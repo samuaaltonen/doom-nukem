@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/17 11:37:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/23 21:32:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # define MOUSE_SENSITIVITY 10.f
 # define TEXTURE_PANELS "./assets/texture_spritesheet.xpm"
 # define TEXTURE_BACKGROUND "./assets/bg.xpm"
+# define MAX_POLYGON_CORNERS 6
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
@@ -90,6 +91,17 @@ typedef struct s_point
 	int				x;
 	int				y;
 }	t_point;
+
+/**
+ * Polygons
+*/
+typedef struct s_poly
+{
+	t_vector2	corners[MAX_POLYGON_CORNERS];
+	int			corner_count;
+	double		bottom;
+	double		top;
+}	t_poly;
 
 /**
  * Struct for images.
@@ -210,6 +222,11 @@ void		player_rotate(t_app *app, double angle);
 void		player_move(t_app *app, t_movement movement, double speed);
 
 /**
+ * Walls
+*/
+void		*render_polygons(void *data);
+
+/**
  * Helper functions
  */
 double		get_radial_direction(t_vector2 *vector);
@@ -217,3 +234,12 @@ void		clamp_distance(double *distance);
 int			get_pixel_color(t_image *image, int x, int y);
 
 #endif
+
+/**
+ * TESTDATA
+*/
+t_poly test_polygons[] = {
+    {{(t_vector2){1.f, 1.f}, (t_vector2){1.f, 2.f}, (t_vector2){2.f, 1.f}}, 3, 0.f, 1.f},
+};
+
+int test_polygon_count = 1;

@@ -100,7 +100,6 @@ void	app_loop(t_app *app)
 
 	while (TRUE)
 	{
-		progress_animations(app);
 		handle_movement(app);
 		update_fps_counter(app);
 		app_render(app);

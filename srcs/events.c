@@ -13,24 +13,6 @@
 #include "doomnukem.h"
 
 /**
- * Progresses all object animations by increasing their animation step.
- */
-void	progress_animations(t_app *app)
-{
-	int	i;
-
-	i = 0;
-	while (i < MAP_MAX_OBJECT_IDS && app->object_sprites[i].image)
-	{
-		app->object_sprites[i].animation_step += 60.f * app->conf->delta_time;
-		if ((int)app->object_sprites[i].animation_step
-			>= app->object_sprites[i].total_steps)
-			app->object_sprites[i].animation_step = 0.f;
-		i++;
-	}
-}
-
-/**
  * Handles player movement and direction depending on keystate.
  */
 void	handle_movement(t_app *app)
