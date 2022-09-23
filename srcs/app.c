@@ -1,0 +1,110 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   app.c                                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
+/*   Updated: 2022/08/08 17:26:59 by saaltone         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "doomnukem.h"
+
+/**
+ * Calculates frame delta time and sets FPS accordingly.
+ */
+static void	update_fps_counter(t_app *app)
+{
+	struct timespec	time_now;
+	struct timespec	time_since;
+
+	clock_gettime(CLOCK_REALTIME, &time_now);
+	time_since.tv_nsec = time_now.tv_nsec - app->conf->fps_clock.tv_nsec;
+	time_since.tv_sec = time_now.tv_sec - app->conf->fps_clock.tv_sec;
+	app->conf->delta_time = (double)time_since.tv_sec
+		+ 1.0e-9 * time_since.tv_nsec;
+	app->conf->fps = (int)(1 / app->conf->delta_time);
+	app->conf->fps_clock = time_now;
+}
+
+/**
+ * Initializes application struct.
+ */
+int	app_init(t_app **app)
+{
+	*app = (t_app *)malloc(sizeof(t_app));
+	ft_bzero(*app, sizeof(t_app));
+	if (!(*app))
+		return (0);
+	return (1);
+}
+
+/**
+ * Prepares the application to be rendered:
+ * Creates window, loads assets, adds event hooks and sets
+ * initial player position / direction.
+ */
+void	app_prepare(t_app *app)
+{
+	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0)
+		exit_error(MSG_ERROR_SDL_INIT);
+	app->image = init_image(WIN_W, WIN_H);
+	app->depthmap = init_image(WIN_W, WIN_H);
+	app->sprite = init_xpm_image(TEXTURE_PANELS);
+	app->bg = init_xpm_image(TEXTURE_BACKGROUND);
+	app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_SHOWN);
+	if (!app->win)
+		exit_error(MSG_ERROR_WINDOW);
+	app->surface = SDL_GetWindowSurface(app->win);
+	if (!app->surface)
+		exit_error(MSG_ERROR_WINDOW_SURFACE);
+	if (SDL_SetRelativeMouseMode(SDL_TRUE) < 0)
+		exit_error(MSG_ERROR_MOUSE);
+	SDL_WarpMouseInWindow(app->win, WIN_W / 2, WIN_H / 2);
+	app->player = (t_player){(t_vector2){0.f, 0.f},
+		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
+		(t_vector2){0.f, 0.f}};
+	init_camera_plane(app);
+}
+
+/**
+ * Rendering function to be called in loop hook. Calls individual renderers and
+ * draws resulting image(s) to the window.
+ */
+void	app_render(t_app *app)
+{
+	SDL_Surface	*converted_surface;
+
+	render_multithreading(app, render_skybox);
+	render_multithreading(app, render_background);
+	if (app->surface->format != app->image->surface->format)
+	{
+		converted_surface = SDL_ConvertSurface(app->image->surface, app->surface->format, 0);
+		SDL_BlitSurface(converted_surface, NULL, app->surface, NULL);
+		SDL_FreeSurface(converted_surface);
+	}
+	else
+		SDL_BlitSurface(app->image->surface, NULL, app->surface, NULL);
+	SDL_UpdateWindowSurface(app->win);
+}
+
+/**
+ * Main game loop. Polls SDL event queue until it is empty and then 
+ * proceeds to next frame.
+ */
+void	app_loop(t_app *app)
+{
+	SDL_Event	event; 
+
+	while (TRUE)
+	{
+		progress_animations(app);
+		handle_movement(app);
+		update_fps_counter(app);
+		app_render(app);
+		while(SDL_PollEvent(&event))
+			dispatch_event(app, &event);
+	}
+}

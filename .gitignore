@@ -1,0 +1,7 @@
+objs
+doom-nukem
+*.a
+*.dSYM
+.vscode/*
+*.o
+.DS_Store
