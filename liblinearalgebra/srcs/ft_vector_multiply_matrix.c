@@ -1,24 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_matrix_inverse.c                                :+:      :+:    :+:   */
+/*   ft_vector2_multiply_matrix.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/12 16:00:58 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/12 16:04:36 by saaltone         ###   ########.fr       */
+/*   Created: 2022/06/10 11:14:06 by saaltone          #+#    #+#             */
+/*   Updated: 2022/06/10 11:16:32 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "liblinearalgebra.h"
 
-t_matrix2	ft_matrix_inverse(t_matrix2 matrix)
+/*
+ * Multiplies vector with a matrix
+*/
+t_vector2	ft_vector_multiply_matrix(t_vector2 vector, t_matrix2 matrix)
 {
-	double	multiplier;
+	t_vector2	result;
 
-	multiplier = 1.0f / (matrix.a.x * matrix.b.y - matrix.b.x * matrix.a.y);
-	return ((t_matrix2){
-		(t_vector2){multiplier * matrix.b.y, -multiplier * matrix.a.y},
-		(t_vector2){-multiplier * matrix.b.x, multiplier * matrix.a.x}
-	});
+	result.x = vector.x * matrix.a.x + vector.y * matrix.b.x;
+	result.y = vector.x * matrix.a.y + vector.y * matrix.b.y;
+	return (result);
 }

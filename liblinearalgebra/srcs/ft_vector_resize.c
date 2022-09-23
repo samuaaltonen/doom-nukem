@@ -1,22 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_vector_length.c                                 :+:      :+:    :+:   */
+/*   ft_vector_resize.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/08 15:07:05 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/08 15:47:51 by saaltone         ###   ########.fr       */
+/*   Created: 2022/07/08 13:37:57 by saaltone          #+#    #+#             */
+/*   Updated: 2022/09/23 21:49:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
-#include "math.h"
+#include "liblinearalgebra.h"
 
-/**
- * Returns vector length.
-*/
-double	ft_vector_length(t_vector2 a)
+t_vector2	ft_vector_resize(t_vector2 a, double size)
 {
-	return (sqrt(a.x * a.x + a.y * a.y));
+	double	scale;
+
+	scale = size / ft_vector_length(a);
+	return ((t_vector2){a.x * scale, a.y * scale});
 }

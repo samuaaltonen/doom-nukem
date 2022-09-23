@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 16:59:10 by htahvana          #+#    #+#             */
-/*   Updated: 2022/08/08 17:51:41 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/23 21:59:25 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ void	*render_background(void *data)
 
 	t = (t_thread_data *)data;
 	app = (t_app *)t->app;
-	y = t->id + WIN_H / 2;
+	y = t->id + WIN_H / 2 + 20;
 	floor_pos.x = 0.f;
 	floor_pos.y = 0.f;
 	while (y < WIN_H)

@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_vector_resize.c                                 :+:      :+:    :+:   */
+/*   ft_vector_perpendicular.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/08 13:37:57 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/08 15:48:50 by saaltone         ###   ########.fr       */
+/*   Created: 2022/07/08 12:50:29 by saaltone          #+#    #+#             */
+/*   Updated: 2022/09/23 21:49:11 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "liblinearalgebra.h"
 
-t_vector2	ft_vector_resize(t_vector2 a, double size)
+/**
+ * Returns perpendicular right hand side 2d vector of vector a. 
+ * Result is right hand side vector so it points to right of the original
+ * vector.
+*/
+t_vector2	ft_vector_perpendicular(t_vector2 a)
 {
-	double	scale;
+	t_vector2	b;
 
-	scale = size / ft_vector_length(a);
-	return ((t_vector2){a.x * scale, a.y * scale});
+	b.x = -a.y;
+	b.y = a.x;
+	return (b);
 }

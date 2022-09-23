@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/23 21:32:47 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/23 21:56:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@
 # include <SDL2/SDL.h>
 # include <SDL2/SDL_image.h>
 # include "libft.h"
+# include "liblinearalgebra.h"
 
 /**
  * Integer type definitions
@@ -236,10 +237,7 @@ int			get_pixel_color(t_image *image, int x, int y);
 #endif
 
 /**
- * TESTDATA
+ * TESTDATA globals
 */
-t_poly test_polygons[] = {
-    {{(t_vector2){1.f, 1.f}, (t_vector2){1.f, 2.f}, (t_vector2){2.f, 1.f}}, 3, 0.f, 1.f},
-};
-
-int test_polygon_count = 1;
+extern t_poly test_polygons[];
+extern int test_polygon_count;

@@ -1,27 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_vector_perpendicular.c                          :+:      :+:    :+:   */
+/*   ft_matrix_inverse.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/08 12:50:29 by saaltone          #+#    #+#             */
-/*   Updated: 2022/07/12 16:05:03 by saaltone         ###   ########.fr       */
+/*   Created: 2022/07/12 16:00:58 by saaltone          #+#    #+#             */
+/*   Updated: 2022/09/23 21:48:57 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "liblinearalgebra.h"
 
-/**
- * Returns perpendicular right hand side 2d vector of vector a. 
- * Result is right hand side vector so it points to right of the original
- * vector.
-*/
-t_vector2	ft_vector_perpendicular(t_vector2 a)
+t_matrix2	ft_matrix_inverse(t_matrix2 matrix)
 {
-	t_vector2	b;
+	double	multiplier;
 
-	b.x = -a.y;
-	b.y = a.x;
-	return (b);
+	multiplier = 1.0f / (matrix.a.x * matrix.b.y - matrix.b.x * matrix.a.y);
+	return ((t_matrix2){
+		(t_vector2){multiplier * matrix.b.y, -multiplier * matrix.a.y},
+		(t_vector2){-multiplier * matrix.b.x, multiplier * matrix.a.x}
+	});
 }

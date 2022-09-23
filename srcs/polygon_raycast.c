@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 20:57:37 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/23 21:31:57 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/23 21:35:08 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ void    polygon_vertex_raycast(t_app *app, t_vector2 start, t_vector2 end)
 {
     t_vector2 start_ray;
 
-    start_ray.x = app->player.dir.x + start.x;
-    start_ray.y = app->player.dir.y + start.y;
+    start_ray.x = start.x - app->player.pos.x;
+    start_ray.y = start.y - app->player.dir.y;
     (void)start_ray;
     (void)end;
 }

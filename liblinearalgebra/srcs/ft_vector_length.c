@@ -1,25 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_vector2_multiply_matrix.c                      :+:      :+:    :+:   */
+/*   ft_vector_length.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/06/10 11:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/06/10 11:16:32 by saaltone         ###   ########.fr       */
+/*   Created: 2022/07/08 15:07:05 by saaltone          #+#    #+#             */
+/*   Updated: 2022/09/23 21:48:59 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "liblinearalgebra.h"
+#include "math.h"
 
-/*
- * Multiplies vector with a matrix
+/**
+ * Returns vector length.
 */
-t_vector2	ft_vector_multiply_matrix(t_vector2 vector, t_matrix2 matrix)
+double	ft_vector_length(t_vector2 a)
 {
-	t_vector2	result;
-
-	result.x = vector.x * matrix.a.x + vector.y * matrix.b.x;
-	result.y = vector.x * matrix.a.y + vector.y * matrix.b.y;
-	return (result);
+	return (sqrt(a.x * a.x + a.y * a.y));
 }
