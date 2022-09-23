@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   events_loop.c                                      :+:      :+:    :+:   */
+/*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:41:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/08 17:47:42 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/24 01:21:25 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,10 +45,10 @@ int	dispatch_event(t_app *app, SDL_Event *event)
 	if (event->type == SDL_QUIT)
 		return events_window_destroy();
 	if (event->type == SDL_KEYUP)
-		events_keyup(event->key.keysym.sym, app);
+		return events_keyup(event->key.keysym.sym, app);
 	if (event->type == SDL_KEYDOWN)
-		events_keydown(event->key.keysym.sym, app);
+		return events_keydown(event->key.keysym.sym, app);
 	if (event->type == SDL_MOUSEMOTION)
-		events_mouse_track(app);
+		return events_mouse_track(app);
 	return (0);
 }

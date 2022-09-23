@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/08 17:21:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/24 01:34:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,5 @@ int	events_keydown(int keycode, t_app *app)
 		app->conf->fov++;
 	if (keycode == SDLK_u || keycode == SDLK_i)
 		init_camera_plane(app);
-	app_render(app);
 	return (0);
 }

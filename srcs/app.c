@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/08 17:26:59 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/24 01:26:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ void	app_render(t_app *app)
 {
 	SDL_Surface	*converted_surface;
 
+	handle_movement(app);
+	update_fps_counter(app);
 	render_multithreading(app, render_skybox);
 	render_multithreading(app, render_background);
 	if (app->surface->format != app->image->surface->format)
@@ -100,10 +102,8 @@ void	app_loop(t_app *app)
 
 	while (TRUE)
 	{
-		handle_movement(app);
-		update_fps_counter(app);
-		app_render(app);
-		while(SDL_PollEvent(&event))
+		while (SDL_PollEvent(&event))
 			dispatch_event(app, &event);
+		app_render(app);
 	}
 }
