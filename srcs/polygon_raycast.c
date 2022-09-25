@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 20:57:37 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/25 22:34:44 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/26 00:02:07 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void    polygon_vertex_raycast(t_app *app, t_vertex2 vertex)
 			app->player.dir.x + app->player.cam.x * camera_x, 
 			app->player.dir.y + app->player.cam.y * camera_x},
 			MAX_VIEW_DISTANCE);
-		ray_vertex.b.x -= app->player.pos.x;
-		ray_vertex.b.y -= app->player.pos.y;
+		ray_vertex.b.x += app->player.pos.x;
+		ray_vertex.b.y += app->player.pos.y;
 		if (ft_vertex_intersection(vertex, ray_vertex, &intersection))
 		{
 			distance = ft_vector_length((t_vector2){

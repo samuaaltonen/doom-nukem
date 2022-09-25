@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/25 22:30:14 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/26 00:02:30 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
 # define COLLISION_OFFSET 0.25f
-# define DIRECTION_START_X -1.f
+# define DIRECTION_START_X 1.f
 # define DIRECTION_START_Y 0.f
+# define POSITION_START_X -20.f
+# define POSITION_START_Y -4.f
 # define FOV 66
 # define DEG_IN_RADIAN 0.01745f
 # define RADIAN_IN_DEG 57.29578f
@@ -196,9 +198,9 @@ t_image		*init_image(int x, int y);
 t_image		*init_xpm_image(char *path);
 void		put_pixel_to_image(t_image *image, int x, int y, int color);
 void		put_pixel_to_image_depth(t_app *app, t_point point, int color,
-				float distance);
+				double distance);
 void		put_pixel_to_image_check(t_app *app, t_point point, int color,
-				float distance);
+				double distance);
 void		flush_image(t_image *image);
 
 /**

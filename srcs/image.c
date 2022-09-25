@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/08 17:22:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/25 23:29:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	put_pixel_to_image(t_image *image, int x, int y, int color)
  * Puts pixel to image and depthmap
  */
 void	put_pixel_to_image_depth(t_app *app, t_point point, int color,
-	float distance)
+	double distance)
 {
 	int				pixel_pos;
 	char			*pixel;
@@ -114,7 +114,7 @@ void	put_pixel_to_image_depth(t_app *app, t_point point, int color,
  * Tests if there is something over the pixel from depthmap before putting it.
  */
 void	put_pixel_to_image_check(t_app *app, t_point point, int color,
-	float distance)
+	double distance)
 {
 	int				pixel_pos;
 	char			*pixel;
