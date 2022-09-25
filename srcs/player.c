@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/25 23:37:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/26 00:28:18 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@ static void	update_position(t_app *app, t_vector2 new)
 		&& !is_collision(app, (t_vector2){app->player.pos.x + COLLISION_OFFSET,
 			new.y + COLLISION_OFFSET}))
 		app->player.pos.y = new.y;
-	ft_printf("Player pos: %f %f\n", app->player.pos.x, app->player.pos.y);
 }
 
 /**

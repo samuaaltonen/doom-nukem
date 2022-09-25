@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/26 00:02:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/26 00:31:41 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,8 +32,8 @@
 # define COLLISION_OFFSET 0.25f
 # define DIRECTION_START_X 1.f
 # define DIRECTION_START_Y 0.f
-# define POSITION_START_X -20.f
-# define POSITION_START_Y -4.f
+# define POSITION_START_X 0.f
+# define POSITION_START_Y 0.f
 # define FOV 66
 # define DEG_IN_RADIAN 0.01745f
 # define RADIAN_IN_DEG 57.29578f
@@ -61,6 +61,20 @@
  * Integer type definitions
  */
 typedef unsigned char	t_uint8;
+
+/**
+ * Texture type enumeration.
+*/
+enum e_texture {
+	FLOOR_STONE			= 0,
+	FLOOR_LAMINATE		= 1,
+	FLOOR_STONE_BRICK	= 2,
+	FLOOR_GRAVEL		= 3,
+	WALL_STONE_BRICK	= 15,
+	WALL_FACE			= 16,
+	WALL_ENGRAVED		= 17,
+	WALL_DOOR			= 18
+};
 
 /**
  * Movement direction enumeration.
@@ -105,6 +119,7 @@ typedef struct s_poly
 	int			corner_count;
 	double		bottom;
 	double		top;
+	int			texture;
 }	t_poly;
 
 /**
