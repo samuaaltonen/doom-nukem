@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 20:57:37 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/25 19:48:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/25 22:34:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,28 @@ static void	draw_vertical_line(t_app *app, int x, int height)
 	int		i;
 
 	start_pixel = WIN_H / 2 - height / 2;
+	if (start_pixel < 0)
+		start_pixel = 0;
 	i = 0;
-	while (i < height)
+	while (i < height && start_pixel + i < WIN_H)
 	{
-		put_pixel_to_image(app->image, x, start_pixel + i, 0x00FFFFFF);
+		put_pixel_to_image(app->image, x, start_pixel + i, 0xCCCCCC);
 		i++;
 	}
+}
+
+/**
+ * Reduces calculated distance based on angle to remove fisheye effect.
+*/
+static void	distortion_correction(double camera_x, double camera_length, 
+	double *distance)
+{
+	double			ray_angle;
+	
+	if (camera_x == 0.f)
+		return ;
+	ray_angle = atan(fabs(camera_x * camera_length));
+	*distance *= cos(ray_angle);
 }
 
 /**
@@ -57,6 +73,7 @@ void    polygon_vertex_raycast(t_app *app, t_vertex2 vertex)
 				intersection.x - app->player.pos.x,
 				intersection.y - app->player.pos.y,
 			});
+			distortion_correction(camera_x, app->player.camera_length, &distance);
 			draw_vertical_line(app, x, (int) (WIN_H / distance));
 		}
 		x++;

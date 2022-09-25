@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/08 17:21:10 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/25 22:28:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	init_camera_plane(t_app *app)
 	camera_plane = ft_vector_resize(ft_vector_perpendicular(
 				app->player.dir), camera_length);
 	app->player.cam = camera_plane;
+	app->player.camera_length = camera_length;
 }
 
 /**

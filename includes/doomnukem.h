@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/25 19:48:44 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/25 22:30:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@
 # define MSG_ERROR_TEXTURE_FILE_ACCESS "Could not open/close a texture file."
 # define MSG_ERROR_TEXTURE_LOAD_FAILED "Texture files are invalid."
 # define MSG_ERROR_MOUSE "Could not set mouse cursor relative to the window."
-# define THREAD_COUNT 16
+# define THREAD_COUNT 1
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
 # define COLLISION_OFFSET 0.25f
-# define DIRECTION_START_X 1.f
-# define DIRECTION_START_Y 1.f
+# define DIRECTION_START_X -1.f
+# define DIRECTION_START_Y 0.f
 # define FOV 66
 # define DEG_IN_RADIAN 0.01745f
 # define RADIAN_IN_DEG 57.29578f
@@ -150,6 +150,7 @@ typedef struct s_player
 	t_vector2		pos;
 	t_vector2		dir;
 	t_vector2		cam;
+	double			camera_length;
 }	t_player;
 
 /**

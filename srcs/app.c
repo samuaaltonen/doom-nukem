@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/25 19:49:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/25 23:22:02 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	app_prepare(t_app *app)
 	SDL_WarpMouseInWindow(app->win, WIN_W / 2, WIN_H / 2);
 	app->player = (t_player){(t_vector2){0.f, 0.f},
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
-		(t_vector2){0.f, 0.f}};
+		(t_vector2){0.f, 0.f}, 1.0f};
 	init_camera_plane(app);
 }
 
