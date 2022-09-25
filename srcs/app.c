@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/24 01:26:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/25 19:49:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,7 @@ void	app_render(t_app *app)
 	update_fps_counter(app);
 	render_multithreading(app, render_skybox);
 	render_multithreading(app, render_background);
+	render_multithreading(app, render_polygons);
 	if (app->surface->format != app->image->surface->format)
 	{
 		converted_surface = SDL_ConvertSurface(app->image->surface, app->surface->format, 0);

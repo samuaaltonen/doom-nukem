@@ -6,15 +6,15 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/24 01:17:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/25 19:48:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOMNUKEM_H
 # define DOOMNUKEM_H
 # define WIN_NAME "Doom Nukem"
-# define WIN_W 1280
-# define WIN_H 720
+# define WIN_W 2400
+# define WIN_H 1600
 # define MSG_ERROR "Error occured"
 # define MSG_ERROR_WINDOW "Could not open a window."
 # define MSG_ERROR_WINDOW_SURFACE "Could not get window surface."
@@ -30,8 +30,8 @@
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
 # define COLLISION_OFFSET 0.25f
-# define DIRECTION_START_X -1.f
-# define DIRECTION_START_Y 0.f
+# define DIRECTION_START_X 1.f
+# define DIRECTION_START_Y 1.f
 # define FOV 66
 # define DEG_IN_RADIAN 0.01745f
 # define RADIAN_IN_DEG 57.29578f
@@ -43,6 +43,7 @@
 # define TEXTURE_PANELS "./assets/texture_spritesheet.xpm"
 # define TEXTURE_BACKGROUND "./assets/bg.xpm"
 # define MAX_POLYGON_CORNERS 6
+# define MAX_VIEW_DISTANCE 50
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
