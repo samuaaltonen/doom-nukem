@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/09/25 19:47:48 by saaltone         ###   ########.fr        #
+#    Updated: 2022/09/26 19:07:54 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ HEADERS = -I ./includes -I ./libft/includes -I ./liblinearalgebra/includes \
 FLAGS = -Wall -Wextra -Werror -O3 -g
 
 LIBLINKS = -L ./libft -L ./liblinearalgebra -L/usr/local/lib \
-		-llinearalgebra -lft -lm -lSDL2 -lSDL2_image
+		-llinearalgebra -lft -lm -lSDL2 -lSDL2_image -lSDL2_ttf
 
 all: $(NAME)
 

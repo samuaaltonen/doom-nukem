@@ -5,3 +5,4 @@ doom-nukem
 .vscode/*
 *.o
 .DS_Store
+perf.data*
