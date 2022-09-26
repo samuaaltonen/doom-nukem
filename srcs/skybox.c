@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sky_bloom.c                                        :+:      :+:    :+:   */
+/*   skybox.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:18:55 by htahvana          #+#    #+#             */
-/*   Updated: 2022/08/08 17:58:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/26 21:02:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,10 @@ void	*render_skybox(void *data)
 		while (++coord.y < WIN_H)
 		{
 			put_pixel_to_image(app->image, coord.x, coord.y,
-				get_pixel_color(app->bg, offset, texy) | 0x01000000);
+				get_pixel_color(app->bg, offset, texy));
 			texy += steps.y;
 		}
-		coord.x += 1;
+		coord.x += THREAD_COUNT;
 	}
 	pthread_exit(NULL);
 }

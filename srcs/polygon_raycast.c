@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 20:57:37 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/26 00:38:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/26 20:58:51 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,9 @@ static void	draw_vertical_line(t_app *app, int x, double distance, int texture, 
 	while (i < height)
 	{
 		tex_y += y_step;
-		put_pixel_to_image(app->image, x, start_pixel + i,
-			get_pixel_color(app->sprite, (int)(((double)texture + fmod(texture_offset, 1.0)) * (double)TEX_SIZE), tex_y));
+		put_pixel_to_image_check(app, (t_point){x, start_pixel + i},
+			get_pixel_color(app->sprite, (int)(((double)texture + fmod(texture_offset, 1.0)) * (double)TEX_SIZE), tex_y),
+			distance);
 		i++;
 	}
 }

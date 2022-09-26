@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:32:04 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/08 17:20:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/26 19:36:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,27 @@ int	get_pixel_color(t_image *image, int x, int y)
 void	flush_image(t_image *image)
 {
 	ft_bzero(image->data, image->height * image->line_size);
+}
+
+/**
+ * Updates the info string with given value backwards from given index
+ */
+static void	update_value(t_app *app, int value, int char_index)
+{
+	int	i;
+
+	i = -1;
+	while (++i < 4)
+	{
+		app->conf->fps_info[char_index - i] = value % 10 + '0';
+		value = value / 10;
+	}
+}
+
+/**
+ * Updates all the values.
+ */
+void	update_info(t_app *app)
+{
+	update_value(app, app->conf->fps, 7);
 }

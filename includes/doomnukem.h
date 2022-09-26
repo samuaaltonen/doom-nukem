@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/16 14:20:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/26 00:31:41 by saaltone         ###   ########.fr       */
+/*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
+/*   Updated: 2022/09/26 21:12:25 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,9 @@
 # define MSG_ERROR_THREADS_JOIN "Could not join threads."
 # define MSG_ERROR_TEXTURE_FILE_ACCESS "Could not open/close a texture file."
 # define MSG_ERROR_TEXTURE_LOAD_FAILED "Texture files are invalid."
+# define MSG_ERROR_FONT "Could not open font file."
 # define MSG_ERROR_MOUSE "Could not set mouse cursor relative to the window."
-# define THREAD_COUNT 1
+# define THREAD_COUNT 8
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
 # define COLLISION_OFFSET 0.25f
@@ -44,8 +45,9 @@
 # define MOUSE_SENSITIVITY 10.f
 # define TEXTURE_PANELS "./assets/texture_spritesheet.xpm"
 # define TEXTURE_BACKGROUND "./assets/bg.xpm"
+# define FONT_FILE "./assets/SpaceMono-Regular.ttf"
 # define MAX_POLYGON_CORNERS 6
-# define MAX_VIEW_DISTANCE 50
+# define MAX_VIEW_DISTANCE 100.f
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
@@ -54,6 +56,7 @@
 # include <stdlib.h>
 # include <SDL2/SDL.h>
 # include <SDL2/SDL_image.h>
+# include <SDL2/SDL_ttf.h>
 # include "libft.h"
 # include "liblinearalgebra.h"
 
@@ -142,6 +145,7 @@ typedef struct s_conf
 	int				toggle_help;
 	int				fps;
 	struct timespec	fps_clock;
+	char			fps_info[20];
 	double			delta_time;
 	double			skybox_offset;
 	int				fov;
@@ -178,8 +182,9 @@ typedef struct s_app
 	t_conf			*conf;
 	SDL_Window		*win;
 	SDL_Surface		*surface;
+	TTF_Font		*font;
 	t_image			*image;
-	t_image			*depthmap;
+	double			depthmap[WIN_H][WIN_W];
 	t_thread_data	thread_info[THREAD_COUNT];
 	t_player		player;
 	t_image			*sprite;
@@ -197,6 +202,7 @@ void		exit_error(char *message);
 int			conf_init(t_app *app);
 void		init_thread_info(t_app *app);
 void		init_camera_plane(t_app *app);
+void		update_info(t_app *app);
 
 /**
  * Application

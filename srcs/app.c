@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/26 00:03:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/26 21:10:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,9 @@ int	app_init(t_app **app)
  */
 void	app_prepare(t_app *app)
 {
-	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0)
+	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0 || TTF_Init() < 0)
 		exit_error(MSG_ERROR_SDL_INIT);
 	app->image = init_image(WIN_W, WIN_H);
-	app->depthmap = init_image(WIN_W, WIN_H);
 	app->sprite = init_xpm_image(TEXTURE_PANELS);
 	app->bg = init_xpm_image(TEXTURE_BACKGROUND);
 	app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_SHOWN);
@@ -60,6 +59,9 @@ void	app_prepare(t_app *app)
 	app->surface = SDL_GetWindowSurface(app->win);
 	if (!app->surface)
 		exit_error(MSG_ERROR_WINDOW_SURFACE);
+	app->font = TTF_OpenFont(FONT_FILE, 22);
+	if (!app->font)
+		exit_error(MSG_ERROR_FONT);
 	if (SDL_SetRelativeMouseMode(SDL_TRUE) < 0)
 		exit_error(MSG_ERROR_MOUSE);
 	SDL_WarpMouseInWindow(app->win, WIN_W / 2, WIN_H / 2);
@@ -76,9 +78,12 @@ void	app_prepare(t_app *app)
 void	app_render(t_app *app)
 {
 	SDL_Surface	*converted_surface;
+	SDL_Surface *text_surface;
 
 	handle_movement(app);
 	update_fps_counter(app);
+	update_info(app);
+	ft_bzero(app->depthmap, WIN_H * WIN_W * sizeof(double));
 	render_multithreading(app, render_skybox);
 	render_multithreading(app, render_background);
 	render_multithreading(app, render_polygons);
@@ -90,6 +95,9 @@ void	app_render(t_app *app)
 	}
 	else
 		SDL_BlitSurface(app->image->surface, NULL, app->surface, NULL);
+	text_surface = TTF_RenderText_Solid(app->font, app->conf->fps_info, (SDL_Color){255, 255, 255, 0});
+	SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
+	SDL_FreeSurface(text_surface);
 	SDL_UpdateWindowSurface(app->win);
 }
 

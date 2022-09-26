@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/25 23:29:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/26 21:10:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,8 @@ void	put_pixel_to_image(t_image *image, int x, int y, int color)
 void	put_pixel_to_image_depth(t_app *app, t_point point, int color,
 	double distance)
 {
-	int				pixel_pos;
-	char			*pixel;
-	char			*depth_pixel;
-	unsigned int	depth;
+	int		pixel_pos;
+	char	*pixel;
 
 	pixel_pos = (point.y * app->image->line_size)
 		+ (point.x * IMAGE_PIXEL_BYTES);
@@ -103,11 +101,9 @@ void	put_pixel_to_image_depth(t_app *app, t_point point, int color,
 		|| point.y >= app->image->height)
 		return ;
 	pixel = app->image->data + pixel_pos;
-	depth_pixel = app->depthmap->data + pixel_pos;
-	depth = (255 - ((unsigned int)(254 / MAX_RAY_DISTANCE * distance)));
-	*(unsigned int *)depth_pixel = depth << 24;
+	app->depthmap[point.y][point.x] = distance;
 	if (color > 0)
-		*(unsigned int *)pixel = color;
+		*(int *)pixel = color;
 }
 
 /**
@@ -116,10 +112,8 @@ void	put_pixel_to_image_depth(t_app *app, t_point point, int color,
 void	put_pixel_to_image_check(t_app *app, t_point point, int color,
 	double distance)
 {
-	int				pixel_pos;
-	char			*pixel;
-	char			*depth_pixel;
-	unsigned int	depth;
+	int		pixel_pos;
+	char	*pixel;
 
 	pixel_pos = (point.y * app->image->line_size)
 		+ (point.x * IMAGE_PIXEL_BYTES);
@@ -127,13 +121,10 @@ void	put_pixel_to_image_check(t_app *app, t_point point, int color,
 		|| point.y >= app->image->height)
 		return ;
 	pixel = app->image->data + pixel_pos;
-	depth_pixel = app->depthmap->data + pixel_pos;
-	depth = (255 - ((unsigned int)(254 / MAX_RAY_DISTANCE * distance)));
-	if (*(unsigned int *)depth_pixel == 0
-		|| *(unsigned int *)depth_pixel < depth << 24)
-	{
-		*(unsigned int *)depth_pixel = depth << 24;
-		if (color > 0)
-			*(unsigned int *)pixel = color;
-	}
+	if (app->depthmap[point.y][point.x] < distance &&
+		app->depthmap[point.y][point.x] != 0.f)
+		return ;
+	app->depthmap[point.y][point.x] = distance;
+	if (color > 0)
+		*(unsigned int *)pixel = color;
 }
