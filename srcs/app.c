@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/26 21:10:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/26 22:24:15 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	app_prepare(t_app *app)
 	app->image = init_image(WIN_W, WIN_H);
 	app->sprite = init_xpm_image(TEXTURE_PANELS);
 	app->bg = init_xpm_image(TEXTURE_BACKGROUND);
-	app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_SHOWN);
+	app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W * WIN_SCALE, WIN_H * WIN_SCALE, SDL_WINDOW_SHOWN);
 	if (!app->win)
 		exit_error(MSG_ERROR_WINDOW);
 	app->surface = SDL_GetWindowSurface(app->win);
@@ -70,6 +70,45 @@ void	app_prepare(t_app *app)
 		(t_vector2){0.f, 0.f}, 1.0f};
 	init_camera_plane(app);
 }
+/* 
+static void	copy_pixel(unsigned char *dst, unsigned char *src, int bpp)
+{
+	*dst = *src;
+	*(dst + 1) = *(src + 1);
+	*(dst + 2) = *(src + 2);
+	if (bpp == 32)
+		*(dst + 3) = *(src + 3);
+}
+
+void	copy_view_to_window(t_app *app)
+{
+	int	y;
+	int	x;
+	int	s;
+	int	pos_src;
+	int	pos_dst;
+
+	y = 0;
+	while (y < WIN_H)
+	{
+		x = 0;
+		while (x < WIN_W)
+		{
+			s = 0;
+			while (s < WIN_SCALE * WIN_SCALE)
+			{
+				pos_src = (y * app->image->line_size) + (x * IMAGE_PIXEL_BYTES);
+				pos_dst = ((y + s / WIN_SCALE) * app->image->line_size * WIN_SCALE) + ((x + s % WIN_SCALE) * IMAGE_PIXEL_BYTES);
+				copy_pixel((unsigned char *)(app->surface->pixels + pos_dst),
+					(unsigned char *)(app->image->data + pos_src),
+					app->surface->format->BitsPerPixel);
+				s++;
+			}
+			x++;
+		}
+		y++;
+	}
+} */
 
 /**
  * Rendering function to be called in loop hook. Calls individual renderers and
@@ -87,14 +126,15 @@ void	app_render(t_app *app)
 	render_multithreading(app, render_skybox);
 	render_multithreading(app, render_background);
 	render_multithreading(app, render_polygons);
+	//copy_view_to_window(app);
 	if (app->surface->format != app->image->surface->format)
 	{
 		converted_surface = SDL_ConvertSurface(app->image->surface, app->surface->format, 0);
-		SDL_BlitSurface(converted_surface, NULL, app->surface, NULL);
+		SDL_BlitScaled(converted_surface, NULL, app->surface, NULL);
 		SDL_FreeSurface(converted_surface);
 	}
 	else
-		SDL_BlitSurface(app->image->surface, NULL, app->surface, NULL);
+		SDL_BlitScaled(app->image->surface, NULL, app->surface, NULL);
 	text_surface = TTF_RenderText_Solid(app->font, app->conf->fps_info, (SDL_Color){255, 255, 255, 0});
 	SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
 	SDL_FreeSurface(text_surface);

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 16:59:10 by htahvana          #+#    #+#             */
-/*   Updated: 2022/09/26 21:07:06 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/26 22:28:51 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  */
 static void	floor_pixel(t_app *app, t_point *texture_coord, t_vector3 screen_pos)
 {
-	put_pixel_to_image_depth(app, (t_point){screen_pos.x, screen_pos.y},
+	put_pixel_to_image_check(app, (t_point){screen_pos.x, screen_pos.y},
 		get_pixel_color(app->sprite, texture_coord->x, texture_coord->y), screen_pos.z);
 	/* put_pixel_to_image_depth(app, (t_point){screen_pos.x, (abs)((int)screen_pos.y - WIN_H) - 1},
 		get_pixel_color(app->sprite, texture_coord->x, texture_coord->y), screen_pos.z); */
@@ -35,7 +35,6 @@ static void	draw_floor(t_app *app, int y, t_vector2 *step, t_vector2 *floor_pos)
 
 	distance = 0.5f * WIN_H / (y - WIN_H / 2);
 	x = -1;
-	clamp_distance(&distance);
 	while (++x < WIN_W)
 	{
 		coord = (t_point){(int)floor_pos->x, (int)floor_pos->y};
@@ -86,7 +85,7 @@ void	*render_background(void *data)
 
 	t = (t_thread_data *)data;
 	app = (t_app *)t->app;
-	y = t->id + WIN_H / 2 + 20;
+	y = t->id + WIN_H / 2;
 	floor_pos.x = 0.f;
 	floor_pos.y = 0.f;
 	while (y < WIN_H)
