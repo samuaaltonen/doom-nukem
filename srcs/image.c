@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/26 21:10:54 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/27 00:20:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ t_image	*init_xpm_image(char *path)
 		&& SDL_RWclose(rwops) < 0)
 		exit_error(MSG_ERROR_IMAGE_INIT);
 	argb_converted = SDL_ConvertSurfaceFormat(image->surface, SDL_PIXELFORMAT_ARGB8888, 0);
+	if (!argb_converted)
+		exit_error(MSG_ERROR_IMAGE_INIT);
 	SDL_FreeSurface(image->surface);
 	image->surface = argb_converted;
 	SDL_LockSurface(image->surface);
