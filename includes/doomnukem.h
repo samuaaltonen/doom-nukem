@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/27 17:12:42 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/27 20:14:40 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,7 @@ typedef struct s_conf
 	double			skybox_offset;
 	int				fov;
 	int				keystates;
+	int				mouse_active;
 	double			movement_speed;
 	double			rotation_speed;
 }	t_conf;
@@ -265,6 +266,7 @@ int			events_keyup(int keycode, t_app *app);
 int			events_keydown(int keycode, t_app *app);
 int			events_mouse_track(t_app *app);
 int			events_window_destroy(void);
+int			events_window_other(int windowevent, t_app *app);
 int			dispatch_event(t_app *app, SDL_Event *event);
 void		handle_movement(t_app *app);
 

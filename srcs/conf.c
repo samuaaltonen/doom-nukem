@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/26 19:36:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/27 20:14:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	conf_init(t_app *app)
 	app->conf->skybox_offset = 360.f;
 	app->conf->movement_speed = MOVEMENT_SPEED;
 	app->conf->rotation_speed = ROTATION_SPEED;
+	app->conf->mouse_active = 1;
 	ft_strcpy(app->conf->fps_info, "FPS                 ");
 	init_thread_info(app);
 	return (1);

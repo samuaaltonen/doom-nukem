@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:40:40 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/08 17:21:51 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/27 20:15:37 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	events_mouse_track(t_app *app)
 	t_point	current_pos;
 	t_point	delta;
 
+	if (!app->conf->mouse_active)
+		return (0);
 	SDL_GetMouseState(&current_pos.x, &current_pos.y);
 	delta.x = current_pos.x - WIN_W / 2;
 	if (delta.x != 0)

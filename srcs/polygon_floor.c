@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 15:10:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/27 18:04:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/27 19:50:19 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	polygon_floor_line(t_app *app, t_polygon *polygon, int x, t_bool is_
 	while (start != end)
 	{
 		put_pixel_to_image_check(app, (t_point){x, start},
-			0xFFFFFF,
+			start < end ? 0xFFFFFF : 0x00FF00,
 			polygon->hits[x].distance_first);
 		if (start < end)
 			start++;
@@ -44,6 +44,9 @@ static void	polygon_floor_line(t_app *app, t_polygon *polygon, int x, t_bool is_
 		else
 			polygon->hits[x].distance_first -= distance_step;
 	}
+	/* if (x == 500 && polygon->texture == MINECRAFT_GRASS_SIDE) {
+		ft_printf("End distance %f, 2nd distance %f\n", polygon->hits[x].distance_first, polygon->hits[x].distance_second);
+	} */
 }
 
 /** TODO

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/27 17:14:18 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/27 19:26:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void	app_render(t_app *app)
 	update_info(app);
 	ft_bzero(app->depthmap, WIN_H * WIN_W * sizeof(double));
 	render_multithreading(app, render_skybox);
-	render_multithreading(app, render_background);
+	//render_multithreading(app, render_background);
 	render_multithreading(app, render_polygons);
 	if (app->surface->format != app->image->surface->format)
 	{
