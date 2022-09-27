@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/27 00:32:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/27 17:12:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,14 +138,26 @@ typedef struct s_point
 /**
  * Polygons
 */
-typedef struct s_poly
+typedef struct s_polygon_hit
 {
-	t_vector2	corners[MAX_POLYGON_CORNERS];
-	int			corner_count;
-	double		bottom;
-	double		top;
-	int			texture;
-}	t_poly;
+	int		y_first_top;
+	int		y_second_top;
+	int		y_first_bottom;
+	int		y_second_bottom;
+	double	distance_first;
+	double	distance_second;
+}	t_polygon_hit;
+
+typedef struct s_polygon
+{
+	t_vector2		corners[MAX_POLYGON_CORNERS];
+	int				corner_count;
+	double			bottom;
+	double			top;
+	int				texture;
+	t_polygon_hit	*hits;
+}	t_polygon;
+
 
 /**
  * Struct for images.
@@ -270,9 +282,10 @@ void		player_rotate(t_app *app, double angle);
 void		player_move(t_app *app, t_movement movement, double speed);
 
 /**
- * Walls
+ * Polygons
 */
 void		*render_polygons(void *data);
+void		polygon_draw_floors(t_app *app, t_polygon *polygon);
 
 /**
  * Helper functions
@@ -286,5 +299,5 @@ int			get_pixel_color(t_image *image, int x, int y);
 /**
  * TESTDATA globals
 */
-extern t_poly test_polygons[];
+extern t_polygon test_polygons[];
 extern int test_polygon_count;

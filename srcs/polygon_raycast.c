@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 20:57:37 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/27 00:53:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/27 17:15:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	wall_limits(int *start_pixel, int *height,
 /**
  * Draws vertical line to image based on wall distance (closer = higher).
  */
-static void	draw_vertical_line(t_app *app, t_poly *polygon, int x, double distance, double texture_offset)
+static void	draw_vertical_line(t_app *app, t_polygon *polygon, int x, double distance, double texture_offset)
 {
 	int		start_pixel;
 	int		i;
@@ -56,6 +56,16 @@ static void	draw_vertical_line(t_app *app, t_poly *polygon, int x, double distan
 			distance);
 		i++;
 	}
+	if (polygon->hits[x].y_first_top)
+	{
+		polygon->hits[x].y_second_top = start_pixel;
+		polygon->hits[x].y_second_bottom = start_pixel + i;
+		polygon->hits[x].distance_second = distance;
+		return ;
+	}
+	polygon->hits[x].y_first_top = start_pixel;
+	polygon->hits[x].y_first_bottom = start_pixel + i;
+	polygon->hits[x].distance_first = distance;
 }
 
 /**
@@ -64,7 +74,7 @@ static void	draw_vertical_line(t_app *app, t_poly *polygon, int x, double distan
 static void	distortion_correction(double camera_x, double camera_length, 
 	double *distance)
 {
-	double			ray_angle;
+	double	ray_angle;
 	
 	if (camera_x == 0.f)
 		return ;
@@ -75,7 +85,7 @@ static void	distortion_correction(double camera_x, double camera_length,
 /**
  * Raycasts a polygon vertex.
 */
-void    polygon_vertex_raycast(t_app *app, t_poly *polygon, int corner_a, int corner_b)
+void    polygon_vertex_raycast(t_app *app, t_polygon *polygon, int corner_a, int corner_b)
 {
 	t_vertex2	wall_vertex;
 	t_vertex2	ray_vertex;
@@ -112,11 +122,14 @@ void    polygon_vertex_raycast(t_app *app, t_poly *polygon, int corner_a, int co
 	}
 }
 
-void    polygon_raycast(t_app *app, t_poly *polygon)
+void    polygon_raycast(t_app *app, t_polygon *polygon)
 {
-    int i;
+    int				i;
+	t_polygon_hit	hits[WIN_W];
 
     i = 0;
+	ft_bzero((void *)&hits, sizeof(t_polygon_hit) * WIN_W);
+	polygon->hits = (t_polygon_hit *)&hits;
     while (i < polygon->corner_count)
     {
         if (i + 1 < polygon->corner_count)
@@ -125,6 +138,7 @@ void    polygon_raycast(t_app *app, t_poly *polygon)
             polygon_vertex_raycast(app, polygon, i, 0);
         i++;
     }
+	polygon_draw_floors(app, polygon);
 }
 
 /**

@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/09/26 19:07:54 by saaltone         ###   ########.fr        #
+#    Updated: 2022/09/27 16:10:01 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,8 @@ CC = gcc
 
 FILES = main.c error.c conf.c app.c events.c events_key.c \
 		events_mouse.c events_window.c graphics.c image.c \
-		helper.c skybox.c floor.c player.c polygon_raycast.c TESTDATA.c
+		helper.c skybox.c floor.c player.c polygon_raycast.c \
+		polygon_floor.c TESTDATA.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a
