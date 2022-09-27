@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 20:57:37 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/27 20:03:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/27 22:33:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@
 static void	wall_limits(int *start_pixel, int *height,
 	double *tex_y, double y_step)
 {
-	*height += 2;
 	*tex_y = 0;
 	if (*start_pixel < 0)
 	{
@@ -45,7 +44,7 @@ static void	draw_vertical_line(t_app *app, t_polygon *polygon, int x, double dis
 	texture_offset = fmod(texture_offset, 1.0);
 	height = (int) ((WIN_H / distance) * (polygon->top - polygon->bottom));
 	y_step = TEX_SIZE / (WIN_H / distance);
-	start_pixel = WIN_H / 2 - height + (int) (WIN_H / distance / 2.f);
+	start_pixel = WIN_H / 2 - height + (int) (WIN_H / distance * (0.5 - polygon->bottom));
 	wall_limits(&start_pixel, &height, &tex_y, y_step);
 	i = 0;
 	while (i < height)

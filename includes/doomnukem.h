@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/27 20:14:40 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/09/27 21:59:06 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 # define MSG_ERROR_TEXTURE_LOAD_FAILED "Texture files are invalid."
 # define MSG_ERROR_FONT "Could not open font file."
 # define MSG_ERROR_MOUSE "Could not set mouse cursor relative to the window."
-# define THREAD_COUNT 8
+# define THREAD_COUNT 2
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
 # define COLLISION_OFFSET 0.25f
@@ -207,6 +207,7 @@ typedef struct s_player
 	t_vector2		dir;
 	t_vector2		cam;
 	double			camera_length;
+	double			height;
 }	t_player;
 
 /**
