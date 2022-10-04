@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/04 12:23:17 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/04 16:57:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,7 @@ void	app_prepare(t_app *app)
 	app->font = TTF_OpenFont(FONT_FILE, 22);
 	if (!app->font)
 		exit_error(MSG_ERROR_FONT);
-	if (SDL_SetRelativeMouseMode(SDL_TRUE) < 0)
-		exit_error(MSG_ERROR_MOUSE);
+	SDL_ShowCursor(SDL_DISABLE);
 	SDL_WarpMouseInWindow(app->win, WIN_W / 2, WIN_H / 2);
 	app->player = (t_player){(t_vector2){POSITION_START_X, POSITION_START_Y},
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
