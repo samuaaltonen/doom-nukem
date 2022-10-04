@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 15:10:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/27 22:11:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/04 12:24:11 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	polygon_floor_line(t_app *app, t_polygon *polygon, int x, t_bool is_
 	distance_step /= (double)ft_abs(start - end);
 	while (start != end)
 	{
-		put_pixel_to_image_check(app, (t_point){x, start},
+		put_pixel_to_surface_check(app, (t_point){x, start},
 			0xFFFFFF,
 			distance_start);
 		if (start < end)

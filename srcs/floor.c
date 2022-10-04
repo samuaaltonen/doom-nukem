@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 16:59:10 by htahvana          #+#    #+#             */
-/*   Updated: 2022/09/27 15:19:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/04 12:23:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
  */
 static void	floor_pixel(t_app *app, t_point *texture_coord, t_vector3 screen_pos)
 {
-	put_pixel_to_image_check(app, (t_point){screen_pos.x, screen_pos.y},
+	put_pixel_to_surface_check(app, (t_point){screen_pos.x, screen_pos.y},
 		get_pixel_color(app->sprite, TEX_SIZE * 10 + texture_coord->x, texture_coord->y), screen_pos.z);
 	/* put_pixel_to_image_depth(app, (t_point){screen_pos.x, (abs)((int)screen_pos.y - WIN_H) - 1},
 		get_pixel_color(app->sprite, texture_coord->x, texture_coord->y), screen_pos.z); */

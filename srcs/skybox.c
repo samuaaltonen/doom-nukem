@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:18:55 by htahvana          #+#    #+#             */
-/*   Updated: 2022/09/26 21:19:02 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/04 12:22:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	*render_skybox(void *data)
 				* steps.x) % 512;
 		while (++coord.y < WIN_H)
 		{
-			put_pixel_to_image_check(app, (t_point){coord.x, coord.y},
+			put_pixel_to_surface_check(app, (t_point){coord.x, coord.y},
 				get_pixel_color(app->bg, offset, texy), MAX_VIEW_DISTANCE);
 			texy += steps.y;
 		}

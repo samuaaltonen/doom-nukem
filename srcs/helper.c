@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:32:04 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/26 19:36:26 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/04 12:19:07 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,24 @@ double	get_radial_direction(t_vector2 *vector)
 /**
  * Returns pixel color at given position.
  */
-int	get_pixel_color(t_image *image, int x, int y)
+int	get_pixel_color(SDL_Surface *surface, int x, int y)
 {
 	int		pixel_pos;
 	char	*pixel;
 
-	pixel_pos = (y * image->line_size) + (x * IMAGE_PIXEL_BYTES);
-	if (pixel_pos < 0 || x >= image->width || y >= image->height)
+	pixel_pos = (y * surface->pitch) + (x * IMAGE_PIXEL_BYTES);
+	if (pixel_pos < 0 || x >= surface->w || y >= surface->h)
 		return (0);
-	pixel = image->data + pixel_pos;
+	pixel = surface->pixels + pixel_pos;
 	return (*(int *)pixel);
 }
 
 /**
  * Flushes image (sets all pixels to black)
  */
-void	flush_image(t_image *image)
+void	flush_surface(SDL_Surface *surface)
 {
-	ft_bzero(image->data, image->height * image->line_size);
+	ft_bzero(surface->pixels, surface->h * surface->pitch);
 }
 
 /**

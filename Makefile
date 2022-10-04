@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/09/27 16:10:01 by saaltone         ###   ########.fr        #
+#    Updated: 2022/10/04 11:56:10 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,18 +28,29 @@ SRCS := $(patsubst %, $(SRC_DIR)/%, $(FILES))
 OBJ_DIR = ./objs
 OBJS = $(patsubst %, $(OBJ_DIR)/%, $(FILES:.c=.o))
 
+SDL_DIR = ./sdl/
+SDL_HEADERS = \
+	-I$(SDL_DIR)SDL2.framework/Versions/A/Headers \
+	-I$(SDL_DIR)SDL2_image.framework/Versions/A/Headers \
+	-I$(SDL_DIR)SDL2_ttf.framework/Versions/A/Headers \
+
+FRAMEWORKS = -F$(SDL_DIR) \
+				-rpath $(SDL_DIR) \
+				-framework OpenGL -framework AppKit -framework OpenCl \
+				-framework SDL2 -framework SDL2_ttf -framework SDL2_image
+
 HEADERS = -I ./includes -I ./libft/includes -I ./liblinearalgebra/includes \
-		-I /usr/local/include/SDL2
+		-I /usr/local/include/SDL2 $(SDL_HEADERS)
 
 FLAGS = -Wall -Wextra -Werror -O3 -g
 
 LIBLINKS = -L ./libft -L ./liblinearalgebra -L/usr/local/lib \
-		-llinearalgebra -lft -lm -lSDL2 -lSDL2_image -lSDL2_ttf
+		-llinearalgebra -lft -lm
 
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(LIBLINEARALGEBRA) $(OBJS)
-	$(CC) $(OBJS) -o $(NAME) $(FLAGS) $(HEADERS) $(LIBLINKS)
+	$(CC) $(OBJS) -o $(NAME) $(FLAGS) $(HEADERS) $(FRAMEWORKS) $(LIBLINKS)
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
 	$(CC) $(FLAGS) $(HEADERS) -c $< -o $@

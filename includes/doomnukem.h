@@ -6,16 +6,15 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/27 21:59:06 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/04 12:20:18 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOMNUKEM_H
 # define DOOMNUKEM_H
 # define WIN_NAME "Doom Nukem"
-# define WIN_W 960
-# define WIN_H 540
-# define WIN_SCALE 2
+# define WIN_W 1280
+# define WIN_H 720
 # define MSG_ERROR "Error occured"
 # define MSG_ERROR_WINDOW "Could not open a window."
 # define MSG_ERROR_WINDOW_SURFACE "Could not get window surface."
@@ -43,7 +42,7 @@
 # define MOVEMENT_SPEED 3.2f
 # define MAX_RAY_DISTANCE 25.f
 # define TEX_SIZE 64
-# define MOUSE_SENSITIVITY 10.f
+# define MOUSE_SENSITIVITY 100.f
 //# define TEXTURE_PANELS "./assets/texture_spritesheet.xpm"
 # define TEXTURE_PANELS "./assets/minecraft_spritesheet.xpm"
 # define TEXTURE_BACKGROUND "./assets/bg.xpm"
@@ -56,9 +55,9 @@
 # include <time.h>
 # include <pthread.h>
 # include <stdlib.h>
-# include <SDL2/SDL.h>
-# include <SDL2/SDL_image.h>
-# include <SDL2/SDL_ttf.h>
+# include <SDL.h>
+# include <SDL_image.h>
+# include <SDL_ttf.h>
 # include "libft.h"
 # include "liblinearalgebra.h"
 
@@ -158,19 +157,6 @@ typedef struct s_polygon
 	t_polygon_hit	*hits;
 }	t_polygon;
 
-
-/**
- * Struct for images.
- */
-typedef struct s_image
-{
-	int				line_size;
-	int				width;
-	int				height;
-	SDL_Surface		*surface;
-	char			*data;
-}	t_image;
-
 /**
  * Struct for configuration variables of the application.
  */
@@ -219,12 +205,11 @@ typedef struct s_app
 	SDL_Window		*win;
 	SDL_Surface		*surface;
 	TTF_Font		*font;
-	t_image			*image;
 	double			depthmap[WIN_H][WIN_W];
 	t_thread_data	thread_info[THREAD_COUNT];
 	t_player		player;
-	t_image			*sprite;
-	t_image			*bg;
+	SDL_Surface		*sprite;
+	SDL_Surface		*bg;
 }	t_app;
 
 /**
@@ -251,14 +236,14 @@ void		app_loop(t_app *app);
 /**
  * Images
  */
-t_image		*init_image(int x, int y);
-t_image		*init_xpm_image(char *path);
-void		put_pixel_to_image(t_image *image, int x, int y, int color);
-void		put_pixel_to_image_depth(t_app *app, t_point point, int color,
+SDL_Surface	*init_image(int x, int y);
+SDL_Surface	*init_xpm_image(char *path);
+void		put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color);
+void		put_pixel_to_surface_depth(t_app *app, t_point point, int color,
 				double distance);
-void		put_pixel_to_image_check(t_app *app, t_point point, int color,
+void		put_pixel_to_surface_check(t_app *app, t_point point, int color,
 				double distance);
-void		flush_image(t_image *image);
+void		flush_surface(SDL_Surface *surface);
 
 /**
  * Events
@@ -295,7 +280,7 @@ void		polygon_draw_floors(t_app *app, t_polygon *polygon);
  */
 double		get_radial_direction(t_vector2 *vector);
 void		clamp_distance(double *distance);
-int			get_pixel_color(t_image *image, int x, int y);
+int			get_pixel_color(SDL_Surface *surface, int x, int y);
 
 #endif
 

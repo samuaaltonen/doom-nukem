@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 20:57:37 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/27 22:33:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/04 12:22:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ static void	draw_vertical_line(t_app *app, t_polygon *polygon, int x, double dis
 		tex_y += y_step;
 		if (tex_y >= (double) TEX_SIZE)
 			tex_y = fmod(tex_y, (double) TEX_SIZE);
-		put_pixel_to_image_check(app, (t_point){x, start_pixel + i},
+		put_pixel_to_surface_check(app, (t_point){x, start_pixel + i},
 			get_pixel_color(app->sprite, (int)(((double)polygon->texture + texture_offset) * (double)TEX_SIZE), tex_y),
 			distance);
 		i++;
