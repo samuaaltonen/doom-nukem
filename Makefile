@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/10/05 15:52:33 by dpalacio         ###   ########.fr        #
+#    Updated: 2022/10/05 16:12:47 by dpalacio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ FRAMEWORKS = -F$(SDL_DIR) \
 HEADERS = -I ./includes -I ./libft/includes -I ./liblinearalgebra/includes \
 		-I /usr/local/include/SDL2 $(SDL_HEADERS)
 
-FLAGS = -Wall -Wextra -Werror -flto -Ofast -g
+FLAGS = -Wall -Wextra -Werror -flto -Ofast
 
 LIBLINKS = -L ./libft -L ./liblinearalgebra -L/usr/local/lib \
 		-llinearalgebra -lft -lm -L$(SDL) -lSDL2
@@ -58,19 +58,25 @@ RESET = \033[0m
 all: sdl_install $(NAME)
 
 $(NAME): $(LIBFT) $(LIBLINEARALGEBRA) $(OBJS)
-	$(CC) $(OBJS) -o $(NAME) $(FLAGS) $(HEADERS) $(FRAMEWORKS) $(LIBLINKS)
+	@$(CC) $(OBJS) -o $(NAME) $(FLAGS) $(HEADERS) $(FRAMEWORKS) $(LIBLINKS)
+	@echo "\n$(NAME): $(GREEN)Created object files.$(RESET)"
+	@echo "$(NAME): $(GREEN)Created $(NAME) executable.$(RESET)"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(FLAGS) $(HEADERS) -c $< -o $@
+	@$(CC) $(FLAGS) $(HEADERS) -c $< -o $@
+	@echo "$(GREEN).$(RESET)\c"
 
 $(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+	@mkdir -p $(OBJ_DIR)
+	@echo "$(NAME): $(GREEN)Created obj/ directory.$(RESET)"
 
 $(LIBFT):
-	make -C ./libft
+	@echo "$(NAME): $(GREEN)Compiling Libft...$(RESET)"
+	@make -C ./libft
 
 $(LIBLINEARALGEBRA):
-	make -C ./liblinearalgebra
+	@echo "$(NAME): $(GREEN)Compiling Linear Algebra Library...$(RESET)"
+	@make -C ./liblinearalgebra
 
 sdl_install:
 	@if [ -d "$(SDL_DIR)build/" ];\
@@ -90,8 +96,8 @@ sdl_install:
 .PHONY: all clean fclean re
 
 clean:
-	make clean -C ./libft
-	make clean -C ./liblinearalgebra
+	@make clean -C ./libft
+	@make clean -C ./liblinearalgebra
 	/bin/rm -rf $(OBJ_DIR)
 
 fclean: clean
