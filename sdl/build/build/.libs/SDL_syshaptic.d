@@ -1,0 +1,27 @@
+build/SDL_syshaptic.lo: \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/haptic/darwin/SDL_syshaptic.c \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/haptic/darwin/../../SDL_internal.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/haptic/darwin/../../dynapi/SDL_dynapi.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/haptic/darwin/../../dynapi/SDL_dynapi_overrides.h \
+  include/SDL_config.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_platform.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/begin_code.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/close_code.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_assert.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_stdinc.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_config.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_log.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_haptic.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_error.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_joystick.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_guid.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/haptic/darwin/../SDL_syshaptic.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/haptic/darwin/../../joystick/SDL_sysjoystick.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/haptic/darwin/../../joystick/../SDL_internal.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/haptic/darwin/../../joystick/SDL_joystick_c.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_gamecontroller.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_rwops.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_sensor.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/haptic/darwin/../../joystick/darwin/SDL_iokitjoystick_c.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/haptic/darwin/../../joystick/darwin/../../SDL_internal.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/haptic/darwin/SDL_syshaptic_c.h

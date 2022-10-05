@@ -1,0 +1,35 @@
+build/SDL_clipboard.lo: \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/video/SDL_clipboard.c \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/video/../SDL_internal.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/video/../dynapi/SDL_dynapi.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/video/../dynapi/SDL_dynapi_overrides.h \
+  include/SDL_config.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_platform.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/begin_code.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/close_code.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_assert.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_stdinc.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_config.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_log.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_clipboard.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/video/SDL_sysvideo.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_messagebox.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_video.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_pixels.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_endian.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_rect.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_error.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_rwops.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_surface.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_blendmode.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_shape.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_thread.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_atomic.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_mutex.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_metal.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/video/SDL_vulkan_internal.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/video/./khronos/vulkan/vulkan.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/video/./khronos/vulkan/vk_platform.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/video/./khronos/vulkan/vulkan_core.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/video/./khronos/vulkan/vulkan_macos.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_vulkan.h

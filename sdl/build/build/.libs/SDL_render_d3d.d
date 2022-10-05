@@ -1,0 +1,26 @@
+build/SDL_render_d3d.lo: \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/render/direct3d/SDL_render_d3d.c \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/render/direct3d/../../SDL_internal.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/render/direct3d/../../dynapi/SDL_dynapi.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/render/direct3d/../../dynapi/SDL_dynapi_overrides.h \
+  include/SDL_config.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_platform.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/begin_code.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/close_code.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_assert.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_stdinc.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_config.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_log.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_render.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_rect.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_error.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_pixels.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_endian.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_rwops.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_video.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_surface.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_blendmode.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_system.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_keyboard.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_keycode.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_scancode.h

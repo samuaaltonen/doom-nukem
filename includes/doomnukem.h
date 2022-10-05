@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/04 12:20:18 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/05 15:21:45 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@
 # include <time.h>
 # include <pthread.h>
 # include <stdlib.h>
-# include <SDL.h>
+# include "../sdl/include/SDL.h"
 # include <SDL_image.h>
 # include <SDL_ttf.h>
 # include "libft.h"

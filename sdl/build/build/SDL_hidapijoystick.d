@@ -1,0 +1,32 @@
+build/SDL_hidapijoystick.lo: \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/joystick/hidapi/SDL_hidapijoystick.c \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/joystick/hidapi/../../SDL_internal.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/joystick/hidapi/../../dynapi/SDL_dynapi.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/joystick/hidapi/../../dynapi/SDL_dynapi_overrides.h \
+  include/SDL_config.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_platform.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/begin_code.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/close_code.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_assert.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_stdinc.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_config.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_log.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_atomic.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_endian.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_hints.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_timer.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_error.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_joystick.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_guid.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/joystick/hidapi/../SDL_sysjoystick.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/joystick/hidapi/../SDL_joystick_c.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_gamecontroller.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_rwops.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_sensor.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/joystick/hidapi/SDL_hidapijoystick_c.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_mutex.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/include/SDL_hidapi.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/joystick/hidapi/../usb_ids.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/joystick/hidapi/SDL_hidapi_rumble.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/joystick/hidapi/../../SDL_hints_c.h \
+  /Users/dpalacio/Documents/workspace/doom-nukem/sdl/src/joystick/hidapi/../.././SDL_internal.h
