@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/10/05 16:12:47 by dpalacio         ###   ########.fr        #
+#    Updated: 2022/10/05 16:30:51 by dpalacio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -93,6 +93,10 @@ sdl_install:
 		echo "$(NAME): $(GREEN)SDL2  was installed.$(RESET)";\
 	fi;
 
+sdl_uninstall:
+	@rm -fr $(SDL_DIR)build/
+	@echo "$(NAME): $(YELLOW)SDL2 was uninstalled.$(RESET)"
+
 .PHONY: all clean fclean re
 
 clean:
@@ -103,6 +107,5 @@ clean:
 fclean: clean
 	make fclean -C ./libft
 	make fclean -C ./liblinearalgebra
-	/bin/rm -f $(NAME)
-	rm -fr $(SDL_DIR)build/
+
 re: fclean all
