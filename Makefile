@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/10/05 15:42:58 by dpalacio         ###   ########.fr        #
+#    Updated: 2022/10/05 15:52:33 by dpalacio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,7 +49,7 @@ HEADERS = -I ./includes -I ./libft/includes -I ./liblinearalgebra/includes \
 FLAGS = -Wall -Wextra -Werror -flto -Ofast -g
 
 LIBLINKS = -L ./libft -L ./liblinearalgebra -L/usr/local/lib \
-		-llinearalgebra -lft -lm
+		-llinearalgebra -lft -lm -L$(SDL) -lSDL2
 
 GREEN = \033[0;32m
 YELLOW = \033[0;33m
