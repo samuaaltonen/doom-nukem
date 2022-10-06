@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/04 12:20:18 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/06 15:11:00 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,10 @@
 # define FONT_FILE "./assets/SpaceMono-Regular.ttf"
 # define MAX_POLYGON_CORNERS 8
 # define MAX_VIEW_DISTANCE 100.f
+# define EDITOR_BG_COLOR 0x000000
+# define EDITOR_GRID_COLOR 0x424242
+# define EDITOR_MENU_COLOR 0xD3D3D3
+# define EDITOR_MENU_W 280
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
@@ -163,6 +167,7 @@ typedef struct s_polygon
 typedef struct s_conf
 {
 	int				toggle_help;
+	int				toggle_editor;
 	int				fps;
 	struct timespec	fps_clock;
 	char			fps_info[20];
@@ -197,6 +202,15 @@ typedef struct s_player
 }	t_player;
 
 /**
+ * Struct for editor.
+ */
+
+typedef struct s_editor
+{
+	int				zoom;
+}	t_editor;
+
+/**
  * Struct for the application.
  */
 typedef struct s_app
@@ -208,6 +222,7 @@ typedef struct s_app
 	double			depthmap[WIN_H][WIN_W];
 	t_thread_data	thread_info[THREAD_COUNT];
 	t_player		player;
+	t_editor		editor;
 	SDL_Surface		*sprite;
 	SDL_Surface		*bg;
 }	t_app;
@@ -281,6 +296,11 @@ void		polygon_draw_floors(t_app *app, t_polygon *polygon);
 double		get_radial_direction(t_vector2 *vector);
 void		clamp_distance(double *distance);
 int			get_pixel_color(SDL_Surface *surface, int x, int y);
+
+/**
+ * Editor
+ */
+void		open_map_editor(t_app *app);
 
 #endif
 

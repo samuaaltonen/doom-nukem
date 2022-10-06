@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/10/04 11:56:10 by saaltone         ###   ########.fr        #
+#    Updated: 2022/10/06 15:00:16 by ssulkuma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CC = gcc
 FILES = main.c error.c conf.c app.c events.c events_key.c \
 		events_mouse.c events_window.c graphics.c image.c \
 		helper.c skybox.c floor.c player.c polygon_raycast.c \
-		polygon_floor.c TESTDATA.c
+		polygon_floor.c TESTDATA.c editor.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a
