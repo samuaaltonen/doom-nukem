@@ -24,7 +24,7 @@
 #ifndef SDL_IMAGE_H_
 #define SDL_IMAGE_H_
 
-#include "../../../../include/SDL.h"
+#include "../../../../SDL2.framework/Versions/A/Headers/SDL.h"
 //#include <SDL2/SDL_version.h>
 //#include <SDL2/begin_code.h>
 
