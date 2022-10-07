@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 10:36:08 by saaltone          #+#    #+#              #
-#    Updated: 2022/09/23 22:48:57 by saaltone         ###   ########.fr        #
+#    Updated: 2022/10/07 17:17:03 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ CC = gcc
 FLAGS=-Wall -Werror -Wextra -O3
 
 FILES=ft_vector_length.c ft_vector_multiply_matrix.c ft_vector_perpendicular.c \
-	ft_vector_resize.c ft_matrix_inverse.c ft_vertex_intersection.c
+	ft_vector_resize.c ft_matrix_inverse.c ft_vertex_intersection.c \
+	ft_vector_dotproduct.c ft_vertex_resize.c
 
 SRC_DIR = ./srcs
 SRCS := $(patsubst %, $(SRC_DIR)/%, $(FILES))
