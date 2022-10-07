@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/05 16:01:59 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/07 14:40:52 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,18 @@ int	events_keydown(int keycode, t_app *app)
 	if (keycode == SDLK_d)
 		app->keystates |= RIGHT_DOWN;
 	return (0);
+}
+
+void	handle_movement(t_app *app)
+{
+	if (app->keystates & FORWARD_DOWN
+		|| app->keystates & FORWARD_W_DOWN)
+		app->view_pos.y -= MAP_SPEED;
+	if (app->keystates & BACKWARD_DOWN
+		|| app->keystates & BACKWARD_S_DOWN)
+		app->view_pos.y += MAP_SPEED;
+	if (app->keystates & LEFT_DOWN)
+		app->view_pos.x -= MAP_SPEED;
+	if (app->keystates & RIGHT_DOWN)
+		app->view_pos.x += MAP_SPEED;
 }
