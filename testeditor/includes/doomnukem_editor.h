@@ -228,6 +228,14 @@ typedef struct s_sector
  * Map Editor functions
  * 
  */
+typedef struct s_line
+{
+	t_point	dif;
+	t_point	pos;
+	int		d;
+	int		err;
+	double	ccur;
+}	t_line;
 
 typedef struct s_vec2list
 {
@@ -243,6 +251,8 @@ void add_vector_list(t_app *app, t_vec2list *list);
 t_vec2list *new_vector_list(t_app *app);
 void	handle_movement(t_app *app);
 void render_grid(t_app *app);
+void	linedrawing(t_app *data, t_vec2list *a, t_vec2list *b);
+void	render_sector(t_app *app, t_vec2list *sector_start);
 
 
 #endif

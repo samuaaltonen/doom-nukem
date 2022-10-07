@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/07 14:39:54 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/07 17:34:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,12 @@ void	app_render(t_app *app)
 	text_surface = TTF_RenderText_Solid(app->font, "app->conf->fps_info", (SDL_Color){255, 255, 255, 0});
 	handle_movement(app);
 	render_grid(app);
+	t_vec2list c = {(t_vector2){10.0,10.0},NULL};
+	t_vec2list b = {(t_vector2){20.0,0.0}, &c};
+	t_vec2list a = {(t_vector2){0.0,0.0}, &b};
+	c.next = &a;
+	//linedrawing(app, &a, &b);
+	render_sector(app, &a);
 	SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
 	SDL_FreeSurface(text_surface);
 	SDL_UpdateWindowSurface(app->win);
