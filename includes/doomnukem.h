@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/06 15:11:00 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/07 14:17:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@
 # define TEXTURE_BACKGROUND "./assets/bg.xpm"
 # define FONT_FILE "./assets/SpaceMono-Regular.ttf"
 # define MAX_POLYGON_CORNERS 8
+# define MAX_SECTOR_CORNERS 16
+# define MAX_MEMBER_SECTORS 8
+# define MAX_VISIBLE_SECTORS 32
 # define MAX_VIEW_DISTANCE 100.f
 # define EDITOR_BG_COLOR 0x000000
 # define EDITOR_GRID_COLOR 0x424242
@@ -139,7 +142,7 @@ typedef struct s_point
 }	t_point;
 
 /**
- * Polygons
+ * Polygons GOING TO BE REMOVED SOON
 */
 typedef struct s_polygon_hit
 {
@@ -160,6 +163,26 @@ typedef struct s_polygon
 	int				texture;
 	t_polygon_hit	*hits;
 }	t_polygon;
+
+/**
+ * Sectors
+ */
+typedef struct s_sector
+{
+	t_vector2		corners[MAX_SECTOR_CORNERS];
+	int				wall_types[MAX_SECTOR_CORNERS];
+	int				wall_textures[MAX_SECTOR_CORNERS];
+	int				member_sectors[MAX_MEMBER_SECTORS];
+	int				corner_count;
+	double			floor_height;
+	double			ceiling_height;
+	int				floor_texture;
+	int				ceiling_texture;
+	t_vector3		floor_slope_position;
+	t_vector2		floor_slope_angles;
+	t_vector3		ceiling_slope_position;
+	t_vector2		ceiling_slope_angles;
+}	t_sector;
 
 /**
  * Struct for configuration variables of the application.
@@ -220,6 +243,9 @@ typedef struct s_app
 	SDL_Surface		*surface;
 	TTF_Font		*font;
 	double			depthmap[WIN_H][WIN_W];
+	int				occlusion_top[WIN_W];
+	int				occlusion_bottom[WIN_W];
+	int				possible_visible[MAX_VISIBLE_SECTORS][MAX_SECTOR_CORNERS];
 	t_thread_data	thread_info[THREAD_COUNT];
 	t_player		player;
 	t_editor		editor;
@@ -309,3 +335,6 @@ void		open_map_editor(t_app *app);
 */
 extern t_polygon test_polygons[];
 extern int test_polygon_count;
+
+extern t_sector test_sectors[];
+extern int test_sectors_count;

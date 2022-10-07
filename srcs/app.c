@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/06 15:48:52 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/07 13:15:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,19 +86,9 @@ void	app_render(t_app *app)
 	if (app->conf->toggle_editor)
 		open_map_editor(app);
 	else
-	{	
+	{
 		render_multithreading(app, render_skybox);
-		//render_multithreading(app, render_background);
 		render_multithreading(app, render_polygons);
-		/* if (app->surface->format != app->image->surface->format)
-		{
-			converted_surface = SDL_ConvertSurface(app->image->surface, app->surface->format, 0);
-			//SDL_BlitScaled(converted_surface, NULL, app->surface, NULL);
-			SDL_BlitSurface(app->image->surface, NULL, app->surface, NULL);
-			SDL_FreeSurface(converted_surface);
-		}
-		else
-			SDL_BlitSurface(app->image->surface, NULL, app->surface, NULL); */
 	}
 	text_surface = TTF_RenderText_Solid(app->font, app->conf->fps_info, (SDL_Color){255, 255, 255, 0});
 	SDL_BlitSurface(text_surface, NULL, app->surface, NULL);

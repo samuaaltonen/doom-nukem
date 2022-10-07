@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+         #
+#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/10/06 15:00:16 by ssulkuma         ###   ########.fr        #
+#    Updated: 2022/10/07 14:18:09 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CC = gcc
 FILES = main.c error.c conf.c app.c events.c events_key.c \
 		events_mouse.c events_window.c graphics.c image.c \
 		helper.c skybox.c floor.c player.c polygon_raycast.c \
-		polygon_floor.c TESTDATA.c editor.c
+		polygon_floor.c editor.c OLD_TESTDATA.c TESTDATA.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a
@@ -42,7 +42,7 @@ FRAMEWORKS = -F$(SDL_DIR) \
 HEADERS = -I ./includes -I ./libft/includes -I ./liblinearalgebra/includes \
 		-I /usr/local/include/SDL2 $(SDL_HEADERS)
 
-FLAGS = -Wall -Wextra -Werror -O3 -g
+FLAGS = -Wall -Wextra -Werror -flto -Ofast -g
 
 LIBLINKS = -L ./libft -L ./liblinearalgebra -L/usr/local/lib \
 		-llinearalgebra -lft -lm
