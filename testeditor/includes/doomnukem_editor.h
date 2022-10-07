@@ -147,6 +147,7 @@ typedef struct s_app
 	SDL_Surface		*sprite;
 	t_vector2		view_pos;
 	t_vector2		zoom_area;
+	t_vector2		mouse_click;
 }	t_app;
 
 /**
