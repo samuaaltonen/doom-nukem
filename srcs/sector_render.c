@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/07 13:24:35 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/07 15:22:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	render_sectors(t_app *app)
 	 * there is no movement))
 	 * 
 	 * Oordered based on distance (closest first) */
-	sector_walls_possible_visible();
+	sector_walls_possible_visible(app);
 
 	/** Loop through possible visible walls */
 	// draw floor

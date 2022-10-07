@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/07 14:17:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/07 17:08:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@
 # define MOVEMENT_SPEED 3.2f
 # define MAX_RAY_DISTANCE 25.f
 # define TEX_SIZE 64
-# define MOUSE_SENSITIVITY 100.f
+# define MOUSE_SENSITIVITY 20.f
 //# define TEXTURE_PANELS "./assets/texture_spritesheet.xpm"
 # define TEXTURE_PANELS "./assets/minecraft_spritesheet.xpm"
 # define TEXTURE_BACKGROUND "./assets/bg.xpm"
@@ -50,8 +50,10 @@
 # define MAX_POLYGON_CORNERS 8
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 8
-# define MAX_VISIBLE_SECTORS 32
+# define MAX_VISIBLE_SECTORS 64
+# define MAX_VISIBLE_WALLS 256
 # define MAX_VIEW_DISTANCE 100.f
+# define MAX_VERTEX_LENGTH 1048576.f
 # define EDITOR_BG_COLOR 0x000000
 # define EDITOR_GRID_COLOR 0x424242
 # define EDITOR_MENU_COLOR 0xD3D3D3
@@ -185,6 +187,17 @@ typedef struct s_sector
 }	t_sector;
 
 /**
+ * Wall struct. Contains information of what sector it belongs to and which wall
+ * of that sector it is.
+ */
+typedef struct s_wall
+{
+	int				sector_id;
+	int				wall_id;
+	t_bool			is_member;
+}	t_wall;
+
+/**
  * Struct for configuration variables of the application.
  */
 typedef struct s_conf
@@ -222,6 +235,7 @@ typedef struct s_player
 	t_vector2		cam;
 	double			camera_length;
 	double			height;
+	int				current_sector;
 }	t_player;
 
 /**
@@ -245,7 +259,8 @@ typedef struct s_app
 	double			depthmap[WIN_H][WIN_W];
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];
-	int				possible_visible[MAX_VISIBLE_SECTORS][MAX_SECTOR_CORNERS];
+	t_wall			possible_visible[MAX_VISIBLE_WALLS];
+	int				possible_visible_count;
 	t_thread_data	thread_info[THREAD_COUNT];
 	t_player		player;
 	t_editor		editor;
@@ -322,6 +337,13 @@ void		polygon_draw_floors(t_app *app, t_polygon *polygon);
 double		get_radial_direction(t_vector2 *vector);
 void		clamp_distance(double *distance);
 int			get_pixel_color(SDL_Surface *surface, int x, int y);
+
+/**
+ * Sectors
+ */
+void		render_sectors(t_app *app);
+void		sector_walls_possible_visible(t_app *app);
+t_vertex2	get_sector_vertex_by_corner(t_app *app, int sector_id, int wall_id);
 
 /**
  * Editor
