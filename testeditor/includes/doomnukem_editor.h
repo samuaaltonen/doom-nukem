@@ -35,7 +35,8 @@
 # define MAP_SPEED 0.25f
 # define TEXTURE_PANELS "../assets/minecraft_spritesheet.xpm"
 # define FONT_FILE "../assets/SpaceMono-Regular.ttf"
-# define MAX_SECTOR_CORNERS 8
+# define MAX_SECTOR_CORNERS 16
+# define MAX_MEMBER_SECTORS 16
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
@@ -200,6 +201,49 @@ void		polygon_draw_floors(t_app *app, t_polygon *polygon);
  */
 int			get_pixel_color(SDL_Surface *surface, int x, int y);
 
+
+
+/**
+ * Sectors
+ */
+typedef struct s_sector
+{
+	t_vector2		corners[MAX_SECTOR_CORNERS];
+	int				wall_types[MAX_SECTOR_CORNERS];
+	int				wall_textures[MAX_SECTOR_CORNERS];
+	int				member_sectors[MAX_MEMBER_SECTORS];
+	int				corner_count;
+	double			floor_height;
+	double			ceiling_height;
+	int				floor_texture;
+	int				ceiling_texture;
+	t_vector3		floor_slope_position;
+	t_vector2		floor_slope_angles;
+	t_vector3		ceiling_slope_position;
+	t_vector2		ceiling_slope_angles;
+}	t_sector;
+
+/**
+ * Map Editor functions
+ * 
+ */
+
+typedef struct s_vec2list
+{
+	t_vector2 point;
+	struct s_vec2list *next;
+} t_vec2list;
+
+t_bool complete_sector(t_app *app);
+t_bool valid_point(t_app *app);
+t_vector2 *nearest_point_cursor(t_app *app);
+int	del_sector_list(t_app *app, t_vec2list *list);
+void add_vector_list(t_app *app, t_vec2list *list);
+t_vec2list *new_vector_list(t_app *app);
+void	handle_movement(t_app *app);
+void render_grid(t_app *app);
+
+
 #endif
 
 /**
@@ -207,3 +251,6 @@ int			get_pixel_color(SDL_Surface *surface, int x, int y);
 */
 extern t_polygon test_polygons[];
 extern int test_polygon_count;
+
+extern t_sector test_sectors[];
+extern int test_sectors_count;

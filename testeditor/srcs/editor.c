@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/07 14:41:03 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/07 15:42:01 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,4 +37,28 @@ void render_grid(t_app *app)
 		y++;
 	}
 			//-50 + ( 0  / 1000) * 100
+}
+
+//current real time nearest point to cursor
+t_vector2 *nearest_point_cursor(t_app *app)
+{
+(void)app;
+ return(NULL);
+
+}
+
+//check if point is already in list
+t_bool valid_point(t_app *app)
+{
+(void)app;
+ return(0);
+
+}
+
+//check if point is first element in list and complete sector
+t_bool complete_sector(t_app *app)
+{
+(void)app;
+ return(0);
+
 }
