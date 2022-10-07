@@ -6,3 +6,4 @@ doom-nukem
 *.o
 .DS_Store
 perf.data*
+doom-nukem-editor
