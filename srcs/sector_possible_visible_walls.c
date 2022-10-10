@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/10 12:11:47 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/10 15:32:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,14 +30,14 @@ static t_bool	walls_in_order(t_app *app, int wall_a, int wall_b)
 	t_vertex2	b;
 	t_vertex2	extended;
 	t_vector2	intersection;
-	t_bool		right_side;
+	int			side;
 	int			extended_wall;
 
 	if (!app->possible_visible[wall_a].is_member
 		|| !app->possible_visible[wall_b].is_member)
 		return (TRUE);
 	a = get_sector_vertex_by_corner(app, app->possible_visible[wall_a].sector_id, app->possible_visible[wall_a].wall_id);
-	b = get_sector_vertex_by_corner(app, app->possible_visible[wall_a].sector_id, app->possible_visible[wall_a].wall_id);
+	b = get_sector_vertex_by_corner(app, app->possible_visible[wall_b].sector_id, app->possible_visible[wall_b].wall_id);
 
 	// Extend wall_a to infinity / very long
 	extended = ft_vertex_resize(a, MAX_VERTEX_LENGTH, EXTEND_BOTH);
@@ -47,27 +47,38 @@ static t_bool	walls_in_order(t_app *app, int wall_a, int wall_b)
 	if (ft_vertex_intersection(extended, b, &intersection))
 	{
 		extended = ft_vertex_resize(b, MAX_VERTEX_LENGTH, EXTEND_BOTH);
-		extended_wall = wall_a;
+		extended_wall = wall_b;
+		// If interesction again, no change in order
+		if (ft_vertex_intersection(extended, a, &intersection))
+			return (TRUE);
 	}
 
 	/** 
-	 * Check side with player pos. Can be done with 2 dimensional cross
-	 * product. Cross product between a vector from extended vertex starting
-	 * point to test point and vector from vertex starting to end points.
+	 * Check side with player pos relative to extended wall.
 	 */
-	// Get player side (true if right side of vertex)
-	right_side = ft_vector_crossproduct((t_vector2){app->player.pos.x - extended.a.x, app->player.pos.y - extended.a.y}, 
-		(t_vector2){extended.b.x - extended.a.x, extended.b.y - extended.a.y}) > 0;
+	// Get player side (1 if left side of vertex)
+	side = ft_vertex_side(extended, app->player.pos);
 
-	// Check if both points of other vertex are at the same side as player
-	if (right_side != ft_vector_crossproduct(
-		(t_vector2){a.a.x - extended.a.x, a.a.y - extended.a.y}, 
-		(t_vector2){extended.b.x - extended.a.x, extended.b.y - extended.a.y}) > 0
-		|| right_side != ft_vector_crossproduct(
-			(t_vector2){a.b.x - extended.a.x, a.b.y - extended.a.y}, 
-			(t_vector2){extended.b.x - extended.a.x, extended.b.y - extended.a.y}) > 0)
-		return (extended_wall == wall_b);
-	return (extended_wall == wall_a);
+	/**
+	 * If wall a was extended and wall b is at the same side as player, then 
+	 * wall b has priority (return false so switch b before a).
+	 */
+	if (extended_wall == wall_a
+		&& side == ft_vertex_side(extended, b.a)
+		&& side == ft_vertex_side(extended, b.b))
+		return (FALSE);
+	/**
+	 * Similarly if b was extended, and wall a not at the same side as player,
+	 * then b has priority.
+	 */
+	if (extended_wall == wall_b
+		&& (side != ft_vertex_side(extended, a.a)
+			|| side != ft_vertex_side(extended, a.b)))
+		return (FALSE);
+	/**
+	 * All other cases, wall a has priority so it is already in order.
+	 */
+	return (TRUE);
 }
 
 /**
@@ -79,9 +90,10 @@ static void	order_possible_visible_walls(t_app *app)
 	t_wall	temp;
 	t_bool	in_order;
 	int		i;
+	int		stop = 0;
 
 	in_order = FALSE;
-	while (!in_order)
+	while (!in_order && ++stop < 100)
 	{
 		in_order = TRUE;
 		i = 0;
@@ -90,6 +102,12 @@ static void	order_possible_visible_walls(t_app *app)
 			// Checks if 2 walls are in order and flip when necessary
 			if (!walls_in_order(app, i, i + 1))
 			{
+				/* ft_printf("Walls %d and %d from sectors %d and %d are not in order. Switching them.\n", 
+					app->possible_visible[i].wall_id, 
+					app->possible_visible[i + 1].wall_id,
+					app->possible_visible[i].sector_id, 
+					app->possible_visible[i + 1].sector_id
+				); */
 				temp = app->possible_visible[i];
 				app->possible_visible[i] = app->possible_visible[i + 1];
 				app->possible_visible[i + 1] = temp;
@@ -103,15 +121,20 @@ static void	order_possible_visible_walls(t_app *app)
 /**
  * Determines if wall is possibly visible from player view.
  * Takes dot product of player direction vector and wall vector. If dot 
- * product >= 0, wall is in front of player.
+ * product > 0, wall is in front of player.
  *
- * For member sectors need to be opposite (dot product <= 0) (outside walls).
+ * For member sectors need to be opposite (dot product < 0) (outside walls).
+ * 
+ * If dot product is 0 (player direction and wall direction are parallel,
+ * in that case need to check side)
  */
 static void	check_possible_visible(t_app *app, int sector_id, int wall_id, t_bool is_member)
 {
 	t_vector2	wall_vector;
 	double		dot_product;
+	t_bool		visible;
 
+	visible = FALSE;
 	if (test_sectors[sector_id].corner_count == wall_id + 1)
 		wall_vector = (t_vector2){
 			test_sectors[sector_id].corners[0].x - test_sectors[sector_id].corners[wall_id].x,
@@ -123,14 +146,17 @@ static void	check_possible_visible(t_app *app, int sector_id, int wall_id, t_boo
 			test_sectors[sector_id].corners[wall_id + 1].y - test_sectors[sector_id].corners[wall_id].y
 		};
 	dot_product = ft_vector_dotproduct(app->player.dir, wall_vector);
-	if ((dot_product >= 0.0 && !is_member) || (dot_product <= 0.0 && is_member))
+	if ((dot_product > 0.0 && !is_member) || (dot_product < 0.0 && is_member))
+		visible = TRUE;
+	/** Parallel, not member, can be visible (i.e. corridor) */
+	if (dot_product == 0.0 && !is_member)
+		visible = TRUE;
+	/** Parallel, is member, can be visible if at correct side */
+	if (dot_product == 0.0 && is_member
+		&& ft_vertex_side(get_sector_vertex_by_corner(app, sector_id, wall_id), app->player.pos))
+		visible = TRUE;
+	if (visible)
 	{
-		/* ft_printf("maybe visible, wall id %d from %f,%f to %f,%f\n",
-			wall_id,
-			test_sectors[sector_id].corners[wall_id].x,
-			test_sectors[sector_id].corners[wall_id].y,
-			test_sectors[sector_id].corners[wall_id].x + wall_vector.x,
-			test_sectors[sector_id].corners[wall_id].y + wall_vector.y); */
 		app->possible_visible[app->possible_visible_count] = (t_wall){sector_id, wall_id, is_member};
 		app->possible_visible_count++;
 	}
@@ -158,6 +184,9 @@ static void	loop_sector_walls(t_app *app, int *visited, int sector_id, t_bool is
 		return ;
 	// Mark this sector as visited
 	visited[i] = sector_id;
+	// Set next for -1 in visited array
+	if (i < MAX_VISIBLE_SECTORS - 1)
+		visited[i + 1] = -1;
 	// Loop through member sector walls
 	i = 0;
 	while (i < MAX_MEMBER_SECTORS)
@@ -193,7 +222,7 @@ void	sector_walls_possible_visible(t_app *app)
 	app->possible_visible_count = 0;
 	already_visited[0] = -1;
 
-	// Loop through walls and determined if they could be visible
+	// Loop through walls and determine if they could be visible
 	loop_sector_walls(app, (int *)&already_visited, app->player.current_sector, FALSE);
 
 	// Order possible visible walls

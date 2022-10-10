@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/07 15:22:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/10 13:52:53 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,13 @@ void	render_sectors(t_app *app)
 	 * Oordered based on distance (closest first) */
 	sector_walls_possible_visible(app);
 
+	ft_printf("Possible visible walls ordered from front to back:\n");
+	int	i = 0;
+	while (i < app->possible_visible_count)
+	{
+		ft_printf("sector %d, wall %d, is member: %d\n", app->possible_visible[i].sector_id, app->possible_visible[i].wall_id, app->possible_visible[i].is_member);
+		i++;
+	}
 	/** Loop through possible visible walls */
 	// draw floor
 	// draw ceiling
