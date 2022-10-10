@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:52 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/10 14:09:30 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/10 14:30:20 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,11 +64,12 @@ int	events_mouse_track(t_app *app)
 {
 	(void)app;
 	t_point	current_pos;
-	t_vector2 snap_pos;
+	t_vector2 center;
 	
 	SDL_GetMouseState(&current_pos.x, &current_pos.y);
 	
-	snap_to_nearest(app, &current_pos, &snap_pos);
+	center = (t_vector2){0.0,0.0};
+	snap_to_nearest(app, &current_pos, &app->mouse_click);
 	/* pixel_a.x =  fabs(((a->point.x + data->view_pos.x) / data->zoom_area.x ) * data->surface->w);
 	pixel_a.y =  fabs(((a->point.y + data->view_pos.y) / data->zoom_area.y ) * data->surface->h); */
 

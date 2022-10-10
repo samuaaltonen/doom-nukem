@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/10 12:28:05 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/10 14:31:02 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,21 +21,21 @@ void	render_sector(t_app *app, t_vec2list *sector_start)
 	tmp = sector_start;
 	while (tmp->next != sector_start && tmp->next != NULL)
 	{
-		linedrawing(app, tmp, tmp->next);
+		draw_list_lines(app, tmp, tmp->next);
 		tmp = tmp->next;
 	}
 	if(tmp->next == sector_start)
-		linedrawing(app, tmp, sector_start);
+		draw_list_lines(app, tmp, sector_start);
 }
 
 
-static int	check_borders(t_app *data, t_point *a, t_point *b)
+static int	check_borders(t_app *app, t_point *a, t_point *b)
 {
-	if (a->x > data->surface->w && b->x > data->surface->w)
+	if (a->x > app->surface->w && b->x > app->surface->w)
 		return (0);
 	if (a->x < 0 && b->x < 0)
 		return (0);
-	if (a->y > data->surface->h && b->y > data->surface->h)
+	if (a->y > app->surface->h && b->y > app->surface->h)
 		return (0);
 	if (a->y < 0 && b->y < 0)
 		return (0);
@@ -51,7 +51,7 @@ static void	line_init(t_point *a, t_point *b, t_line *line)
 	line->d = 1;
 }
 
-static void	linedraw_low(t_app *data, t_point *a, t_point *b)
+static void	linedraw_low(t_app *app, t_point *a, t_point *b)
 {
 	t_line	line;
 
@@ -64,7 +64,7 @@ static void	linedraw_low(t_app *data, t_point *a, t_point *b)
 	line.err = (2 * line.dif.y) - line.dif.x;
 	while (line.pos.x < b->x)
 	{
-		put_pixel_to_surface(data->surface, line.pos.x, line.pos.y, 0xFF0000);
+		put_pixel_to_surface(app->surface, line.pos.x, line.pos.y, 0xFF0000);
 		line.pos.x += 1;
 		if (line.err < 0)
 			line.err += (2 * line.dif.y);
@@ -74,10 +74,10 @@ static void	linedraw_low(t_app *data, t_point *a, t_point *b)
 			line.err += (2 * (line.dif.y - line.dif.x));
 		}
 	}
-	put_pixel_to_surface(data->surface, line.pos.x, line.pos.y, 0xFF0000);
+	put_pixel_to_surface(app->surface, line.pos.x, line.pos.y, 0xFF0000);
 }
 
-static void	linedraw_high(t_app *data, t_point *a, t_point *b)
+static void	linedraw_high(t_app *app, t_point *a, t_point *b)
 {
 	t_line	line;
 
@@ -90,7 +90,7 @@ static void	linedraw_high(t_app *data, t_point *a, t_point *b)
 	line.err = (2 * line.dif.x) - line.dif.y;
 	while (line.pos.y < b->y)
 	{
-		put_pixel_to_surface(data->surface, line.pos.x, line.pos.y, 0x00FF00);
+		put_pixel_to_surface(app->surface, line.pos.x, line.pos.y, 0x00FF00);
 		line.pos.y += 1;
 		if (line.err < 0)
 			line.err += (2 * line.dif.x);
@@ -100,7 +100,7 @@ static void	linedraw_high(t_app *data, t_point *a, t_point *b)
 			line.err += (2 * (line.dif.x - line.dif.y));
 		}
 	}
-	put_pixel_to_surface(data->surface, line.pos.x, line.pos.y, 0x00FF00);
+	put_pixel_to_surface(app->surface, line.pos.x, line.pos.y, 0x00FF00);
 }
 
 /* static void line_to_screenspace(t_app *app, t_vec2list *a, t_vec2list *b)
@@ -113,33 +113,66 @@ static void	linedraw_high(t_app *data, t_point *a, t_point *b)
 
 } */
 
-void	linedrawing(t_app *data, t_vec2list *a, t_vec2list *b)
+
+
+void	draw_line(t_app *app, t_vector2 *a, t_vector2 *b)
 {
 	t_point pixel_a;
 	t_point pixel_b;
 
-	pixel_a.x =  fabs(((a->point.x + data->view_pos.x) / data->zoom_area.x ) * data->surface->w);
-	pixel_a.y =  fabs(((a->point.y + data->view_pos.y) / data->zoom_area.y ) * data->surface->h);
+	pixel_a.x =  fabs(((a->x + app->view_pos.x) / app->zoom_area.x ) * app->surface->w);
+	pixel_a.y =  fabs(((a->y + app->view_pos.y) / app->zoom_area.y ) * app->surface->h);
 
-	pixel_b.x =  fabs(((b->point.x + data->view_pos.x) / data->zoom_area.x ) * data->surface->w);
-	pixel_b.y =  fabs(((b->point.y + data->view_pos.y) / data->zoom_area.y ) * data->surface->h);
+	pixel_b.x =  fabs(((b->x + app->view_pos.x) / app->zoom_area.x ) * app->surface->w);
+	pixel_b.y =  fabs(((b->y + app->view_pos.y) / app->zoom_area.y ) * app->surface->h);
 
 	//printf("test x%i, y%i\n", pixel_a.x, pixel_a.y);
 
-	if (!check_borders(data, &pixel_a, &pixel_b))
+	if (!check_borders(app, &pixel_a, &pixel_b))
 		return ;
 	if (abs(pixel_b.y - pixel_a.y) < abs(pixel_b.x - pixel_a.x))
 	{
 		if (pixel_a.x > pixel_b.x)
-			linedraw_low(data, &pixel_b, &pixel_a);
+			linedraw_low(app, &pixel_b, &pixel_a);
 		else
-			linedraw_low(data, &pixel_a, &pixel_b);
+			linedraw_low(app, &pixel_a, &pixel_b);
 	}
 	else
 	{
 		if (pixel_a.y > pixel_b.y)
-			linedraw_high(data, &pixel_b, &pixel_a);
+			linedraw_high(app, &pixel_b, &pixel_a);
 		else
-			linedraw_high(data, &pixel_a, &pixel_b);
+			linedraw_high(app, &pixel_a, &pixel_b);
+	}
+}
+
+void	draw_list_lines(t_app *app, t_vec2list *a, t_vec2list *b)
+{
+	t_point pixel_a;
+	t_point pixel_b;
+
+	pixel_a.x =  fabs(((a->point.x + app->view_pos.x) / app->zoom_area.x ) * app->surface->w);
+	pixel_a.y =  fabs(((a->point.y + app->view_pos.y) / app->zoom_area.y ) * app->surface->h);
+
+	pixel_b.x =  fabs(((b->point.x + app->view_pos.x) / app->zoom_area.x ) * app->surface->w);
+	pixel_b.y =  fabs(((b->point.y + app->view_pos.y) / app->zoom_area.y ) * app->surface->h);
+
+	//printf("test x%i, y%i\n", pixel_a.x, pixel_a.y);
+
+	if (!check_borders(app, &pixel_a, &pixel_b))
+		return ;
+	if (abs(pixel_b.y - pixel_a.y) < abs(pixel_b.x - pixel_a.x))
+	{
+		if (pixel_a.x > pixel_b.x)
+			linedraw_low(app, &pixel_b, &pixel_a);
+		else
+			linedraw_low(app, &pixel_a, &pixel_b);
+	}
+	else
+	{
+		if (pixel_a.y > pixel_b.y)
+			linedraw_high(app, &pixel_b, &pixel_a);
+		else
+			linedraw_high(app, &pixel_a, &pixel_b);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/07 17:34:41 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/10 14:31:44 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	app_render(t_app *app)
 	c.next = &a;
 	//linedrawing(app, &a, &b);
 	render_sector(app, &a);
+	draw_line(app, &c.point, &app->mouse_click);
 	SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
 	SDL_FreeSurface(text_surface);
 	SDL_UpdateWindowSurface(app->win);
