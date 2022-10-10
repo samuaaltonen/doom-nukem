@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/07 17:36:16 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/10 12:28:05 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static void	line_init(t_point *a, t_point *b, t_line *line)
 	line->pos.x = a->x;
 	line->pos.y = a->y;
 	line->d = 1;
-	line->ccur = 0.0f;
 }
 
 static void	linedraw_low(t_app *data, t_point *a, t_point *b)
@@ -101,7 +100,6 @@ static void	linedraw_high(t_app *data, t_point *a, t_point *b)
 			line.err += (2 * (line.dif.x - line.dif.y));
 		}
 	}
-	printf("posx=%i, posy=%i\n", line.pos.x, line.pos.y);
 	put_pixel_to_surface(data->surface, line.pos.x, line.pos.y, 0x00FF00);
 }
 
