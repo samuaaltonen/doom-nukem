@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/10 12:09:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/10 12:11:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
  * for intersection points with the other wall (b). If there is no intersection
  * and wall (b) both corners are at the same side as player position relative
  * to extended wall then drawing priority is with wall (b).
- * If there wall (b) both corners are at different side as player position
+ * If wall (b) both corners are at different side as player position
  * relative to extended (a) wall, then priority is with wall (a).
  * If there is intersection, extend the other one. (if both cases has intersect,
- * then skip.
+ * then order doesn't matter (invalid sector)).
  */
 static t_bool	walls_in_order(t_app *app, int wall_a, int wall_b)
 {
