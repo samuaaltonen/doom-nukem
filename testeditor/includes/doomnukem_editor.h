@@ -251,8 +251,9 @@ int add_to_vector_list(t_vec2list **list, t_vec2list *new);
 t_vec2list *new_vector_list(t_app *app);
 void	handle_movement(t_app *app);
 void render_grid(t_app *app);
-void	linedrawing(t_app *data, t_vec2list *a, t_vec2list *b);
+void	draw_list_lines(t_app *app, t_vec2list *a, t_vec2list *b);
 void	render_sector(t_app *app, t_vec2list *sector_start);
+void	draw_line(t_app *app, t_vector2 *a, t_vector2 *b);
 
 
 #endif
