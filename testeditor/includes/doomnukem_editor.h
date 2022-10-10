@@ -246,8 +246,8 @@ typedef struct s_vec2list
 t_bool complete_sector(t_app *app);
 t_bool valid_point(t_app *app);
 t_vector2 *nearest_point_cursor(t_app *app);
-int	del_sector_list(t_app *app, t_vec2list *list);
-void add_vector_list(t_app *app, t_vec2list *list);
+int	del_vector_list(t_vec2list **list);
+int add_to_vector_list(t_vec2list **list, t_vec2list *new);
 t_vec2list *new_vector_list(t_app *app);
 void	handle_movement(t_app *app);
 void render_grid(t_app *app);
