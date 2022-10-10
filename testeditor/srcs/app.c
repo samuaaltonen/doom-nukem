@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/10 14:30:45 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/10 14:43:09 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int	app_init(t_app **app)
  */
 void	app_prepare(t_app *app)
 {
-	double		aspect_ratio;
-
 	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0 || TTF_Init() < 0)
 		exit_error(MSG_ERROR_SDL_INIT);
 	app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_SHOWN);
@@ -44,9 +42,8 @@ void	app_prepare(t_app *app)
 	app->font = TTF_OpenFont(FONT_FILE, 22);
 	if (!app->font)
 		exit_error(MSG_ERROR_FONT);
-	aspect_ratio = ((double)app->surface->h / (double)app->surface->w) * 100;
 	app->view_pos = (t_vector2){-50.0,-50.0};
-	app->zoom_area = (t_vector2){100.0,aspect_ratio};
+	app->zoom_area = (t_vector2){100.0,100.0};
 	SDL_ShowCursor(SDL_ENABLE);
 	//SDL_WarpMouseInWindow(app->win, WIN_W / 2, WIN_H / 2);
 }
@@ -69,6 +66,7 @@ void	app_render(t_app *app)
 	c.next = &a;
 	//linedrawing(app, &a, &b);
 	render_sector(app, &a);
+	draw_line(app, &c.point, &app->mouse_click);
 	SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
 	SDL_FreeSurface(text_surface);
 	SDL_UpdateWindowSurface(app->win);
