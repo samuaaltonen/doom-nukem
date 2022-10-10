@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/07 17:57:25 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/10 12:09:33 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ static t_bool	walls_in_order(t_app *app, int wall_a, int wall_b)
 		|| right_side != ft_vector_crossproduct(
 			(t_vector2){a.b.x - extended.a.x, a.b.y - extended.a.y}, 
 			(t_vector2){extended.b.x - extended.a.x, extended.b.y - extended.a.y}) > 0)
-		return ((FALSE && extended_wall == wall_a) || (TRUE && extended_wall == wall_b));
-	return ((TRUE && extended_wall == wall_a) || (FALSE && extended_wall == wall_b));
+		return (extended_wall == wall_b);
+	return (extended_wall == wall_a);
 }
 
 /**
