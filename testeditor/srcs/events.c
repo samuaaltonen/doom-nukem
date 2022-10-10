@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:52 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/10 14:30:20 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/10 14:40:17 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,28 @@ int events_mouse_wheel(t_app *app, SDL_Event *event)
 	{
 		app->zoom_area.x *= 2;
 		app->zoom_area.y *= 2;
+		app->view_pos.x *= 2;
+		app->view_pos.y *= 2;
+
 	}	
 	else if(event->wheel.y < 0)
 	{
 		app->zoom_area.x /= 2;
 		app->zoom_area.y /= 2;
+		app->view_pos.x /= 2;
+		app->view_pos.y /= 2;
 	}
+
+	/* 	event->area.x += (x / (double)event->data->sizex) * event->size * 0.1;
+		event->area.y += (y / (double)event->data->sizey) * event->size * 0.1;
+		event->size *= 0.9;
+	}
+	if (button == 5)
+	{
+		event->area.x -= (x / (double)event->data->sizex) * event->size * 0.1;
+		event->area.y -= (y / (double)event->data->sizey) * event->size * 0.1;
+		event->size *= 1.1; */
+
 	return (0);
 }
 
