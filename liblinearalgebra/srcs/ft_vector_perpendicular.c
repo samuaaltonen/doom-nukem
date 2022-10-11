@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/08 12:50:29 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/23 21:49:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/11 14:11:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ t_vector2	ft_vector_perpendicular(t_vector2 a)
 {
 	t_vector2	b;
 
-	b.x = -a.y;
-	b.y = a.x;
+	b.x = a.y;
+	b.y = -a.x;
 	return (b);
 }
