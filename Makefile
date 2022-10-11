@@ -18,7 +18,8 @@ FILES = main.c error.c conf.c app.c events.c events_key.c \
 		events_mouse.c events_window.c graphics.c image.c \
 		helper.c skybox.c floor.c player.c polygon_raycast.c \
 		polygon_floor.c editor.c OLD_TESTDATA.c TESTDATA.c \
-		sector_render.c sector_possible_visible_walls.c sector_vertex.c
+		sector_render.c sector_possible_visible_walls.c sector_vertex.c \
+		render_text.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a

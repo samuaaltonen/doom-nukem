@@ -253,7 +253,7 @@ typedef struct s_editor
 typedef struct s_font
 {
 	SDL_Surface *font;
-	int         font_size;
+	int         size;
 }	t_font;
 
 /**
@@ -265,7 +265,7 @@ typedef struct s_app
 	SDL_Window		*win;
 	SDL_Surface		*surface;
 	TTF_Font		*font;
-	t_app			my_font;
+	t_font			my_font;
 	double			depthmap[WIN_H][WIN_W];
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];
@@ -359,6 +359,12 @@ t_vertex2	get_sector_vertex_by_corner(t_app *app, int sector_id, int wall_id);
  * Editor
  */
 void		open_map_editor(t_app *app);
+
+/**
+ * Font
+ */
+void        load_font(t_app *app);
+void    	render_text(t_app *app, t_point position, char *text);
 
 #endif
 
