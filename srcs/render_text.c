@@ -18,7 +18,6 @@ void        load_font(t_app *app);
 
 void    render_text(t_app *app, t_point position, char *text)
 {
-    //SDL_Surface *text_surface;
     int len;
     int i;
 
@@ -26,9 +25,13 @@ void    render_text(t_app *app, t_point position, char *text)
     i = 0;
     while (text[i] != '\0')
     {
-        ft_putchar(text[i]);
+        if (text[i] == ' ')
+        {
+            position.x += app->my_font.size - 2;
+            i++;
+        }
         render_char(app, position, get_char(text[i]));
-        position.x += app->my_font.size;
+        position.x += app->my_font.size - 2;
         i++;
     }
 }
@@ -50,7 +53,7 @@ SDL_Rect  get_char(int c)
     char        *str;
     int         font_offset;
     int         i;
-    str = "abcdefghijklmnopqrstuvwxyz0123456789.,:;'!?-_()/|";
+    str = "abcdefghijklmnopqrstuvwxyz0123456789.,:;'\"!?-_()/|\\";
     i = 0;
     while (str[i] != '\0')
     {
@@ -58,7 +61,7 @@ SDL_Rect  get_char(int c)
             font_offset = i;
         i++;
     }
-    src.x = 14 * font_offset;
+    src.x = 12 * font_offset;
     src.y = 0;
     src.w = 14;
     src.h = 14;

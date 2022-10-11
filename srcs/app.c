@@ -97,7 +97,7 @@ void	app_render(t_app *app)
 	t_point position;
 	position.x = 100;
 	position.y = 100;
-	render_text(app, position, "helloworld!");
+	render_text(app, position, "hello world!");
 	//----
 	SDL_UpdateWindowSurface(app->win);
 }
