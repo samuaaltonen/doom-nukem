@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:52 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/11 14:36:41 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/11 15:09:07 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,9 @@
 /**
  * converts mouse_pos to world space and snaps to grid
  */
-static void	snap_to_nearest(t_app *app, t_point *mouse_pos, t_vector2 *snap_pos)
+static void	snap_to_nearest(t_app *app, t_point *mouse_pos, t_vector2 *snap_pos, double divider)
 {
 	t_vector2	world_pos;
-	double		divider = 1.0f;
 	double		tmp;
 
 	world_pos.x = app->view_pos.x + (mouse_pos->x / (double)app->surface->w) * app->zoom_area.x;
@@ -65,7 +64,7 @@ int	events_mouse_track(t_app *app)
 	t_point	current_pos;
 	
 	SDL_GetMouseState(&current_pos.x, &current_pos.y);
-	snap_to_nearest(app, &current_pos, &app->mouse_click);
+	snap_to_nearest(app, &current_pos, &app->mouse_click, app->divider);
 	ft_printf("x=%f, y=%f\n",app->mouse_click.x, app->mouse_click.y);
 	return (0);
 }
