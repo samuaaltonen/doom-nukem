@@ -6,39 +6,28 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/11 12:40:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/11 17:15:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * Reduces calculated distance based on angle to remove fisheye effect.
-*/
-static double	distortion_correction(t_app *app, t_vector2 ray, double distance)
-{
-	return (distance * cos(ft_vector_angle(ray, app->player.dir)));
-}
-
-/**
- * Translates given position to screenspace. Calculated distance and offsets.
+ * Draws vertical line.
  */
-t_point_matrix	translate_to_screen_space(t_app *app, t_vector2	coord)
+static void	draw_vertical(t_app *app, int sector_id, int wall_id,
+	t_point_matrix screen)
 {
-	t_vector2	ray;
-	double		distance;
+	int		start;
 
-	ray = (t_vector2){coord.x - app->player.pos.x, coord.y - app->player.pos.y};
-	distance = distortion_correction(app, ray, ft_vector_length(ray));
-	/* ft_printf("Distance to coord %f %f is %f. Ray angle %f (%f deg), Distortion corrected distance %f\n",
-		coord.x, coord.y, ft_vector_length(ray), 
-		ft_vector_angle(app->player.dir, ray),
-		ft_vector_angle(app->player.dir, ray) * RADIAN_IN_DEG,
-		distance); */
-	return ((t_point_matrix){
-		(t_point){0, 0},
-		(t_point){0, 0}
-	});
+	(void)sector_id;
+	(void)wall_id;
+	start = screen.a.y;
+	while (start < screen.b.y)
+	{
+		put_pixel_to_surface(app->surface, screen.a.x, start, 0xFFFFFF);
+		start++;
+	}
 }
 
 /**
@@ -52,12 +41,18 @@ void	sector_wall_draw(t_app *app, int sector_id, int wall_id)
 	t_point_matrix	second_corner;
 
 	wall_vertex = get_sector_vertex_by_corner(app, sector_id, wall_id);
-	first_corner = translate_to_screen_space(app, wall_vertex.a);
-	second_corner = translate_to_screen_space(app, wall_vertex.b);
+	first_corner = translate_to_screen_space(app, sector_id, wall_vertex.a);
+	second_corner = translate_to_screen_space(app, sector_id, wall_vertex.b);
+	/* ft_printf("Wall %d of sector %d screen pixels are (%4d %4d to %4d %4d) and (%4d %4d to %4d %4d)\n",
+		wall_id, sector_id,
+		first_corner.a.x, first_corner.a.y, first_corner.b.x, first_corner.b.y,
+		second_corner.a.x, second_corner.a.y, second_corner.b.x, second_corner.b.y); */
 	// IF wall type normal wall:
 	// Draw ceiling above wall
 	// Draw floor below wall
 	// Draw wall
+	draw_vertical(app, sector_id, wall_id, first_corner);
+	draw_vertical(app, sector_id, wall_id, second_corner);
 
 	// IF portal / member
 	// Draw ceiling

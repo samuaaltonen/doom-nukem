@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/11 12:39:18 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/11 16:49:10 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -347,14 +347,18 @@ void		polygon_draw_floors(t_app *app, t_polygon *polygon);
 double		get_radial_direction(t_vector2 *vector);
 void		clamp_distance(double *distance);
 int			get_pixel_color(SDL_Surface *surface, int x, int y);
+double		distortion_correction(double angle, double distance);
 
 /**
  * Sectors
  */
-void		render_sectors(t_app *app);
-void		sector_walls_possible_visible(t_app *app);
-t_vertex2	get_sector_vertex_by_corner(t_app *app, int sector_id, int wall_id);
-void		sector_wall_draw(t_app *app, int sector_id, int wall_id);
+void			render_sectors(t_app *app);
+void			sector_walls_possible_visible(t_app *app);
+t_vertex2		get_sector_vertex_by_corner(t_app *app, int sector_id,
+					int wall_id);
+t_point_matrix	translate_to_screen_space(t_app *app, int sector_id,
+					t_vector2 coord);
+void			sector_wall_draw(t_app *app, int sector_id, int wall_id);
 
 /**
  * Editor
