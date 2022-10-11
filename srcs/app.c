@@ -67,6 +67,7 @@ void	app_prepare(t_app *app)
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
 		(t_vector2){0.f, 0.f}, 1.0f, 0.5f, 0};
 	init_camera_plane(app);
+	load_font(app);
 }
 
 /**
@@ -92,6 +93,12 @@ void	app_render(t_app *app)
 	text_surface = TTF_RenderText_Solid(app->font, app->conf->fps_info, (SDL_Color){255, 255, 255, 0});
 	SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
 	SDL_FreeSurface(text_surface);
+	//----
+	t_point position;
+	position.x = 100;
+	position.y = 100;
+	render_text(app, position, "helloworld!");
+	//----
 	SDL_UpdateWindowSurface(app->win);
 }
 

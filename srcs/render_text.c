@@ -67,8 +67,11 @@ SDL_Rect  get_char(int c)
 
 void    load_font(t_app *app)
 {
-    app->my_font.font = SDL_LoadBMP("font/doom-nukem_font.bmp");
+    app->my_font.font = SDL_LoadBMP("fonts/doom-nukem_font.bmp");
     if (!app->my_font.font)
+    {    
+        printf("SDL_Init failed: %s\n", SDL_GetError());
         exit_error("Could not load font");
+    }
     app->my_font.size = 14;
 }
