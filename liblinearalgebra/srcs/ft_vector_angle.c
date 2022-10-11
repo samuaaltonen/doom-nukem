@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 12:11:15 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/11 12:13:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/12 00:57:40 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,11 @@
  */
 double	ft_vector_angle(t_vector2 a, t_vector2 b)
 {
-	return (acos(ft_vector_dotproduct(a, b)
-			/ (ft_vector_length(a) * ft_vector_length(b))));
+	double	ratio;
+
+	ratio = ft_vector_dotproduct(a, b)
+			/ (ft_vector_length(a) * ft_vector_length(b));
+	if (ratio <= -1.0 || ratio >= 1.0)
+		return (0.0);
+	return (acos(ratio));
 }

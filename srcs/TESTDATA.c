@@ -24,15 +24,15 @@ typedef struct s_sector
 t_sector test_sectors[] = {
 	// Big square sector
     {
-		{(t_vector2){-16.0, -16.0}, (t_vector2){-16.0, 16.0}, (t_vector2){16.0, 16.0}, (t_vector2){16.0, -16.0}},
+		{(t_vector2){-6.0, -6.0}, (t_vector2){-6.0, 6.0}, (t_vector2){6.0, 6.0}, (t_vector2){6.0, -6.0}},
 		{-1, -1, -1, -1},
 		{MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK},
 		//{1, 2, 3, -1},
-		{1},
+		{-1},
 		-1,
 		4,
 		0.0,
-		40.0,
+		2.0,
 		MINECRAFT_DIRT_PODZOL_TOP,
 		MINECRAFT_REDSTONE_LAMP,
 		(t_vector3){0.0, 0.0, 0.0},

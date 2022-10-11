@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 20:57:37 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/04 12:22:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/11 22:00:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static void	draw_vertical_line(t_app *app, t_polygon *polygon, int x, double dis
 /**
  * Reduces calculated distance based on angle to remove fisheye effect.
 */
-static void	distortion_correction(double camera_x, double camera_length, 
+static void	distortion_correction_poly(double camera_x, double camera_length, 
 	double *distance)
 {
 	double	ray_angle;
@@ -118,7 +118,7 @@ void    polygon_vertex_raycast(t_app *app, t_polygon *polygon, int corner_a, int
 			wall_vertex.a.x - intersection.x,
 			wall_vertex.a.y - intersection.y,
 		});
-		distortion_correction(camera_x, app->player.camera_length, &distance);
+		distortion_correction_poly(camera_x, app->player.camera_length, &distance);
 		draw_vertical_line(app, polygon, x, distance, texture_offset);
 	}
 }

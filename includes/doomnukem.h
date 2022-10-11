@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/11 16:49:10 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/12 01:01:24 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,22 @@ typedef struct s_sector
 }	t_sector;
 
 /**
+ * Rayhit struct.
+*/
+typedef struct s_rayhit
+{
+	t_sector	*sector;
+	t_vector2	position;
+	double		distance;
+	t_vector2	texture_offset;
+	t_vector2	texture_step;
+	int			height;
+	int			wall_start;
+	int			wall_end;
+}	t_rayhit;
+
+
+/**
  * Wall struct. Contains information of what sector it belongs to and which wall
  * of that sector it is.
  */
@@ -356,8 +372,7 @@ void			render_sectors(t_app *app);
 void			sector_walls_possible_visible(t_app *app);
 t_vertex2		get_sector_vertex_by_corner(t_app *app, int sector_id,
 					int wall_id);
-t_point_matrix	translate_to_screen_space(t_app *app, int sector_id,
-					t_vector2 coord);
+int				translate_window_x(t_app *app, t_vector2 coord);
 void			sector_wall_draw(t_app *app, int sector_id, int wall_id);
 
 /**
@@ -374,4 +389,3 @@ extern t_polygon test_polygons[];
 extern int test_polygon_count;
 
 extern t_sector test_sectors[];
-extern int test_sectors_count;

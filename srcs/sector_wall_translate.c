@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:46:07 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/11 16:47:40 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/12 00:21:45 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * Updates screen x position to pixel positions.
  */
-static void	translate_x(t_app *app, double ray_angle, int side,
+/* static void	translate_x(t_app *app, double ray_angle, int side,
 	t_point_matrix *pixels)
 {
 	int		screen_x;
@@ -31,12 +31,12 @@ static void	translate_x(t_app *app, double ray_angle, int side,
 			/ app->player.camera_length / 2;
 	pixels->a.x = screen_x;
 	pixels->b.x = screen_x;
-}
+} */
 
 /**
  * Updates starting and ending pixels depending on distance.
  */
-static void	translate_y(t_app *app, int sector_id, double distance,
+/* static void	translate_y(t_app *app, int sector_id, double distance,
 	t_point_matrix *pixels)
 {
 	double	relative_height;
@@ -52,22 +52,14 @@ static void	translate_y(t_app *app, int sector_id, double distance,
 			* (app->player.height
 				- test_sectors[sector_id].floor_height));
 	end_pixel = start_pixel + height;
-	if (start_pixel <= 0)
-		start_pixel = 0;
-	if (start_pixel >= WIN_H)
-		start_pixel = WIN_H - 1;
-	if (end_pixel <= 0)
-		end_pixel = 0;
-	if (end_pixel >= WIN_H)
-		end_pixel = WIN_H - 1;
 	pixels->a.y = start_pixel;
 	pixels->b.y = end_pixel;
-}
+} */
 
 /**
  * Translates given position to screenspace. Calculated distance and offsets.
  */
-t_point_matrix	translate_to_screen_space(t_app *app, int sector_id,
+/* t_point_matrix	translate_to_screen_space(t_app *app, int sector_id,
 	t_vector2 coord)
 {
 	t_point_matrix	pixels;
@@ -85,4 +77,30 @@ t_point_matrix	translate_to_screen_space(t_app *app, int sector_id,
 	translate_x(app, ray_angle, side, &pixels);
 	translate_y(app, sector_id, distance, &pixels);
 	return (pixels);
+} */
+
+/**
+ * Translates world coordinate position to camera space and converts it to
+ * window x position.
+*/
+int	translate_window_x(t_app *app, t_vector2 coord)
+{
+	int			x;
+	t_vector2	ray;
+	double		angle;
+
+	ray = (t_vector2){coord.x - app->player.pos.x, coord.y - app->player.pos.y};
+	angle = ft_vector_angle(ray, app->player.dir);
+	// If left side, mark angle as negative
+	if (ft_vertex_side((t_vertex2){app->player.pos,
+			(t_vector2){app->player.pos.x + app->player.dir.x,
+			app->player.pos.y + app->player.dir.y}}, coord))
+		angle *= -1.0;
+	if (angle < -M_2_PI)
+		x = 0;
+	else if (angle > M_2_PI)
+		x = WIN_W - 1;
+	else
+		x = WIN_W / 2 + WIN_W * tan(angle) / app->player.camera_length / 2;
+	return (x);
 }
