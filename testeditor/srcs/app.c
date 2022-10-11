@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/11 16:12:51 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/11 16:27:51 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ void	app_prepare(t_app *app)
 	app->view_pos = (t_vector2){-50.0,-50.0};
 	app->zoom_area = (t_vector2){100.0,aspect_ratio};
 	app->divider = 1.0f;
+	app->zoom_range = 5;
 	SDL_ShowCursor(SDL_ENABLE);
 	//SDL_WarpMouseInWindow(app->win, WIN_W / 2, WIN_H / 2);
 }
@@ -65,7 +66,8 @@ void	app_render(t_app *app)
 	handle_movement(app);
 	render_grid(app, 0.5f, 0x424242);
 	render_grid(app, 1.0f, 0x888888);
-	t_vec2list c = {(t_vector2){0,0}, 0, 0, NULL};
+	zoom_slider(app);
+	t_vec2list c = {(t_vector2){10.0,10.0}, 0, 0, NULL};
 	//linedrawing(app, &a, &b);
 	//render_sector(app, &a);
 	render_sectors(app);
