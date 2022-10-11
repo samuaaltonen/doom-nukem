@@ -248,6 +248,15 @@ typedef struct s_editor
 }	t_editor;
 
 /**
+ * Struct for font.
+ */
+typedef struct s_font
+{
+	SDL_Surface *font;
+	int         font_size;
+}	t_font;
+
+/**
  * Struct for the application.
  */
 typedef struct s_app
@@ -256,6 +265,7 @@ typedef struct s_app
 	SDL_Window		*win;
 	SDL_Surface		*surface;
 	TTF_Font		*font;
+	t_app			my_font;
 	double			depthmap[WIN_H][WIN_W];
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];
