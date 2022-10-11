@@ -3,43 +3,63 @@
 /*                                                        :::      ::::::::   */
 /*   editor.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/11 11:37:55 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/11 14:10:18 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
-void	render_grid(t_app *app)
+static void render_row(t_app *app, int y, int color)
+{
+	int	x;
+
+	x = -1;
+	
+	while (++x < app->surface->w)
+		put_pixel_to_surface(app->surface, x, y, color);
+} 
+static void render_col(t_app *app, int x, int color)
+{
+	int	y;
+
+	y = -1;
+	while (++y < app->surface->h)
+		put_pixel_to_surface(app->surface, x, y, color);
+}
+
+void	render_grid(t_app *app, double divider, int color)
 {
 	int			x;
 	int			y;
 	t_vector2	screen;
-	t_vector2	value;
-
+	//t_vector2	value;
+	t_vector2	prev;
 	y = 0;
+	x = 0;
+	prev = (t_vector2){0.0f,0.0f};
 	while (y < app->surface->h)
-	{
-		x = 0;
-		while (x < app->surface->w)
-		{
-			screen.x = app->view_pos.x + (x / (double)app->surface->w) * app->zoom_area.x;
-			screen.y = app->view_pos.y + (y / (double)app->surface->h) * app->zoom_area.y;
-			value = (t_vector2){fabs(fmod(screen.x, 1)),fabs(fmod(screen.y, 1))};
-			if(value.x > 0.999 || value.y > 0.999 || value.x < 0.001 || value.y < 0.001)
-				put_pixel_to_surface(app->surface, x, y, 0x888888);
-			screen.x /= 2;
-			screen.y /= 2;
-			value = (t_vector2){fabs(fmod(screen.x, 1)),fabs(fmod(screen.y, 1))};
-			if((value.x > 0.999 || value.y > 0.999 || value.x < 0.001 || value.y < 0.001) && app->zoom_area.x < 400)
-				put_pixel_to_surface(app->surface, x, y, 0x424242);
-			x++;
-		}
+ 	{
+		screen.x = app->view_pos.x + (x / (double)app->surface->w) * app->zoom_area.x;
+		screen.y = app->view_pos.y + (y / (double)app->surface->h) * app->zoom_area.y;
+		if(fmod(screen.y, divider) < prev.y)
+			render_row(app, y, color);
+		prev.y = fmod(screen.y, divider);
 		y++;
 	}
-			//-50 + ( 0  / 1000) * 100
+	while (x < app->surface->w)
+	{
+		screen.x = app->view_pos.x + (x / (double)app->surface->w) * app->zoom_area.x;
+		screen.y = app->view_pos.y + (y / (double)app->surface->h) * app->zoom_area.y;
+		if(fmod(screen.x, divider) < prev.x)
+			render_col(app, x, color);
+		prev.x = fmod(screen.x, divider);
+
+		x++;
+	}
+		//-50 + ( 0  / 1000) * 100
 }
 
 //current real time nearest point to cursor

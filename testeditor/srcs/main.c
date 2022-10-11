@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:40:17 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/07 14:41:08 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/11 12:53:30 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,9 +35,26 @@ void	exit_error(char *message)
 	exit(EXIT_FAILURE);
 }
 
+int	add_sector_lst(t_app *app, t_sectorlist* new)
+{
+	t_sectorlist *iter;
+
+	if(new)
+	{
+		
+	}
+	iter = *app->sectors;
+	return (0);
+}
+
 int main(void)
 {
 	t_app	*app;
+	t_sectorlist **sectors;
+
+	sectors = ft_memalloc(sizeof(t_sectorlist *));
+	if(!sectors)
+		return (0);
 
 	if (!app_init(&app))
 		exit_error(NULL);
