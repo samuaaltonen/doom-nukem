@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:52 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/10 14:52:13 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/11 11:38:32 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,15 +75,14 @@ int	events_mouse_track(t_app *app)
  */
 int events_mouse_wheel(t_app *app, SDL_Event *event)
 {
-	if(event->wheel.y > 0)
+	if(event->wheel.y > 0 && app->zoom_area.x < 800)
 	{
 		app->zoom_area.x *= 2;
 		app->zoom_area.y *= 2;
 		app->view_pos.x *= 2;
 		app->view_pos.y *= 2;
-
 	}	
-	else if(event->wheel.y < 0)
+	else if(event->wheel.y < 0 && app->zoom_area.x > 25)
 	{
 		app->zoom_area.x /= 2;
 		app->zoom_area.y /= 2;

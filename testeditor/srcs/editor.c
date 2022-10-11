@@ -6,31 +6,35 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/10 14:09:23 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/11 11:37:55 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
-void render_grid(t_app *app)
+void	render_grid(t_app *app)
 {
-	int x;
-	int y;
-	x = 0;
+	int			x;
+	int			y;
+	t_vector2	screen;
+	t_vector2	value;
+
 	y = 0;
-
-	t_vector2 screen = (t_vector2){0.0,0.0};
-
 	while (y < app->surface->h)
 	{
 		x = 0;
-		while(x < app->surface->w)
+		while (x < app->surface->w)
 		{
 			screen.x = app->view_pos.x + (x / (double)app->surface->w) * app->zoom_area.x;
 			screen.y = app->view_pos.y + (y / (double)app->surface->h) * app->zoom_area.y;
-			t_vector2 value = (t_vector2){fabs(fmod(screen.x, 1)),fabs(fmod(screen.y, 1))};
-			if(value.x > 0.95 || value.y > 0.95 || value.x < 0.05 || value.y < 0.05)
-				put_pixel_to_surface(app->surface, x, y, 0x252525);
+			value = (t_vector2){fabs(fmod(screen.x, 1)),fabs(fmod(screen.y, 1))};
+			if(value.x > 0.999 || value.y > 0.999 || value.x < 0.001 || value.y < 0.001)
+				put_pixel_to_surface(app->surface, x, y, 0x888888);
+			screen.x /= 2;
+			screen.y /= 2;
+			value = (t_vector2){fabs(fmod(screen.x, 1)),fabs(fmod(screen.y, 1))};
+			if((value.x > 0.999 || value.y > 0.999 || value.x < 0.001 || value.y < 0.001) && app->zoom_area.x < 400)
+				put_pixel_to_surface(app->surface, x, y, 0x424242);
 			x++;
 		}
 		y++;
