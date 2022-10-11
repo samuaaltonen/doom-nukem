@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/10 12:15:57 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/11 14:16:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,9 @@ void	app_loop(t_app *app)
 {
 	SDL_Event	event;
 
-	render_sectors(app);
 	while (TRUE)
 	{
+	render_sectors(app);
 		while (SDL_PollEvent(&event))
 			dispatch_event(app, &event);
 		app_render(app);

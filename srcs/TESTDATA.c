@@ -9,6 +9,7 @@ typedef struct s_sector
 	int				wall_types[MAX_SECTOR_CORNERS];
 	int				wall_textures[MAX_SECTOR_CORNERS];
 	int				member_sectors[MAX_MEMBER_SECTORS];
+	int				parent_sector;
 	int				corner_count;
 	double			floor_height;
 	double			ceiling_height;
@@ -27,6 +28,7 @@ t_sector test_sectors[] = {
 		{-1, -1, -1, -1},
 		{MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK},
 		{1, 2, 3, -1},
+		-1,
 		4,
 		0.0,
 		4.0,
@@ -43,6 +45,7 @@ t_sector test_sectors[] = {
 		{-1, -1, -1, -1},
 		{MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK},
 		{-1},
+		0,
 		4,
 		0.0,
 		4.0,
@@ -59,6 +62,7 @@ t_sector test_sectors[] = {
 		{-1, -1, -1, -1},
 		{MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK},
 		{-1},
+		0,
 		4,
 		0.0,
 		1.0,
@@ -75,6 +79,7 @@ t_sector test_sectors[] = {
 		{-1, -1, -1, -1},
 		{MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK},
 		{-1},
+		0,
 		4,
 		0.0,
 		1.0,

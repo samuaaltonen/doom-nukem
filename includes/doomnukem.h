@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/07 17:08:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/11 12:39:18 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
 # define COLLISION_OFFSET 0.25f
-# define DIRECTION_START_X 1.f
-# define DIRECTION_START_Y 0.f
+# define DIRECTION_START_X 0.f
+# define DIRECTION_START_Y 1.f
 # define POSITION_START_X 0.f
 # define POSITION_START_Y 0.f
 # define FOV 66
@@ -144,6 +144,15 @@ typedef struct s_point
 }	t_point;
 
 /**
+ * Matrix that contains 2 t_point columns.
+ */
+typedef	struct s_point_matrix
+{
+	t_point			a;
+	t_point			b;
+}	t_point_matrix;
+
+/**
  * Polygons GOING TO BE REMOVED SOON
 */
 typedef struct s_polygon_hit
@@ -175,6 +184,7 @@ typedef struct s_sector
 	int				wall_types[MAX_SECTOR_CORNERS];
 	int				wall_textures[MAX_SECTOR_CORNERS];
 	int				member_sectors[MAX_MEMBER_SECTORS];
+	int				parent_sector;
 	int				corner_count;
 	double			floor_height;
 	double			ceiling_height;
@@ -344,6 +354,7 @@ int			get_pixel_color(SDL_Surface *surface, int x, int y);
 void		render_sectors(t_app *app);
 void		sector_walls_possible_visible(t_app *app);
 t_vertex2	get_sector_vertex_by_corner(t_app *app, int sector_id, int wall_id);
+void		sector_wall_draw(t_app *app, int sector_id, int wall_id);
 
 /**
  * Editor

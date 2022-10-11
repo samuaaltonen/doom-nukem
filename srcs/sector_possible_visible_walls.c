@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/10 15:32:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/11 14:23:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,46 +120,36 @@ static void	order_possible_visible_walls(t_app *app)
 
 /**
  * Determines if wall is possibly visible from player view.
- * Takes dot product of player direction vector and wall vector. If dot 
- * product > 0, wall is in front of player.
- *
- * For member sectors need to be opposite (dot product < 0) (outside walls).
- * 
- * If dot product is 0 (player direction and wall direction are parallel,
- * in that case need to check side)
+ * Checks side first. If player position is at left side of a wall, player is
+ * outside of that wall.
+ * After that checks if either wall corners are left side of camera plane vector
+ * (so they can be visible).
  */
 static void	check_possible_visible(t_app *app, int sector_id, int wall_id, t_bool is_member)
 {
-	t_vector2	wall_vector;
-	double		dot_product;
-	t_bool		visible;
+	t_vertex2	camera_vertex;
+	t_vertex2	wall_vertex;
+	int			player_side;
 
-	visible = FALSE;
-	if (test_sectors[sector_id].corner_count == wall_id + 1)
-		wall_vector = (t_vector2){
-			test_sectors[sector_id].corners[0].x - test_sectors[sector_id].corners[wall_id].x,
-			test_sectors[sector_id].corners[0].y - test_sectors[sector_id].corners[wall_id].y
-		};
-	else
-		wall_vector = (t_vector2){
-			test_sectors[sector_id].corners[wall_id + 1].x - test_sectors[sector_id].corners[wall_id].x,
-			test_sectors[sector_id].corners[wall_id + 1].y - test_sectors[sector_id].corners[wall_id].y
-		};
-	dot_product = ft_vector_dotproduct(app->player.dir, wall_vector);
-	if ((dot_product > 0.0 && !is_member) || (dot_product < 0.0 && is_member))
-		visible = TRUE;
-	/** Parallel, not member, can be visible (i.e. corridor) */
-	if (dot_product == 0.0 && !is_member)
-		visible = TRUE;
-	/** Parallel, is member, can be visible if at correct side */
-	if (dot_product == 0.0 && is_member
-		&& ft_vertex_side(get_sector_vertex_by_corner(app, sector_id, wall_id), app->player.pos))
-		visible = TRUE;
-	if (visible)
-	{
-		app->possible_visible[app->possible_visible_count] = (t_wall){sector_id, wall_id, is_member};
-		app->possible_visible_count++;
-	}
+	wall_vertex = get_sector_vertex_by_corner(app, sector_id, wall_id);
+	player_side = ft_vertex_side(wall_vertex, app->player.pos);
+	// Not member sector, player need to on right side of all walls (clockwise)
+	if (!is_member && player_side)
+		return ;
+	// Is member, now player need to be on left side of all walls (clockwise)
+	if (is_member && !player_side)
+		return ;
+	camera_vertex = (t_vertex2){
+		app->player.pos,
+		(t_vector2){app->player.pos.x + app->player.cam.x,
+			app->player.pos.y + app->player.cam.y}
+	};
+	// Check if either of wall corners are left side of camera vector
+	if (!ft_vertex_side(camera_vertex, wall_vertex.a)
+		&& !ft_vertex_side(camera_vertex, wall_vertex.b))
+		return ;
+	app->possible_visible[app->possible_visible_count] = (t_wall){sector_id, wall_id, is_member};
+	app->possible_visible_count++;
 }
 
 /**
