@@ -3,25 +3,24 @@
 /*                                                        :::      ::::::::   */
 /*   editor.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/11 14:10:18 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/11 14:49:55 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
-static void render_row(t_app *app, int y, int color)
+static void	render_row(t_app *app, int y, int color)
 {
 	int	x;
 
 	x = -1;
-	
 	while (++x < app->surface->w)
 		put_pixel_to_surface(app->surface, x, y, color);
 } 
-static void render_col(t_app *app, int x, int color)
+static void	render_col(t_app *app, int x, int color)
 {
 	int	y;
 
@@ -35,8 +34,8 @@ void	render_grid(t_app *app, double divider, int color)
 	int			x;
 	int			y;
 	t_vector2	screen;
-	//t_vector2	value;
 	t_vector2	prev;
+
 	y = 0;
 	x = 0;
 	prev = (t_vector2){0.0f,0.0f};
@@ -44,7 +43,7 @@ void	render_grid(t_app *app, double divider, int color)
  	{
 		screen.x = app->view_pos.x + (x / (double)app->surface->w) * app->zoom_area.x;
 		screen.y = app->view_pos.y + (y / (double)app->surface->h) * app->zoom_area.y;
-		if(fmod(screen.y, divider) < prev.y)
+		if(fmod(screen.y, divider) < prev.y || screen.y == 0.0f)
 			render_row(app, y, color);
 		prev.y = fmod(screen.y, divider);
 		y++;
@@ -53,7 +52,7 @@ void	render_grid(t_app *app, double divider, int color)
 	{
 		screen.x = app->view_pos.x + (x / (double)app->surface->w) * app->zoom_area.x;
 		screen.y = app->view_pos.y + (y / (double)app->surface->h) * app->zoom_area.y;
-		if(fmod(screen.x, divider) < prev.x)
+		if(fmod(screen.x, divider) < prev.x || screen.x == 0.0f)
 			render_col(app, x, color);
 		prev.x = fmod(screen.x, divider);
 
