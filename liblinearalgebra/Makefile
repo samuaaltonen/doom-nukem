@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 10:36:08 by saaltone          #+#    #+#              #
-#    Updated: 2022/10/10 13:39:06 by saaltone         ###   ########.fr        #
+#    Updated: 2022/10/11 12:17:39 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ FLAGS=-Wall -Werror -Wextra -O3
 FILES=ft_vector_length.c ft_vector_multiply_matrix.c ft_vector_perpendicular.c \
 	ft_vector_resize.c ft_matrix_inverse.c ft_vertex_intersection.c \
 	ft_vector_dotproduct.c ft_vector_crossproduct.c ft_vertex_resize.c \
-	ft_vertex_side.c
+	ft_vertex_side.c ft_vector_angle.c
 
 SRC_DIR = ./srcs
 SRCS := $(patsubst %, $(SRC_DIR)/%, $(FILES))

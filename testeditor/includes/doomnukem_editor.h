@@ -134,20 +134,61 @@ typedef struct s_polygon
 	t_polygon_hit	*hits;
 }	t_polygon;
 
+
+typedef struct	s_vec2list
+{
+	t_vector2			point;
+	int					wall_type;
+	int					wall_texture;
+	struct s_vec2list	*next;
+} t_vec2list;
+
+/**
+ * int					id;
+ *	int					corner_count;
+ *	struct s_sectorlist	**member_sectors;
+ *	double				floor_height;
+ *	double				ceiling_height;
+ *	int					floor_texture;
+ *	int					ceiling_texture;
+ *	s_vec2list			*floor_slope_wall;
+ *	s_vec2list			*floor_slope_opposite;
+ *	s_vec2list			*ceiling_slope_wall;
+ *	s_vec2list			*ceiling_slope_opposite;
+ *	struct s_sectorlist	*next;
+ * 
+ */
+typedef struct	s_sectorlist
+{
+	int					id;
+	int					corner_count;
+	struct s_sectorlist	**member_sectors;
+	double				floor_height;
+	double				ceiling_height;
+	int					floor_texture;
+	int					ceiling_texture;
+	t_vec2list			*floor_slope_wall;
+	t_vec2list			*floor_slope_opposite;
+	t_vec2list			*ceiling_slope_wall;
+	t_vec2list			*ceiling_slope_opposite;
+	struct s_sectorlist	*next;
+} t_sectorlist;
+
 /**
  * Struct for the application.
  */
 typedef struct s_app
 {
-	int				keystates;
-	int				toggle_help;
-	SDL_Window		*win;
-	SDL_Surface		*surface;
-	TTF_Font		*font;
-	SDL_Surface		*sprite;
-	t_vector2		view_pos;
-	t_vector2		zoom_area;
-	t_vector2		mouse_click;
+	int					keystates;
+	int					toggle_help;
+	SDL_Window			*win;
+	SDL_Surface			*surface;
+	TTF_Font			*font;
+	SDL_Surface			*sprite;
+	t_vector2			view_pos;
+	t_vector2			zoom_area;
+	t_vector2			mouse_click;
+	t_sectorlist		**sectors;
 }	t_app;
 
 /**
@@ -228,7 +269,7 @@ typedef struct s_sector
  * Map Editor functions
  * 
  */
-typedef struct s_line
+typedef struct	s_line
 {
 	t_point	dif;
 	t_point	pos;
@@ -237,12 +278,6 @@ typedef struct s_line
 	double	ccur;
 }	t_line;
 
-typedef struct s_vec2list
-{
-	t_vector2 point;
-	struct s_vec2list *next;
-} t_vec2list;
-
 t_bool complete_sector(t_app *app);
 t_bool valid_point(t_app *app);
 t_vector2 *nearest_point_cursor(t_app *app);
@@ -250,7 +285,7 @@ int	del_vector_list(t_vec2list **list);
 int add_to_vector_list(t_vec2list **list, t_vec2list *new);
 t_vec2list *new_vector_list(t_app *app);
 void	handle_movement(t_app *app);
-void render_grid(t_app *app);
+void	render_grid(t_app *app, double divider, int color);
 void	draw_list_lines(t_app *app, t_vec2list *a, t_vec2list *b);
 void	render_sector(t_app *app, t_vec2list *sector_start);
 void	draw_line(t_app *app, t_vector2 *a, t_vector2 *b);

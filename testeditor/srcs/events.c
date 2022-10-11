@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:52 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/11 11:38:32 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/11 13:05:32 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int	events_mouse_track(t_app *app)
 	
 	SDL_GetMouseState(&current_pos.x, &current_pos.y);
 	snap_to_nearest(app, &current_pos, &app->mouse_click);
+	ft_printf("x=%f, y=%f\n",app->mouse_click.x, app->mouse_click.y);
 	return (0);
 }
 

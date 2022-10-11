@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/26 00:28:18 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/11 14:11:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	player_rotate(t_app *app, double angle)
 	t_matrix2	rotation;
 
 	rotation = (t_matrix2){
-		(t_vector2){cos(angle), sin(angle)},
-		(t_vector2){-sin(angle), cos(angle)}
+		(t_vector2){cos(angle), -sin(angle)},
+		(t_vector2){sin(angle), cos(angle)}
 	};
 	app->player.dir = ft_vector_multiply_matrix(app->player.dir, rotation);
 	app->player.cam = ft_vector_multiply_matrix(app->player.cam, rotation);
