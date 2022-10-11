@@ -167,6 +167,7 @@ typedef struct	s_sectorlist
 	double				ceiling_height;
 	int					floor_texture;
 	int					ceiling_texture;
+	t_vec2list			*wall_list;
 	t_vec2list			*floor_slope_wall;
 	t_vec2list			*floor_slope_opposite;
 	t_vec2list			*ceiling_slope_wall;
@@ -185,6 +186,7 @@ typedef struct s_app
 	SDL_Surface			*surface;
 	TTF_Font			*font;
 	SDL_Surface			*sprite;
+	double				divider;
 	t_vector2			view_pos;
 	t_vector2			zoom_area;
 	t_vector2			mouse_click;

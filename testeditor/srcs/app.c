@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/11 14:26:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/11 15:12:28 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	app_prepare(t_app *app)
 	aspect_ratio = ((double)app->surface->h / (double)app->surface->w) * 100;
 	app->view_pos = (t_vector2){-50.0,-50.0};
 	app->zoom_area = (t_vector2){100.0,aspect_ratio};
+	app->divider = 1.0f;
 	SDL_ShowCursor(SDL_ENABLE);
 	//SDL_WarpMouseInWindow(app->win, WIN_W / 2, WIN_H / 2);
 }
