@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/11 15:12:28 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/11 16:12:51 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,10 @@ void	app_render(t_app *app)
 	handle_movement(app);
 	render_grid(app, 0.5f, 0x424242);
 	render_grid(app, 1.0f, 0x888888);
-	t_vec2list c = {(t_vector2){10.0,10.0}, 0, 0, NULL};
-	t_vec2list b = {(t_vector2){20.0,0.0}, 0, 0, &c};
-	t_vec2list a = {(t_vector2){0.0,0.0}, 0, 0, &b};
-	c.next = &a;
+	t_vec2list c = {(t_vector2){0,0}, 0, 0, NULL};
 	//linedrawing(app, &a, &b);
-	render_sector(app, &a);
+	//render_sector(app, &a);
+	render_sectors(app);
 	draw_line(app, &c.point, &app->mouse_click);
 	SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
 	SDL_FreeSurface(text_surface);

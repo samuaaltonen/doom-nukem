@@ -190,7 +190,7 @@ typedef struct s_app
 	t_vector2			view_pos;
 	t_vector2			zoom_area;
 	t_vector2			mouse_click;
-	t_sectorlist		**sectors;
+	t_sectorlist		*sectors;
 }	t_app;
 
 /**
@@ -289,7 +289,7 @@ t_vec2list *new_vector_list(t_app *app);
 void	handle_movement(t_app *app);
 void	render_grid(t_app *app, double divider, int color);
 void	draw_list_lines(t_app *app, t_vec2list *a, t_vec2list *b);
-void	render_sector(t_app *app, t_vec2list *sector_start);
+void	render_sectors(t_app *app);
 void	draw_line(t_app *app, t_vector2 *a, t_vector2 *b);
 
 
