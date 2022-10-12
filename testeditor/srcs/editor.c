@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editor.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/11 16:22:07 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/12 13:02:31 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,55 +34,6 @@ void	zoom_slider(t_app *app)
 		y++;
 	}
 	
-}
-
-static void	render_row(t_app *app, int y, int color)
-{
-	int	x;
-
-	x = -1;
-	while (++x < app->surface->w)
-		put_pixel_to_surface(app->surface, x, y, color);
-} 
-static void	render_col(t_app *app, int x, int color)
-{
-	int	y;
-
-	y = -1;
-	while (++y < app->surface->h)
-		put_pixel_to_surface(app->surface, x, y, color);
-}
-
-void	render_grid(t_app *app, double divider, int color)
-{
-	int			x;
-	int			y;
-	t_vector2	screen;
-	t_vector2	prev;
-
-	y = 0;
-	x = 0;
-	prev = (t_vector2){0.0f,0.0f};
-	while (y < app->surface->h)
- 	{
-		screen.x = app->view_pos.x + (x / (double)app->surface->w) * app->zoom_area.x;
-		screen.y = app->view_pos.y + (y / (double)app->surface->h) * app->zoom_area.y;
-		if(fmod(screen.y, divider) < prev.y || screen.y == 0.0f)
-			render_row(app, y, color);
-		prev.y = fmod(screen.y, divider);
-		y++;
-	}
-	while (x < app->surface->w)
-	{
-		screen.x = app->view_pos.x + (x / (double)app->surface->w) * app->zoom_area.x;
-		screen.y = app->view_pos.y + (y / (double)app->surface->h) * app->zoom_area.y;
-		if(fmod(screen.x, divider) < prev.x || screen.x == 0.0f)
-			render_col(app, x, color);
-		prev.x = fmod(screen.x, divider);
-
-		x++;
-	}
-		//-50 + ( 0  / 1000) * 100
 }
 
 //current real time nearest point to cursor

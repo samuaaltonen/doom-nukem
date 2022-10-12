@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/11 16:27:51 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/12 13:48:16 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	app_prepare(t_app *app)
 	aspect_ratio = ((double)app->surface->h / (double)app->surface->w) * 100;
 	app->view_pos = (t_vector2){-50.0,-50.0};
 	app->zoom_area = (t_vector2){100.0,aspect_ratio};
+	app->view_size = (t_vector2){app->view_pos.x + app->zoom_area.x, app->view_pos.y + app->zoom_area.y};
 	app->divider = 1.0f;
 	app->zoom_range = 5;
 	SDL_ShowCursor(SDL_ENABLE);
@@ -59,11 +60,14 @@ void	app_prepare(t_app *app)
  */
 void	app_render(t_app *app)
 {
+	
 	flush_surface(app->surface);
 	/* SDL_Surface	*converted_surface; */
 	SDL_Surface *text_surface;
 	text_surface = TTF_RenderText_Solid(app->font, "app->conf->fps_info", (SDL_Color){255, 255, 255, 0});
 	handle_movement(app);
+	app->view_size.x = app->view_pos.x + app->zoom_area.x;
+	app->view_size.y = app->view_pos.y + app->zoom_area.y;
 	render_grid(app, 0.5f, 0x424242);
 	render_grid(app, 1.0f, 0x888888);
 	zoom_slider(app);
@@ -71,6 +75,7 @@ void	app_render(t_app *app)
 	//linedrawing(app, &a, &b);
 	//render_sector(app, &a);
 	render_sectors(app);
+	
 	draw_line(app, &c.point, &app->mouse_click);
 	SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
 	SDL_FreeSurface(text_surface);
