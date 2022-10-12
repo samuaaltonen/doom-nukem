@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/12 12:43:19 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/12 23:19:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,9 +99,9 @@ void	app_render(t_app *app)
 	//SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
 	//SDL_FreeSurface(text_surface);
 	//----
-	t_point position;
+	/* t_point position;
 	position.x = 100;
-	position.y = 100;
+	position.y = 100; */
 	//render_text(app, position, "aADEFGhijklmnopqrstuvwxyz0123456789.,:;'\"!?-_()/|\\");
 	render_text(app, (t_point){10, 10}, "fPs");
 	render_text(app, (t_point){10, 10}, app->conf->fps_info);

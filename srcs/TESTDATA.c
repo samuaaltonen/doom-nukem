@@ -32,7 +32,7 @@ t_sector test_sectors[] = {
 		-1,
 		4,
 		0.0,
-		3.0,
+		1.0,
 		MINECRAFT_DIRT_PODZOL_TOP,
 		MINECRAFT_REDSTONE_LAMP,
 		(t_vector3){0.0, 0.0, 0.0},
@@ -61,7 +61,7 @@ t_sector test_sectors[] = {
 	{
 		{(t_vector2){-0.5, 1.5}, (t_vector2){-0.5, 2.0}, (t_vector2){0.5, 2.0}, (t_vector2){0.5, 1.5}},
 		{-1, -1, -1, -1},
-		{MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK},
+		{MINECRAFT_SNOW_SIDE, MINECRAFT_SNOW_SIDE, MINECRAFT_SNOW_SIDE, MINECRAFT_SNOW_SIDE},
 		{-1},
 		0,
 		4,
@@ -78,7 +78,7 @@ t_sector test_sectors[] = {
 	{
 		{(t_vector2){0.25, 1.25}, (t_vector2){0.25, 1.4}, (t_vector2){0.5, 1.4}, (t_vector2){0.5, 1.25}},
 		{-1, -1, -1, -1},
-		{MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK},
+		{MINECRAFT_LOG_BIRCH, MINECRAFT_LOG_BIRCH, MINECRAFT_LOG_BIRCH, MINECRAFT_LOG_BIRCH},
 		{-1},
 		0,
 		4,
@@ -95,7 +95,7 @@ t_sector test_sectors[] = {
 	{
 		{(t_vector2){5.89, 5.9}, (t_vector2){7.15, 5.54}, (t_vector2){7.79, 4.39}, (t_vector2){7.42, 3.12}, (t_vector2){6.27, 2.49}, (t_vector2){5.01, 2.85}, (t_vector2){4.37, 4.01}, (t_vector2){4.74, 5.27}},
 		{-1, -1, -1, -1, -1, -1, -1, -1},
-		{MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK},
+		{MINECRAFT_REDSTONE_LAMP, MINECRAFT_REDSTONE_LAMP, MINECRAFT_REDSTONE_LAMP, MINECRAFT_REDSTONE_LAMP, MINECRAFT_REDSTONE_LAMP, MINECRAFT_REDSTONE_LAMP, MINECRAFT_REDSTONE_LAMP, MINECRAFT_REDSTONE_LAMP},
 		{-1},
 		0,
 		8,

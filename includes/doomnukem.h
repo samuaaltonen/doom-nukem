@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/12 01:01:24 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/12 23:29:00 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,7 @@ typedef struct s_sector
 typedef struct s_rayhit
 {
 	t_sector	*sector;
+	int			texture;
 	t_vector2	position;
 	double		distance;
 	t_vector2	texture_offset;
@@ -290,7 +291,6 @@ typedef struct s_app
 	t_conf			*conf;
 	SDL_Window		*win;
 	SDL_Surface		*surface;
-//	TTF_Font		*font;
 	t_font			font;
 	double			depthmap[WIN_H][WIN_W];
 	int				occlusion_top[WIN_W];
