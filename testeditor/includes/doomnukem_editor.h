@@ -189,6 +189,7 @@ typedef struct s_app
 	SDL_Surface			*sprite;
 	double				divider;
 	t_vector2			view_pos;
+	t_vector2			view_size;
 	t_vector2			zoom_area;
 	t_vector2			mouse_click;
 	t_sectorlist		*sectors;
@@ -293,6 +294,7 @@ void	draw_list_lines(t_app *app, t_vec2list *a, t_vec2list *b);
 void	render_sectors(t_app *app);
 void	draw_line(t_app *app, t_vector2 *a, t_vector2 *b);
 void	zoom_slider(t_app *app);
+void	snap_to_nearest(t_app *app, t_point *mouse_pos, t_vector2 *snap_pos, double divider);
 
 
 #endif

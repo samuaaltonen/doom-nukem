@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:40:17 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/11 16:12:11 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/12 13:23:24 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ int main(void)
 	t_app	*app;
 
 	//testing
-	t_vec2list walls1 = (t_vec2list){(t_vector2){0.0f,10.f},-1, 0, NULL};
+	t_vec2list walls1 = (t_vec2list){(t_vector2){1.0f,10.f},-1, 0, NULL};
 	t_vec2list walls2 = (t_vec2list){(t_vector2){10.0f,0.f},-1, 0, NULL};
-	t_vec2list walls3 = (t_vec2list){(t_vector2){10.0f,10.f},-1, 0, NULL};
+	t_vec2list walls3 = (t_vec2list){(t_vector2){7.0f,7.0f},-1, 0, NULL};
 	t_vec2list walls4 = (t_vec2list){(t_vector2){0.0f,-10.f},-1, 0, NULL};
 	t_vec2list walls5 = (t_vec2list){(t_vector2){-10.0f,0.f},-1, 0, NULL};
 	t_vec2list walls6 = (t_vec2list){(t_vector2){-10.0f,-10.f},-1, 0, NULL};
@@ -99,7 +99,7 @@ int main(void)
 	app_prepare(app);
 	ft_printf("test x%f,y%f\n", walls1.point.x, walls1.point.y);
 	put_sector_lst(app, new_sector_list(&walls1));
-	put_sector_lst(app, new_sector_list(&walls4));
+	//put_sector_lst(app, new_sector_list(&walls4));
 	app_loop(app);
 	return (0);
 }
