@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/11 14:16:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/11 17:08:22 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,13 +83,15 @@ void	app_render(t_app *app)
 	update_fps_counter(app);
 	update_info(app);
 	ft_bzero(app->depthmap, WIN_H * WIN_W * sizeof(double));
-	if (app->conf->toggle_editor)
+	/* if (app->conf->toggle_editor)
 		open_map_editor(app);
 	else
 	{
 		render_multithreading(app, render_skybox);
 		render_multithreading(app, render_polygons);
-	}
+	} */
+	flush_surface(app->surface);
+	render_sectors(app);
 	text_surface = TTF_RenderText_Solid(app->font, app->conf->fps_info, (SDL_Color){255, 255, 255, 0});
 	SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
 	SDL_FreeSurface(text_surface);
@@ -112,7 +114,6 @@ void	app_loop(t_app *app)
 
 	while (TRUE)
 	{
-	render_sectors(app);
 		while (SDL_PollEvent(&event))
 			dispatch_event(app, &event);
 		app_render(app);

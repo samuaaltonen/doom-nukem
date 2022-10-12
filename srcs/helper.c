@@ -6,11 +6,19 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:32:04 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/04 12:19:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/11 16:46:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
+
+/**
+ * Reduces calculated distance based on angle to remove fisheye effect.
+*/
+double	distortion_correction(double angle, double distance)
+{
+	return (distance * cos(angle));
+}
 
 /**
  * Clamps distance to maximum distance.

@@ -6,15 +6,14 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/10 15:08:03 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/11 16:09:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 
-
-void	render_sector(t_app *app, t_vec2list *sector_start)
+static void	render_sector(t_app *app, t_vec2list *sector_start)
 {
 	t_vec2list *tmp;
 
@@ -28,6 +27,18 @@ void	render_sector(t_app *app, t_vec2list *sector_start)
 		draw_list_lines(app, tmp, sector_start);
 }
 
+void	render_sectors(t_app *app)
+{
+	t_sectorlist *tmp;
+
+	tmp = app->sectors;
+	render_sector(app, tmp->wall_list);
+	while(tmp->next)
+	{
+		tmp = tmp->next;
+		render_sector(app, tmp->wall_list);
+	}
+}
 
 static int	check_borders(t_app *app, t_point *a, t_point *b)
 {

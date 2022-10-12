@@ -6,39 +6,79 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/11 12:40:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/12 00:58:11 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
-/**
- * Reduces calculated distance based on angle to remove fisheye effect.
-*/
-static double	distortion_correction(t_app *app, t_vector2 ray, double distance)
+/** SIMPLE WIP
+ * Draws vertical line.
+ */
+static void	draw_vertical(t_app *app, int x, int y_start, int y_end, int color)
 {
-	return (distance * cos(ft_vector_angle(ray, app->player.dir)));
+	while (y_start < y_end)
+	{
+		put_pixel_to_surface(app->surface, x, y_start, color);
+		y_start++;
+	}
 }
 
 /**
- * Translates given position to screenspace. Calculated distance and offsets.
- */
-t_point_matrix	translate_to_screen_space(t_app *app, t_vector2	coord)
+ * Calculates wall starting and ending positions in window y coordinates.
+*/
+static void	calculate_vertical_positions(t_app *app, t_rayhit *hit)
 {
-	t_vector2	ray;
-	double		distance;
+	double	relative_height;
 
-	ray = (t_vector2){coord.x - app->player.pos.x, coord.y - app->player.pos.y};
-	distance = distortion_correction(app, ray, ft_vector_length(ray));
-	/* ft_printf("Distance to coord %f %f is %f. Ray angle %f (%f deg), Distortion corrected distance %f\n",
-		coord.x, coord.y, ft_vector_length(ray), 
-		ft_vector_angle(app->player.dir, ray),
-		ft_vector_angle(app->player.dir, ray) * RADIAN_IN_DEG,
-		distance); */
-	return ((t_point_matrix){
-		(t_point){0, 0},
-		(t_point){0, 0}
-	});
+	relative_height = WIN_H / hit->distance;
+	hit->height = (int)(relative_height
+			* (hit->sector->ceiling_height - hit->sector->floor_height));
+	hit->wall_start = WIN_H / 2 - hit->height + (int)(relative_height
+			* (app->player.height - hit->sector->floor_height));
+	hit->wall_end = hit->wall_start + hit->height;
+	hit->texture_step.y = TEX_SIZE / relative_height;
+	hit->texture_offset.y = 0;
+	if (hit->wall_start < 0)
+	{
+		hit->texture_offset.y = -hit->wall_start * hit->texture_step.y;
+		hit->wall_start = 0;
+	}
+	if (hit->wall_end > WIN_H)
+		hit->wall_end = WIN_H - 1;
+}
+
+/**
+ * Performs raycast from player to wall. Updates values into rayhit struct to be
+ * used later in rendering.
+ * Returns TRUE if there was a hit and FALSE otherwise.
+*/
+static t_bool	wall_raycast(t_app *app, t_vertex2 wall, t_rayhit *hit, int x)
+{
+	t_vertex2	ray_vertex;
+	double		camera_x;
+	double		angle;
+
+	ray_vertex.a = app->player.pos;
+	camera_x = 2 * x / (double) WIN_W - 1.f;
+	ray_vertex.b = ft_vector_resize((t_vector2){
+		app->player.dir.x + app->player.cam.x * camera_x, 
+		app->player.dir.y + app->player.cam.y * camera_x},
+		MAX_VIEW_DISTANCE);
+	angle = ft_vector_angle(ray_vertex.b, app->player.dir);
+	ray_vertex.b.x += app->player.pos.x;
+	ray_vertex.b.y += app->player.pos.y;
+	if (!ft_vertex_intersection(wall, ray_vertex, &hit->position))
+		return (FALSE);
+	hit->distance = ft_vector_length((t_vector2){
+		hit->position.x - app->player.pos.x,
+		hit->position.y - app->player.pos.y});
+	hit->texture_offset.x = ft_vector_length((t_vector2){
+		wall.a.x - hit->position.x,
+		wall.a.y - hit->position.y});
+	hit->distance = distortion_correction(angle, hit->distance);
+	calculate_vertical_positions(app, hit);
+	return (TRUE);
 }
 
 /**
@@ -47,20 +87,45 @@ t_point_matrix	translate_to_screen_space(t_app *app, t_vector2	coord)
  */
 void	sector_wall_draw(t_app *app, int sector_id, int wall_id)
 {
-	t_vertex2		wall_vertex;
-	t_point_matrix	first_corner;
-	t_point_matrix	second_corner;
+	t_rayhit	hit;
+	t_vertex2	vertex;
+	int			start_x;
+	int			end_x;
+	int			temp_x;
 
-	wall_vertex = get_sector_vertex_by_corner(app, sector_id, wall_id);
-	first_corner = translate_to_screen_space(app, wall_vertex.a);
-	second_corner = translate_to_screen_space(app, wall_vertex.b);
-	// IF wall type normal wall:
-	// Draw ceiling above wall
-	// Draw floor below wall
-	// Draw wall
-
-	// IF portal / member
-	// Draw ceiling
-	// Draw floor
-	// If floor higher or ceiling smaller of next sector, draw partial wall
+	hit.sector = &test_sectors[sector_id];
+	vertex = get_sector_vertex_by_corner(app, sector_id, wall_id);
+	start_x = translate_window_x(app, vertex.a);
+	end_x = translate_window_x(app, vertex.b);
+	temp_x = end_x;
+	if (end_x < start_x)
+	{
+		end_x = start_x;
+		start_x = temp_x;
+	}
+	start_x--;
+	if (start_x < -1)
+		start_x = -1;
+	while (++start_x < end_x)
+	{
+		/**
+		 * Perform rayhit. Skips when there is no hit.
+		*/
+		if (!wall_raycast(app, vertex, &hit, start_x))
+			continue ;
+		// IF wall type normal wall:
+		if (hit.sector->wall_types[wall_id] == -1)
+		{
+			// Draw ceiling above wall
+			draw_vertical(app, start_x, 0, hit.wall_start, 0x333333);
+			// Draw floor below wall
+			draw_vertical(app, start_x, hit.wall_end, WIN_H - 1, 0xcccccc);
+			// Draw wall
+			draw_vertical(app, start_x, hit.wall_start, hit.wall_end, 0x992299);
+		}
+		// IF portal / member
+		// Draw ceiling
+		// Draw floor
+		// If floor higher or ceiling smaller of next sector, draw partial wall
+	}
 }

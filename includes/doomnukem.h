@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/11 12:39:18 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/12 01:01:24 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,6 +197,22 @@ typedef struct s_sector
 }	t_sector;
 
 /**
+ * Rayhit struct.
+*/
+typedef struct s_rayhit
+{
+	t_sector	*sector;
+	t_vector2	position;
+	double		distance;
+	t_vector2	texture_offset;
+	t_vector2	texture_step;
+	int			height;
+	int			wall_start;
+	int			wall_end;
+}	t_rayhit;
+
+
+/**
  * Wall struct. Contains information of what sector it belongs to and which wall
  * of that sector it is.
  */
@@ -357,14 +373,17 @@ void		polygon_draw_floors(t_app *app, t_polygon *polygon);
 double		get_radial_direction(t_vector2 *vector);
 void		clamp_distance(double *distance);
 int			get_pixel_color(SDL_Surface *surface, int x, int y);
+double		distortion_correction(double angle, double distance);
 
 /**
  * Sectors
  */
-void		render_sectors(t_app *app);
-void		sector_walls_possible_visible(t_app *app);
-t_vertex2	get_sector_vertex_by_corner(t_app *app, int sector_id, int wall_id);
-void		sector_wall_draw(t_app *app, int sector_id, int wall_id);
+void			render_sectors(t_app *app);
+void			sector_walls_possible_visible(t_app *app);
+t_vertex2		get_sector_vertex_by_corner(t_app *app, int sector_id,
+					int wall_id);
+int				translate_window_x(t_app *app, t_vector2 coord);
+void			sector_wall_draw(t_app *app, int sector_id, int wall_id);
 
 /**
  * Editor
@@ -386,4 +405,3 @@ extern t_polygon test_polygons[];
 extern int test_polygon_count;
 
 extern t_sector test_sectors[];
-extern int test_sectors_count;
