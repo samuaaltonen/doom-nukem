@@ -48,7 +48,7 @@ int	app_init(t_app **app)
  */
 void	app_prepare(t_app *app)
 {
-	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0 || TTF_Init() < 0)
+	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0 /*|| TTF_Init() < 0*/)
 		exit_error(MSG_ERROR_SDL_INIT);
 	app->sprite = init_xpm_image(TEXTURE_PANELS);
 	app->bg = init_xpm_image(TEXTURE_BACKGROUND);
@@ -58,9 +58,9 @@ void	app_prepare(t_app *app)
 	app->surface = SDL_GetWindowSurface(app->win);
 	if (!app->surface)
 		exit_error(MSG_ERROR_WINDOW_SURFACE);
-	app->font = TTF_OpenFont(FONT_FILE, 22);
-	if (!app->font)
-		exit_error(MSG_ERROR_FONT);
+	//app->font = TTF_OpenFont(FONT_FILE, 22);
+	//if (!app->font)
+	//	exit_error(MSG_ERROR_FONT);
 	SDL_ShowCursor(SDL_DISABLE);
 	SDL_WarpMouseInWindow(app->win, WIN_W / 2, WIN_H / 2);
 	app->player = (t_player){(t_vector2){POSITION_START_X, POSITION_START_Y},
@@ -69,7 +69,7 @@ void	app_prepare(t_app *app)
 	init_camera_plane(app);
 	//----
 	load_font(app);
-	color_font(app, 0x5500FF00);
+	color_font(app, 0xFFFFFFFF);
 	//----
 }
 
@@ -80,7 +80,7 @@ void	app_prepare(t_app *app)
 void	app_render(t_app *app)
 {
 	/* SDL_Surface	*converted_surface; */
-	SDL_Surface *text_surface;
+	//SDL_Surface *text_surface;
 
 	handle_movement(app);
 	update_fps_counter(app);
@@ -95,14 +95,16 @@ void	app_render(t_app *app)
 	} */
 	flush_surface(app->surface);
 	render_sectors(app);
-	text_surface = TTF_RenderText_Solid(app->font, app->conf->fps_info, (SDL_Color){255, 255, 255, 0});
-	SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
-	SDL_FreeSurface(text_surface);
+	//text_surface = TTF_RenderText_Solid(app->font, app->conf->fps_info, (SDL_Color){255, 255, 255, 0});
+	//SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
+	//SDL_FreeSurface(text_surface);
 	//----
 	t_point position;
 	position.x = 100;
 	position.y = 100;
-	render_text(app, position, "aADEFGhijklmnopqrstuvwxyz0123456789.,:;'\"!?-_()/|\\");
+	//render_text(app, position, "aADEFGhijklmnopqrstuvwxyz0123456789.,:;'\"!?-_()/|\\");
+	render_text(app, (t_point){10, 10}, "fps");
+	render_text(app, (t_point){10, 10}, app->conf->fps_info);
 	//----
 	SDL_UpdateWindowSurface(app->win);
 }

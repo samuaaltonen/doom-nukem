@@ -17,20 +17,22 @@ static SDL_Rect    get_char(int c);
 
 void    render_text(t_app *app, t_point position, char *text)
 {
-    int len;
-    int i;
+    char    *str;
+    int     len;
+    int     i;
 
+    str = "abcdefghijklmnopqrstuvwxyz0123456789.,:;'\"!?-_()/|\\";
     len = ft_strlen(text);
     i = 0;
     while (text[i] != '\0')
     {
-        if (text[i] == ' ')
+        if (ft_strchr(str, text[i]))
         {
+            render_char(app, position, get_char(text[i]));
             position.x += app->my_font.size - 2;
-            i++;
         }
-        render_char(app, position, get_char(text[i]));
-        position.x += app->my_font.size - 2;
+        else
+            position.x += app->my_font.size - 2;
         i++;
     }
 }
@@ -72,10 +74,7 @@ void    load_font(t_app *app)
 {
     app->my_font.font = SDL_LoadBMP("fonts/doom-nukem_font.bmp");
     if (!app->my_font.font)
-    {    
-        printf("SDL_Init failed: %s\n", SDL_GetError());
         exit_error("Could not load font");
-    }
     app->my_font.size = 14;
 }
 
