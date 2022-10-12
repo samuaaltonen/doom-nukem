@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_ftdiv.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.42.fr>          +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/08 22:01:05 by saaltone          #+#    #+#             */
-/*   Updated: 2022/03/14 15:04:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/12 12:43:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,12 @@ int	ft_ftdiv(long double number, t_superint **n, t_superint **d)
 	t_ldouble_cast	ldouble_cast;
 
 	ldouble_cast.f = number;
+	if (number == 0.L)
+	{
+		*n = ft_superint_new(0, 3);
+		*d = ft_superint_new(0, 3);
+		return (1);
+	}
 	*n = ft_superint_new(((t_ull) 1) << 63, 3);
 	*d = ft_superint_new(1, 3);
 	if (!(*n) || !(*d)
