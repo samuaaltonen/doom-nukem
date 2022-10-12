@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/12 15:42:16 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:57:11 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	app_render(t_app *app)
 	if(app->active)
 		render_sector(app, app->active);
 	if(app->list_ongoing)
-		draw_line(app, &app->active_last->point, &app->mouse_click);
+		draw_line(app, &app->active_last->point, &app->mouse_click, 0xAABBCC);
 	SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
 	SDL_FreeSurface(text_surface);
 	SDL_UpdateWindowSurface(app->win);

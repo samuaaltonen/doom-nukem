@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/12 15:41:56 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/12 17:00:09 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@ void	render_sector(t_app *app, t_vec2list *sector_start)
 	tmp = sector_start;
 	while (tmp->next != sector_start && tmp->next != NULL)
 	{
-		draw_list_lines(app, tmp, tmp->next);
+		draw_list_lines(app, tmp, tmp->next, 0xEEEEEE);
 		tmp = tmp->next;
 	}
 	if(tmp->next == sector_start)
-		draw_list_lines(app, tmp, sector_start);
+		draw_list_lines(app, tmp, sector_start, 0xEEEEEE);
 }
 
 void	render_sectors(t_app *app)

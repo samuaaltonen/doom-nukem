@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:01:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/12 16:15:41 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:55:36 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	line_init(t_point *a, t_point *b, t_line *line)
 	line->d = 1;
 }
 
-static void	linedraw_low(t_app *app, t_point *a, t_point *b)
+static void	linedraw_low(t_app *app, t_point *a, t_point *b, int color)
 {
 	t_line	line;
 
@@ -47,7 +47,7 @@ static void	linedraw_low(t_app *app, t_point *a, t_point *b)
 	line.err = (2 * line.dif.y) - line.dif.x;
 	while (line.pos.x < b->x)
 	{
-		put_pixel_to_surface(app->surface, line.pos.x, line.pos.y, 0xFF0000);
+		put_pixel_to_surface(app->surface, line.pos.x, line.pos.y, color);
 		line.pos.x += 1;
 		if (line.err < 0)
 			line.err += (2 * line.dif.y);
@@ -57,10 +57,10 @@ static void	linedraw_low(t_app *app, t_point *a, t_point *b)
 			line.err += (2 * (line.dif.y - line.dif.x));
 		}
 	}
-	put_pixel_to_surface(app->surface, line.pos.x, line.pos.y, 0xFF0000);
+	put_pixel_to_surface(app->surface, line.pos.x, line.pos.y, color);
 }
 
-static void	linedraw_high(t_app *app, t_point *a, t_point *b)
+static void	linedraw_high(t_app *app, t_point *a, t_point *b, int color)
 {
 	t_line	line;
 
@@ -73,7 +73,7 @@ static void	linedraw_high(t_app *app, t_point *a, t_point *b)
 	line.err = (2 * line.dif.x) - line.dif.y;
 	while (line.pos.y < b->y)
 	{
-		put_pixel_to_surface(app->surface, line.pos.x, line.pos.y, 0x00FF00);
+		put_pixel_to_surface(app->surface, line.pos.x, line.pos.y, color);
 		line.pos.y += 1;
 		if (line.err < 0)
 			line.err += (2 * line.dif.x);
@@ -83,10 +83,10 @@ static void	linedraw_high(t_app *app, t_point *a, t_point *b)
 			line.err += (2 * (line.dif.x - line.dif.y));
 		}
 	}
-	put_pixel_to_surface(app->surface, line.pos.x, line.pos.y, 0x00FF00);
+	put_pixel_to_surface(app->surface, line.pos.x, line.pos.y, color);
 }
 
-void	draw_line(t_app *app, t_vector2 *a, t_vector2 *b)
+void	draw_line(t_app *app, t_vector2 *a, t_vector2 *b, int color)
 {
 	t_point pixel_a;
 	t_point pixel_b;
@@ -102,20 +102,20 @@ void	draw_line(t_app *app, t_vector2 *a, t_vector2 *b)
 	if (abs(pixel_b.y - pixel_a.y) < abs(pixel_b.x - pixel_a.x))
 	{
 		if (pixel_a.x > pixel_b.x)
-			linedraw_low(app, &pixel_b, &pixel_a);
+			linedraw_low(app, &pixel_b, &pixel_a, color);
 		else
-			linedraw_low(app, &pixel_a, &pixel_b);
+			linedraw_low(app, &pixel_a, &pixel_b, color);
 	}
 	else
 	{
 		if (pixel_a.y > pixel_b.y)
-			linedraw_high(app, &pixel_b, &pixel_a);
+			linedraw_high(app, &pixel_b, &pixel_a, color);
 		else
-			linedraw_high(app, &pixel_a, &pixel_b);
+			linedraw_high(app, &pixel_a, &pixel_b, color);
 	}
 }
 
-void	draw_list_lines(t_app *app, t_vec2list *a, t_vec2list *b)
+void	draw_list_lines(t_app *app, t_vec2list *a, t_vec2list *b, int color)
 {
 	t_point pixel_a;
 	t_point pixel_b;
@@ -131,15 +131,15 @@ void	draw_list_lines(t_app *app, t_vec2list *a, t_vec2list *b)
 	if (abs(pixel_b.y - pixel_a.y) < abs(pixel_b.x - pixel_a.x))
 	{
 		if (pixel_a.x > pixel_b.x)
-			linedraw_low(app, &pixel_b, &pixel_a);
+			linedraw_low(app, &pixel_b, &pixel_a, color);
 		else
-			linedraw_low(app, &pixel_a, &pixel_b);
+			linedraw_low(app, &pixel_a, &pixel_b, color);
 	}
 	else
 	{
 		if (pixel_a.y > pixel_b.y)
-			linedraw_high(app, &pixel_b, &pixel_a);
+			linedraw_high(app, &pixel_b, &pixel_a, color);
 		else
-			linedraw_high(app, &pixel_a, &pixel_b);
+			linedraw_high(app, &pixel_a, &pixel_b, color);
 	}
 }

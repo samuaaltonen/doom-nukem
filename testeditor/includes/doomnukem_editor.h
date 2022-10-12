@@ -104,6 +104,13 @@ enum e_keystate {
 	V_BUTTON = 0b1000000000
 };
 
+enum e_colors {
+	PORTAL = 0xFF0000,
+	WALL = 0x999999,
+	CEILING_ROTATE = 0x888888,
+	FLOOR_ROTATE = 0x777777
+};
+
 /**
  * Struct for integer coordinate point.
  */
@@ -296,10 +303,10 @@ int add_to_vector_list(t_vec2list **list, t_vec2list *new);
 t_vec2list *new_vector_list(t_app *app);
 void	handle_movement(t_app *app);
 void	render_grid(t_app *app, double divider, int color);
-void	draw_list_lines(t_app *app, t_vec2list *a, t_vec2list *b);
+void	draw_list_lines(t_app *app, t_vec2list *a, t_vec2list *b, int color);
 void	render_sectors(t_app *app);
 void	render_sector(t_app *app, t_vec2list *sector_start);
-void	draw_line(t_app *app, t_vector2 *a, t_vector2 *b);
+void	draw_line(t_app *app, t_vector2 *a, t_vector2 *b, int color);
 void	zoom_slider(t_app *app);
 void	snap_to_nearest(t_app *app, t_point *mouse_pos, t_vector2 *snap_pos, double divider);
 int		put_sector_lst(t_app *app, t_sectorlist* new);
