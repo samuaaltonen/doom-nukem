@@ -92,14 +92,16 @@ enum e_texture {
  * Keystate enumerations use powers of 2 for bit stacking operations.
  */
 enum e_keystate {
-	FORWARD_DOWN = 1,
-	FORWARD_W_DOWN = 2,
-	BACKWARD_DOWN = 4,
-	BACKWARD_S_DOWN = 8,
-	LEFT_DOWN = 16,
-	RIGHT_DOWN = 32,
-	ROTATE_LEFT_DOWN = 64,
-	ROTATE_RIGHT_DOWN = 128
+	FORWARD_DOWN = 0b1,
+	FORWARD_W_DOWN = 0b10,
+	BACKWARD_DOWN = 0b100,
+	BACKWARD_S_DOWN = 0b1000,
+	LEFT_DOWN = 0b10000,
+	RIGHT_DOWN = 0b100000,
+	ROTATE_LEFT_DOWN = 0b1000000,
+	ROTATE_RIGHT_DOWN = 0b10000000,
+	C_BUTTON = 0b100000000,
+	V_BUTTON = 0b1000000000
 };
 
 /**
@@ -193,6 +195,11 @@ typedef struct s_app
 	t_vector2			zoom_area;
 	t_vector2			mouse_click;
 	t_sectorlist		*sectors;
+	t_sectorlist		*active_sector;
+	t_vec2list			*active;
+	t_vec2list			*active_last;
+	t_bool				list_creation;
+	t_bool				list_ongoing;
 }	t_app;
 
 /**
@@ -279,7 +286,6 @@ typedef struct	s_line
 	t_point	pos;
 	int		d;
 	int		err;
-	double	ccur;
 }	t_line;
 
 t_bool complete_sector(t_app *app);
@@ -292,9 +298,12 @@ void	handle_movement(t_app *app);
 void	render_grid(t_app *app, double divider, int color);
 void	draw_list_lines(t_app *app, t_vec2list *a, t_vec2list *b);
 void	render_sectors(t_app *app);
+void	render_sector(t_app *app, t_vec2list *sector_start);
 void	draw_line(t_app *app, t_vector2 *a, t_vector2 *b);
 void	zoom_slider(t_app *app);
 void	snap_to_nearest(t_app *app, t_point *mouse_pos, t_vector2 *snap_pos, double divider);
+int		put_sector_lst(t_app *app, t_sectorlist* new);
+t_sectorlist	*new_sector_list(t_vec2list *wall_list);
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:01:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/12 13:50:06 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:15:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,18 +86,6 @@ static void	linedraw_high(t_app *app, t_point *a, t_point *b)
 	put_pixel_to_surface(app->surface, line.pos.x, line.pos.y, 0x00FF00);
 }
 
-/* static void line_to_screenspace(t_app *app, t_vec2list *a, t_vec2list *b)
-{
-	t_point pixel_a;
-	t_point pixel_b;
-
-	pixel_a.x =  ((a->point.x + app->view_pos.x) / app->zoom_area.x ) * (double)app->surface->w;
-	pixel_a.y =  ((a->point.y + app->view_pos.y) / app->zoom_area.y ) * (double)app->surface->h;
-
-} */
-
-
-
 void	draw_line(t_app *app, t_vector2 *a, t_vector2 *b)
 {
 	t_point pixel_a;
@@ -108,8 +96,6 @@ void	draw_line(t_app *app, t_vector2 *a, t_vector2 *b)
 
 	pixel_b.x = (b->x - app->view_pos.x) * (app->surface->w) / (app->view_size.x - app->view_pos.x);
 	pixel_b.y = (b->y - app->view_pos.y) * (app->surface->h) / (app->view_size.y - app->view_pos.y);
-
-	printf("pixel x%i, y%i; world x%f, y%f\n", pixel_b.x, pixel_b.y, b->x, b->y);
 
 	if (!check_borders(app, &pixel_a, &pixel_b))
 		return ;
@@ -139,8 +125,6 @@ void	draw_list_lines(t_app *app, t_vec2list *a, t_vec2list *b)
 
 	pixel_b.x = (b->point.x - app->view_pos.x) * (app->surface->w) / (app->view_size.x - app->view_pos.x);
 	pixel_b.y = (b->point.y - app->view_pos.y) * (app->surface->h) / (app->view_size.y - app->view_pos.y);
-
-	//printf("test x%i, y%i\n", pixel_a.x, pixel_a.y);
 
 	if (!check_borders(app, &pixel_a, &pixel_b))
 		return ;

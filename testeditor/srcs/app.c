@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/12 13:48:16 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:42:16 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,13 @@ void	app_render(t_app *app)
 	render_grid(app, 0.5f, 0x424242);
 	render_grid(app, 1.0f, 0x888888);
 	zoom_slider(app);
-	t_vec2list c = {(t_vector2){10.0,10.0}, 0, 0, NULL};
 	//linedrawing(app, &a, &b);
 	//render_sector(app, &a);
 	render_sectors(app);
-	
-	draw_line(app, &c.point, &app->mouse_click);
+	if(app->active)
+		render_sector(app, app->active);
+	if(app->list_ongoing)
+		draw_line(app, &app->active_last->point, &app->mouse_click);
 	SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
 	SDL_FreeSurface(text_surface);
 	SDL_UpdateWindowSurface(app->win);

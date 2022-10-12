@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:52 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/12 13:04:10 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/12 16:15:00 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,72 @@ int	events_mouse_track(t_app *app)
 {
 	t_point	current_pos;
 	
-	SDL_GetMouseState(&current_pos.x, &current_pos.y);
+	SDL_GetMouseState(&current_pos.x, &current_pos.y);		
 	snap_to_nearest(app, &current_pos, &app->mouse_click, app->divider);
-	ft_printf("x=%f, y=%f\n",app->mouse_click.x, app->mouse_click.y);
+	ft_printf("x=%f, y=%f modes:c%i,o%i\n",app->mouse_click.x, app->mouse_click.y, app->list_creation, app->list_ongoing);
+	return (0);
+}
+
+
+/**
+ * loops through all points in all sectors to find matchin coordinates
+ * // future add checking only within active sector
+ */
+t_vec2list	*find_clicked_vector(t_app *app)
+{
+	t_vec2list		*found;
+	t_sectorlist	*sector;
+
+	sector = app->sectors;
+	while(sector)
+	{
+		found = sector->wall_list;
+		while(found)
+		{
+			if(app->mouse_click.x == found->point.x && app->mouse_click.y == found->point.y)
+				return(found);
+			if(found->next == sector->wall_list)
+				break;
+			found = found->next;
+		}
+		sector = sector->next;
+	}
+	return(NULL);
+}
+
+/**
+ * if not in sector creation, select points
+ * else add new points to list or starts a new list
+ */
+int	events_mouse_click(t_app *app, SDL_Event *event)
+{
+	t_vec2list *tmp;
+
+	(void)event;
+	if(!app->list_ongoing && app->list_creation)
+	{
+		app->active = new_vector_list(app);
+		app->active_last = app->active;
+		app->list_ongoing = TRUE;
+	}
+	else if(app->list_ongoing)
+	{
+
+		if(app->mouse_click.x == app->active->point.x && app->mouse_click.y == app->active->point.y)
+		{
+			return (complete_sector(app));
+		}
+		else if(valid_point(app))
+		{
+			tmp = new_vector_list(app);
+			add_to_vector_list(&app->active, tmp);
+			app->active_last = tmp;
+		}
+	}
+	else
+	{
+		app->active = find_clicked_vector(app);
+	}
 	return (0);
 }
 
@@ -109,5 +172,7 @@ int	dispatch_event(t_app *app, SDL_Event *event)
 		return events_mouse_track(app);
 	if (event->type == SDL_MOUSEWHEEL)
 		return events_mouse_wheel(app, event);	
+	if (event->type == SDL_MOUSEBUTTONUP)
+		return events_mouse_click(app, event);
 	return (0);
 }

@@ -6,14 +6,14 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/12 13:02:38 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:41:56 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 
-static void	render_sector(t_app *app, t_vec2list *sector_start)
+void	render_sector(t_app *app, t_vec2list *sector_start)
 {
 	t_vec2list *tmp;
 
@@ -87,4 +87,9 @@ void	render_grid(t_app *app, double divider, int color)
 		x++;
 	}
 		//-50 + ( 0  / 1000) * 100
+}
+
+void	render_selection_point(t_app *app)
+{
+	(void)app;
 }
