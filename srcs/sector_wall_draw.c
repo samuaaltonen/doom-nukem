@@ -6,20 +6,83 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/12 00:58:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:41:06 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
-/** SIMPLE WIP
- * Draws vertical line.
+/**
+ * Draws ceiling.
  */
-static void	draw_vertical(t_app *app, int x, int y_start, int y_end, int color)
+static void	draw_ceiling(t_app *app, int x, int y_start, int y_end)
 {
+	/**
+	 * Check TOP occlusion and only draw not occluded parts.
+	 */
+	if (x < 0 || x >= WIN_W)
+		return ;
+	if (app->occlusion_top[x] > y_start)
+		y_start = app->occlusion_top[x] + 1;
+	app->occlusion_top[x] = y_end;
+	/**
+	 * TODO: TEXTURES
+	 * Draw vertical line
+	 */
 	while (y_start < y_end)
 	{
-		put_pixel_to_surface(app->surface, x, y_start, color);
+		put_pixel_to_surface(app->surface, x, y_start, 0x333333);
+		y_start++;
+	}
+}
+
+/**
+ * Draws floor.
+ */
+static void	draw_floor(t_app *app, int x, int y_start, int y_end)
+{
+	/**
+	 * Check BOTTOM occlusion and only draw not occluded parts.
+	 */
+	if (x < 0 || x >= WIN_W)
+		return ;
+	if (app->occlusion_bottom[x] > WIN_H - y_end)
+		y_end = WIN_H - app->occlusion_bottom[x];
+	app->occlusion_bottom[x] = WIN_H - y_start;
+	/**
+	 * TODO: TEXTURES
+	 * Draw vertical line
+	 */
+	while (y_start < y_end)
+	{
+		put_pixel_to_surface(app->surface, x, y_start, 0xcccccc);
+		y_start++;
+	}
+}
+
+/**
+ * Draws vertical line.
+ */
+static void	draw_wall(t_app *app, int x, int y_start, int y_end)
+{
+	/**
+	 * Check occlusion and only draw not occluded parts.
+	 */
+	if (x < 0 || x >= WIN_W)
+		return ;
+	if (app->occlusion_top[x] > y_start)
+		y_start = app->occlusion_top[x] + 1;
+	if (app->occlusion_bottom[x] > WIN_H - y_end)
+		y_end = WIN_H - app->occlusion_bottom[x];
+	app->occlusion_top[x] = y_end;
+	app->occlusion_bottom[x] = WIN_H - y_start;
+	/**
+	 * TODO: TEXTURES
+	 * Draw vertical line
+	 */
+	while (y_start < y_end)
+	{
+		put_pixel_to_surface(app->surface, x, y_start, 0x992299);
 		y_start++;
 	}
 }
@@ -117,11 +180,11 @@ void	sector_wall_draw(t_app *app, int sector_id, int wall_id)
 		if (hit.sector->wall_types[wall_id] == -1)
 		{
 			// Draw ceiling above wall
-			draw_vertical(app, start_x, 0, hit.wall_start, 0x333333);
+			draw_ceiling(app, start_x, 0, hit.wall_start);
 			// Draw floor below wall
-			draw_vertical(app, start_x, hit.wall_end, WIN_H - 1, 0xcccccc);
+			draw_floor(app, start_x, hit.wall_end, WIN_H - 1);
 			// Draw wall
-			draw_vertical(app, start_x, hit.wall_start, hit.wall_end, 0x992299);
+			draw_wall(app, start_x, hit.wall_start, hit.wall_end);
 		}
 		// IF portal / member
 		// Draw ceiling
