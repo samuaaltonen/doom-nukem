@@ -6,14 +6,11 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:42:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/10 15:29:40 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:19:25 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
-
-
-
 
 /**
  * Creates a new linked list to save vertices (x, y points) of a sector.
@@ -22,9 +19,6 @@ t_vec2list	*new_vector_list(t_app *app)
 {
 	t_vec2list		*new;
 
-	if (app->mouse_click.x < 0 || app->mouse_click.x > WIN_W
-		|| app->mouse_click.y < 0 || app->mouse_click.y > WIN_H)
-		return (NULL);
 	new = (t_vec2list *)malloc(sizeof(t_vec2list));
 	if (!new)
 		return (NULL);
