@@ -27,12 +27,12 @@ t_sector test_sectors[] = {
 		{(t_vector2){-10.0, -10.0}, (t_vector2){-10.0, 10.0}, (t_vector2){10.0, 10.0}, (t_vector2){10.0, -10.0}},
 		{-1, -1, -1, -1},
 		{MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK},
-		{1, 2, 3, -1},
+		{1, 2, 3, 4, -1},
 		//{-1},
 		-1,
 		4,
 		0.0,
-		2.0,
+		3.0,
 		MINECRAFT_DIRT_PODZOL_TOP,
 		MINECRAFT_REDSTONE_LAMP,
 		(t_vector3){0.0, 0.0, 0.0},
@@ -77,7 +77,7 @@ t_sector test_sectors[] = {
 	// Small box, partially occluding previous ones (wall 0 and 3 should get ordered to be before previous walls)
 	{
 		{(t_vector2){0.25, 1.25}, (t_vector2){0.25, 1.4}, (t_vector2){0.5, 1.4}, (t_vector2){0.5, 1.25}},
-		{-1, -1, -1},
+		{-1, -1, -1, -1},
 		{MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK},
 		{-1},
 		0,
