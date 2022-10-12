@@ -69,7 +69,7 @@ void	app_prepare(t_app *app)
 	init_camera_plane(app);
 	//----
 	load_font(app);
-	color_font(app, 0x00FF00);
+	color_font(app, 0x5500FF00);
 	//----
 }
 

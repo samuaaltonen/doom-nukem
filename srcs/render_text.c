@@ -12,9 +12,8 @@
 
 #include "doomnukem.h"
 
-void        render_char(t_app *app, t_point position, SDL_Rect src);
-SDL_Rect    get_char(int c);
-void        load_font(t_app *app);
+static void        render_char(t_app *app, t_point position, SDL_Rect src);
+static SDL_Rect    get_char(int c);
 
 void    render_text(t_app *app, t_point position, char *text)
 {
@@ -36,7 +35,7 @@ void    render_text(t_app *app, t_point position, char *text)
     }
 }
 
-void    render_char(t_app *app, t_point position, SDL_Rect src)
+static void    render_char(t_app *app, t_point position, SDL_Rect src)
 {
     SDL_Rect    dst;
 
@@ -47,7 +46,7 @@ void    render_char(t_app *app, t_point position, SDL_Rect src)
     SDL_BlitSurface(app->my_font.font, &src, app->surface, &dst);
 }
 
-SDL_Rect  get_char(int c)
+static SDL_Rect  get_char(int c)
 {
     SDL_Rect    src;
     char        *str;
@@ -82,8 +81,10 @@ void    load_font(t_app *app)
 
 void    color_font(t_app *app, int color)
 {
-    int x;
-    int y;
+    int     x;
+    int     y;
+    int		pixel_pos;
+	char	*pixel;
 
     x = 0;
     y = 0;
@@ -91,6 +92,9 @@ void    color_font(t_app *app, int color)
     {
         while (x < app->my_font.font->w)
         {
+            pixel_pos = (y * app->my_font.font->pitch) + (x * IMAGE_PIXEL_BYTES);
+            pixel = app->my_font.font->pixels + pixel_pos;
+            if ((*(int *)pixel & 0xFF000000) != 0x00000000)
             put_pixel_to_surface(app->my_font.font, x, y, color);
             x++;
         }
