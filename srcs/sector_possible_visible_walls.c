@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/12 15:42:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/12 15:53:32 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ static void	order_possible_visible_walls(t_app *app)
 	int		failsafe = 0;
 
 	in_order = FALSE;
-	while (!in_order && ++failsafe < 50)
+	while (!in_order && ++failsafe < 100)
 	{
 		in_order = TRUE;
 		i = 0;
@@ -116,7 +116,7 @@ static void	order_possible_visible_walls(t_app *app)
 			i++;
 		}
 	}
-	if (failsafe == 50)
+	if (failsafe == 100)
 		ft_printf("Ordering error, causes infinite loop.\n");
 }
 
