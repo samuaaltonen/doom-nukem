@@ -13,26 +13,22 @@
 #include "doomnukem.h"
 
 static void        render_char(t_app *app, t_point position, SDL_Rect src);
-static SDL_Rect    get_char(int c);
+static SDL_Rect    get_char(char *str, int c);
 
 void    render_text(t_app *app, t_point position, char *text)
 {
     char    *str;
-    int     len;
+    char    c;
     int     i;
 
     str = "abcdefghijklmnopqrstuvwxyz0123456789.,:;'\"!?-_()/|\\";
-    len = ft_strlen(text);
     i = 0;
     while (text[i] != '\0')
     {
-        if (ft_strchr(str, text[i]))
-        {
-            render_char(app, position, get_char(text[i]));
-            position.x += app->my_font.size - 2;
-        }
-        else
-            position.x += app->my_font.size - 2;
+        c = ft_tolower(text[i]);
+        if (ft_strchr(str, c))
+            render_char(app, position, get_char(str, c));
+        position.x += app->font.size - 2;
         i++;
     }
 }
@@ -43,19 +39,17 @@ static void    render_char(t_app *app, t_point position, SDL_Rect src)
 
     dst.x = position.x;
     dst.y = position.y;
-    dst.w = app->my_font.size;
-    dst.h = app->my_font.size;
-    SDL_BlitSurface(app->my_font.font, &src, app->surface, &dst);
+    dst.w = app->font.size;
+    dst.h = app->font.size;
+    SDL_BlitSurface(app->font.font, &src, app->surface, &dst);
 }
 
-static SDL_Rect  get_char(int c)
+static SDL_Rect  get_char(char *str, int c)
 {
     SDL_Rect    src;
-    char        *str;
     int         font_offset;
     int         i;
 
-    str = "abcdefghijklmnopqrstuvwxyz0123456789.,:;'\"!?-_()/|\\";
     i = 0;
     while (str[i] != '\0')
     {
@@ -72,10 +66,10 @@ static SDL_Rect  get_char(int c)
 
 void    load_font(t_app *app)
 {
-    app->my_font.font = SDL_LoadBMP("fonts/doom-nukem_font.bmp");
-    if (!app->my_font.font)
+    app->font.font = SDL_LoadBMP("fonts/doom-nukem_font.bmp");
+    if (!app->font.font)
         exit_error("Could not load font");
-    app->my_font.size = 14;
+    app->font.size = 14;
 }
 
 void    color_font(t_app *app, int color)
@@ -87,14 +81,14 @@ void    color_font(t_app *app, int color)
 
     x = 0;
     y = 0;
-    while (y < app->my_font.font->h)
+    while (y < app->font.font->h)
     {
-        while (x < app->my_font.font->w)
+        while (x < app->font.font->w)
         {
-            pixel_pos = (y * app->my_font.font->pitch) + (x * IMAGE_PIXEL_BYTES);
-            pixel = app->my_font.font->pixels + pixel_pos;
+            pixel_pos = (y * app->font.font->pitch) + (x * IMAGE_PIXEL_BYTES);
+            pixel = app->font.font->pixels + pixel_pos;
             if ((*(int *)pixel & 0xFF000000) != 0x00000000)
-            put_pixel_to_surface(app->my_font.font, x, y, color);
+                put_pixel_to_surface(app->font.font, x, y, color);
             x++;
         }
         x = 0;

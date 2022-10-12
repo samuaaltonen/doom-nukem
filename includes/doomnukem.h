@@ -290,8 +290,8 @@ typedef struct s_app
 	t_conf			*conf;
 	SDL_Window		*win;
 	SDL_Surface		*surface;
-	TTF_Font		*font;
-	t_font			my_font;
+//	TTF_Font		*font;
+	t_font			font;
 	double			depthmap[WIN_H][WIN_W];
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];

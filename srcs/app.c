@@ -103,7 +103,7 @@ void	app_render(t_app *app)
 	position.x = 100;
 	position.y = 100;
 	//render_text(app, position, "aADEFGhijklmnopqrstuvwxyz0123456789.,:;'\"!?-_()/|\\");
-	render_text(app, (t_point){10, 10}, "fps");
+	render_text(app, (t_point){10, 10}, "fPs");
 	render_text(app, (t_point){10, 10}, app->conf->fps_info);
 	//----
 	SDL_UpdateWindowSurface(app->win);
