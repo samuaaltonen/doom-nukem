@@ -394,6 +394,7 @@ void		open_map_editor(t_app *app);
  * Font
  */
 void        load_font(t_app *app);
+void		color_font(t_app *app, int color);
 void    	render_text(t_app *app, t_point position, char *text);
 
 #endif

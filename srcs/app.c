@@ -67,7 +67,10 @@ void	app_prepare(t_app *app)
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
 		(t_vector2){0.f, 0.f}, 1.0f, 0.5f, 0};
 	init_camera_plane(app);
+	//----
 	load_font(app);
+	color_font(app, 0x00FF00);
+	//----
 }
 
 /**
@@ -99,7 +102,7 @@ void	app_render(t_app *app)
 	t_point position;
 	position.x = 100;
 	position.y = 100;
-	render_text(app, position, "hello world!");
+	render_text(app, position, "aADEFGhijklmnopqrstuvwxyz0123456789.,:;'\"!?-_()/|\\");
 	//----
 	SDL_UpdateWindowSurface(app->win);
 }

@@ -53,11 +53,12 @@ SDL_Rect  get_char(int c)
     char        *str;
     int         font_offset;
     int         i;
+
     str = "abcdefghijklmnopqrstuvwxyz0123456789.,:;'\"!?-_()/|\\";
     i = 0;
     while (str[i] != '\0')
     {
-        if (str[i] == c)
+        if (ft_tolower(str[i]) == c)
             font_offset = i;
         i++;
     }
@@ -77,4 +78,23 @@ void    load_font(t_app *app)
         exit_error("Could not load font");
     }
     app->my_font.size = 14;
+}
+
+void    color_font(t_app *app, int color)
+{
+    int x;
+    int y;
+
+    x = 0;
+    y = 0;
+    while (y < app->my_font.font->h)
+    {
+        while (x < app->my_font.font->w)
+        {
+            put_pixel_to_surface(app->my_font.font, x, y, color);
+            x++;
+        }
+        x = 0;
+        y++;
+    }
 }
