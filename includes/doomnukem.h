@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/12 23:29:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/13 12:07:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,7 @@ typedef struct s_wall
  */
 typedef struct s_conf
 {
+	int				toggle_loop;
 	int				toggle_help;
 	int				toggle_editor;
 	int				fps;
