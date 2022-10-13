@@ -91,7 +91,6 @@ void	app_render(t_app *app)
 	flush_surface(app->surface);
 	render_sectors(app);
 	//----
-	render_text(app, (t_point){100, 100}, "a{B}+cDEFGhijklmnopqrstuvwxyz0123456789.,:;'\"!?-_()/|\\");
 	render_text(app, (t_point){10, 10}, "FPS");
 	render_text(app, (t_point){10, 10}, app->conf->fps_info);
 	//----
