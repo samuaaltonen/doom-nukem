@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:52 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/12 16:15:00 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:47:59 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 	(void)event;
 	if(!app->list_ongoing && app->list_creation)
 	{
-		app->active = new_vector_list(app);
+		app->active = new_vector_list(&app->mouse_click);
 		app->active_last = app->active;
 		app->list_ongoing = TRUE;
 	}
@@ -120,8 +120,8 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 		}
 		else if(valid_point(app))
 		{
-			tmp = new_vector_list(app);
-			add_to_vector_list(&app->active, tmp);
+			tmp = new_vector_list(&app->mouse_click);
+			put_to_vector_list(&app->active, tmp);
 			app->active_last = tmp;
 		}
 	}

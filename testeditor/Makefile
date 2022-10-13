@@ -6,7 +6,7 @@
 #    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/10/12 15:06:26 by htahvana         ###   ########.fr        #
+#    Updated: 2022/10/13 14:50:34 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = doom-nukem-editor
 CC = gcc
 
 FILES = editor.c events_key.c app.c events.c image.c main.c render.c \
- linedraw.c lists.c TESTDATA.c
+ linedraw.c lists.c export.c import.c TESTDATA.c
 
 LIBFT = ../libft/libft.a
 LIBLINEARALGEBRA = ../liblinearalgebra/liblinearalgebra.a
@@ -40,7 +40,7 @@ FRAMEWORKS = -F$(SDL_DIR) \
 HEADERS = -I ./includes -I ../libft/includes -I ../liblinearalgebra/includes \
 		-I /usr/local/include/SDL2 $(SDL_HEADERS)
 
-FLAGS = -Wall -Wextra -Werror -O3 -g
+FLAGS = -Wall -Wextra -Werror -O3 -g -fsanitize=address
 
 LIBLINKS = -L ../libft -L ../liblinearalgebra -L/usr/local/lib \
 		-llinearalgebra -lft -lm

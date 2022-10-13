@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/12 14:49:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/13 16:16:25 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,10 @@ int	events_keyup(int keycode, t_app *app)
 		app->toggle_help = ft_toggle(app->toggle_help);
 	if (keycode == SDLK_c)
 		app->list_creation = ft_toggle(app->list_creation);
+	if (keycode == SDLK_m)
+		file_open(app, "./test.test");
+	if (keycode == SDLK_o)
+		import_file(app, "./test.test");
 	return (0);
 }
 

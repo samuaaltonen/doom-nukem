@@ -6,24 +6,27 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:42:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/12 15:19:25 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/13 17:26:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
+
 /**
  * Creates a new linked list to save vertices (x, y points) of a sector.
  */
-t_vec2list	*new_vector_list(t_app *app)
+t_vec2list	*new_vector_list(t_vector2 *point)
 {
 	t_vec2list		*new;
 
 	new = (t_vec2list *)malloc(sizeof(t_vec2list));
 	if (!new)
 		return (NULL);
-	new->point.x = app->mouse_click.x;
-	new->point.y = app->mouse_click.y;
+	new->point.x = point->x;
+	new->point.y = point->y;
+	new->wall_texture = -1;
+	new->wall_type = -1;
 	new->next = NULL;
 	return (new);
 }
@@ -31,12 +34,13 @@ t_vec2list	*new_vector_list(t_app *app)
 /**
  * Adds a new node to the end of vector2d linked list.
  */
-int		add_to_vector_list(t_vec2list **list, t_vec2list *new)
+int		put_to_vector_list(t_vec2list **list, t_vec2list *new)
 {
 	t_vec2list		*last;
 
 	if (!new)
 		return (-1);
+	new->next = NULL;
 	if (!(*list))
 	{
 		*list = new;
@@ -47,6 +51,47 @@ int		add_to_vector_list(t_vec2list **list, t_vec2list *new)
 		last = last->next;
 	last->next = new;
 	return (0);
+}
+
+int	put_sector_lst(t_app *app, t_sectorlist* new)
+{
+	t_sectorlist *iter;
+
+	if(!new)
+		exit_error("editor:add_sector_lst failed!\n");
+	if(!app->sectors)
+	{
+		app->sectors = new;
+		return(0);
+	}
+	iter = app->sectors;
+	while (iter->next)
+		iter = iter->next;
+	iter->next = new;
+	return(0);
+}
+
+/**
+ * Creates a new linked list to save sectors.
+ */
+t_sectorlist	*new_sector_list(t_vec2list *wall_list)
+{
+	t_sectorlist	*new;
+	t_vec2list		*tmp;
+	new = (t_sectorlist *)ft_memalloc(sizeof(t_sectorlist));
+	if (!new)
+		return (NULL);
+
+	tmp = wall_list->next;
+	new->corner_count++;
+	while(tmp != wall_list)
+	{
+		new->corner_count++;
+		tmp = tmp->next;
+	}
+	new->wall_list = wall_list;
+	new->next = NULL;
+	return (new);
 }
 
 /**
