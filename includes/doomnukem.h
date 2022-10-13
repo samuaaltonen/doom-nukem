@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/13 12:07:26 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:18:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,7 @@ typedef struct s_wall
 	int				sector_id;
 	int				wall_id;
 	t_bool			is_member;
+	int				visibility_score;
 }	t_wall;
 
 /**

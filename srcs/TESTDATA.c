@@ -110,7 +110,7 @@ t_sector test_sectors[] = {
 	},
 	// Tiny box at positive x
 	{
-		{(t_vector2){2.25, 1.5}, (t_vector2){2.25, 1.7}, (t_vector2){2.5, 1.7}, (t_vector2){2.5, 1.5}},
+		{(t_vector2){2.25, 1.4}, (t_vector2){2.25, 1.7}, (t_vector2){2.5, 1.7}, (t_vector2){2.5, 1.4}},
 		{-1, -1, -1, -1},
 		{MINECRAFT_LOG_OAK, MINECRAFT_LOG_OAK, MINECRAFT_LOG_OAK, MINECRAFT_LOG_OAK},
 		{-1},
@@ -127,7 +127,7 @@ t_sector test_sectors[] = {
 	},
 	// Tiny box at negative x
 	{
-		{(t_vector2){-2.25, 1.5}, (t_vector2){-2.25, 1.7}, (t_vector2){-2.5, 1.7}, (t_vector2){-2.5, 1.5}},
+		{(t_vector2){-2.25, 1.5}, (t_vector2){-2.25, 1.7}, (t_vector2){-2.0, 1.7}, (t_vector2){-2.0, 1.5}},
 		{-1, -1, -1, -1},
 		{MINECRAFT_LOG_OAK, MINECRAFT_LOG_OAK, MINECRAFT_LOG_OAK, MINECRAFT_LOG_OAK},
 		{-1},
