@@ -285,6 +285,14 @@ typedef struct s_font
 }	t_font;
 
 /**
+ * Struct for menu.
+ 
+typedef struct s_menu
+{
+	
+}*/
+
+/**
  * Struct for the application.
  */
 typedef struct s_app
@@ -397,6 +405,11 @@ void		open_map_editor(t_app *app);
 void        load_font(t_app *app);
 void		color_font(t_app *app, int color);
 void    	render_text(t_app *app, t_point position, char *text);
+
+/**
+ * UI
+ */
+void    render_button(t_app *app);
 
 #endif
 

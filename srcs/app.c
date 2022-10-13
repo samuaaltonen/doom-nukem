@@ -66,7 +66,7 @@ void	app_prepare(t_app *app)
 	init_camera_plane(app);
 	//----
 	load_font(app);
-	color_font(app, 0xFFFFFFFF);
+	color_font(app, 0xFFEFDCCC);
 	//----
 }
 
@@ -91,8 +91,9 @@ void	app_render(t_app *app)
 	flush_surface(app->surface);
 	render_sectors(app);
 	//----
-	render_text(app, (t_point){10, 10}, "FPS");
-	render_text(app, (t_point){10, 10}, app->conf->fps_info);
+	render_button(app);
+	render_text(app, (t_point){20, 21}, "FPS");
+	render_text(app, (t_point){20, 21}, app->conf->fps_info);
 	//----
 	SDL_UpdateWindowSurface(app->win);
 }
