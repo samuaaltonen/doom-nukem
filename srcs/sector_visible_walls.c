@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sector_possible_visible_walls.c                    :+:      :+:    :+:   */
+/*   sector_visible_walls.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/13 23:01:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/14 00:11:45 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	check_possible_visible(t_app *app, int sector_id, int wall_id, t_boo
 	t_vertex2	wall_vertex;
 	int			player_side;
 
-	wall_vertex = get_sector_vertex_by_corner(app, sector_id, wall_id);
+	wall_vertex = get_wall_vertex(app, sector_id, wall_id);
 	player_side = ft_vertex_side(wall_vertex, app->player.pos);
 	// Not member sector, player need to on right side of all walls (clockwise)
 	if (!is_member && player_side)
@@ -105,7 +105,7 @@ static void	loop_sector_walls(t_app *app, int *visited, int sector_id, t_bool is
 /**
  * Sets possible visible walls to possible_visible array.
  */
-void	sector_walls_possible_visible(t_app *app)
+void	sector_visible_walls(t_app *app)
 {
 	int	already_visited[MAX_VISIBLE_SECTORS];
 

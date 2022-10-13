@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:46:07 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/13 23:18:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/14 00:11:45 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,11 @@ int	translate_window_x(t_app *app, t_vector2 coord)
 	return (x);
 }
 
-void	prepare_sector_walls(t_app *app)
+/**
+ * Prepares selected walls to be rendered. Calculates their translated x
+ * positions in screen.
+*/
+void	sector_walls_prepare(t_app *app)
 {
 	int	i;
 	int	temp_x;
@@ -46,7 +50,7 @@ void	prepare_sector_walls(t_app *app)
 	i = -1;
 	while (++i < app->possible_visible_count)
 	{
-		app->possible_visible[i].vertex = get_sector_vertex_by_corner(app,
+		app->possible_visible[i].vertex = get_wall_vertex(app,
 			app->possible_visible[i].sector_id,
 			app->possible_visible[i].wall_id);
 		app->possible_visible[i].start_x = translate_window_x(app, app->possible_visible[i].vertex.a);

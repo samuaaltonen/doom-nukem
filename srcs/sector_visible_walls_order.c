@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 23:00:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/13 23:02:46 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/14 00:11:45 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ static t_bool	walls_in_order(t_app *app, int wall_a, int wall_b)
 		return (FALSE);
 	if (!app->possible_visible[wall_b].is_member)
 		return (TRUE);
-	a = get_sector_vertex_by_corner(app, app->possible_visible[wall_a].sector_id, app->possible_visible[wall_a].wall_id);
-	b = get_sector_vertex_by_corner(app, app->possible_visible[wall_b].sector_id, app->possible_visible[wall_b].wall_id);
+	a = get_wall_vertex(app, app->possible_visible[wall_a].sector_id, app->possible_visible[wall_a].wall_id);
+	b = get_wall_vertex(app, app->possible_visible[wall_b].sector_id, app->possible_visible[wall_b].wall_id);
 
 	// Extend wall_a to infinity / very long
 	extended = ft_vertex_resize(a, MAX_VERTEX_LENGTH, EXTEND_BOTH);
