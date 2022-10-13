@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:46:07 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/12 00:21:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/13 22:24:04 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,4 +103,29 @@ int	translate_window_x(t_app *app, t_vector2 coord)
 	else
 		x = WIN_W / 2 + WIN_W * tan(angle) / app->player.camera_length / 2;
 	return (x);
+}
+
+void	prepare_sector_walls(t_app *app)
+{
+	int	i;
+	int	temp_x;
+
+	i = -1;
+	while (++i < app->possible_visible_count)
+	{
+		app->possible_visible[i].vertex = get_sector_vertex_by_corner(app,
+			app->possible_visible[i].sector_id,
+			app->possible_visible[i].wall_id);
+		app->possible_visible[i].start_x = translate_window_x(app, app->possible_visible[i].vertex.a);
+		app->possible_visible[i].end_x = translate_window_x(app, app->possible_visible[i].vertex.b);
+		temp_x = app->possible_visible[i].end_x;
+		if (app->possible_visible[i].end_x < app->possible_visible[i].start_x)
+		{
+			app->possible_visible[i].end_x = app->possible_visible[i].start_x;
+			app->possible_visible[i].start_x = temp_x;
+		}
+		app->possible_visible[i].start_x--;
+		if (app->possible_visible[i].start_x < -1)
+			app->possible_visible[i].start_x = -1;
+	}
 }

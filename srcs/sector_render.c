@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/13 15:24:02 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/13 22:36:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,16 @@ void	render_sectors(t_app *app)
 	 * function (not needed to calculate possible visible walls every frame if 
 	 * there is no movement))
 	 * 
-	 * Oordered based on distance (closest first) */
+	 */
 	sector_walls_possible_visible(app);
+
+	/** Calculates translated x positions in window space
+	 * - makes ordering faster since no need to check order of walls that have
+	 *   no x overlap in window
+	 * - these values are used also in rendering part
+	 */
+	prepare_sector_walls(app);
+	sector_walls_order(app);
 
 	/* ft_printf("--- new frame ---\n"); */
 	int	i = 0;

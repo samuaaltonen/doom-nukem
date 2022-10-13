@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/13 15:24:27 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/13 22:38:01 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,9 @@ static t_bool	walls_in_order(t_app *app, int wall_a, int wall_b)
 	int			side;
 	int			extended_wall;
 
-	if (!app->possible_visible[wall_a].is_member
-		|| !app->possible_visible[wall_b].is_member)
+	if (!app->possible_visible[wall_a].is_member)
+		return (FALSE);
+	if (!app->possible_visible[wall_b].is_member)
 		return (TRUE);
 	a = get_sector_vertex_by_corner(app, app->possible_visible[wall_a].sector_id, app->possible_visible[wall_a].wall_id);
 	b = get_sector_vertex_by_corner(app, app->possible_visible[wall_b].sector_id, app->possible_visible[wall_b].wall_id);
@@ -85,7 +86,7 @@ static t_bool	walls_in_order(t_app *app, int wall_a, int wall_b)
  * Orders walls depending on visibility. Only orders walls that came from member
  * sectors. Other walls should already be in order (if all sectors convex).
  */
-static void	order_possible_visible_walls(t_app *app)
+/* static void	order_possible_visible_walls(t_app *app)
 {
 	t_wall	temp;
 	t_bool	in_order;
@@ -122,7 +123,7 @@ static void	order_possible_visible_walls(t_app *app)
 			}
 		}
 	}
-}
+} */
 
 /**
  * Determines if wall is possibly visible from player view.
@@ -133,7 +134,7 @@ static void	order_possible_visible_walls(t_app *app)
  */
 static void	check_possible_visible(t_app *app, int sector_id, int wall_id, t_bool is_member)
 {
-	t_vertex2	camera_vertex;
+	t_vertex2	view;
 	t_vertex2	wall_vertex;
 	int			player_side;
 
@@ -145,16 +146,24 @@ static void	check_possible_visible(t_app *app, int sector_id, int wall_id, t_boo
 	// Is member, now player need to be on left side of all walls (clockwise)
 	if (is_member && !player_side)
 		return ;
-	camera_vertex = (t_vertex2){
+	view = (t_vertex2){
 		app->player.pos,
-		(t_vector2){app->player.pos.x + app->player.cam.x,
-			app->player.pos.y + app->player.cam.y}
+		(t_vector2){app->player.pos.x + app->player.dir.x + app->player.cam.x,
+			app->player.pos.y + app->player.dir.y + app->player.cam.y}
 	};
-	// Check if either of wall corners are left side of camera vector
-	if (!ft_vertex_side(camera_vertex, wall_vertex.a)
-		&& !ft_vertex_side(camera_vertex, wall_vertex.b))
+	// Check if either of wall corners are left side of right view vertex
+	if (!ft_vertex_side(view, wall_vertex.a)
+		&& !ft_vertex_side(view, wall_vertex.b))
 		return ;
-	app->possible_visible[app->possible_visible_count] = (t_wall){sector_id, wall_id, is_member, 0};
+	view.b = (t_vector2){app->player.pos.x + app->player.dir.x - app->player.cam.x,
+			app->player.pos.y + app->player.dir.y - app->player.cam.y};
+	// Check if either of wall corners are right side of left view vertex
+	if (ft_vertex_side(view, wall_vertex.a)
+		&& ft_vertex_side(view, wall_vertex.b))
+		return ;
+	app->possible_visible[app->possible_visible_count].sector_id = sector_id;
+	app->possible_visible[app->possible_visible_count].wall_id = wall_id;
+	app->possible_visible[app->possible_visible_count].is_member = is_member;
 	app->possible_visible_count++;
 }
 
@@ -206,6 +215,75 @@ static void	loop_sector_walls(t_app *app, int *visited, int sector_id, t_bool is
 	}
 }
 
+t_bool	walls_overlap(t_app *app, int wall_a, int wall_b)
+{
+	if (app->possible_visible[wall_a].start_x < app->possible_visible[wall_b].end_x
+		&& app->possible_visible[wall_a].end_x > app->possible_visible[wall_b].start_x)
+		return (TRUE);
+	/* ft_printf("No overlap with wall %d:%d (x: %d to %d) and %d:%d\n", 
+		app->possible_visible[wall_a].sector_id, app->possible_visible[wall_a].wall_id,
+		app->possible_visible[wall_a].start_x, app->possible_visible[wall_a].end_x,
+		app->possible_visible[wall_b].sector_id, app->possible_visible[wall_b].wall_id,
+		app->possible_visible[wall_b].start_x, app->possible_visible[wall_b].end_x
+	); */
+	return (FALSE);
+}
+
+/**
+ * Returns foremost wall from possibly visible walls
+*/
+int	get_foremost_wall(t_app *app)
+{
+	int		current_score;
+	int		most_score;
+	int		most_foremost;
+	int		i;
+	int		j;
+	t_bool	is_foremost;
+
+	i = -1;
+	most_score = 0;
+	most_foremost = -1;
+	while (++i < app->possible_visible_count)
+	{
+		if (app->possible_visible[i].already_selected)
+			continue ;
+		if (most_foremost == -1)
+			most_foremost = i;
+		j = -1;
+		is_foremost = TRUE;
+		current_score = 0;
+		while (++j < app->possible_visible_count)
+		{
+			if (i == j || app->possible_visible[j].already_selected)
+				continue ;
+			if (!walls_overlap(app, i, j))
+				continue ;
+			if (!walls_in_order(app, i, j))
+			{
+				/* ft_printf("Wall %d:%d is behind of wall %d:%d\n",
+					app->possible_visible[i].sector_id, app->possible_visible[i].wall_id,
+					app->possible_visible[j].sector_id, app->possible_visible[j].wall_id); */
+				is_foremost = FALSE;
+			}
+			else
+			{
+				current_score++;
+				if (current_score > most_score)
+				{
+					most_score = current_score;
+					most_foremost = i;
+				}
+			}
+		}
+		if (is_foremost)
+			return (i);
+	}
+	/* if (app->possible_visible[most_foremost].is_member)
+		ft_printf("Cannot determine foremost wall.\n"); */
+	return (most_foremost);
+}
+
 /**
  * Sets possible visible walls to possible_visible array.
  */
@@ -222,5 +300,29 @@ void	sector_walls_possible_visible(t_app *app)
 	loop_sector_walls(app, (int *)&already_visited, app->player.current_sector, FALSE);
 
 	// Order possible visible walls
-	order_possible_visible_walls(app);
+	//order_possible_visible_walls(app);
+}
+
+void	sector_walls_order(t_app *app)
+{
+	t_wall	temp[MAX_VISIBLE_WALLS];
+	int		foremost;
+	int		i;
+
+	i = 0;
+	while (i < app->possible_visible_count)
+	{
+		foremost = get_foremost_wall(app);
+		temp[i] = app->possible_visible[foremost];
+		app->possible_visible[foremost].already_selected = 1;
+		i++;
+	}
+	i = 0;
+	/* ft_printf("Front front to back:\n"); */
+	while (i < app->possible_visible_count)
+	{
+		/* ft_printf("%d:%d\n", temp[i].sector_id, temp[i].wall_id); */
+		app->possible_visible[i] = temp[i];
+		i++;
+	}
 }
