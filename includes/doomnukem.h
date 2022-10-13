@@ -144,6 +144,17 @@ typedef struct s_point
 }	t_point;
 
 /**
+ * Struct for integer coordinate rectangule.
+ */
+typedef struct s_rect
+{
+	int				x;
+	int				y;
+	int				w;
+	int				h;
+}	t_rect;
+
+/**
  * Matrix that contains 2 t_point columns.
  */
 typedef	struct s_point_matrix
@@ -411,6 +422,8 @@ void    	render_text(t_app *app, t_point position, char *text);
  * UI
  */
 void    render_button(t_app *app);
+void	blit_surface(SDL_Surface *src, t_rect src_rect,
+	SDL_Surface *dst, t_rect dst_rect);
 
 #endif
 
