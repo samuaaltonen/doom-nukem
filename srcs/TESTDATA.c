@@ -24,7 +24,7 @@ typedef struct s_sector
 t_sector test_sectors[] = {
 	// Big square sector
     {
-		{(t_vector2){-10.0, -10.0}, (t_vector2){-10.0, 10.0}, (t_vector2){10.0, 10.0}, (t_vector2){10.0, -10.0}},
+		{(t_vector2){-20.0, -20.0}, (t_vector2){-20.0, 20.0}, (t_vector2){20.0, 20.0}, (t_vector2){20.0, -20.0}},
 		{-1, -1, -1, -1},
 		{MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK, MINECRAFT_NETHER_BRICK},
 		{1, 2, 3, 4, 5, 6, -1},
@@ -110,7 +110,7 @@ t_sector test_sectors[] = {
 	},
 	// Tiny box at positive x
 	{
-		{(t_vector2){2.25, 1.4}, (t_vector2){2.25, 1.7}, (t_vector2){2.5, 1.7}, (t_vector2){2.5, 1.4}},
+		{(t_vector2){2.25, 1.45}, (t_vector2){2.25, 1.7}, (t_vector2){2.5, 1.7}, (t_vector2){2.5, 1.45}},
 		{-1, -1, -1, -1},
 		{MINECRAFT_LOG_OAK, MINECRAFT_LOG_OAK, MINECRAFT_LOG_OAK, MINECRAFT_LOG_OAK},
 		{-1},
@@ -133,6 +133,34 @@ t_sector test_sectors[] = {
 		{-1},
 		0,
 		4,
+		0.0,
+		1.0,
+		MINECRAFT_DIRT_PODZOL_TOP,
+		MINECRAFT_REDSTONE_LAMP,
+		(t_vector3){0.0, 0.0, 0.0},
+		(t_vector2){0.0, 0.0},
+		(t_vector3){0.0, 0.0, 0.0},
+		(t_vector2){0.0, 0.0},
+	},
+	// Big star
+	{
+		{
+			(t_vector2){-12.0, -0.5},
+			(t_vector2){-15.5, 1.75},
+			(t_vector2){-10.6, 0.6},
+			(t_vector2){-10.0, 6.0},
+			(t_vector2){-10.6, 0.6},
+			(t_vector2){-4.5, 1.75},
+			(t_vector2){-8.0, -0.5},
+			(t_vector2){-6.5, -5.0},
+			(t_vector2){-10.0, -2.0},
+			(t_vector2){-13.5, -5.0}
+		},
+		{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
+		{MINECRAFT_END_BRICKS, MINECRAFT_END_BRICKS, MINECRAFT_END_BRICKS, MINECRAFT_END_BRICKS, MINECRAFT_END_BRICKS, MINECRAFT_END_BRICKS, MINECRAFT_END_BRICKS, MINECRAFT_END_BRICKS, MINECRAFT_END_BRICKS, MINECRAFT_END_BRICKS},
+		{-1},
+		0,
+		10,
 		0.0,
 		1.0,
 		MINECRAFT_DIRT_PODZOL_TOP,

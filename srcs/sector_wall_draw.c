@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/13 22:32:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/13 23:16:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,10 +89,6 @@ static void	draw_wall(t_app *app, int x, t_rayhit *hit)
 		return;
 	app->occlusion_top[x] = y_end;
 	app->occlusion_bottom[x] = WIN_H - y_start;
-	/**
-	 * TODO: TEXTURES
-	 * Draw vertical line
-	 */
 	while (y_start < y_end)
 	{
 		tex_y += hit->texture_step.y;
@@ -166,44 +162,27 @@ static t_bool	wall_raycast(t_app *app, t_vertex2 wall, t_rayhit *hit, int x)
  * Draws individual sector wall, possible ceiling and floor of that vertical
  * screenline. Also updates occlusion arrays accordingly.
  */
-void	sector_wall_draw(t_app *app, int sector_id, int wall_id)
+void	sector_wall_draw(t_app *app, t_wall *wall)
 {
 	t_rayhit	hit;
-	t_vertex2	vertex;
-	int			start_x;
-	int			end_x;
-	int			temp_x;
+	int			x;
 
-	hit.sector = &test_sectors[sector_id];
-	hit.texture = test_sectors[sector_id].wall_textures[wall_id];
-	vertex = get_sector_vertex_by_corner(app, sector_id, wall_id);
-	start_x = translate_window_x(app, vertex.a);
-	end_x = translate_window_x(app, vertex.b);
-	temp_x = end_x;
-	if (end_x < start_x)
-	{
-		end_x = start_x;
-		start_x = temp_x;
-	}
-	start_x--;
-	if (start_x < -1)
-		start_x = -1;
-	while (++start_x < end_x)
+	hit.sector = &test_sectors[wall->sector_id];
+	hit.texture = test_sectors[wall->sector_id].wall_textures[wall->wall_id];
+	x = wall->start_x;
+	while (++x < wall->end_x)
 	{
 		/**
 		 * Perform rayhit. Skips when there is no hit.
 		*/
-		if (!wall_raycast(app, vertex, &hit, start_x))
+		if (!wall_raycast(app, wall->vertex, &hit, x))
 			continue ;
 		// IF wall type normal wall:
-		if (hit.sector->wall_types[wall_id] == -1)
+		if (hit.sector->wall_types[wall->wall_id] == -1)
 		{
-			// Draw ceiling above wall
-			draw_ceiling(app, start_x, 0, hit.wall_start);
-			// Draw floor below wall
-			draw_floor(app, start_x, hit.wall_end, WIN_H - 1);
-			// Draw wall
-			draw_wall(app, start_x, &hit);
+			draw_ceiling(app, x, 0, hit.wall_start);
+			draw_floor(app, x, hit.wall_end, WIN_H - 1);
+			draw_wall(app, x, &hit);
 		}
 		// IF portal / member
 		// Draw ceiling

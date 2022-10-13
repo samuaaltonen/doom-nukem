@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/13 22:39:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/13 23:31:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -233,7 +233,6 @@ typedef struct s_wall
 	int				sector_id;
 	int				wall_id;
 	t_bool			is_member;
-	int				visibility_score;
 	int				already_selected;
 	t_vertex2		vertex;
 	int				start_x;
@@ -410,7 +409,7 @@ t_vertex2		get_sector_vertex_by_corner(t_app *app, int sector_id,
 int				translate_window_x(t_app *app, t_vector2 coord);
 void			prepare_sector_walls(t_app *app);
 void			sector_walls_order(t_app *app);
-void			sector_wall_draw(t_app *app, int sector_id, int wall_id);
+void			sector_wall_draw(t_app *app, t_wall *wall);
 
 /**
  * Editor

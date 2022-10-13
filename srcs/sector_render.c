@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/13 22:36:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/13 23:15:37 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	render_sectors(t_app *app)
 				app->possible_visible[i].sector_id, 
 				app->possible_visible[i].wall_id,
 				app->possible_visible[i].is_member); */
-		sector_wall_draw(app, app->possible_visible[i].sector_id, app->possible_visible[i].wall_id);
+		sector_wall_draw(app, &app->possible_visible[i]);
 		i++;
 	}
 }

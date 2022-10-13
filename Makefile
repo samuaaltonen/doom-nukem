@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/10/11 16:49:26 by saaltone         ###   ########.fr        #
+#    Updated: 2022/10/13 23:31:58 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,9 @@ FILES = main.c error.c conf.c app.c events.c events_key.c \
 		events_mouse.c events_window.c graphics.c image.c \
 		helper.c skybox.c floor.c player.c polygon_raycast.c \
 		polygon_floor.c editor.c OLD_TESTDATA.c TESTDATA.c \
-		sector_render.c sector_possible_visible_walls.c sector_vertex.c \
-		sector_wall_draw.c sector_wall_translate.c render_text.c ui.c
+		sector_render.c sector_visible_walls.c sector_visible_walls_order.c \
+		sector_vertex.c sector_wall_draw.c sector_wall_translate.c \
+		render_text.c ui.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a
