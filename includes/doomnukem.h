@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/13 12:07:26 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:18:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,6 +222,7 @@ typedef struct s_wall
 	int				sector_id;
 	int				wall_id;
 	t_bool			is_member;
+	int				visibility_score;
 }	t_wall;
 
 /**
@@ -283,6 +284,14 @@ typedef struct s_font
 	SDL_Surface *font;
 	int         size;
 }	t_font;
+
+/**
+ * Struct for menu.
+ 
+typedef struct s_menu
+{
+	
+}*/
 
 /**
  * Struct for the application.
@@ -397,6 +406,11 @@ void		open_map_editor(t_app *app);
 void        load_font(t_app *app);
 void		color_font(t_app *app, int color);
 void    	render_text(t_app *app, t_point position, char *text);
+
+/**
+ * UI
+ */
+void    render_button(t_app *app);
 
 #endif
 

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/13 12:24:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/13 15:24:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,34 +90,38 @@ static void	order_possible_visible_walls(t_app *app)
 	t_wall	temp;
 	t_bool	in_order;
 	int		i;
-	int		failsafe = 0;
+	int		j;
 
+	i = -1;
+	while (++i < app->possible_visible_count)
+	{
+		app->possible_visible[i].visibility_score = 0;
+		if (!app->possible_visible[i].is_member)
+			continue ;
+		j = -1;
+		while (++j < app->possible_visible_count)
+		{
+			if (i == j)
+				continue ;
+			app->possible_visible[i].visibility_score += walls_in_order(app, i, j);
+		}
+	}
 	in_order = FALSE;
-	while (!in_order && ++failsafe < 100)
+	while (!in_order)
 	{
 		in_order = TRUE;
-		i = 0;
-		while (i < app->possible_visible_count - 1)
+		i = -1;
+		while (++i < app->possible_visible_count - 1)
 		{
-			// Checks if 2 walls are in order and flip when necessary
-			if (!walls_in_order(app, i, i + 1))
+			if (app->possible_visible[i].visibility_score < app->possible_visible[i + 1].visibility_score)
 			{
-				/* ft_printf("Walls %d and %d from sectors %d and %d are not in order. Switching them.\n", 
-					app->possible_visible[i].wall_id, 
-					app->possible_visible[i + 1].wall_id,
-					app->possible_visible[i].sector_id, 
-					app->possible_visible[i + 1].sector_id
-				); */
 				temp = app->possible_visible[i];
 				app->possible_visible[i] = app->possible_visible[i + 1];
 				app->possible_visible[i + 1] = temp;
 				in_order = FALSE;
 			}
-			i++;
 		}
 	}
-	if (failsafe == 100)
-		ft_printf("Ordering error, causes infinite loop.\n");
 }
 
 /**
@@ -150,7 +154,7 @@ static void	check_possible_visible(t_app *app, int sector_id, int wall_id, t_boo
 	if (!ft_vertex_side(camera_vertex, wall_vertex.a)
 		&& !ft_vertex_side(camera_vertex, wall_vertex.b))
 		return ;
-	app->possible_visible[app->possible_visible_count] = (t_wall){sector_id, wall_id, is_member};
+	app->possible_visible[app->possible_visible_count] = (t_wall){sector_id, wall_id, is_member, 0};
 	app->possible_visible_count++;
 }
 
