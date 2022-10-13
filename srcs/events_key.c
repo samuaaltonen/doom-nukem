@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/06 14:47:50 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/13 12:07:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	events_keyup(int keycode, t_app *app)
 	if (keycode == SDLK_h)
 		app->conf->toggle_help = ft_toggle(app->conf->toggle_help);
 	if (keycode == SDLK_e)
-		app->conf->toggle_editor = ft_toggle(app->conf->toggle_editor);
+		app->conf->toggle_loop = ft_toggle(app->conf->toggle_loop);
 	return (0);
 }
 

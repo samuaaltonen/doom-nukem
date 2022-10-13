@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_text.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:48:08 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/11 11:48:13 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/12 22:40:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ static SDL_Rect  get_char(char *str, int c)
     int         font_offset;
     int         i;
 
+    font_offset = 0;
     i = 0;
     while (str[i] != '\0')
     {

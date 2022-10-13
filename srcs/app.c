@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/12 12:43:19 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/13 12:07:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,6 +110,7 @@ void	app_loop(t_app *app)
 	{
 		while (SDL_PollEvent(&event))
 			dispatch_event(app, &event);
-		app_render(app);
+		if (!app->conf->toggle_loop)
+			app_render(app);
 	}
 }

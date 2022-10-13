@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/12 15:53:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/13 12:24:11 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,12 +44,12 @@ static t_bool	walls_in_order(t_app *app, int wall_a, int wall_b)
 	extended_wall = wall_a;
 
 	// Check intersection
-	if (ft_vertex_intersection(extended, b, &intersection))
+	if (ft_vertex_intersection_through(extended, b, &intersection))
 	{
 		extended = ft_vertex_resize(b, MAX_VERTEX_LENGTH, EXTEND_BOTH);
 		extended_wall = wall_b;
 		// If interesction again, no change in order
-		if (ft_vertex_intersection(extended, a, &intersection))
+		if (ft_vertex_intersection_through(extended, a, &intersection))
 			return (TRUE);
 	}
 

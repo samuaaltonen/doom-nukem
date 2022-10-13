@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/12 16:28:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/12 23:27:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ static void	draw_ceiling(t_app *app, int x, int y_start, int y_end)
 		return ;
 	if (app->occlusion_top[x] > y_start)
 		y_start = app->occlusion_top[x] + 1;
+	if (y_start == y_end || y_start > y_end)
+		return;
 	app->occlusion_top[x] = y_end;
 	/**
 	 * TODO: TEXTURES
@@ -48,6 +50,8 @@ static void	draw_floor(t_app *app, int x, int y_start, int y_end)
 		return ;
 	if (app->occlusion_bottom[x] > WIN_H - y_end)
 		y_end = WIN_H - app->occlusion_bottom[x];
+	if (y_start == y_end || y_start > y_end)
+		return;
 	app->occlusion_bottom[x] = WIN_H - y_start;
 	/**
 	 * TODO: TEXTURES
@@ -63,8 +67,15 @@ static void	draw_floor(t_app *app, int x, int y_start, int y_end)
 /**
  * Draws vertical line.
  */
-static void	draw_wall(t_app *app, int x, int y_start, int y_end)
+static void	draw_wall(t_app *app, int x, t_rayhit *hit)
 {
+	int		y_start;
+	int		y_end;
+	double	tex_y;
+
+	y_start = hit->wall_start;
+	y_end = hit->wall_end;
+	tex_y = hit->texture_offset.y;
 	/**
 	 * Check occlusion and only draw not occluded parts.
 	 */
@@ -74,6 +85,8 @@ static void	draw_wall(t_app *app, int x, int y_start, int y_end)
 		y_start = app->occlusion_top[x] + 1;
 	if (app->occlusion_bottom[x] > WIN_H - y_end)
 		y_end = WIN_H - app->occlusion_bottom[x];
+	if (y_start == y_end || y_start > y_end)
+		return;
 	app->occlusion_top[x] = y_end;
 	app->occlusion_bottom[x] = WIN_H - y_start;
 	/**
@@ -82,7 +95,12 @@ static void	draw_wall(t_app *app, int x, int y_start, int y_end)
 	 */
 	while (y_start < y_end)
 	{
-		put_pixel_to_surface(app->surface, x, y_start, 0x992299);
+		tex_y += hit->texture_step.y;
+		if (tex_y >= (double) TEX_SIZE)
+			tex_y = fmod(tex_y, (double) TEX_SIZE);
+		put_pixel_to_surface(app->surface, x, y_start, get_pixel_color(
+			app->sprite, (int)(((double)hit->texture + hit->texture_offset.x) * (double)TEX_SIZE), 
+			(int) tex_y));
 		y_start++;
 	}
 }
@@ -136,9 +154,9 @@ static t_bool	wall_raycast(t_app *app, t_vertex2 wall, t_rayhit *hit, int x)
 	hit->distance = ft_vector_length((t_vector2){
 		hit->position.x - app->player.pos.x,
 		hit->position.y - app->player.pos.y});
-	hit->texture_offset.x = ft_vector_length((t_vector2){
+	hit->texture_offset.x = fmod(ft_vector_length((t_vector2){
 		wall.a.x - hit->position.x,
-		wall.a.y - hit->position.y});
+		wall.a.y - hit->position.y}), 1.0);
 	hit->distance = distortion_correction(angle, hit->distance);
 	calculate_vertical_positions(app, hit);
 	return (TRUE);
@@ -157,6 +175,7 @@ void	sector_wall_draw(t_app *app, int sector_id, int wall_id)
 	int			temp_x;
 
 	hit.sector = &test_sectors[sector_id];
+	hit.texture = test_sectors[sector_id].wall_textures[wall_id];
 	vertex = get_sector_vertex_by_corner(app, sector_id, wall_id);
 	start_x = translate_window_x(app, vertex.a);
 	end_x = translate_window_x(app, vertex.b);
@@ -184,7 +203,7 @@ void	sector_wall_draw(t_app *app, int sector_id, int wall_id)
 			// Draw floor below wall
 			draw_floor(app, start_x, hit.wall_end, WIN_H - 1);
 			// Draw wall
-			draw_wall(app, start_x, hit.wall_start, hit.wall_end);
+			draw_wall(app, start_x, &hit);
 		}
 		// IF portal / member
 		// Draw ceiling
