@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:48:08 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/14 16:30:12 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/14 17:09:08 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,12 @@ static t_rect	get_char(char *str, int c)
 
 void	load_font(t_app *app)
 {
-	app->font.font = SDL_LoadBMP("fonts/doom-nukem_font.bmp");
+	if (!app->font.font)
+		app->font.font = SDL_LoadBMP("fonts/doom-nukem_font.bmp");
 	if (!app->font.font)
 		exit_error("Could not load font");
 	app->font.size = 14;
+	change_font(app, 14, 0xFF000000);
 }
 
 void	change_font(t_app *app, int size, int color)

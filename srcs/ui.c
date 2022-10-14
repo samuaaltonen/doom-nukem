@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/14 16:37:47 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/14 17:08:43 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,5 @@ void	render_menu(t_app *app)
 	SDL_FreeSurface(button);
 	change_font(app, 48, 0xFF5F1E02);
 	render_text(app, (t_point){dst.x + 162, dst.y + 40}, "MENU");
-	change_font(app, 14, 0xFFEFDCCC);
+	load_font(app);
 }

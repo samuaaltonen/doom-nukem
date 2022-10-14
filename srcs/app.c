@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/14 16:32:16 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/14 17:09:24 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,6 @@ void	app_prepare(t_app *app)
 	init_camera_plane(app);
 	//----
 	load_font(app);
-	change_font(app, 14, 0xFFEFDCCC);
 	//----
 }
 
@@ -93,8 +92,11 @@ void	app_render(t_app *app)
 	//----
 	render_button(app);
 	render_menu(app);
+
+	change_font(app, 14, 0xFFEFDCCC);
 	render_text(app, (t_point){20, 20}, "FPS");
 	render_text(app, (t_point){20, 20}, app->conf->fps_info);
+	load_font(app);
 	//----
 	SDL_UpdateWindowSurface(app->win);
 }
