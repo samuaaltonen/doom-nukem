@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/12 17:00:09 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/14 13:25:36 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,11 +32,10 @@ void	render_sectors(t_app *app)
 	t_sectorlist *tmp;
 
 	tmp = app->sectors;
-	render_sector(app, tmp->wall_list);
-	while(tmp->next)
+	while(tmp)
 	{
-		tmp = tmp->next;
 		render_sector(app, tmp->wall_list);
+		tmp = tmp->next;
 	}
 }
 
