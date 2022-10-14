@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/12 16:57:11 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/14 13:27:06 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	app_prepare(t_app *app)
 	app->view_size = (t_vector2){app->view_pos.x + app->zoom_area.x, app->view_pos.y + app->zoom_area.y};
 	app->divider = 1.0f;
 	app->zoom_range = 5;
+	app->sectors = NULL;
 	SDL_ShowCursor(SDL_ENABLE);
 	//SDL_WarpMouseInWindow(app->win, WIN_W / 2, WIN_H / 2);
 }
@@ -71,8 +72,6 @@ void	app_render(t_app *app)
 	render_grid(app, 0.5f, 0x424242);
 	render_grid(app, 1.0f, 0x888888);
 	zoom_slider(app);
-	//linedrawing(app, &a, &b);
-	//render_sector(app, &a);
 	render_sectors(app);
 	if(app->active)
 		render_sector(app, app->active);
