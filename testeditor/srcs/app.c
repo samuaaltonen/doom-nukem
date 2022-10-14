@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/14 13:27:06 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:15:57 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ void	app_prepare(t_app *app)
 	app->font = TTF_OpenFont(FONT_FILE, 22);
 	if (!app->font)
 		exit_error(MSG_ERROR_FONT);
-	aspect_ratio = ((double)app->surface->h / (double)app->surface->w) * 100;
-	app->view_pos = (t_vector2){-50.0,-50.0};
+	aspect_ratio = ((double)app->surface->h / (double)app->surface->w) * -100;
+	app->view_pos = (t_vector2){-50.0, 50.0};
 	app->zoom_area = (t_vector2){100.0,aspect_ratio};
 	app->view_size = (t_vector2){app->view_pos.x + app->zoom_area.x, app->view_pos.y + app->zoom_area.y};
 	app->divider = 1.0f;
