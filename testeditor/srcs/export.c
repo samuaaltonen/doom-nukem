@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/14 15:06:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:19:53 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,10 @@ size_t	ft_lstlen(t_sectorlist *lst)
 //open a file
 int	file_open(t_app *app, char *path)
 {
-	(void)app;
 	int fd;
 	t_exportsector *export;
-	size_t	sectorcountTEMP = 0;
-	size_t	sectors;
+	size_t	counter = 0;
+	size_t	sector_count;
 	t_sectorlist *tmp;
 
 	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
@@ -77,10 +76,10 @@ int	file_open(t_app *app, char *path)
 	if(fd < 0)
 		exit_error("FILE OPEN ERROR TEMP!");
 		
-	sectors = ft_lstlen(app->sectors);
-	write(fd,&sectors,sizeof(sectors));
+	sector_count = ft_lstlen(app->sectors);
+	write(fd,&sector_count,sizeof(sector_count));
 	tmp = app->sectors;
-	while(sectorcountTEMP++ < sectors)
+	while(counter++ < sector_count)
 	{
 		write_sector(tmp, export);
 		write(fd, export, sizeof(t_exportsector));
@@ -90,7 +89,3 @@ int	file_open(t_app *app, char *path)
 	close(fd);
 	return (0);
 }
-
-//write list points to file
-
-//close file

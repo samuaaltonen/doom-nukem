@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/14 14:35:08 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:47:31 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,15 +104,15 @@ int	import_file(t_app *app, char *path)
 	int	fd;
 	t_exportsector *export;
 	t_sectorlist *new;
-	size_t sectorcountTEMP = 0;
-	size_t sectors = 0;
+	size_t counter = 0;
+	size_t sector_count;
 
 	fd = open(path, O_RDONLY, 0755);
 	if(fd < 0)
 		exit_error("FILE OPEN ERROR TEMP!");
 	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
-	read(fd, &sectors,(sizeof(size_t)));
-	while(sectorcountTEMP++ < sectors)
+	read(fd, &sector_count,(sizeof(size_t)));
+	while(counter++ < sector_count)
 	{
 		read(fd, export,sizeof(t_exportsector));
 		new = read_sector_list(export);

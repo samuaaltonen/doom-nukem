@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/13 16:16:25 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:17:51 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,10 @@ void	handle_movement(t_app *app)
 {
 	if (app->keystates & FORWARD_DOWN
 		|| app->keystates & FORWARD_W_DOWN)
-		app->view_pos.y -= MAP_SPEED;
+		app->view_pos.y += MAP_SPEED;
 	if (app->keystates & BACKWARD_DOWN
 		|| app->keystates & BACKWARD_S_DOWN)
-		app->view_pos.y += MAP_SPEED;
+		app->view_pos.y -= MAP_SPEED;
 	if (app->keystates & LEFT_DOWN)
 		app->view_pos.x -= MAP_SPEED;
 	if (app->keystates & RIGHT_DOWN)
