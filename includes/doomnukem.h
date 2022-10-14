@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/14 16:15:30 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:26:05 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -423,7 +423,7 @@ void		open_map_editor(t_app *app);
  * Font
  */
 void        load_font(t_app *app);
-void		color_font(t_app *app, int color);
+void		change_font(t_app *app, int size, int color);
 void    	render_text(t_app *app, t_point position, char *text);
 
 /**

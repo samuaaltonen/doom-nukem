@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   render_text.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:48:08 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/12 22:40:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:30:12 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
-static void		render_char(t_app *app, t_point position, SDL_Rect src);
-static SDL_Rect	get_char(char *str, int c);
+static void		render_char(t_app *app, t_point position, t_rect src);
+static t_rect	get_char(char *str, int c);
 
 void	render_text(t_app *app, t_point position, char *text)
 {
@@ -33,20 +33,20 @@ void	render_text(t_app *app, t_point position, char *text)
 	}
 }
 
-static void	render_char(t_app *app, t_point position, SDL_Rect src)
+static void	render_char(t_app *app, t_point position, t_rect src)
 {
-	SDL_Rect	dst;
+	t_rect	dst;
 
 	dst.x = position.x;
 	dst.y = position.y;
 	dst.w = app->font.size;
 	dst.h = app->font.size;
-	SDL_BlitSurface(app->font.font, &src, app->surface, &dst);
+	blit_surface(app->font.font, &src, app->surface, &dst);
 }
 
-static SDL_Rect	get_char(char *str, int c)
+static t_rect	get_char(char *str, int c)
 {
-	SDL_Rect	src;
+	t_rect	src;
 	int			font_offset;
 	int			i;
 
@@ -73,13 +73,14 @@ void	load_font(t_app *app)
 	app->font.size = 14;
 }
 
-void	color_font(t_app *app, int color)
+void	change_font(t_app *app, int size, int color)
 {
 	int		x;
 	int		y;
 	int		pixel_pos;
 	char	*pixel;
 
+	app->font.size = size;
 	x = 0;
 	y = 0;
 	while (y < app->font.font->h)

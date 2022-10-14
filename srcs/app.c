@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/14 16:06:17 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:32:16 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	app_prepare(t_app *app)
 	init_camera_plane(app);
 	//----
 	load_font(app);
-	color_font(app, 0xFFEFDCCC);
+	change_font(app, 14, 0xFFEFDCCC);
 	//----
 }
 
