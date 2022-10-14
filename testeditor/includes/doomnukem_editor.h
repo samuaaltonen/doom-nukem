@@ -179,8 +179,10 @@ typedef struct	s_sectorlist
 	t_vec2list			*wall_list;
 	t_vec2list			*floor_slope_wall;
 	t_vec2list			*floor_slope_opposite;
+	double				floor_slope_height;
 	t_vec2list			*ceiling_slope_wall;
 	t_vec2list			*ceiling_slope_opposite;
+	double				ceiling_slope_height;
 	struct s_sectorlist	*next;
 } t_sectorlist;
 
@@ -283,6 +285,25 @@ typedef struct s_sector
 	t_vector2		ceiling_slope_angles;
 }	t_sector;
 
+typedef struct s_exportsector
+{
+	t_vector2		corners[MAX_SECTOR_CORNERS];
+	int				wall_types[MAX_SECTOR_CORNERS];
+	int				wall_textures[MAX_SECTOR_CORNERS];
+	int				member_sectors[MAX_MEMBER_SECTORS];
+	int				corner_count;
+	double			floor_height;
+	double			ceiling_height;
+	int				floor_texture;
+	int				ceiling_texture;
+	double			floor_slope_height;
+	int				floor_slope_position;
+	int				floor_slope_opposite;
+	double			ceiling_slope_height;
+	int				ceiling_slope_position;
+	int				ceiling_slope_opposite;
+}	t_exportsector;
+
 /**
  * Map Editor functions
  * 
@@ -299,8 +320,8 @@ t_bool complete_sector(t_app *app);
 t_bool valid_point(t_app *app);
 t_vector2 *nearest_point_cursor(t_app *app);
 int	del_vector_list(t_vec2list **list);
-int add_to_vector_list(t_vec2list **list, t_vec2list *new);
-t_vec2list *new_vector_list(t_app *app);
+int put_to_vector_list(t_vec2list **list, t_vec2list *new);
+t_vec2list *new_vector_list(t_vector2 *point);
 void	handle_movement(t_app *app);
 void	render_grid(t_app *app, double divider, int color);
 void	draw_list_lines(t_app *app, t_vec2list *a, t_vec2list *b, int color);
@@ -311,6 +332,8 @@ void	zoom_slider(t_app *app);
 void	snap_to_nearest(t_app *app, t_point *mouse_pos, t_vector2 *snap_pos, double divider);
 int		put_sector_lst(t_app *app, t_sectorlist* new);
 t_sectorlist	*new_sector_list(t_vec2list *wall_list);
+int	file_open(t_app *app, char *path);
+int	import_file(t_app *app, char *path);
 
 
 #endif
