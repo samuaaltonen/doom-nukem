@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/14 00:24:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:15:30 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -354,12 +354,10 @@ void		app_loop(t_app *app);
  */
 SDL_Surface	*init_image(int x, int y);
 SDL_Surface	*init_xpm_image(char *path);
-void		put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color);
 void		put_pixel_to_surface_depth(t_app *app, t_point point, int color,
 				double distance);
 void		put_pixel_to_surface_check(t_app *app, t_point point, int color,
 				double distance);
-void		flush_surface(SDL_Surface *surface);
 
 /**
  * Events
@@ -431,13 +429,25 @@ void    	render_text(t_app *app, t_point position, char *text);
 /**
  * UI
  */
-void    render_button(t_app *app);
-void	blit_surface(SDL_Surface *src, t_rect *src_rect,
+void    	render_button(t_app *app);
+void		render_menu(t_app *app);
+
+
+
+/**
+ * utils_sdl
+ */
+void		put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color);
+void		flush_surface(SDL_Surface *surface);
+void		blit_surface(SDL_Surface *src, t_rect *src_rect,
 	SDL_Surface *dst, t_rect *dst_rect);
-void	map_point(t_rect *src, t_rect *dst, t_point *point);
-void	rect_from_surface(SDL_Surface *surface, t_rect *rect);
-int		check_blit(SDL_Surface *src, t_rect *src_rect,
+int			check_blit(SDL_Surface *src, t_rect *src_rect,
 	SDL_Surface *dst, t_rect *dst_rect);
+void		rect_from_surface(SDL_Surface *surface, t_rect *rect);
+/**
+ * utils
+ */
+void		map_coordinates(t_rect *src, t_rect *dst, t_point *point);
 
 #endif
 

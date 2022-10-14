@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   helper.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:32:04 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/11 16:46:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:49:57 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,29 +41,6 @@ double	get_radial_direction(t_vector2 *vector)
 		rad = rad + 2 * M_PI;
 	rad = rad * (180 / M_PI);
 	return (rad);
-}
-
-/**
- * Returns pixel color at given position.
- */
-int	get_pixel_color(SDL_Surface *surface, int x, int y)
-{
-	int		pixel_pos;
-	char	*pixel;
-
-	pixel_pos = (y * surface->pitch) + (x * IMAGE_PIXEL_BYTES);
-	if (pixel_pos < 0 || x >= surface->w || y >= surface->h)
-		return (0);
-	pixel = surface->pixels + pixel_pos;
-	return (*(int *)pixel);
-}
-
-/**
- * Flushes image (sets all pixels to black)
- */
-void	flush_surface(SDL_Surface *surface)
-{
-	ft_bzero(surface->pixels, surface->h * surface->pitch);
 }
 
 /**

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/13 23:28:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:06:17 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	app_render(t_app *app)
 	render_sectors(app);
 	//----
 	render_button(app);
+	render_menu(app);
 	render_text(app, (t_point){20, 20}, "FPS");
 	render_text(app, (t_point){20, 20}, app->conf->fps_info);
 	//----
