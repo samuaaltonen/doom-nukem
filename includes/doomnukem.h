@@ -434,6 +434,7 @@ void    	render_text(t_app *app, t_point position, char *text);
 void    render_button(t_app *app);
 void	blit_surface(SDL_Surface *src, t_rect src_rect,
 	SDL_Surface *dst, t_rect dst_rect);
+t_point	map_point(t_rect src, t_rect dst, t_point point);
 
 #endif
 
