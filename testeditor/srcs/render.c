@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/14 13:25:36 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/14 16:16:52 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	render_grid(t_app *app, double divider, int color)
  	{
 		screen.x = app->view_pos.x + (x / (double)app->surface->w) * app->zoom_area.x;
 		screen.y = app->view_pos.y + (y / (double)app->surface->h) * app->zoom_area.y;
-		if(fmod(screen.y, divider) < prev.y || screen.y == 0.0f)
+		if(fmod(screen.y, divider) > prev.y || screen.y == 0.0f)
 			render_row(app, y, color);
 		prev.y = fmod(screen.y, divider);
 		y++;
