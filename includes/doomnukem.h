@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/14 16:26:05 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/14 17:12:49 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -207,6 +207,25 @@ typedef struct s_sector
 	t_vector2		ceiling_slope_angles;
 }	t_sector;
 
+typedef struct s_exportsector
+{
+	t_vector2		corners[MAX_SECTOR_CORNERS];
+	int				wall_types[MAX_SECTOR_CORNERS];
+	int				wall_textures[MAX_SECTOR_CORNERS];
+	int				member_sectors[MAX_MEMBER_SECTORS];
+	int				corner_count;
+	double			floor_height;
+	double			ceiling_height;
+	int				floor_texture;
+	int				ceiling_texture;
+	double			floor_slope_height;
+	int				floor_slope_position;
+	int				floor_slope_opposite;
+	double			ceiling_slope_height;
+	int				ceiling_slope_position;
+	int				ceiling_slope_opposite;
+}	t_exportsector;
+
 /**
  * Rayhit struct.
 */
@@ -326,6 +345,7 @@ typedef struct s_app
 	t_editor		editor;
 	SDL_Surface		*sprite;
 	SDL_Surface		*bg;
+	t_sector		*sectors;
 }	t_app;
 
 /**
@@ -448,6 +468,12 @@ void		rect_from_surface(SDL_Surface *surface, t_rect *rect);
  * utils
  */
 void		map_coordinates(t_rect *src, t_rect *dst, t_point *point);
+
+/**
+ * maps 
+ */
+int	import_file(t_app *app, char *path);
+
 
 #endif
 

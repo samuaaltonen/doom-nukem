@@ -36,7 +36,7 @@
 # define TEXTURE_PANELS "../assets/minecraft_spritesheet.xpm"
 # define FONT_FILE "../assets/SpaceMono-Regular.ttf"
 # define MAX_SECTOR_CORNERS 16
-# define MAX_MEMBER_SECTORS 16
+# define MAX_MEMBER_SECTORS 8
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
@@ -334,6 +334,7 @@ int		put_sector_lst(t_app *app, t_sectorlist* new);
 t_sectorlist	*new_sector_list(t_vec2list *wall_list);
 int	file_open(t_app *app, char *path);
 int	import_file(t_app *app, char *path);
+void	change_all_wall_tex(t_vec2list *walls, int wall_tex);
 
 
 #endif

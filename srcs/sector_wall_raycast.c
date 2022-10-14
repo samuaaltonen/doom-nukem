@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_wall_raycast.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/14 00:18:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:03:11 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,8 +78,8 @@ void	sector_walls_raycast(t_app *app, t_wall *wall)
 	t_rayhit	hit;
 	int			x;
 
-	hit.sector = &test_sectors[wall->sector_id];
-	hit.texture = test_sectors[wall->sector_id].wall_textures[wall->wall_id];
+	hit.sector = &app->sectors[wall->sector_id];
+	hit.texture = app->sectors[wall->sector_id].wall_textures[wall->wall_id];
 	x = wall->start_x;
 	while (++x < wall->end_x)
 	{

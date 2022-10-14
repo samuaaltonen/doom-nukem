@@ -1,26 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/16 14:21:47 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/14 14:16:34 by htahvana         ###   ########.fr       */
+/*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
+/*   Updated: 2022/10/14 16:50:12 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doomnukem.h"
+#include "doomnukem_editor.h"
 
-int	main(void)
+void	change_all_wall_tex(t_vec2list *walls, int wall_tex)
 {
-	t_app	*app;
+	t_vec2list *tmp;
 
-	if (!app_init(&app)
-		|| !conf_init(app))
-		exit_error(NULL);
-	app_prepare(app);
-	import_file(app, "./test.test");
-	app_loop(app);
-	return (0);
+	tmp = walls;
+	while(tmp)
+	{
+		tmp->wall_texture = wall_tex;
+		tmp = tmp->next;
+		if(tmp == walls)
+			break;
+	}
 }
