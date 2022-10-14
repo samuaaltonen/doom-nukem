@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/13 15:18:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/14 00:24:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,17 @@ typedef struct s_point
 }	t_point;
 
 /**
+ * Struct for integer coordinate rectangule.
+ */
+typedef struct s_rect
+{
+	int				x;
+	int				y;
+	int				w;
+	int				h;
+}	t_rect;
+
+/**
  * Matrix that contains 2 t_point columns.
  */
 typedef	struct s_point_matrix
@@ -222,7 +233,10 @@ typedef struct s_wall
 	int				sector_id;
 	int				wall_id;
 	t_bool			is_member;
-	int				visibility_score;
+	int				already_selected;
+	t_vertex2		vertex;
+	int				start_x;
+	int				end_x;
 }	t_wall;
 
 /**
@@ -388,12 +402,19 @@ double		distortion_correction(double angle, double distance);
 /**
  * Sectors
  */
+t_vertex2		get_wall_vertex(t_app *app, int sector_id, int wall_id);
+void			sector_visible_walls(t_app *app);
+void			sector_walls_prepare(t_app *app);
+void			sector_walls_order(t_app *app);
+void			sector_walls_raycast(t_app *app, t_wall *wall);
 void			render_sectors(t_app *app);
-void			sector_walls_possible_visible(t_app *app);
-t_vertex2		get_sector_vertex_by_corner(t_app *app, int sector_id,
-					int wall_id);
-int				translate_window_x(t_app *app, t_vector2 coord);
-void			sector_wall_draw(t_app *app, int sector_id, int wall_id);
+
+/**
+ * Sector draw
+*/
+void			draw_wall(t_app *app, int x, t_rayhit *hit);
+void			draw_floor(t_app *app, int x, int y_start, int y_end);
+void			draw_ceiling(t_app *app, int x, int y_start, int y_end);
 
 /**
  * Editor
@@ -411,6 +432,8 @@ void    	render_text(t_app *app, t_point position, char *text);
  * UI
  */
 void    render_button(t_app *app);
+void	blit_surface(SDL_Surface *src, t_rect src_rect,
+	SDL_Surface *dst, t_rect dst_rect);
 
 #endif
 

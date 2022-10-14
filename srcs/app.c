@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/13 12:07:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/13 23:28:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void	app_render(t_app *app)
 	render_sectors(app);
 	//----
 	render_button(app);
-	render_text(app, (t_point){20, 21}, "FPS");
-	render_text(app, (t_point){20, 21}, app->conf->fps_info);
+	render_text(app, (t_point){20, 20}, "FPS");
+	render_text(app, (t_point){20, 20}, app->conf->fps_info);
 	//----
 	SDL_UpdateWindowSurface(app->win);
 }
