@@ -432,9 +432,12 @@ void    	render_text(t_app *app, t_point position, char *text);
  * UI
  */
 void    render_button(t_app *app);
-void	blit_surface(SDL_Surface *src, t_rect src_rect,
-	SDL_Surface *dst, t_rect dst_rect);
-void	map_point(t_rect src, t_rect dst, t_point *point);
+void	blit_surface(SDL_Surface *src, t_rect *src_rect,
+	SDL_Surface *dst, t_rect *dst_rect);
+void	map_point(t_rect *src, t_rect *dst, t_point *point);
+void	rect_from_surface(SDL_Surface *surface, t_rect *rect);
+int		check_blit(SDL_Surface *src, t_rect *src_rect,
+	SDL_Surface *dst, t_rect *dst_rect);
 
 #endif
 
