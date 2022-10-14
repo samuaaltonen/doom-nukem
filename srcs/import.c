@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/14 14:47:34 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:11:14 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void read_sector(t_app *app, t_exportsector *export, int sectorid, int se
 	app->sectors[sectorid].ceiling_height = export->ceiling_height;
 	app->sectors[sectorid].floor_height = export->floor_height;
 	app->sectors[sectorid].parent_sector = 0;
-		ft_printf("sectorid = %i ", sectorid);
+		ft_printf("sectorid = %i\n", sectorid);
 
 	//temporary
 	if(sectorid == 0)
@@ -67,7 +67,7 @@ int	import_file(t_app *app, char *path)
 	while(counter < sector_count)
 	{
 		read(fd, export,sizeof(t_exportsector));
-		ft_printf("export data corners=%i\n", export->corner_count);
+		ft_printf("export data corners=%i ", export->corner_count);
 		read_sector(app, export, counter, sector_count);
 		counter++;
 	}

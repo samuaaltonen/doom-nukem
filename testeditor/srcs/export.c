@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/14 14:29:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:06:35 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ static void	list_to_export(t_exportsector *export, t_vec2list *list, int count)
 //construct string
 void write_sector(t_sectorlist *sector, t_exportsector *export)
 {
-	export->ceiling_height = sector->ceiling_height;
+	//export->ceiling_height = sector->ceiling_height;
+	export->ceiling_height = 1;
 	export->ceiling_slope_height = 0;
 	export->ceiling_slope_opposite = 0;
 	export->ceiling_slope_position = 0;

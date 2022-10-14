@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_visible_walls.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/14 00:11:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/14 15:03:11 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,18 +84,18 @@ static void	loop_sector_walls(t_app *app, int *visited, int sector_id, t_bool is
 	while (i < MAX_MEMBER_SECTORS)
 	{
 		// Break loop when -1 is found (no members after that anyways)
-		if (test_sectors[sector_id].member_sectors[i] == -1)
+		if (app->sectors[sector_id].member_sectors[i] == -1)
 			break ;
-		loop_sector_walls(app, visited, test_sectors[sector_id].member_sectors[i], TRUE);
+		loop_sector_walls(app, visited, app->sectors[sector_id].member_sectors[i], TRUE);
 		i++;
 	}
 	// Loop through sector walls
 	i = 0;
-	while (i < test_sectors[sector_id].corner_count)
+	while (i < app->sectors[sector_id].corner_count)
 	{
 		// If wall is portal, recurse into portal
-		if (test_sectors[sector_id].wall_types[i] != -1)
-			loop_sector_walls(app, visited, test_sectors[sector_id].wall_types[i], FALSE);
+		if (app->sectors[sector_id].wall_types[i] != -1)
+			loop_sector_walls(app, visited, app->sectors[sector_id].wall_types[i], FALSE);
 		// Check if wall is possibly visible, if yes add to possible_visible array
 		check_possible_visible(app, sector_id, i, is_member);
 		i++;
