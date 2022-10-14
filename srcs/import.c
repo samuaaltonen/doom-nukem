@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/14 14:43:12 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/14 14:47:34 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,11 @@ static void read_sector(t_app *app, t_exportsector *export, int sectorid, int se
 	//temporary
 	if(sectorid == 0)
 	{
-		app->sectors[sectorid].member_sectors[sector_count] = -1;
+		app->sectors[sectorid].member_sectors[sector_count - 1] = -1;
 		while(--sector_count > 0)
 		{
-			app->sectors[sectorid].member_sectors[sector_count] = sector_count;
+			app->sectors[sectorid].member_sectors[sector_count - 1] = sector_count;
 		}
-			app->sectors[sectorid].member_sectors[sector_count] = -1;
 
 	}
 	else
