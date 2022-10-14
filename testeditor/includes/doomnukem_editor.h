@@ -36,7 +36,7 @@
 # define TEXTURE_PANELS "../assets/minecraft_spritesheet.xpm"
 # define FONT_FILE "../assets/SpaceMono-Regular.ttf"
 # define MAX_SECTOR_CORNERS 16
-# define MAX_MEMBER_SECTORS 16
+# define MAX_MEMBER_SECTORS 8
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>

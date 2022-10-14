@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/13 17:35:38 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/14 14:35:08 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,8 +121,3 @@ int	import_file(t_app *app, char *path)
 	close(fd);
 	return (0);
 }
-//gnl file
-
-//make lists and sectors from gnl
-
-//clode file
