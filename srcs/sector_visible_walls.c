@@ -3,14 +3,51 @@
 /*                                                        :::      ::::::::   */
 /*   sector_visible_walls.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/14 15:03:11 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/15 23:36:41 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
+
+/**
+ * Returns TRUE if given vertex has either corners visible to player.
+ * 
+ * - If both corners of the wall are in view cone returns TRUE
+ * - If not, then check intersection points with view vertices: Extend view
+ *   vertices and check intersection with the wall and return TRUE if either of
+ *   the intersection coordinates are left of camera plane (in front of player).
+*/
+static t_bool	has_visible_corner(t_app *app, t_vertex2 wall)
+{
+	t_vertex2	left;
+	t_vertex2	right;
+	t_vertex2	view_camera;
+	t_vector2	intersection;
+
+	view_camera = (t_vertex2){app->player.pos,
+		(t_vector2){app->player.pos.x + app->player.cam.x,
+		app->player.pos.y + app->player.cam.y}};
+	left = (t_vertex2){app->player.pos,
+		(t_vector2){app->player.pos.x + app->player.dir.x - app->player.cam.x,
+		app->player.pos.y + app->player.dir.y - app->player.cam.y}};
+	right = (t_vertex2){app->player.pos,
+		(t_vector2){app->player.pos.x + app->player.dir.x + app->player.cam.x,
+		app->player.pos.y + app->player.dir.y + app->player.cam.y}};
+	if (ft_vertex_side(right, wall.a) && ft_vertex_side(right, wall.b)
+		&& !ft_vertex_side(left, wall.a) && !ft_vertex_side(left, wall.b))
+		return (TRUE);
+	left = ft_vertex_resize(left, MAX_VERTEX_LENGTH, EXTEND_BOTH);
+	right = ft_vertex_resize(right, MAX_VERTEX_LENGTH, EXTEND_BOTH);
+	if ((ft_vertex_intersection(left, wall, &intersection)
+			&& ft_vertex_side(view_camera, intersection))
+		|| (ft_vertex_intersection(right, wall, &intersection)
+			&& ft_vertex_side(view_camera, intersection)))
+		return (TRUE);
+	return (FALSE);
+}
 
 /**
  * Determines if wall is possibly visible from player view.
@@ -21,7 +58,6 @@
  */
 static void	check_possible_visible(t_app *app, int sector_id, int wall_id, t_bool is_member)
 {
-	t_vertex2	view;
 	t_vertex2	wall_vertex;
 	int			player_side;
 
@@ -33,20 +69,7 @@ static void	check_possible_visible(t_app *app, int sector_id, int wall_id, t_boo
 	// Is member, now player need to be on left side of all walls (clockwise)
 	if (is_member && !player_side)
 		return ;
-	view = (t_vertex2){
-		app->player.pos,
-		(t_vector2){app->player.pos.x + app->player.dir.x + app->player.cam.x,
-			app->player.pos.y + app->player.dir.y + app->player.cam.y}
-	};
-	// Check if either of wall corners are left side of right view vertex
-	if (!ft_vertex_side(view, wall_vertex.a)
-		&& !ft_vertex_side(view, wall_vertex.b))
-		return ;
-	view.b = (t_vector2){app->player.pos.x + app->player.dir.x - app->player.cam.x,
-			app->player.pos.y + app->player.dir.y - app->player.cam.y};
-	// Check if either of wall corners are right side of left view vertex
-	if (ft_vertex_side(view, wall_vertex.a)
-		&& ft_vertex_side(view, wall_vertex.b))
+	if (!has_visible_corner(app, wall_vertex))
 		return ;
 	app->possible_visible[app->possible_visible_count].sector_id = sector_id;
 	app->possible_visible[app->possible_visible_count].wall_id = wall_id;
