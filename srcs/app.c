@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/14 17:09:24 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/15 20:34:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	app_prepare(t_app *app)
 	SDL_WarpMouseInWindow(app->win, WIN_W / 2, WIN_H / 2);
 	app->player = (t_player){(t_vector2){POSITION_START_X, POSITION_START_Y},
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
-		(t_vector2){0.f, 0.f}, 1.0f, 0.5f, 0};
+		(t_vector2){0.0, 0.0}, 1.0, 0.5, 0};
 	init_camera_plane(app);
 	//----
 	load_font(app);

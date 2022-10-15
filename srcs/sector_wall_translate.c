@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:46:07 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/14 00:11:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/15 20:29:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,8 @@
  * Translates world coordinate position to camera space and converts it to
  * window x position.
 */
-int	translate_window_x(t_app *app, t_vector2 coord)
+static int	translate_window_x(t_app *app, t_vector2 coord, double dotproduct)
 {
-	int			x;
 	t_vector2	ray;
 	double		angle;
 
@@ -29,13 +28,35 @@ int	translate_window_x(t_app *app, t_vector2 coord)
 			(t_vector2){app->player.pos.x + app->player.dir.x,
 			app->player.pos.y + app->player.dir.y}}, coord))
 		angle *= -1.0;
-	if (angle < -M_2_PI)
-		x = 0;
-	else if (angle > M_2_PI)
-		x = WIN_W - 1;
+	if (angle < -PI_3_QUARTERS || angle > PI_3_QUARTERS)
+	{
+		if (dotproduct > 0.0)
+			return (0);
+		return (WIN_W - 1);
+	}
+	if (angle < -PI_HALF)
+		return (0);
+	else if (angle > PI_HALF)
+		return (WIN_W - 1);
 	else
-		x = WIN_W / 2 + WIN_W * tan(angle) / app->player.camera_length / 2;
-	return (x);
+		return (WIN_W / 2 + WIN_W * tan(angle) / app->player.camera_length / 2);
+}
+
+/**
+ * Gets wall dotproduct. Returns negative if viewing from outside (member
+ * sectors).
+*/
+static double	get_wall_dotproduct(t_app *app, t_wall wall)
+{
+	double	dotproduct;
+
+	dotproduct = ft_vector_dotproduct(app->player.dir, (t_vector2){
+			wall.vertex.b.x - wall.vertex.a.x,
+			wall.vertex.b.y - wall.vertex.a.y
+		});
+	if (wall.is_member)
+		return (-dotproduct);
+	return (dotproduct);
 }
 
 /**
@@ -44,8 +65,9 @@ int	translate_window_x(t_app *app, t_vector2 coord)
 */
 void	sector_walls_prepare(t_app *app)
 {
-	int	i;
-	int	temp_x;
+	double	dotproduct;
+	int		i;
+	int		temp_x;
 
 	i = -1;
 	while (++i < app->possible_visible_count)
@@ -53,8 +75,9 @@ void	sector_walls_prepare(t_app *app)
 		app->possible_visible[i].vertex = get_wall_vertex(app,
 			app->possible_visible[i].sector_id,
 			app->possible_visible[i].wall_id);
-		app->possible_visible[i].start_x = translate_window_x(app, app->possible_visible[i].vertex.a);
-		app->possible_visible[i].end_x = translate_window_x(app, app->possible_visible[i].vertex.b);
+		dotproduct = get_wall_dotproduct(app, app->possible_visible[i]);
+		app->possible_visible[i].start_x = translate_window_x(app, app->possible_visible[i].vertex.a, dotproduct);
+		app->possible_visible[i].end_x = translate_window_x(app, app->possible_visible[i].vertex.b, dotproduct);
 		temp_x = app->possible_visible[i].end_x;
 		if (app->possible_visible[i].end_x < app->possible_visible[i].start_x)
 		{

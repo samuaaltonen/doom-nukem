@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:18:55 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/04 12:22:44 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/15 20:34:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	*render_skybox(void *data)
 	{
 		coord.y = -1;
 		texy = 0.f;
-		offset = (int)((coord.x + app->conf->skybox_offset / 720.f * WIN_W * 2)
+		offset = (int)((coord.x + app->conf->skybox_offset / 720.0 * WIN_W * 2)
 				* steps.x) % 512;
 		while (++coord.y < WIN_H)
 		{

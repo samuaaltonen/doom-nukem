@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 23:00:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/15 18:36:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/15 19:54:22 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,8 +153,10 @@ void	sector_walls_order(t_app *app)
 		i++;
 	}
 	i = 0;
+	/* ft_printf("Wall order:\n"); */
 	while (i < app->possible_visible_count)
 	{
+		/* ft_printf("%d:%d\n", temp[i].sector_id, temp[i].wall_id); */
 		app->possible_visible[i] = temp[i];
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/14 17:12:49 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/15 20:35:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,25 @@
 # define MSG_ERROR_TEXTURE_LOAD_FAILED "Texture files are invalid."
 # define MSG_ERROR_FONT "Could not open font file."
 # define MSG_ERROR_MOUSE "Could not set mouse cursor relative to the window."
+# define MSG_ERROR_FILE_READ "Could not read from a file."
 # define THREAD_COUNT 2
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
-# define COLLISION_OFFSET 0.25f
-# define DIRECTION_START_X 0.f
-# define DIRECTION_START_Y 1.f
-# define POSITION_START_X 0.f
-# define POSITION_START_Y 0.f
+# define COLLISION_OFFSET 0.25
+# define DIRECTION_START_X 0.0
+# define DIRECTION_START_Y 1.0
+# define POSITION_START_X 0.0
+# define POSITION_START_Y 0.0
 # define FOV 66
-# define DEG_IN_RADIAN 0.01745f
-# define RADIAN_IN_DEG 57.29578f
+# define DEG_IN_RADIAN 0.01745
+# define RADIAN_IN_DEG 57.29578
+# define PI_HALF 1.57079632679
+# define PI_3_QUARTERS 2.35619449019
 # define ROTATION_SPEED 1.8f
 # define MOVEMENT_SPEED 3.2f
-# define MAX_RAY_DISTANCE 25.f
+# define MAX_RAY_DISTANCE 25.0
 # define TEX_SIZE 64
-# define MOUSE_SENSITIVITY 20.f
-//# define TEXTURE_PANELS "./assets/texture_spritesheet.xpm"
+# define MOUSE_SENSITIVITY 20.0
 # define TEXTURE_PANELS "./assets/minecraft_spritesheet.xpm"
 # define TEXTURE_BACKGROUND "./assets/bg.xpm"
 # define FONT_FILE "./assets/SpaceMono-Regular.ttf"
@@ -52,8 +54,8 @@
 # define MAX_MEMBER_SECTORS 8
 # define MAX_VISIBLE_SECTORS 64
 # define MAX_VISIBLE_WALLS 256
-# define MAX_VIEW_DISTANCE 100.f
-# define MAX_VERTEX_LENGTH 1048576.f
+# define MAX_VIEW_DISTANCE 100.0
+# define MAX_VERTEX_LENGTH 1048576.0
 # define EDITOR_BG_COLOR 0x000000
 # define EDITOR_GRID_COLOR 0x424242
 # define EDITOR_MENU_COLOR 0xD3D3D3

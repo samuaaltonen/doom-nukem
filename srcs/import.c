@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/14 15:11:14 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/15 18:11:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,15 @@ int	import_file(t_app *app, char *path)
 		exit_error("FILE OPEN ERROR TEMP!");
 	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
 
-	read(fd, &sector_count,(sizeof(size_t)));
+	if (read(fd, &sector_count,(sizeof(size_t))) == -1)
+		exit_error(MSG_ERROR_FILE_READ);
 	
 	sectors = (t_sector *)malloc(sizeof(t_sector) * sector_count); 
 	app->sectors = sectors;
 	while(counter < sector_count)
 	{
-		read(fd, export,sizeof(t_exportsector));
+		if (read(fd, export,sizeof(t_exportsector)) == -1)
+			exit_error(MSG_ERROR_FILE_READ);
 		ft_printf("export data corners=%i ", export->corner_count);
 		read_sector(app, export, counter, sector_count);
 		counter++;
