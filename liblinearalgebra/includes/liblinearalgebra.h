@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:46:18 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/13 12:17:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/15 18:35:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_matrix2	ft_matrix_inverse(t_matrix2 matrix);
 int			ft_vertex_intersection(t_vertex2 vertex_a, t_vertex2 vertex_b,
 				t_vector2 *intersection);
 int			ft_vertex_intersection_through(t_vertex2 vertex_a,
-				t_vertex2 vertex_b, t_vector2 *intersection);
+				t_vertex2 vertex_b);
 t_vertex2	ft_vertex_resize(t_vertex2 vertex, double length, int side);
 double		ft_vector_dotproduct(t_vector2 a, t_vector2 b);
 double		ft_vector_crossproduct(t_vector2 a, t_vector2 b);
