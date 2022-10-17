@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/17 14:21:59 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:12:53 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,15 @@ return (1);
 //check if point is first element in list and complete sector
 t_bool complete_sector(t_app *app)
 {
+	t_sectorlist *new;
+
 	app->active_last->next = app->active;
-	put_sector_lst(app,new_sector_list(app->active));
+	new = put_sector_lst(app,new_sector_list(app->active));
 	app->active = NULL;
 	app->active_last = NULL;
 	app->list_ongoing = FALSE;
 	app->list_creation = FALSE;
-
- return(0);
-
+	new->parent_sector = find_parent_sector(app, new);
+	
+ return (0);
 }

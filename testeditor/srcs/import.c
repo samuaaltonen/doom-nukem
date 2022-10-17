@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/14 15:47:31 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:23:35 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ void read_sector(t_sectorlist *sector, t_exportsector *export)
 	sector->floor_texture = export->floor_texture;
 	sector->id = 0;
 	sector->member_sectors = NULL;
+	sector->parent_sector = NULL;
 	sector->next = NULL;
 }
 
@@ -116,7 +117,7 @@ int	import_file(t_app *app, char *path)
 	{
 		read(fd, export,sizeof(t_exportsector));
 		new = read_sector_list(export);
-		put_sector_lst(app, new);
+		find_parent_sector(app, put_sector_lst(app, new));
 	}
 	close(fd);
 	return (0);

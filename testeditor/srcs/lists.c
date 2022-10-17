@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:42:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/17 14:22:29 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/17 15:07:24 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,23 @@ int		put_to_vector_list(t_vec2list **list, t_vec2list *new)
 	return (0);
 }
 
-int	put_sector_lst(t_app *app, t_sectorlist* new)
+t_sectorlist	*put_sector_lst(t_app *app, t_sectorlist* new)
 {
 	t_sectorlist *iter;
 
 	if(!new)
 		exit_error("editor:add_sector_lst failed!\n");
-	if(!app->sectors)
+	if(app->sectors)
 	{
-		app->sectors = new;
-		return(0);
+		iter = app->sectors;
+		while (iter->next)
+			iter = iter->next;
+		new->id = iter->id + 1;
+		iter->next = new;
 	}
-	iter = app->sectors;
-	while (iter->next)
-		iter = iter->next;
-	new->id = iter->id + 1;
-	iter->next = new;
-	return(0);
+	else
+		app->sectors = new;
+	return(new);
 }
 
 /**
