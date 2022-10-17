@@ -6,7 +6,7 @@
 #    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/10/14 16:29:37 by htahvana         ###   ########.fr        #
+#    Updated: 2022/10/17 16:36:57 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = doom-nukem-editor
 CC = gcc
 
 FILES = editor.c events_key.c app.c events.c image.c main.c render.c \
- linedraw.c lists.c export.c import.c tools.c TESTDATA.c
+ linedraw.c lists.c export.c import.c tools.c editor_menu.c TESTDATA.c
 
 LIBFT = ../libft/libft.a
 LIBLINEARALGEBRA = ../liblinearalgebra/liblinearalgebra.a

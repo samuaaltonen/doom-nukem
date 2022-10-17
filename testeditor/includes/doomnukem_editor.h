@@ -339,6 +339,7 @@ void			change_all_wall_tex(t_vec2list *walls, int wall_tex);
 int				inside_sector_check(t_app *app, t_sectorlist *sector);
 t_sectorlist	*click_sector(t_app *app);
 t_sectorlist	*find_parent_sector(t_app *app, t_sectorlist *sector);
+void			change_selected_wall_tex(t_app *app, t_vec2list *wall, int wall_id);
 
 
 #endif

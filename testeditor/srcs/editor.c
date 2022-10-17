@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/17 16:12:53 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:40:48 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ t_bool complete_sector(t_app *app)
 	app->list_ongoing = FALSE;
 	app->list_creation = FALSE;
 	new->parent_sector = find_parent_sector(app, new);
+	change_all_wall_tex(new->wall_list, new->id);
 	
  return (0);
 }

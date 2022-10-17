@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/14 16:17:51 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/17 16:38:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,28 @@ int	events_keyup(int keycode, t_app *app)
 		file_open(app, "./test.test");
 	if (keycode == SDLK_o)
 		import_file(app, "./test.test");
+
+	//temp
+	if (keycode == SDLK_0)
+		change_selected_wall_tex(app, app->active, 0);
+	if (keycode == SDLK_1)
+		change_selected_wall_tex(app, app->active, 1);
+	if (keycode == SDLK_2)
+		change_selected_wall_tex(app, app->active, 2);
+	if (keycode == SDLK_3)
+		change_selected_wall_tex(app, app->active, 3);
+	if (keycode == SDLK_4)
+		change_selected_wall_tex(app, app->active, 4);
+	if (keycode == SDLK_5)
+		change_selected_wall_tex(app, app->active, 5);
+	if (keycode == SDLK_6)
+		change_selected_wall_tex(app, app->active, 6);
+	if (keycode == SDLK_7)
+		change_selected_wall_tex(app, app->active, 7);
+	if (keycode == SDLK_8)
+		change_selected_wall_tex(app, app->active, 8);
+	if (keycode == SDLK_9)
+		change_selected_wall_tex(app, app->active, 9);
 	return (0);
 }
 
