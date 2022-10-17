@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:52 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/13 16:47:59 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/17 14:34:54 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,8 @@ int	events_mouse_track(t_app *app)
 	SDL_GetMouseState(&current_pos.x, &current_pos.y);		
 	snap_to_nearest(app, &current_pos, &app->mouse_click, app->divider);
 	ft_printf("x=%f, y=%f modes:c%i,o%i\n",app->mouse_click.x, app->mouse_click.y, app->list_creation, app->list_ongoing);
+	if(app->active_sector)
+		ft_printf("inside = %i\n", app->active_sector->id);
 	return (0);
 }
 
@@ -77,21 +79,17 @@ int	events_mouse_track(t_app *app)
 t_vec2list	*find_clicked_vector(t_app *app)
 {
 	t_vec2list		*found;
-	t_sectorlist	*sector;
-
-	sector = app->sectors;
-	while(sector)
+	if(app->active_sector)
 	{
-		found = sector->wall_list;
+		found = app->active_sector->wall_list;
 		while(found)
 		{
 			if(app->mouse_click.x == found->point.x && app->mouse_click.y == found->point.y)
 				return(found);
-			if(found->next == sector->wall_list)
+			if(found->next == app->active_sector->wall_list)
 				break;
 			found = found->next;
 		}
-		sector = sector->next;
 	}
 	return(NULL);
 }
@@ -104,14 +102,13 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 {
 	t_vec2list *tmp;
 
-	(void)event;
-	if(!app->list_ongoing && app->list_creation)
+	if(event->button.button == SDL_BUTTON_LEFT && !app->list_ongoing && app->list_creation)
 	{
 		app->active = new_vector_list(&app->mouse_click);
 		app->active_last = app->active;
 		app->list_ongoing = TRUE;
 	}
-	else if(app->list_ongoing)
+	else if(event->button.button == SDL_BUTTON_LEFT && app->list_ongoing)
 	{
 
 		if(app->mouse_click.x == app->active->point.x && app->mouse_click.y == app->active->point.y)
@@ -125,9 +122,20 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 			app->active_last = tmp;
 		}
 	}
+	else if(event->button.button == SDL_BUTTON_LEFT)
+	{
+		//if active sector has member sectors find them before vertexes
+		
+		if(app->active_sector)
+			app->active = find_clicked_vector(app);
+		else
+			app->active_sector = click_sector(app);
+
+	}
 	else
 	{
-		app->active = find_clicked_vector(app);
+		app->active = NULL;
+		app->active_sector = NULL;
 	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:42:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/13 17:26:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/17 14:22:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,7 @@ int	put_sector_lst(t_app *app, t_sectorlist* new)
 	iter = app->sectors;
 	while (iter->next)
 		iter = iter->next;
+	new->id = iter->id + 1;
 	iter->next = new;
 	return(0);
 }
@@ -90,6 +91,7 @@ t_sectorlist	*new_sector_list(t_vec2list *wall_list)
 		tmp = tmp->next;
 	}
 	new->wall_list = wall_list;
+	new->id = 0;
 	new->next = NULL;
 	return (new);
 }

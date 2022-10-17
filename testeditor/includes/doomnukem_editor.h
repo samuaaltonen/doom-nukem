@@ -316,25 +316,27 @@ typedef struct	s_line
 	int		err;
 }	t_line;
 
-t_bool complete_sector(t_app *app);
-t_bool valid_point(t_app *app);
-t_vector2 *nearest_point_cursor(t_app *app);
-int	del_vector_list(t_vec2list **list);
-int put_to_vector_list(t_vec2list **list, t_vec2list *new);
-t_vec2list *new_vector_list(t_vector2 *point);
-void	handle_movement(t_app *app);
-void	render_grid(t_app *app, double divider, int color);
-void	draw_list_lines(t_app *app, t_vec2list *a, t_vec2list *b, int color);
-void	render_sectors(t_app *app);
-void	render_sector(t_app *app, t_vec2list *sector_start);
-void	draw_line(t_app *app, t_vector2 *a, t_vector2 *b, int color);
-void	zoom_slider(t_app *app);
-void	snap_to_nearest(t_app *app, t_point *mouse_pos, t_vector2 *snap_pos, double divider);
-int		put_sector_lst(t_app *app, t_sectorlist* new);
+t_bool			complete_sector(t_app *app);
+t_bool			valid_point(t_app *app);
+t_vector2		*nearest_point_cursor(t_app *app);
+int				del_vector_list(t_vec2list **list);
+int				put_to_vector_list(t_vec2list **list, t_vec2list *new);
+t_vec2list		*new_vector_list(t_vector2 *point);
+void			handle_movement(t_app *app);
+void			render_grid(t_app *app, double divider, int color);
+void			draw_list_lines(t_app *app, t_vec2list *a, t_vec2list *b, int color);
+void			render_sectors(t_app *app);
+void			render_sector(t_app *app, t_vec2list *sector_start);
+void			draw_line(t_app *app, t_vector2 *a, t_vector2 *b, int color);
+void			zoom_slider(t_app *app);
+void			snap_to_nearest(t_app *app, t_point *mouse_pos, t_vector2 *snap_pos, double divider);
+int				put_sector_lst(t_app *app, t_sectorlist* new);
 t_sectorlist	*new_sector_list(t_vec2list *wall_list);
-int	file_open(t_app *app, char *path);
-int	import_file(t_app *app, char *path);
-void	change_all_wall_tex(t_vec2list *walls, int wall_tex);
+int				file_open(t_app *app, char *path);
+int				import_file(t_app *app, char *path);
+void			change_all_wall_tex(t_vec2list *walls, int wall_tex);
+int				inside_sector_check(t_app *app, t_sectorlist *sector);
+t_sectorlist	*click_sector(t_app *app);
 
 
 #endif
