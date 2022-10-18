@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/17 16:41:17 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:28:40 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,26 @@ static void	list_to_export(t_exportsector *export, t_vec2list *list, int count)
 	}
 }
 
+static void	member_export(t_app *app, t_exportsector *export, t_sectorlist *sector)
+{
+	int	i;
+
+	i = 0;
+	while (sector->member_sectors[i])
+	{
+		export->member_sectors[i] = get_sector_id(app, sector->member_sectors[i]);
+		ft_printf("%i\n", export->member_sectors[i]);
+		i++;
+	}
+	while (i < MAX_MEMBER_SECTORS)
+	{
+		export->member_sectors[i] = -1;
+		i++;
+	}
+}
+
 //construct string
-void write_sector(t_sectorlist *sector, t_exportsector *export)
+void write_sector(t_app *app, t_sectorlist *sector, t_exportsector *export)
 {
 	//export->ceiling_height = sector->ceiling_height;
 	export->ceiling_height = 1;
@@ -41,6 +59,7 @@ void write_sector(t_sectorlist *sector, t_exportsector *export)
 	export->ceiling_texture = 0;
 	export->corner_count = sector->corner_count;
 	list_to_export(export, sector->wall_list, export->corner_count);
+	member_export(app, export, sector);
 	export->floor_height = sector->floor_height;
 	export->floor_slope_height = 0;
 	export->floor_slope_opposite = 0;
@@ -93,8 +112,8 @@ int	file_open(t_app *app, char *path)
 	tmp = app->sectors;
 	while(counter++ < sector_count)
 	{
-		ft_printf("export_texture %i\n", export->wall_textures[0]);
-		write_sector(tmp, export);
+		write_sector(app, tmp, export);
+		ft_printf("exported sector corners %i\n", export->corner_count);
 		write(fd, export, sizeof(t_exportsector));
 		tmp = tmp->next;
 	}

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/17 16:23:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:31:51 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void read_sector(t_sectorlist *sector, t_exportsector *export)
 	sector->corner_count = export->corner_count;
 	sector->wall_list = NULL;
 	export_to_list(export, &sector->wall_list, export->corner_count);
+	ft_memcpy(sector->member_links,export->member_sectors, MAX_MEMBER_SECTORS * sizeof(int));
 	sector->ceiling_slope_opposite = ft_lstindex(sector->wall_list, export->ceiling_slope_opposite);
 	sector->ceiling_slope_wall = ft_lstindex(sector->wall_list, export->ceiling_slope_position);
 	sector->ceiling_texture = export->ceiling_texture;
@@ -80,8 +81,6 @@ void read_sector(t_sectorlist *sector, t_exportsector *export)
 	sector->floor_slope_opposite = ft_lstindex(sector->wall_list, export->floor_slope_opposite);
 	sector->floor_slope_wall = ft_lstindex(sector->wall_list, export->floor_slope_position);
 	sector->floor_texture = export->floor_texture;
-	sector->id = 0;
-	sector->member_sectors = NULL;
 	sector->parent_sector = NULL;
 	sector->next = NULL;
 }
@@ -97,6 +96,42 @@ t_sectorlist	*read_sector_list(t_exportsector *export)
 		return (NULL);
 	read_sector(new, export);
 	return (new);
+}
+
+static t_sectorlist *sector_by_index(t_app *app, int index)
+{
+	t_sectorlist *head;
+	int i;
+
+	i = 0;
+	head = app->sectors;
+	while (head && i != index)
+	{
+		head = head->next;
+		i++;
+	}
+	return (head);
+}
+
+void	relink_sectors(t_app *app)
+{
+	int i;
+	t_sectorlist *head;
+
+
+	head = app->sectors;
+	i = 0;
+	while (head)
+	{
+		while (head->member_links[i] != -1)
+		{
+			head->member_sectors[i] = sector_by_index(app, head->member_links[i]);
+			head->member_sectors[i]->parent_sector = head;
+			i++;
+		}
+		head = head->next;
+	}
+
 }
 
 //open a file
@@ -117,8 +152,10 @@ int	import_file(t_app *app, char *path)
 	{
 		read(fd, export,sizeof(t_exportsector));
 		new = read_sector_list(export);
-		find_parent_sector(app, put_sector_lst(app, new));
+		put_sector_lst(app, new);
 	}
 	close(fd);
+	relink_sectors(app);
+
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:52 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/17 16:42:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:22:10 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,31 +68,23 @@ int	events_mouse_track(t_app *app)
 	ft_printf("x=%f, y=%f modes:c%i,o%i\n",app->mouse_click.x, app->mouse_click.y, app->list_creation, app->list_ongoing);
 	if(app->active_sector)
 	{
-		ft_printf("inside = %i\n", app->active_sector->id);
+		ft_printf("inside = %i\n", app->active_sector);
+		for(int i = 0; i < MAX_MEMBER_SECTORS && app->active_sector->member_sectors[i]; i++)
+			ft_printf("%i\n",get_sector_id(app, app->active_sector->member_sectors[i]));
 		if(app->active_sector->parent_sector)
-			ft_printf("parent id %i\n ",app->active_sector->parent_sector->id);
+			ft_printf("parent id %i\n ",app->active_sector->parent_sector);
 	}
 
 	if(app->active)
 		ft_printf("selected point x:%f, y:%f, wall tex id %i\n",app->active->point.x, app->active->point.y, app->active->wall_texture);
 
 
-	//testprint
-	t_sectorlist *tmp = app->sectors;
-	while (tmp)
-	{
-		if(tmp->parent_sector)
-			ft_printf("%i\n",tmp->parent_sector->id);
-		tmp = tmp->next;
-	}
-
 	return (0);
 }
 
 
 /**
- * loops through all points in all sectors to find matchin coordinates
- * // future add checking only within active sector
+ * loops through all points in a sectors to find matching point
  */
 t_vec2list	*find_clicked_vector(t_app *app)
 {
@@ -112,6 +104,23 @@ t_vec2list	*find_clicked_vector(t_app *app)
 	return(NULL);
 }
 
+
+t_sectorlist *find_child_sector(t_app *app)
+{
+	int				i;
+	t_sectorlist	*tmp;
+
+	i = 0;
+	while(i < MAX_MEMBER_SECTORS && app->active_sector->member_sectors[i])
+	{
+		tmp = app->active_sector->member_sectors[i];
+		if(inside_sector_check(app, tmp))
+			return (tmp);
+		i++;
+	}
+	return (NULL);
+}
+
 /**
  * if not in sector creation, select points
  * else add new points to list or starts a new list
@@ -128,11 +137,16 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 	}
 	else if(event->button.button == SDL_BUTTON_LEFT && app->list_ongoing)
 	{
-
-		if(app->mouse_click.x == app->active->point.x && app->mouse_click.y == app->active->point.y)
+		//if list creation is cancelled delete existing line and quit, segfaults
+	/* 	if(!app->list_creation)
 		{
+			del_vector_list(&(app->active));
+			app->active = NULL;
+			app->active_last = NULL;
+			app->list_ongoing = FALSE;
+		} */
+		if(app->mouse_click.x == app->active->point.x && app->mouse_click.y == app->active->point.y)
 			return (complete_sector(app));
-		}
 		else if(valid_point(app))
 		{
 			tmp = new_vector_list(&app->mouse_click);
@@ -143,17 +157,22 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 	else if(event->button.button == SDL_BUTTON_LEFT)
 	{
 		//if active sector has member sectors find them before vertexes
-		
 		if(app->active_sector)
+		{
+			if(app->active_sector->member_sectors[0] && find_child_sector(app))
+				app->active_sector = find_child_sector(app);
 			app->active = find_clicked_vector(app);
+		}
 		else
 			app->active_sector = click_sector(app);
-
 	}
 	else
 	{
 		app->active = NULL;
-		app->active_sector = NULL;
+		if(app->active_sector)
+			app->active_sector = app->active_sector->parent_sector;
+		else
+			app->active_sector = NULL;
 	}
 	return (0);
 }

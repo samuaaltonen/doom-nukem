@@ -169,10 +169,10 @@ typedef struct	s_vec2list
  */
 typedef struct	s_sectorlist
 {
-	int					id;
 	int					corner_count;
-	struct s_sectorlist	**member_sectors;
-	struct s_sectorlist *parent_sector;
+	struct s_sectorlist	*member_sectors[MAX_MEMBER_SECTORS];
+	int					member_links[MAX_MEMBER_SECTORS];
+	struct s_sectorlist	*parent_sector;
 	double				floor_height;
 	double				ceiling_height;
 	int					floor_texture;
@@ -210,6 +210,7 @@ typedef struct s_app
 	t_vec2list			*active_last;
 	t_bool				list_creation;
 	t_bool				list_ongoing;
+	int					sectorcount;
 }	t_app;
 
 /**
@@ -340,6 +341,10 @@ int				inside_sector_check(t_app *app, t_sectorlist *sector);
 t_sectorlist	*click_sector(t_app *app);
 t_sectorlist	*find_parent_sector(t_app *app, t_sectorlist *sector);
 void			change_selected_wall_tex(t_app *app, t_vec2list *wall, int wall_id);
+t_sectorlist	*sector_pop(t_app *app, t_sectorlist **pop, void (*del)(void *, size_t));
+void			sector_delone(t_sectorlist **sector, void (*del)(void*, size_t));
+int				get_sector_id(t_app *app, t_sectorlist *sector);
+void			relink_member_sectors(t_app *app);
 
 
 #endif

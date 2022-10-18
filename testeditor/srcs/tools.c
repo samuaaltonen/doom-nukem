@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/17 16:18:33 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:22:30 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,76 @@ void	change_all_wall_tex(t_vec2list *walls, int wall_tex)
 	}
 }
 
+int		get_sector_id(t_app *app, t_sectorlist *sector)
+{
+	t_sectorlist	*tmp;
+	int				i;
+
+	i = 0;
+	if(!sector)
+		return (-1);
+	tmp = app->sectors;
+	while(tmp != sector)
+	{
+		tmp = tmp->next;
+		i++;
+	}
+	return (i);
+}
+
+void	sector_delone(t_sectorlist **sector, void (*del)(void*, size_t))
+{
+	(void)del;
+	int i;
+
+	i = 0;
+	if((*sector)->parent_sector)
+	{
+		while ((*sector)->parent_sector->member_sectors[i] != *sector)
+			i++;
+		(*sector)->parent_sector->member_sectors[i] = NULL;
+		while (++i < MAX_MEMBER_SECTORS && (*sector)->parent_sector->member_sectors[i])
+		{
+			(*sector)->parent_sector->member_sectors[i - 1] = (*sector)->parent_sector->member_sectors[i];
+			(*sector)->parent_sector->member_sectors[i] = NULL;
+		}
+		(*sector)->parent_sector = NULL;
+	}
+	free(*sector);
+	*sector = NULL;
+}
+
+
+t_sectorlist *sector_pop(t_app *app, t_sectorlist **pop, void (*del)(void *, size_t))
+{
+	t_sectorlist *prev;
+	t_sectorlist *head;
+
+	if(!(app->sectors) || !pop || !(*pop))
+		return (NULL);
+	prev = NULL;
+	head = app->sectors;
+	while(head->next && head != *pop)
+	{
+		prev = head;
+		head = head->next;
+	}
+	if (head == *pop)
+	{
+		
+		if(prev)
+			prev->next = (*pop)->next;
+		if(head == app->sectors)
+			app->sectors = (*pop)->next;
+		if(del)
+			sector_delone(&(app->active_sector), del);
+		app->active_sector = NULL;
+		app->sectorcount--;
+	}
+	return (*pop);
+}
+
+
 t_sectorlist *click_sector(t_app *app)
 {
 	t_sectorlist *tmp;
@@ -34,7 +104,13 @@ t_sectorlist *click_sector(t_app *app)
 	while(tmp)
 	{
 		if(inside_sector_check(app, tmp))
+		{
+			while (tmp->parent_sector)
+			{
+				tmp = tmp->parent_sector;
+			}
 			return (tmp);
+		}
 		tmp = tmp->next;
 	}
 	return (NULL);

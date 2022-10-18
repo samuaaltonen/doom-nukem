@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/17 16:40:48 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/18 17:22:05 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,24 @@ t_bool	valid_point(t_app *app)
 return (1);
 }
 
+
+static void	add_member_sector(t_sectorlist *parent, t_sectorlist *child)
+{
+	int i;
+
+	i = 0;
+	if(parent && child)
+	{
+		while (parent->member_sectors[i])
+			i++;
+		if(i >= MAX_MEMBER_SECTORS)
+			exit_error("Trying to add too many members\n");
+		parent->member_sectors[i] = child;
+	}
+}
+
 //check if point is first element in list and complete sector
-t_bool complete_sector(t_app *app)
+t_bool	complete_sector(t_app *app)
 {
 	t_sectorlist *new;
 
@@ -70,8 +86,9 @@ t_bool complete_sector(t_app *app)
 	app->active_last = NULL;
 	app->list_ongoing = FALSE;
 	app->list_creation = FALSE;
-	new->parent_sector = find_parent_sector(app, new);
-	change_all_wall_tex(new->wall_list, new->id);
+	new->parent_sector = app->active_sector;
+	add_member_sector(new->parent_sector, new);
+	change_all_wall_tex(new->wall_list, app->sectorcount);
 	
  return (0);
 }
