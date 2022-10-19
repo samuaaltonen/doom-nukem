@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/19 15:49:57 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:59:35 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,77 @@ void	render_grid(t_app *app, double divider, int color)
 		x++;
 	}
 		//-50 + ( 0  / 1000) * 100
+}
+
+static void	sector_bounds(t_app *app, t_sectorlist *sector, t_point *min, t_point *max)
+{
+	t_vec2list *tmp;
+	t_point screen;
+
+	tmp = sector->wall_list;
+	min->x = (tmp->point.x - app->view_pos.x) * (app->surface->w) / (app->view_size.x - app->view_pos.x);
+	min->y = (tmp->point.y - app->view_pos.y) * (app->surface->h) / (app->view_size.y - app->view_pos.y);
+	max->x = min->x;
+	max->y = min->y;
+	while(tmp)
+	{
+		screen.x = (tmp->point.x - app->view_pos.x) * (app->surface->w) / (app->view_size.x - app->view_pos.x);
+		screen.y = (tmp->point.y - app->view_pos.y) * (app->surface->h) / (app->view_size.y - app->view_pos.y);
+		if(screen.x < min->x)
+			min->x = screen.x;
+		if(screen.x > max->x)
+			max->x = screen.x;
+		if(screen.y < min->y)
+			min->y = screen.y;
+		if(screen.y > max->y)
+			max->y = screen.y;
+		tmp = tmp->next;
+		if(tmp == sector->wall_list)
+			break;
+	}
+}
+
+void	render_fill_active_sector(t_app *app)
+{
+	t_vec2list *a;
+	t_vec2list *b;
+	t_point min;
+	t_point max;
+	t_point cur;
+
+	min = (t_point){0,0};
+	max = (t_point){0,0};
+
+	if(app->active_sector)
+	{
+		a = app->active_sector->wall_list->next;
+		b = app->active_sector->wall_list->next;
+		sector_bounds(app,app->active_sector, &min, &max);
+		ft_printf("min x%i y%i, max x%i y%i\n", min.x, min.y, max.x, max.y);
+		while(a->next != app->active_sector->wall_list && b->next != app->active_sector->wall_list)
+		{
+			if(a->next == b)
+				a = b->next;
+			else if(b->next == a)
+				b = a->next;
+			else
+				b = b->next;
+			//draw triangle start-a-b
+		}
+		
+		//temp draw square instead
+		cur = (t_point){min.x, min.y};
+		while(cur.y < max.y)
+		{
+			cur.x = min.x;
+			while(cur.x < max.x)
+			{
+				put_pixel_to_surface(app->surface, cur.x, cur.y, 0x202020);
+				cur.x++;
+			}
+			cur.y++;
+		}
+	}
 }
 
 void	render_selection_point(t_app *app)

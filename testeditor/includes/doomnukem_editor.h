@@ -347,6 +347,7 @@ void			sector_delone(t_sectorlist **sector, void (*del)(void*, size_t));
 int				get_sector_id(t_app *app, t_sectorlist *sector);
 void			relink_member_sectors(t_app *app);
 void			link_wall_to_sector(t_app *app);
+void			render_fill_active_sector(t_app *app);
 
 
 #endif
