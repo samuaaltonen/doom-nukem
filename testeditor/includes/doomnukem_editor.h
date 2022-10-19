@@ -210,6 +210,7 @@ typedef struct s_app
 	t_vec2list			*active_last;
 	t_bool				list_creation;
 	t_bool				list_ongoing;
+	t_bool				portal_selection;
 	int					sectorcount;
 }	t_app;
 
@@ -345,6 +346,7 @@ t_sectorlist	*sector_pop(t_app *app, t_sectorlist **pop, void (*del)(void *, siz
 void			sector_delone(t_sectorlist **sector, void (*del)(void*, size_t));
 int				get_sector_id(t_app *app, t_sectorlist *sector);
 void			relink_member_sectors(t_app *app);
+void			link_wall_to_sector(t_app *app);
 
 
 #endif

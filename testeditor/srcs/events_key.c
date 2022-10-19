@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/18 15:49:13 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/19 13:27:00 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ int	events_keyup(int keycode, t_app *app)
 		import_file(app, "./test.test");
 	if(keycode == SDLK_DELETE)
 		sector_pop(app, &(app->active_sector), NULL);
+	if(keycode == SDLK_l)
+		link_wall_to_sector(app);
 
 	//temp
 	if (keycode == SDLK_0)
