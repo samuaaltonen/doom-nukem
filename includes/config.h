@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/19 15:41:27 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/19 17:45:50 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,6 @@ typedef struct s_thread_data
 }	t_thread_data;
 
 /**
- * Struct for title screen.
- */
-typedef struct s_title_screen
-{
-	int				active;
-	SDL_Surface		texture;
-}   t_title_screen;
-
-/**
  * Struct for configuration variables of the application.
  */
 typedef struct s_conf
@@ -69,7 +60,6 @@ typedef struct s_conf
 	int				mouse_active;
 	double			movement_speed;
 	double			rotation_speed;
-	t_title_screen	title_screen;
 }	t_conf;
 
 #endif

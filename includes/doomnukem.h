@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/19 15:41:49 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/19 18:00:59 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,8 @@ typedef struct s_app
 	int				possible_visible_count;
 	t_thread_data	thread_info[THREAD_COUNT];
 	t_player		player;
+	int				title_screen;
+	int				game_active;
 	SDL_Surface		*sprite;
 	SDL_Surface		*bg;
 	t_sector		*sectors;
@@ -156,6 +158,7 @@ void    	render_text(t_app *app, t_point position, char *text);
 void		render_ui(t_app *app);
 void    	render_button(t_app *app);
 void		render_menu(t_app *app);
+void		title_screen(t_app *app);
 
 
 

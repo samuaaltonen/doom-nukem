@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/13 12:07:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/19 18:05:19 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,12 @@ int	events_keyup(int keycode, t_app *app)
 		app->conf->toggle_help = ft_toggle(app->conf->toggle_help);
 	if (keycode == SDLK_e)
 		app->conf->toggle_loop = ft_toggle(app->conf->toggle_loop);
+	if (keycode == SDLK_SPACE)
+	{
+		app->game_active = ft_toggle(app->game_active);
+		app->title_screen = ft_toggle(app->title_screen);
+	}
+		
 	return (0);
 }
 

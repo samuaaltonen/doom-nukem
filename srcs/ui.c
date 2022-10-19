@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/19 15:06:36 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/19 17:59:41 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	render_ui(t_app *app)
 {
 	render_button(app);
-	render_menu(app);
 
 	change_font(app, 14, 0xFFEFDCCC);
 	render_text(app, (t_point){20, 20}, "FPS");
@@ -34,7 +33,7 @@ void	render_button(t_app *app)
 	dst.y = 10;
 	dst.w = 128;
 	dst.h = 32;
-	button = SDL_LoadBMP("assets/ui/button_iddle.bmp");
+	button = SDL_LoadBMP(TEXTURE_BUTTON);
 	rect_from_surface(button, &src);
 	blit_surface(button, &src, app->surface, &dst);
 	SDL_FreeSurface(button);
@@ -62,6 +61,14 @@ void	render_menu(t_app *app)
 
 void	title_screen(t_app *app)
 {
-	if (app)
-		return ;
+	SDL_Surface	*bg;
+	t_rect		dst;
+	t_rect		src;
+
+	bg = SDL_LoadBMP("assets/ui/menu-bg.bmp");
+	rect_from_surface(bg, &src);
+	rect_from_surface(app->surface, &dst);
+	blit_surface(bg, &src, app->surface, &dst);
+	SDL_FreeSurface(bg);
+	render_menu(app);
 }

@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/19 15:43:50 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/19 18:00:54 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,13 @@ void	app_render(t_app *app)
 		render_multithreading(app, render_polygons);
 	} */
 	flush_surface(app->surface);
-	//if (app->conf->title_screen.active)
-		//title_screen(app);
-	//else
-	//{
+	if (app->title_screen)
+		title_screen(app);
+	else if (app->game_active)
+	{
 		render_sectors(app);
 		render_ui(app);
-	//}
+	}
 	SDL_UpdateWindowSurface(app->win);
 }
 
