@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/18 17:31:51 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/19 13:21:58 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void read_sector(t_sectorlist *sector, t_exportsector *export)
 	sector->wall_list = NULL;
 	export_to_list(export, &sector->wall_list, export->corner_count);
 	ft_memcpy(sector->member_links,export->member_sectors, MAX_MEMBER_SECTORS * sizeof(int));
+	ft_printf("0th %i, 1st %i, 2nd %i, 3rd %i\n",sector->member_links[0], sector->member_links[1],sector->member_links[2], sector->member_links[3]);
 	sector->ceiling_slope_opposite = ft_lstindex(sector->wall_list, export->ceiling_slope_opposite);
 	sector->ceiling_slope_wall = ft_lstindex(sector->wall_list, export->ceiling_slope_position);
 	sector->ceiling_texture = export->ceiling_texture;
@@ -115,18 +116,23 @@ static t_sectorlist *sector_by_index(t_app *app, int index)
 
 void	relink_sectors(t_app *app)
 {
-	int i;
+	int		i;
 	t_sectorlist *head;
 
-
 	head = app->sectors;
-	i = 0;
 	while (head)
 	{
-		while (head->member_links[i] != -1)
+		i = 0;
+		while (i < MAX_MEMBER_SECTORS)
 		{
-			head->member_sectors[i] = sector_by_index(app, head->member_links[i]);
-			head->member_sectors[i]->parent_sector = head;
+			if(head->member_links[i] != -1)
+			{
+				head->member_sectors[i] = sector_by_index(app, head->member_links[i]);
+				head->member_sectors[i]->parent_sector = head;
+			}
+			else
+				head->member_sectors[i] = NULL;
+			
 			i++;
 		}
 		head = head->next;

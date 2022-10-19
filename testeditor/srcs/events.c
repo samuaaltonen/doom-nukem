@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:52 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/18 17:22:10 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/19 13:19:27 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ int	events_mouse_track(t_app *app)
 	if(app->active_sector)
 	{
 		ft_printf("inside = %i\n", app->active_sector);
-		for(int i = 0; i < MAX_MEMBER_SECTORS && app->active_sector->member_sectors[i]; i++)
-			ft_printf("%i\n",get_sector_id(app, app->active_sector->member_sectors[i]));
+		for(int i = 0; i < 4 && app->active_sector->member_sectors[i]; ++i)
+			ft_printf("members %i\n", get_sector_id(app, app->active_sector->member_sectors[i]));
 		if(app->active_sector->parent_sector)
 			ft_printf("parent id %i\n ",app->active_sector->parent_sector);
 	}
