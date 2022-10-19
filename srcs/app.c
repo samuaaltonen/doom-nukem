@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/19 13:21:57 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:19:24 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	app_render(t_app *app)
 {
 	handle_movement(app);
 	update_fps_counter(app);
-
 	update_info(app);
 	ft_bzero(app->depthmap, WIN_H * WIN_W * sizeof(double));
 	/* if (app->conf->toggle_editor)
@@ -88,10 +87,13 @@ void	app_render(t_app *app)
 		render_multithreading(app, render_polygons);
 	} */
 	flush_surface(app->surface);
-	render_sectors(app);
-	//----
-	render_ui(app);
-	//----
+	//if (app->conf->title_screen.active)
+		//title_screen(app);
+	//else
+	//{
+		render_sectors(app);
+		render_ui(app);
+	//}
 	SDL_UpdateWindowSurface(app->win);
 }
 

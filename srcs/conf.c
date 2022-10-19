@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/06 15:27:08 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:04:38 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ int	conf_init(t_app *app)
 	app->conf->movement_speed = MOVEMENT_SPEED;
 	app->conf->rotation_speed = ROTATION_SPEED;
 	app->conf->mouse_active = 1;
+	app->conf->title_screen.active = 1;
 	app->editor.zoom = 1;
 	ft_strcpy(app->conf->fps_info, "FPS                 ");
 	init_thread_info(app);
