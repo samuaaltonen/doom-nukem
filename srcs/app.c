@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/15 20:34:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/19 13:21:57 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,8 @@ void	app_prepare(t_app *app)
 {
 	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0)
 		exit_error(MSG_ERROR_SDL_INIT);
-	app->sprite = init_xpm_image(TEXTURE_PANELS);
-	app->bg = init_xpm_image(TEXTURE_BACKGROUND);
+	app->sprite = load_texture(TEXTURE_PANELS);
+	app->bg = load_texture(TEXTURE_BACKGROUND);
 	app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_SHOWN);
 	if (!app->win)
 		exit_error(MSG_ERROR_WINDOW);
@@ -90,13 +90,7 @@ void	app_render(t_app *app)
 	flush_surface(app->surface);
 	render_sectors(app);
 	//----
-	render_button(app);
-	render_menu(app);
-
-	change_font(app, 14, 0xFFEFDCCC);
-	render_text(app, (t_point){20, 20}, "FPS");
-	render_text(app, (t_point){20, 20}, app->conf->fps_info);
-	load_font(app);
+	render_ui(app);
 	//----
 	SDL_UpdateWindowSurface(app->win);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/15 20:35:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/19 13:23:59 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,9 +46,11 @@
 # define MAX_RAY_DISTANCE 25.0
 # define TEX_SIZE 64
 # define MOUSE_SENSITIVITY 20.0
-# define TEXTURE_PANELS "./assets/minecraft_spritesheet.xpm"
-# define TEXTURE_BACKGROUND "./assets/bg.xpm"
-# define FONT_FILE "./assets/SpaceMono-Regular.ttf"
+# define TEXTURE_PANELS "./assets/textures/minecraft_spritesheet.bmp"
+//# define TEXTURE_PANELS "./assets/minecraft_spritesheet.xpm"
+# define TEXTURE_BACKGROUND "./assets/textures/bg.bmp"
+//# define TEXTURE_BACKGROUND "./assets/bg.xpm"
+//# define FONT_FILE "./assets/SpaceMono-Regular.ttf"
 # define MAX_POLYGON_CORNERS 8
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 8
@@ -67,8 +69,6 @@
 # include <pthread.h>
 # include <stdlib.h>
 # include <SDL.h>
-# include <SDL_image.h>
-# include <SDL_ttf.h>
 # include "libft.h"
 # include "liblinearalgebra.h"
 
@@ -375,7 +375,7 @@ void		app_loop(t_app *app);
  * Images
  */
 SDL_Surface	*init_image(int x, int y);
-SDL_Surface	*init_xpm_image(char *path);
+SDL_Surface	*load_texture(char *path);
 void		put_pixel_to_surface_depth(t_app *app, t_point point, int color,
 				double distance);
 void		put_pixel_to_surface_check(t_app *app, t_point point, int color,
@@ -451,6 +451,7 @@ void    	render_text(t_app *app, t_point position, char *text);
 /**
  * UI
  */
+void		render_ui(t_app *app);
 void    	render_button(t_app *app);
 void		render_menu(t_app *app);
 

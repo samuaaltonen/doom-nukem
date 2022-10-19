@@ -6,7 +6,7 @@
 #    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/10/14 17:11:53 by dpalacio         ###   ########.fr        #
+#    Updated: 2022/10/19 13:23:22 by dpalacio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,13 +34,11 @@ OBJS = $(patsubst %, $(OBJ_DIR)/%, $(FILES:.c=.o))
 SDL_DIR = ./sdl/
 SDL_HEADERS = \
 	-I$(SDL_DIR)SDL2.framework/Versions/A/Headers \
-	-I$(SDL_DIR)SDL2_image.framework/Versions/A/Headers \
-	-I$(SDL_DIR)SDL2_ttf.framework/Versions/A/Headers \
 
 FRAMEWORKS = -F$(SDL_DIR) \
 				-rpath $(SDL_DIR) \
 				-framework OpenGL -framework AppKit -framework OpenCl \
-				-framework SDL2 -framework SDL2_ttf -framework SDL2_image
+				-framework SDL2
 
 HEADERS = -I ./includes -I ./libft/includes -I ./liblinearalgebra/includes \
 		-I /usr/local/include/SDL2 $(SDL_HEADERS)

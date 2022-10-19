@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/04 12:22:20 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/19 13:20:01 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ SDL_Surface	*init_image(int width, int height)
 /**
  * Initializes XPM image.
  */
-SDL_Surface	*init_xpm_image(char *path)
+SDL_Surface	*load_texture(char *path)
 {
 	SDL_Surface	*surface;
 	SDL_Surface	*argb_converted;
@@ -39,7 +39,7 @@ SDL_Surface	*init_xpm_image(char *path)
 	rwops = SDL_RWFromFile(path, "rb");
 	if (!rwops)
 		exit_error(MSG_ERROR_IMAGE_INIT);
-	surface = IMG_LoadXPM_RW(rwops);
+	surface = SDL_LoadBMP_RW(rwops, SDL_TRUE);
 	if (!surface
 		&& SDL_RWclose(rwops) < 0)
 		exit_error(MSG_ERROR_IMAGE_INIT);

@@ -6,11 +6,22 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/14 17:08:43 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/19 13:07:17 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
+
+void	render_ui(t_app *app)
+{
+	render_button(app);
+	render_menu(app);
+
+	change_font(app, 14, 0xFFEFDCCC);
+	render_text(app, (t_point){20, 20}, "FPS");
+	render_text(app, (t_point){20, 20}, app->conf->fps_info);
+	load_font(app);
+}
 
 void	render_button(t_app *app)
 {
