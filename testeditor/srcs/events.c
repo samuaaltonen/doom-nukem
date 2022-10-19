@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:52 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/19 13:19:27 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:18:11 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	events_mouse_track(t_app *app)
 	
 	SDL_GetMouseState(&current_pos.x, &current_pos.y);		
 	snap_to_nearest(app, &current_pos, &app->mouse_click, app->divider);
-	ft_printf("x=%f, y=%f modes:c%i,o%i\n",app->mouse_click.x, app->mouse_click.y, app->list_creation, app->list_ongoing);
+	ft_printf("x=%f, y=%f modes:c%i,o%i,p%i\n",app->mouse_click.x, app->mouse_click.y, app->list_creation, app->list_ongoing, app->portal_selection);
 	if(app->active_sector)
 	{
 		ft_printf("inside = %i\n", app->active_sector);
@@ -76,7 +76,7 @@ int	events_mouse_track(t_app *app)
 	}
 
 	if(app->active)
-		ft_printf("selected point x:%f, y:%f, wall tex id %i\n",app->active->point.x, app->active->point.y, app->active->wall_texture);
+		ft_printf("selected point x:%f, y:%f, tex:%i, type:%i\n",app->active->point.x, app->active->point.y, app->active->wall_texture, app->active->wall_type);
 
 
 	return (0);

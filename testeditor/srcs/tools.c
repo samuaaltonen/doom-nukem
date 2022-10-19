@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/18 17:22:30 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:16:12 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,28 @@ t_sectorlist	*find_parent_sector(t_app *app, t_sectorlist *sector)
 		tmp = tmp->next;
 	}
 	return (NULL);
+}
+
+void link_wall_to_sector(t_app *app)
+{
+
+	if(app->list_ongoing || app->list_creation)
+	{
+		app->portal_selection = FALSE; 
+		app->active_last = NULL;
+	}
+		//add scheck the wall is not in itself
+	if(app->portal_selection && app->active_sector && app->active_last)
+	{
+		app->active_last->wall_type = get_sector_id(app, app->active_sector);
+		app->portal_selection = FALSE;
+		app->active_last = NULL;
+	}
+	else if(!app->portal_selection && app->active)
+	{
+		app->portal_selection = TRUE;
+		app->active_last = app->active;
+	}
 }
 
 int	inside_sector_check(t_app *app, t_sectorlist *sector)
