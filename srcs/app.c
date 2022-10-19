@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/19 15:19:24 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:43:50 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,7 @@ void	app_render(t_app *app)
 	update_fps_counter(app);
 	update_info(app);
 	ft_bzero(app->depthmap, WIN_H * WIN_W * sizeof(double));
-	/* if (app->conf->toggle_editor)
-		open_map_editor(app);
+	/*
 	else
 	{
 		render_multithreading(app, render_skybox);

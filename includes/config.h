@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/19 15:16:52 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:41:27 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,6 @@
 # define MAX_VISIBLE_WALLS 256
 # define MAX_VIEW_DISTANCE 100.0
 # define MAX_VERTEX_LENGTH 1048576.0
-# define EDITOR_BG_COLOR 0x000000
-# define EDITOR_GRID_COLOR 0x424242
-# define EDITOR_MENU_COLOR 0xD3D3D3
-# define EDITOR_MENU_W 280
 
 /**
  * Struct for threads about their specific drawing areas.
@@ -63,7 +59,6 @@ typedef struct s_conf
 {
 	int				toggle_loop;
 	int				toggle_help;
-	int				toggle_editor;
 	int				fps;
 	struct timespec	fps_clock;
 	char			fps_info[20];

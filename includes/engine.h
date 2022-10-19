@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/19 15:19:22 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/19 15:47:33 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,14 +85,5 @@ typedef struct s_wall
 	int				start_x;
 	int				end_x;
 }	t_wall;
-
-/**
- * Struct for editor.
- */
-
-typedef struct s_editor
-{
-	int				zoom;
-}	t_editor;
 
 #endif
