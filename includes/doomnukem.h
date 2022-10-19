@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/19 13:23:59 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/19 13:37:58 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -278,6 +278,7 @@ typedef struct s_conf
 	int				mouse_active;
 	double			movement_speed;
 	double			rotation_speed;
+	int				title_screen;
 }	t_conf;
 
 /**
@@ -374,7 +375,7 @@ void		app_loop(t_app *app);
 /**
  * Images
  */
-SDL_Surface	*init_image(int x, int y);
+SDL_Surface	*create_surface(int x, int y);
 SDL_Surface	*load_texture(char *path);
 void		put_pixel_to_surface_depth(t_app *app, t_point point, int color,
 				double distance);

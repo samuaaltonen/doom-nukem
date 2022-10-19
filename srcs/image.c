@@ -6,16 +6,16 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/19 13:20:01 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/19 13:37:57 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * Initializes image.
+ * Creates a srface with the specified width and height.
  */
-SDL_Surface	*init_image(int width, int height)
+SDL_Surface	*create_surface(int width, int height)
 {
 	SDL_Surface	*surface;
 
@@ -27,7 +27,7 @@ SDL_Surface	*init_image(int width, int height)
 }
 
 /**
- * Initializes XPM image.
+ * Loads texture from .bmp image into a surface.
  */
 SDL_Surface	*load_texture(char *path)
 {
@@ -59,7 +59,7 @@ SDL_Surface	*load_texture(char *path)
 }
 
 /**
- * Changes color of a specific pixel in image.
+ * Changes color of a specific pixel in surface.
  */
 void	put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color)
 {
@@ -74,7 +74,7 @@ void	put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color)
 }
 
 /**
- * Puts pixel to image and depthmap
+ * Puts pixel to surface and depthmap
  */
 void	put_pixel_to_surface_depth(t_app *app, t_point point, int color,
 	double distance)
