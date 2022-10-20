@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:48:08 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/20 12:48:34 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:45:07 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static t_rect	get_char(char *str, int c)
 void	load_font(t_app *app)
 {
 	if (!app->assets.font.font)
-		app->assets.font.font = SDL_LoadBMP(TEXTURE_FONT);
+		app->assets.font.font = SDL_LoadBMP(FONT_TX);
 	if (!app->assets.font.font)
 		exit_error("Could not load font");
 	app->assets.font.size = 14;

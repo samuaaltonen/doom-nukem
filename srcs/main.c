@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:21:47 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 12:32:18 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:45:04 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	main(void)
 	if (!config_init(app))
 		exit_error(NULL);
 	load_assets(app);
-	//---level and game conf
+	//---level and game conf (To move after level selection)
 	SDL_ShowCursor(SDL_DISABLE);
 	app->player = (t_player){(t_vector2){POSITION_START_X, POSITION_START_Y},
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},

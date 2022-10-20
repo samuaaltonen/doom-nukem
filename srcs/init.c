@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/20 13:07:58 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:45:06 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,9 @@ void	sdl_init(t_app *app)
  */
 void    load_assets(t_app *app)
 {
-	app->assets.sprite = load_texture(TEXTURE_PANELS);
-	app->assets.bg = load_texture(TEXTURE_BACKGROUND);
+	app->assets.button_texture = load_texture(BUTTON_TX);
+	app->assets.title_screen_image = load_texture(TITLESCREEN_TX);
+	app->assets.sprite = load_texture(PANELS_TX);
+	app->assets.bg = load_texture(SKYBOX_TX);
     load_font(app);
 }

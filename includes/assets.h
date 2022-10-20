@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/20 13:06:53 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:45:04 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,11 @@
 
 # include "doomnukem.h"
 
-# define TEXTURE_PANELS "./assets/textures/minecraft_spritesheet.bmp"
-# define TEXTURE_BACKGROUND "./assets/textures/bg.bmp"
-# define TEXTURE_FONT "fonts/doom-nukem_font.bmp"
-# define TEXTURE_BUTTON "assets/ui/button_iddle.bmp"
+# define PANELS_TX "assets/textures/minecraft_spritesheet.bmp"
+# define SKYBOX_TX "assets/textures/bg.bmp"
+# define FONT_TX "assets/fonts/doom-nukem_font.bmp"
+# define BUTTON_TX "assets/ui/button_iddle.bmp"
+# define TITLESCREEN_TX "assets/ui/menu-bg.bmp"
 
 /**
  * Texture type enumeration.
@@ -69,7 +70,9 @@ typedef struct s_font
  */
 typedef struct s_assets
 {
-	t_font		font;
+	t_font			font;
+	SDL_Surface		*button_texture;
+	SDL_Surface		*title_screen_image;
 	SDL_Surface		*sprite;
 	SDL_Surface		*bg;
 }	t_assets;
