@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/19 15:16:12 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:19:06 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,4 +199,36 @@ int	inside_sector_check(t_app *app, t_sectorlist *sector)
 	}
 
 	return(1);
+}
+
+void	sector_edit(t_app *app, SDL_Keycode key)
+{
+	if(key == SDLK_UP)
+	{
+		if(app->ceiling_edit)
+			app->active_sector->ceiling_height += HEIGHT_INC;
+		if(app->floor_edit)
+			app->active_sector->floor_height += HEIGHT_INC;
+	}
+	else if(key == SDLK_DOWN)
+	{
+		if(app->ceiling_edit)
+			app->active_sector->ceiling_height -= HEIGHT_INC;
+		if(app->floor_edit)
+			app->active_sector->floor_height -= HEIGHT_INC;
+	}
+	else if(key == SDLK_LEFT)
+	{
+		if(app->ceiling_edit && app->active_sector->ceiling_texture > 0)
+			app->active_sector->ceiling_texture--;
+		if(app->floor_edit && app->active_sector->floor_texture > 0)
+			app->active_sector->floor_texture--;
+	}
+	else if(key == SDLK_RIGHT)
+	{
+		if(app->ceiling_edit && app->active_sector->ceiling_texture < MAX_TEX_COUNT)
+			app->active_sector->ceiling_texture++;
+		if(app->floor_edit && app->active_sector->floor_texture < MAX_TEX_COUNT)
+			app->active_sector->floor_texture++;
+	}
 }

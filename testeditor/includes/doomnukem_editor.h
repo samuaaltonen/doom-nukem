@@ -30,9 +30,11 @@
 # define THREAD_COUNT 2
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
+# define MAX_TEX_COUNT 128
 # define DEG_IN_RADIAN 0.01745f
 # define RADIAN_IN_DEG 57.29578f
 # define MAP_SPEED 0.25f
+# define HEIGHT_INC 0.125f
 # define TEXTURE_PANELS "../assets/minecraft_spritesheet.xpm"
 # define FONT_FILE "../assets/SpaceMono-Regular.ttf"
 # define MAX_SECTOR_CORNERS 16
@@ -211,6 +213,8 @@ typedef struct s_app
 	t_bool				list_creation;
 	t_bool				list_ongoing;
 	t_bool				portal_selection;
+	t_bool				ceiling_edit;
+	t_bool				floor_edit;
 	int					sectorcount;
 }	t_app;
 
@@ -348,6 +352,7 @@ int				get_sector_id(t_app *app, t_sectorlist *sector);
 void			relink_member_sectors(t_app *app);
 void			link_wall_to_sector(t_app *app);
 void			render_fill_active_sector(t_app *app);
+void			sector_edit(t_app *app, SDL_Keycode key);
 
 
 #endif
