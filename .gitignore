@@ -1,4 +1,5 @@
 objs
+build
 doom-nukem
 *.a
 *.dSYM
