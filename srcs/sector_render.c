@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/14 00:21:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:50:46 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,27 @@ void	render_sectors(t_app *app)
 	*/
 	sector_walls_order(app);
 
-	/* ft_printf("--- new frame ---\n"); */
+	/**
+	 * Render sectors
+	*/
+	render_multithreading(app, sector_walls_render);
+}
+
+/**
+ * Multithreaded renderer for sector walls.
+*/
+void	*sector_walls_render(void *data)
+{
+	t_app			*app;
+	t_thread_data	*thread;
+
+	thread = (t_thread_data *)data;
+	app = (t_app *)thread->app;
 	int	i = 0;
 	while (i < app->possible_visible_count)
 	{
-		/* if (app->possible_visible[i].is_member)
-			ft_printf("Drawing wall at sector %d, wall %d, is_member %d\n",
-				app->possible_visible[i].sector_id, 
-				app->possible_visible[i].wall_id,
-				app->possible_visible[i].is_member); */
-		sector_walls_raycast(app, &app->possible_visible[i]);
+		sector_walls_raycast(app, thread, &app->possible_visible[i]);
 		i++;
 	}
+	pthread_exit(NULL);
 }

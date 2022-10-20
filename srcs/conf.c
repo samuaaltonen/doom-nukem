@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 11:46:05 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:51:08 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,8 @@ void	init_thread_info(t_app *app)
 	i = 0;
 	while (i < THREAD_COUNT)
 	{
-		app->thread_info[i] = (t_thread_data){
-			app,
-			i
-		};
+		app->thread_info[i].app = app;
+		app->thread_info[i].id = i;
 		i++;
 	}
 }

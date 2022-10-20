@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/19 16:45:00 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:14:01 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	app_prepare(t_app *app)
  */
 void	app_render(t_app *app)
 {
-	
 	flush_surface(app->surface);
 	/* SDL_Surface	*converted_surface; */
 	SDL_Surface *text_surface;
@@ -70,13 +69,16 @@ void	app_render(t_app *app)
 	handle_movement(app);
 	app->view_size.x = app->view_pos.x + app->zoom_area.x;
 	app->view_size.y = app->view_pos.y + app->zoom_area.y;
+	render_fill_active_sector(app);
 	render_grid(app, 0.5f, 0x424242);
 	render_grid(app, 1.0f, 0x888888);
 	zoom_slider(app);
-	render_fill_active_sector(app);
 	render_sectors(app);
 	if(app->active)
+	{
 		render_sector(app, app->active);
+		render_selection_point(app, 5);
+	}
 	if(app->list_ongoing)
 		draw_line(app, &app->active_last->point, &app->mouse_click, 0xAABBCC);
 	SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
@@ -96,6 +98,21 @@ void	app_loop(t_app *app)
 	{
 		while (SDL_PollEvent(&event))
 			dispatch_event(app, &event);
+
+	ft_printf("x=%f, y=%f modes:c%i,o%i,p%i,r%i,f%i\n",app->mouse_click.x, app->mouse_click.y, app->list_creation, app->list_ongoing, app->portal_selection, app->floor_edit, app->ceiling_edit);
+	if(app->active_sector)
+	{
+		ft_printf("inside = %i, floor: h:%f,tex:%i,o:%i, ceil: h:%f,tex:%i,o:%i, light:%i\n has members: ", app->active_sector, app->active_sector->floor_height, app->active_sector->floor_tex, app->active_sector->floor_tex_offset, app->active_sector->ceil_height, app->active_sector->ceil_tex, app->active_sector->ceil_tex_offset, app->active_sector->light);
+		for(int i = 0; i < 4 && app->active_sector->member_sectors[i]; ++i)
+			ft_printf("%i ", get_sector_id(app, app->active_sector->member_sectors[i]));
+		ft_printf("\n");
+		if(app->active_sector->parent_sector)
+			ft_printf("parent id %i\n ",app->active_sector->parent_sector);
+	}
+
+	if(app->active)
+		ft_printf("selected point x:%f, y:%f, tex:%i, type:%i\n",app->active->point.x, app->active->point.y, app->active->wall_texture, app->active->wall_type);
+
 		app_render(app);
 	}
 

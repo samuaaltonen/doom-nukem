@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:21:47 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 13:45:04 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:29:17 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	main(void)
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
 		(t_vector2){0.0, 0.0}, 1.0, 0.5, 0};
 	init_camera_plane(app);
-	import_file(app, "./test.test");
+	import_file(app, MAP_PATH);
 	//---
 	app_loop(app);
 	return (0);

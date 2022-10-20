@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/19 13:27:00 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:01:53 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@
 int	events_keyup(int keycode, t_app *app)
 {
 	if (keycode == SDLK_RIGHT)
-		app->keystates ^= ROTATE_RIGHT_DOWN;
+		sector_edit(app, keycode);
 	if (keycode == SDLK_LEFT)
-		app->keystates ^= ROTATE_LEFT_DOWN;
+		sector_edit(app, keycode);
 	if (keycode == SDLK_UP)
-		app->keystates ^= FORWARD_DOWN;
+		sector_edit(app, keycode);
 	if (keycode == SDLK_DOWN)
-		app->keystates ^= BACKWARD_DOWN;
+		sector_edit(app, keycode);
 	if (keycode == SDLK_w)
 		app->keystates ^= FORWARD_W_DOWN;
 	if (keycode == SDLK_s)
@@ -47,6 +47,12 @@ int	events_keyup(int keycode, t_app *app)
 		sector_pop(app, &(app->active_sector), NULL);
 	if(keycode == SDLK_l)
 		link_wall_to_sector(app);
+	if(keycode == SDLK_r)
+		app->ceiling_edit = ft_toggle(app->ceiling_edit);
+	if(keycode == SDLK_f)
+		app->floor_edit = ft_toggle(app->floor_edit);
+	if(keycode == SDLK_t)
+		app->light_edit = ft_toggle(app->light_edit);
 
 	//temp
 	if (keycode == SDLK_0)
@@ -77,14 +83,6 @@ int	events_keyup(int keycode, t_app *app)
  */
 int	events_keydown(int keycode, t_app *app)
 {
-	if (keycode == SDLK_RIGHT)
-		app->keystates |= ROTATE_RIGHT_DOWN;
-	if (keycode == SDLK_LEFT)
-		app->keystates |= ROTATE_LEFT_DOWN;
-	if (keycode == SDLK_UP)
-		app->keystates |= FORWARD_DOWN;
-	if (keycode == SDLK_DOWN)
-		app->keystates |= BACKWARD_DOWN;
 	if (keycode == SDLK_w)
 		app->keystates |= FORWARD_W_DOWN;
 	if (keycode == SDLK_s)

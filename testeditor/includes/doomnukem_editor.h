@@ -30,9 +30,11 @@
 # define THREAD_COUNT 2
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
+# define MAX_TEX_COUNT 128
 # define DEG_IN_RADIAN 0.01745f
 # define RADIAN_IN_DEG 57.29578f
 # define MAP_SPEED 0.25f
+# define HEIGHT_INC 0.125f
 # define TEXTURE_PANELS "../assets/minecraft_spritesheet.xpm"
 # define FONT_FILE "../assets/SpaceMono-Regular.ttf"
 # define MAX_SECTOR_CORNERS 16
@@ -120,30 +122,6 @@ typedef struct s_point
 	int				y;
 }	t_point;
 
-/**
- * Polygons
-*/
-typedef struct s_polygon_hit
-{
-	int		y_first_top;
-	int		y_second_top;
-	int		y_first_bottom;
-	int		y_second_bottom;
-	double	distance_first;
-	double	distance_second;
-}	t_polygon_hit;
-
-typedef struct s_polygon
-{
-	t_vector2		corners[MAX_SECTOR_CORNERS];
-	int				corner_count;
-	double			bottom;
-	double			top;
-	int				texture;
-	t_polygon_hit	*hits;
-}	t_polygon;
-
-
 typedef struct	s_vec2list
 {
 	t_vector2			point;
@@ -153,37 +131,29 @@ typedef struct	s_vec2list
 } t_vec2list;
 
 /**
- * int					id;
- *	int					corner_count;
- *	struct s_sectorlist	**member_sectors;
- *	double				floor_height;
- *	double				ceiling_height;
- *	int					floor_texture;
- *	int					ceiling_texture;
- *	s_vec2list			*floor_slope_wall;
- *	s_vec2list			*floor_slope_opposite;
- *	s_vec2list			*ceiling_slope_wall;
- *	s_vec2list			*ceiling_slope_opposite;
- *	struct s_sectorlist	*next;
+ * 
  * 
  */
 typedef struct	s_sectorlist
 {
 	int					corner_count;
+	t_vec2list			*wall_list;
 	struct s_sectorlist	*member_sectors[MAX_MEMBER_SECTORS];
 	int					member_links[MAX_MEMBER_SECTORS];
 	struct s_sectorlist	*parent_sector;
+	int					light;
 	double				floor_height;
-	double				ceiling_height;
-	int					floor_texture;
-	int					ceiling_texture;
-	t_vec2list			*wall_list;
+	double				ceil_height;
+	int					floor_tex;
+	int					floor_tex_offset;
+	int					ceil_tex;
+	int					ceil_tex_offset;
 	t_vec2list			*floor_slope_wall;
 	t_vec2list			*floor_slope_opposite;
 	double				floor_slope_height;
-	t_vec2list			*ceiling_slope_wall;
-	t_vec2list			*ceiling_slope_opposite;
-	double				ceiling_slope_height;
+	t_vec2list			*ceil_slope_wall;
+	t_vec2list			*ceil_slope_opposite;
+	double				ceil_slope_height;
 	struct s_sectorlist	*next;
 } t_sectorlist;
 
@@ -211,6 +181,9 @@ typedef struct s_app
 	t_bool				list_creation;
 	t_bool				list_ongoing;
 	t_bool				portal_selection;
+	t_bool				ceiling_edit;
+	t_bool				floor_edit;
+	t_bool				light_edit;
 	int					sectorcount;
 }	t_app;
 
@@ -251,60 +224,31 @@ int			events_window_other(int windowevent, t_app *app);
 int			dispatch_event(t_app *app, SDL_Event *event);
 
 /**
- * Graphics
- */
-void		*render_background(void *data);
-
-/**
- * Polygons
-*/
-void		*render_polygons(void *data);
-void		polygon_draw_floors(t_app *app, t_polygon *polygon);
-
-/**
  * Helper functions
  */
 int			get_pixel_color(SDL_Surface *surface, int x, int y);
 
-
-
-/**
- * Sectors
- */
-typedef struct s_sector
-{
-	t_vector2		corners[MAX_SECTOR_CORNERS];
-	int				wall_types[MAX_SECTOR_CORNERS];
-	int				wall_textures[MAX_SECTOR_CORNERS];
-	int				member_sectors[MAX_MEMBER_SECTORS];
-	int				corner_count;
-	double			floor_height;
-	double			ceiling_height;
-	int				floor_texture;
-	int				ceiling_texture;
-	t_vector3		floor_slope_position;
-	t_vector2		floor_slope_angles;
-	t_vector3		ceiling_slope_position;
-	t_vector2		ceiling_slope_angles;
-}	t_sector;
-
 typedef struct s_exportsector
 {
+	int				corner_count;
 	t_vector2		corners[MAX_SECTOR_CORNERS];
 	int				wall_types[MAX_SECTOR_CORNERS];
 	int				wall_textures[MAX_SECTOR_CORNERS];
 	int				member_sectors[MAX_MEMBER_SECTORS];
-	int				corner_count;
+	int				parent_sector;
+	int				light;
 	double			floor_height;
-	double			ceiling_height;
-	int				floor_texture;
-	int				ceiling_texture;
+	double			ceil_height;
+	int				floor_tex;
+	int				floor_tex_offset;
+	int				ceil_tex;
+	int				ceil_tex_offset;
 	double			floor_slope_height;
 	int				floor_slope_position;
 	int				floor_slope_opposite;
-	double			ceiling_slope_height;
-	int				ceiling_slope_position;
-	int				ceiling_slope_opposite;
+	double			ceil_slope_height;
+	int				ceil_slope_position;
+	int				ceil_slope_opposite;
 }	t_exportsector;
 
 /**
@@ -348,15 +292,8 @@ int				get_sector_id(t_app *app, t_sectorlist *sector);
 void			relink_member_sectors(t_app *app);
 void			link_wall_to_sector(t_app *app);
 void			render_fill_active_sector(t_app *app);
+void			sector_edit(t_app *app, SDL_Keycode key);
+void			render_selection_point(t_app *app, int size);
 
 
 #endif
-
-/**
- * TESTDATA globals
-*/
-extern t_polygon test_polygons[];
-extern int test_polygon_count;
-
-extern t_sector test_sectors[];
-extern int test_sectors_count;

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/19 13:21:58 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:23:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,23 +67,26 @@ t_vec2list	*ft_lstindex(t_vec2list *lst, size_t index)
 //read sector data from export
 void read_sector(t_sectorlist *sector, t_exportsector *export)
 {
-	sector->ceiling_height = export->ceiling_height;
-	sector->ceiling_slope_height = export->ceiling_slope_height;
 	sector->corner_count = export->corner_count;
 	sector->wall_list = NULL;
 	export_to_list(export, &sector->wall_list, export->corner_count);
 	ft_memcpy(sector->member_links,export->member_sectors, MAX_MEMBER_SECTORS * sizeof(int));
-	ft_printf("0th %i, 1st %i, 2nd %i, 3rd %i\n",sector->member_links[0], sector->member_links[1],sector->member_links[2], sector->member_links[3]);
-	sector->ceiling_slope_opposite = ft_lstindex(sector->wall_list, export->ceiling_slope_opposite);
-	sector->ceiling_slope_wall = ft_lstindex(sector->wall_list, export->ceiling_slope_position);
-	sector->ceiling_texture = export->ceiling_texture;
+	sector->light = export->light;
 	sector->floor_height = export->floor_height;
+	sector->ceil_height = export->ceil_height;
+	sector->floor_tex = export->floor_tex;
+	sector->floor_tex_offset = export->floor_tex_offset;
+	sector->ceil_tex = export->ceil_tex;
+	sector->ceil_tex_offset = export->ceil_tex_offset;
 	sector->floor_slope_height = export->floor_slope_height;
 	sector->floor_slope_opposite = ft_lstindex(sector->wall_list, export->floor_slope_opposite);
 	sector->floor_slope_wall = ft_lstindex(sector->wall_list, export->floor_slope_position);
-	sector->floor_texture = export->floor_texture;
+	sector->ceil_slope_height = export->ceil_slope_height;
+	sector->ceil_slope_opposite = ft_lstindex(sector->wall_list, export->ceil_slope_opposite);
+	sector->ceil_slope_wall = ft_lstindex(sector->wall_list, export->ceil_slope_position);
 	sector->parent_sector = NULL;
 	sector->next = NULL;
+	ft_printf("0th %i, 1st %i, 2nd %i, 3rd %i\n",sector->member_links[0], sector->member_links[1],sector->member_links[2], sector->member_links[3]);
 }
 
 /**
@@ -162,6 +165,5 @@ int	import_file(t_app *app, char *path)
 	}
 	close(fd);
 	relink_sectors(app);
-
 	return (0);
 }

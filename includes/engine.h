@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/20 13:12:47 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:37:56 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,16 +20,19 @@
  */
 typedef struct s_sector
 {
+	int				corner_count;
 	t_vector2		corners[MAX_SECTOR_CORNERS];
 	int				wall_types[MAX_SECTOR_CORNERS];
 	int				wall_textures[MAX_SECTOR_CORNERS];
 	int				member_sectors[MAX_MEMBER_SECTORS];
 	int				parent_sector;
-	int				corner_count;
+	int				light;
 	double			floor_height;
 	double			ceiling_height;
 	int				floor_texture;
+	double			floor_tex_offset;
 	int				ceiling_texture;
+	double			ceil_tex_offset;
 	t_vector3		floor_slope_position;
 	t_vector2		floor_slope_angles;
 	t_vector3		ceiling_slope_position;
@@ -38,21 +41,25 @@ typedef struct s_sector
 
 typedef struct s_exportsector
 {
+	int				corner_count;
 	t_vector2		corners[MAX_SECTOR_CORNERS];
 	int				wall_types[MAX_SECTOR_CORNERS];
 	int				wall_textures[MAX_SECTOR_CORNERS];
 	int				member_sectors[MAX_MEMBER_SECTORS];
-	int				corner_count;
+	int				parent_sector;
+	int				light;
 	double			floor_height;
-	double			ceiling_height;
-	int				floor_texture;
-	int				ceiling_texture;
+	double			ceil_height;
+	int				floor_tex;
+	int				floor_tex_offset;
+	int				ceil_tex;
+	int				ceil_tex_offset;
 	double			floor_slope_height;
 	int				floor_slope_position;
 	int				floor_slope_opposite;
-	double			ceiling_slope_height;
-	int				ceiling_slope_position;
-	int				ceiling_slope_opposite;
+	double			ceil_slope_height;
+	int				ceil_slope_position;
+	int				ceil_slope_opposite;
 }	t_exportsector;
 
 /**

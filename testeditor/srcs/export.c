@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/18 17:28:40 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:40:52 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,20 +51,23 @@ static void	member_export(t_app *app, t_exportsector *export, t_sectorlist *sect
 //construct string
 void write_sector(t_app *app, t_sectorlist *sector, t_exportsector *export)
 {
-	//export->ceiling_height = sector->ceiling_height;
-	export->ceiling_height = 1;
-	export->ceiling_slope_height = 0;
-	export->ceiling_slope_opposite = 0;
-	export->ceiling_slope_position = 0;
-	export->ceiling_texture = 0;
 	export->corner_count = sector->corner_count;
 	list_to_export(export, sector->wall_list, export->corner_count);
 	member_export(app, export, sector);
+	export->parent_sector = get_sector_id(app, sector->parent_sector);
+	export->light = sector->light;
 	export->floor_height = sector->floor_height;
-	export->floor_slope_height = 0;
+	export->ceil_height = sector->ceil_height;
+	export->floor_tex = sector->floor_tex;
+	export->floor_tex_offset = -1;
+	export->ceil_tex = sector->ceil_tex;
+	export->ceil_tex_offset = -1;
+	export->floor_slope_height = sector->floor_slope_height;
 	export->floor_slope_opposite = 0;
 	export->floor_slope_position = 0;
-	export->floor_texture = 0;
+	export->ceil_slope_height = sector->ceil_slope_height;
+	export->ceil_slope_opposite = 0;
+	export->ceil_slope_position = 0;
 } 
 
 size_t	ft_lstlen(t_sectorlist *lst)
@@ -94,19 +97,6 @@ int	file_open(t_app *app, char *path)
 	fd = open(path, O_WRONLY | O_CREAT, 0755);
 	if(fd < 0)
 		exit_error("FILE OPEN ERROR TEMP!");
-		
-/* 	//debug
-	int i = 0;
-	tmp = app->sectors;
-	while(tmp)
-	{
-		i++;
-		ft_printf("%i\n",i);
-		change_all_wall_tex(tmp->wall_list, i);
-		tmp = tmp->next;
-	}
-	// */
-
 	sector_count = ft_lstlen(app->sectors);
 	write(fd,&sector_count,sizeof(sector_count));
 	tmp = app->sectors;
