@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 14:51:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/20 16:05:20 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,27 +49,3 @@ void	init_camera_plane(t_app *app)
 	app->player.cam = camera_plane;
 	app->player.camera_length = camera_length;
 }
-
-/**
- * Initializes configuration struct.
- *
-int	conf_init(t_app *app)
-{
-	if (!app)
-		return (0);
-	app->conf = (t_conf *)malloc(sizeof(t_conf));
-	if (!(app->conf))
-		return (0);
-	ft_bzero(app->conf, sizeof(t_conf));
-	clock_gettime(CLOCK_REALTIME, &app->conf->fps_clock);
-	app->conf->fov = FOV;
-	app->conf->skybox_offset = 360.f;
-	app->conf->movement_speed = MOVEMENT_SPEED;
-	app->conf->rotation_speed = ROTATION_SPEED;
-	app->conf->mouse_active = 1;
-	app->title_screen = 1;
-	app->game_active = 0;
-	ft_strcpy(app->conf->fps_info, "FPS                 ");
-	init_thread_info(app);
-	return (1);
-}*/
