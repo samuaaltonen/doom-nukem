@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/15 23:36:41 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/20 18:13:45 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,11 +56,16 @@ static t_bool	has_visible_corner(t_app *app, t_vertex2 wall)
  * After that checks if either wall corners are left side of camera plane vector
  * (so they can be visible).
  */
-static void	check_possible_visible(t_app *app, int sector_id, int wall_id, t_bool is_member)
+static void	check_possible_visible(t_app *app, int sector_id, int wall_id,
+	t_bool is_member)
 {
+	t_bool		is_portal;
 	t_vertex2	wall_vertex;
 	int			player_side;
 
+	is_portal = FALSE;
+	if (app->sectors[sector_id].wall_types[wall_id] != -1 || is_member)
+		is_portal = TRUE;
 	wall_vertex = get_wall_vertex(app, sector_id, wall_id);
 	player_side = ft_vertex_side(wall_vertex, app->player.pos);
 	// Not member sector, player need to on right side of all walls (clockwise)
@@ -68,19 +73,21 @@ static void	check_possible_visible(t_app *app, int sector_id, int wall_id, t_boo
 		return ;
 	// Is member, now player need to be on left side of all walls (clockwise)
 	if (is_member && !player_side)
-		return ;
+		is_portal = FALSE;
 	if (!has_visible_corner(app, wall_vertex))
 		return ;
 	app->possible_visible[app->possible_visible_count].sector_id = sector_id;
 	app->possible_visible[app->possible_visible_count].wall_id = wall_id;
 	app->possible_visible[app->possible_visible_count].is_member = is_member;
+	app->possible_visible[app->possible_visible_count].is_portal = is_portal;
 	app->possible_visible_count++;
 }
 
 /**
  * Loops through sectors walls to check which of them might be visible.
  */
-static void	loop_sector_walls(t_app *app, int *visited, int sector_id, t_bool is_member)
+static void	loop_sector_walls(t_app *app, int *visited, int sector_id,
+	t_bool is_member)
 {
 	int	i;
 

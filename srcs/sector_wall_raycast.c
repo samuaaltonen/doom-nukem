@@ -6,18 +6,35 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 14:54:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/20 18:06:15 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
+ * If wall is a portal, calculate parent positions as well (used in partial
+ * wall rendering)
+*/
+static void	calculate_parent_positions(t_app *app, t_rayhit *hit,
+	double relative_height)
+{
+	t_sector	*parent;
+
+	parent = &app->sectors[hit->sector->parent_sector];
+	hit->parent_height = (int)(relative_height
+		* (parent->ceiling_height - parent->floor_height));
+	hit->parent_wall_start = WIN_H / 2 - hit->parent_height
+		+ (int)(relative_height * (app->player.height - parent->floor_height));
+	hit->parent_wall_end = hit->parent_wall_start + hit->parent_height;
+}
+
+/**
  * Calculates wall starting and ending positions in window y coordinates.
 */
 static void	calculate_vertical_positions(t_app *app, t_rayhit *hit)
 {
-	double	relative_height;
+	double		relative_height;
 
 	relative_height = WIN_H / hit->distance;
 	hit->height = (int)(relative_height
@@ -34,6 +51,8 @@ static void	calculate_vertical_positions(t_app *app, t_rayhit *hit)
 	}
 	if (hit->wall_end > WIN_H)
 		hit->wall_end = WIN_H - 1;
+	if (hit->sector->parent_sector >= 0)
+		calculate_parent_positions(app, hit, relative_height);
 }
 
 /**
@@ -91,16 +110,18 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall)
 		*/
 		if (!raycast_hit(app, wall->vertex, &hit, x))
 			continue ;
-		// IF wall type normal wall:
-		if (hit.sector->wall_types[wall->wall_id] == -1)
+		// If portal or member (member sectors automatically portals)
+		if (wall->is_portal)
 		{
+			draw_parent(app, x, &hit);
 			draw_ceiling(app, x, &hit);
 			draw_floor(app, x, &hit);
-			draw_wall(app, x, &hit);
+			//draw_wall(app, x, &hit);
+			continue ;
 		}
-		// IF portal / member
-		// Draw ceiling
-		// Draw floor
-		// If floor higher or ceiling smaller of next sector, draw partial wall
+		// IF wall type normal wall:
+		draw_ceiling(app, x, &hit);
+		draw_floor(app, x, &hit);
+		draw_wall(app, x, &hit, OCCLUDE_BOTH);
 	}
 }

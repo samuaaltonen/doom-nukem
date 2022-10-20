@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/10/20 15:53:56 by saaltone         ###   ########.fr        #
+#    Updated: 2022/10/20 17:27:57 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ FILES = main.c init.c title_screen.c error.c conf.c app.c events.c \
 		sector_draw_ceiling.c sector_draw_floor.c sector_draw_wall.c \
 		sector_render.c sector_visible_walls_order.c sector_visible_walls.c \
 		sector_wall_raycast.c sector_wall_translate.c sector_wall_vertex.c \
-		render_text.c ui.c import.c utils.c utils_sdl.c
+		sector_draw_parent.c render_text.c ui.c import.c utils.c utils_sdl.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a

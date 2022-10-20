@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/20 14:37:56 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/20 18:02:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,12 @@
 # define ENGINE_H
 
 # include "doomnukem.h"
+
+enum s_occlusion {
+	OCCLUDE_TOP,
+	OCCLUDE_BOTTOM,
+	OCCLUDE_BOTH
+};
 
 /**
  * Sectors
@@ -78,6 +84,9 @@ typedef struct s_rayhit
 	int			height;
 	int			wall_start;
 	int			wall_end;
+	int			parent_height;
+	int			parent_wall_start;
+	int			parent_wall_end;
 }	t_rayhit;
 
 /**
@@ -89,6 +98,7 @@ typedef struct s_wall
 	int				sector_id;
 	int				wall_id;
 	t_bool			is_member;
+	t_bool			is_portal;
 	int				already_selected;
 	t_vertex2		vertex;
 	int				start_x;
