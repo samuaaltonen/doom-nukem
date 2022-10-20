@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 13:20:59 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:52:06 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,8 @@ t_vertex2		get_wall_vertex(t_app *app, int sector_id, int wall_id);
 void			sector_visible_walls(t_app *app);
 void			sector_walls_prepare(t_app *app);
 void			sector_walls_order(t_app *app);
-void			sector_walls_raycast(t_app *app, t_wall *wall);
+void			sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall);
+void			*sector_walls_render(void *data);
 void			render_sectors(t_app *app);
 
 /**

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:41:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/27 20:17:41 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:02:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ int	dispatch_event(t_app *app, SDL_Event *event)
 		return events_keyup(event->key.keysym.sym, app);
 	if (event->type == SDL_KEYDOWN)
 		return events_keydown(event->key.keysym.sym, app);
-	if (event->type == SDL_MOUSEMOTION)
-		return events_mouse_track(app);
+	/* if (event->type == SDL_MOUSEMOTION)
+		return events_mouse_track(app); */
 	if (event->type == SDL_WINDOWEVENT)
 		return events_window_other(event->window.event, app);
 	return (0);

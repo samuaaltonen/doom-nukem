@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 13:04:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:54:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static t_bool	raycast_hit(t_app *app, t_vertex2 wall, t_rayhit *hit, int x)
  * Draws individual sector wall, possible ceiling and floor of that vertical
  * screenline. Also updates occlusion arrays accordingly.
  */
-void	sector_walls_raycast(t_app *app, t_wall *wall)
+void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall)
 {
 	t_rayhit	hit;
 	int			x;
@@ -84,6 +84,8 @@ void	sector_walls_raycast(t_app *app, t_wall *wall)
 	x = wall->start_x;
 	while (++x < wall->end_x)
 	{
+		if (x % THREAD_COUNT != thread->id)
+			continue ;
 		/**
 		 * Perform rayhit. Skips when there is no hit.
 		*/
