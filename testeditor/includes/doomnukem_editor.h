@@ -169,9 +169,9 @@ typedef struct	s_sectorlist
 	double				floor_height;
 	double				ceil_height;
 	int					floor_tex;
-	double				floor_tex_offset;
+	int					floor_tex_offset;
 	int					ceil_tex;
-	double				ceil_tex_offset;
+	int					ceil_tex_offset;
 	t_vec2list			*floor_slope_wall;
 	t_vec2list			*floor_slope_opposite;
 	double				floor_slope_height;
@@ -263,28 +263,6 @@ void		polygon_draw_floors(t_app *app, t_polygon *polygon);
  */
 int			get_pixel_color(SDL_Surface *surface, int x, int y);
 
-
-
-/**
- * Sectors
- */
-typedef struct s_sector
-{
-	t_vector2		corners[MAX_SECTOR_CORNERS];
-	int				wall_types[MAX_SECTOR_CORNERS];
-	int				wall_textures[MAX_SECTOR_CORNERS];
-	int				member_sectors[MAX_MEMBER_SECTORS];
-	int				corner_count;
-	double			floor_height;
-	double			ceiling_height;
-	int				floor_tex;
-	int				ceil_tex;
-	t_vector3		floor_slope_position;
-	t_vector2		floor_slope_angles;
-	t_vector3		ceil_slope_position;
-	t_vector2		ceil_slope_angles;
-}	t_sector;
-
 typedef struct s_exportsector
 {
 	int				corner_count;
@@ -297,9 +275,9 @@ typedef struct s_exportsector
 	double			floor_height;
 	double			ceil_height;
 	int				floor_tex;
-	double			floor_tex_offset;
+	int				floor_tex_offset;
 	int				ceil_tex;
-	double			ceil_tex_offset;
+	int				ceil_tex_offset;
 	double			floor_slope_height;
 	int				floor_slope_position;
 	int				floor_slope_opposite;
@@ -353,12 +331,3 @@ void			sector_edit(t_app *app, SDL_Keycode key);
 
 
 #endif
-
-/**
- * TESTDATA globals
-*/
-extern t_polygon test_polygons[];
-extern int test_polygon_count;
-
-extern t_sector test_sectors[];
-extern int test_sectors_count;

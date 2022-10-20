@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:42:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/20 14:20:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:41:38 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ t_sectorlist	*new_sector_list(t_vec2list *wall_list)
 {
 	t_sectorlist	*new;
 	t_vec2list		*tmp;
+
 	new = (t_sectorlist *)ft_memalloc(sizeof(t_sectorlist));
 	if (!new)
 		return (NULL);
@@ -92,6 +93,8 @@ t_sectorlist	*new_sector_list(t_vec2list *wall_list)
 	}
 	new->wall_list = wall_list;
 	new->ceil_height = 1.0f;
+	new->floor_tex_offset = -1;
+	new->ceil_tex_offset = -1;
 	new->next = NULL;
 	return (new);
 }

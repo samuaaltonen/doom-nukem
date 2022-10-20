@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/20 14:21:30 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:40:52 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,19 +97,6 @@ int	file_open(t_app *app, char *path)
 	fd = open(path, O_WRONLY | O_CREAT, 0755);
 	if(fd < 0)
 		exit_error("FILE OPEN ERROR TEMP!");
-		
-/* 	//debug
-	int i = 0;
-	tmp = app->sectors;
-	while(tmp)
-	{
-		i++;
-		ft_printf("%i\n",i);
-		change_all_wall_tex(tmp->wall_list, i);
-		tmp = tmp->next;
-	}
-	// */
-
 	sector_count = ft_lstlen(app->sectors);
 	write(fd,&sector_count,sizeof(sector_count));
 	tmp = app->sectors;

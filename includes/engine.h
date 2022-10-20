@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/20 14:21:49 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:37:56 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ typedef struct s_exportsector
 	double			floor_height;
 	double			ceil_height;
 	int				floor_tex;
-	double			floor_tex_offset;
+	int				floor_tex_offset;
 	int				ceil_tex;
-	double			ceil_tex_offset;
+	int				ceil_tex_offset;
 	double			floor_slope_height;
 	int				floor_slope_position;
 	int				floor_slope_opposite;
