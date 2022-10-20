@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 18:03:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 01:15:02 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion)
 	int		y_end;
 	double	tex_y;
 
+	if (hit->texture == -1)
+		return ;
 	y_start = hit->wall_start;
 	y_end = hit->wall_end;
 	tex_y = hit->texture_offset.y;

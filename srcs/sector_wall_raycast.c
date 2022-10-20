@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 18:06:15 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 02:00:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,21 @@ static void	calculate_parent_positions(t_app *app, t_rayhit *hit,
 	hit->parent_wall_start = WIN_H / 2 - hit->parent_height
 		+ (int)(relative_height * (app->player.height - parent->floor_height));
 	hit->parent_wall_end = hit->parent_wall_start + hit->parent_height;
+	hit->parent_texture_offset_top = 0;
+	hit->parent_texture_offset_bottom = 0;
+	if (hit->parent_wall_start < 0)
+	{
+		hit->parent_texture_offset_top = -hit->parent_wall_start * hit->texture_step.y;
+		hit->parent_wall_start = 0;
+	}
+	if (hit->wall_start < 0)
+		hit->parent_texture_offset_bottom = -hit->wall_start * hit->texture_step.y;
+	if (hit->parent_wall_start >= WIN_H)
+		hit->parent_wall_start = WIN_H - 1;
+	if (hit->parent_wall_end < 0)
+		hit->parent_wall_end = 0;
+	if (hit->parent_wall_end >= WIN_H)
+		hit->parent_wall_end = WIN_H - 1;
 }
 
 /**
@@ -44,15 +59,19 @@ static void	calculate_vertical_positions(t_app *app, t_rayhit *hit)
 	hit->wall_end = hit->wall_start + hit->height;
 	hit->texture_step.y = TEX_SIZE / relative_height;
 	hit->texture_offset.y = 0;
+	if (hit->sector->parent_sector >= 0)
+		calculate_parent_positions(app, hit, relative_height);
 	if (hit->wall_start < 0)
 	{
 		hit->texture_offset.y = -hit->wall_start * hit->texture_step.y;
 		hit->wall_start = 0;
 	}
-	if (hit->wall_end > WIN_H)
+	if (hit->wall_start >= WIN_H)
+		hit->wall_start = WIN_H - 1;
+	if (hit->wall_end < 0)
+		hit->wall_end = 0;
+	if (hit->wall_end >= WIN_H)
 		hit->wall_end = WIN_H - 1;
-	if (hit->sector->parent_sector >= 0)
-		calculate_parent_positions(app, hit, relative_height);
 }
 
 /**
@@ -116,7 +135,7 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall)
 			draw_parent(app, x, &hit);
 			draw_ceiling(app, x, &hit);
 			draw_floor(app, x, &hit);
-			//draw_wall(app, x, &hit);
+			//draw_wall(app, x, &hit, OCCLUDE_BOTH);
 			continue ;
 		}
 		// IF wall type normal wall:

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/20 18:02:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 01:48:07 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ typedef struct s_rayhit
 	int			parent_height;
 	int			parent_wall_start;
 	int			parent_wall_end;
+	double		parent_texture_offset_top;
+	double		parent_texture_offset_bottom;
 }	t_rayhit;
 
 /**
