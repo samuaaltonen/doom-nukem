@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
+#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/10/20 14:05:46 by htahvana         ###   ########.fr        #
+#    Updated: 2022/10/20 15:53:56 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,8 +28,9 @@ LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a
 SRC_DIR = ./srcs
 SRCS := $(patsubst %, $(SRC_DIR)/%, $(FILES))
 
-OBJ_DIR = ./objs
-OBJS = $(patsubst %, $(OBJ_DIR)/%, $(FILES:.c=.o))
+BUILD_DIR = ./build
+OBJS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.o))
+DEPS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.d))
 
 SDL_DIR = ./sdl/
 SDL_HEADERS = \
@@ -50,14 +51,17 @@ LIBLINKS = -L ./libft -L ./liblinearalgebra -L/usr/local/lib \
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(LIBLINEARALGEBRA) $(OBJS)
+$(NAME): $(LIBFT) $(LIBLINEARALGEBRA) $(OBJS) $(DEPS)
 	$(CC) $(OBJS) -o $(NAME) $(FLAGS) $(HEADERS) $(FRAMEWORKS) $(LIBLINKS)
 
-$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	$(CC) $(FLAGS) $(HEADERS) -c $< -o $@
+# Create object files with (-MMD also creates dependency files)
+$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
+	$(CC) $(FLAGS) $(HEADERS) -MMD -c $< -o $@
 
-$(OBJ_DIR):
-	mkdir -p $(OBJ_DIR)
+-include $(DEPS)
+
+$(BUILD_DIR):
+	mkdir -p $(BUILD_DIR)
 
 $(LIBFT):
 	make -C ./libft
@@ -70,7 +74,7 @@ $(LIBLINEARALGEBRA):
 clean:
 	make clean -C ./libft
 	make clean -C ./liblinearalgebra
-	/bin/rm -rf $(OBJ_DIR)
+	/bin/rm -rf $(BUILD_DIR)
 
 fclean: clean
 	make fclean -C ./libft
