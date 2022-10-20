@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/19 13:37:57 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/20 16:00:49 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * Creates a srface with the specified width and height.
- */
+ *
 SDL_Surface	*create_surface(int width, int height)
 {
 	SDL_Surface	*surface;
@@ -24,39 +24,7 @@ SDL_Surface	*create_surface(int width, int height)
 	if (!surface)
 		exit_error(MSG_ERROR_IMAGE_INIT);
 	return (surface);
-}
-
-/**
- * Loads texture from .bmp image into a surface.
- */
-SDL_Surface	*load_texture(char *path)
-{
-	SDL_Surface	*surface;
-	SDL_Surface	*argb_converted;
-	SDL_RWops	*rwops;
-	int			clear_alpha;
-
-	rwops = SDL_RWFromFile(path, "rb");
-	if (!rwops)
-		exit_error(MSG_ERROR_IMAGE_INIT);
-	surface = SDL_LoadBMP_RW(rwops, SDL_TRUE);
-	if (!surface
-		&& SDL_RWclose(rwops) < 0)
-		exit_error(MSG_ERROR_IMAGE_INIT);
-	argb_converted = SDL_ConvertSurfaceFormat(surface, SDL_PIXELFORMAT_ARGB8888, 0);
-	if (!argb_converted)
-		exit_error(MSG_ERROR_IMAGE_INIT);
-	SDL_FreeSurface(surface);
-	surface = argb_converted;
-	SDL_LockSurface(surface);
-	clear_alpha = 0;
-	while (clear_alpha < surface->w * surface->h)
-	{
-		*((unsigned int *)surface->pixels + clear_alpha) &= 0x00FFFFFF;
-		clear_alpha++;
-	}
-	return (surface);
-}
+}*/
 
 /**
  * Changes color of a specific pixel in surface.
