@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/20 14:23:29 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 01:05:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,10 +156,12 @@ int	import_file(t_app *app, char *path)
 	if(fd < 0)
 		exit_error("FILE OPEN ERROR TEMP!");
 	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
-	read(fd, &sector_count,(sizeof(size_t)));
+	if (read(fd, &sector_count,(sizeof(size_t))) == -1)
+		exit_error(MSG_ERROR_FILE_READ);
 	while(counter++ < sector_count)
 	{
-		read(fd, export,sizeof(t_exportsector));
+		if (read(fd, export,sizeof(t_exportsector)) == -1)
+			exit_error(MSG_ERROR_FILE_READ);
 		new = read_sector_list(export);
 		put_sector_lst(app, new);
 	}
