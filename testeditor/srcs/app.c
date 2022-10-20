@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/18 14:49:29 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/19 16:45:00 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	app_render(t_app *app)
 	render_grid(app, 0.5f, 0x424242);
 	render_grid(app, 1.0f, 0x888888);
 	zoom_slider(app);
+	render_fill_active_sector(app);
 	render_sectors(app);
 	if(app->active)
 		render_sector(app, app->active);
