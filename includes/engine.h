@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/19 15:19:22 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:01:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,11 @@ typedef struct s_exportsector
 typedef struct s_rayhit
 {
 	t_sector	*sector;
+	t_vector2	ray;
 	int			texture;
 	t_vector2	position;
 	double		distance;
+	double		distortion;
 	t_vector2	texture_offset;
 	t_vector2	texture_step;
 	int			height;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/19 15:23:48 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:01:41 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,8 @@ void			render_sectors(t_app *app);
  * Sector draw
 */
 void			draw_wall(t_app *app, int x, t_rayhit *hit);
-void			draw_floor(t_app *app, int x, int y_start, int y_end);
-void			draw_ceiling(t_app *app, int x, int y_start, int y_end);
+void			draw_floor(t_app *app, int x, t_rayhit *hit);
+void			draw_ceiling(t_app *app, int x, t_rayhit *hit);
 
 /**
  * Editor
