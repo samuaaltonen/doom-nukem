@@ -122,30 +122,6 @@ typedef struct s_point
 	int				y;
 }	t_point;
 
-/**
- * Polygons
-*/
-typedef struct s_polygon_hit
-{
-	int		y_first_top;
-	int		y_second_top;
-	int		y_first_bottom;
-	int		y_second_bottom;
-	double	distance_first;
-	double	distance_second;
-}	t_polygon_hit;
-
-typedef struct s_polygon
-{
-	t_vector2		corners[MAX_SECTOR_CORNERS];
-	int				corner_count;
-	double			bottom;
-	double			top;
-	int				texture;
-	t_polygon_hit	*hits;
-}	t_polygon;
-
-
 typedef struct	s_vec2list
 {
 	t_vector2			point;
@@ -248,17 +224,6 @@ int			events_window_other(int windowevent, t_app *app);
 int			dispatch_event(t_app *app, SDL_Event *event);
 
 /**
- * Graphics
- */
-void		*render_background(void *data);
-
-/**
- * Polygons
-*/
-void		*render_polygons(void *data);
-void		polygon_draw_floors(t_app *app, t_polygon *polygon);
-
-/**
  * Helper functions
  */
 int			get_pixel_color(SDL_Surface *surface, int x, int y);
@@ -328,6 +293,7 @@ void			relink_member_sectors(t_app *app);
 void			link_wall_to_sector(t_app *app);
 void			render_fill_active_sector(t_app *app);
 void			sector_edit(t_app *app, SDL_Keycode key);
+void			render_selection_point(t_app *app, int size);
 
 
 #endif

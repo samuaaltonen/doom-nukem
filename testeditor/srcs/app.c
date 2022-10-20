@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/20 14:36:54 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:14:01 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,10 @@ void	app_render(t_app *app)
 	zoom_slider(app);
 	render_sectors(app);
 	if(app->active)
+	{
 		render_sector(app, app->active);
+		render_selection_point(app, 5);
+	}
 	if(app->list_ongoing)
 		draw_line(app, &app->active_last->point, &app->mouse_click, 0xAABBCC);
 	SDL_BlitSurface(text_surface, NULL, app->surface, NULL);

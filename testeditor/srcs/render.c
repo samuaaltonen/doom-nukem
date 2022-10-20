@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/19 16:59:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/20 15:12:37 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,30 @@ void	render_fill_active_sector(t_app *app)
 	}
 }
 
-void	render_selection_point(t_app *app)
+void	render_selection_point(t_app *app, int size)
 {
-	(void)app;
+	t_point min;
+	t_point max;
+
+	if(app->active)
+	{
+		min.x = (app->active->point.x - app->view_pos.x) * (app->surface->w) / (app->view_size.x - app->view_pos.x);
+		min.y = (app->active->point.y - app->view_pos.y) * (app->surface->h) / (app->view_size.y - app->view_pos.y);
+		max.x = min.x + size;
+		max.y = min.y + size;
+		min.x = min.x - size;
+		min.y = min.y - size;
+		while(min.y < max.y)
+		{
+			min.x = max.x - size * 2;
+			while(min.x < max.x)
+				{
+					put_pixel_to_surface(app->surface, min.x, min.y, 0xFF00FF);
+					min.x++;
+				}
+			min.y++;
+		}
+
+
+	}
 }
