@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   skybox.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:18:55 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/15 20:34:28 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:08:36 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	*render_skybox(void *data)
 		while (++coord.y < WIN_H)
 		{
 			put_pixel_to_surface_check(app, (t_point){coord.x, coord.y},
-				get_pixel_color(app->bg, offset, texy), MAX_VIEW_DISTANCE);
+				get_pixel_color(app->assets.bg, offset, texy), MAX_VIEW_DISTANCE);
 			texy += steps.y;
 		}
 		coord.x += THREAD_COUNT;

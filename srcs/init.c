@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/20 12:10:09 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:07:58 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,8 @@ int	config_init(t_app *app)
 	app->conf->movement_speed = MOVEMENT_SPEED;
 	app->conf->rotation_speed = ROTATION_SPEED;
 	app->conf->mouse_active = 1;
-	app->title_screen = 1;
-	app->game_active = 0;
+	app->status.title_screen = 1;
+	app->status.game_active = 0;
 	ft_strcpy(app->conf->fps_info, "FPS                 ");
 	init_thread_info(app);
 	return (1);
@@ -70,7 +70,7 @@ void	sdl_init(t_app *app)
  */
 void    load_assets(t_app *app)
 {
-	app->sprite = load_texture(TEXTURE_PANELS);
-	app->bg = load_texture(TEXTURE_BACKGROUND);
+	app->assets.sprite = load_texture(TEXTURE_PANELS);
+	app->assets.bg = load_texture(TEXTURE_BACKGROUND);
     load_font(app);
 }

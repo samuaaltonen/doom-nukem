@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 12:19:24 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:06:58 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,13 @@
  */
 typedef unsigned char	t_uint8;
 
+typedef struct s_game_status
+{
+	int				title_screen;
+	int				game_active;
+}	t_game_status;
+
+
 /**
  * Struct for the application.
  */
@@ -44,7 +51,8 @@ typedef struct s_app
 	t_conf			*conf;
 	SDL_Window		*win;
 	SDL_Surface		*surface;
-	t_font			font;
+	t_game_status	status;
+	t_assets		assets;
 	double			depthmap[WIN_H][WIN_W];
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];
@@ -52,10 +60,6 @@ typedef struct s_app
 	int				possible_visible_count;
 	t_thread_data	thread_info[THREAD_COUNT];
 	t_player		player;
-	int				title_screen;
-	int				game_active;
-	SDL_Surface		*sprite;
-	SDL_Surface		*bg;
 	t_sector		*sectors;
 }	t_app;
 

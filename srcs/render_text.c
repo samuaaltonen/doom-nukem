@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:48:08 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/19 14:48:02 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/20 12:48:34 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	render_text(t_app *app, t_point position, char *text)
 		c = ft_tolower(text[i]);
 		if (ft_strchr(str, c))
 			render_char(app, position, get_char(str, c));
-		position.x += app->font.size - 2;
+		position.x += app->assets.font.size - 2;
 		i++;
 	}
 }
@@ -39,9 +39,9 @@ static void	render_char(t_app *app, t_point position, t_rect src)
 
 	dst.x = position.x;
 	dst.y = position.y;
-	dst.w = app->font.size;
-	dst.h = app->font.size;
-	blit_surface(app->font.font, &src, app->surface, &dst);
+	dst.w = app->assets.font.size;
+	dst.h = app->assets.font.size;
+	blit_surface(app->assets.font.font, &src, app->surface, &dst);
 }
 
 static t_rect	get_char(char *str, int c)
@@ -67,11 +67,11 @@ static t_rect	get_char(char *str, int c)
 
 void	load_font(t_app *app)
 {
-	if (!app->font.font)
-		app->font.font = SDL_LoadBMP(TEXTURE_FONT);
-	if (!app->font.font)
+	if (!app->assets.font.font)
+		app->assets.font.font = SDL_LoadBMP(TEXTURE_FONT);
+	if (!app->assets.font.font)
 		exit_error("Could not load font");
-	app->font.size = 14;
+	app->assets.font.size = 14;
 	change_font(app, 14, 0xFF000000);
 }
 
@@ -82,17 +82,17 @@ void	change_font(t_app *app, int size, int color)
 	int		pixel_pos;
 	char	*pixel;
 
-	app->font.size = size;
+	app->assets.font.size = size;
 	x = 0;
 	y = 0;
-	while (y < app->font.font->h)
+	while (y < app->assets.font.font->h)
 	{
-		while (x < app->font.font->w)
+		while (x < app->assets.font.font->w)
 		{
-			pixel_pos = (y * app->font.font->pitch) + (x * IMAGE_PIXEL_BYTES);
-			pixel = app->font.font->pixels + pixel_pos;
+			pixel_pos = (y * app->assets.font.font->pitch) + (x * IMAGE_PIXEL_BYTES);
+			pixel = app->assets.font.font->pixels + pixel_pos;
 			if ((*(int *)pixel & 0xFF000000) != 0x00000000)
-				put_pixel_to_surface(app->font.font, x, y, color);
+				put_pixel_to_surface(app->assets.font.font, x, y, color);
 			x++;
 		}
 		x = 0;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_draw_wall.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/14 00:16:53 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:09:14 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit)
 		if (tex_y >= (double) TEX_SIZE)
 			tex_y = fmod(tex_y, (double) TEX_SIZE);
 		put_pixel_to_surface(app->surface, x, y_start, get_pixel_color(
-			app->sprite, (int)(((double)hit->texture + hit->texture_offset.x) * (double)TEX_SIZE), 
+			app->assets.sprite, (int)(((double)hit->texture + hit->texture_offset.x) * (double)TEX_SIZE), 
 			(int) tex_y));
 		y_start++;
 	}
