@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/20 15:12:37 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:32:09 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,23 @@ static void	sector_bounds(t_app *app, t_sectorlist *sector, t_point *min, t_poin
 	}
 }
 
+void	render_sector_points(t_app *app)
+{
+	t_vec2list *head;
+
+	if(app->active_sector)
+	{
+		head = app->active_sector->wall_list;
+		while(head)
+		{
+			render_selection_point(app, head, 2);
+			head = head->next;
+			if(head == app->active_sector->wall_list)
+				break;
+		}
+	}
+}
+
 void	render_fill_active_sector(t_app *app)
 {
 	t_vec2list *a;
@@ -135,7 +152,6 @@ void	render_fill_active_sector(t_app *app)
 		a = app->active_sector->wall_list->next;
 		b = app->active_sector->wall_list->next;
 		sector_bounds(app,app->active_sector, &min, &max);
-		ft_printf("min x%i y%i, max x%i y%i\n", min.x, min.y, max.x, max.y);
 		while(a->next != app->active_sector->wall_list && b->next != app->active_sector->wall_list)
 		{
 			if(a->next == b)
@@ -162,15 +178,15 @@ void	render_fill_active_sector(t_app *app)
 	}
 }
 
-void	render_selection_point(t_app *app, int size)
+void	render_selection_point(t_app *app, t_vec2list *point, int size)
 {
 	t_point min;
 	t_point max;
 
-	if(app->active)
+	if(point)
 	{
-		min.x = (app->active->point.x - app->view_pos.x) * (app->surface->w) / (app->view_size.x - app->view_pos.x);
-		min.y = (app->active->point.y - app->view_pos.y) * (app->surface->h) / (app->view_size.y - app->view_pos.y);
+		min.x = (point->point.x - app->view_pos.x) * (app->surface->w) / (app->view_size.x - app->view_pos.x);
+		min.y = (point->point.y - app->view_pos.y) * (app->surface->h) / (app->view_size.y - app->view_pos.y);
 		max.x = min.x + size;
 		max.y = min.y + size;
 		min.x = min.x - size;

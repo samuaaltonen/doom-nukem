@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/20 14:23:48 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:14:09 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,4 +235,44 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 		if(app->floor_edit && app->active_sector->floor_tex < MAX_TEX_COUNT)
 			app->active_sector->floor_tex++;
 	}
+	else if(key == SDLK_u)
+	{
+		if(app->ceiling_edit)
+			app->active_sector->ceil_slope_height += HEIGHT_INC;
+		if(app->floor_edit)
+			app->active_sector->floor_slope_height += HEIGHT_INC;
+	}
+	else if(key == SDLK_j)
+	{
+		if(app->ceiling_edit)
+			app->active_sector->ceil_slope_height -= HEIGHT_INC;
+		if(app->floor_edit)
+			app->active_sector->floor_slope_height -= HEIGHT_INC;
+	}
+}
+
+
+t_vec2list	*find_opposite_point(t_sectorlist *sector, t_vec2list *point)
+{
+	t_vector2 c;
+	t_vec2list *head;
+	t_vec2list *selection;
+	double	opposite;
+	double	max;
+
+	max = 0.0f;
+	head = sector->wall_list;
+	while (head->next != sector->wall_list )
+	{
+		c = (t_vector2){head->point.x - point->point.x, head->point.y - point->point.y};
+		opposite = ft_vector_length(c) * sin(ft_vector_angle((t_vector2){point->next->point.x - point->point.x, point->next->point.y - point->point.y}, c));
+		if(opposite > max)
+		{
+			max = opposite;
+			selection = head;
+		}
+		head = head->next;
+	}
+		return (selection);
+		//ft_printf(" opposite distance %f, \n", ft_vector_length(c) * ( sin(ft_vector_angle(line, c))));
 }

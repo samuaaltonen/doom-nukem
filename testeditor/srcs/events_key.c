@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 14:01:53 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/20 17:14:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,10 @@ int	events_keyup(int keycode, t_app *app)
 	if (keycode == SDLK_UP)
 		sector_edit(app, keycode);
 	if (keycode == SDLK_DOWN)
+		sector_edit(app, keycode);
+	if (keycode == SDLK_u)
+		sector_edit(app, keycode);
+	if (keycode == SDLK_j)
 		sector_edit(app, keycode);
 	if (keycode == SDLK_w)
 		app->keystates ^= FORWARD_W_DOWN;
@@ -53,6 +57,16 @@ int	events_keyup(int keycode, t_app *app)
 		app->floor_edit = ft_toggle(app->floor_edit);
 	if(keycode == SDLK_t)
 		app->light_edit = ft_toggle(app->light_edit);
+	if(app->active_sector && app->active && keycode == SDLK_y)
+	{
+		app->active_sector->ceil_slope_wall = app->active;
+		app->active_sector->ceil_slope_opposite = find_opposite_point(app->active_sector, app->active);
+	}
+	if(app->active_sector && app->active && keycode == SDLK_h)
+	{
+		app->active_sector->floor_slope_wall = app->active;
+		app->active_sector->floor_slope_opposite = find_opposite_point(app->active_sector, app->active);
+	}
 
 	//temp
 	if (keycode == SDLK_0)

@@ -32,6 +32,7 @@
 # define IMAGE_PIXEL_BITS 32
 # define MAX_TEX_COUNT 128
 # define DEG_IN_RADIAN 0.01745f
+# define PI_HALF 1.57079632679
 # define RADIAN_IN_DEG 57.29578f
 # define MAP_SPEED 0.25f
 # define HEIGHT_INC 0.125f
@@ -293,7 +294,9 @@ void			relink_member_sectors(t_app *app);
 void			link_wall_to_sector(t_app *app);
 void			render_fill_active_sector(t_app *app);
 void			sector_edit(t_app *app, SDL_Keycode key);
-void			render_selection_point(t_app *app, int size);
+void			render_selection_point(t_app *app, t_vec2list *point, int size);
+t_vec2list		*find_opposite_point(t_sectorlist *sector, t_vec2list *point);
+void			render_sector_points(t_app *app);
 
 
 #endif
