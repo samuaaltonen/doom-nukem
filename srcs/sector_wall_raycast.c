@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_wall_raycast.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/14 15:03:11 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:04:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ static t_bool	raycast_hit(t_app *app, t_vertex2 wall, t_rayhit *hit, int x)
 
 	ray_vertex.a = app->player.pos;
 	camera_x = 2 * x / (double) WIN_W - 1.f;
-	ray_vertex.b = ft_vector_resize((t_vector2){
+	hit->ray = (t_vector2){
 		app->player.dir.x + app->player.cam.x * camera_x, 
-		app->player.dir.y + app->player.cam.y * camera_x},
-		MAX_VIEW_DISTANCE);
+		app->player.dir.y + app->player.cam.y * camera_x};
+	ray_vertex.b = ft_vector_resize(hit->ray, MAX_VIEW_DISTANCE);
 	angle = ft_vector_angle(ray_vertex.b, app->player.dir);
 	ray_vertex.b.x += app->player.pos.x;
 	ray_vertex.b.y += app->player.pos.y;
@@ -64,7 +64,8 @@ static t_bool	raycast_hit(t_app *app, t_vertex2 wall, t_rayhit *hit, int x)
 	hit->texture_offset.x = fmod(ft_vector_length((t_vector2){
 		wall.a.x - hit->position.x,
 		wall.a.y - hit->position.y}), 1.0);
-	hit->distance = distortion_correction(angle, hit->distance);
+	hit->distortion = cos(angle);
+	hit->distance = hit->distortion * hit->distance;
 	calculate_vertical_positions(app, hit);
 	return (TRUE);
 }
@@ -91,8 +92,8 @@ void	sector_walls_raycast(t_app *app, t_wall *wall)
 		// IF wall type normal wall:
 		if (hit.sector->wall_types[wall->wall_id] == -1)
 		{
-			draw_ceiling(app, x, 0, hit.wall_start);
-			draw_floor(app, x, hit.wall_end, WIN_H - 1);
+			draw_ceiling(app, x, &hit);
+			draw_floor(app, x, &hit);
 			draw_wall(app, x, &hit);
 		}
 		// IF portal / member

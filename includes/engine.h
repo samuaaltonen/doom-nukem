@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/19 15:47:33 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:12:47 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,11 @@ typedef struct s_exportsector
 typedef struct s_rayhit
 {
 	t_sector	*sector;
+	t_vector2	ray;
 	int			texture;
 	t_vector2	position;
 	double		distance;
+	double		distortion;
 	t_vector2	texture_offset;
 	t_vector2	texture_step;
 	int			height;
