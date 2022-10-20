@@ -6,11 +6,29 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/19 18:00:54 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/20 12:32:19 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
+
+/**
+ * Main game loop. Polls SDL event queue until it is empty and then 
+ * proceeds to next frame.
+ */
+void	app_loop(t_app *app)
+{
+	SDL_Event	event;
+
+	while (TRUE)
+	{
+		while (SDL_PollEvent(&event))
+			dispatch_event(app, &event);
+		if (!app->conf->toggle_loop)
+			render_frame(app);
+	}
+}
+
 
 /**
  * Calculates frame delta time and sets FPS accordingly.
@@ -30,52 +48,12 @@ static void	update_fps_counter(t_app *app)
 }
 
 /**
- * Initializes application struct.
- */
-int	app_init(t_app **app)
-{
-	*app = (t_app *)malloc(sizeof(t_app));
-	ft_bzero(*app, sizeof(t_app));
-	if (!(*app))
-		return (0);
-	return (1);
-}
-
-/**
- * Prepares the application to be rendered:
- * Creates window, loads assets, adds event hooks and sets
- * initial player position / direction.
- */
-void	app_prepare(t_app *app)
-{
-	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0)
-		exit_error(MSG_ERROR_SDL_INIT);
-	app->sprite = load_texture(TEXTURE_PANELS);
-	app->bg = load_texture(TEXTURE_BACKGROUND);
-	app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_SHOWN);
-	if (!app->win)
-		exit_error(MSG_ERROR_WINDOW);
-	app->surface = SDL_GetWindowSurface(app->win);
-	if (!app->surface)
-		exit_error(MSG_ERROR_WINDOW_SURFACE);
-	SDL_ShowCursor(SDL_DISABLE);
-	SDL_WarpMouseInWindow(app->win, WIN_W / 2, WIN_H / 2);
-	app->player = (t_player){(t_vector2){POSITION_START_X, POSITION_START_Y},
-		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
-		(t_vector2){0.0, 0.0}, 1.0, 0.5, 0};
-	init_camera_plane(app);
-	//----
-	load_font(app);
-	//----
-}
-
-/**
  * Rendering function to be called in loop hook. Calls individual renderers and
  * draws resulting image(s) to the window.
  */
-void	app_render(t_app *app)
+void	render_frame(t_app *app)
 {
-	handle_movement(app);
+	flush_surface(app->surface);
 	update_fps_counter(app);
 	update_info(app);
 	ft_bzero(app->depthmap, WIN_H * WIN_W * sizeof(double));
@@ -85,30 +63,19 @@ void	app_render(t_app *app)
 		render_multithreading(app, render_skybox);
 		render_multithreading(app, render_polygons);
 	} */
-	flush_surface(app->surface);
 	if (app->title_screen)
 		title_screen(app);
+	//else if (app->main_menu)
+	//	main_menu(app);
 	else if (app->game_active)
-	{
-		render_sectors(app);
-		render_ui(app);
-	}
+		render_game(app);
 	SDL_UpdateWindowSurface(app->win);
 }
 
-/**
- * Main game loop. Polls SDL event queue until it is empty and then 
- * proceeds to next frame.
- */
-void	app_loop(t_app *app)
+void	render_game(t_app *app)
 {
-	SDL_Event	event;
-
-	while (TRUE)
-	{
-		while (SDL_PollEvent(&event))
-			dispatch_event(app, &event);
-		if (!app->conf->toggle_loop)
-			app_render(app);
-	}
+	SDL_ShowCursor(SDL_DISABLE);
+	handle_movement(app);
+	render_sectors(app);
+	render_ui(app);
 }

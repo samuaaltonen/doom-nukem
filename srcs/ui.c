@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/19 17:59:41 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/20 12:06:57 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,18 +57,4 @@ void	render_menu(t_app *app)
 	change_font(app, 48, 0xFF5F1E02);
 	render_text(app, (t_point){dst.x + 162, dst.y + 40}, "MENU");
 	load_font(app);
-}
-
-void	title_screen(t_app *app)
-{
-	SDL_Surface	*bg;
-	t_rect		dst;
-	t_rect		src;
-
-	bg = SDL_LoadBMP("assets/ui/menu-bg.bmp");
-	rect_from_surface(bg, &src);
-	rect_from_surface(app->surface, &dst);
-	blit_surface(bg, &src, app->surface, &dst);
-	SDL_FreeSurface(bg);
-	render_menu(app);
 }

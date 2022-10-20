@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:21:47 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/14 14:16:34 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/20 12:32:18 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,19 @@ int	main(void)
 {
 	t_app	*app;
 
-	if (!app_init(&app)
-		|| !conf_init(app))
+	app_init(&app);
+	sdl_init(app);	
+	if (!config_init(app))
 		exit_error(NULL);
-	app_prepare(app);
+	load_assets(app);
+	//---level and game conf
+	SDL_ShowCursor(SDL_DISABLE);
+	app->player = (t_player){(t_vector2){POSITION_START_X, POSITION_START_Y},
+		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
+		(t_vector2){0.0, 0.0}, 1.0, 0.5, 0};
+	init_camera_plane(app);
 	import_file(app, "./test.test");
+	//---
 	app_loop(app);
 	return (0);
 }

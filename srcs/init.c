@@ -1,61 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   conf.c                                             :+:      :+:    :+:   */
+/*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 11:46:05 by dpalacio         ###   ########.fr       */
+/*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
+/*   Updated: 2022/10/20 12:10:09 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * Inits thread information structs. They contain info about what part of the
- * window each thread calculates.
+ * Initializes application struct.
  */
-void	init_thread_info(t_app *app)
+void	app_init(t_app **app)
 {
-	int	i;
-
-	i = 0;
-	while (i < THREAD_COUNT)
-	{
-		app->thread_info[i] = (t_thread_data){
-			app,
-			i
-		};
-		i++;
-	}
-}
-
-/**
- * Calculates initial camera plane using FOV and player direction vector.
- * Camera plane is always perpendicular to the direction vector.
- * 
- * cameralength = directionlength * tan(FOV / 2)
- */
-void	init_camera_plane(t_app *app)
-{
-	t_vector2	camera_plane;
-	double		camera_length;
-	double		direction_length;
-
-	direction_length = ft_vector_length(app->player.dir);
-	camera_length = direction_length * tan(app->conf->fov
-			* DEG_IN_RADIAN / 2.0f);
-	camera_plane = ft_vector_resize(ft_vector_perpendicular(
-				app->player.dir), camera_length);
-	app->player.cam = camera_plane;
-	app->player.camera_length = camera_length;
+	*app = (t_app *)malloc(sizeof(t_app));
+	ft_bzero(*app, sizeof(t_app));
+	if (!(*app))
+		exit_error(NULL);
 }
 
 /**
  * Initializes configuration struct.
- *
-int	conf_init(t_app *app)
+ */
+int	config_init(t_app *app)
 {
 	if (!app)
 		return (0);
@@ -74,4 +45,32 @@ int	conf_init(t_app *app)
 	ft_strcpy(app->conf->fps_info, "FPS                 ");
 	init_thread_info(app);
 	return (1);
-}*/
+}
+
+
+/**
+ * Prepares the application to be rendered:
+ * Creates window, adds event hooks and sets
+ * initial player position / direction.
+ */
+void	sdl_init(t_app *app)
+{
+	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0)
+		exit_error(MSG_ERROR_SDL_INIT);
+	app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_SHOWN);
+	if (!app->win)
+		exit_error(MSG_ERROR_WINDOW);
+	app->surface = SDL_GetWindowSurface(app->win);
+	if (!app->surface)
+		exit_error(MSG_ERROR_WINDOW_SURFACE);
+}
+
+/**
+ * Loads all game assets
+ */
+void    load_assets(t_app *app)
+{
+	app->sprite = load_texture(TEXTURE_PANELS);
+	app->bg = load_texture(TEXTURE_BACKGROUND);
+    load_font(app);
+}

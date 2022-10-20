@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/19 18:00:59 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/20 12:19:24 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,14 @@ typedef struct s_app
 }	t_app;
 
 /**
+ * init.c
+ */
+void		sdl_init(t_app *app);
+void		app_init(t_app **app);
+int			config_init(t_app *app);
+void		load_assets(t_app *app);
+
+/**
  * Messages
  */
 void		exit_error(char *message);
@@ -67,7 +75,6 @@ void		exit_error(char *message);
 /**
  * Configuration
  */
-int			conf_init(t_app *app);
 void		init_thread_info(t_app *app);
 void		init_camera_plane(t_app *app);
 void		update_info(t_app *app);
@@ -75,10 +82,10 @@ void		update_info(t_app *app);
 /**
  * Application
  */
-int			app_init(t_app **app);
-void		app_prepare(t_app *app);
-void		app_render(t_app *app);
+//void		app_prepare(t_app *app);
+void		render_frame(t_app *app);
 void		app_loop(t_app *app);
+void		render_game(t_app *app);
 
 /**
  * Images
