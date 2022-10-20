@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_draw_ceiling.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:17:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 12:59:55 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/20 13:17:17 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static	int	get_position_color(t_app *app, t_vector2 pos, int texture)
 	y = (TEX_SIZE - (int)(pos.y * (double) TEX_SIZE)) % TEX_SIZE;
 	if (y < 0)
 		y += TEX_SIZE;
-	return get_pixel_color(app->sprite, texture * TEX_SIZE + x, y);
+	return get_pixel_color(app->assets.sprite, texture * TEX_SIZE + x, y);
 }
 
 /**
