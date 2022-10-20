@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assets.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/20 13:06:53 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:11:44 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 # define TEXTURE_BACKGROUND "./assets/textures/bg.bmp"
 # define TEXTURE_FONT "fonts/doom-nukem_font.bmp"
 # define TEXTURE_BUTTON "assets/ui/button_iddle.bmp"
+# define MAP_PATH "./testeditor/test.test"
 
 /**
  * Texture type enumeration.

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 13:12:56 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:01:53 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,8 @@ int	events_keyup(int keycode, t_app *app)
 		app->ceiling_edit = ft_toggle(app->ceiling_edit);
 	if(keycode == SDLK_f)
 		app->floor_edit = ft_toggle(app->floor_edit);
+	if(keycode == SDLK_t)
+		app->light_edit = ft_toggle(app->light_edit);
 
 	//temp
 	if (keycode == SDLK_0)

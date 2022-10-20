@@ -155,37 +155,29 @@ typedef struct	s_vec2list
 } t_vec2list;
 
 /**
- * int					id;
- *	int					corner_count;
- *	struct s_sectorlist	**member_sectors;
- *	double				floor_height;
- *	double				ceiling_height;
- *	int					floor_texture;
- *	int					ceiling_texture;
- *	s_vec2list			*floor_slope_wall;
- *	s_vec2list			*floor_slope_opposite;
- *	s_vec2list			*ceiling_slope_wall;
- *	s_vec2list			*ceiling_slope_opposite;
- *	struct s_sectorlist	*next;
+ * 
  * 
  */
 typedef struct	s_sectorlist
 {
 	int					corner_count;
+	t_vec2list			*wall_list;
 	struct s_sectorlist	*member_sectors[MAX_MEMBER_SECTORS];
 	int					member_links[MAX_MEMBER_SECTORS];
 	struct s_sectorlist	*parent_sector;
+	int					light;
 	double				floor_height;
-	double				ceiling_height;
-	int					floor_texture;
-	int					ceiling_texture;
-	t_vec2list			*wall_list;
+	double				ceil_height;
+	int					floor_tex;
+	double				floor_tex_offset;
+	int					ceil_tex;
+	double				ceil_tex_offset;
 	t_vec2list			*floor_slope_wall;
 	t_vec2list			*floor_slope_opposite;
 	double				floor_slope_height;
-	t_vec2list			*ceiling_slope_wall;
-	t_vec2list			*ceiling_slope_opposite;
-	double				ceiling_slope_height;
+	t_vec2list			*ceil_slope_wall;
+	t_vec2list			*ceil_slope_opposite;
+	double				ceil_slope_height;
 	struct s_sectorlist	*next;
 } t_sectorlist;
 
@@ -215,6 +207,7 @@ typedef struct s_app
 	t_bool				portal_selection;
 	t_bool				ceiling_edit;
 	t_bool				floor_edit;
+	t_bool				light_edit;
 	int					sectorcount;
 }	t_app;
 
@@ -284,31 +277,35 @@ typedef struct s_sector
 	int				corner_count;
 	double			floor_height;
 	double			ceiling_height;
-	int				floor_texture;
-	int				ceiling_texture;
+	int				floor_tex;
+	int				ceil_tex;
 	t_vector3		floor_slope_position;
 	t_vector2		floor_slope_angles;
-	t_vector3		ceiling_slope_position;
-	t_vector2		ceiling_slope_angles;
+	t_vector3		ceil_slope_position;
+	t_vector2		ceil_slope_angles;
 }	t_sector;
 
 typedef struct s_exportsector
 {
+	int				corner_count;
 	t_vector2		corners[MAX_SECTOR_CORNERS];
 	int				wall_types[MAX_SECTOR_CORNERS];
 	int				wall_textures[MAX_SECTOR_CORNERS];
 	int				member_sectors[MAX_MEMBER_SECTORS];
-	int				corner_count;
+	int				parent_sector;
+	int				light;
 	double			floor_height;
-	double			ceiling_height;
-	int				floor_texture;
-	int				ceiling_texture;
+	double			ceil_height;
+	int				floor_tex;
+	double			floor_tex_offset;
+	int				ceil_tex;
+	double			ceil_tex_offset;
 	double			floor_slope_height;
 	int				floor_slope_position;
 	int				floor_slope_opposite;
-	double			ceiling_slope_height;
-	int				ceiling_slope_position;
-	int				ceiling_slope_opposite;
+	double			ceil_slope_height;
+	int				ceil_slope_position;
+	int				ceil_slope_opposite;
 }	t_exportsector;
 
 /**

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/20 13:20:28 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:20:55 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	app_loop(t_app *app)
 	ft_printf("x=%f, y=%f modes:c%i,o%i,p%i,r%i,f%i\n",app->mouse_click.x, app->mouse_click.y, app->list_creation, app->list_ongoing, app->portal_selection, app->floor_edit, app->ceiling_edit);
 	if(app->active_sector)
 	{
-		ft_printf("inside = %i, floor: h:%f,tex:%i, ceil: h:%f,tex:%i\n has members: ", app->active_sector, app->active_sector->floor_height, app->active_sector->floor_texture, app->active_sector->ceiling_height, app->active_sector->ceiling_texture);
+		ft_printf("inside = %i, floor: h:%f,tex:%i,o:%f, ceil: h:%f,tex:%i,o:%f, light:%i\n has members: ", app->active_sector, app->active_sector->floor_height, app->active_sector->floor_tex, app->active_sector->floor_tex_offset, app->active_sector->ceil_height, app->active_sector->ceil_tex, app->active_sector->ceil_tex_offset, app->active_sector->light);
 		for(int i = 0; i < 4 && app->active_sector->member_sectors[i]; ++i)
 			ft_printf("%i ", get_sector_id(app, app->active_sector->member_sectors[i]));
 		ft_printf("\n");

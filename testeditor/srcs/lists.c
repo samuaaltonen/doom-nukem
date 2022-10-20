@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:42:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/18 14:55:48 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:20:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ t_sectorlist	*new_sector_list(t_vec2list *wall_list)
 		tmp = tmp->next;
 	}
 	new->wall_list = wall_list;
+	new->ceil_height = 1.0f;
 	new->next = NULL;
 	return (new);
 }

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/18 17:38:26 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/20 14:21:47 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,15 @@ static void read_sector(t_app *app, t_exportsector *export, int sectorid, int se
 	(void)sector_count;
 	app->sectors[sectorid].corner_count = export->corner_count;
 	export_to_array(app, export, sectorid);
-	app->sectors[sectorid].ceiling_texture = export->ceiling_texture;
-	app->sectors[sectorid].floor_texture = export->floor_texture;
-	app->sectors[sectorid].ceiling_height = export->ceiling_height;
+	app->sectors[sectorid].light = export->light;
+	app->sectors[sectorid].ceiling_texture = export->ceil_tex;
+	app->sectors[sectorid].ceil_tex_offset = export->ceil_tex_offset;
+	app->sectors[sectorid].floor_texture = export->floor_tex;
+	app->sectors[sectorid].floor_tex_offset = export->floor_tex_offset;
+	app->sectors[sectorid].ceiling_height = export->ceil_height;
 	app->sectors[sectorid].floor_height = export->floor_height;
-	app->sectors[sectorid].parent_sector = 0;
-		ft_printf("sectorid = %i\n", sectorid);
+	app->sectors[sectorid].parent_sector = export->parent_sector;
+		ft_printf("sectorid = %i corners count: %i\n", sectorid, app->sectors[sectorid].corner_count);
 }
 
 //open a file
@@ -62,7 +65,6 @@ int	import_file(t_app *app, char *path)
 		counter++;
 	}
 	ft_printf("sector_count=%i\n",sector_count);
-
 	close(fd);
 	return (0);
 }
