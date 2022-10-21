@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 03:20:15 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:41:02 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion)
 		app->occlusion_top[x] = y_end;
 	if (occlusion == OCCLUDE_BOTH || occlusion == OCCLUDE_BOTTOM)
 		app->occlusion_bottom[x] = WIN_H - y_start;
+	tex_y += hit->texture_step.y * (y_start - hit->wall_start);
 	while (y_start < y_end)
 	{
 		tex_y += hit->texture_step.y;
