@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:36:45 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:38:08 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:41:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,12 @@
 /**
  * Creates a new linked list to save sectors.
  */
-t_sectorlist	*new_sector_list(t_vec2list *wall_list)
+t_sector_lst	*new_sector_list(t_vec2list *wall_list)
 {
-	t_sectorlist	*new;
+	t_sector_lst	*new;
 	t_vec2list		*tmp;
 
-	new = (t_sectorlist *)ft_memalloc(sizeof(t_sectorlist));
+	new = (t_sector_lst *)ft_memalloc(sizeof(t_sector_lst));
 	if (!new)
 		return (NULL);
 
@@ -45,11 +45,11 @@ t_sectorlist	*new_sector_list(t_vec2list *wall_list)
  * 
  * @param app 
  * @param new 
- * @return t_sectorlist* 
+ * @return t_sector_lst* 
  */
-t_sectorlist	*put_sector_lst(t_app *app, t_sectorlist* new)
+t_sector_lst	*put_sector_lst(t_app *app, t_sector_lst* new)
 {
-	t_sectorlist *iter;
+	t_sector_lst *iter;
 
 	if(!new)
 		exit_error("editor:add_sector_lst failed!\n");

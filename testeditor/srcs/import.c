@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:27:27 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:41:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ t_vec2list	*ft_lstindex(t_vec2list *lst, size_t index)
  * @param sector 
  * @param export 
  */
-void read_sector(t_sectorlist *sector, t_exportsector *export)
+void read_sector(t_sector_lst *sector, t_exportsector *export)
 {
 	sector->corner_count = export->corner_count;
 	sector->wall_list = NULL;
@@ -105,21 +105,21 @@ void read_sector(t_sectorlist *sector, t_exportsector *export)
  * @brief reads exported sector data, allocates and returns a new sector
  * 
  * @param export 
- * @return t_sectorlist* 
+ * @return t_sector_lst* 
  */
-t_sectorlist	*read_sector_list(t_exportsector *export)
+t_sector_lst	*read_sector_list(t_exportsector *export)
 {
-	t_sectorlist	*new;
-	new = (t_sectorlist *)malloc(sizeof(t_sectorlist));
+	t_sector_lst	*new;
+	new = (t_sector_lst *)malloc(sizeof(t_sector_lst));
 	if (!new)
 		return (NULL);
 	read_sector(new, export);
 	return (new);
 }
 
-static t_sectorlist *sector_by_index(t_app *app, int index)
+static t_sector_lst *sector_by_index(t_app *app, int index)
 {
-	t_sectorlist *head;
+	t_sector_lst *head;
 	int i;
 
 	i = 0;
@@ -141,7 +141,7 @@ static t_sectorlist *sector_by_index(t_app *app, int index)
 void	relink_sectors(t_app *app)
 {
 	int		i;
-	t_sectorlist *head;
+	t_sector_lst *head;
 
 	head = app->sectors;
 	while (head)
@@ -176,7 +176,7 @@ int	import_file(t_app *app, char *path)
 {
 	int	fd;
 	t_exportsector *export;
-	t_sectorlist *new;
+	t_sector_lst *new;
 	size_t counter = 0;
 	size_t sector_count;
 

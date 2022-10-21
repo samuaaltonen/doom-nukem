@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:27:03 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:41:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static void	list_to_export(t_exportsector *export, t_vec2list *list, int count)
 	}
 }
 
-static void	member_export(t_app *app, t_exportsector *export, t_sectorlist *sector)
+static void	member_export(t_app *app, t_exportsector *export, t_sector_lst *sector)
 {
 	int	i;
 
@@ -55,7 +55,7 @@ static void	member_export(t_app *app, t_exportsector *export, t_sectorlist *sect
  * @param sector 
  * @param export 
  */
-void write_sector(t_app *app, t_sectorlist *sector, t_exportsector *export)
+void write_sector(t_app *app, t_sector_lst *sector, t_exportsector *export)
 {
 	export->corner_count = sector->corner_count;
 	list_to_export(export, sector->wall_list, export->corner_count);
@@ -76,7 +76,7 @@ void write_sector(t_app *app, t_sectorlist *sector, t_exportsector *export)
 	export->ceil_slope_position = 0;
 } 
 
-size_t	ft_lstlen(t_sectorlist *lst)
+size_t	ft_lstlen(t_sector_lst *lst)
 {
 	size_t	i;
 
@@ -103,7 +103,7 @@ int	file_open(t_app *app, char *path)
 	t_exportsector *export;
 	size_t	counter = 0;
 	size_t	sector_count;
-	t_sectorlist *tmp;
+	t_sector_lst *tmp;
 
 	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
 	fd = open(path, O_WRONLY | O_CREAT, 0755);

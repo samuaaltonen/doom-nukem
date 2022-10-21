@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:22:33 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:41:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	render_sector(t_app *app, t_vec2list *sector_start)
  */
 void	render_sectors(t_app *app)
 {
-	t_sectorlist *tmp;
+	t_sector_lst *tmp;
 
 	tmp = app->sectors;
 	while(tmp)
@@ -117,7 +117,7 @@ void	render_grid(t_app *app, double divider, int color)
  * @param min 
  * @param max 
  */
-static void	sector_bounds(t_app *app, t_sectorlist *sector, t_point *min, t_point *max)
+static void	sector_bounds(t_app *app, t_sector_lst *sector, t_point *min, t_point *max)
 {
 	t_vec2list *tmp;
 	t_point screen;

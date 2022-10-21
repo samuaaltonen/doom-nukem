@@ -156,7 +156,7 @@ typedef struct	s_sectorlist
 	t_vec2list			*ceil_slope_opposite;
 	double				ceil_slope_height;
 	struct s_sectorlist	*next;
-} t_sectorlist;
+} t_sector_lst;
 
 /**
  * Struct for the application.
@@ -175,8 +175,8 @@ typedef struct s_app
 	t_vector2			view_size;
 	t_vector2			zoom_area;
 	t_vector2			mouse_click;
-	t_sectorlist		*sectors;
-	t_sectorlist		*active_sector;
+	t_sector_lst		*sectors;
+	t_sector_lst		*active_sector;
 	t_vec2list			*active;
 	t_vec2list			*active_last;
 	t_bool				list_creation;
@@ -278,25 +278,25 @@ void			render_sector(t_app *app, t_vec2list *sector_start);
 void			draw_line(t_app *app, t_vector2 *a, t_vector2 *b, int color);
 void			zoom_slider(t_app *app);
 void			snap_to_nearest(t_app *app, t_point *mouse_pos, t_vector2 *snap_pos, double divider);
-t_sectorlist	*put_sector_lst(t_app *app, t_sectorlist* new);
-t_sectorlist	*new_sector_list(t_vec2list *wall_list);
+t_sector_lst	*put_sector_lst(t_app *app, t_sector_lst* new);
+t_sector_lst	*new_sector_list(t_vec2list *wall_list);
 int				file_open(t_app *app, char *path);
 int				import_file(t_app *app, char *path);
 void			change_walls_tex(t_vec2list *walls, int wall_tex);
-int				inside_sector_check(t_app *app, t_sectorlist *sector);
-t_sectorlist	*click_sector(t_app *app);
-t_sectorlist	*find_parent_sector(t_app *app, t_sectorlist *sector);
+int				inside_sector_check(t_app *app, t_sector_lst *sector);
+t_sector_lst	*click_sector(t_app *app);
+t_sector_lst	*find_parent_sector(t_app *app, t_sector_lst *sector);
 void			change_selected_wall_tex(t_app *app, t_vec2list *wall, int wall_id);
-t_sectorlist	*sector_pop(t_app *app, t_sectorlist **pop, void (*del)(void *, size_t));
-void			sector_delone(t_sectorlist **sector, void (*del)(void*, size_t));
-int				get_sector_id(t_app *app, t_sectorlist *sector);
+t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop, void (*del)(void *, size_t));
+void			sector_delone(t_sector_lst **sector, void (*del)(void*, size_t));
+int				get_sector_id(t_app *app, t_sector_lst *sector);
 void			relink_member_sectors(t_app *app);
 void			link_wall_to_sector(t_app *app);
 void			render_fill_active_sector(t_app *app);
 void			sector_edit(t_app *app, SDL_Keycode key);
 void			render_selection_point(t_app *app, t_vec2list *point, int size);
-t_vec2list		*find_opposite_point(t_sectorlist *sector, t_vec2list *point);
+t_vec2list		*find_opposite_point(t_sector_lst *sector, t_vec2list *point);
 void			render_sector_points(t_app *app);
-void			change_walls_type(t_app *app, t_sectorlist *sector);
+void			change_walls_type(t_app *app, t_sector_lst *sector);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:36:06 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:41:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ return (TRUE);
 }
 
 
-static void	add_member_sector(t_sectorlist *parent, t_sectorlist *child)
+static void	add_member_sector(t_sector_lst *parent, t_sector_lst *child)
 {
 	int i;
 
@@ -80,7 +80,7 @@ static void	add_member_sector(t_sectorlist *parent, t_sectorlist *child)
  */
 t_bool	complete_sector(t_app *app)
 {
-	t_sectorlist *new;
+	t_sector_lst *new;
 
 	app->active_last->next = app->active;
 	new = put_sector_lst(app,new_sector_list(app->active));

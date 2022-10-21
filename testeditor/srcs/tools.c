@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:36:28 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:41:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
  * @param sector 
  * @return int 
  */
-int		get_sector_id(t_app *app, t_sectorlist *sector)
+int		get_sector_id(t_app *app, t_sector_lst *sector)
 {
-	t_sectorlist	*tmp;
+	t_sector_lst	*tmp;
 	int				i;
 
 	i = 0;
@@ -40,7 +40,7 @@ int		get_sector_id(t_app *app, t_sectorlist *sector)
 
 
 //WIP
-void	sector_delone(t_sectorlist **sector, void (*del)(void*, size_t))
+void	sector_delone(t_sector_lst **sector, void (*del)(void*, size_t))
 {
 	(void)del;
 	int i;
@@ -66,10 +66,10 @@ void	sector_delone(t_sectorlist **sector, void (*del)(void*, size_t))
  * Pop out the selected sector from the sector list if the sector has no members, runs del on it and returns the popped sector.
  * 
  */
-t_sectorlist *sector_pop(t_app *app, t_sectorlist **pop, void (*del)(void *, size_t))
+t_sector_lst *sector_pop(t_app *app, t_sector_lst **pop, void (*del)(void *, size_t))
 {
-	t_sectorlist *prev;
-	t_sectorlist *head;
+	t_sector_lst *prev;
+	t_sector_lst *head;
 
 	if((*pop)->member_sectors[0] || !(app->sectors) || !pop || !(*pop))
 		return (NULL);
@@ -97,9 +97,9 @@ t_sectorlist *sector_pop(t_app *app, t_sectorlist **pop, void (*del)(void *, siz
 /**
  * returns the clicked sector, by checking if 
  */
-t_sectorlist *click_sector(t_app *app)
+t_sector_lst *click_sector(t_app *app)
 {
-	t_sectorlist *tmp;
+	t_sector_lst *tmp;
 
 	tmp = app->sectors;
 	while(tmp)
@@ -150,7 +150,7 @@ void link_wall_to_sector(t_app *app)
 /**
  * Returns true if the click is inside a convex sector, checking the point side to all walls
  */
-int	inside_sector_check(t_app *app, t_sectorlist *sector)
+int	inside_sector_check(t_app *app, t_sector_lst *sector)
 {
 	t_vec2list *tmp;
 
@@ -173,7 +173,7 @@ int	inside_sector_check(t_app *app, t_sectorlist *sector)
  * ft_vector_length(c) * (sin(ft_vector_angle(line, c))
  * c = vector to iterated point
  */
-t_vec2list	*find_opposite_point(t_sectorlist *sector, t_vec2list *point)
+t_vec2list	*find_opposite_point(t_sector_lst *sector, t_vec2list *point)
 {
 	t_vector2 c;
 	t_vec2list *head;

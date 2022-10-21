@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:52 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:29:47 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:41:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,12 +97,12 @@ t_vec2list	*find_clicked_vector(t_app *app)
  * @brief Finds which member sector in active sector was clicked
  * 
  * @param app 
- * @return t_sectorlist* 
+ * @return t_sector_lst* 
  */
-t_sectorlist *find_child_sector(t_app *app)
+t_sector_lst *find_child_sector(t_app *app)
 {
 	int				i;
-	t_sectorlist	*tmp;
+	t_sector_lst	*tmp;
 
 	i = 0;
 	while(i < MAX_MEMBER_SECTORS && app->active_sector->member_sectors[i])

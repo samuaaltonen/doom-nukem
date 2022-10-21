@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 16:33:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:36:06 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:41:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	change_selected_wall_tex(t_app *app, t_vec2list *wall, int wall_id)
 /**
  * Changes all wall types of the selected sector to it's parent linking them
  */
-void	change_walls_type(t_app *app, t_sectorlist *sector)
+void	change_walls_type(t_app *app, t_sector_lst *sector)
 {
 	t_vec2list *head;
 
