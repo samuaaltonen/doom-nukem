@@ -6,31 +6,13 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:11:04 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:36:28 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
-/**
- * @brief changes all walls in the given list to wall_tex param
- * 
- * @param walls 
- * @param wall_tex 
- */
-void	change_all_wall_tex(t_vec2list *walls, int wall_tex)
-{
-	t_vec2list *tmp;
 
-	tmp = walls;
-	while(tmp)
-	{
-		tmp->wall_texture = wall_tex;
-		tmp = tmp->next;
-		if(tmp == walls)
-			break;
-	}
-}
 
 /**
  * @brief Get the sector id of the sector parameter
@@ -186,62 +168,6 @@ int	inside_sector_check(t_app *app, t_sectorlist *sector)
 }
 
 /**
- * Handles sector changes depending on active states and pressed keys
- * Up and Down for heights
- * Left and Right for textures
- * U and J for slope heights
- */
-void	sector_edit(t_app *app, SDL_Keycode key)
-{
-	if(key == SDLK_UP)
-	{
-		if(app->ceiling_edit)
-			app->active_sector->ceil_height += HEIGHT_INC;
-		if(app->floor_edit)
-			app->active_sector->floor_height += HEIGHT_INC;
-		if(app->light_edit)
-			app->active_sector->light++;
-	}
-	else if(key == SDLK_DOWN)
-	{
-		if(app->ceiling_edit)
-			app->active_sector->ceil_height -= HEIGHT_INC;
-		if(app->floor_edit)
-			app->active_sector->floor_height -= HEIGHT_INC;
-		if(app->light_edit)
-			app->active_sector->light--;
-	}
-	else if(key == SDLK_LEFT)
-	{
-		if(app->ceiling_edit && app->active_sector->ceil_tex > 0)
-			app->active_sector->ceil_tex--;
-		if(app->floor_edit && app->active_sector->floor_tex > 0)
-			app->active_sector->floor_tex--;
-	}
-	else if(key == SDLK_RIGHT)
-	{
-		if(app->ceiling_edit && app->active_sector->ceil_tex < MAX_TEX_COUNT)
-			app->active_sector->ceil_tex++;
-		if(app->floor_edit && app->active_sector->floor_tex < MAX_TEX_COUNT)
-			app->active_sector->floor_tex++;
-	}
-	else if(key == SDLK_u)
-	{
-		if(app->ceiling_edit)
-			app->active_sector->ceil_slope_height += HEIGHT_INC;
-		if(app->floor_edit)
-			app->active_sector->floor_slope_height += HEIGHT_INC;
-	}
-	else if(key == SDLK_j)
-	{
-		if(app->ceiling_edit)
-			app->active_sector->ceil_slope_height -= HEIGHT_INC;
-		if(app->floor_edit)
-			app->active_sector->floor_slope_height -= HEIGHT_INC;
-	}
-}
-
-/**
  * Finds and returns the wall in the sector that is furthest from the parallel line to selected point
  * 
  * ft_vector_length(c) * (sin(ft_vector_angle(line, c))
@@ -270,25 +196,4 @@ t_vec2list	*find_opposite_point(t_sectorlist *sector, t_vec2list *point)
 	}
 		return (selection);
 		//ft_printf(" opposite distance %f, \n", ft_vector_length(c) * ( sin(ft_vector_angle(line, c))));
-}
-
-
-/**
- * Changes all wall types of the selected sector to it's parent linking them
- */
-void	change_walls_type(t_app *app, t_sectorlist *sector)
-{
-	t_vec2list *head;
-
-	if(!sector)
-		return ;
-	head = sector->wall_list;
-	while(head)
-	{
-		head->wall_type = get_sector_id(app, sector->parent_sector);
-
-		head = head->next;
-		if(head == sector->wall_list)
-			break;
-	}
 }
