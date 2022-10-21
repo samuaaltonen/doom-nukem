@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 15:18:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:25:17 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,11 +68,19 @@ void read_sector(t_sector_lst *sector, t_exportsector *export)
 	sector->ceil_tex = export->ceil_tex;
 	sector->ceil_tex_offset = export->ceil_tex_offset;
 	sector->floor_slope_height = export->floor_slope_height;
-	sector->floor_slope_opposite = ft_lstindex(sector->wall_list, export->floor_slope_opposite);
-	sector->floor_slope_wall = ft_lstindex(sector->wall_list, export->floor_slope_position);
+	sector->floor_slope_opposite = 0;
+	sector->floor_slope_wall = 0;
+	sector->ceil_slope_opposite = 0;
+	sector->ceil_slope_wall = 0;
+	if(export->floor_slope_opposite != -1)
+		sector->floor_slope_opposite = ft_lstindex(sector->wall_list, export->floor_slope_opposite);
+	if(export->floor_slope_position != -1)
+		sector->floor_slope_wall = ft_lstindex(sector->wall_list, export->floor_slope_position);
 	sector->ceil_slope_height = export->ceil_slope_height;
-	sector->ceil_slope_opposite = ft_lstindex(sector->wall_list, export->ceil_slope_opposite);
-	sector->ceil_slope_wall = ft_lstindex(sector->wall_list, export->ceil_slope_position);
+	if(export->ceil_slope_opposite != -1)
+		sector->ceil_slope_opposite = ft_lstindex(sector->wall_list, export->ceil_slope_opposite);
+	if(export->floor_slope_position != -1)
+		sector->ceil_slope_wall = ft_lstindex(sector->wall_list, export->ceil_slope_position);
 	sector->parent_sector = NULL;
 	sector->next = NULL;
 	ft_printf("0th %i, 1st %i, 2nd %i, 3rd %i\n",sector->member_links[0], sector->member_links[1],sector->member_links[2], sector->member_links[3]);
