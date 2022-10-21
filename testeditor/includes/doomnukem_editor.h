@@ -322,5 +322,6 @@ void			relink_member_sectors(t_app *app);
  * Export
  */
 int				export_file(t_app *app, char *path);
+int				get_vertex_id(t_vec2_lst *list, t_vec2_lst *wall);
 
 #endif

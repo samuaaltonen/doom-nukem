@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 14:33:54 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:54:57 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,22 @@ static void	member_export(t_app *app, t_exportsector *export, t_sector_lst *sect
 	}
 }
 
+
+int				get_vertex_id(t_vec2_lst *list, t_vec2_lst *wall)
+{
+	int	i;
+
+	if(!wall)
+		return (-1);
+	i = 0;
+	while (wall != list)
+	{
+		i++;
+		list = list->next;
+	}
+	return (i);
+}
+
 /**
  * @brief Writes sector data to an exportable format
  * 
@@ -69,11 +85,11 @@ void write_sector(t_app *app, t_sector_lst *sector, t_exportsector *export)
 	export->ceil_tex = sector->ceil_tex;
 	export->ceil_tex_offset = -1;
 	export->floor_slope_height = sector->floor_slope_height;
-	export->floor_slope_opposite = 0;
-	export->floor_slope_position = 0;
+	export->floor_slope_opposite = get_vertex_id(sector->wall_list,sector->floor_slope_opposite);
+	export->floor_slope_position = get_vertex_id(sector->wall_list,sector->floor_slope_wall);
 	export->ceil_slope_height = sector->ceil_slope_height;
-	export->ceil_slope_opposite = 0;
-	export->ceil_slope_position = 0;
+	export->ceil_slope_opposite = get_vertex_id(sector->wall_list,sector->ceil_slope_opposite);
+	export->ceil_slope_position = get_vertex_id(sector->wall_list,sector->ceil_slope_wall);
 } 
 
 /**
