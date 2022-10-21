@@ -6,13 +6,18 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/20 17:32:09 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:22:33 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
-
+/**
+ * @brief renders all the lines for the given sector
+ * 
+ * @param app 
+ * @param sector_start 
+ */
 void	render_sector(t_app *app, t_vec2list *sector_start)
 {
 	t_vec2list *tmp;
@@ -30,6 +35,11 @@ void	render_sector(t_app *app, t_vec2list *sector_start)
 	}
 }
 
+/**
+ * @brief runs render sector on all the sectors in app
+ * 
+ * @param app 
+ */
 void	render_sectors(t_app *app)
 {
 	t_sectorlist *tmp;
@@ -49,7 +59,8 @@ static void	render_row(t_app *app, int y, int color)
 	x = -1;
 	while (++x < app->surface->w)
 		put_pixel_to_surface(app->surface, x, y, color);
-} 
+}
+
 static void	render_col(t_app *app, int x, int color)
 {
 	int	y;
@@ -59,6 +70,13 @@ static void	render_col(t_app *app, int x, int color)
 		put_pixel_to_surface(app->surface, x, y, color);
 }
 
+/**
+ * @brief renders a grid with the divider and color param
+ * 
+ * @param app 
+ * @param divider 
+ * @param color 
+ */
 void	render_grid(t_app *app, double divider, int color)
 {
 	int			x;
@@ -91,6 +109,14 @@ void	render_grid(t_app *app, double divider, int color)
 		//-50 + ( 0  / 1000) * 100
 }
 
+/**
+ * @brief Puts the max and min values of a bounding box of a sector to the given min and max param
+ * 
+ * @param app 
+ * @param sector 
+ * @param min 
+ * @param max 
+ */
 static void	sector_bounds(t_app *app, t_sectorlist *sector, t_point *min, t_point *max)
 {
 	t_vec2list *tmp;
@@ -119,6 +145,11 @@ static void	sector_bounds(t_app *app, t_sectorlist *sector, t_point *min, t_poin
 	}
 }
 
+/**
+ * @brief renders points on each point of the active sector
+ * 
+ * @param app 
+ */
 void	render_sector_points(t_app *app)
 {
 	t_vec2list *head;
@@ -136,6 +167,12 @@ void	render_sector_points(t_app *app)
 	}
 }
 
+/**
+ * @brief Makes triangles for rendering from a sector
+ * WIP atm only renders a rectangle bounding the sector
+ * 
+ * @param app 
+ */
 void	render_fill_active_sector(t_app *app)
 {
 	t_vec2list *a;
@@ -162,8 +199,7 @@ void	render_fill_active_sector(t_app *app)
 				b = b->next;
 			//draw triangle start-a-b
 		}
-		
-		//temp draw square instead
+		//wip draw square instead
 		cur = (t_point){min.x, min.y};
 		while(cur.y < max.y)
 		{
@@ -178,6 +214,13 @@ void	render_fill_active_sector(t_app *app)
 	}
 }
 
+/**
+ * @brief Renders a square with given size on the given point
+ * 
+ * @param app 
+ * @param point 
+ * @param size 
+ */
 void	render_selection_point(t_app *app, t_vec2list *point, int size)
 {
 	t_point min;
@@ -201,7 +244,5 @@ void	render_selection_point(t_app *app, t_vec2list *point, int size)
 				}
 			min.y++;
 		}
-
-
 	}
 }

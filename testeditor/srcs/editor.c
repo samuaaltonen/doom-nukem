@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/20 14:41:27 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:33:07 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,12 @@ void	zoom_slider(t_app *app)
 	
 }
 
-//current real time nearest point to cursor
-t_vector2 *nearest_point_cursor(t_app *app)
-{
-(void)app;
- return(NULL);
-
-}
-
-//check if point is already in active list
+/**
+ * @brief check if clicked point is already part of the same list
+ * 
+ * @param app 
+ * @return t_bool 
+ */
 t_bool	valid_point(t_app *app)
 {
 	t_vec2list	*tmp;
@@ -53,10 +50,10 @@ t_bool	valid_point(t_app *app)
 	while (tmp)
 	{
 		if (tmp->point.x == app->mouse_click.x && tmp->point.y == app->mouse_click.y)
-			return (0);
+			return (FALSE);
 		tmp = tmp->next;
 	}
-return (1);
+return (TRUE);
 }
 
 
@@ -75,7 +72,12 @@ static void	add_member_sector(t_sectorlist *parent, t_sectorlist *child)
 	}
 }
 
-//check if point is first element in list and complete sector
+/**
+ * @brief Completes an ongoing sector
+ * 
+ * @param app 
+ * @return t_bool 
+ */
 t_bool	complete_sector(t_app *app)
 {
 	t_sectorlist *new;
@@ -89,6 +91,6 @@ t_bool	complete_sector(t_app *app)
 	new->parent_sector = app->active_sector;
 	add_member_sector(new->parent_sector, new);
 	change_all_wall_tex(new->wall_list, app->sectorcount);
-	
+	change_walls_type(app, new);
  return (0);
 }

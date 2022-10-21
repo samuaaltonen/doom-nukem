@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:52 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/20 12:12:47 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:29:47 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,10 @@ int	events_mouse_track(t_app *app)
 
 
 /**
- * loops through all points in a sectors to find matching point
+ * @brief Finds which point in active sector was clicked
+ * 
+ * @param app 
+ * @return t_vec2list* 
  */
 t_vec2list	*find_clicked_vector(t_app *app)
 {
@@ -90,7 +93,12 @@ t_vec2list	*find_clicked_vector(t_app *app)
 	return(NULL);
 }
 
-
+/**
+ * @brief Finds which member sector in active sector was clicked
+ * 
+ * @param app 
+ * @return t_sectorlist* 
+ */
 t_sectorlist *find_child_sector(t_app *app)
 {
 	int				i;

@@ -6,12 +6,19 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/20 14:23:29 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:27:27 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
+/**
+ * @brief creates a pointer list from saved point data
+ * 
+ * @param export 
+ * @param list 
+ * @param count 
+ */
 static void	export_to_list(t_exportsector *export, t_vec2list **list, int count)
 {
 	int			i;
@@ -64,7 +71,12 @@ t_vec2list	*ft_lstindex(t_vec2list *lst, size_t index)
 	return (temp);
 }
 
-//read sector data from export
+/**
+ * @brief reads values from exported sector and writes them into sector
+ * 
+ * @param sector 
+ * @param export 
+ */
 void read_sector(t_sectorlist *sector, t_exportsector *export)
 {
 	sector->corner_count = export->corner_count;
@@ -90,7 +102,10 @@ void read_sector(t_sectorlist *sector, t_exportsector *export)
 }
 
 /**
- * reads a exportsector and makes a sector.
+ * @brief reads exported sector data, allocates and returns a new sector
+ * 
+ * @param export 
+ * @return t_sectorlist* 
  */
 t_sectorlist	*read_sector_list(t_exportsector *export)
 {
@@ -117,6 +132,12 @@ static t_sectorlist *sector_by_index(t_app *app, int index)
 	return (head);
 }
 
+/**
+ * @brief relinks the pointer references of sectors
+ * 	using integer values in saved file
+ * 
+ * @param app 
+ */
 void	relink_sectors(t_app *app)
 {
 	int		i;
@@ -143,7 +164,14 @@ void	relink_sectors(t_app *app)
 
 }
 
-//open a file
+/**
+ * @brief Opens a file from the given path
+ * 	reads all sector data into the sector list
+ * 
+ * @param app 
+ * @param path 
+ * @return int 
+ */
 int	import_file(t_app *app, char *path)
 {
 	int	fd;

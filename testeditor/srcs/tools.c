@@ -6,12 +6,18 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/20 17:14:09 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:11:04 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
+/**
+ * @brief changes all walls in the given list to wall_tex param
+ * 
+ * @param walls 
+ * @param wall_tex 
+ */
 void	change_all_wall_tex(t_vec2list *walls, int wall_tex)
 {
 	t_vec2list *tmp;
@@ -26,6 +32,13 @@ void	change_all_wall_tex(t_vec2list *walls, int wall_tex)
 	}
 }
 
+/**
+ * @brief Get the sector id of the sector parameter
+ * 
+ * @param app 
+ * @param sector 
+ * @return int 
+ */
 int		get_sector_id(t_app *app, t_sectorlist *sector)
 {
 	t_sectorlist	*tmp;
@@ -43,6 +56,8 @@ int		get_sector_id(t_app *app, t_sectorlist *sector)
 	return (i);
 }
 
+
+//WIP
 void	sector_delone(t_sectorlist **sector, void (*del)(void*, size_t))
 {
 	(void)del;
@@ -65,13 +80,16 @@ void	sector_delone(t_sectorlist **sector, void (*del)(void*, size_t))
 	*sector = NULL;
 }
 
-
+/**
+ * Pop out the selected sector from the sector list if the sector has no members, runs del on it and returns the popped sector.
+ * 
+ */
 t_sectorlist *sector_pop(t_app *app, t_sectorlist **pop, void (*del)(void *, size_t))
 {
 	t_sectorlist *prev;
 	t_sectorlist *head;
 
-	if(!(app->sectors) || !pop || !(*pop))
+	if((*pop)->member_sectors[0] || !(app->sectors) || !pop || !(*pop))
 		return (NULL);
 	prev = NULL;
 	head = app->sectors;
@@ -82,7 +100,6 @@ t_sectorlist *sector_pop(t_app *app, t_sectorlist **pop, void (*del)(void *, siz
 	}
 	if (head == *pop)
 	{
-		
 		if(prev)
 			prev->next = (*pop)->next;
 		if(head == app->sectors)
@@ -95,7 +112,9 @@ t_sectorlist *sector_pop(t_app *app, t_sectorlist **pop, void (*del)(void *, siz
 	return (*pop);
 }
 
-
+/**
+ * returns the clicked sector, by checking if 
+ */
 t_sectorlist *click_sector(t_app *app)
 {
 	t_sectorlist *tmp;
@@ -119,49 +138,11 @@ t_sectorlist *click_sector(t_app *app)
 
 //check if list is convex, vertex_side from every point to every other point
 
-
-//compare two wall lists check if new points are inside check points
-//this is awful, would be better if I used a max_limited array of elements
-static t_bool	check_points(t_vec2list *walls, t_vec2list *points)
-{
-	t_vec2list *new;
-	t_vec2list *tmp;
-
-	new = points;
-	tmp = walls;
-	if(tmp == new)
-		return (FALSE);
-	while(tmp)
-	{
-		new = points->next;
-		while(new != points)
-		{
-			if(ft_vertex_side((t_vertex2){tmp->point, tmp->next->point}, new->point))
-				return (FALSE);
-			new = new->next;
-		}
-		tmp = tmp->next;
-		if(tmp == walls)
-			break ;
-	}
-	return (TRUE);
-}
-
-
-t_sectorlist	*find_parent_sector(t_app *app, t_sectorlist *sector)
-{
-	t_sectorlist *tmp;
-
-	tmp = app->sectors;
-	while (tmp)
-	{
-		if(check_points(tmp->wall_list, sector->wall_list))
-			return (tmp);
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
+/**
+ * Handles the manual linking event using active wall and active sector
+ * 
+ * activate on a selected wall, navigate to link target sector, activate again
+ */
 void link_wall_to_sector(t_app *app)
 {
 
@@ -170,7 +151,7 @@ void link_wall_to_sector(t_app *app)
 		app->portal_selection = FALSE; 
 		app->active_last = NULL;
 	}
-		//add scheck the wall is not in itself
+		//add check the wall is not in itself
 	if(app->portal_selection && app->active_sector && app->active_last)
 	{
 		app->active_last->wall_type = get_sector_id(app, app->active_sector);
@@ -184,6 +165,9 @@ void link_wall_to_sector(t_app *app)
 	}
 }
 
+/**
+ * Returns true if the click is inside a convex sector, checking the point side to all walls
+ */
 int	inside_sector_check(t_app *app, t_sectorlist *sector)
 {
 	t_vec2list *tmp;
@@ -201,6 +185,12 @@ int	inside_sector_check(t_app *app, t_sectorlist *sector)
 	return(1);
 }
 
+/**
+ * Handles sector changes depending on active states and pressed keys
+ * Up and Down for heights
+ * Left and Right for textures
+ * U and J for slope heights
+ */
 void	sector_edit(t_app *app, SDL_Keycode key)
 {
 	if(key == SDLK_UP)
@@ -251,7 +241,12 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 	}
 }
 
-
+/**
+ * Finds and returns the wall in the sector that is furthest from the parallel line to selected point
+ * 
+ * ft_vector_length(c) * (sin(ft_vector_angle(line, c))
+ * c = vector to iterated point
+ */
 t_vec2list	*find_opposite_point(t_sectorlist *sector, t_vec2list *point)
 {
 	t_vector2 c;
@@ -275,4 +270,25 @@ t_vec2list	*find_opposite_point(t_sectorlist *sector, t_vec2list *point)
 	}
 		return (selection);
 		//ft_printf(" opposite distance %f, \n", ft_vector_length(c) * ( sin(ft_vector_angle(line, c))));
+}
+
+
+/**
+ * Changes all wall types of the selected sector to it's parent linking them
+ */
+void	change_walls_type(t_app *app, t_sectorlist *sector)
+{
+	t_vec2list *head;
+
+	if(!sector)
+		return ;
+	head = sector->wall_list;
+	while(head)
+	{
+		head->wall_type = get_sector_id(app, sector->parent_sector);
+
+		head = head->next;
+		if(head == sector->wall_list)
+			break;
+	}
 }

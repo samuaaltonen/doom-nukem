@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 17:14:41 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:30:51 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,11 @@ int	events_keydown(int keycode, t_app *app)
 	return (0);
 }
 
+/**
+ * @brief handle map navigation
+ * 
+ * @param app 
+ */
 void	handle_movement(t_app *app)
 {
 	if (app->keystates & FORWARD_DOWN

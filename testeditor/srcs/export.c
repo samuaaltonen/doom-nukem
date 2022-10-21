@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/20 14:40:52 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:27:03 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,13 @@ static void	member_export(t_app *app, t_exportsector *export, t_sectorlist *sect
 	}
 }
 
-//construct string
+/**
+ * @brief Writes sector data to an exportable format
+ * 
+ * @param app 
+ * @param sector 
+ * @param export 
+ */
 void write_sector(t_app *app, t_sectorlist *sector, t_exportsector *export)
 {
 	export->corner_count = sector->corner_count;
@@ -84,7 +90,13 @@ size_t	ft_lstlen(t_sectorlist *lst)
 }
 
 
-//open a file
+/**
+ * @brief Opens or creates a file at path, writes map data to it
+ * 
+ * @param app 
+ * @param path 
+ * @return int 
+ */
 int	file_open(t_app *app, char *path)
 {
 	int fd;

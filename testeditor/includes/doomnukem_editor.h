@@ -297,6 +297,6 @@ void			sector_edit(t_app *app, SDL_Keycode key);
 void			render_selection_point(t_app *app, t_vec2list *point, int size);
 t_vec2list		*find_opposite_point(t_sectorlist *sector, t_vec2list *point);
 void			render_sector_points(t_app *app);
-
+void			change_walls_type(t_app *app, t_sectorlist *sector);
 
 #endif

@@ -6,12 +6,11 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:42:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/20 14:41:38 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:20:33 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
-
 
 /**
  * Creates a new linked list to save vertices (x, y points) of a sector.
@@ -53,6 +52,14 @@ int		put_to_vector_list(t_vec2list **list, t_vec2list *new)
 	return (0);
 }
 
+/**
+ * @brief Puts new sector into the app->sectors list
+ * 	and returns the newly added sector
+ * 
+ * @param app 
+ * @param new 
+ * @return t_sectorlist* 
+ */
 t_sectorlist	*put_sector_lst(t_app *app, t_sectorlist* new)
 {
 	t_sectorlist *iter;
