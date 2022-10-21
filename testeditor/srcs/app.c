@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/20 15:14:01 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:27:26 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,9 @@ void	app_render(t_app *app)
 	if(app->active)
 	{
 		render_sector(app, app->active);
-		render_selection_point(app, 5);
+		render_selection_point(app, app->active, 3);
 	}
+	render_sector_points(app);
 	if(app->list_ongoing)
 		draw_line(app, &app->active_last->point, &app->mouse_click, 0xAABBCC);
 	SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
@@ -107,11 +108,16 @@ void	app_loop(t_app *app)
 			ft_printf("%i ", get_sector_id(app, app->active_sector->member_sectors[i]));
 		ft_printf("\n");
 		if(app->active_sector->parent_sector)
-			ft_printf("parent id %i\n ",app->active_sector->parent_sector);
+			ft_printf("parent id %i, ",app->active_sector->parent_sector);
+		if(app->active_sector->ceil_slope_wall)
+			ft_printf("ceiling slopes from %i to %i, height %f, ", app->active_sector->ceil_slope_wall,app->active_sector->ceil_slope_opposite, app->active_sector->ceil_slope_height);
+		if(app->active_sector->ceil_slope_wall)
+			ft_printf("floor slopes from %i to %i, height %f", app->active_sector->floor_slope_wall,app->active_sector->floor_slope_opposite, app->active_sector->floor_slope_height);
+		ft_printf("\n");
 	}
 
 	if(app->active)
-		ft_printf("selected point x:%f, y:%f, tex:%i, type:%i\n",app->active->point.x, app->active->point.y, app->active->wall_texture, app->active->wall_type);
+		ft_printf("selected point x:%f, y:%f, tex:%i, type:%i\n",app->active->point.x, app->active->point.y, app->active->tex, app->active->type);
 
 		app_render(app);
 	}

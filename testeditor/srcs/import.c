@@ -6,16 +6,23 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/20 14:23:29 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:29:07 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
-static void	export_to_list(t_exportsector *export, t_vec2list **list, int count)
+/**
+ * @brief creates a pointer list from saved point data
+ * 
+ * @param export 
+ * @param list 
+ * @param count 
+ */
+static void	export_to_list(t_exportsector *export, t_vec2_lst **list, int count)
 {
 	int			i;
-	t_vec2list	*tmp;
+	t_vec2_lst	*tmp;
 	t_vector2	point;
 
 	if(!export)
@@ -24,8 +31,8 @@ static void	export_to_list(t_exportsector *export, t_vec2list **list, int count)
 	point.y = export->corners[0].y;
 	tmp = new_vector_list(&point);
 	*list = tmp;
-	tmp->wall_texture = export->wall_textures[0];
-	tmp->wall_type = export->wall_types[0];
+	tmp->tex = export->wall_textures[0];
+	tmp->type = export->wall_types[0];
 	i = 1;
 	while(i < count)
 	{
@@ -33,39 +40,21 @@ static void	export_to_list(t_exportsector *export, t_vec2list **list, int count)
 		point.y = export->corners[i].y;
 		tmp->next = new_vector_list(&point);
 		put_to_vector_list(list, tmp->next);
-		tmp->next->wall_texture = export->wall_textures[i];
-		tmp->next->wall_type = export->wall_types[i];
+		tmp->next->tex = export->wall_textures[i];
+		tmp->next->type = export->wall_types[i];
 		tmp = tmp->next;
 		i++;
 	}
 	tmp->next = *list;
 }
 
-//returns element out the link at the index
-t_vec2list	*ft_lstindex(t_vec2list *lst, size_t index)
-{
-	size_t	i;
-	t_vec2list	*temp;
-
-	i = 0;
-	temp = lst;
-	if (index == 0)
-		return (lst);
-	if (temp == NULL)
-		return (NULL);
-	while (i < index)
-	{
-		if (temp->next)
-			temp = temp->next;
-		else
-			return (NULL);
-		i++;
-	}
-	return (temp);
-}
-
-//read sector data from export
-void read_sector(t_sectorlist *sector, t_exportsector *export)
+/**
+ * @brief reads values from exported sector and writes them into sector
+ * 
+ * @param sector 
+ * @param export 
+ */
+void read_sector(t_sector_lst *sector, t_exportsector *export)
 {
 	sector->corner_count = export->corner_count;
 	sector->wall_list = NULL;
@@ -90,37 +79,31 @@ void read_sector(t_sectorlist *sector, t_exportsector *export)
 }
 
 /**
- * reads a exportsector and makes a sector.
+ * @brief reads exported sector data, allocates and returns a new sector
+ * 
+ * @param export 
+ * @return t_sector_lst* 
  */
-t_sectorlist	*read_sector_list(t_exportsector *export)
+t_sector_lst	*read_sector_list(t_exportsector *export)
 {
-	t_sectorlist	*new;
-	new = (t_sectorlist *)malloc(sizeof(t_sectorlist));
+	t_sector_lst	*new;
+	new = (t_sector_lst *)malloc(sizeof(t_sector_lst));
 	if (!new)
 		return (NULL);
 	read_sector(new, export);
 	return (new);
 }
 
-static t_sectorlist *sector_by_index(t_app *app, int index)
-{
-	t_sectorlist *head;
-	int i;
-
-	i = 0;
-	head = app->sectors;
-	while (head && i != index)
-	{
-		head = head->next;
-		i++;
-	}
-	return (head);
-}
-
+/**
+ * @brief relinks the pointer references of sectors
+ * 	using integer values in saved file
+ * 
+ * @param app 
+ */
 void	relink_sectors(t_app *app)
 {
 	int		i;
-	t_sectorlist *head;
+	t_sector_lst *head;
 
 	head = app->sectors;
 	while (head)
@@ -143,12 +126,19 @@ void	relink_sectors(t_app *app)
 
 }
 
-//open a file
+/**
+ * @brief Opens a file from the given path
+ * 	reads all sector data into the sector list
+ * 
+ * @param app 
+ * @param path 
+ * @return int 
+ */
 int	import_file(t_app *app, char *path)
 {
 	int	fd;
 	t_exportsector *export;
-	t_sectorlist *new;
+	t_sector_lst *new;
 	size_t counter = 0;
 	size_t sector_count;
 

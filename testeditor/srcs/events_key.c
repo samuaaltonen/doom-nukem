@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 14:01:53 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:33:54 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,10 @@ int	events_keyup(int keycode, t_app *app)
 		sector_edit(app, keycode);
 	if (keycode == SDLK_DOWN)
 		sector_edit(app, keycode);
+	if (keycode == SDLK_u)
+		sector_edit(app, keycode);
+	if (keycode == SDLK_j)
+		sector_edit(app, keycode);
 	if (keycode == SDLK_w)
 		app->keystates ^= FORWARD_W_DOWN;
 	if (keycode == SDLK_s)
@@ -40,9 +44,9 @@ int	events_keyup(int keycode, t_app *app)
 	if (keycode == SDLK_c)
 		app->list_creation = ft_toggle(app->list_creation);
 	if (keycode == SDLK_m)
-		file_open(app, "./test.test");
+		export_file(app, FILE_PATH);
 	if (keycode == SDLK_o)
-		import_file(app, "./test.test");
+		import_file(app, FILE_PATH);
 	if(keycode == SDLK_DELETE)
 		sector_pop(app, &(app->active_sector), NULL);
 	if(keycode == SDLK_l)
@@ -53,6 +57,16 @@ int	events_keyup(int keycode, t_app *app)
 		app->floor_edit = ft_toggle(app->floor_edit);
 	if(keycode == SDLK_t)
 		app->light_edit = ft_toggle(app->light_edit);
+	if(app->active_sector && app->active && keycode == SDLK_y)
+	{
+		app->active_sector->ceil_slope_wall = app->active;
+		app->active_sector->ceil_slope_opposite = find_opposite_point(app->active_sector, app->active);
+	}
+	if(app->active_sector && app->active && keycode == SDLK_h)
+	{
+		app->active_sector->floor_slope_wall = app->active;
+		app->active_sector->floor_slope_opposite = find_opposite_point(app->active_sector, app->active);
+	}
 
 	//temp
 	if (keycode == SDLK_0)
@@ -94,6 +108,11 @@ int	events_keydown(int keycode, t_app *app)
 	return (0);
 }
 
+/**
+ * @brief handle map navigation
+ * 
+ * @param app 
+ */
 void	handle_movement(t_app *app)
 {
 	if (app->keystates & FORWARD_DOWN

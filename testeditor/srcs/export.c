@@ -6,16 +6,16 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/20 14:40:52 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:33:54 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
-static void	list_to_export(t_exportsector *export, t_vec2list *list, int count)
+static void	list_to_export(t_exportsector *export, t_vec2_lst *list, int count)
 {
 	int i;
-	t_vec2list *tmp;
+	t_vec2_lst *tmp;
 
 	i = 0;
 	tmp = list;
@@ -23,14 +23,14 @@ static void	list_to_export(t_exportsector *export, t_vec2list *list, int count)
 	{
 		export->corners[i].x = tmp->point.x;
 		export->corners[i].y = tmp->point.y;
-		export->wall_textures[i] = tmp->wall_texture;
-		export->wall_types[i] = tmp->wall_type;
+		export->wall_textures[i] = tmp->tex;
+		export->wall_types[i] = tmp->type;
 		tmp = tmp->next;
 		i++;
 	}
 }
 
-static void	member_export(t_app *app, t_exportsector *export, t_sectorlist *sector)
+static void	member_export(t_app *app, t_exportsector *export, t_sector_lst *sector)
 {
 	int	i;
 
@@ -48,8 +48,14 @@ static void	member_export(t_app *app, t_exportsector *export, t_sectorlist *sect
 	}
 }
 
-//construct string
-void write_sector(t_app *app, t_sectorlist *sector, t_exportsector *export)
+/**
+ * @brief Writes sector data to an exportable format
+ * 
+ * @param app 
+ * @param sector 
+ * @param export 
+ */
+void write_sector(t_app *app, t_sector_lst *sector, t_exportsector *export)
 {
 	export->corner_count = sector->corner_count;
 	list_to_export(export, sector->wall_list, export->corner_count);
@@ -70,28 +76,20 @@ void write_sector(t_app *app, t_sectorlist *sector, t_exportsector *export)
 	export->ceil_slope_position = 0;
 } 
 
-size_t	ft_lstlen(t_sectorlist *lst)
-{
-	size_t	i;
-
-	i = 0;
-	while (lst)
-	{
-		i++;
-		lst = lst->next;
-	}
-	return (i);
-}
-
-
-//open a file
-int	file_open(t_app *app, char *path)
+/**
+ * @brief Opens or creates a file at path, writes map data to it
+ * 
+ * @param app 
+ * @param path 
+ * @return int 
+ */
+int	export_file(t_app *app, char *path)
 {
 	int fd;
 	t_exportsector *export;
 	size_t	counter = 0;
 	size_t	sector_count;
-	t_sectorlist *tmp;
+	t_sector_lst *tmp;
 
 	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
 	fd = open(path, O_WRONLY | O_CREAT, 0755);

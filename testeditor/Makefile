@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/10/20 16:00:47 by saaltone         ###   ########.fr        #
+#    Updated: 2022/10/21 14:12:50 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,8 +14,10 @@ NAME = doom-nukem-editor
 
 CC = gcc
 
-FILES = editor.c events_key.c app.c events.c image.c main.c render.c \
- linedraw.c lists.c export.c import.c tools.c editor_menu.c
+FILES = app.c editor.c editor_ui.c editor_menu.c \
+events_key.c events_mouse.c events.c export.c import.c \
+image.c main.c render.c render_extra.c \
+linedraw.c lists.c sector.c sector_tools.c tools.c
 
 LIBFT = ../libft/libft.a
 LIBLINEARALGEBRA = ../liblinearalgebra/liblinearalgebra.a
