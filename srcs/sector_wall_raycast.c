@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 13:23:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:57:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static void	calculate_parent_positions(t_app *app, t_rayhit *hit,
 /**
  * Calculates wall starting and ending positions in window y coordinates.
 */
-static void	calculate_vertical_positions(t_app *app, t_rayhit *hit)
+void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 {
 	double		relative_height;
 
@@ -104,7 +104,7 @@ static t_bool	raycast_hit(t_app *app, t_vertex2 wall, t_rayhit *hit, int x)
 		wall.a.y - hit->position.y}), 1.0);
 	hit->distortion = cos(angle);
 	hit->distance = hit->distortion * hit->distance;
-	calculate_vertical_positions(app, hit);
+	set_wall_vertical_positions(app, hit);
 	return (TRUE);
 }
 
@@ -118,6 +118,7 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall)
 	int			x;
 
 	hit.sector = &app->sectors[wall->sector_id];
+	hit.wall_type = app->sectors[wall->sector_id].wall_types[wall->wall_id];
 	hit.texture = app->sectors[wall->sector_id].wall_textures[wall->wall_id];
 	x = wall->start_x;
 	while (++x < wall->end_x)
@@ -132,15 +133,15 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall)
 		// If portal or member (member sectors automatically portals)
 		if (wall->is_portal)
 		{
-			if (!wall->is_inside || (wall->is_inside && !wall->is_member))
-				draw_parent(app, x, &hit);
-			/**
-			 * TODO: REMOVE THESE 2 LINES after editor has floor/ceiling texture changes
-			 */
-			hit.sector->ceiling_texture = 4;
-			hit.sector->floor_texture = 4;
-			draw_ceiling(app, x, &hit);
-			draw_floor(app, x, &hit);
+			if (wall->is_inside && !wall->is_member)
+				draw_portal_partial(app, x, &hit);
+			if (!wall->is_inside)
+				draw_portal_partial_parent(app, x, &hit);
+			if (wall->is_inside && wall->is_member)
+			{
+				draw_ceiling(app, x, &hit);
+				draw_floor(app, x, &hit);
+			}
 			continue ;
 		}
 		// IF wall type normal wall:

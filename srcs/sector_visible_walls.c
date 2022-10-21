@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 13:02:15 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:36:04 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,35 @@ static void	check_possible_visible(t_app *app, int sector_id, int wall_id,
 }
 
 /**
+ * @brief Returns TRUE if a sector has already been visited. If not, sets sector
+ * as visited.
+ * 
+ * @param visited 
+ * @param sector_id 
+ * @return t_bool 
+ */
+static t_bool	has_been_visited(int *visited, int sector_id)
+{
+	int	i;
+
+	i = 0;
+	while (i < MAX_VISIBLE_SECTORS)
+	{
+		if (visited[i] == -1)
+			break ;
+		if (visited[i] == sector_id)
+			return (TRUE);
+		i++;
+	}
+	if (i == MAX_VISIBLE_SECTORS)
+		return (TRUE);
+	visited[i] = sector_id;
+	if (i < MAX_VISIBLE_SECTORS - 1)
+		visited[i + 1] = -1;
+	return (FALSE);
+}
+
+/**
  * Loops through sectors walls to check which of them might be visible.
  */
 static void	loop_sector_walls(t_app *app, int *visited, int sector_id,
@@ -96,44 +125,25 @@ static void	loop_sector_walls(t_app *app, int *visited, int sector_id,
 {
 	int	i;
 
-	i = 0;
-	// Check if sector has already been visited in this function, stop if it has
-	while (i < MAX_VISIBLE_SECTORS)
-	{
-		if (visited[i] == -1)
-			break ;
-		if (visited[i] == sector_id)
-			return ;
-		i++;
-	}
-	// Stop anyways if visited already MAX_VISIBLE_SECTORS
-	if (i == MAX_VISIBLE_SECTORS)
+	if (has_been_visited(visited, sector_id))
 		return ;
-	// Mark this sector as visited
-	visited[i] = sector_id;
-	// Set next for -1 in visited array
-	if (i < MAX_VISIBLE_SECTORS - 1)
-		visited[i + 1] = -1;
 	// Loop through member sector walls
-	i = 0;
-	while (i < MAX_MEMBER_SECTORS)
+	i = -1;
+	while (++i < MAX_MEMBER_SECTORS)
 	{
 		// Break loop when -1 is found (no members after that anyways)
 		if (app->sectors[sector_id].member_sectors[i] == -1)
 			break ;
 		loop_sector_walls(app, visited, app->sectors[sector_id].member_sectors[i], TRUE);
-		i++;
 	}
 	// Loop through sector walls
-	i = 0;
-	while (i < app->sectors[sector_id].corner_count)
+	i = -1;
+	while (++i < app->sectors[sector_id].corner_count)
 	{
 		// If wall is portal, recurse into portal
 		if (app->sectors[sector_id].wall_types[i] != -1)
 			loop_sector_walls(app, visited, app->sectors[sector_id].wall_types[i], FALSE);
-		// Check if wall is possibly visible, if yes add to possible_visible array
 		check_possible_visible(app, sector_id, i, is_member);
-		i++;
 	}
 }
 

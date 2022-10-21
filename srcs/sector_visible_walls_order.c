@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 23:00:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 13:25:04 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:08:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ static t_bool	walls_in_order(t_app *app, int wall_a, int wall_b)
 	int			side;
 	int			extended_wall;
 
-	if (!app->possible_visible[wall_a].is_member)
-		return (FALSE);
-	if (!app->possible_visible[wall_b].is_member)
+	if (app->possible_visible[wall_a].is_member && !app->possible_visible[wall_b].is_member)
 		return (TRUE);
+	if (app->possible_visible[wall_b].is_member && !app->possible_visible[wall_a].is_member)
+		return (FALSE);
 	a = get_wall_vertex(app, app->possible_visible[wall_a].sector_id, app->possible_visible[wall_a].wall_id);
 	b = get_wall_vertex(app, app->possible_visible[wall_b].sector_id, app->possible_visible[wall_b].wall_id);
 
@@ -111,6 +111,8 @@ t_bool	walls_overlap(t_app *app, int wall_a, int wall_b)
  * - compares walls (i, j), if they are not in order, break, (i) is not foremost
  * - if order was fine with all walls that (i) was compared with, return (i)
  * - if there was no clear foremost wall returns first non picked one
+ * 
+ * TODO: Optimize this by grouping walls ()
 */
 int	get_foremost_wall(t_app *app)
 {
@@ -132,6 +134,13 @@ int	get_foremost_wall(t_app *app)
 			if (i == j || app->possible_visible[j].already_selected
 				|| !walls_overlap(app, i, j))
 				continue ;
+			/* ft_printf("Comparing walls %d,%d (%d to %d) and %d,%d (%d to %d), order: %d\n",
+				app->possible_visible[i].sector_id, app->possible_visible[i].wall_id,
+				app->possible_visible[i].start_x, app->possible_visible[i].end_x,
+				app->possible_visible[j].sector_id, app->possible_visible[j].wall_id,
+				app->possible_visible[j].start_x, app->possible_visible[j].end_x,
+				walls_in_order(app, i, j)
+				); */
 			if (!walls_in_order(app, i, j))
 				break ;
 		}
@@ -166,7 +175,7 @@ void	sector_walls_order(t_app *app)
 	/* ft_printf("Wall order:\n"); */
 	while (i < app->possible_visible_count)
 	{
-		/* ft_printf("%d:%d\n", temp[i].sector_id, temp[i].wall_id); */
+		/* ft_printf("%d:%d, is_portal: %d\n", temp[i].sector_id, temp[i].wall_id, temp[i].is_portal); */
 		app->possible_visible[i] = temp[i];
 		i++;
 	}

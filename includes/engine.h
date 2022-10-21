@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/21 13:01:25 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:11:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ typedef struct s_rayhit
 	int			height;
 	int			wall_start;
 	int			wall_end;
+	int			wall_type;
 	int			parent_height;
 	int			parent_wall_start;
 	int			parent_wall_end;
