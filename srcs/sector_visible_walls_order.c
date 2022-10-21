@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 23:00:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 17:10:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:29:00 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ static int	get_foremost_wall(t_app *app, t_wall *walls, int wall_count)
 	/**
 	 * TODO: Remove 
 	 */
-	ft_printf("ERROR: Wall ordering has no good pick, going with %d,%d\n", app->possible_visible[first_nonselected].sector_id, app->possible_visible[first_nonselected].wall_id);
+	ft_printf("ERROR: Wall ordering has no good pick, going with %d,%d (%d)\n", walls[first_nonselected].sector_id, walls[first_nonselected].wall_id, first_nonselected);
 	return (first_nonselected);
 }
 
@@ -161,10 +161,8 @@ void	sector_walls_order(t_app *app, t_wall *walls, int wall_count)
 		i++;
 	}
 	i = 0;
-	/* ft_printf("Wall order:\n"); */
 	while (i < wall_count)
 	{
-		/* ft_printf("%d:%d, is_portal: %d\n", temp[i].sector_id, temp[i].wall_id, temp[i].is_portal); */
 		walls[i] = temp[i];
 		i++;
 	}

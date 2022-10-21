@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 17:03:26 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:19:10 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ void	render_sectors(t_app *app)
 	 *   no x overlap in window
 	 * - these values are used also in rendering part
 	 */
-	sector_walls_prepare(app, (t_wall *)&app->possible_visible, app->possible_visible_count);
+	//sector_walls_prepare(app, (t_wall *)&app->visible_walls, app->visible_walls_count);
 
 	/**
 	 * Order visible walls
 	*/
-	sector_walls_order(app, (t_wall *)&app->possible_visible, app->possible_visible_count);
+	//sector_walls_order(app, (t_wall *)&app->visible_walls, app->visible_walls_count);
 
 	/**
 	 * Render sectors
@@ -59,10 +59,10 @@ void	*sector_walls_render(void *data)
 	app = (t_app *)thread->app;
 	int	i = 0;
 	ft_printf("--- NEW FRAME ---\n");
-	while (i < app->possible_visible_count)
+	while (i < app->visible_walls_count)
 	{
-		ft_printf("%d:%d\n", app->possible_visible[i].sector_id, app->possible_visible[i].wall_id);
-		sector_walls_raycast(app, thread, &app->possible_visible[i]);
+		/* ft_printf("%d:%d\n", app->visible_walls[i].sector_id, app->visible_walls[i].wall_id); */
+		sector_walls_raycast(app, thread, &app->visible_walls[i]);
 		i++;
 	}
 	pthread_exit(NULL);

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 17:04:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:23:33 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ typedef struct s_app
 	double			depthmap[WIN_H][WIN_W];
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];
-	t_wall			possible_visible[MAX_VISIBLE_WALLS];
-	int				possible_visible_count;
+	t_wall			visible_walls[MAX_VISIBLE_WALLS];
+	int				visible_walls_count;
 	t_thread_data	thread_info[THREAD_COUNT];
 	t_player		player;
 	t_sector		*sectors;

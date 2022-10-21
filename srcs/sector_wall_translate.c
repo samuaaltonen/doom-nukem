@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:46:07 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 16:58:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:29:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,5 +90,6 @@ void	sector_walls_prepare(t_app *app, t_wall *walls, int wall_count)
 			walls[i].start_x = -1;
 		if (walls[i].end_x >= WIN_W)
 			walls[i].end_x = WIN_W - 1;
+		walls[i].already_selected = 0;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 16:56:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:23:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,36 +56,33 @@ static t_bool	has_visible_corner(t_app *app, t_vertex2 wall)
  * After that checks if either wall corners are left side of camera plane vector
  * (so they can be visible).
  */
-static void	check_possible_visible(t_app *app, int sector_id, int wall_id,
-	t_bool is_member)
+static void	check_possible_visible(t_app *app, t_wall *walls, int *walls_count, t_wall wall)
 {
 	t_bool		is_inside;
 	t_bool		is_portal;
 	t_vertex2	wall_vertex;
 	int			player_side;
 
-	is_inside = !is_member;
-	wall_vertex = get_wall_vertex(app, sector_id, wall_id);
+	is_inside = !wall.is_member;
+	wall_vertex = get_wall_vertex(app, wall.sector_id, wall.wall_id);
 	player_side = ft_vertex_side(wall_vertex, app->player.pos);
 	// Not member sector, player need to on right side of all walls (clockwise)
-	if (!is_member && player_side)
+	if (!wall.is_member && player_side)
 		return ;
 	is_portal = FALSE;
-	if (app->sectors[sector_id].wall_types[wall_id] != -1 || is_member)
+	if (app->sectors[wall.sector_id].wall_types[wall.wall_id] != -1 || wall.is_member)
 		is_portal = TRUE;
 	/** Is member, now player need to be on left side of all walls. If not, mark
 	 * wall as not portal (it is now only considered as "inside" wall within
 	 * portal/member) */
-	if (is_member && !player_side)
+	if (wall.is_member && !player_side)
 		is_inside = TRUE;
 	if (!has_visible_corner(app, wall_vertex))
 		return ;
-	app->possible_visible[app->possible_visible_count].sector_id = sector_id;
-	app->possible_visible[app->possible_visible_count].wall_id = wall_id;
-	app->possible_visible[app->possible_visible_count].is_member = is_member;
-	app->possible_visible[app->possible_visible_count].is_portal = is_portal;
-	app->possible_visible[app->possible_visible_count].is_inside = is_inside;
-	app->possible_visible_count++;
+	walls[*walls_count] = wall;
+	walls[*walls_count].is_portal = is_portal;
+	walls[*walls_count].is_inside = is_inside;
+	*walls_count = *walls_count + 1;
 }
 
 /**
@@ -120,30 +117,61 @@ static t_bool	has_been_visited(int *visited, int sector_id)
 /**
  * Loops through sectors walls to check which of them might be visible.
  */
-static void	loop_sector_walls(t_app *app, int *visited, int sector_id,
-	t_bool is_member)
+static void	loop_sector_walls(t_app *app, t_wall *walls, int *walls_count, int *interested,
+	int sector_id, t_bool is_member)
 {
-	int	i;
+	int			i;
+	t_sector	*sector;
+	t_wall		wall;
 
-	if (has_been_visited(visited, sector_id))
-		return ;
+	sector = &app->sectors[sector_id];
 	// Loop through member sector walls
 	i = -1;
 	while (++i < MAX_MEMBER_SECTORS)
 	{
 		// Break loop when -1 is found (no members after that anyways)
-		if (app->sectors[sector_id].member_sectors[i] == -1)
+		if (sector->member_sectors[i] == -1)
 			break ;
-		loop_sector_walls(app, visited, app->sectors[sector_id].member_sectors[i], TRUE);
+		loop_sector_walls(app, walls, walls_count, interested, sector->member_sectors[i], TRUE);
 	}
 	// Loop through sector walls
 	i = -1;
-	while (++i < app->sectors[sector_id].corner_count)
+	while (++i < sector->corner_count)
 	{
-		// If wall is portal, recurse into portal
-		if (app->sectors[sector_id].wall_types[i] != -1)
-			loop_sector_walls(app, visited, app->sectors[sector_id].wall_types[i], FALSE);
-		check_possible_visible(app, sector_id, i, is_member);
+		// If wall is a portal, add portal destination to be interesting sector
+		if (sector->wall_types[i] != -1)
+		{
+			*(interested + 1) = sector->wall_types[i];
+			*(interested + 2) = -1;
+		}
+		wall.sector_id = sector_id;
+		wall.wall_id = i;
+		wall.is_member = is_member;
+		check_possible_visible(app, walls, walls_count, wall);
+	}
+}
+
+/**
+ * @brief Copies walls from sector based array to main array that is used for
+ * rendering.
+ * 
+ * @param app 
+ * @param walls 
+ * @param wall_count 
+ */
+void	sector_walls_copy(t_app *app, t_wall *walls, int wall_count)
+{
+	int	previously_copied;
+	int	i;
+
+	previously_copied = app->visible_walls_count;
+	i = 0;
+	while (i < wall_count)
+	{
+		ft_printf("Copying wall %d,%d\n", walls[i].sector_id, walls[i].wall_id);
+		app->visible_walls[i + previously_copied] = walls[i];
+		app->visible_walls_count++;
+		i++;
 	}
 }
 
@@ -152,11 +180,35 @@ static void	loop_sector_walls(t_app *app, int *visited, int sector_id,
  */
 void	sector_visible_walls(t_app *app)
 {
-	int	already_visited[MAX_VISIBLE_SECTORS];
-	/* int	interested_in[MAX_VISIBLE_SECTORS]; */
+	t_wall	visible_walls[MAX_VISIBLE_SECTORS][(MAX_MEMBER_SECTORS + 1) * MAX_SECTOR_CORNERS];
+	int		visible_count[MAX_VISIBLE_SECTORS + 1];
+	int		already_visited[MAX_VISIBLE_SECTORS];
+	int		interested_in[MAX_VISIBLE_SECTORS];
+	int		i;
 
-	app->possible_visible_count = 0;
 	already_visited[0] = -1;
-	loop_sector_walls(app, (int *)&already_visited,
-		app->player.current_sector, FALSE);
+	interested_in[0] = app->player.current_sector;
+	interested_in[1] = -1;
+	i = 0;
+	while (interested_in[i] != -1 && i < MAX_VISIBLE_SECTORS - 1)
+	{
+		visible_count[i] = 0;
+		visible_count[i + 1] = -1;
+		if (!has_been_visited((int *)&already_visited, interested_in[i]))
+			loop_sector_walls(app, (t_wall *)&visible_walls[i], &visible_count[i], &interested_in[i], interested_in[i], FALSE);
+		i++;
+	}
+	/**
+	 * Order walls and stack them to main array for rendering
+	 */
+	i = 0;
+	app->visible_walls_count = 0;
+	while (visible_count[i] > 0)
+	{
+		ft_printf("group %d, wall count %d\n", i, visible_count[i]);
+		sector_walls_prepare(app, (t_wall *)&visible_walls[i], visible_count[i]);
+		sector_walls_order(app, (t_wall *)&visible_walls[i], visible_count[i]);
+		sector_walls_copy(app, (t_wall *)&visible_walls[i], visible_count[i]);
+		i++;
+	}
 }
