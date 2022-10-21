@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/20 15:57:57 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:49:15 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,4 +75,16 @@ void    load_assets(t_app *app)
 	app->assets.sprite = SDL_LoadBMP(PANELS_TX);
 	app->assets.bg = SDL_LoadBMP(SKYBOX_TX);
     load_font(app);
+}
+
+/**
+ * Loads the font or resets it
+ */
+void	load_font(t_app *app)
+{
+	if (!app->assets.font.font)
+		app->assets.font.font = SDL_LoadBMP(FONT_TX);
+	if (!app->assets.font.font)
+		exit_error("Could not load font");
+	change_font(app, 16, 0xFF000000);
 }

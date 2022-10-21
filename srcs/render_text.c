@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:48:08 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/20 15:58:19 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:52:47 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,26 @@ static t_rect	get_char(char *str, int c);
 
 void	render_text(t_app *app, t_point position, char *text)
 {
-	char	*str;
-	char	c;
+	char	*upcase;
+	char	*lowcase;
 	int		i;
 
-	str = "abcdefghijklmnopqrstuvwxyz0123456789.,:;'\"!?-_()/|\\";
+	upcase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+	lowcase = "abcdefghijklmnopqrstuvwxyz";
 	i = 0;
 	while (text[i] != '\0')
 	{
-		c = ft_tolower(text[i]);
-		if (ft_strchr(str, c))
-			render_char(app, position, get_char(str, c));
-		position.x += app->assets.font.size - 2;
+		if (ft_strchr(upcase, text[i]))
+			render_char(app, position, get_char(upcase, text[i]));
+		position.x += app->assets.font.size - 4;
 		i++;
 	}
+}
+
+static void	get_char(int c)
+{
+	char	*upcase;
+	char	*lowcase;
 }
 
 static void	render_char(t_app *app, t_point position, t_rect src)
@@ -54,26 +60,17 @@ static t_rect	get_char(char *str, int c)
 	i = 0;
 	while (str[i] != '\0')
 	{
-		if (ft_tolower(str[i]) == c)
+		if ((str[i]) == c)
 			font_offset = i;
 		i++;
 	}
-	src.x = 12 * font_offset;
+	src.x = 16 * font_offset;
 	src.y = 0;
-	src.w = 14;
-	src.h = 14;
+	src.w = 16;
+	src.h = 16;
 	return (src);
 }
 
-void	load_font(t_app *app)
-{
-	if (!app->assets.font.font)
-		app->assets.font.font = SDL_LoadBMP(FONT_TX);
-	if (!app->assets.font.font)
-		exit_error("Could not load font");
-	app->assets.font.size = 14;
-	change_font(app, 14, 0xFF000000);
-}
 
 void	change_font(t_app *app, int size, int color)
 {

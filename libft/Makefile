@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 10:36:08 by saaltone          #+#    #+#              #
-#    Updated: 2022/09/23 21:50:18 by saaltone         ###   ########.fr        #
+#    Updated: 2022/10/21 15:11:35 by dpalacio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -23,7 +23,8 @@ FILES=ft_putchar.c ft_memalloc.c ft_memdel.c ft_strnew.c \
 		ft_memccpy.c ft_memmove.c ft_memchr.c ft_memcmp.c ft_strdup.c \
 		ft_strcpy.c ft_strncpy.c ft_strcat.c ft_strncat.c ft_strlcat.c \
 		ft_strchr.c ft_strrchr.c ft_strstr.c ft_strnstr.c ft_atoi.c \
-		ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c \
+		ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_islower.c \
+		ft_isupper.c ft_isprint.c \
 		ft_toupper.c ft_tolower.c ft_lstnew.c ft_lstdelone.c ft_lstdel.c \
 		ft_lstadd.c ft_lstput.c ft_lstiter.c ft_lstmap.c \
 		ft_putendl_fd.c ft_split_count.c ft_count_digits.c \

@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/20 16:10:49 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:34:33 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@ void	render_ui(t_app *app)
 	render_button(app);
 
 	change_font(app, 14, 0xFFEFDCCC);
-	render_text(app, (t_point){20, 20}, "FPS");
-	render_text(app, (t_point){20, 20}, app->conf->fps_info);
+//	render_text(app, (t_point){20, 20}, "FPS");
+//	render_text(app, (t_point){20, 20}, app->conf->fps_info);
 	load_font(app);
 }
 
