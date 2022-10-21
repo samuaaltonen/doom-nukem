@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:23:43 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 03:20:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:18:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	draw_parent(t_app *app, int x, t_rayhit *hit)
 	t_rayhit	parenthit;
 
 	ft_memcpy(&parenthit, hit, sizeof(t_rayhit));
+	parenthit.sector = &app->sectors[hit->sector->parent_sector];
 	parenthit.wall_start = hit->parent_wall_start;
 	parenthit.wall_end = hit->parent_wall_end;
 	draw_ceiling(app, x, &parenthit);

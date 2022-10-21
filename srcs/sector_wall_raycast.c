@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 03:10:19 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:21:37 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,9 +133,15 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall)
 		// If portal or member (member sectors automatically portals)
 		if (wall->is_portal)
 		{
-			draw_parent(app, x, &hit);
-			//draw_ceiling(app, x, &hit);
-			//draw_floor(app, x, &hit);
+			if (!wall->is_inside || (wall->is_inside && !wall->is_member))
+				draw_parent(app, x, &hit);
+			/**
+			 * TODO: REMOVE THESE 2 LINES after editor has floor/ceiling texture changes
+			 */
+			hit.sector->ceiling_texture = 4;
+			hit.sector->floor_texture = 4;
+			draw_ceiling(app, x, &hit);
+			draw_floor(app, x, &hit);
 			//draw_wall(app, x, &hit, OCCLUDE_BOTH);
 			continue ;
 		}

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:46:07 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/15 20:29:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:03:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ static double	get_wall_dotproduct(t_app *app, t_wall wall)
 			wall.vertex.b.x - wall.vertex.a.x,
 			wall.vertex.b.y - wall.vertex.a.y
 		});
-	if (wall.is_member)
+	if (wall.is_member && !wall.is_inside)
 		return (-dotproduct);
 	return (dotproduct);
 }
@@ -84,8 +84,8 @@ void	sector_walls_prepare(t_app *app)
 			app->possible_visible[i].end_x = app->possible_visible[i].start_x;
 			app->possible_visible[i].start_x = temp_x;
 		}
-		app->possible_visible[i].start_x -= 2;
-		app->possible_visible[i].end_x += 2;
+		app->possible_visible[i].start_x -= 1;
+		app->possible_visible[i].end_x += 1;
 		if (app->possible_visible[i].start_x < -1)
 			app->possible_visible[i].start_x = -1;
 		if (app->possible_visible[i].end_x >= WIN_W)

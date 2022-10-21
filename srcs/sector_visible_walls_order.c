@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 23:00:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 01:39:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:09:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,9 +86,20 @@ static t_bool	walls_in_order(t_app *app, int wall_a, int wall_b)
 */
 t_bool	walls_overlap(t_app *app, int wall_a, int wall_b)
 {
-	if (app->possible_visible[wall_a].start_x < app->possible_visible[wall_b].end_x
-		&& app->possible_visible[wall_a].end_x > app->possible_visible[wall_b].start_x)
+	int	overlap_start;
+	int	overlap_end;
+
+	overlap_start = app->possible_visible[wall_a].start_x - app->possible_visible[wall_b].end_x;
+	overlap_end = app->possible_visible[wall_a].end_x - app->possible_visible[wall_b].start_x;
+	if (overlap_start < -2 && overlap_end > 2)
+	{
+		/* ft_printf("Walls %d,%d (%d to %d) (is_portal: %d) and %d,%d (%d to %d) (is_portal: %d) overlap.\n",
+			app->possible_visible[wall_a].sector_id, app->possible_visible[wall_a].wall_id,
+			app->possible_visible[wall_a].start_x, app->possible_visible[wall_a].end_x, app->possible_visible[wall_a].is_portal,
+			app->possible_visible[wall_b].sector_id, app->possible_visible[wall_b].wall_id,
+			app->possible_visible[wall_b].start_x, app->possible_visible[wall_b].end_x, app->possible_visible[wall_b].is_portal); */
 		return (TRUE);
+	}
 	return (FALSE);
 }
 
@@ -126,12 +137,20 @@ int	get_foremost_wall(t_app *app)
 			if (i == j || app->possible_visible[j].already_selected
 				|| !walls_overlap(app, i, j))
 				continue ;
+			/* ft_printf("Comparing wall %d,%d to wall %d,%d. Order is: %d\n",
+				app->possible_visible[i].sector_id, app->possible_visible[i].wall_id,
+				app->possible_visible[j].sector_id, app->possible_visible[j].wall_id,
+				walls_in_order(app, i, j)); */
 			if (!walls_in_order(app, i, j))
 				break ;
 		}
 		if (j == app->possible_visible_count)
+		{
+			/* ft_printf("Picking wall %d,%d\n", app->possible_visible[i].sector_id, app->possible_visible[i].wall_id); */
 			return (i);
+		}
 	}
+	ft_printf("Wall ordering has no good pick, going with %d,%d\n", app->possible_visible[first_nonselected].sector_id, app->possible_visible[first_nonselected].wall_id);
 	return (first_nonselected);
 }
 

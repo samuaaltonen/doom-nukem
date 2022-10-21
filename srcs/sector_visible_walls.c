@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 01:38:28 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:02:15 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,27 +59,32 @@ static t_bool	has_visible_corner(t_app *app, t_vertex2 wall)
 static void	check_possible_visible(t_app *app, int sector_id, int wall_id,
 	t_bool is_member)
 {
+	t_bool		is_inside;
 	t_bool		is_portal;
 	t_vertex2	wall_vertex;
 	int			player_side;
 
+	is_inside = !is_member;
 	wall_vertex = get_wall_vertex(app, sector_id, wall_id);
 	player_side = ft_vertex_side(wall_vertex, app->player.pos);
 	// Not member sector, player need to on right side of all walls (clockwise)
 	if (!is_member && player_side)
 		return ;
-	// Is member, now player need to be on left side of all walls (clockwise)
-	if (is_member && !player_side)
-		return ;
-	if (!has_visible_corner(app, wall_vertex))
-		return ;
 	is_portal = FALSE;
 	if (app->sectors[sector_id].wall_types[wall_id] != -1 || is_member)
 		is_portal = TRUE;
+	/** Is member, now player need to be on left side of all walls. If not, mark
+	 * wall as not portal (it is now only considered as "inside" wall within
+	 * portal/member) */
+	if (is_member && !player_side)
+		is_inside = TRUE;
+	if (!has_visible_corner(app, wall_vertex))
+		return ;
 	app->possible_visible[app->possible_visible_count].sector_id = sector_id;
 	app->possible_visible[app->possible_visible_count].wall_id = wall_id;
 	app->possible_visible[app->possible_visible_count].is_member = is_member;
 	app->possible_visible[app->possible_visible_count].is_portal = is_portal;
+	app->possible_visible[app->possible_visible_count].is_inside = is_inside;
 	app->possible_visible_count++;
 }
 

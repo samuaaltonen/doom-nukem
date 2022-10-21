@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/21 01:48:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:01:25 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct s_wall
 	int				wall_id;
 	t_bool			is_member;
 	t_bool			is_portal;
+	t_bool			is_inside;
 	int				already_selected;
 	t_vertex2		vertex;
 	int				start_x;
