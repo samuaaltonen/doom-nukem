@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:23:43 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 01:56:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 03:20:01 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,15 @@ void	draw_parent(t_app *app, int x, t_rayhit *hit)
 	draw_floor(app, x, &parenthit);
 	parenthit.wall_end = hit->wall_start;
 	parenthit.texture_offset.y = hit->parent_texture_offset_top;
-	draw_wall(app, x, &parenthit, OCCLUDE_TOP);
+	if (parenthit.wall_start >= WIN_H - 1)
+		draw_wall(app, x, &parenthit, OCCLUDE_BOTH);
+	else
+		draw_wall(app, x, &parenthit, OCCLUDE_TOP);
 	parenthit.wall_start = hit->wall_end;
 	parenthit.wall_end = hit->parent_wall_end;
 	parenthit.texture_offset.y = hit->parent_texture_offset_bottom;
-	draw_wall(app, x, &parenthit, OCCLUDE_BOTH);
+	if (parenthit.wall_start <= 0)
+		draw_wall(app, x, &parenthit, OCCLUDE_BOTH);
+	else
+		draw_wall(app, x, &parenthit, OCCLUDE_BOTTOM);
 }

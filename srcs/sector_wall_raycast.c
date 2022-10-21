@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 02:00:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 03:10:19 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,8 @@ static void	calculate_parent_positions(t_app *app, t_rayhit *hit,
 		hit->parent_texture_offset_top = -hit->parent_wall_start * hit->texture_step.y;
 		hit->parent_wall_start = 0;
 	}
-	if (hit->wall_start < 0)
-		hit->parent_texture_offset_bottom = -hit->wall_start * hit->texture_step.y;
+	if (hit->wall_end < 0)
+		hit->parent_texture_offset_bottom = -hit->wall_end * hit->texture_step.y;
 	if (hit->parent_wall_start >= WIN_H)
 		hit->parent_wall_start = WIN_H - 1;
 	if (hit->parent_wall_end < 0)
@@ -120,6 +120,7 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall)
 	hit.sector = &app->sectors[wall->sector_id];
 	hit.texture = app->sectors[wall->sector_id].wall_textures[wall->wall_id];
 	x = wall->start_x;
+	//ft_printf("Sector %d, floor h: %f, ceiling h: %f\n", wall->sector_id, app->sectors[wall->sector_id].floor_height, app->sectors[wall->sector_id].ceiling_height);
 	while (++x < wall->end_x)
 	{
 		if (x % THREAD_COUNT != thread->id)
@@ -133,8 +134,8 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall)
 		if (wall->is_portal)
 		{
 			draw_parent(app, x, &hit);
-			draw_ceiling(app, x, &hit);
-			draw_floor(app, x, &hit);
+			//draw_ceiling(app, x, &hit);
+			//draw_floor(app, x, &hit);
 			//draw_wall(app, x, &hit, OCCLUDE_BOTH);
 			continue ;
 		}

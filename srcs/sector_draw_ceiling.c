@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_draw_ceiling.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:17:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 13:17:17 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/21 03:19:51 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ void	draw_ceiling(t_app *app, int x, t_rayhit *hit)
 	y_start = 0;
 	y_end = hit->wall_start;
 	if (app->occlusion_top[x] > 0)
-		y_start = app->occlusion_bottom[x] + 1;
+		y_start = app->occlusion_top[x];
+	if (app->occlusion_bottom[x] > WIN_H - y_end)
+		y_end = WIN_H - app->occlusion_bottom[x];
 	if (y_start == y_end || y_start > y_end)
 		return;
 	app->occlusion_top[x] = hit->wall_start;

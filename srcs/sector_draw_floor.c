@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_draw_floor.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 13:20:00 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/21 03:19:56 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ void	draw_floor(t_app *app, int x, t_rayhit *hit)
 		return ;
 	y_start = hit->wall_end;
 	y_end = WIN_H - 1;
+	if (app->occlusion_top[x] > y_start)
+		y_start = app->occlusion_top[x];
 	if (app->occlusion_bottom[x] > WIN_H - y_end)
 		y_end = WIN_H - app->occlusion_bottom[x];
 	if (y_start == y_end || y_start > y_end)
