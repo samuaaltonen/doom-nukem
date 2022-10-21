@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_draw_wall.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 13:09:14 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:41:02 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 /**
  * Draws vertical line.
  */
-void	draw_wall(t_app *app, int x, t_rayhit *hit)
+void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion)
 {
 	int		y_start;
 	int		y_end;
 	double	tex_y;
 
+	if (hit->texture == -1)
+		return ;
 	y_start = hit->wall_start;
 	y_end = hit->wall_end;
 	tex_y = hit->texture_offset.y;
@@ -30,13 +32,16 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit)
 	if (x < 0 || x >= WIN_W)
 		return ;
 	if (app->occlusion_top[x] > y_start)
-		y_start = app->occlusion_top[x] + 1;
+		y_start = app->occlusion_top[x];
 	if (app->occlusion_bottom[x] > WIN_H - y_end)
 		y_end = WIN_H - app->occlusion_bottom[x];
 	if (y_start == y_end || y_start > y_end)
 		return;
-	app->occlusion_top[x] = y_end;
-	app->occlusion_bottom[x] = WIN_H - y_start;
+	if (occlusion == OCCLUDE_BOTH || occlusion == OCCLUDE_TOP)
+		app->occlusion_top[x] = y_end;
+	if (occlusion == OCCLUDE_BOTH || occlusion == OCCLUDE_BOTTOM)
+		app->occlusion_bottom[x] = WIN_H - y_start;
+	tex_y += hit->texture_step.y * (y_start - hit->wall_start);
 	while (y_start < y_end)
 	{
 		tex_y += hit->texture_step.y;

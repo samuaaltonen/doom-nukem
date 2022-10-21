@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 10:14:16 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:54:56 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,9 +153,12 @@ void			render_sectors(t_app *app);
 /**
  * Sector draw
 */
-void			draw_wall(t_app *app, int x, t_rayhit *hit);
+void			set_wall_vertical_positions(t_app *app, t_rayhit *hit);
+void			draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion);
 void			draw_floor(t_app *app, int x, t_rayhit *hit);
 void			draw_ceiling(t_app *app, int x, t_rayhit *hit);
+void			draw_portal_partial(t_app *app, int x, t_rayhit *hit);
+void			draw_portal_partial_parent(t_app *app, int x, t_rayhit *hit);
 
 /**
  * Font

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 14:33:54 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:18:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,22 @@ static void	member_export(t_app *app, t_exportsector *export, t_sector_lst *sect
 	}
 }
 
+
+int				get_vertex_id(t_vec2_lst *list, t_vec2_lst *wall)
+{
+	int	i;
+
+	if(!wall)
+		return (-1);
+	i = 0;
+	while (wall != list)
+	{
+		i++;
+		list = list->next;
+	}
+	return (i);
+}
+
 /**
  * @brief Writes sector data to an exportable format
  * 
@@ -69,11 +85,11 @@ void write_sector(t_app *app, t_sector_lst *sector, t_exportsector *export)
 	export->ceil_tex = sector->ceil_tex;
 	export->ceil_tex_offset = -1;
 	export->floor_slope_height = sector->floor_slope_height;
-	export->floor_slope_opposite = 0;
-	export->floor_slope_position = 0;
+	export->floor_slope_opposite = get_vertex_id(sector->wall_list,sector->floor_slope_opposite);
+	export->floor_slope_position = get_vertex_id(sector->wall_list,sector->floor_slope_wall);
 	export->ceil_slope_height = sector->ceil_slope_height;
-	export->ceil_slope_opposite = 0;
-	export->ceil_slope_position = 0;
+	export->ceil_slope_opposite = get_vertex_id(sector->wall_list,sector->ceil_slope_opposite);
+	export->ceil_slope_position = get_vertex_id(sector->wall_list,sector->ceil_slope_wall);
 } 
 
 /**
@@ -96,13 +112,15 @@ int	export_file(t_app *app, char *path)
 	if(fd < 0)
 		exit_error("FILE OPEN ERROR TEMP!");
 	sector_count = ft_lstlen(app->sectors);
-	write(fd,&sector_count,sizeof(sector_count));
+	if (write(fd,&sector_count,sizeof(sector_count)) == -1)
+		exit_error(MSG_ERROR_FILE_WRITE);
 	tmp = app->sectors;
 	while(counter++ < sector_count)
 	{
 		write_sector(app, tmp, export);
 		ft_printf("exported sector corners %i\n", export->corner_count);
-		write(fd, export, sizeof(t_exportsector));
+		if (write(fd, export, sizeof(t_exportsector)) == -1)
+			exit_error(MSG_ERROR_FILE_WRITE);
 		tmp = tmp->next;
 	}
 	free(export);

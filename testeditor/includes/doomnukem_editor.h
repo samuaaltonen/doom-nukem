@@ -27,6 +27,8 @@
 # define MSG_ERROR_TEXTURE_LOAD_FAILED "Texture files are invalid."
 # define MSG_ERROR_FONT "Could not open font file."
 # define MSG_ERROR_MOUSE "Could not set mouse cursor relative to the window."
+# define MSG_ERROR_FILE_READ "Could not read from a file."
+# define MSG_ERROR_FILE_WRITE "Could not write to a file."
 # define THREAD_COUNT 2
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
@@ -322,5 +324,6 @@ void			relink_member_sectors(t_app *app);
  * Export
  */
 int				export_file(t_app *app, char *path);
+int				get_vertex_id(t_vec2_lst *list, t_vec2_lst *wall);
 
 #endif
