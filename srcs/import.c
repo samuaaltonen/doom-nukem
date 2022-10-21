@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 14:56:04 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:08:31 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,49 @@ static void	export_to_array(t_app *app, t_exportsector *export, int sectorid)
 	ft_memcpy(app->sectors[sectorid].wall_textures, export->wall_textures, export->corner_count * sizeof(int));
 	ft_memcpy(app->sectors[sectorid].wall_types, export->wall_types, export->corner_count *  sizeof(int));
 	ft_memcpy(app->sectors[sectorid].member_sectors, export->member_sectors, MAX_MEMBER_SECTORS * sizeof(int));
+}
+
+static void	import_slopes(t_app *app, t_exportsector *export, t_sector *sector)
+{
+	t_vector2 point;
+	t_vector2 linedst;
+	t_vector2 opposite;
+	t_vector2 perp;
+	(void)app;
+
+	if(export->floor_slope_position == -1)
+	{
+		return ;
+	}
+	point.x = sector->corners[export->floor_slope_position].x;
+	point.y = sector->corners[export->floor_slope_position].y;
+	if(export->floor_slope_position < sector->corner_count)
+	{
+		linedst.x = sector->corners[export->floor_slope_position + 1].x;
+		linedst.y = sector->corners[export->floor_slope_position + 1].y;
+	}
+	else
+	{
+		linedst.x = sector->corners[0].x;
+		linedst.y = sector->corners[0].y;
+	}
+	opposite.x = sector->corners[export->floor_slope_opposite].x;
+	opposite.y = sector->corners[export->floor_slope_opposite].y;
+
+	perp = ft_vector_perpendicular((t_vector2){linedst.x - point.x, linedst.y - point.y});
+	
+	ft_vertex_intersection(ft_vertex_resize( \
+		(t_vertex2){point, linedst}, MAX_VERTEX_LENGTH, 2), \
+		ft_vertex_resize((t_vertex2){(t_vector2){opposite.x, opposite.y}, \
+		(t_vector2){perp.x + opposite.x, perp.y + opposite.y}}, \
+		MAX_VERTEX_LENGTH, 2),&point);
+	
+	double height =  export->floor_slope_height - export->floor_height;
+
+	sector->floor_slope_angles.x = atan(height / ft_vector_length((t_vector2){opposite.x - point.x, opposite.y - point.y}));
+	sector->floor_slope_angles.y = ft_vector_angle(linedst,(t_vector2){0.f,1.f});
+	ft_printf("INTERSECTION POINT: x%f y%f\n", RADIAN_IN_DEG * sector->floor_slope_angles.x, RADIAN_IN_DEG * sector->floor_slope_angles.y);
+	
 }
 
 //read sector data from export
@@ -34,6 +77,7 @@ static void read_sector(t_app *app, t_exportsector *export, int sectorid, int se
 	app->sectors[sectorid].ceiling_height = export->ceil_height;
 	app->sectors[sectorid].floor_height = export->floor_height;
 	app->sectors[sectorid].parent_sector = export->parent_sector;
+	import_slopes(app, export, &(app->sectors[sectorid]));
 		ft_printf("sectorid = %i corners count: %i\n", sectorid, app->sectors[sectorid].corner_count);
 }
 
