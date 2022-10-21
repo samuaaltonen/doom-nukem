@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 14:36:04 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:56:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,6 +153,7 @@ static void	loop_sector_walls(t_app *app, int *visited, int sector_id,
 void	sector_visible_walls(t_app *app)
 {
 	int	already_visited[MAX_VISIBLE_SECTORS];
+	/* int	interested_in[MAX_VISIBLE_SECTORS]; */
 
 	app->possible_visible_count = 0;
 	already_visited[0] = -1;

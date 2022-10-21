@@ -6,14 +6,12 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/21 14:11:54 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:00:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENGINE_H
 # define ENGINE_H
-
-# include "doomnukem.h"
 
 enum s_occlusion {
 	OCCLUDE_TOP,

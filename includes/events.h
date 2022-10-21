@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   events.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:34:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/19 15:16:49 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:00:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EVENTS_H
 # define EVENTS_H
-
-# include "doomnukem.h"
 
 enum e_keystate {
 	FORWARD_DOWN = 1,

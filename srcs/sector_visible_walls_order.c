@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 23:00:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 15:08:13 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:10:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,30 +24,30 @@
  * If there is intersection, extend the other one. (if both cases has intersect,
  * then order doesn't matter (invalid sector)).
  */
-static t_bool	walls_in_order(t_app *app, int wall_a, int wall_b)
+static t_bool	walls_in_order(t_app *app, t_wall *wall_a, t_wall *wall_b)
 {
 	t_vertex2	a;
 	t_vertex2	b;
 	t_vertex2	extended;
+	t_bool		extended_a;
 	int			side;
-	int			extended_wall;
 
-	if (app->possible_visible[wall_a].is_member && !app->possible_visible[wall_b].is_member)
+	if (wall_a->is_member && !wall_b->is_member)
 		return (TRUE);
-	if (app->possible_visible[wall_b].is_member && !app->possible_visible[wall_a].is_member)
+	if (wall_b->is_member && !wall_a->is_member)
 		return (FALSE);
-	a = get_wall_vertex(app, app->possible_visible[wall_a].sector_id, app->possible_visible[wall_a].wall_id);
-	b = get_wall_vertex(app, app->possible_visible[wall_b].sector_id, app->possible_visible[wall_b].wall_id);
+	a = get_wall_vertex(app, wall_a->sector_id, wall_a->wall_id);
+	b = get_wall_vertex(app, wall_b->sector_id, wall_b->wall_id);
 
 	// Extend wall_a to infinity / very long
 	extended = ft_vertex_resize(a, MAX_VERTEX_LENGTH, EXTEND_BOTH);
-	extended_wall = wall_a;
+	extended_a = TRUE;
 
 	// Check intersection
 	if (ft_vertex_intersection_through(extended, b))
 	{
 		extended = ft_vertex_resize(b, MAX_VERTEX_LENGTH, EXTEND_BOTH);
-		extended_wall = wall_b;
+		extended_a = FALSE;
 		// If interesction again, no change in order
 		if (ft_vertex_intersection_through(extended, a))
 			return (TRUE);
@@ -63,7 +63,7 @@ static t_bool	walls_in_order(t_app *app, int wall_a, int wall_b)
 	 * If wall a was extended and wall b is at the same side as player, then 
 	 * wall b has priority (return false so switch b before a).
 	 */
-	if (extended_wall == wall_a
+	if (extended_a
 		&& side == ft_vertex_side(extended, b.a)
 		&& side == ft_vertex_side(extended, b.b))
 		return (FALSE);
@@ -71,7 +71,7 @@ static t_bool	walls_in_order(t_app *app, int wall_a, int wall_b)
 	 * Similarly if b was extended, and wall a not at the same side as player,
 	 * then b has priority.
 	 */
-	if (extended_wall == wall_b
+	if (!extended_a
 		&& (side != ft_vertex_side(extended, a.a)
 			|| side != ft_vertex_side(extended, a.b)))
 		return (FALSE);
@@ -84,15 +84,13 @@ static t_bool	walls_in_order(t_app *app, int wall_a, int wall_b)
 /**
  * Returns TRUE if there is overlap in translated window x coordinates.
 */
-t_bool	walls_overlap(t_app *app, int wall_a, int wall_b)
+t_bool	walls_overlap(t_wall *wall_a, t_wall *wall_b)
 {
 	int	overlap_start;
 	int	overlap_end;
 
-	overlap_start = app->possible_visible[wall_a].start_x
-		- app->possible_visible[wall_b].end_x;
-	overlap_end = app->possible_visible[wall_a].end_x
-		- app->possible_visible[wall_b].start_x;
+	overlap_start = wall_a->start_x - wall_b->end_x;
+	overlap_end = wall_a->end_x - wall_b->start_x;
 	if (overlap_start < -2 && overlap_end > 2)
 		return (TRUE);
 	return (FALSE);
@@ -111,10 +109,8 @@ t_bool	walls_overlap(t_app *app, int wall_a, int wall_b)
  * - compares walls (i, j), if they are not in order, break, (i) is not foremost
  * - if order was fine with all walls that (i) was compared with, return (i)
  * - if there was no clear foremost wall returns first non picked one
- * 
- * TODO: Optimize this by grouping walls ()
 */
-int	get_foremost_wall(t_app *app)
+static int	get_foremost_wall(t_app *app, t_wall *walls, int wall_count)
 {
 	int		first_nonselected;
 	int		i;
@@ -122,29 +118,22 @@ int	get_foremost_wall(t_app *app)
 
 	i = -1;
 	first_nonselected = -1;
-	while (++i < app->possible_visible_count)
+	while (++i < wall_count)
 	{
-		if (app->possible_visible[i].already_selected)
+		if (walls[i].already_selected)
 			continue ;
 		if (first_nonselected == -1)
 			first_nonselected = i;
 		j = -1;
-		while (++j < app->possible_visible_count)
+		while (++j < wall_count)
 		{
-			if (i == j || app->possible_visible[j].already_selected
-				|| !walls_overlap(app, i, j))
+			if (i == j || walls[j].already_selected
+				|| !walls_overlap(&walls[i], &walls[j]))
 				continue ;
-			/* ft_printf("Comparing walls %d,%d (%d to %d) and %d,%d (%d to %d), order: %d\n",
-				app->possible_visible[i].sector_id, app->possible_visible[i].wall_id,
-				app->possible_visible[i].start_x, app->possible_visible[i].end_x,
-				app->possible_visible[j].sector_id, app->possible_visible[j].wall_id,
-				app->possible_visible[j].start_x, app->possible_visible[j].end_x,
-				walls_in_order(app, i, j)
-				); */
-			if (!walls_in_order(app, i, j))
+			if (!walls_in_order(app, &walls[i], &walls[j]))
 				break ;
 		}
-		if (j == app->possible_visible_count)
+		if (j == wall_count)
 			return (i);
 	}
 	/**
@@ -157,26 +146,26 @@ int	get_foremost_wall(t_app *app)
 /**
  * Orders possible visible walls.
 */
-void	sector_walls_order(t_app *app)
+void	sector_walls_order(t_app *app, t_wall *walls, int wall_count)
 {
 	t_wall	temp[MAX_VISIBLE_WALLS];
 	int		foremost;
 	int		i;
 
 	i = 0;
-	while (i < app->possible_visible_count)
+	while (i < wall_count)
 	{
-		foremost = get_foremost_wall(app);
-		temp[i] = app->possible_visible[foremost];
-		app->possible_visible[foremost].already_selected = 1;
+		foremost = get_foremost_wall(app, walls, wall_count);
+		temp[i] = walls[foremost];
+		walls[foremost].already_selected = 1;
 		i++;
 	}
 	i = 0;
 	/* ft_printf("Wall order:\n"); */
-	while (i < app->possible_visible_count)
+	while (i < wall_count)
 	{
 		/* ft_printf("%d:%d, is_portal: %d\n", temp[i].sector_id, temp[i].wall_id, temp[i].is_portal); */
-		app->possible_visible[i] = temp[i];
+		walls[i] = temp[i];
 		i++;
 	}
 }

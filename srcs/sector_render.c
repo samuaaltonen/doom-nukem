@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 14:46:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:03:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ void	render_sectors(t_app *app)
 	 *   no x overlap in window
 	 * - these values are used also in rendering part
 	 */
-	sector_walls_prepare(app);
+	sector_walls_prepare(app, (t_wall *)&app->possible_visible, app->possible_visible_count);
 
 	/**
 	 * Order visible walls
 	*/
-	sector_walls_order(app);
+	sector_walls_order(app, (t_wall *)&app->possible_visible, app->possible_visible_count);
 
 	/**
 	 * Render sectors
@@ -58,8 +58,10 @@ void	*sector_walls_render(void *data)
 	thread = (t_thread_data *)data;
 	app = (t_app *)thread->app;
 	int	i = 0;
+	ft_printf("--- NEW FRAME ---\n");
 	while (i < app->possible_visible_count)
 	{
+		ft_printf("%d:%d\n", app->possible_visible[i].sector_id, app->possible_visible[i].wall_id);
 		sector_walls_raycast(app, thread, &app->possible_visible[i]);
 		i++;
 	}

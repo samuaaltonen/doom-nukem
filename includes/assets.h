@@ -3,17 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   assets.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/20 15:28:46 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:00:30 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ASSETS_H
 # define ASSETS_H
-
-# include "doomnukem.h"
 
 # define PANELS_TX "assets/textures/minecraft_spritesheet.bmp"
 # define SKYBOX_TX "assets/textures/bg.bmp"

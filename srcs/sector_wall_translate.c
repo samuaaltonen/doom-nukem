@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:46:07 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 13:03:14 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 16:58:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,32 +63,32 @@ static double	get_wall_dotproduct(t_app *app, t_wall wall)
  * Prepares selected walls to be rendered. Calculates their translated x
  * positions in screen.
 */
-void	sector_walls_prepare(t_app *app)
+void	sector_walls_prepare(t_app *app, t_wall *walls, int wall_count)
 {
 	double	dotproduct;
 	int		i;
 	int		temp_x;
 
 	i = -1;
-	while (++i < app->possible_visible_count)
+	while (++i < wall_count)
 	{
-		app->possible_visible[i].vertex = get_wall_vertex(app,
-			app->possible_visible[i].sector_id,
-			app->possible_visible[i].wall_id);
-		dotproduct = get_wall_dotproduct(app, app->possible_visible[i]);
-		app->possible_visible[i].start_x = translate_window_x(app, app->possible_visible[i].vertex.a, dotproduct);
-		app->possible_visible[i].end_x = translate_window_x(app, app->possible_visible[i].vertex.b, dotproduct);
-		temp_x = app->possible_visible[i].end_x;
-		if (app->possible_visible[i].end_x < app->possible_visible[i].start_x)
+		walls[i].vertex = get_wall_vertex(app,
+			walls[i].sector_id,
+			walls[i].wall_id);
+		dotproduct = get_wall_dotproduct(app, walls[i]);
+		walls[i].start_x = translate_window_x(app, walls[i].vertex.a, dotproduct);
+		walls[i].end_x = translate_window_x(app, walls[i].vertex.b, dotproduct);
+		temp_x = walls[i].end_x;
+		if (walls[i].end_x < walls[i].start_x)
 		{
-			app->possible_visible[i].end_x = app->possible_visible[i].start_x;
-			app->possible_visible[i].start_x = temp_x;
+			walls[i].end_x = walls[i].start_x;
+			walls[i].start_x = temp_x;
 		}
-		app->possible_visible[i].start_x -= 1;
-		app->possible_visible[i].end_x += 1;
-		if (app->possible_visible[i].start_x < -1)
-			app->possible_visible[i].start_x = -1;
-		if (app->possible_visible[i].end_x >= WIN_W)
-			app->possible_visible[i].end_x = WIN_W - 1;
+		walls[i].start_x -= 1;
+		walls[i].end_x += 1;
+		if (walls[i].start_x < -1)
+			walls[i].start_x = -1;
+		if (walls[i].end_x >= WIN_W)
+			walls[i].end_x = WIN_W - 1;
 	}
 }

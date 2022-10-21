@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 14:18:40 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:04:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,8 +144,8 @@ double		distortion_correction(double angle, double distance);
  */
 t_vertex2		get_wall_vertex(t_app *app, int sector_id, int wall_id);
 void			sector_visible_walls(t_app *app);
-void			sector_walls_prepare(t_app *app);
-void			sector_walls_order(t_app *app);
+void			sector_walls_prepare(t_app *app, t_wall *walls, int wall_count);
+void			sector_walls_order(t_app *app, t_wall *walls, int wall_count);
 void			sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall);
 void			*sector_walls_render(void *data);
 void			render_sectors(t_app *app);
