@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 17:25:17 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:50:24 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ void read_sector(t_sector_lst *sector, t_exportsector *export)
 	sector->floor_slope_wall = 0;
 	sector->ceil_slope_opposite = 0;
 	sector->ceil_slope_wall = 0;
+	ft_printf("floor opposite id %i, pos id %i\n", export->floor_slope_opposite, export->floor_slope_position);
 	if(export->floor_slope_opposite != -1)
 		sector->floor_slope_opposite = ft_lstindex(sector->wall_list, export->floor_slope_opposite);
 	if(export->floor_slope_position != -1)

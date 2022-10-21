@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 15:18:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:55:02 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	app_loop(t_app *app)
 				ft_printf("parent id %i, ",app->active_sector->parent_sector);
 			if(app->active_sector->ceil_slope_wall)
 				ft_printf("ceiling slopes from %i to %i, height %f, ", app->active_sector->ceil_slope_wall,app->active_sector->ceil_slope_opposite, app->active_sector->ceil_slope_height);
-			if(app->active_sector->ceil_slope_wall)
+			if(app->active_sector->floor_slope_wall)
 				ft_printf("floor slopes from %i to %i, height %f", app->active_sector->floor_slope_wall,app->active_sector->floor_slope_opposite, app->active_sector->floor_slope_height);
 			ft_printf("\n");
 		}
