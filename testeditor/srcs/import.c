@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:43:29 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:29:07 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,8 @@ static void	export_to_list(t_exportsector *export, t_vec2_lst **list, int count)
 	point.y = export->corners[0].y;
 	tmp = new_vector_list(&point);
 	*list = tmp;
-	tmp->wall_texture = export->wall_textures[0];
-	tmp->wall_type = export->wall_types[0];
+	tmp->tex = export->wall_textures[0];
+	tmp->type = export->wall_types[0];
 	i = 1;
 	while(i < count)
 	{
@@ -40,35 +40,12 @@ static void	export_to_list(t_exportsector *export, t_vec2_lst **list, int count)
 		point.y = export->corners[i].y;
 		tmp->next = new_vector_list(&point);
 		put_to_vector_list(list, tmp->next);
-		tmp->next->wall_texture = export->wall_textures[i];
-		tmp->next->wall_type = export->wall_types[i];
+		tmp->next->tex = export->wall_textures[i];
+		tmp->next->type = export->wall_types[i];
 		tmp = tmp->next;
 		i++;
 	}
 	tmp->next = *list;
-}
-
-//returns element out the link at the index
-t_vec2_lst	*ft_lstindex(t_vec2_lst *lst, size_t index)
-{
-	size_t	i;
-	t_vec2_lst	*temp;
-
-	i = 0;
-	temp = lst;
-	if (index == 0)
-		return (lst);
-	if (temp == NULL)
-		return (NULL);
-	while (i < index)
-	{
-		if (temp->next)
-			temp = temp->next;
-		else
-			return (NULL);
-		i++;
-	}
-	return (temp);
 }
 
 /**
@@ -115,21 +92,6 @@ t_sector_lst	*read_sector_list(t_exportsector *export)
 		return (NULL);
 	read_sector(new, export);
 	return (new);
-}
-
-static t_sector_lst *sector_by_index(t_app *app, int index)
-{
-	t_sector_lst *head;
-	int i;
-
-	i = 0;
-	head = app->sectors;
-	while (head && i != index)
-	{
-		head = head->next;
-		i++;
-	}
-	return (head);
 }
 
 /**

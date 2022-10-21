@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:36:45 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:43:29 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:45:47 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,3 +66,57 @@ t_sector_lst	*put_sector_lst(t_app *app, t_sector_lst* new)
 	return(new);
 }
 
+//WIP
+void	sector_delone(t_sector_lst **sector, void (*del)(void*, size_t))
+{
+	(void)del;
+	int i;
+
+	i = 0;
+	if((*sector)->parent_sector)
+	{
+		while ((*sector)->parent_sector->member_sectors[i] != *sector)
+			i++;
+		(*sector)->parent_sector->member_sectors[i] = NULL;
+		while (++i < MAX_MEMBER_SECTORS && (*sector)->parent_sector->member_sectors[i])
+		{
+			(*sector)->parent_sector->member_sectors[i - 1] = (*sector)->parent_sector->member_sectors[i];
+			(*sector)->parent_sector->member_sectors[i] = NULL;
+		}
+		(*sector)->parent_sector = NULL;
+	}
+	free(*sector);
+	*sector = NULL;
+}
+
+/**
+ * Pop out the selected sector from the sector list if the sector has no members, runs del on it and returns the popped sector.
+ * 
+ */
+t_sector_lst *sector_pop(t_app *app, t_sector_lst **pop, void (*del)(void *, size_t))
+{
+	t_sector_lst *prev;
+	t_sector_lst *head;
+
+	if((*pop)->member_sectors[0] || !(app->sectors) || !pop || !(*pop))
+		return (NULL);
+	prev = NULL;
+	head = app->sectors;
+	while(head->next && head != *pop)
+	{
+		prev = head;
+		head = head->next;
+	}
+	if (head == *pop)
+	{
+		if(prev)
+			prev->next = (*pop)->next;
+		if(head == app->sectors)
+			app->sectors = (*pop)->next;
+		if(del)
+			sector_delone(&(app->active_sector), del);
+		app->active_sector = NULL;
+		app->sectorcount--;
+	}
+	return (*pop);
+}

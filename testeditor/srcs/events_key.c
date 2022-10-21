@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 13:30:51 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:33:54 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,9 @@ int	events_keyup(int keycode, t_app *app)
 	if (keycode == SDLK_c)
 		app->list_creation = ft_toggle(app->list_creation);
 	if (keycode == SDLK_m)
-		file_open(app, "./test.test");
+		export_file(app, FILE_PATH);
 	if (keycode == SDLK_o)
-		import_file(app, "./test.test");
+		import_file(app, FILE_PATH);
 	if(keycode == SDLK_DELETE)
 		sector_pop(app, &(app->active_sector), NULL);
 	if(keycode == SDLK_l)

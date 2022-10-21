@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:42:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:43:29 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:27:26 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ t_vec2_lst	*new_vector_list(t_vector2 *point)
 		return (NULL);
 	new->point.x = point->x;
 	new->point.y = point->y;
-	new->wall_texture = -1;
-	new->wall_type = -1;
+	new->tex = -1;
+	new->type = -1;
 	new->next = NULL;
 	return (new);
 }

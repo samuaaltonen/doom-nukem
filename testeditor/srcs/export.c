@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:43:29 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:33:54 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ static void	list_to_export(t_exportsector *export, t_vec2_lst *list, int count)
 	{
 		export->corners[i].x = tmp->point.x;
 		export->corners[i].y = tmp->point.y;
-		export->wall_textures[i] = tmp->wall_texture;
-		export->wall_types[i] = tmp->wall_type;
+		export->wall_textures[i] = tmp->tex;
+		export->wall_types[i] = tmp->type;
 		tmp = tmp->next;
 		i++;
 	}
@@ -76,20 +76,6 @@ void write_sector(t_app *app, t_sector_lst *sector, t_exportsector *export)
 	export->ceil_slope_position = 0;
 } 
 
-size_t	ft_lstlen(t_sector_lst *lst)
-{
-	size_t	i;
-
-	i = 0;
-	while (lst)
-	{
-		i++;
-		lst = lst->next;
-	}
-	return (i);
-}
-
-
 /**
  * @brief Opens or creates a file at path, writes map data to it
  * 
@@ -97,7 +83,7 @@ size_t	ft_lstlen(t_sector_lst *lst)
  * @param path 
  * @return int 
  */
-int	file_open(t_app *app, char *path)
+int	export_file(t_app *app, char *path)
 {
 	int fd;
 	t_exportsector *export;

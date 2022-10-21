@@ -6,166 +6,13 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:43:29 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:00:26 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
-
-
-/**
- * @brief Get the sector id of the sector parameter
- * 
- * @param app 
- * @param sector 
- * @return int 
- */
-int		get_sector_id(t_app *app, t_sector_lst *sector)
-{
-	t_sector_lst	*tmp;
-	int				i;
-
-	i = 0;
-	if(!sector)
-		return (-1);
-	tmp = app->sectors;
-	while(tmp != sector)
-	{
-		tmp = tmp->next;
-		i++;
-	}
-	return (i);
-}
-
-
-//WIP
-void	sector_delone(t_sector_lst **sector, void (*del)(void*, size_t))
-{
-	(void)del;
-	int i;
-
-	i = 0;
-	if((*sector)->parent_sector)
-	{
-		while ((*sector)->parent_sector->member_sectors[i] != *sector)
-			i++;
-		(*sector)->parent_sector->member_sectors[i] = NULL;
-		while (++i < MAX_MEMBER_SECTORS && (*sector)->parent_sector->member_sectors[i])
-		{
-			(*sector)->parent_sector->member_sectors[i - 1] = (*sector)->parent_sector->member_sectors[i];
-			(*sector)->parent_sector->member_sectors[i] = NULL;
-		}
-		(*sector)->parent_sector = NULL;
-	}
-	free(*sector);
-	*sector = NULL;
-}
-
-/**
- * Pop out the selected sector from the sector list if the sector has no members, runs del on it and returns the popped sector.
- * 
- */
-t_sector_lst *sector_pop(t_app *app, t_sector_lst **pop, void (*del)(void *, size_t))
-{
-	t_sector_lst *prev;
-	t_sector_lst *head;
-
-	if((*pop)->member_sectors[0] || !(app->sectors) || !pop || !(*pop))
-		return (NULL);
-	prev = NULL;
-	head = app->sectors;
-	while(head->next && head != *pop)
-	{
-		prev = head;
-		head = head->next;
-	}
-	if (head == *pop)
-	{
-		if(prev)
-			prev->next = (*pop)->next;
-		if(head == app->sectors)
-			app->sectors = (*pop)->next;
-		if(del)
-			sector_delone(&(app->active_sector), del);
-		app->active_sector = NULL;
-		app->sectorcount--;
-	}
-	return (*pop);
-}
-
-/**
- * returns the clicked sector, by checking if 
- */
-t_sector_lst *click_sector(t_app *app)
-{
-	t_sector_lst *tmp;
-
-	tmp = app->sectors;
-	while(tmp)
-	{
-		if(inside_sector_check(app, tmp))
-		{
-			while (tmp->parent_sector)
-			{
-				tmp = tmp->parent_sector;
-			}
-			return (tmp);
-		}
-		tmp = tmp->next;
-	}
-	return (NULL);
-}
-
-
 //check if list is convex, vertex_side from every point to every other point
-
-/**
- * Handles the manual linking event using active wall and active sector
- * 
- * activate on a selected wall, navigate to link target sector, activate again
- */
-void link_wall_to_sector(t_app *app)
-{
-
-	if(app->list_ongoing || app->list_creation)
-	{
-		app->portal_selection = FALSE; 
-		app->active_last = NULL;
-	}
-		//add check the wall is not in itself
-	if(app->portal_selection && app->active_sector && app->active_last)
-	{
-		app->active_last->wall_type = get_sector_id(app, app->active_sector);
-		app->portal_selection = FALSE;
-		app->active_last = NULL;
-	}
-	else if(!app->portal_selection && app->active)
-	{
-		app->portal_selection = TRUE;
-		app->active_last = app->active;
-	}
-}
-
-/**
- * Returns true if the click is inside a convex sector, checking the point side to all walls
- */
-int	inside_sector_check(t_app *app, t_sector_lst *sector)
-{
-	t_vec2_lst *tmp;
-
-	tmp = sector->wall_list;
-	while (tmp)
-	{
-		if(ft_vertex_side((t_vertex2){tmp->point, tmp->next->point}, app->mouse_click))
-			return (0);
-		tmp = tmp->next;
-		if(tmp == sector->wall_list)
-			break;
-	}
-
-	return(1);
-}
 
 /**
  * Finds and returns the wall in the sector that is furthest from the parallel line to selected point
@@ -196,4 +43,55 @@ t_vec2_lst	*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point)
 	}
 		return (selection);
 		//ft_printf(" opposite distance %f, \n", ft_vector_length(c) * ( sin(ft_vector_angle(line, c))));
+}
+
+//returns element out the link at the index
+t_vec2_lst	*ft_lstindex(t_vec2_lst *lst, size_t index)
+{
+	size_t	i;
+	t_vec2_lst	*temp;
+
+	i = 0;
+	temp = lst;
+	if (index == 0)
+		return (lst);
+	if (temp == NULL)
+		return (NULL);
+	while (i < index)
+	{
+		if (temp->next)
+			temp = temp->next;
+		else
+			return (NULL);
+		i++;
+	}
+	return (temp);
+}
+
+t_sector_lst	*sector_by_index(t_app *app, int index)
+{
+	t_sector_lst *head;
+	int i;
+
+	i = 0;
+	head = app->sectors;
+	while (head && i != index)
+	{
+		head = head->next;
+		i++;
+	}
+	return (head);
+}
+
+size_t	ft_lstlen(t_sector_lst *lst)
+{
+	size_t	i;
+
+	i = 0;
+	while (lst)
+	{
+		i++;
+		lst = lst->next;
+	}
+	return (i);
 }
