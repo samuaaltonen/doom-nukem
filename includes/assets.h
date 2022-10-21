@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/21 15:34:03 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:07:43 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # define SKYBOX_TX "assets/textures/bg.bmp"
 # define FONT_TX "assets/fonts/sci-fi_font.bmp"
 # define BUTTON_TX "assets/ui/button_iddle.bmp"
-# define TITLESCREEN_TX "assets/ui/menu-bg.bmp"
+# define TITLESCREEN_TX "assets/textures/title_screen.bmp"
 # define MAP_PATH "./testeditor/test.test"
 
 /**

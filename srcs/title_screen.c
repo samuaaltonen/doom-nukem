@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/21 17:50:37 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/21 18:02:05 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,18 +37,13 @@ void	render_menu(t_app *app)
 	//blit_surface(app->assets.button_texture, &src, app->surface, &dst);
 	//change_font(app, 48, 0xFF5F1E02);
 	//render_text(app, (t_point){dst.x + dst.w / 2 - 96, dst.y + dst.h / 2 - 24}, "MENU");
-	change_font(app, 16, 0xFF111111);
-	render_text(app, (t_point){100, 100}, "ABCDEFGHIJKLMNOPQRSTUVWXYZ");
-	render_text(app, (t_point){100, 120}, "abcdefghijklmnopqrstuvwxyz");
-	render_text(app, (t_point){100, 140}, "0123456789");
-	render_text(app, (t_point){100, 160}, " .,:;'\"!?-_()/|\\<>\%");
-	change_font(app, 32, 0xFF111111);
-	render_text(app, (t_point){100, 180}, "Testing.With <CHARACTERS> and \"diferent\" stuff");
-//	render_text(app, (t_point){260, 180}, "WORKING TITLE!");
-//	change_font(app, 60, 0xFFC10020);
-//	render_text(app, (t_point){224, 84}, "DOOM NUKEM:");
-//	render_text(app, (t_point){264, 184}, "WORKING TITLE!");
-//	change_font(app, 36, 0xFFFFFFFF);
-//	render_text(app, (t_point){WIN_W / 2 - 5 * 36, WIN_H - 200}, "PRESS SPACE");
+	change_font(app, 64, 0xFF111111);
+	render_text(app, (t_point){220, 80}, "DOOM NUKEM:");
+	render_text(app, (t_point){260, 180}, "WORKING TITLE!");
+	change_font(app, 64, 0xFFFF9400);
+	render_text(app, (t_point){224, 84}, "DOOM NUKEM:");
+	render_text(app, (t_point){264, 184}, "WORKING TITLE!");
+	change_font(app, 32, 0xFFFFFFFF);
+	render_text(app, (t_point){WIN_W / 2 - 5 * 36, WIN_H - 200}, "PRESS SPACE");
 	load_font(app);
 }
