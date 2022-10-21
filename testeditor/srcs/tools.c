@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:41:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:43:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ void link_wall_to_sector(t_app *app)
  */
 int	inside_sector_check(t_app *app, t_sector_lst *sector)
 {
-	t_vec2list *tmp;
+	t_vec2_lst *tmp;
 
 	tmp = sector->wall_list;
 	while (tmp)
@@ -173,11 +173,11 @@ int	inside_sector_check(t_app *app, t_sector_lst *sector)
  * ft_vector_length(c) * (sin(ft_vector_angle(line, c))
  * c = vector to iterated point
  */
-t_vec2list	*find_opposite_point(t_sector_lst *sector, t_vec2list *point)
+t_vec2_lst	*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point)
 {
 	t_vector2 c;
-	t_vec2list *head;
-	t_vec2list *selection;
+	t_vec2_lst *head;
+	t_vec2_lst *selection;
 	double	opposite;
 	double	max;
 

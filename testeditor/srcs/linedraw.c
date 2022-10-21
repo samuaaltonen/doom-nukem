@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:01:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:22:20 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:43:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,7 +131,7 @@ void	draw_line(t_app *app, t_vector2 *a, t_vector2 *b, int color)
  * @param b 
  * @param color 
  */
-void	draw_list_lines(t_app *app, t_vec2list *a, t_vec2list *b, int color)
+void	draw_list_lines(t_app *app, t_vec2_lst *a, t_vec2_lst *b, int color)
 {
 	t_point pixel_a;
 	t_point pixel_b;

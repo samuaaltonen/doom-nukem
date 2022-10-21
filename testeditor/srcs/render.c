@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:41:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:43:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
  * @param app 
  * @param sector_start 
  */
-void	render_sector(t_app *app, t_vec2list *sector_start)
+void	render_sector(t_app *app, t_vec2_lst *sector_start)
 {
-	t_vec2list *tmp;
+	t_vec2_lst *tmp;
 
 	tmp = sector_start;
 	while (tmp->next != NULL)
@@ -119,7 +119,7 @@ void	render_grid(t_app *app, double divider, int color)
  */
 static void	sector_bounds(t_app *app, t_sector_lst *sector, t_point *min, t_point *max)
 {
-	t_vec2list *tmp;
+	t_vec2_lst *tmp;
 	t_point screen;
 
 	tmp = sector->wall_list;
@@ -152,7 +152,7 @@ static void	sector_bounds(t_app *app, t_sector_lst *sector, t_point *min, t_poin
  */
 void	render_sector_points(t_app *app)
 {
-	t_vec2list *head;
+	t_vec2_lst *head;
 
 	if(app->active_sector)
 	{
@@ -175,8 +175,8 @@ void	render_sector_points(t_app *app)
  */
 void	render_fill_active_sector(t_app *app)
 {
-	t_vec2list *a;
-	t_vec2list *b;
+	t_vec2_lst *a;
+	t_vec2_lst *b;
 	t_point min;
 	t_point max;
 	t_point cur;
@@ -221,7 +221,7 @@ void	render_fill_active_sector(t_app *app)
  * @param point 
  * @param size 
  */
-void	render_selection_point(t_app *app, t_vec2list *point, int size)
+void	render_selection_point(t_app *app, t_vec2_lst *point, int size)
 {
 	t_point min;
 	t_point max;

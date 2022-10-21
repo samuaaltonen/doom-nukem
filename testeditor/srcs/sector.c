@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:36:45 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:41:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:43:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 /**
  * Creates a new linked list to save sectors.
  */
-t_sector_lst	*new_sector_list(t_vec2list *wall_list)
+t_sector_lst	*new_sector_list(t_vec2_lst *wall_list)
 {
 	t_sector_lst	*new;
-	t_vec2list		*tmp;
+	t_vec2_lst		*tmp;
 
 	new = (t_sector_lst *)ft_memalloc(sizeof(t_sector_lst));
 	if (!new)

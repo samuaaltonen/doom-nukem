@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:52 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:41:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:43:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,11 +73,11 @@ int	events_mouse_track(t_app *app)
  * @brief Finds which point in active sector was clicked
  * 
  * @param app 
- * @return t_vec2list* 
+ * @return t_vec2_lst* 
  */
-t_vec2list	*find_clicked_vector(t_app *app)
+t_vec2_lst	*find_clicked_vector(t_app *app)
 {
-	t_vec2list		*found;
+	t_vec2_lst		*found;
 	if(app->active_sector)
 	{
 		found = app->active_sector->wall_list;
@@ -121,7 +121,7 @@ t_sector_lst *find_child_sector(t_app *app)
  */
 int	events_mouse_click(t_app *app, SDL_Event *event)
 {
-	t_vec2list *tmp;
+	t_vec2_lst *tmp;
 
 	if(event->button.button == SDL_BUTTON_LEFT && !app->list_ongoing && app->list_creation)
 	{

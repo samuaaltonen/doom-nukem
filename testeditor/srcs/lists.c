@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:42:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:38:09 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:43:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,11 @@
 /**
  * Creates a new linked list to save vertices (x, y points) of a sector.
  */
-t_vec2list	*new_vector_list(t_vector2 *point)
+t_vec2_lst	*new_vector_list(t_vector2 *point)
 {
-	t_vec2list		*new;
+	t_vec2_lst		*new;
 
-	new = (t_vec2list *)malloc(sizeof(t_vec2list));
+	new = (t_vec2_lst *)malloc(sizeof(t_vec2_lst));
 	if (!new)
 		return (NULL);
 	new->point.x = point->x;
@@ -33,9 +33,9 @@ t_vec2list	*new_vector_list(t_vector2 *point)
 /**
  * Adds a new node to the end of vector2d linked list.
  */
-int		put_to_vector_list(t_vec2list **list, t_vec2list *new)
+int		put_to_vector_list(t_vec2_lst **list, t_vec2_lst *new)
 {
-	t_vec2list		*last;
+	t_vec2_lst		*last;
 
 	if (!new)
 		return (-1);
@@ -55,10 +55,10 @@ int		put_to_vector_list(t_vec2list **list, t_vec2list *new)
 /**
  * Deletes the whole vector2d linked list.
  */
-int		del_vector_list(t_vec2list **list)
+int		del_vector_list(t_vec2_lst **list)
 {
-	t_vec2list		*current;
-	t_vec2list		*next;
+	t_vec2_lst		*current;
+	t_vec2_lst		*next;
 
 	if (!(*list))
 		return (-1);

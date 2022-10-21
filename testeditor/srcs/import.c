@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:41:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:43:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
  * @param list 
  * @param count 
  */
-static void	export_to_list(t_exportsector *export, t_vec2list **list, int count)
+static void	export_to_list(t_exportsector *export, t_vec2_lst **list, int count)
 {
 	int			i;
-	t_vec2list	*tmp;
+	t_vec2_lst	*tmp;
 	t_vector2	point;
 
 	if(!export)
@@ -49,10 +49,10 @@ static void	export_to_list(t_exportsector *export, t_vec2list **list, int count)
 }
 
 //returns element out the link at the index
-t_vec2list	*ft_lstindex(t_vec2list *lst, size_t index)
+t_vec2_lst	*ft_lstindex(t_vec2_lst *lst, size_t index)
 {
 	size_t	i;
-	t_vec2list	*temp;
+	t_vec2_lst	*temp;
 
 	i = 0;
 	temp = lst;

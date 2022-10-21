@@ -6,16 +6,16 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:41:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:43:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
-static void	list_to_export(t_exportsector *export, t_vec2list *list, int count)
+static void	list_to_export(t_exportsector *export, t_vec2_lst *list, int count)
 {
 	int i;
-	t_vec2list *tmp;
+	t_vec2_lst *tmp;
 
 	i = 0;
 	tmp = list;

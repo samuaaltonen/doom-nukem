@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 16:33:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:41:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:43:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @param wall 
  * @param wall_id 
  */
-void	change_selected_wall_tex(t_app *app, t_vec2list *wall, int wall_id)
+void	change_selected_wall_tex(t_app *app, t_vec2_lst *wall, int wall_id)
 {
 	(void)app;
 	wall->wall_texture = wall_id;
@@ -30,7 +30,7 @@ void	change_selected_wall_tex(t_app *app, t_vec2list *wall, int wall_id)
  */
 void	change_walls_type(t_app *app, t_sector_lst *sector)
 {
-	t_vec2list *head;
+	t_vec2_lst *head;
 
 	if(!sector)
 		return ;
@@ -51,9 +51,9 @@ void	change_walls_type(t_app *app, t_sector_lst *sector)
  * @param walls 
  * @param wall_tex 
  */
-void	change_walls_tex(t_vec2list *walls, int wall_tex)
+void	change_walls_tex(t_vec2_lst *walls, int wall_tex)
 {
-	t_vec2list *tmp;
+	t_vec2_lst *tmp;
 
 	tmp = walls;
 	while(tmp)
