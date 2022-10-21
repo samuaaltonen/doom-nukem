@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_draw_ceiling.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:17:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 13:17:17 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/21 13:52:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,20 +46,19 @@ void	draw_ceiling(t_app *app, int x, t_rayhit *hit)
 	y_start = 0;
 	y_end = hit->wall_start;
 	if (app->occlusion_top[x] > 0)
-		y_start = app->occlusion_bottom[x] + 1;
+		y_start = app->occlusion_top[x];
+	if (app->occlusion_bottom[x] > WIN_H - y_end)
+		y_end = WIN_H - app->occlusion_bottom[x];
 	if (y_start == y_end || y_start > y_end)
 		return;
 	app->occlusion_top[x] = hit->wall_start;
 	while (y_end > y_start)
 	{
-		distance = -0.5 * WIN_H / (y_end - WIN_H / 2);
+		distance = (app->player.height - hit->sector->ceiling_height) * WIN_H / (y_end - WIN_H / 2);
 		world_pos.x = hit->position.x - (hit->distance - distance) * hit->ray.x;
 		world_pos.y = hit->position.y - (hit->distance - distance) * hit->ray.y;
-		/**
-		 * TODO: Remove offset of 10 after selecting floor/ceiling texture possible in editor
-		*/
 		put_pixel_to_surface(app->surface, x, y_end, get_position_color(
-			app, world_pos, hit->sector->floor_texture + 10));
+			app, world_pos, hit->sector->ceiling_texture));
 		y_end--;
 	}
 }

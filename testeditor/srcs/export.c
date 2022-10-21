@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 14:54:57 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:18:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,13 +112,15 @@ int	export_file(t_app *app, char *path)
 	if(fd < 0)
 		exit_error("FILE OPEN ERROR TEMP!");
 	sector_count = ft_lstlen(app->sectors);
-	write(fd,&sector_count,sizeof(sector_count));
+	if (write(fd,&sector_count,sizeof(sector_count)) == -1)
+		exit_error(MSG_ERROR_FILE_WRITE);
 	tmp = app->sectors;
 	while(counter++ < sector_count)
 	{
 		write_sector(app, tmp, export);
 		ft_printf("exported sector corners %i\n", export->corner_count);
-		write(fd, export, sizeof(t_exportsector));
+		if (write(fd, export, sizeof(t_exportsector)) == -1)
+			exit_error(MSG_ERROR_FILE_WRITE);
 		tmp = tmp->next;
 	}
 	free(export);

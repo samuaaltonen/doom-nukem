@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 14:27:26 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/21 15:18:01 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,24 +100,24 @@ void	app_loop(t_app *app)
 		while (SDL_PollEvent(&event))
 			dispatch_event(app, &event);
 
-	ft_printf("x=%f, y=%f modes:c%i,o%i,p%i,r%i,f%i\n",app->mouse_click.x, app->mouse_click.y, app->list_creation, app->list_ongoing, app->portal_selection, app->floor_edit, app->ceiling_edit);
-	if(app->active_sector)
-	{
-		ft_printf("inside = %i, floor: h:%f,tex:%i,o:%i, ceil: h:%f,tex:%i,o:%i, light:%i\n has members: ", app->active_sector, app->active_sector->floor_height, app->active_sector->floor_tex, app->active_sector->floor_tex_offset, app->active_sector->ceil_height, app->active_sector->ceil_tex, app->active_sector->ceil_tex_offset, app->active_sector->light);
-		for(int i = 0; i < 4 && app->active_sector->member_sectors[i]; ++i)
-			ft_printf("%i ", get_sector_id(app, app->active_sector->member_sectors[i]));
-		ft_printf("\n");
-		if(app->active_sector->parent_sector)
-			ft_printf("parent id %i, ",app->active_sector->parent_sector);
-		if(app->active_sector->ceil_slope_wall)
-			ft_printf("ceiling slopes from %i to %i, height %f, ", app->active_sector->ceil_slope_wall,app->active_sector->ceil_slope_opposite, app->active_sector->ceil_slope_height);
-		if(app->active_sector->ceil_slope_wall)
-			ft_printf("floor slopes from %i to %i, height %f", app->active_sector->floor_slope_wall,app->active_sector->floor_slope_opposite, app->active_sector->floor_slope_height);
-		ft_printf("\n");
-	}
+		ft_printf("x=%f, y=%f modes:c%i,o%i,p%i,r%i,f%i\n",app->mouse_click.x, app->mouse_click.y, app->list_creation, app->list_ongoing, app->portal_selection, app->floor_edit, app->ceiling_edit);
+		if(app->active_sector)
+		{
+			ft_printf("inside = %i, floor: h:%f,tex:%i,o:%i, ceil: h:%f,tex:%i,o:%i, light:%i\n has members: ", app->active_sector, app->active_sector->floor_height, app->active_sector->floor_tex, app->active_sector->floor_tex_offset, app->active_sector->ceil_height, app->active_sector->ceil_tex, app->active_sector->ceil_tex_offset, app->active_sector->light);
+			for(int i = 0; i < 4 && app->active_sector->member_sectors[i]; ++i)
+				ft_printf("%i ", get_sector_id(app, app->active_sector->member_sectors[i]));
+			ft_printf("\n");
+			if(app->active_sector->parent_sector)
+				ft_printf("parent id %i, ",app->active_sector->parent_sector);
+			if(app->active_sector->ceil_slope_wall)
+				ft_printf("ceiling slopes from %i to %i, height %f, ", app->active_sector->ceil_slope_wall,app->active_sector->ceil_slope_opposite, app->active_sector->ceil_slope_height);
+			if(app->active_sector->ceil_slope_wall)
+				ft_printf("floor slopes from %i to %i, height %f", app->active_sector->floor_slope_wall,app->active_sector->floor_slope_opposite, app->active_sector->floor_slope_height);
+			ft_printf("\n");
+		}
 
-	if(app->active)
-		ft_printf("selected point x:%f, y:%f, tex:%i, type:%i\n",app->active->point.x, app->active->point.y, app->active->tex, app->active->type);
+		if(app->active)
+			ft_printf("selected point x:%f, y:%f, tex:%i, type:%i\n",app->active->point.x, app->active->point.y, app->active->tex, app->active->type);
 
 		app_render(app);
 	}

@@ -6,18 +6,50 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 14:54:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/21 14:57:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
+ * If wall is a portal, calculate parent positions as well (used in partial
+ * wall rendering)
+*/
+static void	calculate_parent_positions(t_app *app, t_rayhit *hit,
+	double relative_height)
+{
+	t_sector	*parent;
+
+	parent = &app->sectors[hit->sector->parent_sector];
+	hit->parent_height = (int)(relative_height
+		* (parent->ceiling_height - parent->floor_height));
+	hit->parent_wall_start = WIN_H / 2 - hit->parent_height
+		+ (int)(relative_height * (app->player.height - parent->floor_height));
+	hit->parent_wall_end = hit->parent_wall_start + hit->parent_height;
+	hit->parent_texture_offset_top = 0;
+	hit->parent_texture_offset_bottom = 0;
+	if (hit->parent_wall_start < 0)
+	{
+		hit->parent_texture_offset_top = -hit->parent_wall_start * hit->texture_step.y;
+		hit->parent_wall_start = 0;
+	}
+	if (hit->wall_end < 0)
+		hit->parent_texture_offset_bottom = -hit->wall_end * hit->texture_step.y;
+	if (hit->parent_wall_start >= WIN_H)
+		hit->parent_wall_start = WIN_H - 1;
+	if (hit->parent_wall_end < 0)
+		hit->parent_wall_end = 0;
+	if (hit->parent_wall_end >= WIN_H)
+		hit->parent_wall_end = WIN_H - 1;
+}
+
+/**
  * Calculates wall starting and ending positions in window y coordinates.
 */
-static void	calculate_vertical_positions(t_app *app, t_rayhit *hit)
+void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 {
-	double	relative_height;
+	double		relative_height;
 
 	relative_height = WIN_H / hit->distance;
 	hit->height = (int)(relative_height
@@ -27,12 +59,18 @@ static void	calculate_vertical_positions(t_app *app, t_rayhit *hit)
 	hit->wall_end = hit->wall_start + hit->height;
 	hit->texture_step.y = TEX_SIZE / relative_height;
 	hit->texture_offset.y = 0;
+	if (hit->sector->parent_sector >= 0)
+		calculate_parent_positions(app, hit, relative_height);
 	if (hit->wall_start < 0)
 	{
 		hit->texture_offset.y = -hit->wall_start * hit->texture_step.y;
 		hit->wall_start = 0;
 	}
-	if (hit->wall_end > WIN_H)
+	if (hit->wall_start >= WIN_H)
+		hit->wall_start = WIN_H - 1;
+	if (hit->wall_end < 0)
+		hit->wall_end = 0;
+	if (hit->wall_end >= WIN_H)
 		hit->wall_end = WIN_H - 1;
 }
 
@@ -66,7 +104,7 @@ static t_bool	raycast_hit(t_app *app, t_vertex2 wall, t_rayhit *hit, int x)
 		wall.a.y - hit->position.y}), 1.0);
 	hit->distortion = cos(angle);
 	hit->distance = hit->distortion * hit->distance;
-	calculate_vertical_positions(app, hit);
+	set_wall_vertical_positions(app, hit);
 	return (TRUE);
 }
 
@@ -80,6 +118,7 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall)
 	int			x;
 
 	hit.sector = &app->sectors[wall->sector_id];
+	hit.wall_type = app->sectors[wall->sector_id].wall_types[wall->wall_id];
 	hit.texture = app->sectors[wall->sector_id].wall_textures[wall->wall_id];
 	x = wall->start_x;
 	while (++x < wall->end_x)
@@ -91,16 +130,23 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall)
 		*/
 		if (!raycast_hit(app, wall->vertex, &hit, x))
 			continue ;
-		// IF wall type normal wall:
-		if (hit.sector->wall_types[wall->wall_id] == -1)
+		// If portal or member (member sectors automatically portals)
+		if (wall->is_portal)
 		{
-			draw_ceiling(app, x, &hit);
-			draw_floor(app, x, &hit);
-			draw_wall(app, x, &hit);
+			if (wall->is_inside && !wall->is_member)
+				draw_portal_partial(app, x, &hit);
+			if (!wall->is_inside)
+				draw_portal_partial_parent(app, x, &hit);
+			if (wall->is_inside && wall->is_member)
+			{
+				draw_ceiling(app, x, &hit);
+				draw_floor(app, x, &hit);
+			}
+			continue ;
 		}
-		// IF portal / member
-		// Draw ceiling
-		// Draw floor
-		// If floor higher or ceiling smaller of next sector, draw partial wall
+		// IF wall type normal wall:
+		draw_ceiling(app, x, &hit);
+		draw_floor(app, x, &hit);
+		draw_wall(app, x, &hit, OCCLUDE_BOTH);
 	}
 }
