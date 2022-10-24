@@ -114,7 +114,9 @@ enum e_colors {
 	PORTAL = 0xFF0000,
 	WALL = 0x999999,
 	CEILING_ROTATE = 0x888888,
-	FLOOR_ROTATE = 0x777777
+	FLOOR_ROTATE = 0x777777,
+	BG_LIGHT = 0x888888,
+	BG_DARK = 0x424242
 };
 
 /**
@@ -262,6 +264,7 @@ int			dispatch_event(t_app *app, SDL_Event *event);
  * Render functions
  * 
  */
+void			render_divider(t_app *app);
 void			render_grid(t_app *app, double divider, int color);
 void			render_sector(t_app *app, t_vec2_lst *sector_start);
 void			render_sectors(t_app *app);
@@ -304,6 +307,7 @@ t_vec2_lst		*find_clicked_vector(t_app *app);
 void			zoom_slider(t_app *app);
 void			handle_movement(t_app *app);
 void			snap_to_nearest(t_app *app, t_point *mouse_pos, t_vector2 *snap_pos, double divider);
+void			move_divider(t_app *app, SDL_Keycode keycode);
 
 /**
  * Edit Functions

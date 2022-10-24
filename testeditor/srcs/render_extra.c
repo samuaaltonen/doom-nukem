@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:55:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/24 15:18:27 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/24 16:02:41 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,12 @@ void	render_center(t_app *app, int color)
 	render_row(app, point.y + 1, color);
 	render_col(app, point.x + 1, color);
 	
+}
+
+void	render_divider(t_app *app)
+{
+	render_grid(app, app->divider, BG_DARK);
+	render_grid(app, app->divider * 2, BG_LIGHT);
 }
 
 /**
