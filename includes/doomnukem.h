@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/24 12:05:15 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/24 14:55:52 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,24 +31,15 @@
 # include "player.h"
 
 
-# define STATUS_TITLE 0
-# define STATUS_MENU 1
+# define STATUS_TITLESCREEN 0
+# define STATUS_TITLEMENU 1
 # define STATUS_GAME 2
-# define STATUS_PAUSE 3
+# define STATUS_PAUSEMENU 3
 
 /**
  * Integer type definitions
  */
 typedef unsigned char	t_uint8;
-
-typedef struct s_game_status
-{
-	int				title_screen;
-	int				title_menu;
-	int				game_active;
-	int				game_pause;
-}	t_game_status;
-
 
 /**
  * Struct for the application.
@@ -58,7 +49,7 @@ typedef struct s_app
 	t_conf			*conf;
 	SDL_Window		*win;
 	SDL_Surface		*surface;
-	t_game_status	status;
+	t_uint8			status;
 	t_assets		assets;
 	double			depthmap[WIN_H][WIN_W];
 	int				occlusion_top[WIN_W];
@@ -77,11 +68,6 @@ void		sdl_init(t_app *app);
 void		app_init(t_app **app);
 int			config_init(t_app *app);
 void		load_assets(t_app *app);
-
-/**
- * game_status.c
- */
-int	game_status(t_app *app);
 
 /**
  * error.c

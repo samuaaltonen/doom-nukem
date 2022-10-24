@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 12:45:35 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/24 14:55:33 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,12 @@ int	events_keyup(int keycode, t_app *app)
 		app->conf->toggle_loop = ft_toggle(app->conf->toggle_loop);
 	if (keycode == SDLK_SPACE)
 	{
-		app->status.game_active = ft_toggle(app->status.game_active);
-		app->status.title_screen = ft_toggle(app->status.title_screen);
+		if (app->status == STATUS_TITLESCREEN)
+			app->status = STATUS_TITLEMENU;
+		else if (app->status == STATUS_TITLEMENU)
+			app->status = STATUS_GAME;
+		else if (app->status == STATUS_GAME)
+			app->status = STATUS_TITLEMENU;
 	}
 		
 	return (0);

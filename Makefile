@@ -6,7 +6,7 @@
 #    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/10/24 12:00:20 by dpalacio         ###   ########.fr        #
+#    Updated: 2022/10/24 14:57:20 by dpalacio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = doom-nukem
 
 CC = gcc
 
-FILES = main.c init.c game_status.c title_screen.c error.c conf.c app.c  \
+FILES = main.c init.c title_screen.c error.c conf.c app.c  \
 		events_key.c events_mouse.c events_window.c graphics.c image.c \
 		helper.c skybox.c player.c events.c \
 		sector_draw_ceiling.c sector_draw_floor.c sector_draw_wall.c \
