@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/10/21 14:07:50 by saaltone         ###   ########.fr        #
+#    Updated: 2022/10/24 12:00:20 by dpalacio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,9 +14,9 @@ NAME = doom-nukem
 
 CC = gcc
 
-FILES = main.c init.c title_screen.c error.c conf.c app.c events.c \
+FILES = main.c init.c game_status.c title_screen.c error.c conf.c app.c  \
 		events_key.c events_mouse.c events_window.c graphics.c image.c \
-		helper.c skybox.c player.c \
+		helper.c skybox.c player.c events.c \
 		sector_draw_ceiling.c sector_draw_floor.c sector_draw_wall.c \
 		sector_render.c sector_visible_walls_order.c sector_visible_walls.c \
 		sector_wall_raycast.c sector_wall_translate.c sector_wall_vertex.c \
