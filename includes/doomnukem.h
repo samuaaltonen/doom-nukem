@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/24 14:55:52 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/24 16:45:09 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,16 @@
 # include "geometry.h"
 # include "player.h"
 
-
+//STATUS MACROS
 # define STATUS_TITLESCREEN 0
 # define STATUS_TITLEMENU 1
 # define STATUS_GAME 2
 # define STATUS_PAUSEMENU 3
+
+//BUTTON MACROS
+# define BUTTON_IDDLE 0
+# define BUTTON_SELECTED 1
+# define BUTTON_PRESSED 2
 
 /**
  * Integer type definitions
@@ -170,8 +175,11 @@ void    	render_text(t_app *app, t_point position, char *text);
  */
 void		render_ui(t_app *app);
 void    	render_button(t_app *app);
-void		render_menu(t_app *app);
-void		title_screen(t_app *app);
+
+
+void		render_titlemenu(t_app *app);
+void		render_titlescreen(t_app *app);
+void		render_game(t_app *app);
 
 
 

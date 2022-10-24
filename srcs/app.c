@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/24 14:56:29 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/24 16:50:25 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,18 +64,14 @@ void	render_frame(t_app *app)
 		render_multithreading(app, render_polygons);
 	} */
 	if (app->status == STATUS_TITLESCREEN)
-		title_screen(app);
+		render_titlescreen(app);
 	else if (app->status == STATUS_TITLEMENU)
-		render_menu(app);
+		render_titlemenu(app);
 	else if (app->status == STATUS_GAME)
 		render_game(app);
+//	else if (app->status == STATUS_PAUSEMENU)
+//		render_pausemenu(app);
 	SDL_UpdateWindowSurface(app->win);
 }
 
-void	render_game(t_app *app)
-{
-	SDL_ShowCursor(SDL_DISABLE);
-	handle_movement(app);
-	render_sectors(app);
-	render_ui(app);
-}
+

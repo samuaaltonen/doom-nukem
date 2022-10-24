@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:41:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 01:11:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/24 18:07:32 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,22 @@
 void	handle_movement(t_app *app)
 {
 	if (app->conf->keystates & FORWARD_DOWN
-		|| app->conf->keystates & FORWARD_W_DOWN)
+		|| app->conf->keystates & W_DOWN)
 		player_move(app, FORWARD,
 			app->conf->movement_speed * app->conf->delta_time);
 	if (app->conf->keystates & BACKWARD_DOWN
-		|| app->conf->keystates & BACKWARD_S_DOWN)
+		|| app->conf->keystates & S_DOWN)
 		player_move(app, BACKWARD,
 			app->conf->movement_speed * app->conf->delta_time);
-	if (app->conf->keystates & LEFT_DOWN)
+	if (app->conf->keystates & A_DOWN)
 		player_move(app, LEFT,
 			app->conf->movement_speed * app->conf->delta_time);
-	if (app->conf->keystates & RIGHT_DOWN)
+	if (app->conf->keystates & D_DOWN)
 		player_move(app, RIGHT,
 			app->conf->movement_speed * app->conf->delta_time);
-	if (app->conf->keystates & ROTATE_LEFT_DOWN)
+	if (app->conf->keystates & LEFT_DOWN)
 		player_rotate(app, -app->conf->rotation_speed * app->conf->delta_time);
-	if (app->conf->keystates & ROTATE_RIGHT_DOWN)
+	if (app->conf->keystates & RIGHT_DOWN)
 		player_rotate(app, app->conf->rotation_speed * app->conf->delta_time);
 }
 
