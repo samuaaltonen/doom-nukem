@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_extra.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:55:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:57:36 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/24 15:18:27 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,19 @@ static void	render_col(t_app *app, int x, int color)
 	y = -1;
 	while (++y < app->surface->h)
 		put_pixel_to_surface(app->surface, x, y, color);
+}
+
+void	render_center(t_app *app, int color)
+{
+	t_point		point;
+
+	point.x = (0 - app->view_pos.x) * (app->surface->w) / (app->view_size.x - app->view_pos.x);
+	point.y = (0 - app->view_pos.y) * (app->surface->h) / (app->view_size.y - app->view_pos.y);
+	render_row(app, point.y, color);
+	render_col(app, point.x, color);
+	render_row(app, point.y + 1, color);
+	render_col(app, point.x + 1, color);
+	
 }
 
 /**
@@ -66,8 +79,10 @@ void	render_grid(t_app *app, double divider, int color)
 
 		x++;
 	}
+	render_center(app, color);
 		//-50 + ( 0  / 1000) * 100
 }
+
 
 /**
  * @brief Puts the max and min values of a bounding box of a sector to the given min and max param
