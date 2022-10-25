@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/25 10:58:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 14:21:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,7 @@ static t_bool	has_been_visited(int *visited, int sector_id)
 /**
  * Loops through sectors walls to check which of them might be visible.
  */
-static void	loop_sector_walls(t_app *app, t_wall *walls, int *walls_count, int *interested,
-	int sector_id, t_bool is_member)
+static void	loop_sector_walls(t_app *app, t_wallstack *wallstack, int index, int sector_id)
 {
 	int			i;
 	t_sector	*sector;
@@ -132,23 +131,24 @@ static void	loop_sector_walls(t_app *app, t_wall *walls, int *walls_count, int *
 		// Break loop when -1 is found (no members after that anyways)
 		if (sector->member_sectors[i] == -1)
 			break ;
-		loop_sector_walls(app, walls, walls_count, interested, sector->member_sectors[i], TRUE);
+		loop_sector_walls(app, wallstack, index, sector->member_sectors[i]);
 	}
 	// Loop through sector walls
 	i = -1;
 	while (++i < sector->corner_count)
 	{
 		// If wall is a portal, add portal destination to be interesting sector
-		if (sector->wall_types[i] != -1)
+		if (sector->parent_sector == -1 && sector->wall_types[i] != -1)
 		{
-			/* ft_printf("Marking sector %d as interesting.\n", sector_id); */
-			*(interested + 1) = sector->wall_types[i];
-			*(interested + 2) = -1;
+			wallstack->interesting[wallstack->interesting_count] = sector->wall_types[i];
+			wallstack->interesting_count++;
 		}
 		wall.sector_id = sector_id;
 		wall.wall_id = i;
-		wall.is_member = is_member;
-		check_possible_visible(app, walls, walls_count, wall);
+		wall.is_member = FALSE;
+		if (sector->parent_sector != -1)
+			wall.is_member = TRUE;
+		check_possible_visible(app, (t_wall *)&wallstack->visible_walls[index], (int *)&wallstack->visible_count[index], wall);
 	}
 }
 
@@ -169,7 +169,6 @@ void	sector_walls_copy(t_app *app, t_wall *walls, int wall_count)
 	i = 0;
 	while (i < wall_count)
 	{
-		/* ft_printf("Copying wall %d,%d\n", walls[i].sector_id, walls[i].wall_id); */
 		app->visible_walls[i + previously_copied] = walls[i];
 		app->visible_walls_count++;
 		i++;
@@ -181,22 +180,19 @@ void	sector_walls_copy(t_app *app, t_wall *walls, int wall_count)
  */
 void	sector_visible_walls(t_app *app)
 {
-	t_wall	visible_walls[MAX_VISIBLE_SECTORS][(MAX_MEMBER_SECTORS + 1) * MAX_SECTOR_CORNERS];
-	int		visible_count[MAX_VISIBLE_SECTORS + 1];
-	int		already_visited[MAX_VISIBLE_SECTORS];
-	int		interested_in[MAX_VISIBLE_SECTORS];
-	int		i;
+	t_wallstack	wallstack;
+	int			i;
 
-	already_visited[0] = -1;
-	interested_in[0] = app->player.current_sector;
-	interested_in[1] = -1;
+	wallstack.visited[0] = -1;
+	wallstack.interesting[0] = app->player.current_sector;
+	wallstack.interesting_count = 1;
 	i = 0;
-	while (interested_in[i] != -1 && i < MAX_VISIBLE_SECTORS - 1)
+	while (i < wallstack.interesting_count && i < MAX_VISIBLE_SECTORS - 1)
 	{
-		visible_count[i] = 0;
-		visible_count[i + 1] = -1;
-		if (!has_been_visited((int *)&already_visited, interested_in[i]))
-			loop_sector_walls(app, (t_wall *)&visible_walls[i], &visible_count[i], &interested_in[i], interested_in[i], FALSE);
+		wallstack.visible_count[i] = 0;
+		wallstack.visible_count[i + 1] = -1;
+		if (!has_been_visited((int *)&wallstack.visited, wallstack.interesting[i]))
+			loop_sector_walls(app, &wallstack, i, wallstack.interesting[i]);
 		i++;
 	}
 	/**
@@ -204,12 +200,11 @@ void	sector_visible_walls(t_app *app)
 	 */
 	i = 0;
 	app->visible_walls_count = 0;
-	while (visible_count[i] > 0)
+	while (wallstack.visible_count[i] > 0)
 	{
-		/* ft_printf("group %d, wall count %d\n", i, visible_count[i]); */
-		sector_walls_prepare(app, (t_wall *)&visible_walls[i], visible_count[i]);
-		sector_walls_order(app, (t_wall *)&visible_walls[i], visible_count[i]);
-		sector_walls_copy(app, (t_wall *)&visible_walls[i], visible_count[i]);
+		sector_walls_prepare(app, (t_wall *)&wallstack.visible_walls[i], wallstack.visible_count[i]);
+		sector_walls_order(app, (t_wall *)&wallstack.visible_walls[i], wallstack.visible_count[i]);
+		sector_walls_copy(app, (t_wall *)&wallstack.visible_walls[i], wallstack.visible_count[i]);
 		i++;
 	}
 }

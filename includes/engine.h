@@ -6,14 +6,14 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/25 10:45:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 13:54:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ENGINE_H
 # define ENGINE_H
 
-enum s_occlusion {
+enum e_occlusion {
 	OCCLUDE_TOP,
 	OCCLUDE_BOTTOM,
 	OCCLUDE_BOTH
@@ -102,9 +102,24 @@ typedef struct s_wall
 	t_bool			is_portal;
 	t_bool			is_inside;
 	int				already_selected;
-	t_line		line;
+	t_line			line;
 	int				start_x;
 	int				end_x;
 }	t_wall;
+
+/**
+ * Wallstack struct. Used when gathering possibly visible walls from sectors and
+ * their ordering.
+ */
+typedef struct s_wallstack
+{
+	t_wall	visible_walls[MAX_VISIBLE_SECTORS] \
+			[(MAX_MEMBER_SECTORS + 1) * MAX_SECTOR_CORNERS];
+	int		visible_count[MAX_VISIBLE_SECTORS + 1];
+	int		visited[MAX_VISIBLE_SECTORS];
+	int		visited_count;
+	int		interesting[MAX_VISIBLE_SECTORS];
+	int		interesting_count;
+}	t_wallstack;
 
 #endif
