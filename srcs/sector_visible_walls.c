@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/25 14:21:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 15:02:51 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
  * Returns TRUE if given line has either corners visible to player.
  * 
  * - If both corners of the wall are in view cone returns TRUE
- * - If not, then check intersection points with view vertices: Extend view
- *   vertices and check intersection with the wall and return TRUE if either of
+ * - If not, then check intersection points with view lines: Extend view
+ *   lines and check intersection with the wall and return TRUE if either of
  *   the intersection coordinates are left of camera plane (in front of player).
 */
 static t_bool	has_visible_corner(t_app *app, t_line wall)
@@ -39,8 +39,8 @@ static t_bool	has_visible_corner(t_app *app, t_line wall)
 	if (ft_line_side(right, wall.a) && ft_line_side(right, wall.b)
 		&& !ft_line_side(left, wall.a) && !ft_line_side(left, wall.b))
 		return (TRUE);
-	left = ft_line_resize(left, MAX_line_LENGTH, EXTEND_BOTH);
-	right = ft_line_resize(right, MAX_line_LENGTH, EXTEND_BOTH);
+	left = ft_line_resize(left, MAX_LINE_LENGTH, EXTEND_BOTH);
+	right = ft_line_resize(right, MAX_LINE_LENGTH, EXTEND_BOTH);
 	if ((ft_line_intersection(left, wall, &intersection)
 			&& ft_line_side(view_camera, intersection))
 		|| (ft_line_intersection(right, wall, &intersection)
@@ -148,7 +148,8 @@ static void	loop_sector_walls(t_app *app, t_wallstack *wallstack, int index, int
 		wall.is_member = FALSE;
 		if (sector->parent_sector != -1)
 			wall.is_member = TRUE;
-		check_possible_visible(app, (t_wall *)&wallstack->visible_walls[index], (int *)&wallstack->visible_count[index], wall);
+		check_possible_visible(app, (t_wall *)&wallstack->visible_walls[index],
+			(int *)&wallstack->visible_count[index], wall);
 	}
 }
 
@@ -200,11 +201,14 @@ void	sector_visible_walls(t_app *app)
 	 */
 	i = 0;
 	app->visible_walls_count = 0;
-	while (wallstack.visible_count[i] > 0)
+	while (wallstack.visible_count[i] != -1)
 	{
-		sector_walls_prepare(app, (t_wall *)&wallstack.visible_walls[i], wallstack.visible_count[i]);
-		sector_walls_order(app, (t_wall *)&wallstack.visible_walls[i], wallstack.visible_count[i]);
-		sector_walls_copy(app, (t_wall *)&wallstack.visible_walls[i], wallstack.visible_count[i]);
+		if (wallstack.visible_count[i] > 0)
+		{
+			sector_walls_prepare(app, (t_wall *)&wallstack.visible_walls[i], wallstack.visible_count[i]);
+			sector_walls_order(app, (t_wall *)&wallstack.visible_walls[i], wallstack.visible_count[i]);
+			sector_walls_copy(app, (t_wall *)&wallstack.visible_walls[i], wallstack.visible_count[i]);
+		}
 		i++;
 	}
 }

@@ -13,7 +13,7 @@
 #include "liblinearalgebra.h"
 
 /**
- * Calculates intersection point between 2 vertices. If there is no intersection
+ * Calculates intersection point between 2 lines. If there is no intersection
  * returns 0, otherwise 1 and sets the intersection point to given vector2
  * pointer.
  * 

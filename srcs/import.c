@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/25 10:45:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 14:28:51 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,10 @@ static void	import_slopes(t_app *app, t_exportsector *export, t_sector *sector)
 	perp = ft_vector_perpendicular((t_vector2){linedst.x - point.x, linedst.y - point.y});
 	
 	ft_line_intersection(ft_line_resize( \
-		(t_line){point, linedst}, MAX_line_LENGTH, 2), \
+		(t_line){point, linedst}, MAX_LINE_LENGTH, 2), \
 		ft_line_resize((t_line){(t_vector2){opposite.x, opposite.y}, \
 		(t_vector2){perp.x + opposite.x, perp.y + opposite.y}}, \
-		MAX_line_LENGTH, 2),&point);
+		MAX_LINE_LENGTH, 2),&point);
 	
 	double height =  export->floor_slope_height - export->floor_height;
 

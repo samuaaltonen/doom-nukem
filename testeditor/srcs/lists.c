@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   lists.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:42:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 14:27:26 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/25 14:29:22 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Creates a new linked list to save vertices (x, y points) of a sector.
+ * Creates a new linked list to save lines (x, y points) of a sector.
  */
 t_vec2_lst	*new_vector_list(t_vector2 *point)
 {
