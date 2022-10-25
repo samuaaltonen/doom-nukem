@@ -15,6 +15,7 @@
 # define WIN_NAME "Doom Nukem Editor"
 # define WIN_W 1280
 # define WIN_H 720
+# define HELP_MENU_W 280
 # define MSG_ERROR "Error occured"
 # define MSG_ERROR_WINDOW "Could not open a window."
 # define MSG_ERROR_WINDOW_SURFACE "Could not get window surface."
@@ -40,6 +41,7 @@
 # define HEIGHT_INC 0.125f
 # define TEXTURE_PANELS "../assets/minecraft_spritesheet.xpm"
 # define FONT_FILE "../assets/SpaceMono-Regular.ttf"
+# define FONT_TX "../assets/fonts/sci-fi_font.bmp"
 # define FILE_PATH "./test.test"
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 8
@@ -167,6 +169,27 @@ typedef struct	s_sectorlist
 } t_sector_lst;
 
 /**
+ * Struct for font.
+ */
+typedef struct s_font
+{
+	SDL_Surface	*font;
+	int         size;
+}	t_font;
+
+/**
+ * Struct for all assets.
+ */
+typedef struct s_assets
+{
+	t_font			font;
+	SDL_Surface		*button_texture;
+	SDL_Surface		*title_screen_image;
+	SDL_Surface		*sprite;
+	SDL_Surface		*bg;
+}	t_assets;
+
+/**
  * Struct for the application.
  */
 typedef struct s_app
@@ -194,6 +217,7 @@ typedef struct s_app
 	t_bool				floor_edit;
 	t_bool				light_edit;
 	int					sectorcount;
+	t_assets			assets;
 }	t_app;
 
 typedef struct	s_exportsector
@@ -220,6 +244,17 @@ typedef struct	s_exportsector
 }	t_exportsector;
 
 /**
+ * Struct for integer coordinate rectangule.
+ */
+typedef struct s_rect
+{
+	int				x;
+	int				y;
+	int				w;
+	int				h;
+}	t_rect;
+
+/**
  * Messages
  */
 void		exit_error(char *message);
@@ -242,6 +277,7 @@ void		app_loop(t_app *app);
 SDL_Surface	*init_image(int x, int y);
 void		put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color);
 void		flush_surface(SDL_Surface *surface);
+int			get_pixel_color(SDL_Surface *surface, int x, int y);
 
 /**
  * Events
@@ -272,6 +308,7 @@ void			render_sector_points(t_app *app);
 void			render_fill_active_sector(t_app *app);
 void			draw_list_lines(t_app *app, t_vec2_lst *a, t_vec2_lst *b, int color);
 void			draw_line(t_app *app, t_vector2 *a, t_vector2 *b, int color);
+void		map_coordinates(t_rect *src, t_rect *dst, t_point *point);
 
 /**
  * Sector Functions
@@ -329,4 +366,18 @@ void			relink_member_sectors(t_app *app);
 int				export_file(t_app *app, char *path);
 int				get_line_id(t_vec2_lst *list, t_vec2_lst *wall);
 
+/**
+ * Font
+*/
+void		change_font(t_app *app, int size, int color);
+void		load_font(t_app *app);
+void		render_text(t_app *app, t_point position, char *text);
+void		rect_from_surface(SDL_Surface *surface, t_rect *rect);
+int			check_blit(SDL_Surface *src, t_rect *src_rect, SDL_Surface *dst, t_rect *dst_rect);
+void		blit_surface(SDL_Surface *src, t_rect *src_rect, SDL_Surface *dst, t_rect *dst_rect);
+
+/**
+ * Help menu
+*/
+void		render_help_menu(t_app *app);
 #endif
