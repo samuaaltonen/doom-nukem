@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
+#    By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/10/21 14:12:50 by htahvana         ###   ########.fr        #
+#    Updated: 2022/10/25 11:21:46 by ssulkuma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,8 @@ CC = gcc
 
 FILES = app.c editor.c editor_ui.c editor_menu.c \
 events_key.c events_mouse.c events.c export.c import.c \
-image.c main.c render.c render_extra.c \
-linedraw.c lists.c sector.c sector_tools.c tools.c
+image.c main.c render.c render_extra.c render_text.c \
+linedraw.c lists.c sector.c sector_tools.c tools.c utils_sdl.c utils.c
 
 LIBFT = ../libft/libft.a
 LIBLINEARALGEBRA = ../liblinearalgebra/liblinearalgebra.a

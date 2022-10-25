@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/25 14:43:44 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 15:08:02 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,8 @@ void	app_render(t_app *app)
 {
 	flush_surface(app->surface);
 	/* SDL_Surface	*converted_surface; */
-	SDL_Surface *text_surface;
-	text_surface = TTF_RenderText_Solid(app->font, "app->conf->fps_info", (SDL_Color){255, 255, 255, 0});
+	//SDL_Surface *text_surface;
+	//text_surface = TTF_RenderText_Solid(app->font, "app->conf->fps_info", (SDL_Color){255, 255, 255, 0});
 	handle_movement(app);
 	app->view_size.x = app->view_pos.x + app->zoom_area.x;
 	app->view_size.y = app->view_pos.y + app->zoom_area.y;
@@ -83,8 +83,9 @@ void	app_render(t_app *app)
 	render_sector_points(app);
 	if(app->list_ongoing)
 		draw_line(app, &app->active_last->point, &app->mouse_click, 0xAABBCC);
-	SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
-	SDL_FreeSurface(text_surface);
+	render_help_menu(app);
+	//SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
+	//SDL_FreeSurface(text_surface);
 	SDL_UpdateWindowSurface(app->win);
 }
 
