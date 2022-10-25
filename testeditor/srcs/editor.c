@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/25 16:47:27 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/25 16:54:04 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 {
 	if(key == SDLK_UP)
 	{
-		if(app->ceiling_edit)
+		if(app->ceiling_edit && !app->slope_edit)
 			app->active_sector->ceil_height += HEIGHT_INC;
-		if(app->floor_edit)
+		if(app->floor_edit && !app->slope_edit)
 			app->active_sector->floor_height += HEIGHT_INC;
 		if(app->light_edit)
 			app->active_sector->light++;
@@ -55,9 +55,9 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 	}
 	else if(key == SDLK_DOWN)
 	{
-		if(app->ceiling_edit)
+		if(app->ceiling_edit && !app->slope_edit)
 			app->active_sector->ceil_height -= HEIGHT_INC;
-		if(app->floor_edit)
+		if(app->floor_edit && !app->slope_edit)
 			app->active_sector->floor_height -= HEIGHT_INC;
 		if(app->light_edit)
 			app->active_sector->light--;
