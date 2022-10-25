@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/25 11:18:36 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/25 12:08:20 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ typedef struct s_app
 	SDL_Surface		*surface;
 	t_uint8			status;
 	t_assets		assets;
+	t_point			mouse_pos;
 	double			depthmap[WIN_H][WIN_W];
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];
@@ -174,7 +175,7 @@ void    	render_text(t_app *app, t_point position, char *text);
  * UI
  */
 void		render_ui(t_app *app);
-void    	render_button(t_app *app);
+t_rect    	render_button(t_app *app, t_point pos, int state, int size);
 
 
 void		render_titlemenu(t_app *app);

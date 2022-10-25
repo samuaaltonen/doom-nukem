@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/21 18:13:54 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/25 12:08:48 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	render_ui(t_app *app)
 {
-	render_button(app);
+	render_button(app,(t_point){10, 10}, 0, 1);
 
 	change_font(app, 16, 0xFFEFDCCC);
 	render_text(app, (t_point){20, 20}, "FPS");
@@ -22,19 +22,17 @@ void	render_ui(t_app *app)
 	load_font(app);
 }
 
-void	render_button(t_app *app)
+t_rect	render_button(t_app *app, t_point pos, int state, int size)
 {
-	SDL_Surface	*button;
 	t_rect		dst;
 	t_rect		src;
 
-
-	dst.x = 10;
-	dst.y = 10;
-	dst.w = 128;
-	dst.h = 32;
-	button = SDL_LoadBMP(BUTTON_TX);
-	rect_from_surface(button, &src);
-	blit_surface(button, &src, app->surface, &dst);
-	SDL_FreeSurface(button);
+	state = 0;
+	dst.x = pos.x;
+	dst.y = pos.y;
+	dst.w = app->assets.button_texture->w * size;
+	dst.h = app->assets.button_texture->h * size;
+	rect_from_surface(app->assets.button_texture, &src);
+	blit_surface(app->assets.button_texture, &src, app->surface, &dst);
+	return (dst);
 }
