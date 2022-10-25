@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 14:57:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:51:20 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,22 +79,22 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
  * used later in rendering.
  * Returns TRUE if there was a hit and FALSE otherwise.
 */
-static t_bool	raycast_hit(t_app *app, t_vertex2 wall, t_rayhit *hit, int x)
+static t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 {
-	t_vertex2	ray_vertex;
-	double		camera_x;
-	double		angle;
+	t_line	ray_line;
+	double	camera_x;
+	double	angle;
 
-	ray_vertex.a = app->player.pos;
+	ray_line.a = app->player.pos;
 	camera_x = 2 * x / (double) WIN_W - 1.f;
 	hit->ray = (t_vector2){
 		app->player.dir.x + app->player.cam.x * camera_x, 
 		app->player.dir.y + app->player.cam.y * camera_x};
-	ray_vertex.b = ft_vector_resize(hit->ray, MAX_VIEW_DISTANCE);
-	angle = ft_vector_angle(ray_vertex.b, app->player.dir);
-	ray_vertex.b.x += app->player.pos.x;
-	ray_vertex.b.y += app->player.pos.y;
-	if (!ft_vertex_intersection(wall, ray_vertex, &hit->position))
+	ray_line.b = ft_vector_resize(hit->ray, MAX_VIEW_DISTANCE);
+	angle = ft_vector_angle(ray_line.b, app->player.dir);
+	ray_line.b.x += app->player.pos.x;
+	ray_line.b.y += app->player.pos.y;
+	if (!ft_line_intersection(wall, ray_line, &hit->position))
 		return (FALSE);
 	hit->distance = ft_vector_length((t_vector2){
 		hit->position.x - app->player.pos.x,
@@ -128,7 +128,7 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall)
 		/**
 		 * Perform rayhit. Skips when there is no hit.
 		*/
-		if (!raycast_hit(app, wall->vertex, &hit, x))
+		if (!raycast_hit(app, wall->line, &hit, x))
 			continue ;
 		// If portal or member (member sectors automatically portals)
 		if (wall->is_portal)

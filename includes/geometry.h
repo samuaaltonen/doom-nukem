@@ -4,17 +4,15 @@
 /*                                                        :::      ::::::::   */
 /*   geometry.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:48:59 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/19 15:19:06 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/21 17:00:25 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GEOMETRY_H
 # define GEOMETRY_H
-
-# include "doomnukem.h"
 
 # define DEG_IN_RADIAN 0.01745
 # define RADIAN_IN_DEG 57.29578

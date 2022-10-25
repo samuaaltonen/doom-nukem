@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_vertex_side.c                                   :+:      :+:    :+:   */
+/*   ft_line_side.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/10 12:48:54 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/10 15:22:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:45:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,10 @@
 
 /**
  * Returns 1 if given coordinate point (vector2) is located at left side of
- * given vertex and 0 if left side.
+ * given line and 0 if left side.
  */
-int	ft_vertex_side(t_vertex2 vertex, t_vector2 coord)
+int	ft_line_side(t_line line, t_vector2 coord)
 {
-	return ((vertex.b.x - vertex.a.x) * (coord.y - vertex.a.y)
-		- (vertex.b.y - vertex.a.y) * (coord.x - vertex.a.x) > 0.0);
+	return ((line.b.x - line.a.x) * (coord.y - line.a.y)
+		- (line.b.y - line.a.y) * (coord.x - line.a.x) > 0.0);
 }

@@ -1,40 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_vertex_resize.c                                 :+:      :+:    :+:   */
+/*   ft_line_resize.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 17:01:41 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/07 17:16:27 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:45:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "liblinearalgebra.h"
 
 /**
- * Extends vertex to given length. If both_sides is seleted, extends both ends
- * of the vertex.
+ * Extends line to given length. If both_sides is seleted, extends both ends
+ * of the line.
  */
-t_vertex2	ft_vertex_resize(t_vertex2 vertex, double length, int side)
+t_line	ft_line_resize(t_line line, double length, int side)
 {
-	t_vertex2	resized;
-	t_vector2	vertex_direction;
+	t_line	resized;
+	t_vector2	line_direction;
 
-	vertex_direction = ft_vector_resize((t_vector2){
-			vertex.b.x - vertex.a.x,
-			vertex.b.y - vertex.a.y,
+	line_direction = ft_vector_resize((t_vector2){
+			line.b.x - line.a.x,
+			line.b.y - line.a.y,
 		}, length);
-	resized = vertex;
+	resized = line;
 	if (side == EXTEND_CORNER_A || side == EXTEND_BOTH)
 	{
-		resized.a.x -= vertex_direction.x;
-		resized.a.y -= vertex_direction.y;
+		resized.a.x -= line_direction.x;
+		resized.a.y -= line_direction.y;
 	}
 	if (side == EXTEND_CORNER_B || side == EXTEND_BOTH)
 	{
-		resized.b.x += vertex_direction.x;
-		resized.b.y += vertex_direction.y;
+		resized.b.x += line_direction.x;
+		resized.b.y += line_direction.y;
 	}
 	return (resized);
 }

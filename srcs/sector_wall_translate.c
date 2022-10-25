@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:46:07 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 13:03:14 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:45:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	translate_window_x(t_app *app, t_vector2 coord, double dotproduct)
 	ray = (t_vector2){coord.x - app->player.pos.x, coord.y - app->player.pos.y};
 	angle = ft_vector_angle(ray, app->player.dir);
 	// If left side, mark angle as negative
-	if (ft_vertex_side((t_vertex2){app->player.pos,
+	if (ft_line_side((t_line){app->player.pos,
 			(t_vector2){app->player.pos.x + app->player.dir.x,
 			app->player.pos.y + app->player.dir.y}}, coord))
 		angle *= -1.0;
@@ -51,8 +51,8 @@ static double	get_wall_dotproduct(t_app *app, t_wall wall)
 	double	dotproduct;
 
 	dotproduct = ft_vector_dotproduct(app->player.dir, (t_vector2){
-			wall.vertex.b.x - wall.vertex.a.x,
-			wall.vertex.b.y - wall.vertex.a.y
+			wall.line.b.x - wall.line.a.x,
+			wall.line.b.y - wall.line.a.y
 		});
 	if (wall.is_member && !wall.is_inside)
 		return (-dotproduct);
@@ -63,32 +63,33 @@ static double	get_wall_dotproduct(t_app *app, t_wall wall)
  * Prepares selected walls to be rendered. Calculates their translated x
  * positions in screen.
 */
-void	sector_walls_prepare(t_app *app)
+void	sector_walls_prepare(t_app *app, t_wall *walls, int wall_count)
 {
 	double	dotproduct;
 	int		i;
 	int		temp_x;
 
 	i = -1;
-	while (++i < app->possible_visible_count)
+	while (++i < wall_count)
 	{
-		app->possible_visible[i].vertex = get_wall_vertex(app,
-			app->possible_visible[i].sector_id,
-			app->possible_visible[i].wall_id);
-		dotproduct = get_wall_dotproduct(app, app->possible_visible[i]);
-		app->possible_visible[i].start_x = translate_window_x(app, app->possible_visible[i].vertex.a, dotproduct);
-		app->possible_visible[i].end_x = translate_window_x(app, app->possible_visible[i].vertex.b, dotproduct);
-		temp_x = app->possible_visible[i].end_x;
-		if (app->possible_visible[i].end_x < app->possible_visible[i].start_x)
+		walls[i].line = get_wall_line(app,
+			walls[i].sector_id,
+			walls[i].wall_id);
+		dotproduct = get_wall_dotproduct(app, walls[i]);
+		walls[i].start_x = translate_window_x(app, walls[i].line.a, dotproduct);
+		walls[i].end_x = translate_window_x(app, walls[i].line.b, dotproduct);
+		temp_x = walls[i].end_x;
+		if (walls[i].end_x < walls[i].start_x)
 		{
-			app->possible_visible[i].end_x = app->possible_visible[i].start_x;
-			app->possible_visible[i].start_x = temp_x;
+			walls[i].end_x = walls[i].start_x;
+			walls[i].start_x = temp_x;
 		}
-		app->possible_visible[i].start_x -= 1;
-		app->possible_visible[i].end_x += 1;
-		if (app->possible_visible[i].start_x < -1)
-			app->possible_visible[i].start_x = -1;
-		if (app->possible_visible[i].end_x >= WIN_W)
-			app->possible_visible[i].end_x = WIN_W - 1;
+		walls[i].start_x -= 1;
+		walls[i].end_x += 1;
+		if (walls[i].start_x < -1)
+			walls[i].start_x = -1;
+		if (walls[i].end_x >= WIN_W)
+			walls[i].end_x = WIN_W - 1;
+		walls[i].already_selected = 0;
 	}
 }

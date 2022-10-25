@@ -6,14 +6,12 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:34:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/25 10:05:51 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/25 11:18:47 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EVENTS_H
 # define EVENTS_H
-
-# include "doomnukem.h"
 
 enum e_keystate {
 	FORWARD_DOWN = 1 << 0,

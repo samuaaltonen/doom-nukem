@@ -1,30 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sector_wall_vertex.c                               :+:      :+:    :+:   */
+/*   sector_wall_line.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:47:35 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/14 15:03:11 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:45:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * Returns vertex from sector by wall id.
+ * Returns line from sector by wall id.
  */
-t_vertex2	get_wall_vertex(t_app *app, int sector_id, int wall_id)
+t_line	get_wall_line(t_app *app, int sector_id, int wall_id)
 {
 	(void)app;
 	if (app->sectors[sector_id].corner_count == wall_id + 1)
-		return (t_vertex2){
+		return (t_line){
 			app->sectors[sector_id].corners[wall_id],
 			app->sectors[sector_id].corners[0],
 		};
 	else
-		return (t_vertex2){
+		return (t_line){
 			app->sectors[sector_id].corners[wall_id],
 			app->sectors[sector_id].corners[wall_id + 1],
 		};

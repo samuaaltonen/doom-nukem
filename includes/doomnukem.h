@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/25 10:58:23 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/25 11:18:36 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ typedef struct s_app
 	double			depthmap[WIN_H][WIN_W];
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];
-	t_wall			possible_visible[MAX_VISIBLE_WALLS];
-	int				possible_visible_count;
+	t_wall			visible_walls[MAX_VISIBLE_WALLS];
+	int				visible_walls_count;
 	t_thread_data	thread_info[THREAD_COUNT];
 	t_player		player;
 	t_sector		*sectors;
@@ -145,10 +145,10 @@ double		distortion_correction(double angle, double distance);
 /**
  * Sectors
  */
-t_vertex2		get_wall_vertex(t_app *app, int sector_id, int wall_id);
+t_line		get_wall_line(t_app *app, int sector_id, int wall_id);
 void			sector_visible_walls(t_app *app);
-void			sector_walls_prepare(t_app *app);
-void			sector_walls_order(t_app *app);
+void			sector_walls_prepare(t_app *app, t_wall *walls, int wall_count);
+void			sector_walls_order(t_app *app, t_wall *walls, int wall_count);
 void			sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall);
 void			*sector_walls_render(void *data);
 void			render_sectors(t_app *app);
@@ -202,13 +202,4 @@ void		map_coordinates(t_rect *src, t_rect *dst, t_point *point);
  */
 int	import_file(t_app *app, char *path);
 
-
 #endif
-
-/**
- * TESTDATA globals
-
-extern t_polygon test_polygons[];
-extern int test_polygon_count;
-
-extern t_sector test_sectors[];*/

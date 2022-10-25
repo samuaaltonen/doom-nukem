@@ -6,14 +6,12 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/25 10:48:45 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/25 11:18:26 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ASSETS_H
 # define ASSETS_H
-
-# include "doomnukem.h"
 
 # define PANELS_TX "assets/textures/minecraft_spritesheet.bmp"
 # define SKYBOX_TX "assets/textures/bg.bmp"
