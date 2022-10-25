@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/25 12:08:20 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/25 13:55:40 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@
 # define STATUS_PAUSEMENU 3
 
 //BUTTON MACROS
-# define BUTTON_IDDLE 0
-# define BUTTON_SELECTED 1
-# define BUTTON_PRESSED 2
+# define BUTTON_IDLE 0
+# define BUTTON_SELECT 1
+# define BUTTON_PRESS 2
 
 /**
  * Integer type definitions
@@ -175,8 +175,10 @@ void    	render_text(t_app *app, t_point position, char *text);
  * UI
  */
 void		render_ui(t_app *app);
-t_rect    	render_button(t_app *app, t_point pos, int state, int size);
+t_rect    	render_button(t_app *app, t_point pos, int size);
 
+void		title_screen(t_app *app);
+int			check_mouse(t_app *app, t_rect rect);
 
 void		render_titlemenu(t_app *app);
 void		render_titlescreen(t_app *app);

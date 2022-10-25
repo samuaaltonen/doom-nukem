@@ -6,19 +6,21 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/25 11:18:26 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/25 13:39:39 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ASSETS_H
 # define ASSETS_H
 
-# define PANELS_TX "assets/textures/minecraft_spritesheet.bmp"
-# define SKYBOX_TX "assets/textures/bg.bmp"
-# define FONT_TX "assets/fonts/sci-fi_font.bmp"
-# define BUTTON_TX "assets/ui/sci-fi_button.bmp"
-# define TITLESCREEN_TX "assets/textures/title_screen.bmp"
-# define POINTER_TX "assets/ui/mouse_pointer.bmp"
+# define PANELS_PATH "assets/textures/minecraft_spritesheet.bmp"
+# define SKYBOX_PATH "assets/textures/bg.bmp"
+# define FONT_PATH "assets/fonts/sci-fi_font.bmp"
+# define BUTTON_IDLE_PATH "assets/ui/button_idle.bmp"
+# define BUTTON_SELECT_PATH "assets/ui/button_select.bmp"
+# define BUTTON_PRESS_PATH "assets/ui/button_press.bmp"
+# define TITLESCREEN_PATH "assets/textures/title_screen.bmp"
+# define POINTER_PATH "assets/ui/mouse_pointer.bmp"
 # define MAP_PATH "./testeditor/test.test"
 
 /**
@@ -71,7 +73,8 @@ typedef struct s_font
 typedef struct s_assets
 {
 	t_font			font;
-	SDL_Surface		*button_texture;
+	SDL_Surface		*button_idle;
+	SDL_Surface		*button_select;
 	SDL_Surface		*title_screen_image;
 	SDL_Surface		*pointer;
 	SDL_Surface		*sprite;

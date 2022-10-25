@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/25 10:49:15 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/25 13:31:36 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,11 +69,12 @@ void	sdl_init(t_app *app)
  */
 void    load_assets(t_app *app)
 {
-	app->assets.button_texture = SDL_LoadBMP(BUTTON_TX);
-	app->assets.title_screen_image = SDL_LoadBMP(TITLESCREEN_TX);
-	app->assets.pointer = SDL_LoadBMP(POINTER_TX);
-	app->assets.sprite = SDL_LoadBMP(PANELS_TX);
-	app->assets.bg = SDL_LoadBMP(SKYBOX_TX);
+	app->assets.button_idle = SDL_LoadBMP(BUTTON_IDLE_PATH);
+	app->assets.button_select = SDL_LoadBMP(BUTTON_SELECT_PATH);
+	app->assets.title_screen_image = SDL_LoadBMP(TITLESCREEN_PATH);
+	app->assets.pointer = SDL_LoadBMP(POINTER_PATH);
+	app->assets.sprite = SDL_LoadBMP(PANELS_PATH);
+	app->assets.bg = SDL_LoadBMP(SKYBOX_PATH);
     load_font(app);
 }
 
@@ -83,7 +84,7 @@ void    load_assets(t_app *app)
 void	load_font(t_app *app)
 {
 	if (!app->assets.font.font)
-		app->assets.font.font = SDL_LoadBMP(FONT_TX);
+		app->assets.font.font = SDL_LoadBMP(FONT_PATH);
 	if (!app->assets.font.font)
 		exit_error("Could not load font");
 	change_font(app, 16, 0xFF000000);

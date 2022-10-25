@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/25 12:00:28 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/25 13:31:37 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,30 +33,8 @@ void	render_titlescreen(t_app *app)
 
 void	render_titlemenu(t_app *app)
 {
-	t_rect		dst;
-	t_rect		src;
-	t_point		current_pos;
-
-	rect_from_surface(app->assets.button_texture, &src);
-	dst.x = 40;
-	dst.y = 200;
-	dst.w = app->assets.button_texture->w * 2;
-	dst.h = app->assets.button_texture->h * 2;
-	
-	blit_surface(app->assets.button_texture, &src, app->surface, &dst);
-	change_font(app, 16, 0xFFFF9400);
-	render_text(app, (t_point){dst.x + 24, dst.y + 24}, "START GAME");
-	dst.y += dst.h * 1.1;
-	blit_surface(app->assets.button_texture, &src, app->surface, &dst);
-	render_text(app, (t_point){dst.x + 24, dst.y + 24}, "CHOOSE LEVEL");
-	dst.y += dst.h * 1.1;
-	blit_surface(app->assets.button_texture, &src, app->surface, &dst);
-	render_text(app, (t_point){dst.x + 24, dst.y + 24}, "OPTIONS");
-	dst.y += dst.h * 1.1;
-	blit_surface(app->assets.button_texture, &src, app->surface, &dst);
-	render_text(app, (t_point){dst.x + 24, dst.y + 24}, "QUIT GAME");
-	SDL_GetMouseState(&current_pos.x, &current_pos.y);
-	render_pointer(app, current_pos.x, current_pos.y);
+	title_screen(app);
+	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
 }
 
 void	render_pointer(t_app *app, int x, int y)
