@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/24 15:27:27 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/25 16:46:05 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,6 @@ int	events_keyup(int keycode, t_app *app)
 	if (keycode == SDLK_UP)
 		sector_edit(app, keycode);
 	if (keycode == SDLK_DOWN)
-		sector_edit(app, keycode);
-	if (keycode == SDLK_u)
-		sector_edit(app, keycode);
-	if (keycode == SDLK_j)
 		sector_edit(app, keycode);
 	if (keycode == SDLK_w)
 		app->keystates ^= FORWARD_W_DOWN;
@@ -57,6 +53,8 @@ int	events_keyup(int keycode, t_app *app)
 		app->floor_edit = ft_toggle(app->floor_edit);
 	if(keycode == SDLK_t)
 		app->light_edit = ft_toggle(app->light_edit);
+	if(keycode == SDLK_u)
+		app->slope_edit = ft_toggle(app->slope_edit);
 	if(app->active_sector && app->active && keycode == SDLK_y)
 	{
 		app->active_sector->ceil_slope_wall = app->active;
