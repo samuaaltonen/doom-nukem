@@ -49,7 +49,6 @@
 # include <pthread.h>
 # include <stdlib.h>
 # include <SDL.h>
-# include <SDL_image.h>
 # include <SDL_ttf.h>
 # include "libft.h"
 # include "liblinearalgebra.h"
@@ -136,13 +135,13 @@ typedef struct	s_vec2_lst
 	struct s_vec2_lst	*next;
 } t_vec2_lst;
 
-typedef struct	s_line
+typedef struct	s_draw_line
 {
 	t_point	dif;
 	t_point	pos;
 	int		d;
 	int		err;
-}	t_line;
+}	t_draw_line;
 
 typedef struct	s_sectorlist
 {
