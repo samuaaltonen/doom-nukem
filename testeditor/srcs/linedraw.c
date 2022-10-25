@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linedraw.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:01:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:43:29 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/25 11:19:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static int	check_borders(t_app *app, t_point *a, t_point *b)
 	return (1);
 }
 
-static void	line_init(t_point *a, t_point *b, t_line *line)
+static void	line_init(t_point *a, t_point *b, t_draw_line *line)
 {
 	line->dif.x = b->x - a->x;
 	line->dif.y = b->y - a->y;
@@ -36,7 +36,7 @@ static void	line_init(t_point *a, t_point *b, t_line *line)
 
 static void	linedraw_low(t_app *app, t_point *a, t_point *b, int color)
 {
-	t_line	line;
+	t_draw_line	line;
 
 	line_init(a, b, &line);
 	if (line.dif.y < 0)
@@ -62,7 +62,7 @@ static void	linedraw_low(t_app *app, t_point *a, t_point *b, int color)
 
 static void	linedraw_high(t_app *app, t_point *a, t_point *b, int color)
 {
-	t_line	line;
+	t_draw_line	line;
 
 	line_init(a, b, &line);
 	if (line.dif.x < 0)
