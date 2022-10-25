@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/21 17:00:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:44:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 
 # define PANELS_TX "assets/textures/minecraft_spritesheet.bmp"
 # define SKYBOX_TX "assets/textures/bg.bmp"
-# define FONT_TX "assets/fonts/doom-nukem_font.bmp"
-# define BUTTON_TX "assets/ui/button_iddle.bmp"
-# define TITLESCREEN_TX "assets/ui/menu-bg.bmp"
+# define FONT_TX "assets/fonts/sci-fi_font.bmp"
+# define BUTTON_TX "assets/ui/sci-fi_button.bmp"
+# define TITLESCREEN_TX "assets/textures/title_screen.bmp"
 # define MAP_PATH "./testeditor/test.test"
 
 /**

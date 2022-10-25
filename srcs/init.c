@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/20 13:45:06 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/24 14:54:41 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,7 @@ int	config_init(t_app *app)
 	app->conf->movement_speed = MOVEMENT_SPEED;
 	app->conf->rotation_speed = ROTATION_SPEED;
 	app->conf->mouse_active = 1;
-	app->status.title_screen = 1;
-	app->status.game_active = 0;
+	app->status = STATUS_TITLESCREEN;
 	ft_strcpy(app->conf->fps_info, "FPS                 ");
 	init_thread_info(app);
 	return (1);
@@ -70,9 +69,21 @@ void	sdl_init(t_app *app)
  */
 void    load_assets(t_app *app)
 {
-	app->assets.button_texture = load_texture(BUTTON_TX);
-	app->assets.title_screen_image = load_texture(TITLESCREEN_TX);
-	app->assets.sprite = load_texture(PANELS_TX);
-	app->assets.bg = load_texture(SKYBOX_TX);
+	app->assets.button_texture = SDL_LoadBMP(BUTTON_TX);
+	app->assets.title_screen_image = SDL_LoadBMP(TITLESCREEN_TX);
+	app->assets.sprite = SDL_LoadBMP(PANELS_TX);
+	app->assets.bg = SDL_LoadBMP(SKYBOX_TX);
     load_font(app);
+}
+
+/**
+ * Loads the font or resets it
+ */
+void	load_font(t_app *app)
+{
+	if (!app->assets.font.font)
+		app->assets.font.font = SDL_LoadBMP(FONT_TX);
+	if (!app->assets.font.font)
+		exit_error("Could not load font");
+	change_font(app, 16, 0xFF000000);
 }

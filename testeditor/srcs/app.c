@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 15:18:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/24 15:45:38 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,8 +70,9 @@ void	app_render(t_app *app)
 	app->view_size.x = app->view_pos.x + app->zoom_area.x;
 	app->view_size.y = app->view_pos.y + app->zoom_area.y;
 	render_fill_active_sector(app);
-	render_grid(app, 0.5f, 0x424242);
-	render_grid(app, 1.0f, 0x888888);
+	//render_grid(app, 0.5f, 0x424242);
+	//render_grid(app, 1.0f, 0x888888);
+	render_divider(app);
 	zoom_slider(app);
 	render_sectors(app);
 	if(app->active)
@@ -111,7 +112,7 @@ void	app_loop(t_app *app)
 				ft_printf("parent id %i, ",app->active_sector->parent_sector);
 			if(app->active_sector->ceil_slope_wall)
 				ft_printf("ceiling slopes from %i to %i, height %f, ", app->active_sector->ceil_slope_wall,app->active_sector->ceil_slope_opposite, app->active_sector->ceil_slope_height);
-			if(app->active_sector->ceil_slope_wall)
+			if(app->active_sector->floor_slope_wall)
 				ft_printf("floor slopes from %i to %i, height %f", app->active_sector->floor_slope_wall,app->active_sector->floor_slope_opposite, app->active_sector->floor_slope_height);
 			ft_printf("\n");
 		}

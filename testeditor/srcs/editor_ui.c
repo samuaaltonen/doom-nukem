@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editor_ui.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:09:02 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 14:09:29 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/24 15:33:36 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,4 +33,12 @@ void	zoom_slider(t_app *app)
 		}
 		y++;
 	}
+}
+
+void	move_divider(t_app *app, SDL_Keycode keycode)
+{
+	if (keycode == SDLK_z && app->divider > 0.2f)
+		app->divider /= 2;
+	else if (keycode == SDLK_x && app->divider < 0.75f)
+		app->divider *= 2;
 }

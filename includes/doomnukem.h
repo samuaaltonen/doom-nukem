@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 17:23:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:45:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,18 +30,21 @@
 # include "geometry.h"
 # include "player.h"
 
+//STATUS MACROS
+# define STATUS_TITLESCREEN 0
+# define STATUS_TITLEMENU 1
+# define STATUS_GAME 2
+# define STATUS_PAUSEMENU 3
+
+//BUTTON MACROS
+# define BUTTON_IDDLE 0
+# define BUTTON_SELECTED 1
+# define BUTTON_PRESSED 2
 
 /**
  * Integer type definitions
  */
 typedef unsigned char	t_uint8;
-
-typedef struct s_game_status
-{
-	int				title_screen;
-	int				game_active;
-}	t_game_status;
-
 
 /**
  * Struct for the application.
@@ -51,7 +54,7 @@ typedef struct s_app
 	t_conf			*conf;
 	SDL_Window		*win;
 	SDL_Surface		*surface;
-	t_game_status	status;
+	t_uint8			status;
 	t_assets		assets;
 	double			depthmap[WIN_H][WIN_W];
 	int				occlusion_top[WIN_W];
@@ -72,7 +75,7 @@ int			config_init(t_app *app);
 void		load_assets(t_app *app);
 
 /**
- * Messages
+ * error.c
  */
 void		exit_error(char *message);
 
@@ -142,7 +145,7 @@ double		distortion_correction(double angle, double distance);
 /**
  * Sectors
  */
-t_vertex2		get_wall_vertex(t_app *app, int sector_id, int wall_id);
+t_line		get_wall_line(t_app *app, int sector_id, int wall_id);
 void			sector_visible_walls(t_app *app);
 void			sector_walls_prepare(t_app *app, t_wall *walls, int wall_count);
 void			sector_walls_order(t_app *app, t_wall *walls, int wall_count);
@@ -172,8 +175,11 @@ void    	render_text(t_app *app, t_point position, char *text);
  */
 void		render_ui(t_app *app);
 void    	render_button(t_app *app);
-void		render_menu(t_app *app);
-void		title_screen(t_app *app);
+
+
+void		render_titlemenu(t_app *app);
+void		render_titlescreen(t_app *app);
+void		render_game(t_app *app);
 
 
 
@@ -197,13 +203,4 @@ void		map_coordinates(t_rect *src, t_rect *dst, t_point *point);
  */
 int	import_file(t_app *app, char *path);
 
-
 #endif
-
-/**
- * TESTDATA globals
-
-extern t_polygon test_polygons[];
-extern int test_polygon_count;
-
-extern t_sector test_sectors[];*/

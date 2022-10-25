@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 14:33:54 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/24 15:27:27 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ int	events_keyup(int keycode, t_app *app)
 		app->active_sector->floor_slope_wall = app->active;
 		app->active_sector->floor_slope_opposite = find_opposite_point(app->active_sector, app->active);
 	}
+	if (keycode == SDLK_x || keycode == SDLK_z)
+		move_divider(app, keycode);
 
 	//temp
 	if (keycode == SDLK_0)

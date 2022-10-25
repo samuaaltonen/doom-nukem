@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_vertex_intersection.c                           :+:      :+:    :+:   */
+/*   ft_line_intersection.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 22:01:27 by saaltone          #+#    #+#             */
-/*   Updated: 2022/09/25 23:19:47 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:45:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,26 @@
  * See also:
  * https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection
 */
-int	ft_vertex_intersection(t_vertex2 vertex_a, t_vertex2 vertex_b,
+int	ft_line_intersection(t_line line_a, t_line line_b,
 		t_vector2 *intersection)
 {
 	double	t;
 	double	u;
 	double	divider;
 
-	divider = ((vertex_a.a.x - vertex_a.b.x) * (vertex_b.a.y - vertex_b.b.y)
-			- (vertex_a.a.y - vertex_a.b.y) * (vertex_b.a.x - vertex_b.b.x));
+	divider = ((line_a.a.x - line_a.b.x) * (line_b.a.y - line_b.b.y)
+			- (line_a.a.y - line_a.b.y) * (line_b.a.x - line_b.b.x));
 	if (divider == 0.f)
 		return (0);
-	t = ((vertex_a.a.x - vertex_b.a.x) * (vertex_b.a.y - vertex_b.b.y)
-			- (vertex_a.a.y - vertex_b.a.y) * (vertex_b.a.x - vertex_b.b.x))
+	t = ((line_a.a.x - line_b.a.x) * (line_b.a.y - line_b.b.y)
+			- (line_a.a.y - line_b.a.y) * (line_b.a.x - line_b.b.x))
 		/ divider;
-	u = ((vertex_a.a.x - vertex_b.a.x) * (vertex_a.a.y - vertex_a.b.y)
-			- (vertex_a.a.y - vertex_b.a.y) * (vertex_a.a.x - vertex_a.b.x))
+	u = ((line_a.a.x - line_b.a.x) * (line_a.a.y - line_a.b.y)
+			- (line_a.a.y - line_b.a.y) * (line_a.a.x - line_a.b.x))
 		/ divider;
 	if (t < 0.f || t > 1.f || u < 0.f || u > 1.f)
 		return (0);
-	intersection->x = vertex_a.a.x + t * (vertex_a.b.x - vertex_a.a.x);
-	intersection->y = vertex_a.a.y + t * (vertex_a.b.y - vertex_a.a.y);
+	intersection->x = line_a.a.x + t * (line_a.b.x - line_a.a.x);
+	intersection->y = line_a.a.y + t * (line_a.b.y - line_a.a.y);
 	return (1);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_mouse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 14:03:37 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:45:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 	}
 	else if(event->button.button == SDL_BUTTON_LEFT)
 	{
-		//if active sector has member sectors find them before vertexes
+		//if active sector has member sectors find them before linees
 		if(app->active_sector)
 		{
 			if(app->active_sector->member_sectors[0] && find_child_sector(app))

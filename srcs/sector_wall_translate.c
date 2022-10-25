@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:46:07 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 18:29:13 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:45:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	translate_window_x(t_app *app, t_vector2 coord, double dotproduct)
 	ray = (t_vector2){coord.x - app->player.pos.x, coord.y - app->player.pos.y};
 	angle = ft_vector_angle(ray, app->player.dir);
 	// If left side, mark angle as negative
-	if (ft_vertex_side((t_vertex2){app->player.pos,
+	if (ft_line_side((t_line){app->player.pos,
 			(t_vector2){app->player.pos.x + app->player.dir.x,
 			app->player.pos.y + app->player.dir.y}}, coord))
 		angle *= -1.0;
@@ -51,8 +51,8 @@ static double	get_wall_dotproduct(t_app *app, t_wall wall)
 	double	dotproduct;
 
 	dotproduct = ft_vector_dotproduct(app->player.dir, (t_vector2){
-			wall.vertex.b.x - wall.vertex.a.x,
-			wall.vertex.b.y - wall.vertex.a.y
+			wall.line.b.x - wall.line.a.x,
+			wall.line.b.y - wall.line.a.y
 		});
 	if (wall.is_member && !wall.is_inside)
 		return (-dotproduct);
@@ -72,12 +72,12 @@ void	sector_walls_prepare(t_app *app, t_wall *walls, int wall_count)
 	i = -1;
 	while (++i < wall_count)
 	{
-		walls[i].vertex = get_wall_vertex(app,
+		walls[i].line = get_wall_line(app,
 			walls[i].sector_id,
 			walls[i].wall_id);
 		dotproduct = get_wall_dotproduct(app, walls[i]);
-		walls[i].start_x = translate_window_x(app, walls[i].vertex.a, dotproduct);
-		walls[i].end_x = translate_window_x(app, walls[i].vertex.b, dotproduct);
+		walls[i].start_x = translate_window_x(app, walls[i].line.a, dotproduct);
+		walls[i].end_x = translate_window_x(app, walls[i].line.b, dotproduct);
 		temp_x = walls[i].end_x;
 		if (walls[i].end_x < walls[i].start_x)
 		{

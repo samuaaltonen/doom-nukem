@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 23:00:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 18:29:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:45:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,9 @@
  */
 static t_bool	walls_in_order(t_app *app, t_wall *wall_a, t_wall *wall_b)
 {
-	t_vertex2	a;
-	t_vertex2	b;
-	t_vertex2	extended;
+	t_line	a;
+	t_line	b;
+	t_line	extended;
 	t_bool		extended_a;
 	int			side;
 
@@ -36,44 +36,44 @@ static t_bool	walls_in_order(t_app *app, t_wall *wall_a, t_wall *wall_b)
 		return (TRUE);
 	if (wall_b->is_member && !wall_a->is_member)
 		return (FALSE);
-	a = get_wall_vertex(app, wall_a->sector_id, wall_a->wall_id);
-	b = get_wall_vertex(app, wall_b->sector_id, wall_b->wall_id);
+	a = get_wall_line(app, wall_a->sector_id, wall_a->wall_id);
+	b = get_wall_line(app, wall_b->sector_id, wall_b->wall_id);
 
 	// Extend wall_a to infinity / very long
-	extended = ft_vertex_resize(a, MAX_VERTEX_LENGTH, EXTEND_BOTH);
+	extended = ft_line_resize(a, MAX_line_LENGTH, EXTEND_BOTH);
 	extended_a = TRUE;
 
 	// Check intersection
-	if (ft_vertex_intersection_through(extended, b))
+	if (ft_line_intersection_through(extended, b))
 	{
-		extended = ft_vertex_resize(b, MAX_VERTEX_LENGTH, EXTEND_BOTH);
+		extended = ft_line_resize(b, MAX_line_LENGTH, EXTEND_BOTH);
 		extended_a = FALSE;
 		// If interesction again, no change in order
-		if (ft_vertex_intersection_through(extended, a))
+		if (ft_line_intersection_through(extended, a))
 			return (TRUE);
 	}
 
 	/** 
 	 * Check side with player pos relative to extended wall.
 	 */
-	// Get player side (1 if left side of vertex)
-	side = ft_vertex_side(extended, app->player.pos);
+	// Get player side (1 if left side of line)
+	side = ft_line_side(extended, app->player.pos);
 
 	/**
 	 * If wall a was extended and wall b is at the same side as player, then 
 	 * wall b has priority (return false so switch b before a).
 	 */
 	if (extended_a
-		&& side == ft_vertex_side(extended, b.a)
-		&& side == ft_vertex_side(extended, b.b))
+		&& side == ft_line_side(extended, b.a)
+		&& side == ft_line_side(extended, b.b))
 		return (FALSE);
 	/**
 	 * Similarly if b was extended, and wall a not at the same side as player,
 	 * then b has priority.
 	 */
 	if (!extended_a
-		&& (side != ft_vertex_side(extended, a.a)
-			|| side != ft_vertex_side(extended, a.b)))
+		&& (side != ft_line_side(extended, a.a)
+			|| side != ft_line_side(extended, a.b)))
 		return (FALSE);
 	/**
 	 * All other cases, wall a has priority so it is already in order.

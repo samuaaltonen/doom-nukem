@@ -6,45 +6,45 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 18:23:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:45:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * Returns TRUE if given vertex has either corners visible to player.
+ * Returns TRUE if given line has either corners visible to player.
  * 
  * - If both corners of the wall are in view cone returns TRUE
  * - If not, then check intersection points with view vertices: Extend view
  *   vertices and check intersection with the wall and return TRUE if either of
  *   the intersection coordinates are left of camera plane (in front of player).
 */
-static t_bool	has_visible_corner(t_app *app, t_vertex2 wall)
+static t_bool	has_visible_corner(t_app *app, t_line wall)
 {
-	t_vertex2	left;
-	t_vertex2	right;
-	t_vertex2	view_camera;
+	t_line	left;
+	t_line	right;
+	t_line	view_camera;
 	t_vector2	intersection;
 
-	view_camera = (t_vertex2){app->player.pos,
+	view_camera = (t_line){app->player.pos,
 		(t_vector2){app->player.pos.x + app->player.cam.x,
 		app->player.pos.y + app->player.cam.y}};
-	left = (t_vertex2){app->player.pos,
+	left = (t_line){app->player.pos,
 		(t_vector2){app->player.pos.x + app->player.dir.x - app->player.cam.x,
 		app->player.pos.y + app->player.dir.y - app->player.cam.y}};
-	right = (t_vertex2){app->player.pos,
+	right = (t_line){app->player.pos,
 		(t_vector2){app->player.pos.x + app->player.dir.x + app->player.cam.x,
 		app->player.pos.y + app->player.dir.y + app->player.cam.y}};
-	if (ft_vertex_side(right, wall.a) && ft_vertex_side(right, wall.b)
-		&& !ft_vertex_side(left, wall.a) && !ft_vertex_side(left, wall.b))
+	if (ft_line_side(right, wall.a) && ft_line_side(right, wall.b)
+		&& !ft_line_side(left, wall.a) && !ft_line_side(left, wall.b))
 		return (TRUE);
-	left = ft_vertex_resize(left, MAX_VERTEX_LENGTH, EXTEND_BOTH);
-	right = ft_vertex_resize(right, MAX_VERTEX_LENGTH, EXTEND_BOTH);
-	if ((ft_vertex_intersection(left, wall, &intersection)
-			&& ft_vertex_side(view_camera, intersection))
-		|| (ft_vertex_intersection(right, wall, &intersection)
-			&& ft_vertex_side(view_camera, intersection)))
+	left = ft_line_resize(left, MAX_line_LENGTH, EXTEND_BOTH);
+	right = ft_line_resize(right, MAX_line_LENGTH, EXTEND_BOTH);
+	if ((ft_line_intersection(left, wall, &intersection)
+			&& ft_line_side(view_camera, intersection))
+		|| (ft_line_intersection(right, wall, &intersection)
+			&& ft_line_side(view_camera, intersection)))
 		return (TRUE);
 	return (FALSE);
 }
@@ -60,12 +60,12 @@ static void	check_possible_visible(t_app *app, t_wall *walls, int *walls_count, 
 {
 	t_bool		is_inside;
 	t_bool		is_portal;
-	t_vertex2	wall_vertex;
+	t_line	wall_line;
 	int			player_side;
 
 	is_inside = !wall.is_member;
-	wall_vertex = get_wall_vertex(app, wall.sector_id, wall.wall_id);
-	player_side = ft_vertex_side(wall_vertex, app->player.pos);
+	wall_line = get_wall_line(app, wall.sector_id, wall.wall_id);
+	player_side = ft_line_side(wall_line, app->player.pos);
 	// Not member sector, player need to on right side of all walls (clockwise)
 	if (!wall.is_member && player_side)
 		return ;
@@ -77,7 +77,7 @@ static void	check_possible_visible(t_app *app, t_wall *walls, int *walls_count, 
 	 * portal/member) */
 	if (wall.is_member && !player_side)
 		is_inside = TRUE;
-	if (!has_visible_corner(app, wall_vertex))
+	if (!has_visible_corner(app, wall_line))
 		return ;
 	walls[*walls_count] = wall;
 	walls[*walls_count].is_portal = is_portal;

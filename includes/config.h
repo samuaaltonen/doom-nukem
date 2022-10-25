@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/21 17:36:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:45:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 # define MAX_VISIBLE_SECTORS 64
 # define MAX_VISIBLE_WALLS 256
 # define MAX_VIEW_DISTANCE 100.0
-# define MAX_VERTEX_LENGTH 1048576.0
+# define MAX_line_LENGTH 1048576.0
 
 /**
  * Struct for threads about their specific drawing areas.
