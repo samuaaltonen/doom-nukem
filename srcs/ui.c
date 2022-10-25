@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/25 13:56:20 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/25 14:13:07 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,14 @@ t_rect	render_button(t_app *app, t_point pos, int size)
 	if (!check_mouse(app, dst))
 		blit_surface(app->assets.button_idle, &src, app->surface, &dst);
 	else if (check_mouse(app, dst))
-		blit_surface(app->assets.button_select, &src, app->surface, &dst);
+		{
+			if (((SDL_GetMouseState(NULL, NULL)) & SDL_BUTTON_LMASK) != 0)
+				blit_surface(app->assets.button_press, &src, app->surface, &dst);
+			else
+				blit_surface(app->assets.button_select, &src, app->surface, &dst);
+		}
+		
+	
 	return (dst);
 }
 

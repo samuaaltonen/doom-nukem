@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/25 13:39:39 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/25 14:08:05 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ typedef struct s_assets
 	t_font			font;
 	SDL_Surface		*button_idle;
 	SDL_Surface		*button_select;
+	SDL_Surface		*button_press;
 	SDL_Surface		*title_screen_image;
 	SDL_Surface		*pointer;
 	SDL_Surface		*sprite;
