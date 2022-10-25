@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/24 09:55:52 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:48:45 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 # define FONT_TX "assets/fonts/sci-fi_font.bmp"
 # define BUTTON_TX "assets/ui/sci-fi_button.bmp"
 # define TITLESCREEN_TX "assets/textures/title_screen.bmp"
+# define POINTER_TX "assets/ui/mouse_pointer.bmp"
 # define MAP_PATH "./testeditor/test.test"
 
 /**
@@ -74,6 +75,7 @@ typedef struct s_assets
 	t_font			font;
 	SDL_Surface		*button_texture;
 	SDL_Surface		*title_screen_image;
+	SDL_Surface		*pointer;
 	SDL_Surface		*sprite;
 	SDL_Surface		*bg;
 }	t_assets;

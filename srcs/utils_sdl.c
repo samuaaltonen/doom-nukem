@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:38:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/21 16:10:55 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/25 11:16:49 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,35 +44,36 @@ void	blit_surface(SDL_Surface *src, t_rect *src_rect,
 	SDL_Surface *dst, t_rect *dst_rect)
 {
 	t_point	point;
+	t_point	current;
 	int		pixel;
-	int		x;
-	int		y;
 
-	if (check_blit(src, src_rect, dst, dst_rect) == 0)
-		exit_error(MSG_ERROR);
-	x = 0;
-	y = 0;
-	while (y < dst_rect->h)
+	if (check_blit(src, src_rect, dst, dst_rect))
 	{
-		while (x < dst_rect->w)
+		current.x = 0;
+		current.y = 0;
+		while (current.y < dst_rect->h)
 		{
-			point.x = x;
-			point.y = y;
-			map_coordinates(dst_rect, src_rect, &point);
-			pixel = get_pixel_color(src, point.x, point.y);
-			if ((pixel & 0xFF000000) != 0x00000000)
-				put_pixel_to_surface(dst, x + dst_rect->x,
-					y + dst_rect->y, pixel);
-			x++;
+			while (current.x < dst_rect->w)
+			{
+				point.x = current.x;
+				point.y = current.y;
+				map_coordinates(dst_rect, src_rect, &point);
+				pixel = get_pixel_color(src, point.x, point.y);
+				if ((pixel & 0xFF000000) != 0x00000000)
+					put_pixel_to_surface(dst, current.x + dst_rect->x,
+						current.y + dst_rect->y, pixel);
+				current.x++;
+			}
+			current.x = 0;
+			current.y++;
 		}
-		x = 0;
-		y++;
 	}
 }
+
 /**
  * Checks for errors before blitting the surfaces
  */
-int		check_blit(SDL_Surface *src, t_rect *src_rect,
+int	check_blit(SDL_Surface *src, t_rect *src_rect,
 	SDL_Surface *dst, t_rect *dst_rect)
 {
 	if (src == NULL || dst == NULL)

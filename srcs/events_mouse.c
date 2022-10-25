@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:40:40 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/24 17:38:31 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:58:22 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,5 +29,7 @@ int	events_mouse_track(t_app *app)
 			(double) delta.x / MOUSE_SENSITIVITY * app->conf->delta_time);
 	if (app->status == STATUS_GAME)
 		SDL_WarpMouseInWindow(app->win, WIN_W / 2, WIN_H / 2);
+	if (app->status == STATUS_TITLEMENU || app->status == STATUS_PAUSEMENU)
+		render_pointer(app, current_pos.x, current_pos.y);
 	return (0);
 }

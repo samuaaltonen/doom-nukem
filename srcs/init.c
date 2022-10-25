@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/24 14:54:41 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:49:15 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void    load_assets(t_app *app)
 {
 	app->assets.button_texture = SDL_LoadBMP(BUTTON_TX);
 	app->assets.title_screen_image = SDL_LoadBMP(TITLESCREEN_TX);
+	app->assets.pointer = SDL_LoadBMP(POINTER_TX);
 	app->assets.sprite = SDL_LoadBMP(PANELS_TX);
 	app->assets.bg = SDL_LoadBMP(SKYBOX_TX);
     load_font(app);

@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/24 16:45:09 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:58:23 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,9 +179,8 @@ void    	render_button(t_app *app);
 
 void		render_titlemenu(t_app *app);
 void		render_titlescreen(t_app *app);
+void		render_pointer(t_app *app, int x, int y);
 void		render_game(t_app *app);
-
-
 
 /**
  * utils_sdl
