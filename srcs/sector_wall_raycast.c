@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/25 10:45:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:51:20 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 static t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 {
 	t_line	ray_line;
-	double		camera_x;
-	double		angle;
+	double	camera_x;
+	double	angle;
 
 	ray_line.a = app->player.pos;
 	camera_x = 2 * x / (double) WIN_W - 1.f;

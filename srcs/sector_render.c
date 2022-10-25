@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 18:19:10 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:58:30 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void	*sector_walls_render(void *data)
 	thread = (t_thread_data *)data;
 	app = (t_app *)thread->app;
 	int	i = 0;
-	ft_printf("--- NEW FRAME ---\n");
+	/* ft_printf("--- NEW FRAME ---\n"); */
 	while (i < app->visible_walls_count)
 	{
 		/* ft_printf("%d:%d\n", app->visible_walls[i].sector_id, app->visible_walls[i].wall_id); */

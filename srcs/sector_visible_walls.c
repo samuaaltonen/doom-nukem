@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/25 10:45:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 10:58:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,9 @@
 */
 static t_bool	has_visible_corner(t_app *app, t_line wall)
 {
-	t_line	left;
-	t_line	right;
-	t_line	view_camera;
+	t_line		left;
+	t_line		right;
+	t_line		view_camera;
 	t_vector2	intersection;
 
 	view_camera = (t_line){app->player.pos,
@@ -60,7 +60,7 @@ static void	check_possible_visible(t_app *app, t_wall *walls, int *walls_count, 
 {
 	t_bool		is_inside;
 	t_bool		is_portal;
-	t_line	wall_line;
+	t_line		wall_line;
 	int			player_side;
 
 	is_inside = !wall.is_member;
@@ -141,6 +141,7 @@ static void	loop_sector_walls(t_app *app, t_wall *walls, int *walls_count, int *
 		// If wall is a portal, add portal destination to be interesting sector
 		if (sector->wall_types[i] != -1)
 		{
+			/* ft_printf("Marking sector %d as interesting.\n", sector_id); */
 			*(interested + 1) = sector->wall_types[i];
 			*(interested + 2) = -1;
 		}
@@ -168,7 +169,7 @@ void	sector_walls_copy(t_app *app, t_wall *walls, int wall_count)
 	i = 0;
 	while (i < wall_count)
 	{
-		ft_printf("Copying wall %d,%d\n", walls[i].sector_id, walls[i].wall_id);
+		/* ft_printf("Copying wall %d,%d\n", walls[i].sector_id, walls[i].wall_id); */
 		app->visible_walls[i + previously_copied] = walls[i];
 		app->visible_walls_count++;
 		i++;
@@ -205,7 +206,7 @@ void	sector_visible_walls(t_app *app)
 	app->visible_walls_count = 0;
 	while (visible_count[i] > 0)
 	{
-		ft_printf("group %d, wall count %d\n", i, visible_count[i]);
+		/* ft_printf("group %d, wall count %d\n", i, visible_count[i]); */
 		sector_walls_prepare(app, (t_wall *)&visible_walls[i], visible_count[i]);
 		sector_walls_order(app, (t_wall *)&visible_walls[i], visible_count[i]);
 		sector_walls_copy(app, (t_wall *)&visible_walls[i], visible_count[i]);
