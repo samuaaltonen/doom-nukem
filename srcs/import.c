@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/25 14:28:51 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 15:31:59 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ static void	import_slopes(t_app *app, t_exportsector *export, t_sector *sector)
 	t_vector2 opposite;
 	t_vector2 perp;
 	(void)app;
+	t_vector2 newpoint;
 
 	if(export->floor_slope_position == -1)
 	{
@@ -53,12 +54,12 @@ static void	import_slopes(t_app *app, t_exportsector *export, t_sector *sector)
 		(t_line){point, linedst}, MAX_LINE_LENGTH, 2), \
 		ft_line_resize((t_line){(t_vector2){opposite.x, opposite.y}, \
 		(t_vector2){perp.x + opposite.x, perp.y + opposite.y}}, \
-		MAX_LINE_LENGTH, 2),&point);
+			MAX_LINE_LENGTH, 2),&newpoint);
 	
 	double height =  export->floor_slope_height - export->floor_height;
 
-	sector->floor_slope_angles.x = atan(height / ft_vector_length((t_vector2){opposite.x - point.x, opposite.y - point.y}));
-	sector->floor_slope_angles.y = ft_vector_angle(linedst,(t_vector2){0.f,1.f});
+	sector->floor_slope_angles.x = atan(height / ft_vector_length((t_vector2){opposite.x - newpoint.x, opposite.y - newpoint.y}));
+	sector->floor_slope_angles.y = ft_vector_angle((t_vector2){linedst.x - point.x, linedst.y - point.y},(t_vector2){0.f,1.f});
 	ft_printf("INTERSECTION POINT: x%f y%f\n", RADIAN_IN_DEG * sector->floor_slope_angles.x, RADIAN_IN_DEG * sector->floor_slope_angles.y);
 	
 }
