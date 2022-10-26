@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/26 11:01:33 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/26 13:11:22 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ int	events_keyup(int keycode, t_app *app)
 		app->conf->keystates ^= A_DOWN;
 	if (keycode == SDLK_d)
 		app->conf->keystates ^= D_DOWN;
+	if (keycode == SDLK_LSHIFT)
+		app->conf->keystates ^= SHIFT_DOWN;
+	if (keycode == SDLK_LCTRL)
+		app->conf->keystates ^= CTRL_DOWN;
 	if (keycode == SDLK_ESCAPE)
 		exit(EXIT_SUCCESS);
 	//if (keycode == SDLK_h)
@@ -45,7 +49,7 @@ int	events_keyup(int keycode, t_app *app)
 		if (app->status == STATUS_TITLESCREEN)
 			app->status = STATUS_TITLEMENU;
 		else if (app->status == STATUS_GAME)
-			app->status = STATUS_TITLEMENU;
+			app->status = STATUS_PAUSEMENU;
 	}
 		
 	return (0);
