@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/25 15:04:49 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/26 10:58:17 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,19 +15,27 @@
 void	title_screen(t_app *app)
 {
 	t_rect		src;
-	t_rect		start_button;
-	t_rect		levels_button;
-	t_rect		options_button;
-	t_rect		quit_button;
 
 	change_font(app, 16, 0xFFFF9400);
 	rect_from_surface(app->assets.button_idle, &src);
-	start_button = render_button(app, (t_point){50, 200}, 2);
-	render_text(app, (t_point){start_button.x + 24, start_button.y + 24}, "START GAME");
-	levels_button = render_button(app, (t_point){50, 300}, 2);
-	render_text(app, (t_point){levels_button.x + 24, levels_button.y + 24}, "CHOOSE LEVEL");
-	options_button = render_button(app, (t_point){50, 400}, 2);
-	render_text(app, (t_point){options_button.x + 24, options_button.y + 24}, "OPTIONS");
-	quit_button = render_button(app, (t_point){50, 500}, 2);
-	render_text(app, (t_point){quit_button.x + 24, quit_button.y + 24}, "QUIT GAME");
+	button_function(app, render_button(app, (t_point){50, 200}, 2), start_game);
+	render_text(app, (t_point){74, 224}, "START GAME");
+	button_function(app, render_button(app, (t_point){50, 300}, 2), start_game);
+	render_text(app, (t_point){74, 324}, "SELECT LEVEL");
+	button_function(app, render_button(app, (t_point){50, 400}, 2), start_game);
+	render_text(app, (t_point){74, 424}, "OPTIONS");
+	button_function(app, render_button(app, (t_point){50, 500}, 2), start_game);
+	render_text(app, (t_point){74, 524}, "QUIT GAME");
+}
+
+void	button_function(t_app *app, t_rect button, void (*f)(t_app *app))
+{
+	if (check_mouse(app, button) && app->event.button.clicks == 1
+		&& app->event.button.state == SDL_RELEASED)
+	f(app);
+}
+
+void	start_game(t_app *app)
+{
+	app->status = STATUS_GAME;
 }

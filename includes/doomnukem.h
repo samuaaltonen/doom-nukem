@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/25 13:55:40 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/26 10:29:08 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ typedef struct s_app
 	t_conf			*conf;
 	SDL_Window		*win;
 	SDL_Surface		*surface;
+	SDL_Event		event;
 	t_uint8			status;
 	t_assets		assets;
 	t_point			mouse_pos;
@@ -179,6 +180,8 @@ t_rect    	render_button(t_app *app, t_point pos, int size);
 
 void		title_screen(t_app *app);
 int			check_mouse(t_app *app, t_rect rect);
+void		button_function(t_app *app, t_rect button, void (*f)(t_app *app));
+void		start_game(t_app *app);
 
 void		render_titlemenu(t_app *app);
 void		render_titlescreen(t_app *app);

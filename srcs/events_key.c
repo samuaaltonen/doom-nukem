@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/25 10:05:51 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/26 11:01:33 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,6 @@ int	events_keyup(int keycode, t_app *app)
 		app->conf->keystates ^= SPACE_DOWN;
 		if (app->status == STATUS_TITLESCREEN)
 			app->status = STATUS_TITLEMENU;
-		else if (app->status == STATUS_TITLEMENU)
-			app->status = STATUS_GAME;
 		else if (app->status == STATUS_GAME)
 			app->status = STATUS_TITLEMENU;
 	}
