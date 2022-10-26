@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/25 11:00:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 14:46:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define WIN_NAME "Doom Nukem"
 # define WIN_W 1280
 # define WIN_H 720
-# define THREAD_COUNT 4
+# define THREAD_COUNT 1
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
 # define COLLISION_OFFSET 0.25
@@ -32,7 +32,7 @@
 # define MAX_VISIBLE_SECTORS 64
 # define MAX_VISIBLE_WALLS 256
 # define MAX_VIEW_DISTANCE 100.0
-# define MAX_line_LENGTH 1048576.0
+# define MAX_LINE_LENGTH 1048576.0
 
 /**
  * Struct for threads about their specific drawing areas.

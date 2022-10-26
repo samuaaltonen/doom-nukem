@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 14:09:55 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/25 16:54:04 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,21 +42,29 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 {
 	if(key == SDLK_UP)
 	{
-		if(app->ceiling_edit)
+		if(app->ceiling_edit && !app->slope_edit)
 			app->active_sector->ceil_height += HEIGHT_INC;
-		if(app->floor_edit)
+		if(app->floor_edit && !app->slope_edit)
 			app->active_sector->floor_height += HEIGHT_INC;
 		if(app->light_edit)
 			app->active_sector->light++;
+		if(app->slope_edit && app->ceiling_edit)
+			app->active_sector->ceil_slope_height += HEIGHT_INC;
+		if(app->slope_edit && app->floor_edit)
+			app->active_sector->floor_slope_height += HEIGHT_INC;
 	}
 	else if(key == SDLK_DOWN)
 	{
-		if(app->ceiling_edit)
+		if(app->ceiling_edit && !app->slope_edit)
 			app->active_sector->ceil_height -= HEIGHT_INC;
-		if(app->floor_edit)
+		if(app->floor_edit && !app->slope_edit)
 			app->active_sector->floor_height -= HEIGHT_INC;
 		if(app->light_edit)
 			app->active_sector->light--;
+		if(app->slope_edit && app->ceiling_edit)
+			app->active_sector->ceil_slope_height -= HEIGHT_INC;
+		if(app->slope_edit && app->floor_edit)
+			app->active_sector->floor_slope_height -= HEIGHT_INC;
 	}
 	else if(key == SDLK_LEFT)
 	{
@@ -71,19 +79,5 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			app->active_sector->ceil_tex++;
 		if(app->floor_edit && app->active_sector->floor_tex < MAX_TEX_COUNT)
 			app->active_sector->floor_tex++;
-	}
-	else if(key == SDLK_u)
-	{
-		if(app->ceiling_edit)
-			app->active_sector->ceil_slope_height += HEIGHT_INC;
-		if(app->floor_edit)
-			app->active_sector->floor_slope_height += HEIGHT_INC;
-	}
-	else if(key == SDLK_j)
-	{
-		if(app->ceiling_edit)
-			app->active_sector->ceil_slope_height -= HEIGHT_INC;
-		if(app->floor_edit)
-			app->active_sector->floor_slope_height -= HEIGHT_INC;
 	}
 }

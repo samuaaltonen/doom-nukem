@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 23:00:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/25 10:45:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 14:28:51 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,13 @@ static t_bool	walls_in_order(t_app *app, t_wall *wall_a, t_wall *wall_b)
 	b = get_wall_line(app, wall_b->sector_id, wall_b->wall_id);
 
 	// Extend wall_a to infinity / very long
-	extended = ft_line_resize(a, MAX_line_LENGTH, EXTEND_BOTH);
+	extended = ft_line_resize(a, MAX_LINE_LENGTH, EXTEND_BOTH);
 	extended_a = TRUE;
 
 	// Check intersection
 	if (ft_line_intersection_through(extended, b))
 	{
-		extended = ft_line_resize(b, MAX_line_LENGTH, EXTEND_BOTH);
+		extended = ft_line_resize(b, MAX_LINE_LENGTH, EXTEND_BOTH);
 		extended_a = FALSE;
 		// If interesction again, no change in order
 		if (ft_line_intersection_through(extended, a))

@@ -40,7 +40,7 @@
 # define MAP_SPEED 0.25f
 # define HEIGHT_INC 0.125f
 # define TEXTURE_PANELS "../assets/minecraft_spritesheet.xpm"
-# define FONT_FILE "../assets/SpaceMono-Regular.ttf"
+# define FONT_FILE "../assets/legacy/SpaceMono-Regular.ttf"
 # define FONT_TX "../assets/fonts/sci-fi_font.bmp"
 # define FILE_PATH "./test.test"
 # define MAX_SECTOR_CORNERS 16
@@ -216,6 +216,7 @@ typedef struct s_app
 	t_bool				ceiling_edit;
 	t_bool				floor_edit;
 	t_bool				light_edit;
+	t_bool				slope_edit;
 	int					sectorcount;
 	t_assets			assets;
 }	t_app;
