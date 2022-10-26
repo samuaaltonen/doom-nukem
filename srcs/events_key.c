@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/26 14:01:43 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/26 14:39:44 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,17 +43,21 @@ int	events_keyup(int keycode, t_app *app)
 	//	app->conf->toggle_help = ft_toggle(app->conf->toggle_help);
 	if (keycode == SDLK_e)
 		app->conf->toggle_loop = ft_toggle(app->conf->toggle_loop);
+	if (keycode == SDLK_TAB)
+	{
+		if (app->status == STATUS_GAME || app->status == STATUS_PAUSEMENU)
+			pause_game(app);
+	}
 	if (keycode == SDLK_SPACE)
 	{
-		app->conf->keystates ^= SPACE_DOWN;
 		if (app->status == STATUS_TITLESCREEN)
 			app->status = STATUS_MAINMENU;
-		else if (app->status == STATUS_GAME)
-			pause_game(app);
-			//app->status = STATUS_MAINMENU;
-
+		//----DEBUG FUNCTIONALITY
+		else if (app->status == STATUS_MAINMENU)
+			start_game(app);
+		//----
+		app->conf->keystates ^= SPACE_DOWN;
 	}
-		
 	return (0);
 }
 

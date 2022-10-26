@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/09 14:13:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/25 10:04:22 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/26 14:20:26 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	events_window_other(int windowevent, t_app *app)
 	{
 		app->conf->mouse_active = TRUE;
 		SDL_WarpMouseInWindow(app->win, WIN_W / 2, WIN_H / 2);
+		SDL_ShowCursor(SDL_DISABLE);
 	}
 	if (windowevent == SDL_WINDOWEVENT_CLOSE)
 		exit(EXIT_SUCCESS);
