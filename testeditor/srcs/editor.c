@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/25 16:54:04 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/26 15:51:54 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 	}
 	else if(key == SDLK_LEFT)
 	{
+		if(app->active && app->active->tex > 0)
+			app->active->tex--;
 		if(app->ceiling_edit && app->active_sector->ceil_tex > 0)
 			app->active_sector->ceil_tex--;
 		if(app->floor_edit && app->active_sector->floor_tex > 0)
@@ -75,6 +77,8 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 	}
 	else if(key == SDLK_RIGHT)
 	{
+		if(app->active && app->active->tex < MAX_TEX_COUNT)
+			app->active->tex++;
 		if(app->ceiling_edit && app->active_sector->ceil_tex < MAX_TEX_COUNT)
 			app->active_sector->ceil_tex++;
 		if(app->floor_edit && app->active_sector->floor_tex < MAX_TEX_COUNT)
