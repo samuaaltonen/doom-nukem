@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_wall_raycast.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/26 12:15:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/26 15:58:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	calculate_parent_positions(t_app *app, t_rayhit *hit,
 	hit->parent_height = (int)(relative_height
 		* (parent->ceiling_height - parent->floor_height));
 	hit->parent_wall_start = WIN_H / 2 - hit->parent_height
-		+ (int)(relative_height * (app->player.height - parent->floor_height));
+		+ (int)(relative_height * ((app->player.height + app->player.elevation) - parent->floor_height));
 	hit->parent_wall_end = hit->parent_wall_start + hit->parent_height;
 	hit->parent_texture_offset_top = 0;
 	hit->parent_texture_offset_bottom = 0;
@@ -55,7 +55,7 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 	hit->height = (int)(relative_height
 			* (hit->sector->ceiling_height - hit->sector->floor_height));
 	hit->wall_start = WIN_H / 2 - hit->height + (int)(relative_height
-			* (app->player.height - hit->sector->floor_height));
+			* ((app->player.height + app->player.elevation) - hit->sector->floor_height));
 	hit->wall_end = hit->wall_start + hit->height;
 	hit->texture_step.y = TEX_SIZE / relative_height;
 	hit->texture_offset.y = 0;

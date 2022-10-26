@@ -29,11 +29,40 @@ static int	is_collision(t_app *app, t_vector2 pos)
 	return (0);
 }
 
+static t_bool	is_wall_collision(t_app *app, t_move new)
+{
+	int	i;
+	int	wall_id;
+
+	i = 0;
+	while (i < app->sectors[app->player.current_sector].corner_count)
+	{
+		if(ft_line_side(get_wall_line(app, app->player.current_sector,i), new.pos) != 0)
+		{
+			wall_id = app->sectors[app->player.current_sector].wall_types[i];
+			if(wall_id < 0 || (new.elevation + 0.2f < app->sectors[wall_id].floor_height ||
+				app->sectors[wall_id].ceiling_height - app->sectors[wall_id].floor_height < 0.6f))
+				return (FALSE);
+			else
+			{
+				app->player.elevation = app->player.elevation + (app->sectors[wall_id].floor_height - app->sectors[app->player.current_sector].floor_height);
+				app->player.current_sector = wall_id;
+				return (TRUE);
+			}
+		}
+		i++;
+	}
+	return (TRUE);
+
+}
+
 /**
  * Updates player's position if possible.
  */
 static void	update_position(t_app *app, t_vector2 new)
 {
+	if(!is_wall_collision(app, (t_move){new, app->player.elevation}))
+		return ;
 	if (!is_collision(app, (t_vector2){new.x - COLLISION_OFFSET,
 			app->player.pos.y - COLLISION_OFFSET})
 		&& !is_collision(app, (t_vector2){new.x - COLLISION_OFFSET,
@@ -53,6 +82,7 @@ static void	update_position(t_app *app, t_vector2 new)
 			new.y + COLLISION_OFFSET}))
 		app->player.pos.y = new.y;
 }
+
 
 /**
  * Rotates player direction by given angle.
