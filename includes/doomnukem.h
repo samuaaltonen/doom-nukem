@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/26 14:07:04 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/26 16:42:59 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ typedef struct s_app
 	t_uint8			status;
 	t_assets		assets;
 	t_point			mouse_pos;
-	double			depthmap[WIN_H][WIN_W];
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];
 	t_wall			visible_walls[MAX_VISIBLE_WALLS];

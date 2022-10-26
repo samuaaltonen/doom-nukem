@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/26 14:23:42 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/26 16:42:02 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	render_frame(t_app *app)
 	flush_surface(app->surface);
 	update_fps_counter(app);
 	update_info(app);
-	ft_bzero(app->depthmap, WIN_H * WIN_W * sizeof(double));
 	/*
 	else
 	{
