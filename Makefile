@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/10/26 15:33:35 by saaltone         ###   ########.fr        #
+#    Updated: 2022/10/26 15:35:05 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = doom-nukem
 
 CC = gcc
 
-FILES = main.c init.c render.c title_screen.c error.c conf.c app.c  \
+FILES = main.c init.c render.c buttons.c error.c conf.c app.c  \
 		events_key.c events_mouse.c events_window.c graphics.c image.c \
 		helper.c skybox.c player.c events.c \
 		sector_draw_ceiling.c sector_draw_floor.c sector_draw_wall.c \

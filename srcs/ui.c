@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/25 14:13:07 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/26 11:17:41 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ t_rect	render_button(t_app *app, t_point pos, int size)
 			else
 				blit_surface(app->assets.button_select, &src, app->surface, &dst);
 		}
-		
-	
 	return (dst);
 }
 

@@ -216,6 +216,7 @@ typedef struct s_app
 	t_bool				ceiling_edit;
 	t_bool				floor_edit;
 	t_bool				light_edit;
+	t_bool				slope_edit;
 	int					sectorcount;
 	t_assets			assets;
 }	t_app;

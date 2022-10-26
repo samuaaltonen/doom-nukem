@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/25 15:08:02 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/25 16:48:38 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void	app_loop(t_app *app)
 		while (SDL_PollEvent(&event))
 			dispatch_event(app, &event);
 
-		ft_printf("x=%f, y=%f modes:c%i,o%i,p%i,r%i,f%i\n",app->mouse_click.x, app->mouse_click.y, app->list_creation, app->list_ongoing, app->portal_selection, app->floor_edit, app->ceiling_edit);
+		ft_printf("x=%f, y=%f modes:c%i,o%i,p%i,r%i,f%i,s%i\n",app->mouse_click.x, app->mouse_click.y, app->list_creation, app->list_ongoing, app->portal_selection, app->ceiling_edit, app->floor_edit, app->slope_edit);
 		if(app->active_sector)
 		{
 			ft_printf("inside = %i, floor: h:%f,tex:%i,o:%i, ceil: h:%f,tex:%i,o:%i, light:%i\n has members: ", app->active_sector, app->active_sector->floor_height, app->active_sector->floor_tex, app->active_sector->floor_tex_offset, app->active_sector->ceil_height, app->active_sector->ceil_tex, app->active_sector->ceil_tex_offset, app->active_sector->light);

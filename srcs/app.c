@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/25 13:31:39 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/26 14:23:42 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,10 @@
  */
 void	app_loop(t_app *app)
 {
-	SDL_Event	event;
-
 	while (TRUE)
 	{
-		while (SDL_PollEvent(&event))
-			dispatch_event(app, &event);
+		while (SDL_PollEvent(&app->event))
+			dispatch_event(app, &app->event);
 		if (!app->conf->toggle_loop)
 			render_frame(app);
 	}
@@ -65,12 +63,12 @@ void	render_frame(t_app *app)
 	} */
 	if (app->status == STATUS_TITLESCREEN)
 		render_titlescreen(app);
-	else if (app->status == STATUS_TITLEMENU)
-		render_titlemenu(app);
+	else if (app->status == STATUS_MAINMENU)
+		render_mainmenu(app);
 	else if (app->status == STATUS_GAME)
 		render_game(app);
-//	else if (app->status == STATUS_PAUSEMENU)
-//		render_pausemenu(app);
+	else if (app->status == STATUS_PAUSEMENU)
+		render_pausemenu(app);
 	SDL_UpdateWindowSurface(app->win);
 }
 

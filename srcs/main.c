@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:21:47 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/26 12:25:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/26 15:34:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,11 @@ int	main(void)
 	load_assets(app);
 	//---level and game conf (To move after level selection)
 	SDL_ShowCursor(SDL_DISABLE);
-	app->player = (t_player){(t_vector2){POSITION_START_X, POSITION_START_Y},
+/*	app->player = (t_player){(t_vector2){POSITION_START_X, POSITION_START_Y},
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
 		(t_vector2){0.0, 0.0}, 1.0, 0.5, 0};
 	init_camera_plane(app);
-	import_file(app, MAP_PATH);
+	import_file(app, MAP_PATH);*/
 	//---
 	app_loop(app);
 	return (0);
