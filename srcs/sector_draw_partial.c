@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:23:43 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/21 14:51:15 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/26 12:14:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,9 @@ void	draw_portal_partial(t_app *app, int x, t_rayhit *hit)
 		draw_wall(app, x, hit, OCCLUDE_TOP);
 	hit->wall_start = portalhit.wall_end;
 	hit->wall_end = temp;
+	hit->texture_offset.y = 0.0;
+	if (hit->wall_start <= 0)
+		hit->texture_offset.y = portalhit.texture_offset.y;
 	if (hit->wall_start >= WIN_H - 1)
 		draw_wall(app, x, hit, OCCLUDE_BOTH);
 	else
