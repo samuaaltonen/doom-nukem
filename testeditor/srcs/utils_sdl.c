@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:38:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/25 12:44:08 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/25 15:37:50 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,6 @@ int		check_blit(SDL_Surface *src, t_rect *src_rect,
  */
 void	rect_from_surface(SDL_Surface *surface, t_rect *rect)
 {
-	ft_printf("w %d h %d", surface->w, surface->h);
 	rect->x = 0;
 	rect->y = 0;
 	rect->w = surface->w;
