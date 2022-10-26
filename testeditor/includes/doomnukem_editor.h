@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/26 15:01:10 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/26 18:20:53 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ enum e_colors {
 	BG_LIGHT = 0x888888,
 	BG_DARK = 0x424242,
 	TEXT = 0xFF111111,
-	ACTIVE_TEXT = 0xFFFF00FF
+	ACTIVE_TEXT = 0xFFFF00FF,
 };
 
 /**
@@ -177,7 +177,7 @@ typedef struct	s_sectorlist
 typedef struct s_font
 {
 	SDL_Surface	*font;
-	int         size;
+	int			size;
 }	t_font;
 
 /**
