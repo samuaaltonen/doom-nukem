@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/26 13:20:03 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/26 14:07:43 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,4 +36,22 @@ void	pause_game(t_app *app)
 		app->status = STATUS_PAUSEMENU;
 	else if (app->status == STATUS_PAUSEMENU)
 		app->status = STATUS_GAME;
+}
+
+void	exit_game(t_app *app)
+{
+	free(app);
+	SDL_Quit();
+	exit(EXIT_SUCCESS);
+}
+
+void	main_menu(t_app *app)
+{
+	app->status = STATUS_MAINMENU;
+}
+
+void	do_nothing(t_app *app)
+{
+	if (app)
+		return ;
 }

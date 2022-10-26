@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/26 13:17:35 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/26 14:07:04 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@
 
 //STATUS MACROS
 # define STATUS_TITLESCREEN 0
-# define STATUS_TITLEMENU 1
+# define STATUS_MAINMENU 1
 # define STATUS_GAME 2
 # define STATUS_PAUSEMENU 3
 
@@ -182,8 +182,11 @@ int			check_mouse(t_app *app, t_rect rect);
 void		button_function(t_app *app, t_rect button, void (*f)(t_app *app));
 void		start_game(t_app *app);
 void		pause_game(t_app *app);
+void		exit_game(t_app *app);
+void		main_menu(t_app *app);
+void		do_nothing(t_app *app);
 
-void		render_titlemenu(t_app *app);
+void		render_mainmenu(t_app *app);
 void		render_titlescreen(t_app *app);
 void		render_pointer(t_app *app, int x, int y);
 void		render_game(t_app *app);

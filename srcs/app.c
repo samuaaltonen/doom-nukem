@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/26 13:12:15 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/26 14:01:22 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,8 +63,8 @@ void	render_frame(t_app *app)
 	} */
 	if (app->status == STATUS_TITLESCREEN)
 		render_titlescreen(app);
-	else if (app->status == STATUS_TITLEMENU)
-		render_titlemenu(app);
+	else if (app->status == STATUS_MAINMENU)
+		render_mainmenu(app);
 	else if (app->status == STATUS_GAME)
 		render_game(app);
 	else if (app->status == STATUS_PAUSEMENU)
