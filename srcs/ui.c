@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/26 11:17:41 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/26 14:51:28 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	render_ui(t_app *app)
 {
-	render_button(app,(t_point){10, 10}, 1);
+	render_button(app, (t_point){10, 10}, 1);
 	change_font(app, 16, 0xFFEFDCCC);
 	render_text(app, (t_point){20, 20}, "FPS");
 	render_text(app, (t_point){20, 20}, app->conf->fps_info);
@@ -34,12 +34,12 @@ t_rect	render_button(t_app *app, t_point pos, int size)
 	if (!check_mouse(app, dst))
 		blit_surface(app->assets.button_idle, &src, app->surface, &dst);
 	else if (check_mouse(app, dst))
-		{
-			if (((SDL_GetMouseState(NULL, NULL)) & SDL_BUTTON_LMASK) != 0)
-				blit_surface(app->assets.button_press, &src, app->surface, &dst);
-			else
-				blit_surface(app->assets.button_select, &src, app->surface, &dst);
-		}
+	{
+		if (((SDL_GetMouseState(NULL, NULL)) & SDL_BUTTON_LMASK) != 0)
+			blit_surface(app->assets.button_press, &src, app->surface, &dst);
+		else
+			blit_surface(app->assets.button_select, &src, app->surface, &dst);
+	}
 	return (dst);
 }
 
@@ -47,8 +47,8 @@ int	check_mouse(t_app *app, t_rect rect)
 {
 	if (app->mouse_pos.x >= rect.x && app->mouse_pos.y >= rect.y)
 	{
-		if (app->mouse_pos.x <=(rect.x + rect.w)
-			&& app->mouse_pos.y <=(rect.y + rect.h))
+		if (app->mouse_pos.x <= (rect.x + rect.w)
+			&& app->mouse_pos.y <= (rect.y + rect.h))
 			return (1);
 	}
 	return (0);

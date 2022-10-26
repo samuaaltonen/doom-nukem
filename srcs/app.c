@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/26 14:23:42 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/26 14:48:16 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	app_loop(t_app *app)
 			render_frame(app);
 	}
 }
-
 
 /**
  * Calculates frame delta time and sets FPS accordingly.
@@ -55,12 +54,6 @@ void	render_frame(t_app *app)
 	update_fps_counter(app);
 	update_info(app);
 	ft_bzero(app->depthmap, WIN_H * WIN_W * sizeof(double));
-	/*
-	else
-	{
-		render_multithreading(app, render_skybox);
-		render_multithreading(app, render_polygons);
-	} */
 	if (app->status == STATUS_TITLESCREEN)
 		render_titlescreen(app);
 	else if (app->status == STATUS_MAINMENU)
@@ -71,5 +64,3 @@ void	render_frame(t_app *app)
 		render_pausemenu(app);
 	SDL_UpdateWindowSurface(app->win);
 }
-
-
