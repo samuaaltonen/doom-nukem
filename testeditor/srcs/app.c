@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/26 13:50:33 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/27 15:00:53 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ void	app_render(t_app *app)
 	}
 	render_sector_points(app);
 	if(app->list_ongoing)
-		draw_line(app, &app->active_last->point, &app->mouse_click, 0xAABBCC);
+		draw_line(app, &app->active_last->point, &app->mouse_track, 0xAABBCC);
 	render_help_menu(app);
 	//SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
 	//SDL_FreeSurface(text_surface);
@@ -103,7 +103,7 @@ void	app_loop(t_app *app)
 		while (SDL_PollEvent(&event))
 			dispatch_event(app, &event);
 
-		ft_printf("x=%f, y=%f modes:c%i,o%i,p%i,r%i,f%i,s%i\n",app->mouse_click.x, app->mouse_click.y, app->list_creation, app->list_ongoing, app->portal_selection, app->ceiling_edit, app->floor_edit, app->slope_edit);
+		ft_printf("x=%f, y=%f modes:c%i,o%i,p%i,r%i,f%i,s%i\n",app->mouse_track.x, app->mouse_track.y, app->list_creation, app->list_ongoing, app->portal_selection, app->ceiling_edit, app->floor_edit, app->slope_edit);
 		if(app->active_sector)
 		{
 			ft_printf("inside = %i, floor: h:%f,tex:%i,o:%i, ceil: h:%f,tex:%i,o:%i, light:%i\n has members: ", app->active_sector, app->active_sector->floor_height, app->active_sector->floor_tex, app->active_sector->floor_tex_offset, app->active_sector->ceil_height, app->active_sector->ceil_tex, app->active_sector->ceil_tex_offset, app->active_sector->light);

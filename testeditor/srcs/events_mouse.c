@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_mouse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/25 10:45:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/27 15:01:34 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 
 	if(event->button.button == SDL_BUTTON_LEFT && !app->list_ongoing && app->list_creation)
 	{
-		app->active = new_vector_list(&app->mouse_click);
+		app->active = new_vector_list(&app->mouse_track);
 		app->active_last = app->active;
 		app->list_ongoing = TRUE;
 	}
@@ -36,11 +36,11 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 			app->active_last = NULL;
 			app->list_ongoing = FALSE;
 		} */
-		if(app->mouse_click.x == app->active->point.x && app->mouse_click.y == app->active->point.y)
+		if(app->mouse_track.x == app->active->point.x && app->mouse_track.y == app->active->point.y)
 			return (complete_sector(app));
 		else if(valid_point(app))
 		{
-			tmp = new_vector_list(&app->mouse_click);
+			tmp = new_vector_list(&app->mouse_track);
 			put_to_vector_list(&app->active, tmp);
 			app->active_last = tmp;
 		}

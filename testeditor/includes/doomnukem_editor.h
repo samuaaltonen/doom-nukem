@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/26 18:20:53 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/27 14:59:12 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,7 @@ typedef struct s_app
 	t_vector2			view_size;
 	t_vector2			zoom_area;
 	t_vector2			mouse_click;
+	t_vector2			mouse_track;
 	t_sector_lst		*sectors;
 	t_sector_lst		*active_sector;
 	t_vec2_lst			*active;

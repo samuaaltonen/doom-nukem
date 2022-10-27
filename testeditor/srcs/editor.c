@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editor.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/26 15:51:54 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/27 15:01:11 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_bool	valid_point(t_app *app)
 	tmp = app->active;
 	while (tmp)
 	{
-		if (tmp->point.x == app->mouse_click.x && tmp->point.y == app->mouse_click.y)
+		if (tmp->point.x == app->mouse_track.x && tmp->point.y == app->mouse_track.y)
 			return (FALSE);
 		tmp = tmp->next;
 	}
