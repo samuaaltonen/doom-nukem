@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:09:02 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/27 15:47:37 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/27 16:49:02 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,10 +68,10 @@ static void	help_menu_texts(t_app *app)
 	render_text(app, (t_point){10, 170}, "RIGHT CLICK TO UNSELECT.");
 	render_text(app, (t_point){10, 190}, "LEFT CLICK CORNER TO");
 	render_text(app, (t_point){10, 210}, "SELECT WALL ON RIGHT.");
-	render_text(app, (t_point){10, 230}, "WALL TEX ( 1 - 9 )");
+	render_text(app, (t_point){10, 230}, "TOGGLE ALL WALLS ( V )");
 	render_text(app, (t_point){10, 280}, "TOGGLE FLOOR ( F )");
 	render_text(app, (t_point){10, 300}, "TOGGLE CEILING ( R )");
-	render_text(app, (t_point){10, 320}, "F / C TEX ( LEFT / RIGHT )");
+	render_text(app, (t_point){10, 320}, "TEX ( LEFT / RIGHT )");
 	render_text(app, (t_point){10, 340}, "F / C HEIGHT ( UP / DOWN )");
 	render_text(app, (t_point){10, 370}, "CREATE PORTAL ( L )");
 	render_text(app, (t_point){10, 390}, "SELECT WALL TO CREATE");

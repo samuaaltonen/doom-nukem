@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/27 15:01:11 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/27 16:41:24 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,8 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 	{
 		if(app->active && app->active->tex > 0)
 			app->active->tex--;
+		if (app->wall_edit && app->active_sector->wall_list->tex > 0 && !app->active)
+			app->active_sector->wall_list->tex--;
 		if(app->ceiling_edit && app->active_sector->ceil_tex > 0)
 			app->active_sector->ceil_tex--;
 		if(app->floor_edit && app->active_sector->floor_tex > 0)
@@ -79,6 +81,8 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 	{
 		if(app->active && app->active->tex < MAX_TEX_COUNT)
 			app->active->tex++;
+		if (app->wall_edit && app->active_sector->wall_list->tex < MAX_TEX_COUNT && !app->active)
+			app->active_sector->wall_list->tex++;
 		if(app->ceiling_edit && app->active_sector->ceil_tex < MAX_TEX_COUNT)
 			app->active_sector->ceil_tex++;
 		if(app->floor_edit && app->active_sector->floor_tex < MAX_TEX_COUNT)
