@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/27 13:59:10 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/27 15:53:21 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	events_keyup(int keycode, t_app *app)
 	if (keycode == SDLK_LCTRL)
 		app->conf->keystates ^= CTRL_DOWN;
 	if (keycode == SDLK_ESCAPE)
-		exit(EXIT_SUCCESS);
+		exit_game(app);
 	//if (keycode == SDLK_h)
 	//	app->conf->toggle_help = ft_toggle(app->conf->toggle_help);
 	if (keycode == SDLK_e)
