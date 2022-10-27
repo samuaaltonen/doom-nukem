@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/27 15:41:16 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/27 16:17:33 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,15 @@ static void	calculate_parent_positions(t_app *app, t_rayhit *hit,
 		hit->parent_texture_offset_top = -hit->parent_wall_start * hit->texture_step.y;
 		hit->parent_wall_start = 0;
 	}
-	if (hit->wall_end < 0)
-		hit->parent_texture_offset_bottom = -hit->wall_end * hit->texture_step.y;
+	/* if (hit->wall_end < 0)
+		hit->parent_texture_offset_bottom = -hit->wall_end * hit->texture_step.y; */
 	if (hit->parent_wall_start >= WIN_H)
 		hit->parent_wall_start = WIN_H - 1;
 	if (hit->parent_wall_end < 0)
+	{
+		hit->parent_texture_offset_bottom = -hit->parent_wall_end * hit->texture_step.y;
 		hit->parent_wall_end = 0;
+	}
 	if (hit->parent_wall_end >= WIN_H)
 		hit->parent_wall_end = WIN_H - 1;
 }
