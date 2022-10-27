@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/26 14:48:16 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/27 10:35:51 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ void	render_frame(t_app *app)
 	flush_surface(app->surface);
 	update_fps_counter(app);
 	update_info(app);
-	ft_bzero(app->depthmap, WIN_H * WIN_W * sizeof(double));
 	if (app->status == STATUS_TITLESCREEN)
 		render_titlescreen(app);
 	else if (app->status == STATUS_MAINMENU)

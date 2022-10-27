@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   doomnukem_editor.h                                        :+:      :+:    :+:   */
+/*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/05 13:14:03 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/26 18:20:53 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define WIN_W 1280
 # define WIN_H 720
 # define HELP_MENU_W 280
+# define ICON_SIZE 64
 # define MSG_ERROR "Error occured"
 # define MSG_ERROR_WINDOW "Could not open a window."
 # define MSG_ERROR_WINDOW_SURFACE "Could not get window surface."
@@ -39,7 +40,7 @@
 # define RADIAN_IN_DEG 57.29578f
 # define MAP_SPEED 0.25f
 # define HEIGHT_INC 0.125f
-# define TEXTURE_PANELS "../assets/minecraft_spritesheet.xpm"
+# define PANELS_PATH "../assets/textures/minecraft_spritesheet.bmp"
 # define FONT_FILE "../assets/legacy/SpaceMono-Regular.ttf"
 # define FONT_TX "../assets/fonts/sci-fi_font.bmp"
 # define FILE_PATH "./test.test"
@@ -117,7 +118,9 @@ enum e_colors {
 	CEILING_ROTATE = 0x888888,
 	FLOOR_ROTATE = 0x777777,
 	BG_LIGHT = 0x888888,
-	BG_DARK = 0x424242
+	BG_DARK = 0x424242,
+	TEXT = 0xFF111111,
+	ACTIVE_TEXT = 0xFFFF00FF,
 };
 
 /**
@@ -174,7 +177,7 @@ typedef struct	s_sectorlist
 typedef struct s_font
 {
 	SDL_Surface	*font;
-	int         size;
+	int			size;
 }	t_font;
 
 /**
@@ -213,6 +216,7 @@ typedef struct s_app
 	t_bool				list_creation;
 	t_bool				list_ongoing;
 	t_bool				portal_selection;
+	t_bool				wall_edit;
 	t_bool				ceiling_edit;
 	t_bool				floor_edit;
 	t_bool				light_edit;
@@ -381,4 +385,5 @@ void		blit_surface(SDL_Surface *src, t_rect *src_rect, SDL_Surface *dst, t_rect 
  * Help menu
 */
 void		render_help_menu(t_app *app);
+void		load_assets(t_app *app);
 #endif

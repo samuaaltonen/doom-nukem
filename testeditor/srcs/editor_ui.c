@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:09:02 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/25 13:55:29 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/26 18:35:34 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ void	zoom_slider(t_app *app)
 		x = app->surface->w - 30;
 		while (x <= (app->surface->w - 20))
 		{
-			if (x == (app->surface->w - 25) || y == app->surface->h / 4 || y == (app->surface->h - (app->surface->h / 4) + 10))
+			if (x == (app->surface->w - 25) || y == app->surface->h / 4
+				|| y == (app->surface->h - (app->surface->h / 4) + 10))
 				put_pixel_to_surface(app->surface, x, y, 0xFFFFFF);
 			if (y >= zoom_point && y <= zoom_point + 10)
 				put_pixel_to_surface(app->surface, x, y, 0xFFFFFF);
@@ -46,12 +47,15 @@ void	move_divider(t_app *app, SDL_Keycode keycode)
 		app->divider *= 2;
 }
 
+/**
+ * Renders the help menu texts on the help menu.
+*/
 static void	help_menu_texts(t_app *app)
 {
 	load_font(app);
-	change_font(app, 20, 0xFF111111);
+	change_font(app, 20, TEXT);
 	render_text(app, (t_point){10, 10}, "LEVEL EDITOR");
-	change_font(app, 15, 0xFF111111);
+	change_font(app, 15, TEXT);
 	render_text(app, (t_point){10, 40}, "OPEN FILE ( O )");
 	render_text(app, (t_point){10, 60}, "SAVE FILE ( M )");
 	render_text(app, (t_point){10, 90}, "CREATE WALL ( C )");
@@ -77,6 +81,75 @@ static void	help_menu_texts(t_app *app)
 	load_font(app);
 }
 
+static void	render_icon(t_app *app, t_point	position, int tex)
+{
+	int		x;
+	int		y;
+	int		tex_x;
+	int		tex_y;
+	int		color;
+
+	y = position.y;
+	tex_y = 0;
+	while (y < position.y + ICON_SIZE)
+	{
+		x = position.x;
+		tex_x = 0;
+		while (x < position.x + ICON_SIZE)
+		{
+			color = get_pixel_color(app->assets.sprite, (ICON_SIZE * tex) + tex_x, tex_y);
+			put_pixel_to_surface(app->surface, x, y, color);
+			tex_x++;
+			x++;
+		}
+		tex_y++;
+		y++;
+	}
+}
+
+/**
+ * Toggles the color of the wall, floor and ceiling header based on,
+ * if they're active or not.
+*/
+static void	toggle_active_color(t_app *app, int active, char *text, int x)
+{
+	load_font(app);
+	if (active == 1)
+	{
+		change_font(app, 15, ACTIVE_TEXT);
+		render_text(app, (t_point){x, 600}, text);
+	}
+	else if (active == 2)
+	{
+		change_font(app, 15, 0xFF00FFFF);
+		render_text(app, (t_point){x, 600}, text);
+	}
+	else
+	{
+		change_font(app, 15, TEXT);
+		render_text(app, (t_point){x, 600}, text);
+	}
+}
+
+static void	render_texture_icons(t_app *app)
+{
+	if (app->active_sector)
+	{
+		if (app->active)
+			toggle_active_color(app, 2, "WALL", 34);
+		else
+			toggle_active_color(app, app->wall_edit, "WALL", 34);
+		toggle_active_color(app, app->floor_edit, "FLOOR", 108);
+		toggle_active_color(app, app->ceiling_edit, "CEILING", 182);
+		render_icon(app, (t_point){34, 620}, app->active_sector->wall_list->tex);
+		render_icon(app, (t_point){108, 620}, app->active_sector->floor_tex);
+		render_icon(app, (t_point){182, 620}, app->active_sector->ceil_tex);
+	}
+}
+
+/**
+ * Renders the help menu sidebar to the left of the screen.
+*/
 void	render_help_menu(t_app *app)
 {
 	int		x;
@@ -94,4 +167,5 @@ void	render_help_menu(t_app *app)
 		y++;
 	}
 	help_menu_texts(app);
+	render_texture_icons(app);
 }

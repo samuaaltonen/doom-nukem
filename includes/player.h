@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/26 11:31:36 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/26 15:36:49 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,14 @@ typedef struct s_player
 	t_vector2		cam;
 	double			camera_length;
 	double			height;
+	double			elevation;
 	int				current_sector;
 }	t_player;
+
+typedef struct s_move
+{
+	t_vector2	pos;
+	double		elevation;
+} t_move;
 
 #endif
