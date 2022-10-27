@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/26 15:36:49 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/27 13:42:49 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ typedef enum e_movement {
 	FORWARD = 0,
 	BACKWARD = 1,
 	LEFT = 2,
-	RIGHT = 3
+	RIGHT = 3,
+	UP = 4,
+	DOWN = 5
 }	t_movement;
 
 /**
