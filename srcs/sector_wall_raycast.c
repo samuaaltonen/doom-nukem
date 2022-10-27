@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/27 13:42:57 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/27 13:57:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,7 +123,7 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall, int s
 	int			end;
 
 	hit.sector = &app->sectors[wall->sector_id];
-	hit.wall_type = app->sectors[wall->sector_id].wall_types[wall->wall_id];
+	hit.wall_type = wall->wall_type;
 	hit.texture = app->sectors[wall->sector_id].wall_textures[wall->wall_id];
 	start = wall->start_x;
 	if (start < start_x)
@@ -160,6 +160,4 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall, int s
 		draw_floor(app, x, &hit);
 		draw_wall(app, x, &hit, OCCLUDE_BOTH);
 	}
-	if (wall->is_portal && x > start && wall->is_inside && !wall->is_member)
-		sector_render(app, thread, app->sectors[hit.wall_type].stack_index, start, end);
 }

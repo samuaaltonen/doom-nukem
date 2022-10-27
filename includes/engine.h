@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/27 12:33:54 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/27 13:55:25 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,12 +93,13 @@ typedef struct s_rayhit
 
 /**
  * Wall struct. Contains information of what sector it belongs to and which wall
- * of that sector it is.
+ * of that sector it is and precalculated x positions in screen.
  */
 typedef struct s_wall
 {
 	int				sector_id;
 	int				wall_id;
+	int				wall_type;
 	t_bool			is_member;
 	t_bool			is_portal;
 	t_bool			is_inside;

@@ -146,6 +146,7 @@ static void	loop_sector_walls(t_app *app, t_wallstack *wallstack, int index, int
 		}
 		wall.sector_id = sector_id;
 		wall.wall_id = i;
+		wall.wall_type = sector->wall_types[i];
 		wall.is_member = FALSE;
 		if (sector->parent_sector != -1)
 			wall.is_member = TRUE;

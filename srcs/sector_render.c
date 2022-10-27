@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/27 13:36:40 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/27 13:58:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,54 +22,60 @@ void	render_sectors(t_app *app)
 	ft_bzero(app->occlusion_bottom, WIN_W * sizeof(int));
 
 	/**
-	 * Get possible visible walls (this can be moved to player position update 
-	 * function (not needed to calculate possible visible walls every frame if 
-	 * there is no movement))
+	 * Get possible visible walls for each visible sector (this can be moved to
+	 * player position update function (not needed to calculate possible visible
+	 * walls every frame if there is no movement))
 	 */
 	sector_visible_walls(app);
 
-	/** 
-	 * Calculates translated x positions in window space
-	 * - makes ordering faster since no need to check order of walls that have
-	 *   no x overlap in window
-	 * - these values are used also in rendering part
-	 */
-	//sector_walls_prepare(app, (t_wall *)&app->visible_walls, app->visible_walls_count);
-
 	/**
-	 * Order visible walls
+	 * Render sector stacks
 	*/
-	//sector_walls_order(app, (t_wall *)&app->visible_walls, app->visible_walls_count);
-
-	/**
-	 * Render sectors
-	*/
-	render_multithreading(app, sector_walls_render);
-}
-
-void	sector_render(t_app *app, t_thread_data *thread, int stack_id, int start_x, int end_x)
-{
-	int	i;
-
-	i = 0;
-	while (i < app->wallstack.wall_count[stack_id])
-	{
-		sector_walls_raycast(app, thread, &app->wallstack.walls[stack_id][i], start_x, end_x);
-		i++;
-	}
+	render_multithreading(app, sector_render_thread);
 }
 
 /**
  * Multithreaded renderer for sector walls.
 */
-void	*sector_walls_render(void *data)
+void	*sector_render_thread(void *data)
 {
 	t_app			*app;
 	t_thread_data	*thread;
 
 	thread = (t_thread_data *)data;
 	app = (t_app *)thread->app;
-	sector_render(app, thread,
+	sector_stack_render(app, thread,
 		app->sectors[app->player.current_sector].stack_index, 0, WIN_W - 1);
 	pthread_exit(NULL);
+}
+
+/**
+ * @brief Renders one sector stack.
+ * 
+ * @param app 
+ * @param thread 
+ * @param stack_id 
+ * @param start_x 
+ * @param end_x 
+ */
+void	sector_stack_render(t_app *app, t_thread_data *thread, int stack_id, int start_x, int end_x)
+{
+	t_wall	*wall;
+	int		i;
+
+	i = 0;
+	while (i < app->wallstack.wall_count[stack_id])
+	{
+		wall = &app->wallstack.walls[stack_id][i];
+		sector_walls_raycast(app, thread, wall, start_x, end_x);
+		/**
+		 * If wall is a portal recurse into that
+		 */
+		if (wall->is_portal && wall->is_inside && !wall->is_member)
+			sector_stack_render(app, thread,
+				app->sectors[wall->wall_type].stack_index,
+				ft_max(wall->start_x, start_x),
+				ft_min(wall->end_x, end_x));
+		i++;
+	}
 }
