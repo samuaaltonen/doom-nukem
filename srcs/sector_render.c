@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/27 15:55:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/27 17:06:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	*sector_render_thread(void *data)
 
 /**
  * @brief Renders one sector stack.
- * 
+ *
  * @param app
  * @param thread
  * @param stack_id
