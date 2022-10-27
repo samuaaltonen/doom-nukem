@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/27 14:59:12 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/27 15:43:23 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -387,4 +387,5 @@ void		blit_surface(SDL_Surface *src, t_rect *src_rect, SDL_Surface *dst, t_rect 
 */
 void		render_help_menu(t_app *app);
 void		load_assets(t_app *app);
+void		render_texture_icons(t_app *app);
 #endif
