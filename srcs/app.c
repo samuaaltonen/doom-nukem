@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/27 14:03:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/27 15:03:11 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static void	update_fps_counter(t_app *app)
  */
 void	render_frame(t_app *app)
 {
-	/* flush_surface(app->surface); */
+	flush_surface(app->surface);
 	update_fps_counter(app);
 	update_info(app);
 	if (app->status == STATUS_TITLESCREEN)

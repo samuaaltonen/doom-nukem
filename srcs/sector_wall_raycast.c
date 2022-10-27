@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/27 13:57:26 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/27 15:41:16 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,20 +119,12 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall, int s
 {
 	t_rayhit	hit;
 	int			x;
-	int			start;
-	int			end;
 
 	hit.sector = &app->sectors[wall->sector_id];
 	hit.wall_type = wall->wall_type;
 	hit.texture = app->sectors[wall->sector_id].wall_textures[wall->wall_id];
-	start = wall->start_x;
-	if (start < start_x)
-		start = start_x;
-	end = wall->end_x;
-	if (end > end_x)
-		end = end_x;
-	x = start - 1;
-	while (++x < end)
+	x = start_x - 1;
+	while (++x < end_x)
 	{
 		if (x % THREAD_COUNT != thread->id)
 			continue ;
@@ -152,6 +144,7 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall, int s
 			{
 				draw_ceiling(app, x, &hit);
 				draw_floor(app, x, &hit);
+				draw_portal_partial_hole(app, x, &hit);
 			}
 			continue ;
 		}

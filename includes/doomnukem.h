@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/27 13:58:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/27 15:36:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ void			draw_floor(t_app *app, int x, t_rayhit *hit);
 void			draw_ceiling(t_app *app, int x, t_rayhit *hit);
 void			draw_portal_partial(t_app *app, int x, t_rayhit *hit);
 void			draw_portal_partial_parent(t_app *app, int x, t_rayhit *hit);
+void			draw_portal_partial_hole(t_app *app, int x, t_rayhit *hit);
 
 /**
  * Font
