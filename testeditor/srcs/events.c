@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:52 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 14:03:32 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/27 15:01:57 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	events_mouse_track(t_app *app)
 	t_point	current_pos;
 	
 	SDL_GetMouseState(&current_pos.x, &current_pos.y);		
-	snap_to_nearest(app, &current_pos, &app->mouse_click, app->divider);
+	snap_to_nearest(app, &current_pos, &app->mouse_track, app->divider);
 	return (0);
 }
 
@@ -40,7 +40,7 @@ t_vec2_lst	*find_clicked_vector(t_app *app)
 		found = app->active_sector->wall_list;
 		while(found)
 		{
-			if(app->mouse_click.x == found->point.x && app->mouse_click.y == found->point.y)
+			if(app->mouse_track.x == found->point.x && app->mouse_track.y == found->point.y)
 				return(found);
 			if(found->next == app->active_sector->wall_list)
 				break;

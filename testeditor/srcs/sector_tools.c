@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:53:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/25 10:45:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/27 15:02:10 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ int	inside_sector_check(t_app *app, t_sector_lst *sector)
 	tmp = sector->wall_list;
 	while (tmp)
 	{
-		if(ft_line_side((t_line){tmp->point, tmp->next->point}, app->mouse_click))
+		if(ft_line_side((t_line){tmp->point, tmp->next->point}, app->mouse_track))
 			return (0);
 		tmp = tmp->next;
 		if(tmp == sector->wall_list)
