@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:09:02 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/27 14:55:20 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/27 15:23:53 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ static void	set_icon_rect(t_rect *rect, t_point point)
 
 static void	render_texture_icons(t_app *app)
 {
-	t_vec2_lst	*wall_tex;
 	t_rect		src;
 	t_rect		wall_icon;
 	t_rect		floor_icon;
@@ -131,11 +130,7 @@ static void	render_texture_icons(t_app *app)
 		toggle_active_color(app, app->floor_edit, "FLOOR", 108);
 		toggle_active_color(app, app->ceiling_edit, "CEILING", 182);
 		if (app->active)
-		{
-			wall_tex = find_clicked_vector(app);
-			if (wall_tex)
-				set_icon_rect(&src, (t_point){(ICON_SIZE * wall_tex->tex), 0});
-		}
+			set_icon_rect(&src, (t_point){(ICON_SIZE * app->active->tex), 0});
 		else
 			set_icon_rect(&src, (t_point){(ICON_SIZE * app->active_sector->wall_list->tex), 0});
 		set_icon_rect(&wall_icon, (t_point){34, 620});
