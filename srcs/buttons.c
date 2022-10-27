@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/27 10:36:08 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/27 11:05:14 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	start_game(t_app *app)
 {
 	app->player = (t_player){(t_vector2){POSITION_START_X, POSITION_START_Y},
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
-		(t_vector2){0.0, 0.0}, 1.0, 0.5625f,0.f, 0};
+		(t_vector2){0.0, 0.0}, 1.0, 0.5f,0.f, 0};
 	init_camera_plane(app);
 	import_file(app, MAP_PATH);
 	app->status = STATUS_GAME;
