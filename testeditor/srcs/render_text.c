@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_text.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:48:08 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/25 11:05:16 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/28 00:24:02 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ static t_rect	get_rect(int c)
 		rect = get_char(digits, c, 2);
 	else 
 		rect = get_char(symbols, c, 3);
-		return (rect);
+	return (rect);
 }
 
 static void	render_char(t_app *app, t_point *position, t_rect src)

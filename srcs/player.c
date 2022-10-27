@@ -113,6 +113,7 @@ void	player_move(t_app *app, t_movement movement, double speed)
 			|| movement == LEFT || movement == RIGHT || movement == UP
 			|| movement == DOWN))
 		return ;
+	new = app->player.pos;
 	if (movement == FORWARD)
 		new = (t_vector2){app->player.pos.x + app->player.dir.x * speed,
 			app->player.pos.y + app->player.dir.y * speed};
