@@ -110,7 +110,8 @@ void	player_move(t_app *app, t_movement movement, double speed)
 	t_vector2	new;
 
 	if (!(movement == FORWARD || movement == BACKWARD
-			|| movement == LEFT || movement == RIGHT))
+			|| movement == LEFT || movement == RIGHT || movement == UP
+			|| movement == DOWN))
 		return ;
 	if (movement == FORWARD)
 		new = (t_vector2){app->player.pos.x + app->player.dir.x * speed,
@@ -128,5 +129,11 @@ void	player_move(t_app *app, t_movement movement, double speed)
 			new = (t_vector2){app->player.pos.x + perpendicular.x * speed,
 				app->player.pos.y + perpendicular.y * speed};
 	}
+	//----DEBUG FLY
+	if (movement == UP)
+		app->player.elevation += speed;
+	if (movement == DOWN)
+		app->player.elevation -= speed;
+	//----
 	update_position(app, new);
 }

@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:41:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/26 14:50:44 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/27 13:52:45 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,12 @@ void	handle_movement(t_app *app)
 		player_rotate(app, -app->conf->rotation_speed * app->conf->delta_time);
 	if (app->conf->keystates & RIGHT_DOWN)
 		player_rotate(app, app->conf->rotation_speed * app->conf->delta_time);
+	if (app->conf->keystates & SPACE_DOWN)
+		player_move(app, UP,
+			app->conf->movement_speed * app->conf->delta_time);
+	if (app->conf->keystates & CTRL_DOWN)
+		player_move(app, DOWN,
+			app->conf->movement_speed * app->conf->delta_time);
 }
 
 /**
