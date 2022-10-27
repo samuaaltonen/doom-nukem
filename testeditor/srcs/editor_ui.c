@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:09:02 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/26 16:08:07 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/26 18:35:34 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,12 +111,17 @@ static void	render_icon(t_app *app, t_point	position, int tex)
  * Toggles the color of the wall, floor and ceiling header based on,
  * if they're active or not.
 */
-static void	toggle_active_color(t_app *app, t_bool active, char *text, int x)
+static void	toggle_active_color(t_app *app, int active, char *text, int x)
 {
 	load_font(app);
 	if (active == 1)
 	{
 		change_font(app, 15, ACTIVE_TEXT);
+		render_text(app, (t_point){x, 600}, text);
+	}
+	else if (active == 2)
+	{
+		change_font(app, 15, 0xFF00FFFF);
 		render_text(app, (t_point){x, 600}, text);
 	}
 	else
@@ -126,17 +131,17 @@ static void	toggle_active_color(t_app *app, t_bool active, char *text, int x)
 	}
 }
 
-/**
- * 
-*/
 static void	render_texture_icons(t_app *app)
 {
 	if (app->active_sector)
 	{
-		toggle_active_color(app, app->wall_edit, "WALL", 34);
+		if (app->active)
+			toggle_active_color(app, 2, "WALL", 34);
+		else
+			toggle_active_color(app, app->wall_edit, "WALL", 34);
 		toggle_active_color(app, app->floor_edit, "FLOOR", 108);
 		toggle_active_color(app, app->ceiling_edit, "CEILING", 182);
-		render_icon(app, (t_point){34, 620}, 1);
+		render_icon(app, (t_point){34, 620}, app->active_sector->wall_list->tex);
 		render_icon(app, (t_point){108, 620}, app->active_sector->floor_tex);
 		render_icon(app, (t_point){182, 620}, app->active_sector->ceil_tex);
 	}

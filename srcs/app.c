@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/27 13:43:35 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/27 14:03:01 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	app_loop(t_app *app)
 			render_frame(app);
 	}
 }
-
 
 /**
  * Calculates frame delta time and sets FPS accordingly.

@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:41:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/26 12:55:08 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/26 14:50:44 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,14 +43,14 @@ void	handle_movement(t_app *app)
 int	dispatch_event(t_app *app, SDL_Event *event)
 {
 	if (event->type == SDL_QUIT)
-		return events_window_destroy();
+		return (events_window_destroy());
 	if (event->type == SDL_KEYUP)
-		return events_keyup(event->key.keysym.sym, app);
+		return (events_keyup(event->key.keysym.sym, app));
 	if (event->type == SDL_KEYDOWN)
-		return events_keydown(event->key.keysym.sym, app);
+		return (events_keydown(event->key.keysym.sym, app));
 	if (event->type == SDL_MOUSEMOTION)
-		return events_mouse_track(app);
+		return (events_mouse_track(app));
 	if (event->type == SDL_WINDOWEVENT)
-		return events_window_other(event->window.event, app);
+		return (events_window_other(event->window.event, app));
 	return (0);
 }
