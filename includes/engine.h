@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/25 13:54:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/27 12:33:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ typedef struct s_sector
 	t_vector2		floor_slope_angles;
 	t_vector3		ceiling_slope_position;
 	t_vector2		ceiling_slope_angles;
+	int				stack_index;
 }	t_sector;
 
 typedef struct s_exportsector
@@ -113,9 +114,9 @@ typedef struct s_wall
  */
 typedef struct s_wallstack
 {
-	t_wall	visible_walls[MAX_VISIBLE_SECTORS] \
+	t_wall	walls[MAX_VISIBLE_SECTORS] \
 			[(MAX_MEMBER_SECTORS + 1) * MAX_SECTOR_CORNERS];
-	int		visible_count[MAX_VISIBLE_SECTORS + 1];
+	int		wall_count[MAX_VISIBLE_SECTORS + 1];
 	int		visited[MAX_VISIBLE_SECTORS];
 	int		visited_count;
 	int		interesting[MAX_VISIBLE_SECTORS];

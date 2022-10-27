@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/26 16:42:02 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/27 13:43:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,15 +51,9 @@ static void	update_fps_counter(t_app *app)
  */
 void	render_frame(t_app *app)
 {
-	flush_surface(app->surface);
+	/* flush_surface(app->surface); */
 	update_fps_counter(app);
 	update_info(app);
-	/*
-	else
-	{
-		render_multithreading(app, render_skybox);
-		render_multithreading(app, render_polygons);
-	} */
 	if (app->status == STATUS_TITLESCREEN)
 		render_titlescreen(app);
 	else if (app->status == STATUS_MAINMENU)
@@ -70,5 +64,3 @@ void	render_frame(t_app *app)
 		render_pausemenu(app);
 	SDL_UpdateWindowSurface(app->win);
 }
-
-

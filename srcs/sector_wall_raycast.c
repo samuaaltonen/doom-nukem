@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_wall_raycast.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/26 15:58:41 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/27 13:42:57 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,16 +115,24 @@ static t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
  * Draws individual sector wall, possible ceiling and floor of that vertical
  * screenline. Also updates occlusion arrays accordingly.
  */
-void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall)
+void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall, int start_x, int end_x)
 {
 	t_rayhit	hit;
 	int			x;
+	int			start;
+	int			end;
 
 	hit.sector = &app->sectors[wall->sector_id];
 	hit.wall_type = app->sectors[wall->sector_id].wall_types[wall->wall_id];
 	hit.texture = app->sectors[wall->sector_id].wall_textures[wall->wall_id];
-	x = wall->start_x;
-	while (++x < wall->end_x)
+	start = wall->start_x;
+	if (start < start_x)
+		start = start_x;
+	end = wall->end_x;
+	if (end > end_x)
+		end = end_x;
+	x = start - 1;
+	while (++x < end)
 	{
 		if (x % THREAD_COUNT != thread->id)
 			continue ;
@@ -152,4 +160,6 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall)
 		draw_floor(app, x, &hit);
 		draw_wall(app, x, &hit, OCCLUDE_BOTH);
 	}
+	if (wall->is_portal && x > start && wall->is_inside && !wall->is_member)
+		sector_render(app, thread, app->sectors[hit.wall_type].stack_index, start, end);
 }

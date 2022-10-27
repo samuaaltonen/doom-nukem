@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/25 15:02:59 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/27 13:36:40 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,18 @@ void	render_sectors(t_app *app)
 	render_multithreading(app, sector_walls_render);
 }
 
+void	sector_render(t_app *app, t_thread_data *thread, int stack_id, int start_x, int end_x)
+{
+	int	i;
+
+	i = 0;
+	while (i < app->wallstack.wall_count[stack_id])
+	{
+		sector_walls_raycast(app, thread, &app->wallstack.walls[stack_id][i], start_x, end_x);
+		i++;
+	}
+}
+
 /**
  * Multithreaded renderer for sector walls.
 */
@@ -57,13 +69,7 @@ void	*sector_walls_render(void *data)
 
 	thread = (t_thread_data *)data;
 	app = (t_app *)thread->app;
-	int	i = 0;
-	/* ft_printf("--- NEW FRAME ---\n"); */
-	while (i < app->visible_walls_count)
-	{
-		/* ft_printf("%d:%d\n", app->visible_walls[i].sector_id, app->visible_walls[i].wall_id); */
-		sector_walls_raycast(app, thread, &app->visible_walls[i]);
-		i++;
-	}
+	sector_render(app, thread,
+		app->sectors[app->player.current_sector].stack_index, 0, WIN_W - 1);
 	pthread_exit(NULL);
 }

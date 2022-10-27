@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/26 16:42:59 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/27 13:17:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,7 @@ typedef struct s_app
 	t_point			mouse_pos;
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];
-	t_wall			visible_walls[MAX_VISIBLE_WALLS];
-	int				visible_walls_count;
+	t_wallstack		wallstack;
 	t_thread_data	thread_info[THREAD_COUNT];
 	t_player		player;
 	t_sector		*sectors;
@@ -146,11 +145,12 @@ double		distortion_correction(double angle, double distance);
 /**
  * Sectors
  */
-t_line		get_wall_line(t_app *app, int sector_id, int wall_id);
+t_line			get_wall_line(t_app *app, int sector_id, int wall_id);
 void			sector_visible_walls(t_app *app);
 void			sector_walls_prepare(t_app *app, t_wall *walls, int wall_count);
 void			sector_walls_order(t_app *app, t_wall *walls, int wall_count);
-void			sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall);
+void			sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall, int start_x, int end_x);
+void			sector_render(t_app *app, t_thread_data *thread, int stack_id, int start_x, int end_x);
 void			*sector_walls_render(void *data);
 void			render_sectors(t_app *app);
 

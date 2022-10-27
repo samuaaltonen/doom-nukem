@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sector_visible_walls.c                             :+:      :+:    :+:   */
+/*   sector_walls.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/25 15:02:51 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/27 12:29:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ static void	loop_sector_walls(t_app *app, t_wallstack *wallstack, int index, int
 	t_wall		wall;
 
 	sector = &app->sectors[sector_id];
+	sector->stack_index = index;
 	// Loop through member sector walls
 	i = -1;
 	while (++i < MAX_MEMBER_SECTORS)
@@ -148,31 +149,8 @@ static void	loop_sector_walls(t_app *app, t_wallstack *wallstack, int index, int
 		wall.is_member = FALSE;
 		if (sector->parent_sector != -1)
 			wall.is_member = TRUE;
-		check_possible_visible(app, (t_wall *)&wallstack->visible_walls[index],
-			(int *)&wallstack->visible_count[index], wall);
-	}
-}
-
-/**
- * @brief Copies walls from sector based array to main array that is used for
- * rendering.
- * 
- * @param app 
- * @param walls 
- * @param wall_count 
- */
-void	sector_walls_copy(t_app *app, t_wall *walls, int wall_count)
-{
-	int	previously_copied;
-	int	i;
-
-	previously_copied = app->visible_walls_count;
-	i = 0;
-	while (i < wall_count)
-	{
-		app->visible_walls[i + previously_copied] = walls[i];
-		app->visible_walls_count++;
-		i++;
+		check_possible_visible(app, (t_wall *)&wallstack->walls[index],
+			(int *)&wallstack->wall_count[index], wall);
 	}
 }
 
@@ -181,33 +159,30 @@ void	sector_walls_copy(t_app *app, t_wall *walls, int wall_count)
  */
 void	sector_visible_walls(t_app *app)
 {
-	t_wallstack	wallstack;
-	int			i;
+	int	i;
 
-	wallstack.visited[0] = -1;
-	wallstack.interesting[0] = app->player.current_sector;
-	wallstack.interesting_count = 1;
+	app->wallstack.visited[0] = -1;
+	app->wallstack.interesting[0] = app->player.current_sector;
+	app->wallstack.interesting_count = 1;
 	i = 0;
-	while (i < wallstack.interesting_count && i < MAX_VISIBLE_SECTORS - 1)
+	while (i < app->wallstack.interesting_count && i < MAX_VISIBLE_SECTORS - 1)
 	{
-		wallstack.visible_count[i] = 0;
-		wallstack.visible_count[i + 1] = -1;
-		if (!has_been_visited((int *)&wallstack.visited, wallstack.interesting[i]))
-			loop_sector_walls(app, &wallstack, i, wallstack.interesting[i]);
+		app->wallstack.wall_count[i] = 0;
+		app->wallstack.wall_count[i + 1] = -1;
+		if (!has_been_visited((int *)&app->wallstack.visited, app->wallstack.interesting[i]))
+			loop_sector_walls(app, &app->wallstack, i, app->wallstack.interesting[i]);
 		i++;
 	}
 	/**
 	 * Order walls and stack them to main array for rendering
 	 */
 	i = 0;
-	app->visible_walls_count = 0;
-	while (wallstack.visible_count[i] != -1)
+	while (app->wallstack.wall_count[i] != -1)
 	{
-		if (wallstack.visible_count[i] > 0)
+		if (app->wallstack.wall_count[i] > 0)
 		{
-			sector_walls_prepare(app, (t_wall *)&wallstack.visible_walls[i], wallstack.visible_count[i]);
-			sector_walls_order(app, (t_wall *)&wallstack.visible_walls[i], wallstack.visible_count[i]);
-			sector_walls_copy(app, (t_wall *)&wallstack.visible_walls[i], wallstack.visible_count[i]);
+			sector_walls_prepare(app, (t_wall *)&app->wallstack.walls[i], app->wallstack.wall_count[i]);
+			sector_walls_order(app, (t_wall *)&app->wallstack.walls[i], app->wallstack.wall_count[i]);
 		}
 		i++;
 	}
