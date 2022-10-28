@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/28 15:07:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/28 15:45:46 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ static void	calculate_parent_positions(t_app *app, t_rayhit *hit,
 	hit->parent_wall_start = WIN_H / 2 - hit->parent_height
 		+ (int)(relative_height * ((app->player.height + app->player.elevation) - parent->floor_height));
 	hit->parent_wall_end = hit->parent_wall_start + hit->parent_height;
+	hit->parent_texture_offset_top = 0;
+	hit->parent_texture_offset_bottom = 0;
 	if (hit->parent_wall_start < 0)
 	{
 		hit->parent_texture_offset_top += -hit->parent_wall_start * hit->texture_step.y;
@@ -108,20 +110,18 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 	hit->wall_end = hit->wall_start + hit->height;
 	hit->texture_step.y = TEX_SIZE / relative_height;
 	hit->texture_offset.y = 0;
+	hit->slope_texture_offset_top = (double)TEX_SIZE - relative_height * ceiling_slope * hit->texture_step.y;
+	hit->slope_texture_offset_bottom = (double)TEX_SIZE - relative_height * floor_slope * hit->texture_step.y;
 	if (hit->sector->parent_sector >= 0)
-	{
-		hit->parent_texture_offset_top = 0;
-		hit->parent_texture_offset_bottom = fabs((double)TEX_SIZE - relative_height * floor_slope * hit->texture_step.y);
 		calculate_parent_positions(app, hit, relative_height);
-	}
 	if (hit->wall_start < 0)
 	{
-		hit->texture_offset.y -= hit->wall_start * hit->texture_step.y;
+		hit->texture_offset.y += -hit->wall_start * hit->texture_step.y;
 		hit->wall_start = 0;
 	}
 	if (hit->wall_end < 0)
 	{
-		hit->texture_offset.y -= hit->wall_end * hit->texture_step.y;
+		hit->texture_offset.y += -hit->wall_end * hit->texture_step.y;
 		hit->wall_end = 0;
 	}
 	if (hit->wall_start >= WIN_H)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   skybox.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/08/03 14:18:55 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/26 14:52:08 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/28 15:39:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * Renders the skybox.
  */
-void	*render_skybox(void *data)
+/* void	*render_skybox(void *data)
 {
 	t_app		*app;
 	t_point		coord;
@@ -42,4 +42,4 @@ void	*render_skybox(void *data)
 		coord.x += THREAD_COUNT;
 	}
 	pthread_exit(NULL);
-}
+} */

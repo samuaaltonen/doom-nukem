@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:23:43 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/27 16:11:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/28 15:53:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,8 @@ void	draw_portal_partial_parent(t_app *app, int x, t_rayhit *hit)
 		draw_wall(app, x, &parenthit, OCCLUDE_TOP);
 	parenthit.wall_start = hit->wall_end;
 	parenthit.wall_end = hit->parent_wall_end;
-	parenthit.texture_offset.y = hit->parent_texture_offset_bottom;
+	parenthit.texture_offset.y = hit->parent_texture_offset_bottom
+		+ hit->slope_texture_offset_bottom;
 	if (parenthit.wall_start <= 0)
 		draw_wall(app, x, &parenthit, OCCLUDE_BOTH);
 	else
@@ -100,13 +101,14 @@ void	draw_portal_partial_hole(t_app *app, int x, t_rayhit *hit)
 {
 	t_rayhit	parenthit;
 
-	if (hit->wall_start > hit->parent_wall_start
-		&& hit->wall_end < hit->parent_wall_end)
+	if (hit->wall_start >= hit->parent_wall_start
+		&& hit->wall_end <= hit->parent_wall_end)
 		return ;
 	ft_memcpy(&parenthit, hit, sizeof(t_rayhit));
 	parenthit.sector = &app->sectors[hit->sector->parent_sector];
 	parenthit.wall_start = hit->wall_start;
 	parenthit.wall_end = hit->parent_wall_start;
+	parenthit.texture_offset.y += hit->slope_texture_offset_top;
 	if (hit->wall_start < hit->parent_wall_start)
 	{
 		if (parenthit.wall_start >= WIN_H - 1)
