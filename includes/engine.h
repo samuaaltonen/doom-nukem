@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/28 12:24:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/28 14:51:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,11 @@ typedef struct s_sector
 	t_vector2		floor_slope_end;
 	double			floor_slope_height;
 	double			floor_slope_length;
+
+	t_vector2		ceiling_slope_start;
+	t_vector2		ceiling_slope_end;
+	double			ceiling_slope_height;
+	double			ceiling_slope_length;
 
 	t_vector3		floor_slope_position;
 	t_vector2		floor_slope_angles;
