@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/27 13:58:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/27 17:06:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,12 +51,12 @@ void	*sector_render_thread(void *data)
 
 /**
  * @brief Renders one sector stack.
- * 
- * @param app 
- * @param thread 
- * @param stack_id 
- * @param start_x 
- * @param end_x 
+ *
+ * @param app
+ * @param thread
+ * @param stack_id
+ * @param start_x
+ * @param end_x
  */
 void	sector_stack_render(t_app *app, t_thread_data *thread, int stack_id, int start_x, int end_x)
 {

@@ -17,15 +17,13 @@
  */
 t_line	get_wall_line(t_app *app, int sector_id, int wall_id)
 {
-	(void)app;
 	if (app->sectors[sector_id].corner_count == wall_id + 1)
 		return (t_line){
 			app->sectors[sector_id].corners[wall_id],
 			app->sectors[sector_id].corners[0],
 		};
-	else
-		return (t_line){
-			app->sectors[sector_id].corners[wall_id],
-			app->sectors[sector_id].corners[wall_id + 1],
-		};
+	return (t_line){
+		app->sectors[sector_id].corners[wall_id],
+		app->sectors[sector_id].corners[wall_id + 1],
+	};
 }
