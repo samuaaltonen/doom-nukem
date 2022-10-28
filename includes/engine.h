@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/27 13:55:25 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/28 12:24:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,12 @@ typedef struct s_sector
 	double			floor_tex_offset;
 	int				ceiling_texture;
 	double			ceil_tex_offset;
+
+	t_vector2		floor_slope_start;
+	t_vector2		floor_slope_end;
+	double			floor_slope_height;
+	double			floor_slope_length;
+
 	t_vector3		floor_slope_position;
 	t_vector2		floor_slope_angles;
 	t_vector3		ceiling_slope_position;

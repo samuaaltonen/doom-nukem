@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/25 16:42:59 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/10/28 14:16:22 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,17 @@ static void read_sector(t_app *app, t_exportsector *export, int sectorid, int se
 	app->sectors[sectorid].ceiling_height = export->ceil_height;
 	app->sectors[sectorid].floor_height = export->floor_height;
 	app->sectors[sectorid].parent_sector = export->parent_sector;
+	app->sectors[sectorid].floor_slope_height = 0.0;
+	/**
+	 * TODO: REMOVE THIS
+	 */
+	if (sectorid == 33)
+	{
+		app->sectors[sectorid].floor_slope_height = 1.0;
+		app->sectors[sectorid].floor_slope_end = (t_vector2){-1.25, 10.0};
+		app->sectors[sectorid].floor_slope_start = (t_vector2){1.25, 10.0};
+		app->sectors[sectorid].floor_slope_length = ft_vector_length(ft_vector2_sub(app->sectors[sectorid].floor_slope_end, app->sectors[sectorid].floor_slope_start));
+	}
 	import_floor_slope(export, &(app->sectors[sectorid]));
 	import_ceil_slope(export, &(app->sectors[sectorid]));
 		ft_printf("sectorid = %i corners count: %i, floor slope %f, ceil slope %f\n", sectorid, app->sectors[sectorid].corner_count, app->sectors[sectorid].floor_slope_angles.x, app->sectors[sectorid].ceiling_slope_angles.x);
