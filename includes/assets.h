@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/25 14:08:05 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/10/28 15:19:49 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,10 @@
 # define PANELS_PATH "assets/textures/minecraft_spritesheet.bmp"
 # define SKYBOX_PATH "assets/textures/bg.bmp"
 # define FONT_PATH "assets/fonts/sci-fi_font.bmp"
-# define BUTTON_IDLE_PATH "assets/ui/button_idle.bmp"
-# define BUTTON_SELECT_PATH "assets/ui/button_select.bmp"
-# define BUTTON_PRESS_PATH "assets/ui/button_press.bmp"
-# define TITLESCREEN_PATH "assets/textures/title_screen.bmp"
+# define BUTTON_IDLE_PATH "assets/ui/button_idle2.bmp"
+# define BUTTON_SELECT_PATH "assets/ui/button_select2.bmp"
+# define BUTTON_PRESS_PATH "assets/ui/button_press2.bmp"
+# define TITLESCREEN_PATH "assets/images/awakened2.bmp"
 # define POINTER_PATH "assets/ui/mouse_pointer.bmp"
 # define MAP_PATH "./testeditor/test.test"
 
