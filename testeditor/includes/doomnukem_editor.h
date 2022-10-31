@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/27 15:43:23 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/31 11:44:28 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -332,6 +332,7 @@ void			sector_edit(t_app *app, SDL_Keycode key);
 t_sector_lst	*find_parent_sector(t_app *app, t_sector_lst *sector);
 t_sector_lst	*find_child_sector(t_app *app);
 int				get_sector_id(t_app *app, t_sector_lst *sector);
+void			cancel_list_creation(t_app *app);
 
 /**
  * Point/Wall/Wall_list Functions
