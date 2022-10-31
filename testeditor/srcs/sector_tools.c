@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:53:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/27 15:02:10 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/31 17:07:15 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,28 @@ static void	add_member_sector(t_sector_lst *parent, t_sector_lst *child)
 }
 
 /**
+ * Checks if the vector2d linked list has been drawn counter clockwise and
+ * needs to reversed the other way around.
+*/
+static t_vec2_lst	*check_sector_reverse(t_vec2_lst	**list)
+{
+	t_vec2_lst	*current;
+	t_vec2_lst	*next;
+
+	current = *list;
+	while (current)
+	{
+		next = current->next;
+		current = next;
+	} 
+	if (current->point.x > current->next->point.x && current->point.y > current->next->point.y)
+		return (current);
+	if (current->point.x < current->next->point.x && current->point.y < current->next->point.y)
+		return (current);
+	return (NULL);
+}
+
+/**
  * @brief Completes an ongoing sector
  * 
  * @param app 
@@ -151,10 +173,14 @@ static void	add_member_sector(t_sector_lst *parent, t_sector_lst *child)
  */
 t_bool	complete_sector(t_app *app)
 {
-	t_sector_lst *new;
+	t_sector_lst	*new;
+	t_vec2_lst		*reverse;
 
 	app->active_last->next = app->active;
 	new = put_sector_lst(app,new_sector_list(app->active));
+	reverse = check_sector_reverse(&new->wall_list);
+	if (reverse)
+		reverse_vector_list(&reverse);
 	app->active = NULL;
 	app->active_last = NULL;
 	app->list_ongoing = FALSE;
