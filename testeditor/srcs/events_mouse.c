@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/27 15:01:34 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/31 11:17:52 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,25 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 		app->active_last = app->active;
 		app->list_ongoing = TRUE;
 	}
+	else if ((event->button.button == SDL_BUTTON_RIGHT
+		|| event->button.button == SDL_BUTTON_MIDDLE) && app->list_ongoing)
+	{
+		del_vector_list(&(app->active));
+		app->active = NULL;
+		app->active_last = NULL;
+		app->list_ongoing = FALSE;
+		app->list_creation = FALSE;
+	}
 	else if(event->button.button == SDL_BUTTON_LEFT && app->list_ongoing)
 	{
 		//if list creation is cancelled delete existing line and quit, segfaults
-	/* 	if(!app->list_creation)
-		{
-			del_vector_list(&(app->active));
-			app->active = NULL;
-			app->active_last = NULL;
-			app->list_ongoing = FALSE;
-		} */
+		// if(!app->list_creation)
+		// {
+		// 	del_vector_list(&(app->active));
+		// 	app->active = NULL;
+		// 	app->active_last = NULL;
+		// 	app->list_ongoing = FALSE;
+		// }
 		if(app->mouse_track.x == app->active->point.x && app->mouse_track.y == app->active->point.y)
 			return (complete_sector(app));
 		else if(valid_point(app))
