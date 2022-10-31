@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/31 11:44:28 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/31 15:57:20 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -343,6 +343,7 @@ int				del_vector_list(t_vec2_lst **list);
 t_bool			valid_point(t_app *app);
 t_vec2_lst		*ft_lstindex(t_vec2_lst *lst, size_t index);
 t_vec2_lst		*find_clicked_vector(t_app *app);
+void			reverse_vector_list(t_vec2_lst **head);
 
 /**
  * UI functions
