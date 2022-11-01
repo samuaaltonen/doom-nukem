@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/28 15:33:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/01 13:58:00 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,20 +111,22 @@ static void read_sector(t_app *app, t_exportsector *export, int sectorid, int se
 	app->sectors[sectorid].ceiling_height = export->ceil_height;
 	app->sectors[sectorid].floor_height = export->floor_height;
 	app->sectors[sectorid].parent_sector = export->parent_sector;
+
 	app->sectors[sectorid].floor_slope_height = 0.0;
+	app->sectors[sectorid].ceiling_slope_height = 0.0;
 	/**
 	 * TODO: REMOVE THIS
 	 */
-	if (sectorid == 33)
+	if (sectorid == 13)
 	{
 		app->sectors[sectorid].floor_slope_height = 1.0;
-		app->sectors[sectorid].floor_slope_end = (t_vector2){-1.25, 10.0};
-		app->sectors[sectorid].floor_slope_start = (t_vector2){1.25, 10.0};
+		app->sectors[sectorid].floor_slope_end = (t_vector2){-2.0, 10.0};
+		app->sectors[sectorid].floor_slope_start = (t_vector2){2.0, 10.0};
 		app->sectors[sectorid].floor_slope_length = ft_vector_length(ft_vector2_sub(app->sectors[sectorid].floor_slope_end, app->sectors[sectorid].floor_slope_start));
 
 		app->sectors[sectorid].ceiling_slope_height = -1.0;
-		app->sectors[sectorid].ceiling_slope_end = (t_vector2){-1.25, 10.0};
-		app->sectors[sectorid].ceiling_slope_start = (t_vector2){1.25, 10.0};
+		app->sectors[sectorid].ceiling_slope_end = (t_vector2){-2.0, 10.0};
+		app->sectors[sectorid].ceiling_slope_start = (t_vector2){2.0, 10.0};
 		app->sectors[sectorid].ceiling_slope_length = ft_vector_length(ft_vector2_sub(app->sectors[sectorid].ceiling_slope_end, app->sectors[sectorid].ceiling_slope_start));
 	}
 	import_floor_slope(export, &(app->sectors[sectorid]));
@@ -146,7 +148,8 @@ int	import_file(t_app *app, char *path)
 	if(fd < 0)
 		exit_error("FILE OPEN ERROR TEMP!");
 	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
-
+	if (!export)
+		exit_error(MSG_ERROR_ALLOC);
 	if (read(fd, &sector_count,(sizeof(size_t))) == -1)
 		exit_error(MSG_ERROR_FILE_READ);
 	
@@ -159,6 +162,7 @@ int	import_file(t_app *app, char *path)
 		read_sector(app, export, counter, sector_count);
 		counter++;
 	}
+	free(export);
 	ft_printf("sector_count=%i\n",sector_count);
 	close(fd);
 	return (0);
