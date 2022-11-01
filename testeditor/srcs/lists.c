@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lists.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:42:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/25 14:29:22 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/10/31 15:57:18 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,4 +71,28 @@ int		del_vector_list(t_vec2_lst **list)
 	}
 	*list = NULL;
 	return (0);
+}
+
+/**
+ * Reverses the vector2d linked list.
+*/
+void	reverse_vector_list(t_vec2_lst **head)
+{
+	t_vec2_lst	*prev;
+	t_vec2_lst	*next;
+	t_vec2_lst	*current;
+
+	if (!(*head))
+		return ;
+	prev = NULL;
+	next = NULL;
+	current = *head;
+	while (current)
+	{
+		next = current->next;
+		current->next = prev;
+		prev = current;
+		current = next;
+	}
+	*head = prev;
 }

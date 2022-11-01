@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/27 15:01:34 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/10/31 11:55:17 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,39 +18,34 @@
  */
 int	events_mouse_click(t_app *app, SDL_Event *event)
 {
-	t_vec2_lst *tmp;
+	t_vec2_lst	*tmp;
 
-	if(event->button.button == SDL_BUTTON_LEFT && !app->list_ongoing && app->list_creation)
+	if (event->button.button == SDL_BUTTON_LEFT && !app->list_ongoing && app->list_creation)
 	{
 		app->active = new_vector_list(&app->mouse_track);
 		app->active_last = app->active;
 		app->list_ongoing = TRUE;
 	}
-	else if(event->button.button == SDL_BUTTON_LEFT && app->list_ongoing)
+	else if ((event->button.button == SDL_BUTTON_RIGHT
+			|| event->button.button == SDL_BUTTON_MIDDLE) && app->list_ongoing)
+		cancel_list_creation(app);
+	else if (event->button.button == SDL_BUTTON_LEFT && app->list_ongoing)
 	{
-		//if list creation is cancelled delete existing line and quit, segfaults
-	/* 	if(!app->list_creation)
-		{
-			del_vector_list(&(app->active));
-			app->active = NULL;
-			app->active_last = NULL;
-			app->list_ongoing = FALSE;
-		} */
-		if(app->mouse_track.x == app->active->point.x && app->mouse_track.y == app->active->point.y)
+		if (app->mouse_track.x == app->active->point.x && app->mouse_track.y == app->active->point.y)
 			return (complete_sector(app));
-		else if(valid_point(app))
+		else if (valid_point(app))
 		{
 			tmp = new_vector_list(&app->mouse_track);
 			put_to_vector_list(&app->active, tmp);
 			app->active_last = tmp;
 		}
 	}
-	else if(event->button.button == SDL_BUTTON_LEFT)
+	else if (event->button.button == SDL_BUTTON_LEFT)
 	{
 		//if active sector has member sectors find them before linees
-		if(app->active_sector)
+		if (app->active_sector)
 		{
-			if(app->active_sector->member_sectors[0] && find_child_sector(app))
+			if (app->active_sector->member_sectors[0] && find_child_sector(app))
 				app->active_sector = find_child_sector(app);
 			app->active = find_clicked_vector(app);
 		}
@@ -60,12 +55,24 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 	else
 	{
 		app->active = NULL;
-		if(app->active_sector)
+		if (app->active_sector)
 			app->active_sector = app->active_sector->parent_sector;
 		else
 			app->active_sector = NULL;
 	}
 	return (0);
+}
+
+/**
+ * Cancels the ungoing list creation and deletes the incomplete sector list.
+*/
+void	cancel_list_creation(t_app *app)
+{
+	del_vector_list(&(app->active));
+	app->active = NULL;
+	app->active_last = NULL;
+	app->list_ongoing = FALSE;
+	app->list_creation = FALSE;
 }
 
 /**
