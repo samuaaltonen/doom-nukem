@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/27 15:00:53 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/01 14:45:34 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,12 @@ void	app_render(t_app *app)
 	}
 	render_sector_points(app);
 	if(app->list_ongoing)
-		draw_line(app, &app->active_last->point, &app->mouse_track, 0xAABBCC);
+	{
+		if(valid_point(app))
+			draw_line(app, &app->active_last->point, &app->mouse_track, 0xAABBCC);
+		else
+			draw_line(app, &app->active_last->point, &app->mouse_track, 0xFF4444);
+	}
 	render_help_menu(app);
 	//SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
 	//SDL_FreeSurface(text_surface);
