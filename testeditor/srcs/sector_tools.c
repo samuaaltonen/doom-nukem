@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:53:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/31 17:07:15 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/01 16:27:54 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,26 +60,47 @@ t_sector_lst *click_sector(t_app *app)
 }
 
 /**
+ * Checks that the wall you're trying to make a portal from, isn't
+ * linking to the same sector the wall is in.
+*/
+static t_bool	check_if_valid_link(t_app *app)
+{
+	t_vec2_lst	*temp;
+	t_vec2_lst	*next;
+
+	temp = app->active_sector->wall_list;
+	while (temp)
+	{
+		if (temp == app->active_last)
+			return (FALSE);
+		if (temp->next == app->active_sector->wall_list)
+			break;
+		next = temp->next;
+		temp = next;
+	}
+	return (TRUE);
+}
+
+/**
  * Handles the manual linking event using active wall and active sector
- * 
  * activate on a selected wall, navigate to link target sector, activate again
  */
-void link_wall_to_sector(t_app *app)
+void	link_wall_to_sector(t_app *app)
 {
-
-	if(app->list_ongoing || app->list_creation)
+	if (app->list_ongoing || app->list_creation)
 	{
 		app->portal_selection = FALSE; 
 		app->active_last = NULL;
 	}
-		//add check the wall is not in itself
-	if(app->portal_selection && app->active_sector && app->active_last)
+	if (app->portal_selection && app->active_sector && app->active_last)
 	{
 		app->active_last->type = get_sector_id(app, app->active_sector);
+		if (!check_if_valid_link(app))
+			app->active_last->type = -1;
 		app->portal_selection = FALSE;
 		app->active_last = NULL;
 	}
-	else if(!app->portal_selection && app->active)
+	else if (!app->portal_selection && app->active)
 	{
 		app->portal_selection = TRUE;
 		app->active_last = app->active;
@@ -147,23 +168,23 @@ static void	add_member_sector(t_sector_lst *parent, t_sector_lst *child)
  * Checks if the vector2d linked list has been drawn counter clockwise and
  * needs to reversed the other way around.
 */
-static t_vec2_lst	*check_sector_reverse(t_vec2_lst	**list)
-{
-	t_vec2_lst	*current;
-	t_vec2_lst	*next;
+// static t_vec2_lst	*check_sector_reverse(t_vec2_lst	**list)
+// {
+// 	t_vec2_lst	*current;
+// 	t_vec2_lst	*next;
 
-	current = *list;
-	while (current)
-	{
-		next = current->next;
-		current = next;
-	} 
-	if (current->point.x > current->next->point.x && current->point.y > current->next->point.y)
-		return (current);
-	if (current->point.x < current->next->point.x && current->point.y < current->next->point.y)
-		return (current);
-	return (NULL);
-}
+// 	current = *list;
+// 	while (current)
+// 	{
+// 		next = current->next;
+// 		current = next;
+// 	} 
+// 	if (current->point.x > current->next->point.x && current->point.y > current->next->point.y)
+// 		return (current);
+// 	if (current->point.x < current->next->point.x && current->point.y < current->next->point.y)
+// 		return (current);
+// 	return (NULL);
+// }
 
 /**
  * @brief Completes an ongoing sector
@@ -178,9 +199,9 @@ t_bool	complete_sector(t_app *app)
 
 	app->active_last->next = app->active;
 	new = put_sector_lst(app,new_sector_list(app->active));
-	reverse = check_sector_reverse(&new->wall_list);
-	if (reverse)
-		reverse_vector_list(&reverse);
+	// reverse = check_sector_reverse(&new->wall_list);
+	// if (reverse)
+	// 	reverse_vector_list(&reverse);
 	app->active = NULL;
 	app->active_last = NULL;
 	app->list_ongoing = FALSE;
