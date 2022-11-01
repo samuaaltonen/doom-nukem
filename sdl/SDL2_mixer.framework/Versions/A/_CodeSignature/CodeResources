@@ -4,78 +4,63 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Resources/CMake/sdl2_mixer-config-version.cmake</key>
+		<data>
+		gYlQQT4oiufSsWWf557fmcgm/MM=
+		</data>
+		<key>Resources/CMake/sdl2_mixer-config.cmake</key>
+		<data>
+		LN4pYVT7TbiKr0N2y8uJTFa44gg=
+		</data>
 		<key>Resources/Info.plist</key>
 		<data>
-		Q18q+fULk9TzM6UmLq9z132r9z4=
+		5wdzKE171nwNJIkeDohFAaIRUKo=
 		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Frameworks/FLAC.framework</key>
-		<dict>
-			<key>cdhash</key>
-			<data>
-			LOlvdJpQh366GamtmEYLqpk/owU=
-			</data>
-			<key>requirement</key>
-			<string>identifier FLAC and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = EH385AYQ6F</string>
-		</dict>
-		<key>Frameworks/Ogg.framework</key>
-		<dict>
-			<key>cdhash</key>
-			<data>
-			819NHnBTttJF7DDFqqBT9u9ndl0=
-			</data>
-			<key>requirement</key>
-			<string>identifier "org.xiph.ogg" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = EH385AYQ6F</string>
-		</dict>
-		<key>Frameworks/Vorbis.framework</key>
-		<dict>
-			<key>cdhash</key>
-			<data>
-			wy7Tq06E6OkNZcjlQ44/8JzTG1Q=
-			</data>
-			<key>requirement</key>
-			<string>identifier "org.xiph.vorbis" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = EH385AYQ6F</string>
-		</dict>
-		<key>Frameworks/modplug.framework</key>
-		<dict>
-			<key>cdhash</key>
-			<data>
-			ZgispEg89ikHTAuO7c2/No1rCco=
-			</data>
-			<key>requirement</key>
-			<string>identifier modplug and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = EH385AYQ6F</string>
-		</dict>
-		<key>Frameworks/mpg123.framework</key>
-		<dict>
-			<key>cdhash</key>
-			<data>
-			Zd8Sbrsqj5VXJqtRQ9YeymzrmLA=
-			</data>
-			<key>requirement</key>
-			<string>identifier mpg123 and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = EH385AYQ6F</string>
-		</dict>
 		<key>Headers/SDL_mixer.h</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			gdpsb0QXLHfEL9s33cIlibFt6mI=
+			iP4368thugK+15+CUUZOhMjsLW4=
 			</data>
 			<key>hash2</key>
 			<data>
-			tmatcEpyaSY6hQYE4uLYFO90yHgdHoNidgOKn5OUdQg=
+			YMLoCcYbuBNrAC3pAMiB2fCJuoXak4sueGO0DcpVdQo=
+			</data>
+		</dict>
+		<key>Resources/CMake/sdl2_mixer-config-version.cmake</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			gYlQQT4oiufSsWWf557fmcgm/MM=
+			</data>
+			<key>hash2</key>
+			<data>
+			r8TXuYRoi/AewcXPZ4uUfKAGLvj0BbUn6lkp54Dnw7w=
+			</data>
+		</dict>
+		<key>Resources/CMake/sdl2_mixer-config.cmake</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			LN4pYVT7TbiKr0N2y8uJTFa44gg=
+			</data>
+			<key>hash2</key>
+			<data>
+			SQaToooiarGk7JJzONT4NQML6Oz3Io5QWyT6gJ93E78=
 			</data>
 		</dict>
 		<key>Resources/Info.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Q18q+fULk9TzM6UmLq9z132r9z4=
+			5wdzKE171nwNJIkeDohFAaIRUKo=
 			</data>
 			<key>hash2</key>
 			<data>
-			WAWOAKkM4ztMC2KMzoM9UhpBpRuU8VjGR9rT0u+prJQ=
+			KvJ+/xDP9wXUgiVp6+wBri8nPR6KKW6MvmbxnlCzclk=
 			</data>
 		</dict>
 	</dict>

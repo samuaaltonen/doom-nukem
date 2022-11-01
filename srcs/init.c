@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/26 13:05:04 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/01 11:44:33 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	config_init(t_app *app)
  */
 void	sdl_init(t_app *app)
 {
-	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0)
+	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO) < 0)
 		exit_error(MSG_ERROR_SDL_INIT);
 	app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_SHOWN);
 	if (!app->win)
@@ -62,6 +62,8 @@ void	sdl_init(t_app *app)
 	app->surface = SDL_GetWindowSurface(app->win);
 	if (!app->surface)
 		exit_error(MSG_ERROR_WINDOW_SURFACE);
+	if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 )
+		exit_error(MSG_ERROR);
 	SDL_ShowCursor(SDL_DISABLE);
 }
 
