@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+         #
+#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/10/27 15:49:17 by ssulkuma         ###   ########.fr        #
+#    Updated: 2022/11/01 11:21:25 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
