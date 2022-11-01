@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:53:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/01 16:27:54 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/01 16:41:43 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,13 @@ void	link_wall_to_sector(t_app *app)
 		app->portal_selection = FALSE; 
 		app->active_last = NULL;
 	}
-	if (app->portal_selection && app->active_sector && app->active_last)
+	if (app->portal_selection && app->active && app->active->type != -1)
+	{
+		app->active_last->type = -1;
+		app->portal_selection = FALSE;
+		app->active_last = NULL;
+	}
+	else if (app->portal_selection && app->active_sector && app->active_last)
 	{
 		app->active_last->type = get_sector_id(app, app->active_sector);
 		if (!check_if_valid_link(app))
@@ -195,7 +201,7 @@ static void	add_member_sector(t_sector_lst *parent, t_sector_lst *child)
 t_bool	complete_sector(t_app *app)
 {
 	t_sector_lst	*new;
-	t_vec2_lst		*reverse;
+	// t_vec2_lst		*reverse;
 
 	app->active_last->next = app->active;
 	new = put_sector_lst(app,new_sector_list(app->active));
