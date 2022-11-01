@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/27 15:36:35 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/01 19:07:38 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,17 @@
  */
 typedef unsigned char	t_uint8;
 
+typedef struct s_audio
+{
+	SDL_AudioDeviceID	device_id;
+	SDL_AudioSpec		wav_spec;
+	SDL_AudioSpec		sound_spec;
+	Uint8				*music;
+	Uint32				music_length;
+	Uint8				*sound;
+	Uint32				sound_length;
+}	t_audio;
+
 /**
  * Struct for the application.
  */
@@ -57,6 +68,7 @@ typedef struct s_app
 	SDL_Event		event;
 	t_uint8			status;
 	t_assets		assets;
+	t_audio			audio;
 	t_point			mouse_pos;
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];

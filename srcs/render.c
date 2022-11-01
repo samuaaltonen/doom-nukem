@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/28 15:27:53 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/01 17:48:58 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@ void	render_titlescreen(t_app *app)
 	rect_from_surface(app->surface, &dst);
 	blit_surface(app->assets.title_screen_image, &src, app->surface, &dst);
 	change_font(app, 80, 0xFF111111);
-	render_text(app, (t_point){476, 252}, "AWAKE");
+	render_text(app, (t_point){484, 216}, "AWAKE");
 	change_font(app, 80, 0xFFd50000);
-	render_text(app, (t_point){480, 260}, "AWAKE");
+	render_text(app, (t_point){490, 210}, "AWAKE");
 	change_font(app, 32, 0xFFFFFFFF);
-	render_text(app, (t_point){500, WIN_H - 140}, "PRESS SPACE");
+	render_text(app, (t_point){504, WIN_H - 170}, "PRESS SPACE");
 	load_font(app);
 }
 

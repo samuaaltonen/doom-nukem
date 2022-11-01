@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/28 11:01:14 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/01 19:24:49 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,15 @@ int	events_keyup(int keycode, t_app *app)
 		//----DEBUG FUNCTIONALITIES
 		else if (app->status == STATUS_MAINMENU)
 			start_game(app);
+		else if (app->status == STATUS_GAME)
+		{
+			Uint32	size = SDL_GetQueuedAudioSize(app->audio.device_id);
+			SDL_ClearQueuedAudio(app->audio.device_id);
+			Uint8	*ptr = app->audio.music + app->audio.music_length - size;
+			SDL_MixAudioFormat(ptr, app->audio.sound, AUDIO_S16SYS, app->audio.sound_length, SDL_MIX_MAXVOLUME);
+			SDL_QueueAudio(app->audio.device_id, ptr, size);
+			SDL_PauseAudioDevice(app->audio.device_id, 0);
+		}
 		//----
 		app->conf->keystates ^= SPACE_DOWN;
 	}

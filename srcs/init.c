@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/01 11:44:33 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/01 19:13:54 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,21 @@ void	sdl_init(t_app *app)
 	app->surface = SDL_GetWindowSurface(app->win);
 	if (!app->surface)
 		exit_error(MSG_ERROR_WINDOW_SURFACE);
-	if( Mix_OpenAudio( 22050, MIX_DEFAULT_FORMAT, 2, 4096 ) == -1 )
-		exit_error(MSG_ERROR);
+
+
+//---- SDL_MUSIC NO MIXER
+
+	SDL_LoadWAV("assets/sounds/laser.wav",
+		&app->audio.wav_spec, &app->audio.sound, &app->audio.sound_length);
+	SDL_LoadWAV(MUSIC_PATH,
+		&app->audio.wav_spec, &app->audio.music, &app->audio.music_length);	
+
+
+	app->audio.device_id = SDL_OpenAudioDevice(NULL, 0, &app->audio.wav_spec, NULL, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
+	SDL_QueueAudio(app->audio.device_id, app->audio.music, app->audio.music_length);
+	SDL_QueueAudio(app->audio.device_id, app->audio.sound, app->audio.sound_length);
+	SDL_PauseAudioDevice(app->audio.device_id, 0);
+	SDL_FreeWAV(app->audio.music);
 	SDL_ShowCursor(SDL_DISABLE);
 }
 
@@ -79,6 +92,10 @@ void    load_assets(t_app *app)
 	app->assets.pointer = SDL_LoadBMP(POINTER_PATH);
 	app->assets.sprite = SDL_LoadBMP(PANELS_PATH);
 	app->assets.bg = SDL_LoadBMP(SKYBOX_PATH);
+	//app->assets.music = Mix_LoadMUS(MUSIC_PATH);
+	//if (app->assets.music == NULL)
+	//	exit_error(MSG_ERROR);
+
     load_font(app);
 }
 
