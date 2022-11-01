@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buttons.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/28 15:26:52 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/01 17:05:36 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ void	start_game(t_app *app)
 {
 	app->player = (t_player){(t_vector2){POSITION_START_X, POSITION_START_Y},
 		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
+		(t_vector2){0.f, 0.f},
 		(t_vector2){0.0, 0.0}, 1.0, 0.5f,0.f, 0};
 	init_camera_plane(app);
 	import_file(app, MAP_PATH);

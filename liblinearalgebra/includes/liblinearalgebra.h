@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:46:18 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/25 16:17:22 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/01 16:06:25 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,5 +57,9 @@ double		ft_vector_angle(t_vector2 a, t_vector2 b);
 int			ft_line_side(t_line line, t_vector2 coord);
 t_vector2	ft_vector2_sub(t_vector2 a, t_vector2 b);
 t_vector2	ft_vector2_add(t_vector2 a, t_vector2 b);
-
+t_vector3	ft_vector3_sub(t_vector3 a, t_vector3 b);
+t_vector3	ft_vector3_add(t_vector3 a, t_vector3 b);
+double		ft_lerp(double a, double b, double f);
+void		ft_vector2_limit(t_vector2 *a, double limit);
+void		ft_vector3_limit(t_vector3 *a, double limit);
 #endif

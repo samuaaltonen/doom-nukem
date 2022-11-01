@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/28 15:27:53 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/01 16:34:34 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ void	render_pointer(t_app *app, int x, int y)
 void	render_game(t_app *app)
 {
 	handle_movement(app);
+	update_position(app);
 	render_sectors(app);
 	render_ui(app);
 }

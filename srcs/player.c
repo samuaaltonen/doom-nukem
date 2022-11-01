@@ -59,8 +59,20 @@ static t_bool	is_wall_collision(t_app *app, t_move new)
 /**
  * Updates player's position if possible.
  */
-static void	update_position(t_app *app, t_vector2 new)
+void	update_position(t_app *app)
 {
+		if(ft_vector_length(app->player.move_vector) > 0.f)
+	{
+		if(ft_vector_length(app->player.move_vector) * app->conf->delta_time > MOVE_DECEL)
+			app->player.move_vector = ft_vector_resize(app->player.move_vector,0.9);
+		else
+			app->player.move_vector = (t_vector2){0.f,0.f};
+
+	}
+	t_vector2 new;
+	new = (t_vector2){app->player.pos.x + app->player.move_vector.x * MOVEMENT_SPEED * app->conf->delta_time, app->player.pos.y + app->player.move_vector.y * MOVEMENT_SPEED * app->conf->delta_time};
+	ft_printf("movevector x%f,y%f, delta%f, len%f\n", app->player.move_vector.x, app->player.move_vector.y, app->conf->delta_time, ft_vector_length(app->player.move_vector));
+
 	if(!is_wall_collision(app, (t_move){new, app->player.elevation}))
 		return ;
 	if (!is_collision(app, (t_vector2){new.x - COLLISION_OFFSET,
@@ -107,33 +119,51 @@ void	player_rotate(t_app *app, double angle)
 void	player_move(t_app *app, t_movement movement, double speed)
 {
 	t_vector2	perpendicular;
-	t_vector2	new;
+	//t_vector2	new;
 
 	if (!(movement == FORWARD || movement == BACKWARD
 			|| movement == LEFT || movement == RIGHT || movement == UP
 			|| movement == DOWN))
 		return ;
 	if (movement == FORWARD)
-		new = (t_vector2){app->player.pos.x + app->player.dir.x * speed,
-			app->player.pos.y + app->player.dir.y * speed};
+	{
+		app->player.move_vector = ft_vector2_add(app->player.move_vector, (t_vector2){app->player.dir.x, app->player.dir.y});
+		//ft_vector3_limit(&(app->player.move_vector), MOVEMENT_SPEED);
+		/* new = (t_vector2){app->player.pos.x + app->player.dir.x * speed,
+			app->player.pos.y + app->player.dir.y * speed}; */
+	}
 	if (movement == BACKWARD)
-		new = (t_vector2){app->player.pos.x - app->player.dir.x * speed,
-			app->player.pos.y - app->player.dir.y * speed};
+	{
+		app->player.move_vector = ft_vector2_add(app->player.move_vector, (t_vector2){-app->player.dir.x,-app->player.dir.y });
+		//ft_vector3_limit(&(app->player.move_vector), MOVEMENT_SPEED);
+	/* 	new = (t_vector2){app->player.pos.x - app->player.dir.x * speed,
+			app->player.pos.y - app->player.dir.y * speed}; */
+	}
+		
 	if (movement == LEFT || movement == RIGHT)
 	{
 		perpendicular = ft_vector_perpendicular(app->player.dir);
 		if (movement == LEFT)
-			new = (t_vector2){app->player.pos.x - perpendicular.x * speed,
-				app->player.pos.y - perpendicular.y * speed};
+		{
+			app->player.move_vector = ft_vector2_add(app->player.move_vector, (t_vector2){-perpendicular.x,-perpendicular.y});
+			//ft_vector3_limit(&(app->player.move_vector), MOVEMENT_SPEED);
+			/* new = (t_vector2){app->player.pos.x - perpendicular.x * speed,
+				app->player.pos.y - perpendicular.y * speed}; */
+		}
 		if (movement == RIGHT)
-			new = (t_vector2){app->player.pos.x + perpendicular.x * speed,
-				app->player.pos.y + perpendicular.y * speed};
+		{
+			app->player.move_vector = ft_vector2_add(app->player.move_vector, (t_vector2){perpendicular.x,perpendicular.y});
+			//ft_vector3_limit(&(app->player.move_vector), MOVEMENT_SPEED);
+			/* new = (t_vector2){app->player.pos.x + perpendicular.x * speed,
+				app->player.pos.y + perpendicular.y * speed}; */
+		}
 	}
+	//new = (t_vector2){app->player.pos.x + app->player.move_vector.x, app->player.pos.y + app->player.move_vector.y};
 	//----DEBUG FLY
 	if (movement == UP)
 		app->player.elevation += speed;
 	if (movement == DOWN)
 		app->player.elevation -= speed;
 	//----
-	update_position(app, new);
+	//update_position(app, new);
 }

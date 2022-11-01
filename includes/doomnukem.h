@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/27 15:36:35 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/01 16:27:40 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void		render_multithreading(t_app *app, void *(*renderer)(void *));
  */
 void		player_rotate(t_app *app, double angle);
 void		player_move(t_app *app, t_movement movement, double speed);
-
+void		update_position(t_app *app);
 /**
  * Polygons
 */
