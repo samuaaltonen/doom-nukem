@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/27 15:36:35 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:48:57 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,12 +127,6 @@ void		render_multithreading(t_app *app, void *(*renderer)(void *));
  */
 void		player_rotate(t_app *app, double angle);
 void		player_move(t_app *app, t_movement movement, double speed);
-
-/**
- * Polygons
-*/
-void		*render_polygons(void *data);
-void		polygon_draw_floors(t_app *app, t_polygon *polygon);
 
 /**
  * Helper functions

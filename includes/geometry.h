@@ -49,27 +49,4 @@ typedef struct s_rect
 	int				h;
 }	t_rect;
 
-/**
- * Polygons GOING TO BE REMOVED SOON
-*/
-typedef struct s_polygon_hit
-{
-	int		y_first_top;
-	int		y_second_top;
-	int		y_first_bottom;
-	int		y_second_bottom;
-	double	distance_first;
-	double	distance_second;
-}	t_polygon_hit;
-
-typedef struct s_polygon
-{
-	t_vector2		corners[MAX_POLYGON_CORNERS];
-	int				corner_count;
-	double			bottom;
-	double			top;
-	int				texture;
-	t_polygon_hit	*hits;
-}	t_polygon;
-
 #endif

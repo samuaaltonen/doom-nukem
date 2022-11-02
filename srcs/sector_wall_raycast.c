@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/02 15:11:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:57:59 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,8 +84,14 @@ static double	apply_floor_slope(t_rayhit *hit)
 	perpendicular_distance = cos(pos_angle) * ft_vector_length(ft_vector2_sub(
 		hit->position,
 		hit->sector->floor_slope_start));
+	hit->floor_pos_angle = ft_vector_angle(hit->ray,
+		ft_vector2_sub(hit->sector->floor_slope_end,
+			hit->sector->floor_slope_start));
 	hit->perpendicular_distance = perpendicular_distance;
-	hit->floor_horizon = 1.0 - relation * perpendicular_distance / 2 * hit->distortion;
+	hit->floor_horizon = 1.0 - relation * perpendicular_distance / 2;
+	/* hit->floor_horizon = 1.0 - relation * perpendicular_distance / 2; */
+	/* hit->floor_horizon = 1.0 - 2 * (hit->sector->floor_slope_height
+		/ perpendicular_distance); */
 	return (perpendicular_distance * relation);
 }
 

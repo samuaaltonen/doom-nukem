@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/01 15:21:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:43:20 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # define MAX_RAY_DISTANCE 25.0
 # define TEX_SIZE 64
 # define MOUSE_SENSITIVITY 20.0
-# define MAX_POLYGON_CORNERS 8
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 8
 # define MAX_VISIBLE_SECTORS 64

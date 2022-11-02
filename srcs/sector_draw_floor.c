@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/02 15:11:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:55:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,14 @@ void	draw_floor(t_app *app, int x, t_rayhit *hit)
 		return;
 	app->occlusion_bottom[x] = WIN_H - y_start;
 	double	elevation_offset = hit->sector->floor_slope_height
-		/ hit->sector->floor_slope_length * hit->distance - hit->sector->floor_slope_height 
+		/ hit->sector->floor_slope_length * hit->distance - hit->sector->floor_slope_height;
 		/* - hit->perpendicular_distance * hit->sector->floor_slope_height
-		/ hit->sector->floor_slope_length */;
-	if (hit->sector->floor_slope_height != 0.0 && x == 640) {
+		/ hit->sector->floor_slope_length */
+	if (hit->sector->floor_slope_height != 0.0 && x == 1278) {
 		distance = ((app->player.height + app->player.elevation + elevation_offset) - hit->sector->floor_height)
 				* WIN_H / (y_start - WIN_H / 2 * hit->floor_horizon);
-		ft_printf("real distance: %f, distance by horizon: %f, elevation offset: %f, horizon: %f, perpendicular dist: %f\n",
-			hit->distance, distance, elevation_offset, hit->floor_horizon, hit->perpendicular_distance);
+		ft_printf("real distance: %f, distance by horizon: %f, elevation offset: %f, horizon: %f, perpendicular dist: %f, pos angle: %f\n",
+			hit->distance, distance, elevation_offset, hit->floor_horizon, hit->perpendicular_distance, hit->floor_pos_angle);
 	}
 	while (y_start < y_end)
 	{
