@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/01 17:25:56 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:05:47 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
 # define POSITION_START_Y 0.0
 # define ROTATION_SPEED 1.8f
 # define MOVEMENT_SPEED 3.2f
-# define MOVE_RANGE 0.2f
-# define MOVE_ACCEL 0.1f
-# define MOVE_DECEL 0.1f
+# define MOVE_RANGE 0.05f
+# define MOVE_ACCEL 0.2f
+# define MOVE_DECEL 0.01f
 
 /**
  * Movement direction enumeration.
@@ -43,6 +43,7 @@ typedef struct s_player
 	t_vector2		pos;
 	t_vector2		dir;
 	t_vector2		move_vector;
+	double			velocity;
 	t_vector2		cam;
 	double			camera_length;
 	double			height;

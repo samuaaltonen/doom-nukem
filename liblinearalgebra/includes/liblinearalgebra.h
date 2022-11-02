@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:46:18 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/01 16:06:25 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/02 14:19:18 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,4 +62,6 @@ t_vector3	ft_vector3_add(t_vector3 a, t_vector3 b);
 double		ft_lerp(double a, double b, double f);
 void		ft_vector2_limit(t_vector2 *a, double limit);
 void		ft_vector3_limit(t_vector3 *a, double limit);
+t_vector2	ft_vector2_normalize(t_vector2 a);
+
 #endif

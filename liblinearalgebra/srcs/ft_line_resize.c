@@ -21,6 +21,12 @@ t_line	ft_line_resize(t_line line, double length, int side)
 	t_line	resized;
 	t_vector2	line_direction;
 
+	if(!length)
+	{
+		resized.a = (t_vector2){0.f,0.f};
+		resized.b = (t_vector2){0.f,0.f};
+			return (resized);
+	}
 	line_direction = ft_vector_resize((t_vector2){
 			line.b.x - line.a.x,
 			line.b.y - line.a.y,
