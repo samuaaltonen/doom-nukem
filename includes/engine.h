@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/02 13:56:20 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:10:53 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,6 @@ typedef struct s_rayhit
 	double		floor_horizon;
 	double		ceiling_horizon;
 
-	double		hit_angle;
 	double		floor_pos_angle;
 	double		perpendicular_distance;
 
