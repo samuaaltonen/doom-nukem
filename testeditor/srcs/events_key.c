@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/31 11:41:29 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/02 14:08:31 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	events_keyup(int keycode, t_app *app)
 	}
 	if (keycode == SDLK_x || keycode == SDLK_z)
 		move_divider(app, keycode);
+	if (keycode == SDLK_p)
+		app->player_edit = ft_toggle(app->player_edit);
 	return (0);
 }
 
