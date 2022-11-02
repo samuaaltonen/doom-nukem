@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/31 11:55:17 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/02 14:08:48 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,13 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 				app->active_sector = find_child_sector(app);
 			app->active = find_clicked_vector(app);
 		}
+		else if (app->player_edit)
+			{
+				app->mouse_click = app->mouse_track;
+				app->player.sector = get_sector_id(app, click_sector(app));
+				render_player(app);
+				app->player_edit = FALSE;
+			}
 		else
 			app->active_sector = click_sector(app);
 	}

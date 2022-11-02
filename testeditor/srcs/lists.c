@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:42:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/31 15:57:18 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:50:24 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_vec2_lst	*new_vector_list(t_vector2 *point)
 /**
  * Adds a new node to the end of vector2d linked list.
  */
-int		put_to_vector_list(t_vec2_lst **list, t_vec2_lst *new)
+int	put_to_vector_list(t_vec2_lst **list, t_vec2_lst *new)
 {
 	t_vec2_lst		*last;
 
@@ -55,7 +55,7 @@ int		put_to_vector_list(t_vec2_lst **list, t_vec2_lst *new)
 /**
  * Deletes the whole vector2d linked list.
  */
-int		del_vector_list(t_vec2_lst **list)
+int	del_vector_list(t_vec2_lst **list)
 {
 	t_vec2_lst		*current;
 	t_vec2_lst		*next;

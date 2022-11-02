@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/31 15:57:20 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:23:53 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,7 @@ enum e_colors {
 	BG_DARK = 0x424242,
 	TEXT = 0xFF111111,
 	ACTIVE_TEXT = 0xFFFF00FF,
+	PLAYER = 0x00FF00
 };
 
 /**
@@ -147,6 +148,13 @@ typedef struct	s_draw_line
 	int		d;
 	int		err;
 }	t_draw_line;
+
+typedef struct	s_player
+{
+	t_vector2	position;
+	t_vector2	direction;
+	int			sector;
+}	t_player;
 
 typedef struct	s_sectorlist
 {
@@ -222,8 +230,10 @@ typedef struct s_app
 	t_bool				floor_edit;
 	t_bool				light_edit;
 	t_bool				slope_edit;
+	t_bool				player_edit;
 	int					sectorcount;
 	t_assets			assets;
+	t_player			player;
 }	t_app;
 
 typedef struct	s_exportsector
@@ -314,7 +324,6 @@ void			render_sector_points(t_app *app);
 void			render_fill_active_sector(t_app *app);
 void			draw_list_lines(t_app *app, t_vec2_lst *a, t_vec2_lst *b, int color);
 void			draw_line(t_app *app, t_vector2 *a, t_vector2 *b, int color);
-void		map_coordinates(t_rect *src, t_rect *dst, t_point *point);
 
 /**
  * Sector Functions
@@ -390,4 +399,9 @@ void		blit_surface(SDL_Surface *src, t_rect *src_rect, SDL_Surface *dst, t_rect 
 void		render_help_menu(t_app *app);
 void		load_assets(t_app *app);
 void		render_texture_icons(t_app *app);
+
+/**
+ * Player
+*/
+void		render_player(t_app *app);
 #endif
