@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/02 13:19:54 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:33:47 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,13 @@ void	render_titlescreen(t_app *app)
 	rect_from_surface(app->surface, &dst);
 	blit_surface(app->assets.title_screen_image, &src, app->surface, &dst);
 	change_font(app, 80, 0xFF111111);
-	render_text(app, (t_point){484, 216}, "AWAKE");
+	render_text(app, (t_point){484, 214}, "AWAKE");
 	change_font(app, 80, 0xFFd50000);
 	render_text(app, (t_point){490, 210}, "AWAKE");
 	change_font(app, 32, 0xFFFFFFFF);
 	render_text(app, (t_point){504, WIN_H - 170}, "PRESS SPACE");
 	load_font(app);
+	play_music(app, MUSIC_PATH);
 }
 
 void	render_mainmenu(t_app *app)
@@ -72,6 +73,7 @@ void	render_game(t_app *app)
 	handle_movement(app);
 	render_sectors(app);
 	render_ui(app);
+
 }
 
 void	render_pausemenu(t_app *app)

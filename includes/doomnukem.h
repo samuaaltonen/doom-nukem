@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/01 19:07:38 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:28:43 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,6 +203,11 @@ void		render_titlescreen(t_app *app);
 void		render_pointer(t_app *app, int x, int y);
 void		render_game(t_app *app);
 void		render_pausemenu(t_app *app);
+/*
+* AUDIO.C
+*/
+void    	play_music(t_app *app, char *file);
+void		play_sound(t_app *app, char *file);
 
 /**
  * utils_sdl
