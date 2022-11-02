@@ -3,22 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/27 13:42:49 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/02 12:15:15 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PLAYER_H
 # define PLAYER_H
 
-# define DIRECTION_START_X 0.0
-# define DIRECTION_START_Y 1.0
-# define POSITION_START_X 0.0
-# define POSITION_START_Y 0.0
+# define DIRECTION_START_X -1.0
+# define DIRECTION_START_Y 0.0
+# define POSITION_START_X 3.0
+# define POSITION_START_Y 12.0
 # define ROTATION_SPEED 1.8f
-# define MOVEMENT_SPEED 3.2f
+# define MOVEMENT_SPEED 1.0f
 
 /**
  * Movement direction enumeration.

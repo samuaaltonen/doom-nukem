@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/01 15:44:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/02 13:56:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,11 +52,19 @@ void	draw_floor(t_app *app, int x, t_rayhit *hit)
 	if (y_start == y_end || y_start > y_end)
 		return;
 	app->occlusion_bottom[x] = WIN_H - y_start;
+	double	elevation_offset = hit->sector->floor_slope_height
+		/ hit->sector->floor_slope_length * hit->distance - hit->sector->floor_slope_height;
+	if (hit->sector->floor_slope_height != 0.0 && x == 640) {
+		distance = ((app->player.height + app->player.elevation + elevation_offset) - hit->sector->floor_height)
+				* WIN_H / (y_start - WIN_H / 2 * hit->floor_horizon);
+		ft_printf("real distance: %f, distance by horizon: %f, elevation offset: %f, horizon: %f, hit angle: %f, perpendicular dist: %f\n",
+			hit->distance, distance, elevation_offset, hit->floor_horizon, hit->hit_angle, hit->perpendicular_distance);
+	}
 	while (y_start < y_end)
 	{
 		if (hit->sector->floor_slope_height != 0.0) {
-			distance = ((app->player.height * 2 + app->player.elevation) - hit->sector->floor_height)
-			* WIN_H / (y_start / cos(hit->floor_slope_angle * 4) - WIN_H / 2);
+			distance = ((app->player.height + app->player.elevation + elevation_offset) - hit->sector->floor_height)
+				* WIN_H / (y_start - WIN_H / 2 * hit->floor_horizon);
 		}
 		else
 			distance = ((app->player.height + app->player.elevation) - hit->sector->floor_height) * WIN_H / (y_start - WIN_H / 2);
