@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/01 18:11:14 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/02 11:57:46 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define BUTTON_PRESS_PATH "assets/ui/button_press2.bmp"
 # define TITLESCREEN_PATH "assets/images/awakened3.bmp"
 # define POINTER_PATH "assets/ui/mouse_pointer.bmp"
-# define MUSIC_PATH "assets/sounds/music.wav"
+# define MUSIC_PATH "assets/sounds/title_music.wav"
 # define MAP_PATH "./testeditor/test.test"
 
 /**

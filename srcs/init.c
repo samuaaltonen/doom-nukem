@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/01 19:13:54 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/02 13:21:15 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	sdl_init(t_app *app)
 
 	app->audio.device_id = SDL_OpenAudioDevice(NULL, 0, &app->audio.wav_spec, NULL, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
 	SDL_QueueAudio(app->audio.device_id, app->audio.music, app->audio.music_length);
-	SDL_QueueAudio(app->audio.device_id, app->audio.sound, app->audio.sound_length);
 	SDL_PauseAudioDevice(app->audio.device_id, 0);
 	SDL_FreeWAV(app->audio.music);
 	SDL_ShowCursor(SDL_DISABLE);
