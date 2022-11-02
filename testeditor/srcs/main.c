@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:40:17 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:19:14 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:41:38 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
-
 
 /**
  * Exits the application when window is destroyed.
@@ -35,7 +34,7 @@ void	exit_error(char *message)
 	exit(EXIT_FAILURE);
 }
 
-int main(void)
+int	main(void)
 {
 	t_app	*app;
 

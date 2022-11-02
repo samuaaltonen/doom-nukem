@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:38:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/25 15:37:50 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:42:51 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,15 @@ int	get_pixel_color(SDL_Surface *surface, int x, int y)
 		return (0);
 	pixel = surface->pixels + pixel_pos;
 	return (*(int *)pixel);
+}
+
+/**
+ * Gets map coordinates.
+*/
+static void	map_coordinates(t_rect *src, t_rect *dst, t_point *point)
+{
+	point->x = point->x * ((float)dst->w / (float)src->w) + dst->x;
+	point->y = point->y * ((float)dst->h / (float)src->h) + dst->y;
 }
 
 /**
@@ -61,10 +70,11 @@ void	blit_surface(SDL_Surface *src, t_rect *src_rect,
 		y++;
 	}
 }
+
 /**
  * Checks for errors before blitting the surfaces
  */
-int		check_blit(SDL_Surface *src, t_rect *src_rect,
+int	check_blit(SDL_Surface *src, t_rect *src_rect,
 	SDL_Surface *dst, t_rect *dst_rect)
 {
 	if (src == NULL || dst == NULL)
@@ -87,16 +97,4 @@ void	rect_from_surface(SDL_Surface *surface, t_rect *rect)
 	rect->y = 0;
 	rect->w = surface->w;
 	rect->h = surface->h;
-}
-
-/**
- * Loads the font or resets it
- */
-void	load_font(t_app *app)
-{
-	if (!app->assets.font.font)
-		app->assets.font.font = SDL_LoadBMP(FONT_TX);
-	if (!app->assets.font.font)
-		exit_error("Could not load font");
-	change_font(app, 16, 0xFF000000);
 }

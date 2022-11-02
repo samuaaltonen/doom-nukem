@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/02 14:11:02 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:21:24 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	app_prepare(t_app *app)
 {
 	double		aspect_ratio;
 
-	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0 || TTF_Init() < 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0 || TTF_Init() < 0)
 		exit_error(MSG_ERROR_SDL_INIT);
 	app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_SHOWN);
 	if (!app->win)
@@ -41,9 +41,6 @@ void	app_prepare(t_app *app)
 	app->surface = SDL_GetWindowSurface(app->win);
 	if (!app->surface)
 		exit_error(MSG_ERROR_WINDOW_SURFACE);
-	app->font = TTF_OpenFont(FONT_FILE, 22);
-	if (!app->font)
-		exit_error(MSG_ERROR_FONT);
 	aspect_ratio = ((double)app->surface->h / (double)app->surface->w) * -100;
 	app->view_pos = (t_vector2){-50.0, 50.0};
 	app->zoom_area = (t_vector2){100.0,aspect_ratio};
@@ -54,6 +51,7 @@ void	app_prepare(t_app *app)
 	app->sectors = NULL;
 	app->player_edit = 0;
 	load_assets(app);
+	load_font(app);
 	SDL_ShowCursor(SDL_ENABLE);
 	//SDL_WarpMouseInWindow(app->win, WIN_W / 2, WIN_H / 2);
 }
@@ -65,35 +63,28 @@ void	app_prepare(t_app *app)
 void	app_render(t_app *app)
 {
 	flush_surface(app->surface);
-	/* SDL_Surface	*converted_surface; */
-	//SDL_Surface *text_surface;
-	//text_surface = TTF_RenderText_Solid(app->font, "app->conf->fps_info", (SDL_Color){255, 255, 255, 0});
 	handle_movement(app);
 	app->view_size.x = app->view_pos.x + app->zoom_area.x;
 	app->view_size.y = app->view_pos.y + app->zoom_area.y;
 	render_fill_active_sector(app);
-	//render_grid(app, 0.5f, 0x424242);
-	//render_grid(app, 1.0f, 0x888888);
 	render_divider(app);
-	zoom_slider(app);
 	render_sectors(app);
-	if(app->active)
+	if (app->active)
 	{
 		render_sector(app, app->active);
 		render_selection_point(app, app->active, 3);
 	}
 	render_sector_points(app);
-	if(app->list_ongoing)
+	if (app->list_ongoing)
 	{
-		if(valid_point(app))
+		if (valid_point(app))
 			draw_line(app, &app->active_last->point, &app->mouse_track, 0xAABBCC);
 		else
 			draw_line(app, &app->active_last->point, &app->mouse_track, 0xFF4444);
 	}
 	render_player(app);
+	zoom_slider(app);
 	render_help_menu(app);
-	//SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
-	//SDL_FreeSurface(text_surface);
 	SDL_UpdateWindowSurface(app->win);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/02 14:14:01 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/02 15:23:53 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -324,7 +324,6 @@ void			render_sector_points(t_app *app);
 void			render_fill_active_sector(t_app *app);
 void			draw_list_lines(t_app *app, t_vec2_lst *a, t_vec2_lst *b, int color);
 void			draw_line(t_app *app, t_vector2 *a, t_vector2 *b, int color);
-void		map_coordinates(t_rect *src, t_rect *dst, t_point *point);
 
 /**
  * Sector Functions
