@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/02 16:00:17 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/02 17:02:51 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,22 +34,12 @@ int	events_keyup(int keycode, t_app *app)
 	if (keycode == SDLK_d)
 		app->conf->keystates ^= D_DOWN;
 	if (keycode == SDLK_LSHIFT)
-	{
 		app->conf->keystates ^= SHIFT_DOWN;
-	//----
-		if (app->status == STATUS_GAME)
-			play_sound(app, LASER_PATH);
-	//----
-	}
 	if (keycode == SDLK_LCTRL)
 		app->conf->keystates ^= CTRL_DOWN;
 	if (keycode == SDLK_ESCAPE)
 		exit(EXIT_SUCCESS);
-	if (keycode == SDLK_h)
-	{
-				if (app->status == STATUS_GAME)
-			play_sound(app, SHOT_PATH);
-	}
+//	if (keycode == SDLK_h)
 	if (keycode == SDLK_e)
 		app->conf->toggle_loop = ft_toggle(app->conf->toggle_loop);
 	if (keycode == SDLK_TAB)
