@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:36:45 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 13:45:47 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/01 14:29:08 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ t_sector_lst *sector_pop(t_app *app, t_sector_lst **pop, void (*del)(void *, siz
 	t_sector_lst *prev;
 	t_sector_lst *head;
 
-	if((*pop)->member_sectors[0] || !(app->sectors) || !pop || !(*pop))
+	if(!pop || !(*pop) || (*pop)->member_sectors[0] || !(app->sectors))
 		return (NULL);
 	prev = NULL;
 	head = app->sectors;
@@ -113,9 +113,9 @@ t_sector_lst *sector_pop(t_app *app, t_sector_lst **pop, void (*del)(void *, siz
 			prev->next = (*pop)->next;
 		if(head == app->sectors)
 			app->sectors = (*pop)->next;
-		if(del)
-			sector_delone(&(app->active_sector), del);
+		sector_delone(pop, del);
 		app->active_sector = NULL;
+		app->active = NULL;
 		app->sectorcount--;
 	}
 	return (*pop);
