@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/04 00:31:35 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/04 01:38:01 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,10 @@ static void	calculate_parent_positions(t_app *app, t_rayhit *hit,
 
 static double	apply_ceiling_slope(t_rayhit *hit)
 {
-	double		relation;
 	double		perpendicular_distance;
 	double		pos_angle;
 	t_vector2	slope_start_to_hit;
 
-	relation = hit->sector->ceiling_slope_height
-		/ hit->sector->ceiling_slope_length;
 	slope_start_to_hit = ft_vector2_sub(hit->position,
 			hit->sector->ceiling_slope_start);
 	pos_angle = ft_vector_angle(slope_start_to_hit,
@@ -64,34 +61,28 @@ static double	apply_ceiling_slope(t_rayhit *hit)
 	perpendicular_distance = cos(pos_angle) * ft_vector_length(ft_vector2_sub(
 		hit->position,
 		hit->sector->ceiling_slope_start));
-	return (perpendicular_distance * relation);
+	return (perpendicular_distance * hit->sector->ceiling_slope_magnitude);
 }
 
-static double	apply_floor_slope(t_app *app, t_rayhit *hit)
+static double	apply_floor_slope(t_rayhit *hit)
 {
-	double		relation;
 	double		perpendicular_distance;
 	double		pos_angle;
 	t_vector2	slope_vector;
 
-	relation = hit->sector->floor_slope_height
-		/ hit->sector->floor_slope_length;
 	slope_vector = ft_vector2_sub(hit->sector->floor_slope_end,
 			hit->sector->floor_slope_start);
 
 	pos_angle = ft_vector_angle(ft_vector2_sub(hit->position,
 			hit->sector->floor_slope_start), slope_vector);
 	perpendicular_distance = cos(pos_angle) * ft_vector_length(ft_vector2_sub(
-		hit->position,
-		hit->sector->floor_slope_start));
+		hit->position, hit->sector->floor_slope_start));
 
-	hit->perpendicular_distance = perpendicular_distance;
+	hit->floor_horizon_angle = ft_vector_angle(hit->ray, slope_vector);
+	hit->floor_horizon = 1.0 - hit->sector->floor_slope_magnitude * 2 * cos(hit->floor_horizon_angle);
 
-	hit->floor_horizon_angle = ft_vector_angle(app->player.dir, slope_vector);
-	hit->floor_horizon = 1.0 - relation * 2 * cos(hit->floor_horizon_angle);
-
-	hit->floor_slope_height = perpendicular_distance * relation;
-	return (perpendicular_distance * relation);
+	hit->floor_slope_height = perpendicular_distance * hit->sector->floor_slope_magnitude;
+	return (perpendicular_distance * hit->sector->floor_slope_magnitude);
 }
 
 /**
@@ -108,7 +99,7 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 	if (hit->sector->ceiling_slope_height)
 		ceiling_slope = apply_ceiling_slope(hit);
 	if (hit->sector->floor_slope_height)
-		floor_slope = apply_floor_slope(app, hit);
+		floor_slope = apply_floor_slope(hit);
 	relative_height = WIN_H / hit->distance;
 	hit->height = (int)(relative_height
 			* (hit->sector->ceiling_height + ceiling_slope - hit->sector->floor_height - floor_slope));

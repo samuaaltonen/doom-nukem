@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/04 00:31:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/04 01:36:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,12 @@ typedef struct s_sector
 	t_vector2		floor_slope_start;
 	t_vector2		floor_slope_end;
 	double			floor_slope_height;
-	double			floor_slope_length;
+	double			floor_slope_magnitude;
 
 	t_vector2		ceiling_slope_start;
 	t_vector2		ceiling_slope_end;
 	double			ceiling_slope_height;
-	double			ceiling_slope_length;
+	double			ceiling_slope_magnitude;
 
 	t_vector3		floor_slope_position;
 	t_vector2		floor_slope_angles;
@@ -100,15 +100,10 @@ typedef struct s_rayhit
 	int			parent_wall_end;
 
 	double		floor_horizon;
-	double		floor_horizon_height_offset;
 	double		floor_horizon_angle;
-	t_bool		floor_horizon_is_ascending;
-
 	double		floor_slope_height;
 
 	double		ceiling_horizon;
-
-	double		perpendicular_distance;
 
 	double		parent_texture_offset_top;
 	double		parent_texture_offset_bottom;
