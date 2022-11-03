@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:48:08 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/25 11:05:16 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/03 12:50:48 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,15 @@ static t_rect	get_rect(int c)
 	lowcase = "abcdefghijklmnopqrstuvwxyz";
 	digits = "0123456789";
 	symbols = ".,:;'\"!?-_()/|\\<>\%";
-
 	if (ft_isupper(c))
 		rect = get_char(upcase, c, 0);
 	else if (ft_islower(c))
 		rect = get_char(lowcase, c, 1);
 	else if (ft_isdigit(c))
 		rect = get_char(digits, c, 2);
-	else 
+	else
 		rect = get_char(symbols, c, 3);
-		return (rect);
+	return (rect);
 }
 
 static void	render_char(t_app *app, t_point *position, t_rect src)
@@ -93,7 +92,6 @@ static t_rect	get_char(char *str, int c, int line)
 	return (src);
 }
 
-
 void	change_font(t_app *app, int size, int color)
 {
 	int		x;
@@ -108,7 +106,8 @@ void	change_font(t_app *app, int size, int color)
 	{
 		while (x < app->assets.font.font->w)
 		{
-			pixel_pos = (y * app->assets.font.font->pitch) + (x * IMAGE_PIXEL_BYTES);
+			pixel_pos = (y * app->assets.font.font->pitch)
+				+ (x * IMAGE_PIXEL_BYTES);
 			pixel = app->assets.font.font->pixels + pixel_pos;
 			if ((*(int *)pixel & 0xFF000000) != 0x00000000)
 				put_pixel_to_surface(app->assets.font.font, x, y, color);

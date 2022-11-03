@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/27 16:46:19 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/03 11:06:32 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,12 @@
  */
 void	render_sector(t_app *app, t_vec2_lst *sector_start)
 {
-	t_vec2_lst *tmp;
+	t_vec2_lst	*tmp;
 
 	tmp = sector_start;
 	while (tmp->next != NULL)
 	{
-		if(tmp->type > -1)
+		if (tmp->type > -1)
 			draw_list_lines(app, tmp, tmp->next, PORTAL);
 		else
 			draw_list_lines(app, tmp, tmp->next, 0xEEEEEE);
@@ -42,10 +42,10 @@ void	render_sector(t_app *app, t_vec2_lst *sector_start)
  */
 void	render_sectors(t_app *app)
 {
-	t_sector_lst *tmp;
+	t_sector_lst	*tmp;
 
 	tmp = app->sectors;
-	while(tmp)
+	while (tmp)
 	{
 		render_sector(app, tmp->wall_list);
 		tmp = tmp->next;
@@ -59,20 +59,21 @@ void	render_sectors(t_app *app)
  */
 void	render_sector_points(t_app *app)
 {
-	t_vec2_lst *head;
+	t_vec2_lst	*head;
 
-	if(app->active_sector)
+	if (app->active_sector)
 	{
 		head = app->active_sector->wall_list;
-		while(head)
+		while (head)
 		{
 			render_selection_point(app, head, 2);
 			head = head->next;
-			if(head == app->active_sector->wall_list)
-				break;
+			if (head == app->active_sector->wall_list)
+				break ;
 		}
 		if (app->wall_edit)
-			change_walls_tex(app->active_sector->wall_list, app->active_sector->wall_list->tex);
+			change_walls_tex(app->active_sector->wall_list,
+				app->active_sector->wall_list->tex);
 	}
 }
 
@@ -85,25 +86,27 @@ void	render_sector_points(t_app *app)
  */
 void	render_selection_point(t_app *app, t_vec2_lst *point, int size)
 {
-	t_point min;
-	t_point max;
+	t_point		min;
+	t_point		max;
 
-	if(point)
+	if (point)
 	{
-		min.x = (point->point.x - app->view_pos.x) * (app->surface->w) / (app->view_size.x - app->view_pos.x);
-		min.y = (point->point.y - app->view_pos.y) * (app->surface->h) / (app->view_size.y - app->view_pos.y);
+		min.x = (point->point.x - app->view_pos.x)
+			* (app->surface->w) / (app->view_size.x - app->view_pos.x);
+		min.y = (point->point.y - app->view_pos.y)
+			* (app->surface->h) / (app->view_size.y - app->view_pos.y);
 		max.x = min.x + size;
 		max.y = min.y + size;
 		min.x = min.x - size;
 		min.y = min.y - size;
-		while(min.y < max.y)
+		while (min.y < max.y)
 		{
 			min.x = max.x - size * 2;
-			while(min.x < max.x)
-				{
-					put_pixel_to_surface(app->surface, min.x, min.y, 0xFF00FF);
-					min.x++;
-				}
+			while (min.x < max.x)
+			{
+				put_pixel_to_surface(app->surface, min.x, min.y, 0xFF00FF);
+				min.x++;
+			}
 			min.y++;
 		}
 	}
