@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/02 15:57:59 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/03 12:21:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static double	apply_ceiling_slope(t_rayhit *hit)
 	return (perpendicular_distance * relation);
 }
 
-static double	apply_floor_slope(t_rayhit *hit)
+static double	apply_floor_slope(t_app *app, t_rayhit *hit)
 {
 	double		relation;
 	double		perpendicular_distance;
@@ -88,10 +88,13 @@ static double	apply_floor_slope(t_rayhit *hit)
 		ft_vector2_sub(hit->sector->floor_slope_end,
 			hit->sector->floor_slope_start));
 	hit->perpendicular_distance = perpendicular_distance;
-	hit->floor_horizon = 1.0 - relation * perpendicular_distance / 2;
-	/* hit->floor_horizon = 1.0 - relation * perpendicular_distance / 2; */
-	/* hit->floor_horizon = 1.0 - 2 * (hit->sector->floor_slope_height
-		/ perpendicular_distance); */
+
+	hit->floor_horizon_angle = ft_vector_angle(app->player.dir,
+		ft_vector2_sub(hit->sector->floor_slope_end,
+			hit->sector->floor_slope_start));
+	hit->floor_horizon = 1.0 - relation * perpendicular_distance / 2 * cos(hit->floor_horizon_angle);
+	hit->floor_horizon_dampener = perpendicular_distance * relation * (1.0 - cos(hit->floor_horizon_angle));
+
 	return (perpendicular_distance * relation);
 }
 
@@ -109,7 +112,7 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 	if (hit->sector->ceiling_slope_height)
 		ceiling_slope = apply_ceiling_slope(hit);
 	if (hit->sector->floor_slope_height)
-		floor_slope = apply_floor_slope(hit);
+		floor_slope = apply_floor_slope(app, hit);
 	relative_height = WIN_H / hit->distance;
 	hit->height = (int)(relative_height
 			* (hit->sector->ceiling_height + ceiling_slope - hit->sector->floor_height - floor_slope));
