@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/03 12:21:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/03 15:59:18 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,31 +69,47 @@ static double	apply_ceiling_slope(t_rayhit *hit)
 
 static double	apply_floor_slope(t_app *app, t_rayhit *hit)
 {
+	int 		ascending;
 	double		relation;
+	double		horizon_distance;
 	double		perpendicular_distance;
 	double		pos_angle;
-	t_vector2	slope_start_to_hit;
+	t_vector2	slope_vector;
 
 	relation = hit->sector->floor_slope_height
 		/ hit->sector->floor_slope_length;
-	slope_start_to_hit = ft_vector2_sub(hit->position,
+	slope_vector = ft_vector2_sub(hit->sector->floor_slope_end,
 			hit->sector->floor_slope_start);
-	pos_angle = ft_vector_angle(slope_start_to_hit,
-		ft_vector2_sub(hit->sector->floor_slope_end,
-			hit->sector->floor_slope_start));
+	ascending = 1;
+
+	pos_angle = ft_vector_angle(ft_vector2_sub(hit->position,
+			hit->sector->floor_slope_start), slope_vector);
 	perpendicular_distance = cos(pos_angle) * ft_vector_length(ft_vector2_sub(
 		hit->position,
 		hit->sector->floor_slope_start));
-	hit->floor_pos_angle = ft_vector_angle(hit->ray,
-		ft_vector2_sub(hit->sector->floor_slope_end,
-			hit->sector->floor_slope_start));
+
+	horizon_distance = perpendicular_distance;
+	// If viewing from opposite angle, mark relation as negative
+	if (ft_vector_dotproduct(hit->ray, slope_vector) < 0)
+	{
+		ascending = -1;
+		pos_angle = ft_vector_angle(ft_vector2_sub(hit->position,
+			hit->sector->floor_slope_end), slope_vector);
+		horizon_distance = cos(pos_angle) * ft_vector_length(ft_vector2_sub(
+			hit->position,
+			hit->sector->floor_slope_end));
+	}
+
+	hit->floor_pos_angle = ft_vector_angle(hit->ray, slope_vector);
 	hit->perpendicular_distance = perpendicular_distance;
 
-	hit->floor_horizon_angle = ft_vector_angle(app->player.dir,
-		ft_vector2_sub(hit->sector->floor_slope_end,
-			hit->sector->floor_slope_start));
-	hit->floor_horizon = 1.0 - relation * perpendicular_distance / 2 * cos(hit->floor_horizon_angle);
-	hit->floor_horizon_dampener = perpendicular_distance * relation * (1.0 - cos(hit->floor_horizon_angle));
+	hit->floor_horizon_angle = ft_vector_angle(app->player.dir, slope_vector);
+	hit->floor_horizon = 1.0 - relation * horizon_distance / 2 * fabs(cos(hit->floor_horizon_angle));
+
+	if (ascending == 1)
+		hit->floor_horizon_height_offset = relation * horizon_distance * (1.0 - fabs(cos(hit->floor_horizon_angle)));
+	else
+		hit->floor_horizon_height_offset = -relation * horizon_distance * (fabs(cos(hit->floor_horizon_angle)));
 
 	return (perpendicular_distance * relation);
 }

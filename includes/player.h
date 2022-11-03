@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/02 12:15:15 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/03 15:53:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_player
 	double			camera_length;
 	double			height;
 	double			elevation;
+	double			horizon;
 	int				current_sector;
 }	t_player;
 

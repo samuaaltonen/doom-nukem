@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/03 12:23:41 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/03 14:59:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,22 +58,22 @@ void	draw_floor(t_app *app, int x, t_rayhit *hit)
 		/* - hit->perpendicular_distance * hit->sector->floor_slope_height
 		/ hit->sector->floor_slope_length */
 	if (hit->sector->floor_slope_height != 0.0) {
-		distance = ((app->player.height + app->player.elevation + elevation_offset) - hit->sector->floor_height - hit->floor_horizon_dampener)
+		distance = ((app->player.height + app->player.elevation + elevation_offset) - hit->sector->floor_height - hit->floor_horizon_height_offset)
 				* WIN_H / (y_start - WIN_H / 2 * hit->floor_horizon);
 		/* if (x == 10)
 		ft_printf("{green}  10{reset}: real distance: %f, distance by horizon: %f, elevation offset: %f, horizon: %f, pos angle: %f, horizon_offset: %f\n",
-			hit->distance, distance, elevation_offset, hit->floor_horizon, hit->floor_pos_angle, hit->floor_horizon_dampener); */
+			hit->distance, distance, elevation_offset, hit->floor_horizon, hit->floor_pos_angle, hit->floor_horizon_height_offset); */
 		if (x == 640)
-		ft_printf("{cyan} 640{reset}: real distance: %f, distance by horizon: %f, elevation offset: %f, horizon: %f, pos angle: %f, horizon_offset: %f\n",
-			hit->distance, distance, elevation_offset, hit->floor_horizon, hit->floor_pos_angle, hit->floor_horizon_dampener);
+		ft_printf("{cyan} 640{reset}: real distance: %f, distance by horizon: %f, perp: %f, ele: %f, horizon: %f, pos angle: %f, off: %f, hor angle: %f\n",
+			hit->distance, distance, hit->perpendicular_distance, elevation_offset, hit->floor_horizon, hit->floor_pos_angle, hit->floor_horizon_height_offset, hit->floor_horizon_angle);
 		/* if (x == 1270)
 		ft_printf("{yellow}1270{reset}: real distance: %f, distance by horizon: %f, elevation offset: %f, horizon: %f, pos angle: %f, horizon_offset: %f\n",
-			hit->distance, distance, elevation_offset, hit->floor_horizon, hit->floor_pos_angle, hit->floor_horizon_dampener); */
+			hit->distance, distance, elevation_offset, hit->floor_horizon, hit->floor_pos_angle, hit->floor_horizon_height_offset); */
 	}
 	while (y_start < y_end)
 	{
 		if (hit->sector->floor_slope_height != 0.0) {
-			distance = ((app->player.height + app->player.elevation + elevation_offset) - hit->sector->floor_height - hit->floor_horizon_dampener)
+			distance = ((app->player.height + app->player.elevation + elevation_offset) - hit->sector->floor_height - hit->floor_horizon_height_offset)
 				* WIN_H / (y_start - WIN_H / 2 * hit->floor_horizon);
 		}
 		else

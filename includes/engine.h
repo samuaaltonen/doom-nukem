@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/03 12:02:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/03 15:15:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,9 @@ typedef struct s_rayhit
 	int			parent_wall_end;
 
 	double		floor_horizon;
-	double		floor_horizon_dampener;
+	double		floor_horizon_height_offset;
 	double		floor_horizon_angle;
+	t_bool		floor_horizon_is_ascending;
 
 	double		ceiling_horizon;
 
