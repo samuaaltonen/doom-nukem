@@ -62,49 +62,19 @@ static t_bool	is_wall_collision(t_app *app, t_move new)
 void	update_position(t_app *app)
 {
 	t_vector2 new;
-	t_vector2 move_new;
 
-	if(app->player.velocity > MOVEMENT_SPEED)
-		app->player.velocity = MOVEMENT_SPEED;
-	move_new = ft_vector2_normalize(app->player.move_vector);
-	ft_printf("movevector x%f,y%f, delta%f, len%f, velocity%f, keystates%.32b\n", app->player.move_vector.x, app->player.move_vector.y, app->conf->delta_time, ft_vector_length(app->player.move_vector),app->player.velocity, app->conf->keystates);
-	if(ft_vector_length(app->player.move_vector) > 0.f)
-		move_new = ft_vector_resize(move_new, app->player.velocity * app->conf->delta_time);
-	new = (t_vector2){app->player.pos.x + move_new.x, app->player.pos.y + move_new.y};
-	if(!(app->conf->keystates & 0b11110101))
-	{
-		ft_printf("slowingdown");
-		if(app->player.velocity > MOVE_RANGE && app->player.velocity > 0.f)
-				app->player.velocity -= MOVE_DECEL;
-		else
-			app->player.velocity = 0.f;
-	}
-	if(app->player.velocity != 0.f)
-		app->player.move_vector = ft_vector_resize(app->player.move_vector, MOVEMENT_SPEED / app->player.velocity);
-	else
-		app->player.move_vector = (t_vector2){0.f,0.f};
+	if (ft_vector_length(app->player.move_vector) > MOVEMENT_SPEED)
+		app->player.move_vector = ft_vector_resize(app->player.move_vector, MOVEMENT_SPEED);
+	new = app->player.move_vector;
+	app->player.move_vector = ft_vec2_lerp(app->player.move_vector, (t_vector2){0.f,0.f}, MOVE_DECEL * app->conf->delta_time);
+	new.x = new.x * MOVE_ACCEL;
+	new.y = new.y * MOVE_ACCEL;
+	//ft_printf("movevector x%f,y%f, delta%f, len%f, velocity%f, keystates%.32b\n", app->player.move_vector.x, app->player.move_vector.y, app->conf->delta_time, ft_vector_length(app->player.move_vector),app->player.velocity, app->conf->keystates);
+	new = (t_vector2){app->player.pos.x + new.x, app->player.pos.y + new.y};
 	if(!is_wall_collision(app, (t_move){new, app->player.elevation}))
 		return ;
-	/* if (!is_collision(app, (t_vector2){new.x - COLLISION_OFFSET,
-			app->player.pos.y - COLLISION_OFFSET})
-		&& !is_collision(app, (t_vector2){new.x - COLLISION_OFFSET,
-			app->player.pos.y + COLLISION_OFFSET})
-		&& !is_collision(app, (t_vector2){new.x + COLLISION_OFFSET,
-			app->player.pos.y - COLLISION_OFFSET})
-		&& !is_collision(app, (t_vector2){new.x + COLLISION_OFFSET,
-			app->player.pos.y + COLLISION_OFFSET}))
-		app->player.pos.x = new.x;
-	if (!is_collision(app, (t_vector2){app->player.pos.x - COLLISION_OFFSET,
-			new.y - COLLISION_OFFSET})
-		&& !is_collision(app, (t_vector2){app->player.pos.x - COLLISION_OFFSET,
-			new.y + COLLISION_OFFSET})
-		&& !is_collision(app, (t_vector2){app->player.pos.x + COLLISION_OFFSET,
-			new.y - COLLISION_OFFSET})
-		&& !is_collision(app, (t_vector2){app->player.pos.x + COLLISION_OFFSET,
-			new.y + COLLISION_OFFSET}))
-		app->player.pos.y = new.y; */
-		app->player.pos.y = new.y;
-		app->player.pos.x = new.x;
+	app->player.pos.y = new.y;
+	app->player.pos.x = new.x;
 }
 
 
@@ -131,8 +101,6 @@ void	player_rotate(t_app *app, double angle)
 void	player_move(t_app *app, t_movement movement, double speed)
 {
 	t_vector2	perpendicular;
-	//t_vector2	new;
-	app->player.velocity += MOVE_ACCEL;
 	if (!(movement == FORWARD || movement == BACKWARD
 			|| movement == LEFT || movement == RIGHT || movement == UP
 			|| movement == DOWN))

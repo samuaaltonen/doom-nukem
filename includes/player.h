@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/02 15:05:47 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/03 16:49:34 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 # define ROTATION_SPEED 1.8f
 # define MOVEMENT_SPEED 3.2f
 # define MOVE_RANGE 0.05f
-# define MOVE_ACCEL 0.2f
-# define MOVE_DECEL 0.01f
+# define MOVE_ACCEL 0.15f
+# define MOVE_DECEL 10.f
 
 /**
  * Movement direction enumeration.
