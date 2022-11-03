@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/03 15:15:47 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/04 00:31:33 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,10 @@ typedef struct s_rayhit
 	double		floor_horizon_angle;
 	t_bool		floor_horizon_is_ascending;
 
+	double		floor_slope_height;
+
 	double		ceiling_horizon;
 
-	double		floor_pos_angle;
 	double		perpendicular_distance;
 
 	double		parent_texture_offset_top;
