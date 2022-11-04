@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/04 11:01:47 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/04 12:05:57 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,6 +122,7 @@ void		put_pixel_to_surface_check(t_app *app, t_point point, int color,
 int			events_keyup(int keycode, t_app *app);
 int			events_keydown(int keycode, t_app *app);
 int			events_mouse_motion(t_app *app);
+int			events_mouse_down(int mouse_button, t_app *app);
 int			events_window_destroy(void);
 int			events_window_other(int windowevent, t_app *app);
 int			dispatch_event(t_app *app, SDL_Event *event);

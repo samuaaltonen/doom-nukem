@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:34:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/04 11:05:39 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/04 12:04:50 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,12 @@ enum e_keystate {
 	SPACE = 1 << 8,
 	SHIFT = 1 << 9,
 	CTRL = 1 << 10
+};
+
+enum e_buttonstate {
+	LEFT_MOUSE = 1 << 0,
+	RIGHT_MOUSE = 1 << 1,
+	MIDDLE_MOUSE = 1 << 2
 };
 
 #endif
