@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/02 15:08:59 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/03 14:23:25 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	edit_mode_keys(int keycode, t_app *app)
 /**
  * Handles events for key presses (keyup).
  */
-int		events_keyup(int keycode, t_app *app)
+int	events_keyup(int keycode, t_app *app)
 {
 	wasd_and_arrow_keys(keycode, app);
 	edit_mode_keys(keycode, app);
@@ -75,16 +75,8 @@ int		events_keyup(int keycode, t_app *app)
 		link_wall_to_sector(app);
 	if (keycode == SDLK_DELETE)
 		sector_pop(app, &(app->active_sector), NULL);
-	if (keycode == SDLK_y && app->active_sector && app->active)
-	{
-		app->active_sector->ceil_slope_wall = app->active;
-		app->active_sector->ceil_slope_opposite = find_opposite_point(app->active_sector, app->active);
-	}
-	if (keycode == SDLK_h && app->active_sector && app->active)
-	{
-		app->active_sector->floor_slope_wall = app->active;
-		app->active_sector->floor_slope_opposite = find_opposite_point(app->active_sector, app->active);
-	}
+	if (keycode == SDLK_y || keycode == SDLK_h)
+		activate_slope(app, keycode);
 	if (keycode == SDLK_x || keycode == SDLK_z)
 		move_divider(app, keycode);
 	if (keycode == SDLK_ESCAPE)

@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/02 14:08:48 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/03 11:40:39 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,12 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 			app->active = find_clicked_vector(app);
 		}
 		else if (app->player_edit)
-			{
-				app->mouse_click = app->mouse_track;
-				app->player.sector = get_sector_id(app, click_sector(app));
-				render_player(app);
-				app->player_edit = FALSE;
-			}
+		{
+			app->mouse_click = app->mouse_track;
+			app->player.sector = get_sector_id(app, click_sector(app));
+			render_player(app);
+			app->player_edit = FALSE;
+		}
 		else
 			app->active_sector = click_sector(app);
 	}
@@ -95,31 +95,31 @@ void	snap_to_nearest(t_app *app, t_point *mouse_pos, t_vector2 *snap_pos, double
 	snap_pos->x = world_pos.x;
 	snap_pos->y = world_pos.y;
 	tmp = fabs(fmod(world_pos.x, divider));
-	if(tmp < (divider / 2))
+	if (tmp < (divider / 2))
 	{
-		if(world_pos.x < 0)
+		if (world_pos.x < 0)
 			snap_pos->x = world_pos.x + tmp;
 		else
 			snap_pos->x = world_pos.x - tmp;
 	}
 	else
 	{
-		if(world_pos.x < 0)
+		if (world_pos.x < 0)
 			snap_pos->x = world_pos.x - (divider - tmp);
 		else
 			snap_pos->x = world_pos.x + (divider - tmp);
 	}
 	tmp = fabs(fmod(world_pos.y, divider));
-	if(tmp < (divider / 2))
+	if (tmp < (divider / 2))
 	{
-		if(world_pos.y < 0)
+		if (world_pos.y < 0)
 			snap_pos->y = world_pos.y + tmp;
 		else
 			snap_pos->y = world_pos.y - tmp;
 	}
 	else
 	{
-		if(world_pos.y < 0)
+		if (world_pos.y < 0)
 			snap_pos->y = world_pos.y - (divider - tmp);
 		else
 			snap_pos->y = world_pos.y + (divider - tmp);
