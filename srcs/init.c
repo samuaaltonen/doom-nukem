@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/02 15:27:58 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/04 13:40:56 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,9 @@ int	config_init(t_app *app)
 	app->conf->rotation_speed = ROTATION_SPEED;
 	app->conf->mouse_active = 1;
 	app->status = STATUS_TITLESCREEN;
+	app->conf->fps_avg = 0;
+	app->conf->fps_total = 0;
+	app->conf->frames_total = 0;
 	ft_strcpy(app->conf->fps_info, "FPS                 ");
 	init_thread_info(app);
 	return (1);

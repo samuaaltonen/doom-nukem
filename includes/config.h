@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/04 12:03:33 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/04 13:58:25 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,10 @@ typedef struct s_conf
 	int				toggle_loop;
 	int				toggle_help;
 	int				fps;
+	int				fps_avg;
+	int				frames_total;
+	int				fps_total;
+	int				fps_chunk;
 	struct timespec	fps_clock;
 	char			fps_info[20];
 	double			delta_time;
