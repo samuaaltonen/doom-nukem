@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:00:45 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/03 16:19:25 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:08:25 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,31 +40,31 @@ static void	draw_player_square(t_app *app, t_point world_pos)
 */
 static void	check_player_position(t_app *app, t_vector2 *point)
 {
-	// int				id;
-	// t_sector_lst	*temp;
+	int				id;
+	t_sector_lst	*temp;
 
+	if (app->player.sector == -1 && !app->sectors)
+		return ;
 	if (app->player.sector == -1)
 	{
 		point = &app->mouse_track;
 		app->player_edit = TRUE;
 		return ;
 	}
-	// id = 0;
-	// temp = app->sectors;
-	// while (id < app->player.sector)
-	// {
-	// 	temp = temp->next;
-	// 	id++;
-	// }
-	// while (id < MAX_MEMBER_SECTORS && temp->member_sectors[id])
-	// {
-	// 	if (inside_sector_check(app, temp->member_sectors[id]))
-	// 	{
-	// 		point = &app->mouse_track;
-	// 		app->player_edit = TRUE;
-	// 	}
-	// 	id++;
-	// }
+	id = -1;
+	temp = app->sectors;
+	while (++id < app->player.sector)
+		temp = temp->next;
+	id = -1;
+	while (++id < MAX_MEMBER_SECTORS && temp->member_sectors[id])
+	{
+		if (inside_sector_check(temp->member_sectors[id], &app->mouse_click))
+		{
+			point = &app->mouse_track;
+			app->player.sector = -1;
+			app->player_edit = TRUE;
+		}
+	}
 }
 
 /**

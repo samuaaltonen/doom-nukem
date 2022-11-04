@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/03 14:45:58 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/04 14:39:34 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -334,7 +334,7 @@ void			sector_delone(t_sector_lst **sector,
 					void (*del)(void*, size_t));
 size_t			ft_lstlen(t_sector_lst *lst);
 t_sector_lst	*sector_by_index(t_app *app, int index);
-int				inside_sector_check(t_app *app, t_sector_lst *sector);
+int				inside_sector_check(t_sector_lst *sector, t_vector2 *mouse);
 t_sector_lst	*click_sector(t_app *app);
 void			sector_edit(t_app *app, SDL_Keycode key);
 t_sector_lst	*find_parent_sector(t_app *app, t_sector_lst *sector);

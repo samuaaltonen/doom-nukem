@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/03 14:37:04 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:03:20 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ void	app_prepare(t_app *app)
 	app->sectorcount = 0;
 	app->sectors = NULL;
 	app->player_edit = 0;
+	app->player.sector = -1;
 	load_assets(app);
 	load_font(app);
 	SDL_ShowCursor(SDL_ENABLE);
