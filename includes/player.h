@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/27 13:42:49 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/04 11:10:39 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
 typedef enum e_movement {
 	FORWARD = 0,
 	BACKWARD = 1,
-	LEFT = 2,
-	RIGHT = 3,
-	UP = 4,
-	DOWN = 5
+	LEFTWARD = 2,
+	RIGHTWARD = 3,
+	UPWARD = 4,
+	DOWNWARD = 5
 }	t_movement;
 
 /**

@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:34:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/26 11:23:25 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/04 11:05:39 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 # define EVENTS_H
 
 enum e_keystate {
-	FORWARD_DOWN = 1 << 0,
-	LEFT_DOWN = 1 << 1,
-	BACKWARD_DOWN = 1 << 2,
-	RIGHT_DOWN = 1 << 3,
-	W_DOWN = 1 << 4,
-	A_DOWN = 1 << 5,
-	S_DOWN = 1 << 6,
-	D_DOWN = 1 << 7,
-	SPACE_DOWN = 1 << 8,
-	SHIFT_DOWN = 1 << 9,
-	CTRL_DOWN = 1 << 10
+	UP = 1 << 0,
+	LEFT = 1 << 1,
+	DOWN = 1 << 2,
+	RIGHT = 1 << 3,
+	W = 1 << 4,
+	A = 1 << 5,
+	S = 1 << 6,
+	D = 1 << 7,
+	SPACE = 1 << 8,
+	SHIFT = 1 << 9,
+	CTRL = 1 << 10
 };
 
 #endif
