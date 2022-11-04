@@ -131,9 +131,16 @@ void	player_move(t_app *app, t_movement movement, double speed)
 	}
 	//----DEBUG FLY
 	if (movement == UPWARD)
+	{
 		app->player.elevation += speed;
+		new = (t_vector2){app->player.pos.x, app->player.pos.y};
+	}
+
 	if (movement == DOWNWARD)
+	{
 		app->player.elevation -= speed;
+		new = (t_vector2){app->player.pos.x, app->player.pos.y};
+	}
 	//----
 	update_position(app, new);
 }
