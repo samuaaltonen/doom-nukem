@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/04 12:05:57 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/04 12:31:24 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,6 @@ void		exit_error(char *message);
  */
 void		init_thread_info(t_app *app);
 void		init_camera_plane(t_app *app);
-void		update_info(t_app *app);
 
 /**
  * Application
@@ -105,6 +104,7 @@ void		update_info(t_app *app);
 void		render_frame(t_app *app);
 void		app_loop(t_app *app);
 void		render_game(t_app *app);
+void		update_fps_counter(t_app *app);
 
 /**
  * Images
@@ -123,6 +123,7 @@ int			events_keyup(int keycode, t_app *app);
 int			events_keydown(int keycode, t_app *app);
 int			events_mouse_motion(t_app *app);
 int			events_mouse_down(int mouse_button, t_app *app);
+int			events_mouse_up(int mouse_button, t_app *app);
 int			events_window_destroy(void);
 int			events_window_other(int windowevent, t_app *app);
 int			dispatch_event(t_app *app, SDL_Event *event);
