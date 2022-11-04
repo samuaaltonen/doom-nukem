@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:35:37 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/02 17:02:52 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/04 10:59:23 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	play_music(t_app *app, char *file)
 		SDL_PauseAudioDevice(app->audio.device_id, 0);
 		SDL_FreeWAV(app->audio.music);
 	}	
-		
 }
 
 void	play_sound(t_app *app, char *file)
@@ -41,4 +40,19 @@ void	play_sound(t_app *app, char *file)
 	SDL_QueueAudio(app->audio.device_id, ptr, size);
 	SDL_PauseAudioDevice(app->audio.device_id, 0);
 	SDL_FreeWAV(app->audio.sound);
+}
+
+void	pause_audio(t_app *app)
+{
+	SDL_PauseAudioDevice(app->audio.device_id, 1);
+}
+
+void	unpause_audio(t_app *app)
+{
+	SDL_PauseAudioDevice(app->audio.device_id, 0);
+}
+
+void	stop_audio(t_app *app)
+{
+	SDL_ClearQueuedAudio(app->audio.device_id);
 }

@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/02 15:28:43 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/04 10:59:25 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,9 @@ void		render_pausemenu(t_app *app);
 */
 void    	play_music(t_app *app, char *file);
 void		play_sound(t_app *app, char *file);
+void		pause_audio(t_app *app);
+void		unpause_audio(t_app *app);
+void		stop_audio(t_app *app);
 
 /**
  * utils_sdl
