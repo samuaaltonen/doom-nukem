@@ -67,6 +67,28 @@ void	update_position(t_app *app)
 		app->player.move_vector = ft_vector_resize(app->player.move_vector, MOVEMENT_SPEED);
 	new = app->player.move_vector;
 	app->player.move_vector = ft_vec2_lerp(app->player.move_vector, (t_vector2){0.f,0.f}, MOVE_DECEL * app->conf->delta_time);
+	app->player.velocity = ft_lerp(app->player.velocity, GRAVITY, 0.15f - app->player.jump_timer);
+	if(app->player.flying)
+	{
+		//app->player.elevation = ft_lerp(app->player.elevation, 0.f, GRAVITY * app->conf->delta_time);
+		if(app->player.jump_timer > 0.f)
+		{
+			app->player.jump_timer -= app->conf->delta_time;
+			app->player.velocity += 1.5f * app->conf->delta_time;
+			if(app->player.jump_timer < 0.f)
+				app->player.jump_timer = 0.f;
+		}
+		app->player.elevation += app->player.velocity;
+	}
+	ft_printf("elevation %f, floor_height%f\n", app->player.elevation, app->sectors[app->player.current_sector].floor_height);
+	ft_printf("test timer %f, velocity %f\n", app->player.jump_timer, app->player.velocity);
+	if(app->player.elevation < app->sectors[app->player.current_sector].floor_height)
+	{
+		app->player.flying = FALSE;
+		app->player.velocity = 0.f;
+		app->player.jump_timer = 0.f;
+		app->player.elevation = app->sectors[app->player.current_sector].floor_height;
+	}
 	new.x = new.x * MOVE_ACCEL;
 	new.y = new.y * MOVE_ACCEL;
 	//ft_printf("movevector x%f,y%f, delta%f, len%f, velocity%f, keystates%.32b\n", app->player.move_vector.x, app->player.move_vector.y, app->conf->delta_time, ft_vector_length(app->player.move_vector),app->player.velocity, app->conf->keystates);
@@ -140,8 +162,11 @@ void	player_move(t_app *app, t_movement movement, double speed)
 	}
 	//new = (t_vector2){app->player.pos.x + app->player.move_vector.x, app->player.pos.y + app->player.move_vector.y};
 	//----DEBUG FLY
-	if (movement == UP)
-		app->player.elevation += speed;
+	if (movement == UP && !app->player.flying)
+	{
+		app->player.flying = TRUE;
+		app->player.jump_timer = 0.1f;
+	}
 	if (movement == DOWN)
 		app->player.elevation -= speed;
 	//----

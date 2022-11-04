@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/03 16:49:34 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:23:54 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define MOVE_RANGE 0.05f
 # define MOVE_ACCEL 0.15f
 # define MOVE_DECEL 10.f
+# define GRAVITY -0.025f
 
 /**
  * Movement direction enumeration.
@@ -49,6 +50,8 @@ typedef struct s_player
 	double			height;
 	double			elevation;
 	int				current_sector;
+	t_bool			flying;
+	double			jump_timer;
 }	t_player;
 
 typedef struct s_move
