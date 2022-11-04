@@ -6,7 +6,7 @@
 #    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/04 12:23:46 by dpalacio         ###   ########.fr        #
+#    Updated: 2022/11/04 15:16:25 by dpalacio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,13 +34,12 @@ DEPS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.d))
 
 SDL_DIR = ./sdl/
 SDL_HEADERS = \
-	-I$(SDL_DIR)SDL2.framework/Versions/A/Headers \
-	-I$(SDL_DIR)SDL2_mixer.framework/Versions/A/Headers
+	-I$(SDL_DIR)SDL2.framework/Versions/A/Headers
 
 FRAMEWORKS = -F$(SDL_DIR) \
 				-rpath $(SDL_DIR) \
 				-framework OpenGL -framework AppKit -framework OpenCl \
-				-framework SDL2 -framework SDL2_mixer
+				-framework SDL2
 
 HEADERS = -I ./includes -I ./libft/includes -I ./liblinearalgebra/includes \
 		-I /usr/local/include/SDL2 $(SDL_HEADERS)

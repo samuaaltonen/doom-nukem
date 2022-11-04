@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/04 12:31:24 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/04 14:40:00 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void		init_camera_plane(t_app *app);
 /**
  * Application
  */
-//void		app_prepare(t_app *app);
 void		render_frame(t_app *app);
 void		app_loop(t_app *app);
 void		render_game(t_app *app);

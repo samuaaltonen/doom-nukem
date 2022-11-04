@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:22:26 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/04 13:58:57 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:16:26 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,10 +51,12 @@ static void	update_fps_info(t_app *app)
 	}
 }
 
+
+/**
+ * Updates the fps average every 100 frames
+ */
 static void	update_avg_fps(t_app *app)
 {
-
-
 	if (app->conf->frames_total == 100)
 	{
 		app->conf->fps_chunk = app->conf->fps_total;

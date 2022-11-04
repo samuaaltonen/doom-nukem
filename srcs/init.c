@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/04 13:40:56 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/04 15:16:24 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ int	config_init(t_app *app)
 
 /**
  * Prepares the application to be rendered:
- * Creates window, adds event hooks and sets
- * initial player position / direction.
+ * Creates window and opens an audio device
  */
 void	sdl_init(t_app *app)
 {
@@ -83,10 +82,6 @@ void    load_assets(t_app *app)
 	app->assets.pointer = SDL_LoadBMP(POINTER_PATH);
 	app->assets.sprite = SDL_LoadBMP(PANELS_PATH);
 	app->assets.bg = SDL_LoadBMP(SKYBOX_PATH);
-	//app->assets.music = Mix_LoadMUS(MUSIC_PATH);
-	//if (app->assets.music == NULL)
-	//	exit_error(MSG_ERROR);
-
     load_font(app);
 }
 
