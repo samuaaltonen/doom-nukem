@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/02 15:43:20 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/04 14:15:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,17 @@ typedef struct s_conf
 	int				toggle_loop;
 	int				toggle_help;
 	int				fps;
+	int				fps_avg;
+	int				frames_total;
+	int				fps_total;
+	int				fps_chunk;
 	struct timespec	fps_clock;
 	char			fps_info[20];
 	double			delta_time;
 	double			skybox_offset;
 	int				fov;
 	int				keystates;
+	int				buttonstates;
 	int				mouse_active;
 	double			movement_speed;
 	double			rotation_speed;

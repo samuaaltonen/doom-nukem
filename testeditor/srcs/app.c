@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/02 12:06:42 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/04 14:16:41 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,15 +43,17 @@ void	app_prepare(t_app *app)
 		exit_error(MSG_ERROR_WINDOW_SURFACE);
 	aspect_ratio = ((double)app->surface->h / (double)app->surface->w) * -100;
 	app->view_pos = (t_vector2){-50.0, 50.0};
-	app->zoom_area = (t_vector2){100.0,aspect_ratio};
-	app->view_size = (t_vector2){app->view_pos.x + app->zoom_area.x, app->view_pos.y + app->zoom_area.y};
+	app->zoom_area = (t_vector2){100.0, aspect_ratio};
+	app->view_size = (t_vector2){app->view_pos.x + app->zoom_area.x,
+		app->view_pos.y + app->zoom_area.y};
 	app->divider = 1.0f;
 	app->zoom_range = 5;
 	app->sectorcount = 0;
 	app->sectors = NULL;
+	app->player_edit = 0;
 	load_assets(app);
+	load_font(app);
 	SDL_ShowCursor(SDL_ENABLE);
-	//SDL_WarpMouseInWindow(app->win, WIN_W / 2, WIN_H / 2);
 }
 
 /**
@@ -61,34 +63,28 @@ void	app_prepare(t_app *app)
 void	app_render(t_app *app)
 {
 	flush_surface(app->surface);
-	/* SDL_Surface	*converted_surface; */
-	//SDL_Surface *text_surface;
-	//text_surface = TTF_RenderText_Solid(app->font, "app->conf->fps_info", (SDL_Color){255, 255, 255, 0});
 	handle_movement(app);
 	app->view_size.x = app->view_pos.x + app->zoom_area.x;
 	app->view_size.y = app->view_pos.y + app->zoom_area.y;
 	render_fill_active_sector(app);
-	//render_grid(app, 0.5f, 0x424242);
-	//render_grid(app, 1.0f, 0x888888);
 	render_divider(app);
-	zoom_slider(app);
 	render_sectors(app);
-	if(app->active)
+	if (app->active)
 	{
 		render_sector(app, app->active);
 		render_selection_point(app, app->active, 3);
 	}
 	render_sector_points(app);
-	if(app->list_ongoing)
+	if (app->list_ongoing)
 	{
-		if(valid_point(app))
-			draw_line(app, &app->active_last->point, &app->mouse_track, 0xAABBCC);
+		if (valid_point(app))
+			draw_line(app, &app->active_last->point, &app->mouse_track, LINE_A);
 		else
-			draw_line(app, &app->active_last->point, &app->mouse_track, 0xFF4444);
+			draw_line(app, &app->active_last->point, &app->mouse_track, LINE_B);
 	}
+	render_player(app);
+	zoom_slider(app);
 	render_help_menu(app);
-	//SDL_BlitSurface(text_surface, NULL, app->surface, NULL);
-	//SDL_FreeSurface(text_surface);
 	SDL_UpdateWindowSurface(app->win);
 }
 
@@ -104,27 +100,24 @@ void	app_loop(t_app *app)
 	{
 		while (SDL_PollEvent(&event))
 			dispatch_event(app, &event);
-
-		ft_printf("x=%f, y=%f modes:c%i,o%i,p%i,r%i,f%i,s%i\n",app->mouse_track.x, app->mouse_track.y, app->list_creation, app->list_ongoing, app->portal_selection, app->ceiling_edit, app->floor_edit, app->slope_edit);
-		if(app->active_sector)
+		ft_printf("x=%f, y=%f modes:c%i,o%i,p%i,r%i,f%i,s%i\n", app->mouse_track.x, app->mouse_track.y, app->list_creation, app->list_ongoing, app->portal_selection, app->ceiling_edit, app->floor_edit, app->slope_edit);
+		ft_printf("PLAYER pos x= %f pos y= %f dir x= %f dir y= %f sector= %d\n", app->player.position.x, app->player.position.y, app->player.direction.x, app->player.direction.y, app->player.sector);
+		if (app->active_sector)
 		{
 			ft_printf("inside = %i, floor: h:%f,tex:%i,o:%i, ceil: h:%f,tex:%i,o:%i, light:%i\n has members: ", app->active_sector, app->active_sector->floor_height, app->active_sector->floor_tex, app->active_sector->floor_tex_offset, app->active_sector->ceil_height, app->active_sector->ceil_tex, app->active_sector->ceil_tex_offset, app->active_sector->light);
-			for(int i = 0; i < 4 && app->active_sector->member_sectors[i]; ++i)
+			for (int i = 0; i < 4 && app->active_sector->member_sectors[i]; ++i)
 				ft_printf("%i ", get_sector_id(app, app->active_sector->member_sectors[i]));
 			ft_printf("\n");
-			if(app->active_sector->parent_sector)
-				ft_printf("parent id %i, ",app->active_sector->parent_sector);
-			if(app->active_sector->ceil_slope_wall)
-				ft_printf("ceiling slopes from %i to %i, height %f, ", app->active_sector->ceil_slope_wall,app->active_sector->ceil_slope_opposite, app->active_sector->ceil_slope_height);
-			if(app->active_sector->floor_slope_wall)
-				ft_printf("floor slopes from %i to %i, height %f", app->active_sector->floor_slope_wall,app->active_sector->floor_slope_opposite, app->active_sector->floor_slope_height);
+			if (app->active_sector->parent_sector)
+				ft_printf("parent id %i, ", app->active_sector->parent_sector);
+			if (app->active_sector->ceil_slope_wall)
+				ft_printf("ceiling slopes from %i to %i, height %f, ", app->active_sector->ceil_slope_wall, app->active_sector->ceil_slope_opposite, app->active_sector->ceil_slope_height);
+			if (app->active_sector->floor_slope_wall)
+				ft_printf("floor slopes from %i to %i, height %f", app->active_sector->floor_slope_wall, app->active_sector->floor_slope_opposite, app->active_sector->floor_slope_height);
 			ft_printf("\n");
 		}
-
-		if(app->active)
-			ft_printf("selected point x:%f, y:%f, tex:%i, type:%i\n",app->active->point.x, app->active->point.y, app->active->tex, app->active->type);
-
+		if (app->active)
+			ft_printf("selected point x:%f, y:%f, tex:%i, type:%i\n", app->active->point.x, app->active->point.y, app->active->tex, app->active->type);
 		app_render(app);
 	}
-
 }

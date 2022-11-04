@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:40:40 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/28 00:18:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/04 14:15:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,8 @@
 /**
  * Tracks mouse position and changes player direction accordingly.
  */
-int	events_mouse_track(t_app *app)
+int	events_mouse_motion(t_app *app)
 {
-	//t_point	current_pos;
 	t_point	delta;
 
 	if (!app->conf->mouse_active)
@@ -33,5 +32,27 @@ int	events_mouse_track(t_app *app)
 			SDL_WarpMouseInWindow(app->win, WIN_W / 2, WIN_H / 2);
 		}
 	}
+	return (0);
+}
+
+int	events_mouse_down(int mouse_button, t_app *app)
+{
+	if (mouse_button == SDL_BUTTON_LEFT)
+		app->conf->buttonstates |= LEFT_MOUSE;
+	if (mouse_button == SDL_BUTTON_RIGHT)
+		app->conf->buttonstates |= RIGHT_MOUSE;
+	if (mouse_button == SDL_BUTTON_MIDDLE)
+		app->conf->buttonstates |= MIDDLE_MOUSE;
+	return (0);
+}
+
+int	events_mouse_up(int mouse_button, t_app *app)
+{
+	if (mouse_button == SDL_BUTTON_LEFT)
+		app->conf->buttonstates ^= LEFT_MOUSE;
+	if (mouse_button == SDL_BUTTON_RIGHT)
+		app->conf->buttonstates ^= RIGHT_MOUSE;
+	if (mouse_button == SDL_BUTTON_MIDDLE)
+		app->conf->buttonstates ^= MIDDLE_MOUSE;
 	return (0);
 }

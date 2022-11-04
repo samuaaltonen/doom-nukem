@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/28 11:01:14 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/04 12:00:21 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,29 +18,28 @@
 int	events_keyup(int keycode, t_app *app)
 {
 	if (keycode == SDLK_RIGHT)
-		app->conf->keystates ^= RIGHT_DOWN;
+		app->conf->keystates ^= RIGHT;
 	if (keycode == SDLK_LEFT)
-		app->conf->keystates ^= LEFT_DOWN;
+		app->conf->keystates ^= LEFT;
 	if (keycode == SDLK_UP)
-		app->conf->keystates ^= FORWARD_DOWN;
+		app->conf->keystates ^= UP;
 	if (keycode == SDLK_DOWN)
-		app->conf->keystates ^= BACKWARD_DOWN;
+		app->conf->keystates ^= DOWN;
 	if (keycode == SDLK_w)
-		app->conf->keystates ^= W_DOWN;
+		app->conf->keystates ^= W;
 	if (keycode == SDLK_s)
-		app->conf->keystates ^= S_DOWN;
+		app->conf->keystates ^= S;
 	if (keycode == SDLK_a)
-		app->conf->keystates ^= A_DOWN;
+		app->conf->keystates ^= A;
 	if (keycode == SDLK_d)
-		app->conf->keystates ^= D_DOWN;
+		app->conf->keystates ^= D;
 	if (keycode == SDLK_LSHIFT)
-		app->conf->keystates ^= SHIFT_DOWN;
+		app->conf->keystates ^= SHIFT;
 	if (keycode == SDLK_LCTRL)
-		app->conf->keystates ^= CTRL_DOWN;
+		app->conf->keystates ^= CTRL;
 	if (keycode == SDLK_ESCAPE)
 		exit(EXIT_SUCCESS);
-	//if (keycode == SDLK_h)
-	//	app->conf->toggle_help = ft_toggle(app->conf->toggle_help);
+//	if (keycode == SDLK_h)
 	if (keycode == SDLK_e)
 		app->conf->toggle_loop = ft_toggle(app->conf->toggle_loop);
 	if (keycode == SDLK_TAB)
@@ -55,8 +54,9 @@ int	events_keyup(int keycode, t_app *app)
 		//----DEBUG FUNCTIONALITIES
 		else if (app->status == STATUS_MAINMENU)
 			start_game(app);
+
 		//----
-		app->conf->keystates ^= SPACE_DOWN;
+		app->conf->keystates ^= SPACE;
 	}
 	return (0);
 }
@@ -67,21 +67,21 @@ int	events_keyup(int keycode, t_app *app)
 int	events_keydown(int keycode, t_app *app)
 {
 	if (keycode == SDLK_RIGHT)
-		app->conf->keystates |= RIGHT_DOWN;
+		app->conf->keystates |= RIGHT;
 	if (keycode == SDLK_LEFT)
-		app->conf->keystates |= LEFT_DOWN;
+		app->conf->keystates |= LEFT;
 	if (keycode == SDLK_UP)
-		app->conf->keystates |= FORWARD_DOWN;
+		app->conf->keystates |= UP;
 	if (keycode == SDLK_DOWN)
-		app->conf->keystates |= BACKWARD_DOWN;
+		app->conf->keystates |= DOWN;
 	if (keycode == SDLK_w)
-		app->conf->keystates |= W_DOWN;
+		app->conf->keystates |= W;
 	if (keycode == SDLK_s)
-		app->conf->keystates |= S_DOWN;
+		app->conf->keystates |= S;
 	if (keycode == SDLK_a)
-		app->conf->keystates |= A_DOWN;
+		app->conf->keystates |= A;
 	if (keycode == SDLK_d)
-		app->conf->keystates |= D_DOWN;
+		app->conf->keystates |= D;
 	if (keycode == SDLK_u)
 		app->conf->fov--;
 	if (keycode == SDLK_i)
@@ -89,10 +89,10 @@ int	events_keydown(int keycode, t_app *app)
 	if (keycode == SDLK_u || keycode == SDLK_i)
 		init_camera_plane(app);
 	if (keycode == SDLK_LSHIFT)
-		app->conf->keystates |= SHIFT_DOWN;
+		app->conf->keystates |= SHIFT;
 	if (keycode == SDLK_LCTRL)
-		app->conf->keystates |= CTRL_DOWN;
+		app->conf->keystates |= CTRL;
 	if (keycode == SDLK_SPACE)
-		app->conf->keystates |= SPACE_DOWN;
+		app->conf->keystates |= SPACE;
 	return (0);
 }

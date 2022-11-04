@@ -6,16 +6,16 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/31 11:41:29 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/03 14:23:25 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Handles events for key presses (keyup).
- */
-int	events_keyup(int keycode, t_app *app)
+ * Keyup events for WASD and arrow keys.
+*/
+static void	wasd_and_arrow_keys(int keycode, t_app *app)
 {
 	if (keycode == SDLK_RIGHT)
 		sector_edit(app, keycode);
@@ -33,46 +33,54 @@ int	events_keyup(int keycode, t_app *app)
 		app->keystates ^= LEFT_DOWN;
 	if (keycode == SDLK_d)
 		app->keystates ^= RIGHT_DOWN;
-	if (keycode == SDLK_ESCAPE)
-		exit(EXIT_SUCCESS);
-	if (keycode == SDLK_h)
-		app->toggle_help = ft_toggle(app->toggle_help);
+}
+
+/**
+ * Keyup events for different edit modes.
+*/
+static void	edit_mode_keys(int keycode, t_app *app)
+{
+	if (keycode == SDLK_p)
+		app->player_edit = ft_toggle(app->player_edit);
+	if (keycode == SDLK_r)
+		app->ceiling_edit = ft_toggle(app->ceiling_edit);
+	if (keycode == SDLK_f)
+		app->floor_edit = ft_toggle(app->floor_edit);
+	if (keycode == SDLK_t)
+		app->light_edit = ft_toggle(app->light_edit);
+	if (keycode == SDLK_u)
+		app->slope_edit = ft_toggle(app->slope_edit);
+	if (keycode == SDLK_v)
+		app->wall_edit = ft_toggle(app->wall_edit);
 	if (keycode == SDLK_c)
 	{
 		app->list_creation = ft_toggle(app->list_creation);
 		if (app->list_ongoing)
 			cancel_list_creation(app);
 	}
+}
+
+/**
+ * Handles events for key presses (keyup).
+ */
+int	events_keyup(int keycode, t_app *app)
+{
+	wasd_and_arrow_keys(keycode, app);
+	edit_mode_keys(keycode, app);
 	if (keycode == SDLK_m)
 		export_file(app, FILE_PATH);
 	if (keycode == SDLK_o)
 		import_file(app, FILE_PATH);
-	if(keycode == SDLK_DELETE)
-		sector_pop(app, &(app->active_sector), NULL);
-	if(keycode == SDLK_l)
+	if (keycode == SDLK_l)
 		link_wall_to_sector(app);
-	if(keycode == SDLK_r)
-		app->ceiling_edit = ft_toggle(app->ceiling_edit);
-	if(keycode == SDLK_f)
-		app->floor_edit = ft_toggle(app->floor_edit);
-	if(keycode == SDLK_t)
-		app->light_edit = ft_toggle(app->light_edit);
-	if(keycode == SDLK_u)
-		app->slope_edit = ft_toggle(app->slope_edit);
-	if (keycode == SDLK_v)
-		app->wall_edit = ft_toggle(app->wall_edit);
-	if(app->active_sector && app->active && keycode == SDLK_y)
-	{
-		app->active_sector->ceil_slope_wall = app->active;
-		app->active_sector->ceil_slope_opposite = find_opposite_point(app->active_sector, app->active);
-	}
-	if(app->active_sector && app->active && keycode == SDLK_h)
-	{
-		app->active_sector->floor_slope_wall = app->active;
-		app->active_sector->floor_slope_opposite = find_opposite_point(app->active_sector, app->active);
-	}
+	if (keycode == SDLK_DELETE)
+		sector_pop(app, &(app->active_sector), NULL);
+	if (keycode == SDLK_y || keycode == SDLK_h)
+		activate_slope(app, keycode);
 	if (keycode == SDLK_x || keycode == SDLK_z)
 		move_divider(app, keycode);
+	if (keycode == SDLK_ESCAPE)
+		exit(EXIT_SUCCESS);
 	return (0);
 }
 

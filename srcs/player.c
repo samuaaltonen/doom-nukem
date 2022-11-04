@@ -110,8 +110,8 @@ void	player_move(t_app *app, t_movement movement, double speed)
 	t_vector2	new;
 
 	if (!(movement == FORWARD || movement == BACKWARD
-			|| movement == LEFT || movement == RIGHT || movement == UP
-			|| movement == DOWN))
+			|| movement == LEFTWARD || movement == RIGHTWARD 
+			|| movement == UPWARD || movement == DOWNWARD))
 		return ;
 	new = app->player.pos;
 	if (movement == FORWARD)
@@ -120,21 +120,28 @@ void	player_move(t_app *app, t_movement movement, double speed)
 	if (movement == BACKWARD)
 		new = (t_vector2){app->player.pos.x - app->player.dir.x * speed,
 			app->player.pos.y - app->player.dir.y * speed};
-	if (movement == LEFT || movement == RIGHT)
+	if (movement == LEFTWARD || movement == RIGHTWARD)
 	{
 		perpendicular = ft_vector_perpendicular(app->player.dir);
-		if (movement == LEFT)
+		if (movement == LEFTWARD)
 			new = (t_vector2){app->player.pos.x - perpendicular.x * speed,
 				app->player.pos.y - perpendicular.y * speed};
-		if (movement == RIGHT)
+		if (movement == RIGHTWARD)
 			new = (t_vector2){app->player.pos.x + perpendicular.x * speed,
 				app->player.pos.y + perpendicular.y * speed};
 	}
 	//----DEBUG FLY
-	if (movement == UP)
+	if (movement == UPWARD)
+	{
 		app->player.elevation += speed;
-	if (movement == DOWN)
+		new = (t_vector2){app->player.pos.x, app->player.pos.y};
+	}
+
+	if (movement == DOWNWARD)
+	{
 		app->player.elevation -= speed;
+		new = (t_vector2){app->player.pos.x, app->player.pos.y};
+	}
 	//----
 	update_position(app, new);
 }

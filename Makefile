@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/02 15:37:36 by saaltone         ###   ########.fr        #
+#    Updated: 2022/11/04 14:15:47 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = gcc
 
 FILES = main.c init.c render.c buttons.c error.c conf.c app.c  \
 		events_key.c events_mouse.c events_window.c graphics.c image.c \
-		helper.c skybox.c player.c events.c \
+		helper.c skybox.c player.c events.c audio.c time.c \
 		sector_draw_ceiling.c sector_draw_floor.c sector_draw_wall.c \
 		sector_render.c sector_visible_walls_order.c sector_visible_walls.c \
 		sector_wall_raycast.c sector_wall_prepare.c sector_wall_line.c \
@@ -35,11 +35,12 @@ DEPS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.d))
 SDL_DIR = ./sdl/
 SDL_HEADERS = \
 	-I$(SDL_DIR)SDL2.framework/Versions/A/Headers \
+	-I$(SDL_DIR)SDL2_mixer.framework/Versions/A/Headers
 
 FRAMEWORKS = -F$(SDL_DIR) \
 				-rpath $(SDL_DIR) \
 				-framework OpenGL -framework AppKit -framework OpenCl \
-				-framework SDL2
+				-framework SDL2 -framework SDL2_mixer
 
 HEADERS = -I ./includes -I ./libft/includes -I ./liblinearalgebra/includes \
 		-I /usr/local/include/SDL2 $(SDL_HEADERS)

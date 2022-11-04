@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/25 10:45:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/03 11:33:55 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,12 @@
 
 static void	list_to_export(t_exportsector *export, t_vec2_lst *list, int count)
 {
-	int i;
-	t_vec2_lst *tmp;
+	int			i;
+	t_vec2_lst	*tmp;
 
 	i = 0;
 	tmp = list;
-	while(i < count)
+	while (i < count)
 	{
 		export->corners[i].x = tmp->point.x;
 		export->corners[i].y = tmp->point.y;
@@ -30,14 +30,16 @@ static void	list_to_export(t_exportsector *export, t_vec2_lst *list, int count)
 	}
 }
 
-static void	member_export(t_app *app, t_exportsector *export, t_sector_lst *sector)
+static void	member_export(t_app *app, t_exportsector *export,
+											t_sector_lst *sector)
 {
-	int	i;
+	int		i;
 
 	i = 0;
 	while (sector->member_sectors[i])
 	{
-		export->member_sectors[i] = get_sector_id(app, sector->member_sectors[i]);
+		export->member_sectors[i] = get_sector_id(app,
+				sector->member_sectors[i]);
 		ft_printf("%i\n", export->member_sectors[i]);
 		i++;
 	}
@@ -48,12 +50,11 @@ static void	member_export(t_app *app, t_exportsector *export, t_sector_lst *sect
 	}
 }
 
-
-int				get_line_id(t_vec2_lst *list, t_vec2_lst *wall)
+int	get_line_id(t_vec2_lst *list, t_vec2_lst *wall)
 {
-	int	i;
+	int		i;
 
-	if(!wall)
+	if (!wall)
 		return (-1);
 	i = 0;
 	while (wall != list)
@@ -71,7 +72,7 @@ int				get_line_id(t_vec2_lst *list, t_vec2_lst *wall)
  * @param sector 
  * @param export 
  */
-void write_sector(t_app *app, t_sector_lst *sector, t_exportsector *export)
+void	write_sector(t_app *app, t_sector_lst *sector, t_exportsector *export)
 {
 	export->corner_count = sector->corner_count;
 	list_to_export(export, sector->wall_list, export->corner_count);
@@ -85,12 +86,12 @@ void write_sector(t_app *app, t_sector_lst *sector, t_exportsector *export)
 	export->ceil_tex = sector->ceil_tex;
 	export->ceil_tex_offset = -1;
 	export->floor_slope_height = sector->floor_slope_height;
-	export->floor_slope_opposite = get_line_id(sector->wall_list,sector->floor_slope_opposite);
-	export->floor_slope_position = get_line_id(sector->wall_list,sector->floor_slope_wall);
+	export->floor_slope_opposite = get_line_id(sector->wall_list, sector->floor_slope_opposite);
+	export->floor_slope_position = get_line_id(sector->wall_list, sector->floor_slope_wall);
 	export->ceil_slope_height = sector->ceil_slope_height;
-	export->ceil_slope_opposite = get_line_id(sector->wall_list,sector->ceil_slope_opposite);
-	export->ceil_slope_position = get_line_id(sector->wall_list,sector->ceil_slope_wall);
-} 
+	export->ceil_slope_opposite = get_line_id(sector->wall_list, sector->ceil_slope_opposite);
+	export->ceil_slope_position = get_line_id(sector->wall_list, sector->ceil_slope_wall);
+}
 
 /**
  * @brief Opens or creates a file at path, writes map data to it
@@ -101,21 +102,24 @@ void write_sector(t_app *app, t_sector_lst *sector, t_exportsector *export)
  */
 int	export_file(t_app *app, char *path)
 {
-	int fd;
-	t_exportsector *export;
-	size_t	counter = 0;
-	size_t	sector_count;
-	t_sector_lst *tmp;
+	int				fd;
+	t_sector_lst	*tmp;
+	t_exportsector	*export;
+	size_t			counter;
+	size_t			sector_count;
 
+	counter = 0;
 	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
+	if (!export)
+		exit_error(MSG_ERROR_ALLOC);
 	fd = open(path, O_WRONLY | O_CREAT, 0755);
-	if(fd < 0)
+	if (fd < 0)
 		exit_error("FILE OPEN ERROR TEMP!");
 	sector_count = ft_lstlen(app->sectors);
-	if (write(fd,&sector_count,sizeof(sector_count)) == -1)
+	if (write(fd, &sector_count, sizeof(sector_count)) == -1)
 		exit_error(MSG_ERROR_FILE_WRITE);
 	tmp = app->sectors;
-	while(counter++ < sector_count)
+	while (counter++ < sector_count)
 	{
 		write_sector(app, tmp, export);
 		ft_printf("exported sector corners %i\n", export->corner_count);

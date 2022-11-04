@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/02 15:48:57 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/04 14:15:16 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,17 @@
  */
 typedef unsigned char	t_uint8;
 
+typedef struct s_audio
+{
+	SDL_AudioDeviceID	device_id;
+	SDL_AudioSpec		wav_spec;
+	SDL_AudioSpec		sound_spec;
+	Uint8				*music;
+	Uint32				music_length;
+	Uint8				*sound;
+	Uint32				sound_length;
+}	t_audio;
+
 /**
  * Struct for the application.
  */
@@ -57,6 +68,7 @@ typedef struct s_app
 	SDL_Event		event;
 	t_uint8			status;
 	t_assets		assets;
+	t_audio			audio;
 	t_point			mouse_pos;
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];
@@ -84,7 +96,6 @@ void		exit_error(char *message);
  */
 void		init_thread_info(t_app *app);
 void		init_camera_plane(t_app *app);
-void		update_info(t_app *app);
 
 /**
  * Application
@@ -93,6 +104,7 @@ void		update_info(t_app *app);
 void		render_frame(t_app *app);
 void		app_loop(t_app *app);
 void		render_game(t_app *app);
+void		update_fps_counter(t_app *app);
 
 /**
  * Images
@@ -109,7 +121,9 @@ void		put_pixel_to_surface_check(t_app *app, t_point point, int color,
  */
 int			events_keyup(int keycode, t_app *app);
 int			events_keydown(int keycode, t_app *app);
-int			events_mouse_track(t_app *app);
+int			events_mouse_motion(t_app *app);
+int			events_mouse_down(int mouse_button, t_app *app);
+int			events_mouse_up(int mouse_button, t_app *app);
 int			events_window_destroy(void);
 int			events_window_other(int windowevent, t_app *app);
 int			dispatch_event(t_app *app, SDL_Event *event);
@@ -185,6 +199,14 @@ void		render_titlescreen(t_app *app);
 void		render_pointer(t_app *app, int x, int y);
 void		render_game(t_app *app);
 void		render_pausemenu(t_app *app);
+/*
+* AUDIO.C
+*/
+void    	play_music(t_app *app, char *file);
+void		play_sound(t_app *app, char *file);
+void		pause_audio(t_app *app);
+void		unpause_audio(t_app *app);
+void		stop_audio(t_app *app);
 
 /**
  * utils_sdl
