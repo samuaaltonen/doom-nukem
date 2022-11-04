@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/04 16:33:14 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/04 17:11:06 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,13 @@ static void	import_floor_slope(t_exportsector *export, t_sector *sector)
 	sector->floor_slope_angles.x = atan(
 			(export->floor_slope_height - export->floor_height) /
 			ft_vector_length(ft_vector2_sub(opposite, point)));
+
+	sector->floor_slope_height = export->floor_slope_height - export->floor_height;
+	sector->floor_slope_end = opposite;
+	sector->floor_slope_start = point;
+	sector->floor_slope_magnitude = sector->floor_slope_height 
+		/ ft_vector_length(ft_vector2_sub(sector->floor_slope_end,
+			sector->floor_slope_start));
 }
 
 /**
@@ -114,10 +121,9 @@ static void read_sector(t_app *app, t_exportsector *export, int sectorid, int se
 
 	app->sectors[sectorid].floor_slope_height = 0.0;
 	app->sectors[sectorid].ceiling_slope_height = 0.0;
-	/**
-	 * TODO: REMOVE THIS
-	 */
-	if (sectorid == 9)
+	app->sectors[sectorid].floor_slope_magnitude = 0.0;
+
+	/* if (sectorid == 9)
 	{
 		app->sectors[sectorid].floor_slope_height = 4.0;
 		app->sectors[sectorid].floor_slope_end = (t_vector2){-2.0, 12.0};
@@ -140,7 +146,7 @@ static void read_sector(t_app *app, t_exportsector *export, int sectorid, int se
 		app->sectors[sectorid].ceiling_slope_end = (t_vector2){0.0, 29.0};
 		app->sectors[sectorid].ceiling_slope_start = (t_vector2){0.0, 21.0};
 		app->sectors[sectorid].ceiling_slope_magnitude = app->sectors[sectorid].floor_slope_height / ft_vector_length(ft_vector2_sub(app->sectors[sectorid].ceiling_slope_end, app->sectors[sectorid].ceiling_slope_start));
-	}
+	} */
 	import_floor_slope(export, &(app->sectors[sectorid]));
 	import_ceil_slope(export, &(app->sectors[sectorid]));
 	ft_printf("sectorid = %i corners count: %i, floor slope %f, ceil slope %f\n", sectorid, app->sectors[sectorid].corner_count, app->sectors[sectorid].floor_slope_angles.x, app->sectors[sectorid].ceiling_slope_angles.x);

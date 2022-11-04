@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/04 16:38:06 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/04 17:10:10 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ void	draw_floor(t_app *app, int x, t_rayhit *hit)
 		}
 		else
 			distance = ((app->player.height + app->player.elevation) - hit->sector->floor_height) * WIN_H / (y_start - WIN_H / 2);
-		world_pos.x = hit->position.x - hit->distance - distance * hit->ray.x;
-		world_pos.y = hit->position.y - hit->distance - distance * hit->ray.y;
+		world_pos.x = hit->position.x - (hit->distance - distance) * hit->ray.x;
+		world_pos.y = hit->position.y - (hit->distance - distance) * hit->ray.y;
 		put_pixel_to_surface(app->surface, x, y_start, get_position_color(
 			app, world_pos, hit->sector->floor_texture));
 		y_start++;
