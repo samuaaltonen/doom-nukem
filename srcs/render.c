@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/02 15:33:47 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/04 10:44:04 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,19 +81,23 @@ void	render_pausemenu(t_app *app)
 	t_rect		src;
 
 	render_sectors(app);
-	change_font(app, 16, 0xFFFF9400);
+	change_font(app, 16, 0xFF00FFFF);
 	rect_from_surface(app->assets.button_idle, &src);
 	button_function(app, render_button(app, (t_point){50, 100}, 2), main_menu);
 	render_text(app, (t_point){74, 124}, "MAIN MENU");
+	change_font(app, 16, 0xFF00FFFF);
 	button_function(app, render_button(app, (t_point){50, 200}, 2), pause_game);
 	render_text(app, (t_point){74, 224}, "CONTINUE");
+	change_font(app, 16, 0xFF00FFFF);
 	button_function(app, render_button(app, (t_point){50, 300}, 2), do_nothing);
 	render_text(app, (t_point){74, 324}, "SELECT LEVEL");
+	change_font(app, 16, 0xFF00FFFF);
 	button_function(app, render_button(app, (t_point){50, 400}, 2), do_nothing);
 	render_text(app, (t_point){74, 424}, "OPTIONS");
+	change_font(app, 16, 0xFF00FFFF);
 	button_function(app, render_button(app, (t_point){50, 500}, 2), exit_game);
 	render_text(app, (t_point){74, 524}, "QUIT GAME");
-
+	change_font(app, 16, 0xFF00FFFF);
 	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
 	render_ui(app);
 }
