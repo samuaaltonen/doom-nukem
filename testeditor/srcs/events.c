@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:52 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/02 15:56:57 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/07 14:28:42 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	events_mouse_wheel(t_app *app, SDL_Event *event)
 		app->view_pos.x *= 2;
 		app->view_pos.y *= 2;
 		app->zoom_range += 1;
+		app->movement_speed /= 2;
 	}	
 	else if (event->wheel.y < 0 && app->zoom_area.x > 6)
 	{
@@ -70,6 +71,7 @@ int	events_mouse_wheel(t_app *app, SDL_Event *event)
 		app->view_pos.x /= 2;
 		app->view_pos.y /= 2;
 		app->zoom_range -= 1;
+		app->movement_speed *= 2;
 	}
 	return (0);
 }

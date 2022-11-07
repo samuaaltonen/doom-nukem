@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/04 14:39:34 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/07 14:34:29 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define DEG_IN_RADIAN 0.01745f
 # define PI_HALF 1.57079632679
 # define RADIAN_IN_DEG 57.29578f
-# define MAP_SPEED 0.25f
+# define MAP_SPEED 0.85f
 # define HEIGHT_INC 0.125f
 # define PANELS_PATH "../assets/textures/minecraft_spritesheet.bmp"
 # define FONT_FILE "../assets/legacy/SpaceMono-Regular.ttf"
@@ -224,6 +224,7 @@ typedef struct s_app
 	t_bool				slope_edit;
 	t_bool				player_edit;
 	int					sectorcount;
+	int					movement_speed;
 	t_assets			assets;
 	t_player			player;
 }	t_app;
