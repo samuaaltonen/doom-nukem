@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/04 15:16:24 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/07 11:58:03 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	sdl_init(t_app *app)
 {
 	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO) < 0)
 		exit_error(MSG_ERROR_SDL_INIT);
+	SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
 	app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_SHOWN);
 	if (!app->win)
 		exit_error(MSG_ERROR_WINDOW);
