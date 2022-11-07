@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/07 14:02:33 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/07 16:27:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,9 @@
 # define MOVE_ACCEL 100.f
 # define MOVE_DECEL 10.f
 # define GRAVITY 10.f
-# define JUMP_SIZE 1.f
-# define JUMP_TIME 1.f
+# define JUMP_SIZE 2.f
+# define JUMP_TIME 0.1f
+# define JETPACK 1.f
 
 /**
  * Movement direction enumeration.
@@ -53,6 +54,8 @@ typedef struct s_player
 	double			elevation;
 	int				current_sector;
 	t_bool			flying;
+	t_bool			jetpack;
+	t_bool			jetpack_boost;
 	double			jump_timer;
 }	t_player;
 

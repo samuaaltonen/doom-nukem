@@ -100,7 +100,10 @@ void	update_position(t_app *app)
 	app->player.move_vector = ft_vec2_lerp(app->player.move_vector, (t_vector2){0.f,0.f}, MOVE_DECEL * app->conf->delta_time);
 	if(app->player.flying)
 	{
-		app->player.velocity = ft_lerp(app->player.velocity, -GRAVITY, app->player.jump_timer);
+		if(app->player.jetpack)
+			app->player.velocity = ft_lerp(app->player.velocity, -GRAVITY * 0.25f, app->player.jump_timer);
+		else
+			app->player.velocity = ft_lerp(app->player.velocity, -GRAVITY, app->player.jump_timer);
 		if(app->player.jump_timer < JUMP_TIME)
 		{
 			app->player.jump_timer += app->conf->delta_time;
@@ -108,14 +111,17 @@ void	update_position(t_app *app)
 			if(app->player.jump_timer > JUMP_TIME)
 				app->player.jump_timer = JUMP_TIME;
 		}
+		if(app->player.jetpack_boost)
+			app->player.velocity += JETPACK;
 	}
 	ft_printf("elevation %f, floor_height%f\n", app->player.elevation, app->sectors[app->player.current_sector].floor_height);
-	ft_printf("test timer %f, velocity %f\n", app->player.jump_timer, app->player.velocity);
+	ft_printf("test timer %f, velocity %f jetpack %b\n", app->player.jump_timer, app->player.velocity, app->player.jetpack);
 	if(app->player.elevation < app->sectors[app->player.current_sector].floor_height)
 	{
 		app->player.flying = FALSE;
 		app->player.velocity = 0.f;
 		app->player.jump_timer = JUMP_TIME;
+		app->player.jetpack = FALSE;
 		app->player.elevation = app->sectors[app->player.current_sector].floor_height;
 	}
 	new.x = new.x * MOVE_ACCEL * app->conf->delta_time;
@@ -129,6 +135,7 @@ void	update_position(t_app *app)
 	app->player.pos.y = new.y;
 	app->player.pos.x = new.x;
 	app->player.elevation += app->player.velocity * app->conf->delta_time;
+	app->player.jetpack_boost = FALSE;
 }
 
 
@@ -198,6 +205,11 @@ void	player_move(t_app *app, t_movement movement, double speed)
 	{
 		app->player.flying = TRUE;
 		app->player.jump_timer = 0.f;
+	}
+	if (movement == UP && app->player.flying && app->player.jump_timer == JUMP_TIME)
+	{
+		app->player.jetpack_boost = TRUE;
+		app->player.jetpack = TRUE;
 	}
 	if (movement == DOWN)
 		app->player.elevation -= speed;
