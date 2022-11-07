@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/04 15:23:54 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/07 14:02:33 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,11 @@
 # define ROTATION_SPEED 1.8f
 # define MOVEMENT_SPEED 3.2f
 # define MOVE_RANGE 0.05f
-# define MOVE_ACCEL 0.15f
+# define MOVE_ACCEL 100.f
 # define MOVE_DECEL 10.f
-# define GRAVITY -0.025f
+# define GRAVITY 10.f
+# define JUMP_SIZE 1.f
+# define JUMP_TIME 1.f
 
 /**
  * Movement direction enumeration.
