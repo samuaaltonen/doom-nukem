@@ -6,7 +6,7 @@
 #    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/07 13:24:20 by dpalacio         ###   ########.fr        #
+#    Updated: 2022/11/07 16:05:25 by dpalacio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,20 +36,16 @@ DEPS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.d))
 
 SDL_DIR = ./sdl
 SDL_CONF = `sdl/SDL2_build/bin/sdl2-config --cflags --libs`
-
-#SDL_HEADERS = \
-	-I$(SDL_DIR)SDL2.framework/Versions/A/Headers
+SDL_V = SDL2-2.24.2
 
 FRAMEWORKS = \
 	-framework OpenGL -framework AppKit -framework OpenCl \
-	#-framework SDL2
 
 HEADERS = \
 	-I ./includes \
 	-I ./libft/includes \
 	-I ./liblinearalgebra/includes \
 	-I ./sdl/SDL2-2.24.2/include
-#	-I /usr/local/include/SDL2 $(SDL_HEADERS)
 
 FLAGS = -Wall -Wextra -Werror -flto -Ofast -g
 
@@ -77,11 +73,11 @@ $(LIBLINEARALGEBRA):
 	make -C ./liblinearalgebra
 
 $(SDL2): 
-	cd sdl/SDL2-2.24.2/build && ../configure --prefix=$(PWD)/sdl/SDL2_build/ && make install
+	cd sdl/$(SDL_V)/build && ../configure --prefix=$(PWD)/sdl/SDL2_build/ && make install
 
 clean-sdl:
-	rm -rf sdl/SDL2-2.24.2/build/*
-	touch sdl/SDL2-2.24.2/build/DontRemoveMe
+	rm -rf sdl/$(SDL_V)/build/*
+	touch sdl/$(SDL_V)/build/DontRemoveMe
 	rm -rf sdl/SDL2_build/*
 	touch sdl/SDL2_build/DontRemoveMe
 	rm -f $(SDL2)
@@ -91,7 +87,7 @@ clean:
 	make clean -C ./liblinearalgebra
 	/bin/rm -rf $(BUILD_DIR)
 
-fclean: clean
+fclean: clean clean-sdl
 	make fclean -C ./libft
 	make fclean -C ./liblinearalgebra
 	/bin/rm -f $(NAME)
