@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:00:45 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/04 15:08:25 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/07 13:51:29 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * Draws the player square to the correct position.
 */
-static void	draw_player_square(t_app *app, t_point world_pos)
+static void	draw_player_square(t_app *app, t_point screen_pos)
 {
 	int			x;
 	int			y;
@@ -26,8 +26,8 @@ static void	draw_player_square(t_app *app, t_point world_pos)
 		x = 0;
 		while (x < 10)
 		{
-			put_pixel_to_surface(app->surface, (world_pos.x - 5) + x,
-				(world_pos.y - 5) + y, PLAYER);
+			put_pixel_to_surface(app->surface, (screen_pos.x - 5) + x,
+				(screen_pos.y - 5) + y, PLAYER);
 			x++;
 		}
 		y++;
@@ -73,7 +73,7 @@ static void	check_player_position(t_app *app, t_vector2 *point)
 */
 void	render_player(t_app *app)
 {
-	t_point		world_pos;
+	t_point		screen_pos;
 	t_vector2	point;
 
 	if (app->player_edit && !app->list_creation && !app->active_sector)
@@ -81,11 +81,11 @@ void	render_player(t_app *app)
 	else
 		point = app->mouse_click;
 	check_player_position(app, &point);
-	world_pos.x = (point.x - app->view_pos.x) * (app->surface->w)
+	screen_pos.x = (point.x - app->view_pos.x) * (app->surface->w)
 		/ (app->view_size.x - app->view_pos.x);
-	world_pos.y = (point.y - app->view_pos.y) * (app->surface->h)
+	screen_pos.y = (point.y - app->view_pos.y) * (app->surface->h)
 		/ (app->view_size.y - app->view_pos.y);
-	draw_player_square(app, world_pos);
+	draw_player_square(app, screen_pos);
 	if (!app->player_edit)
 	{
 		app->player.position.x = point.x;
