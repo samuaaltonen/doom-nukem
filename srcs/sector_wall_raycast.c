@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/08 15:15:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:42:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,10 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 	hit->wall_end = hit->wall_start + hit->height;
 	hit->texture_step.y = TEX_SIZE / relative_height;
 	hit->texture_offset.y = 0;
+
+	if (ceil_slope)
+		hit->wall_start_actual += relative_height * ceil_slope - relative_height * (1 + (int)ceil_slope);
+
 	if (hit->sector->parent_sector >= 0)
 		calculate_parent_positions(app, hit, relative_height);
 	if (hit->wall_start < 0)
