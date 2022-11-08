@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/08 16:25:00 by saaltone         ###   ########.fr        #
+#    Updated: 2022/11/08 16:35:10 by ssulkuma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CC = gcc
 FILES = app.c help_menu.c editor.c editor_ui.c editor_menu.c \
 events_key.c events_mouse.c events.c export.c import.c player.c \
 image.c main.c render.c render_extra.c render_text.c render_grid.c \
-linedraw.c linedraw_utils.c lists.c sector.c sector_tools.c \
+linedraw.c linedraw_utils.c lists.c menu_sector_info.c sector.c sector_tools.c \
 sector_members.c sector_portal.c tex_icons.c tools.c utils_sdl.c utils.c 
 
 LIBFT = ../libft/libft.a
