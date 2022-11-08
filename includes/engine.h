@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/08 13:50:18 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/08 14:40:15 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,9 +106,6 @@ typedef struct s_rayhit
 	double		ceil_horizon;
 	double		ceil_horizon_angle;
 	double		ceil_slope_height;
-
-	double		slope_texture_offset_top;
-	double		slope_texture_offset_bottom;
 }	t_rayhit;
 
 /**

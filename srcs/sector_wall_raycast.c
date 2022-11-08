@@ -6,41 +6,11 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/08 14:10:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/08 15:15:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
-
-/**
- * @brief If wall is a portal, calculate parent positions as well (used in partial
- * wall rendering)
- * 
- * @param app 
- * @param hit 
- * @param relative_height 
- */
-static void	calculate_parent_positions(t_app *app, t_rayhit *hit,
-	double relative_height)
-{
-	t_sector	*parent;
-
-	parent = &app->sectors[hit->sector->parent_sector];
-	hit->parent_height = (int)(relative_height
-		* (parent->ceil_height - parent->floor_height));
-	hit->parent_wall_start = WIN_H / 2 - hit->parent_height
-		+ (int)(relative_height * ((app->player.height + app->player.elevation) - parent->floor_height));
-	hit->parent_wall_end = hit->parent_wall_start + hit->parent_height;
-	hit->parent_wall_start_actual = hit->parent_wall_start;
-	if (hit->parent_wall_start < 0)
-		hit->parent_wall_start = 0;
-	if (hit->parent_wall_start >= WIN_H)
-		hit->parent_wall_start = WIN_H - 1;
-	if (hit->parent_wall_end < 0)
-		hit->parent_wall_end = 0;
-	if (hit->parent_wall_end >= WIN_H)
-		hit->parent_wall_end = WIN_H - 1;
-}
 
 /**
  * @brief Calculates height offset for current rayhit based on sector ceiling
@@ -90,6 +60,50 @@ static double	apply_floor_slope(t_rayhit *hit)
 	hit->floor_horizon = hit->sector->floor_slope_magnitude * hit->floor_horizon_angle;
 	hit->floor_slope_height = perpendicular_distance * hit->sector->floor_slope_magnitude;
 	return (perpendicular_distance * hit->sector->floor_slope_magnitude);
+}
+
+/**
+ * @brief If wall is a portal, calculate parent positions as well (used in
+ * partial wall rendering)
+ * 
+ * @param app 
+ * @param hit 
+ * @param relative_height 
+ */
+static void	calculate_parent_positions(t_app *app, t_rayhit *hit,
+	double relative_height)
+{
+	t_rayhit	parenthit;
+
+	t_sector	*parent;
+	double		ceil_slope;
+	double		floor_slope;
+
+	ft_memcpy(&parenthit, hit, sizeof(t_rayhit));
+	parent = &app->sectors[hit->sector->parent_sector];
+	parenthit.sector = parent;
+
+	ceil_slope = 0.0;
+	floor_slope = 0.0;
+	if (parent->ceil_slope_height)
+		ceil_slope = apply_ceiling_slope(&parenthit);
+	if (parent->floor_slope_height)
+		floor_slope = apply_floor_slope(&parenthit);
+
+	hit->parent_height = (int)(relative_height
+		* (parent->ceil_height + ceil_slope - parent->floor_height - floor_slope));
+	hit->parent_wall_start = WIN_H / 2 - hit->parent_height
+		+ (int)(relative_height * ((app->player.height + app->player.elevation) - parent->floor_height - floor_slope));
+	hit->parent_wall_end = hit->parent_wall_start + hit->parent_height;
+	hit->parent_wall_start_actual = hit->parent_wall_start;
+	if (hit->parent_wall_start < 0)
+		hit->parent_wall_start = 0;
+	if (hit->parent_wall_start >= WIN_H)
+		hit->parent_wall_start = WIN_H - 1;
+	if (hit->parent_wall_end < 0)
+		hit->parent_wall_end = 0;
+	if (hit->parent_wall_end >= WIN_H)
+		hit->parent_wall_end = WIN_H - 1;
 }
 
 /**
