@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/08 12:21:15 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:07:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ static void	import_floor_slope(t_exportsector *export, t_sector *sector)
 		linedst = sector->corners[export->floor_slope_position + 1];
 	else
 		linedst = sector->corners[0];
-	opposite = (t_vector2){sector->corners[export->floor_slope_opposite].x,
-			sector->corners[export->floor_slope_opposite].y};
+	opposite = sector->corners[export->floor_slope_opposite];
 	sector->floor_slope_height = export->floor_slope_height - export->floor_height;
 	sector->floor_slope_end = opposite;
 	sector->floor_slope_start = point;
@@ -75,8 +74,7 @@ static void	import_ceil_slope(t_exportsector *export, t_sector *sector)
 		linedst = sector->corners[export->ceil_slope_position + 1];
 	else
 		linedst = sector->corners[0];
-	opposite = (t_vector2){sector->corners[export->ceil_slope_opposite].x,
-			sector->corners[export->ceil_slope_opposite].y};
+	opposite = sector->corners[export->ceil_slope_opposite];
 	sector->ceil_slope_height = export->ceil_slope_height - export->ceil_height;
 	sector->ceil_slope_end = opposite;
 	sector->ceil_slope_start = point;
