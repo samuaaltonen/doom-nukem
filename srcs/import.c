@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/25 16:42:59 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/08 13:49:37 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,10 @@ static void	import_floor_slope(t_exportsector *export, t_sector *sector)
 	t_vector2	opposite;
 
 	if (export->floor_slope_position == -1)
+	{
+		sector->floor_slope_angles = (t_vector2){0.f,0.f};
 		return ;
+	}
 	point = sector->corners[export->floor_slope_position];
 	if (export->floor_slope_position < sector->corner_count)
 		linedst = sector->corners[export->floor_slope_position + 1];
@@ -75,7 +78,10 @@ static void	import_ceil_slope(t_exportsector *export, t_sector *sector)
 	t_vector2	opposite;
 
 	if (export->ceil_slope_position == -1)
+	{
+		sector->ceiling_slope_angles = (t_vector2){0.f,0.f};
 		return ;
+	}
 	point = sector->corners[export->ceil_slope_position];
 	if (export->ceil_slope_position < sector->corner_count)
 		linedst = sector->corners[export->ceil_slope_position + 1];

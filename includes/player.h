@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/07 16:27:22 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/08 13:19:57 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,10 @@
 # define JUMP_SIZE 2.f
 # define JUMP_TIME 0.1f
 # define JETPACK 1.f
+# define JETPACK_FALL 0.25f
+# define MAX_STEP 0.2f
+# define MAX_ANGLE 45.f
+# define TALL 0.7f
 
 /**
  * Movement direction enumeration.

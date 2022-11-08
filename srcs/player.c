@@ -13,25 +13,22 @@
 #include "doomnukem.h"
 
 /**
- * Checks wall collisions for given position.
+ * @brief Checks if players new position is on the otherside of any wall,
+ * 	recurses into the new sector if it's a portal,
+ * 	returns -1 if the player can't be in the new position
+ * 
+ * @param app 
+ * @param new 
+ * @param wall_id 
+ * @return int 
  */
-/* static int	is_collision(t_app *app, t_vector2 pos)
-{
-	(void)app;
-	(void)pos;
-	if (pos.x >= app->map_size.x || pos.y >= app->map_size.y)
-		return (1);
-	if (pos.x < 0 || pos.y < 0)
-		return (1);
-	if (app->map[(int)pos.y][(int)pos.x][0] > 'A'
-		&& app->map[(int)pos.y][(int)pos.x][0] != DOOR_MAP_ID_MOVING)
-		return (1);
-	return (0);
-} */
-
 static int	wall_collision_recursive(t_app *app, t_move new, int wall_id)
 {
 	int	i;
+	int member_id;
+	int counter;
+	(void)member_id;
+	(void)counter;
 
 	i = -1;
 	while (++i < app->sectors[wall_id].corner_count)
@@ -39,8 +36,8 @@ static int	wall_collision_recursive(t_app *app, t_move new, int wall_id)
 		if(ft_line_side(get_wall_line(app, wall_id,i), new.pos) != 0)
 		{
 			wall_id = app->sectors[wall_id].wall_types[i];
-			if(wall_id < 0 || (new.elevation + 0.2f < app->sectors[wall_id].floor_height ||
-				app->sectors[wall_id].ceiling_height - app->sectors[wall_id].floor_height < 0.6f))
+			if(wall_id < 0 || (new.elevation + MAX_STEP < app->sectors[wall_id].floor_height ||
+				app->sectors[wall_id].ceiling_height - app->sectors[wall_id].floor_height < TALL))
 				return (-1);
 			else
 			{
@@ -57,35 +54,35 @@ static int	wall_collision_recursive(t_app *app, t_move new, int wall_id)
 			} 
 		}
 	}
-	return (wall_id);
-}
 
-/* static t_bool	is_wall_collision(t_app *app, t_move new)
-{
-	int	i;
-	int	wall_id;
-
-	i = 0;
-	while (i < app->sectors[app->player.current_sector].corner_count)
+	//member sector walls
+	counter = 0;
+	while(app->sectors[wall_id].member_sectors[counter] >= 0)
 	{
-		if(ft_line_side(get_wall_line(app, app->player.current_sector,i), new.pos) != 0)
+		i = -1;
+		member_id = app->sectors[wall_id].member_sectors[counter];
+		while (++i < app->sectors[member_id].corner_count)
 		{
-			wall_id = app->sectors[app->player.current_sector].wall_types[i];
-			if(wall_id < 0 || (new.elevation + 0.2f < app->sectors[wall_id].floor_height ||
-				app->sectors[wall_id].ceiling_height - app->sectors[wall_id].floor_height < 0.6f))
-				return (FALSE);
+			if(ft_line_side(get_wall_line(app, member_id ,i), new.pos) != 0)
+				break;
+		}
+		if(i == app->sectors[member_id].corner_count)
+		{
+			wall_id = wall_collision_recursive(app, new, member_id);
+			if(wall_id < 0)
+				return (-1);
 			else
 			{
-				app->player.elevation = app->player.elevation + (app->sectors[wall_id].floor_height - app->sectors[app->player.current_sector].floor_height);
 				app->player.current_sector = wall_id;
-				return (TRUE);
+				if(new.elevation != app->sectors[wall_id].floor_height)
+					app->player.flying = TRUE;
+				return(wall_id);
 			}
 		}
-		i++;
+		counter++;
 	}
-	return (TRUE);
-
-} */
+	return (wall_id);
+}
 
 /**
  * Updates player's position if possible.
@@ -101,7 +98,7 @@ void	update_position(t_app *app)
 	if(app->player.flying)
 	{
 		if(app->player.jetpack)
-			app->player.velocity = ft_lerp(app->player.velocity, -GRAVITY * 0.25f, app->player.jump_timer);
+			app->player.velocity = ft_lerp(app->player.velocity, -GRAVITY * JETPACK_FALL, app->player.jump_timer);
 		else
 			app->player.velocity = ft_lerp(app->player.velocity, -GRAVITY, app->player.jump_timer);
 		if(app->player.jump_timer < JUMP_TIME)
