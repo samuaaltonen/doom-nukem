@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
+#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/08 12:40:17 by dpalacio         ###   ########.fr        #
+#    Updated: 2022/11/08 16:25:00 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ LIBLINEARALGEBRA = ../liblinearalgebra/liblinearalgebra.a
 SRC_DIR = ./srcs
 SRCS := $(patsubst %, $(SRC_DIR)/%, $(FILES))
 
-BUILD_DIR = ./build
+BUILD_DIR = ./compiled
 OBJS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.o))
 DEPS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.d))
 
