@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/08 12:29:54 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/08 13:50:18 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,14 @@ typedef struct s_rayhit
 	t_vector2	texture_offset;
 	t_vector2	texture_step;
 	int			height;
+
+	int			wall_start_actual;
 	int			wall_start;
 	int			wall_end;
 	int			wall_type;
+
 	int			parent_height;
+	int			parent_wall_start_actual;
 	int			parent_wall_start;
 	int			parent_wall_end;
 
@@ -103,8 +107,6 @@ typedef struct s_rayhit
 	double		ceil_horizon_angle;
 	double		ceil_slope_height;
 
-	double		parent_texture_offset_top;
-	double		parent_texture_offset_bottom;
 	double		slope_texture_offset_top;
 	double		slope_texture_offset_bottom;
 }	t_rayhit;

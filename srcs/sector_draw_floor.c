@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/04 17:10:10 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/08 14:10:06 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ void	draw_floor(t_app *app, int x, t_rayhit *hit)
 		return;
 	app->occlusion_bottom[x] = WIN_H - y_start;
 
-	elevation_offset = hit->sector->floor_slope_magnitude * hit->distance;
-	elevation_offset *= hit->floor_horizon_angle;
+	elevation_offset = hit->sector->floor_slope_magnitude * hit->distance
+		* hit->floor_horizon_angle;
 
 	while (y_start < y_end)
 	{
