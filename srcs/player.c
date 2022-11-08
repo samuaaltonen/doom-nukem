@@ -35,9 +35,10 @@ static int	wall_collision_recursive(t_app *app, t_move new, int wall_id)
 	{
 		if(ft_line_side(get_wall_line(app, wall_id,i), new.pos) != 0)
 		{
+			ft_printf("recursion'\n");
 			wall_id = app->sectors[wall_id].wall_types[i];
 			if(wall_id < 0 || (new.elevation + MAX_STEP < app->sectors[wall_id].floor_height ||
-				app->sectors[wall_id].ceiling_height - app->sectors[wall_id].floor_height < TALL))
+				app->sectors[wall_id].ceiling_height < new.elevation + TALL))
 				return (-1);
 			else
 			{
@@ -69,7 +70,8 @@ static int	wall_collision_recursive(t_app *app, t_move new, int wall_id)
 		if(i == app->sectors[member_id].corner_count)
 		{
 			wall_id = wall_collision_recursive(app, new, member_id);
-			if(wall_id < 0)
+			if(wall_id < 0 || (new.elevation + MAX_STEP < app->sectors[wall_id].floor_height ||
+				app->sectors[wall_id].ceiling_height < new.elevation + TALL))
 				return (-1);
 			else
 			{
@@ -82,6 +84,14 @@ static int	wall_collision_recursive(t_app *app, t_move new, int wall_id)
 		counter++;
 	}
 	return (wall_id);
+}
+
+
+static t_bool ceil_collision(t_app *app)
+{
+	if(app->sectors[app->player.current_sector].ceiling_height < app->player.elevation + TALL)
+		return (FALSE);
+	return (TRUE);
 }
 
 /**
@@ -131,7 +141,14 @@ void	update_position(t_app *app)
 		return ; */
 	app->player.pos.y = new.y;
 	app->player.pos.x = new.x;
-	app->player.elevation += app->player.velocity * app->conf->delta_time;
+	if(!ceil_collision(app))
+	{
+		app->player.jump_timer = JUMP_TIME;
+		app->player.velocity = 0.f;
+		app->player.elevation = app->sectors[app->player.current_sector].ceiling_height - TALL;
+	}
+	else
+		app->player.elevation += app->player.velocity * app->conf->delta_time;
 	app->player.jetpack_boost = FALSE;
 }
 
