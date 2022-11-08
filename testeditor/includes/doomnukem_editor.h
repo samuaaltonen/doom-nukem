@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/03 14:45:58 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/07 14:34:29 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define DEG_IN_RADIAN 0.01745f
 # define PI_HALF 1.57079632679
 # define RADIAN_IN_DEG 57.29578f
-# define MAP_SPEED 0.25f
+# define MAP_SPEED 0.85f
 # define HEIGHT_INC 0.125f
 # define PANELS_PATH "../assets/textures/minecraft_spritesheet.bmp"
 # define FONT_FILE "../assets/legacy/SpaceMono-Regular.ttf"
@@ -224,6 +224,7 @@ typedef struct s_app
 	t_bool				slope_edit;
 	t_bool				player_edit;
 	int					sectorcount;
+	int					movement_speed;
 	t_assets			assets;
 	t_player			player;
 }	t_app;
@@ -334,7 +335,7 @@ void			sector_delone(t_sector_lst **sector,
 					void (*del)(void*, size_t));
 size_t			ft_lstlen(t_sector_lst *lst);
 t_sector_lst	*sector_by_index(t_app *app, int index);
-int				inside_sector_check(t_app *app, t_sector_lst *sector);
+int				inside_sector_check(t_sector_lst *sector, t_vector2 *mouse);
 t_sector_lst	*click_sector(t_app *app);
 void			sector_edit(t_app *app, SDL_Keycode key);
 t_sector_lst	*find_parent_sector(t_app *app, t_sector_lst *sector);
