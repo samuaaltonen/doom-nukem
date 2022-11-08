@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/07 14:34:29 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/08 12:39:08 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,6 @@
 # include <pthread.h>
 # include <stdlib.h>
 # include <SDL.h>
-# include <SDL_ttf.h>
 # include "libft.h"
 # include "liblinearalgebra.h"
 
@@ -202,7 +201,6 @@ typedef struct s_app
 	int					zoom_range;
 	SDL_Window			*win;
 	SDL_Surface			*surface;
-	TTF_Font			*font;
 	SDL_Surface			*sprite;
 	double				divider;
 	t_vector2			view_pos;

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+         #
+#    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/03 13:51:13 by ssulkuma         ###   ########.fr        #
+#    Updated: 2022/11/08 12:40:17 by dpalacio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,13 +33,11 @@ DEPS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.d))
 SDL_DIR = ../sdl/
 SDL_HEADERS = \
 	-I$(SDL_DIR)SDL2.framework/Versions/A/Headers \
-	-I$(SDL_DIR)SDL2_image.framework/Versions/A/Headers \
-	-I$(SDL_DIR)SDL2_ttf.framework/Versions/A/Headers \
 
 FRAMEWORKS = -F$(SDL_DIR) \
 				-rpath $(SDL_DIR) \
 				-framework OpenGL -framework AppKit -framework OpenCl \
-				-framework SDL2 -framework SDL2_ttf -framework SDL2_image
+				-framework SDL2
 
 HEADERS = -I ./includes -I ../libft/includes -I ../liblinearalgebra/includes \
 		-I /usr/local/include/SDL2 $(SDL_HEADERS)
