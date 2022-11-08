@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/04 01:36:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/08 12:29:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,10 @@ typedef struct s_sector
 	int				parent_sector;
 	int				light;
 	double			floor_height;
-	double			ceiling_height;
 	int				floor_texture;
 	double			floor_tex_offset;
-	int				ceiling_texture;
+	double			ceil_height;
+	int				ceil_texture;
 	double			ceil_tex_offset;
 
 	t_vector2		floor_slope_start;
@@ -43,15 +43,11 @@ typedef struct s_sector
 	double			floor_slope_height;
 	double			floor_slope_magnitude;
 
-	t_vector2		ceiling_slope_start;
-	t_vector2		ceiling_slope_end;
-	double			ceiling_slope_height;
-	double			ceiling_slope_magnitude;
+	t_vector2		ceil_slope_start;
+	t_vector2		ceil_slope_end;
+	double			ceil_slope_height;
+	double			ceil_slope_magnitude;
 
-	t_vector3		floor_slope_position;
-	t_vector2		floor_slope_angles;
-	t_vector3		ceiling_slope_position;
-	t_vector2		ceiling_slope_angles;
 	int				stack_index;
 }	t_sector;
 
@@ -103,7 +99,9 @@ typedef struct s_rayhit
 	double		floor_horizon_angle;
 	double		floor_slope_height;
 
-	double		ceiling_horizon;
+	double		ceil_horizon;
+	double		ceil_horizon_angle;
+	double		ceil_slope_height;
 
 	double		parent_texture_offset_top;
 	double		parent_texture_offset_bottom;

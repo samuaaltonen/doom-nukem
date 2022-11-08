@@ -41,7 +41,7 @@ static t_bool	is_wall_collision(t_app *app, t_move new)
 		{
 			wall_id = app->sectors[app->player.current_sector].wall_types[i];
 			if(wall_id < 0 || (new.elevation + 0.2f < app->sectors[wall_id].floor_height ||
-				app->sectors[wall_id].ceiling_height - app->sectors[wall_id].floor_height < 0.6f))
+				app->sectors[wall_id].ceil_height - app->sectors[wall_id].floor_height < 0.6f))
 				return (FALSE);
 			else
 			{

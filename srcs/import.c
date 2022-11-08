@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/04 17:11:06 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/08 12:21:15 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,6 @@ static void	import_floor_slope(t_exportsector *export, t_sector *sector)
 		linedst = sector->corners[0];
 	opposite = (t_vector2){sector->corners[export->floor_slope_opposite].x,
 			sector->corners[export->floor_slope_opposite].y};
-	sector->floor_slope_position = (t_vector3){point.x, point.y,
-			export->floor_slope_height};
-	sector->floor_slope_angles.y = ft_vector_angle(
-			ft_vector2_sub(linedst, point),(t_vector2){0.f,1.f});	
-	ft_line_intersection(
-			ft_line_resize((t_line){point, linedst}, MAX_LINE_LENGTH, 2),
-			ft_line_resize((t_line){opposite, ft_vector2_add(
-			ft_vector_perpendicular(ft_vector2_sub(linedst, point)), opposite)},
-			MAX_LINE_LENGTH, 2),&point);
-	sector->floor_slope_angles.x = atan(
-			(export->floor_slope_height - export->floor_height) /
-			ft_vector_length(ft_vector2_sub(opposite, point)));
-
 	sector->floor_slope_height = export->floor_slope_height - export->floor_height;
 	sector->floor_slope_end = opposite;
 	sector->floor_slope_start = point;
@@ -90,18 +77,12 @@ static void	import_ceil_slope(t_exportsector *export, t_sector *sector)
 		linedst = sector->corners[0];
 	opposite = (t_vector2){sector->corners[export->ceil_slope_opposite].x,
 			sector->corners[export->ceil_slope_opposite].y};
-	sector->ceiling_slope_position = (t_vector3){point.x, point.y,
-			export->ceil_slope_height};
-	sector->ceiling_slope_angles.y = ft_vector_angle(
-			ft_vector2_sub(linedst, point),(t_vector2){0.f,1.f});	
-	ft_line_intersection(
-			ft_line_resize((t_line){point, linedst}, MAX_LINE_LENGTH, 2),
-			ft_line_resize((t_line){opposite, ft_vector2_add(
-			ft_vector_perpendicular(ft_vector2_sub(linedst, point)), opposite)},
-			MAX_LINE_LENGTH, 2),&point);
-	sector->ceiling_slope_angles.x = atan(
-			(export->ceil_slope_height - export->ceil_height) /
-			ft_vector_length(ft_vector2_sub(opposite, point)));
+	sector->ceil_slope_height = export->ceil_slope_height - export->ceil_height;
+	sector->ceil_slope_end = opposite;
+	sector->ceil_slope_start = point;
+	sector->ceil_slope_magnitude = sector->ceil_slope_height 
+		/ ft_vector_length(ft_vector2_sub(sector->ceil_slope_end,
+			sector->ceil_slope_start));
 }
 
 //read sector data from export
@@ -111,45 +92,18 @@ static void read_sector(t_app *app, t_exportsector *export, int sectorid, int se
 	app->sectors[sectorid].corner_count = export->corner_count;
 	export_to_array(app, export, sectorid);
 	app->sectors[sectorid].light = export->light;
-	app->sectors[sectorid].ceiling_texture = export->ceil_tex;
+	app->sectors[sectorid].ceil_texture = export->ceil_tex;
 	app->sectors[sectorid].ceil_tex_offset = export->ceil_tex_offset;
 	app->sectors[sectorid].floor_texture = export->floor_tex;
 	app->sectors[sectorid].floor_tex_offset = export->floor_tex_offset;
-	app->sectors[sectorid].ceiling_height = export->ceil_height;
+	app->sectors[sectorid].ceil_height = export->ceil_height;
 	app->sectors[sectorid].floor_height = export->floor_height;
 	app->sectors[sectorid].parent_sector = export->parent_sector;
 
 	app->sectors[sectorid].floor_slope_height = 0.0;
-	app->sectors[sectorid].ceiling_slope_height = 0.0;
-	app->sectors[sectorid].floor_slope_magnitude = 0.0;
-
-	/* if (sectorid == 9)
-	{
-		app->sectors[sectorid].floor_slope_height = 4.0;
-		app->sectors[sectorid].floor_slope_end = (t_vector2){-2.0, 12.0};
-		app->sectors[sectorid].floor_slope_start = (t_vector2){2.0, 12.0};
-		app->sectors[sectorid].floor_slope_magnitude = app->sectors[sectorid].floor_slope_height / ft_vector_length(ft_vector2_sub(app->sectors[sectorid].floor_slope_end, app->sectors[sectorid].floor_slope_start));
-
-		app->sectors[sectorid].ceiling_slope_height = 0.0;
-		app->sectors[sectorid].ceiling_slope_end = (t_vector2){-2.0, 12.0};
-		app->sectors[sectorid].ceiling_slope_start = (t_vector2){2.0, 12.0};
-		app->sectors[sectorid].ceiling_slope_magnitude = app->sectors[sectorid].floor_slope_height / ft_vector_length(ft_vector2_sub(app->sectors[sectorid].ceiling_slope_end, app->sectors[sectorid].ceiling_slope_start));
-	}
-	if (sectorid == 13)
-	{
-		app->sectors[sectorid].floor_slope_height = 16.0;
-		app->sectors[sectorid].floor_slope_end = (t_vector2){0.0, 29.0};
-		app->sectors[sectorid].floor_slope_start = (t_vector2){0.0, 21.0};
-		app->sectors[sectorid].floor_slope_magnitude = app->sectors[sectorid].floor_slope_height / ft_vector_length(ft_vector2_sub(app->sectors[sectorid].floor_slope_end, app->sectors[sectorid].floor_slope_start));
-
-		app->sectors[sectorid].ceiling_slope_height = 0.0;
-		app->sectors[sectorid].ceiling_slope_end = (t_vector2){0.0, 29.0};
-		app->sectors[sectorid].ceiling_slope_start = (t_vector2){0.0, 21.0};
-		app->sectors[sectorid].ceiling_slope_magnitude = app->sectors[sectorid].floor_slope_height / ft_vector_length(ft_vector2_sub(app->sectors[sectorid].ceiling_slope_end, app->sectors[sectorid].ceiling_slope_start));
-	} */
+	app->sectors[sectorid].ceil_slope_height = 0.0;
 	import_floor_slope(export, &(app->sectors[sectorid]));
 	import_ceil_slope(export, &(app->sectors[sectorid]));
-	ft_printf("sectorid = %i corners count: %i, floor slope %f, ceil slope %f\n", sectorid, app->sectors[sectorid].corner_count, app->sectors[sectorid].floor_slope_angles.x, app->sectors[sectorid].ceiling_slope_angles.x);
 }
 
 //open a file

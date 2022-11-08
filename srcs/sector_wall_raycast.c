@@ -6,16 +6,20 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/04 17:09:06 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/08 12:36:24 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * If wall is a portal, calculate parent positions as well (used in partial
+ * @brief If wall is a portal, calculate parent positions as well (used in partial
  * wall rendering)
-*/
+ * 
+ * @param app 
+ * @param hit 
+ * @param relative_height 
+ */
 static void	calculate_parent_positions(t_app *app, t_rayhit *hit,
 	double relative_height)
 {
@@ -23,7 +27,7 @@ static void	calculate_parent_positions(t_app *app, t_rayhit *hit,
 
 	parent = &app->sectors[hit->sector->parent_sector];
 	hit->parent_height = (int)(relative_height
-		* (parent->ceiling_height - parent->floor_height));
+		* (parent->ceil_height - parent->floor_height));
 	hit->parent_wall_start = WIN_H / 2 - hit->parent_height
 		+ (int)(relative_height * ((app->player.height + app->player.elevation) - parent->floor_height));
 	hit->parent_wall_end = hit->parent_wall_start + hit->parent_height;
@@ -47,23 +51,38 @@ static void	calculate_parent_positions(t_app *app, t_rayhit *hit,
 		hit->parent_wall_end = WIN_H - 1;
 }
 
+/**
+ * @brief Calculates height offset for current rayhit based on sector ceiling
+ * slope
+ * 
+ * @param hit 
+ * @return double 
+ */
 static double	apply_ceiling_slope(t_rayhit *hit)
 {
 	double		perpendicular_distance;
 	double		pos_angle;
-	t_vector2	slope_start_to_hit;
+	t_vector2	slope_vector;
 
-	slope_start_to_hit = ft_vector2_sub(hit->position,
-			hit->sector->ceiling_slope_start);
-	pos_angle = ft_vector_angle(slope_start_to_hit,
-		ft_vector2_sub(hit->sector->ceiling_slope_end,
-			hit->sector->ceiling_slope_start));
+	slope_vector = ft_vector2_sub(hit->sector->ceil_slope_end,
+			hit->sector->ceil_slope_start);
+	pos_angle = ft_vector_angle(ft_vector2_sub(hit->position,
+			hit->sector->ceil_slope_start), slope_vector);
 	perpendicular_distance = cos(pos_angle) * ft_vector_length(ft_vector2_sub(
-		hit->position,
-		hit->sector->ceiling_slope_start));
-	return (perpendicular_distance * hit->sector->ceiling_slope_magnitude);
+		hit->position, hit->sector->ceil_slope_start));
+	hit->ceil_horizon_angle = cos(ft_vector_angle(hit->ray, slope_vector)) / hit->distortion;
+	hit->ceil_horizon = hit->sector->ceil_slope_magnitude * hit->ceil_horizon_angle;
+	hit->ceil_slope_height = perpendicular_distance * hit->sector->ceil_slope_magnitude;
+	return (perpendicular_distance * hit->sector->ceil_slope_magnitude);
 }
 
+/**
+ * @brief Calculates height offset for current rayhit based on sector floor
+ * slope
+ * 
+ * @param hit 
+ * @return double 
+ */
 static double	apply_floor_slope(t_rayhit *hit)
 {
 	double		perpendicular_distance;
@@ -72,43 +91,43 @@ static double	apply_floor_slope(t_rayhit *hit)
 
 	slope_vector = ft_vector2_sub(hit->sector->floor_slope_end,
 			hit->sector->floor_slope_start);
-
 	pos_angle = ft_vector_angle(ft_vector2_sub(hit->position,
 			hit->sector->floor_slope_start), slope_vector);
 	perpendicular_distance = cos(pos_angle) * ft_vector_length(ft_vector2_sub(
 		hit->position, hit->sector->floor_slope_start));
-
 	hit->floor_horizon_angle = cos(ft_vector_angle(hit->ray, slope_vector)) / hit->distortion;
 	hit->floor_horizon = hit->sector->floor_slope_magnitude * hit->floor_horizon_angle;
-
 	hit->floor_slope_height = perpendicular_distance * hit->sector->floor_slope_magnitude;
 	return (perpendicular_distance * hit->sector->floor_slope_magnitude);
 }
 
 /**
- * Calculates wall starting and ending positions in window y coordinates.
-*/
+ * @brief Calculates wall starting and ending positions in window y coordinates.
+ * 
+ * @param app 
+ * @param hit 
+ */
 void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 {
 	double		relative_height;
-	double		ceiling_slope;
+	double		ceil_slope;
 	double		floor_slope;
 
-	ceiling_slope = 0.0;
+	ceil_slope = 0.0;
 	floor_slope = 0.0;
-	if (hit->sector->ceiling_slope_height)
-		ceiling_slope = apply_ceiling_slope(hit);
+	if (hit->sector->ceil_slope_height)
+		ceil_slope = apply_ceiling_slope(hit);
 	if (hit->sector->floor_slope_height)
 		floor_slope = apply_floor_slope(hit);
 	relative_height = WIN_H / hit->distance;
 	hit->height = (int)(relative_height
-			* (hit->sector->ceiling_height + ceiling_slope - hit->sector->floor_height - floor_slope));
+			* (hit->sector->ceil_height + ceil_slope - hit->sector->floor_height - floor_slope));
 	hit->wall_start = WIN_H / 2 - hit->height + (int)(relative_height
 			* ((app->player.height + app->player.elevation) - hit->sector->floor_height - floor_slope));
 	hit->wall_end = hit->wall_start + hit->height;
 	hit->texture_step.y = TEX_SIZE / relative_height;
 	hit->texture_offset.y = 0;
-	hit->slope_texture_offset_top = (double)TEX_SIZE - relative_height * ceiling_slope * hit->texture_step.y;
+	hit->slope_texture_offset_top = (double)TEX_SIZE - relative_height * ceil_slope * hit->texture_step.y;
 	hit->slope_texture_offset_bottom = (double)TEX_SIZE - relative_height * floor_slope * hit->texture_step.y;
 	if (hit->sector->parent_sector >= 0)
 		calculate_parent_positions(app, hit, relative_height);
@@ -129,10 +148,16 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 }
 
 /**
- * Performs raycast from player to wall. Updates values into rayhit struct to be
- * used later in rendering.
- * Returns TRUE if there was a hit and FALSE otherwise.
-*/
+ * @brief Performs raycast from player to wall. Updates values into rayhit
+ * struct to be used later in rendering. Returns TRUE if there was a hit and
+ * FALSE otherwise.
+ * 
+ * @param app 
+ * @param wall 
+ * @param hit 
+ * @param x 
+ * @return t_bool 
+ */
 static t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 {
 	t_line	ray_line;
@@ -163,8 +188,14 @@ static t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 }
 
 /**
- * Draws individual sector wall, possible ceiling and floor of that vertical
- * screenline. Also updates occlusion arrays accordingly.
+ * @brief Draws individual sector wall, possible ceiling and floor of that
+ * vertical screenline. Also updates occlusion arrays accordingly.
+ * 
+ * @param app 
+ * @param thread 
+ * @param wall 
+ * @param start_x 
+ * @param end_x 
  */
 void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall, int start_x, int end_x)
 {
@@ -179,12 +210,8 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall, int s
 	{
 		if (x % THREAD_COUNT != thread->id)
 			continue ;
-		/**
-		 * Perform rayhit. Skips when there is no hit.
-		*/
 		if (!raycast_hit(app, wall->line, &hit, x))
 			continue ;
-		// If portal or member (member sectors automatically portals)
 		if (wall->is_portal)
 		{
 			if (wall->is_inside && !wall->is_member)
@@ -199,7 +226,6 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall, int s
 			}
 			continue ;
 		}
-		// IF wall type normal wall:
 		draw_ceiling(app, x, &hit);
 		draw_floor(app, x, &hit);
 		draw_wall(app, x, &hit, OCCLUDE_BOTH);
