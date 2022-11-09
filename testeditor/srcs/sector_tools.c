@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:53:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/03 12:48:18 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/04 14:42:03 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ t_sector_lst	*click_sector(t_app *app)
 	tmp = app->sectors;
 	while (tmp)
 	{
-		if (inside_sector_check(app, tmp))
+		if (inside_sector_check(tmp, &app->mouse_track))
 		{
 			while (tmp->parent_sector)
 			{
@@ -63,15 +63,14 @@ t_sector_lst	*click_sector(t_app *app)
  * Returns true if the click is inside a convex sector, checking the point
  * side to all walls.
  */
-int	inside_sector_check(t_app *app, t_sector_lst *sector)
+int	inside_sector_check(t_sector_lst *sector, t_vector2 *mouse)
 {
 	t_vec2_lst	*tmp;
 
 	tmp = sector->wall_list;
 	while (tmp)
 	{
-		if (ft_line_side((t_line){tmp->point, tmp->next->point},
-			app->mouse_track))
+		if (ft_line_side((t_line){tmp->point, tmp->next->point}, (*mouse)))
 			return (0);
 		tmp = tmp->next;
 		if (tmp == sector->wall_list)

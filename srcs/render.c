@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/04 10:44:04 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/09 11:42:32 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	render_titlescreen(t_app *app)
 	t_rect		dst;
 	t_rect		src;
 
+	SDL_SetRelativeMouseMode(SDL_FALSE);
 	rect_from_surface(app->assets.title_screen_image, &src);
 	rect_from_surface(app->surface, &dst);
 	blit_surface(app->assets.title_screen_image, &src, app->surface, &dst);
@@ -35,6 +36,7 @@ void	render_mainmenu(t_app *app)
 	t_rect		dst;
 	t_rect		src;
 
+	SDL_SetRelativeMouseMode(SDL_FALSE);
 	rect_from_surface(app->assets.title_screen_image, &src);
 	rect_from_surface(app->surface, &dst);
 	blit_surface(app->assets.title_screen_image, &src, app->surface, &dst);
@@ -70,16 +72,16 @@ void	render_pointer(t_app *app, int x, int y)
 
 void	render_game(t_app *app)
 {
+	SDL_SetRelativeMouseMode(SDL_TRUE);
 	handle_movement(app);
 	render_sectors(app);
 	render_ui(app);
-
 }
 
 void	render_pausemenu(t_app *app)
 {	
 	t_rect		src;
-
+	SDL_SetRelativeMouseMode(SDL_FALSE);
 	render_sectors(app);
 	change_font(app, 16, 0xFF00FFFF);
 	rect_from_surface(app->assets.button_idle, &src);

@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/04 12:00:21 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/04 14:46:06 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ int	events_keyup(int keycode, t_app *app)
 		app->conf->keystates ^= CTRL;
 	if (keycode == SDLK_ESCAPE)
 		exit(EXIT_SUCCESS);
-//	if (keycode == SDLK_h)
 	if (keycode == SDLK_e)
 		app->conf->toggle_loop = ft_toggle(app->conf->toggle_loop);
 	if (keycode == SDLK_TAB)
@@ -51,10 +50,9 @@ int	events_keyup(int keycode, t_app *app)
 	{
 		if (app->status == STATUS_TITLESCREEN)
 			app->status = STATUS_MAINMENU;
-		//----DEBUG FUNCTIONALITIES
+		//----DEBUG FUNCTIONALITY
 		else if (app->status == STATUS_MAINMENU)
 			start_game(app);
-
 		//----
 		app->conf->keystates ^= SPACE;
 	}

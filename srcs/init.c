@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/04 13:40:56 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/07 11:58:03 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ int	config_init(t_app *app)
 
 /**
  * Prepares the application to be rendered:
- * Creates window, adds event hooks and sets
- * initial player position / direction.
+ * Creates window and opens an audio device
  */
 void	sdl_init(t_app *app)
 {
 	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO) < 0)
 		exit_error(MSG_ERROR_SDL_INIT);
+	SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
 	app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_SHOWN);
 	if (!app->win)
 		exit_error(MSG_ERROR_WINDOW);
@@ -83,10 +83,6 @@ void    load_assets(t_app *app)
 	app->assets.pointer = SDL_LoadBMP(POINTER_PATH);
 	app->assets.sprite = SDL_LoadBMP(PANELS_PATH);
 	app->assets.bg = SDL_LoadBMP(SKYBOX_PATH);
-	//app->assets.music = Mix_LoadMUS(MUSIC_PATH);
-	//if (app->assets.music == NULL)
-	//	exit_error(MSG_ERROR);
-
     load_font(app);
 }
 

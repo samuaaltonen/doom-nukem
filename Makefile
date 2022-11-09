@@ -6,13 +6,14 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/04 14:15:47 by saaltone         ###   ########.fr        #
+#    Updated: 2022/11/09 11:38:05 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = doom-nukem
 
 CC = gcc
+PWD= $(shell pwd)
 
 FILES = main.c init.c render.c buttons.c error.c conf.c app.c  \
 		events_key.c events_mouse.c events_window.c graphics.c image.c \
@@ -24,26 +25,27 @@ FILES = main.c init.c render.c buttons.c error.c conf.c app.c  \
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a
+SDL2 = ./sdl/SDL2_build/lib/libSDL2.a
 
 SRC_DIR = ./srcs
 SRCS := $(patsubst %, $(SRC_DIR)/%, $(FILES))
 
-BUILD_DIR = ./build
+BUILD_DIR = ./compiled
 OBJS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.o))
 DEPS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.d))
 
-SDL_DIR = ./sdl/
-SDL_HEADERS = \
-	-I$(SDL_DIR)SDL2.framework/Versions/A/Headers \
-	-I$(SDL_DIR)SDL2_mixer.framework/Versions/A/Headers
+SDL_DIR = ./sdl
+SDL_CONF = `sdl/SDL2_build/bin/sdl2-config --cflags --libs`
+SDL_V = SDL2-2.24.2
 
-FRAMEWORKS = -F$(SDL_DIR) \
-				-rpath $(SDL_DIR) \
-				-framework OpenGL -framework AppKit -framework OpenCl \
-				-framework SDL2 -framework SDL2_mixer
+FRAMEWORKS = \
+	-framework OpenGL -framework AppKit -framework OpenCl \
 
-HEADERS = -I ./includes -I ./libft/includes -I ./liblinearalgebra/includes \
-		-I /usr/local/include/SDL2 $(SDL_HEADERS)
+HEADERS = \
+	-I ./includes \
+	-I ./libft/includes \
+	-I ./liblinearalgebra/includes \
+	-I ./sdl/SDL2-2.24.2/include
 
 FLAGS = -Wall -Wextra -Werror -flto -Ofast -g
 
@@ -52,8 +54,8 @@ LIBLINKS = -L ./libft -L ./liblinearalgebra -L/usr/local/lib \
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(LIBLINEARALGEBRA) $(OBJS) $(DEPS)
-	$(CC) $(OBJS) -o $(NAME) $(FLAGS) $(HEADERS) $(FRAMEWORKS) $(LIBLINKS)
+$(NAME): $(LIBFT) $(LIBLINEARALGEBRA) $(SDL2) $(OBJS) $(DEPS)
+	$(CC) $(OBJS) -o $(NAME) $(SDL_CONF) $(FLAGS) $(HEADERS) $(FRAMEWORKS) $(LIBLINKS)
 
 # Create object files with (-MMD also creates dependency files)
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
@@ -70,16 +72,26 @@ $(LIBFT):
 $(LIBLINEARALGEBRA):
 	make -C ./liblinearalgebra
 
-.PHONY: all clean fclean re
+$(SDL2): 
+	cd sdl/$(SDL_V)/build && ../configure --prefix=$(PWD)/sdl/SDL2_build/ && make install
+
+clean-sdl:
+	rm -rf sdl/$(SDL_V)/build/*
+	touch sdl/$(SDL_V)/build/DontRemoveMe
+	rm -rf sdl/SDL2_build/*
+	touch sdl/SDL2_build/DontRemoveMe
+	rm -f $(SDL2)
 
 clean:
 	make clean -C ./libft
 	make clean -C ./liblinearalgebra
 	/bin/rm -rf $(BUILD_DIR)
 
-fclean: clean
+fclean: clean clean-sdl
 	make fclean -C ./libft
 	make fclean -C ./liblinearalgebra
 	/bin/rm -f $(NAME)
 
 re: fclean all
+
+.PHONY: all clean fclean re

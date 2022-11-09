@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 11:47:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/03 11:49:03 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/04 14:43:04 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ t_sector_lst	*find_child_sector(t_app *app)
 	while (i < MAX_MEMBER_SECTORS && app->active_sector->member_sectors[i])
 	{
 		tmp = app->active_sector->member_sectors[i];
-		if (inside_sector_check(app, tmp))
+		if (inside_sector_check(tmp, &app->mouse_track))
 			return (tmp);
 		i++;
 	}

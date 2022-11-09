@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/04 14:16:41 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/09 11:38:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	app_prepare(t_app *app)
 {
 	double		aspect_ratio;
 
-	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0)
 		exit_error(MSG_ERROR_SDL_INIT);
 	app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_SHOWN);
 	if (!app->win)
@@ -51,6 +51,8 @@ void	app_prepare(t_app *app)
 	app->sectorcount = 0;
 	app->sectors = NULL;
 	app->player_edit = 0;
+	app->player.sector = -1;
+	app->movement_speed = 4;
 	load_assets(app);
 	load_font(app);
 	SDL_ShowCursor(SDL_ENABLE);

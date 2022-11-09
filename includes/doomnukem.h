@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/04 14:15:16 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/09 11:37:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,6 @@ void		init_camera_plane(t_app *app);
 /**
  * Application
  */
-//void		app_prepare(t_app *app);
 void		render_frame(t_app *app);
 void		app_loop(t_app *app);
 void		render_game(t_app *app);
