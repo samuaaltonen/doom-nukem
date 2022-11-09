@@ -12,6 +12,28 @@
 
 #include "doomnukem.h"
 
+static int circle_collision(t_app *app, t_line wall)
+{
+	t_vector2 line_intersection;
+	t_vector2 new_intersection;
+	t_vector2 closest_start;
+	t_vector2 closest_end;
+
+	double radius = 1.f;
+
+	if(!ft_line_intersection((t_line){app->player.pos,ft_vector2_add(app->player.pos, app->player.move_vector)}, wall, &line_intersection))
+	{
+		new_intersection = ft_closest_point(ft_vector2_add(app->player.pos, app->player.move_vector), wall);
+		closest_start = ft_closest_point(wall.a, (t_line){app->player.pos,ft_vector2_add(app->player.pos, app->player.move_vector)});
+		closest_end = ft_closest_point(wall.b, (t_line){app->player.pos,ft_vector2_add(app->player.pos, app->player.move_vector)});
+		if(ft_point_distance(new_intersection, ft_vector2_add(app->player.pos, app->player.move_vector)) < radius)
+			return (0);
+		if(ft_point_distance(closest_start, wall.a) < radius || ft_point_distance(closest_end, wall.b) < radius)
+			return (0);
+	}
+	return (1);
+}
+
 /**
  * @brief Checks if players new position is on the otherside of any wall,
  * 	recurses into the new sector if it's a portal,
@@ -29,8 +51,10 @@ static int	wall_collision_recursive(t_app *app, t_move new, int wall_id)
 	int counter;
 
 	i = -1;
+
 	while (++i < app->sectors[wall_id].corner_count)
 	{
+		ft_printf("Circle collision %i\n", circle_collision(app,get_wall_line(app, wall_id, i)));
 		if(ft_line_side(get_wall_line(app, wall_id,i), new.pos) != 0)
 		{
 			ft_printf("recursion'\n");
@@ -125,7 +149,7 @@ void	update_position(t_app *app)
 
 	ft_printf("elevation %f, floor_height%f\n", app->player.elevation, app->sectors[app->player.current_sector].floor_height);
 	ft_printf("test timer %f, velocity %f jetpack %b\n", app->player.jump_timer, app->player.velocity, app->player.jetpack);
-
+	ft_printf("closest point c x%f,y%f\n",ft_closest_point(app->player.pos, get_wall_line(app, app->player.current_sector, 0)).x, ft_closest_point(app->player.pos, get_wall_line(app, app->player.current_sector, 0)).y);
 	//checks if player is under floor and resets player to floor
 	if(app->player.elevation < app->sectors[app->player.current_sector].floor_height)
 	{

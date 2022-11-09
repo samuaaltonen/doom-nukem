@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 17:50:24 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/09 16:47:24 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void read_sector(t_sector_lst *sector, t_exportsector *export)
 	sector->ceil_slope_height = export->ceil_slope_height;
 	if(export->ceil_slope_opposite != -1)
 		sector->ceil_slope_opposite = ft_lstindex(sector->wall_list, export->ceil_slope_opposite);
-	if(export->floor_slope_position != -1)
+	if(export->ceil_slope_position != -1)
 		sector->ceil_slope_wall = ft_lstindex(sector->wall_list, export->ceil_slope_position);
 	sector->parent_sector = NULL;
 	sector->next = NULL;
