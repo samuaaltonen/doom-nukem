@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/08 16:07:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/09 15:12:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,35 @@ static void	export_to_array(t_app *app, t_exportsector *export, int sectorid)
 	ft_memcpy(app->sectors[sectorid].wall_textures, export->wall_textures, export->corner_count * sizeof(int));
 	ft_memcpy(app->sectors[sectorid].wall_types, export->wall_types, export->corner_count *  sizeof(int));
 	ft_memcpy(app->sectors[sectorid].member_sectors, export->member_sectors, MAX_MEMBER_SECTORS * sizeof(int));
+}
+
+/**
+ * @brief Modifies slope ending coordinates so that slope is always
+ * perpendicular to the starting wall. Returns modified ending coordinate.
+ * 
+ * @param sector 
+ * @param start 
+ * @param end 
+ * @return t_vector2 
+ */
+static t_vector2	slope_perpendicular(t_sector *sector, int start, int end)
+{
+	t_vector2	slope;
+	t_vector2	start_wall;
+	t_vector2	perpendicular;
+	double		perpendicular_distance;
+
+	slope = ft_vector2_sub(sector->corners[end], sector->corners[start]);
+	if (start < sector->corner_count + 1)
+		start_wall = ft_vector2_sub(sector->corners[start + 1], sector->corners[start]);
+	else
+		start_wall = ft_vector2_sub(sector->corners[0], sector->corners[start]);
+	perpendicular = ft_vector_resize(ft_vector_perpendicular(start_wall), 1.0);
+	perpendicular_distance = ft_vector_length(slope) * fabs(cos(ft_vector_angle(slope, perpendicular)));
+	return ((t_vector2){
+		sector->corners[start].x + perpendicular_distance * perpendicular.x,
+		sector->corners[start].y + perpendicular_distance * perpendicular.y
+	});
 }
 
 /**
@@ -38,14 +67,19 @@ static void	import_floor_slope(t_exportsector *export, t_sector *sector)
 	if (export->floor_slope_position == -1)
 		return ;
 	point = sector->corners[export->floor_slope_position];
-	if (export->floor_slope_position < sector->corner_count)
+	if (export->floor_slope_position < sector->corner_count + 1)
 		linedst = sector->corners[export->floor_slope_position + 1];
 	else
 		linedst = sector->corners[0];
 	opposite = sector->corners[export->floor_slope_opposite];
 	sector->floor_slope_height = export->floor_slope_height - export->floor_height;
-	sector->floor_slope_end = opposite;
+	if (!sector->floor_slope_height)
+		return ;
 	sector->floor_slope_start = point;
+	/* sector->floor_slope_end = opposite; */
+	sector->floor_slope_end = slope_perpendicular(sector,
+		export->floor_slope_position,
+		export->floor_slope_opposite);
 	sector->floor_slope_magnitude = sector->floor_slope_height 
 		/ ft_vector_length(ft_vector2_sub(sector->floor_slope_end,
 			sector->floor_slope_start));
@@ -67,20 +101,27 @@ static void	import_ceil_slope(t_exportsector *export, t_sector *sector)
 	t_vector2	linedst;
 	t_vector2	opposite;
 
+	ft_printf("point: %d, opposite %d\n", export->ceil_slope_position, export->ceil_slope_opposite);
 	if (export->ceil_slope_position == -1)
 		return ;
 	point = sector->corners[export->ceil_slope_position];
-	if (export->ceil_slope_position < sector->corner_count)
+	if (export->ceil_slope_position < sector->corner_count + 1)
 		linedst = sector->corners[export->ceil_slope_position + 1];
 	else
 		linedst = sector->corners[0];
 	opposite = sector->corners[export->ceil_slope_opposite];
 	sector->ceil_slope_height = export->ceil_slope_height - export->ceil_height;
-	sector->ceil_slope_end = opposite;
+	if (!sector->ceil_slope_height)
+		return ;
 	sector->ceil_slope_start = point;
+	/* sector->ceil_slope_end = opposite; */
+	sector->ceil_slope_end = slope_perpendicular(sector,
+		export->ceil_slope_position,
+		export->ceil_slope_opposite);
 	sector->ceil_slope_magnitude = sector->ceil_slope_height 
 		/ ft_vector_length(ft_vector2_sub(sector->ceil_slope_end,
 			sector->ceil_slope_start));
+	ft_printf("ceiling magnitude: %f, point: %d, opposite %d\n", sector->ceil_slope_magnitude, export->ceil_slope_position, export->ceil_slope_opposite);
 }
 
 //read sector data from export

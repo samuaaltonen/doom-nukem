@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/09 11:38:05 by saaltone         ###   ########.fr        #
+#    Updated: 2022/11/09 13:31:21 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ DEPS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.d))
 
 SDL_DIR = ./sdl
 SDL_CONF = `sdl/SDL2_build/bin/sdl2-config --cflags --libs`
-SDL_V = SDL2-2.24.2
+SDL_V = SDL2-2.0.8
 
 FRAMEWORKS = \
 	-framework OpenGL -framework AppKit -framework OpenCl \
@@ -45,7 +45,7 @@ HEADERS = \
 	-I ./includes \
 	-I ./libft/includes \
 	-I ./liblinearalgebra/includes \
-	-I ./sdl/SDL2-2.24.2/include
+	-I ./sdl/SDL2-2.0.8/include
 
 FLAGS = -Wall -Wextra -Werror -flto -Ofast -g
 

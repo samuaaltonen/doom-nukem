@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/03 11:31:31 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/09 15:12:21 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,6 @@ void	read_sector(t_sector_lst *sector, t_exportsector *export)
 	sector->floor_slope_wall = 0;
 	sector->ceil_slope_opposite = 0;
 	sector->ceil_slope_wall = 0;
-	ft_printf("floor opposite id %i, pos id %i\n", export->floor_slope_opposite, export->floor_slope_position);
 	if (export->floor_slope_opposite != -1)
 		sector->floor_slope_opposite = ft_lstindex(sector->wall_list, export->floor_slope_opposite);
 	if (export->floor_slope_position != -1)
@@ -80,7 +79,7 @@ void	read_sector(t_sector_lst *sector, t_exportsector *export)
 	sector->ceil_slope_height = export->ceil_slope_height;
 	if (export->ceil_slope_opposite != -1)
 		sector->ceil_slope_opposite = ft_lstindex(sector->wall_list, export->ceil_slope_opposite);
-	if (export->floor_slope_position != -1)
+	if (export->ceil_slope_position != -1)
 		sector->ceil_slope_wall = ft_lstindex(sector->wall_list, export->ceil_slope_position);
 	sector->parent_sector = NULL;
 	sector->next = NULL;
