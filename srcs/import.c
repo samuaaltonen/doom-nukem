@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/09 15:12:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/09 16:42:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static t_vector2	slope_perpendicular(t_sector *sector, int start, int end)
 	double		perpendicular_distance;
 
 	slope = ft_vector2_sub(sector->corners[end], sector->corners[start]);
-	if (start < sector->corner_count + 1)
+	if (start < sector->corner_count - 1)
 		start_wall = ft_vector2_sub(sector->corners[start + 1], sector->corners[start]);
 	else
 		start_wall = ft_vector2_sub(sector->corners[0], sector->corners[start]);
@@ -101,7 +101,6 @@ static void	import_ceil_slope(t_exportsector *export, t_sector *sector)
 	t_vector2	linedst;
 	t_vector2	opposite;
 
-	ft_printf("point: %d, opposite %d\n", export->ceil_slope_position, export->ceil_slope_opposite);
 	if (export->ceil_slope_position == -1)
 		return ;
 	point = sector->corners[export->ceil_slope_position];
@@ -121,7 +120,6 @@ static void	import_ceil_slope(t_exportsector *export, t_sector *sector)
 	sector->ceil_slope_magnitude = sector->ceil_slope_height 
 		/ ft_vector_length(ft_vector2_sub(sector->ceil_slope_end,
 			sector->ceil_slope_start));
-	ft_printf("ceiling magnitude: %f, point: %d, opposite %d\n", sector->ceil_slope_magnitude, export->ceil_slope_position, export->ceil_slope_opposite);
 }
 
 //read sector data from export
@@ -138,7 +136,6 @@ static void read_sector(t_app *app, t_exportsector *export, int sectorid, int se
 	app->sectors[sectorid].ceil_height = export->ceil_height;
 	app->sectors[sectorid].floor_height = export->floor_height;
 	app->sectors[sectorid].parent_sector = export->parent_sector;
-
 	app->sectors[sectorid].floor_slope_height = 0.0;
 	app->sectors[sectorid].ceil_slope_height = 0.0;
 	import_floor_slope(export, &(app->sectors[sectorid]));
