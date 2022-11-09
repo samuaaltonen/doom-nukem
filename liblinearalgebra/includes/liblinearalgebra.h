@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:46:18 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/03 15:51:11 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/09 17:34:42 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,4 +66,7 @@ t_vector2	ft_vector2_normalize(t_vector2 a);
 t_vector3	ft_vec3_lerp(t_vector3 a, t_vector3 b, double f);
 t_vector2	ft_vec2_lerp(t_vector2 a, t_vector2 b, double f);
 t_vector2	ft_vec2_mult(t_vector2 a, double f);
+t_vector2	ft_closest_point(t_vector2 point, t_line line);
+double		ft_point_distance(t_vector2 a, t_vector2 b);
+
 #endif

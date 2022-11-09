@@ -6,7 +6,7 @@
 #    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 10:36:08 by saaltone          #+#    #+#              #
-#    Updated: 2022/11/03 15:53:29 by htahvana         ###   ########.fr        #
+#    Updated: 2022/11/09 17:34:51 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,8 @@ FILES=ft_vector_length.c ft_vector_multiply_matrix.c ft_vector_perpendicular.c \
 	ft_vector_dotproduct.c ft_vector_crossproduct.c ft_line_resize.c \
 	ft_line_side.c ft_vector_angle.c ft_line_intersection_through.c \
 	ft_vector_sub.c ft_vector_add.c ft_lerp.c ft_vector_limit.c \
-	ft_vector_normalize.c ft_vector_multiply.c
+	ft_vector_normalize.c ft_vector_multiply.c ft_closest_point.c \
+	ft_point_distance.c
 
 SRC_DIR = ./srcs
 SRCS := $(patsubst %, $(SRC_DIR)/%, $(FILES))
