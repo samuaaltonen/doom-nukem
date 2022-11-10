@@ -12,26 +12,49 @@
 
 #include "doomnukem.h"
 
+static t_bool point_on_segment(t_vector2 point, t_line line)
+{
+	double epsilon = 0.01f;
+	double len = ft_point_distance(line.a, line.b);
+
+	double dista = ft_point_distance(point, line.a);
+	double distb = ft_point_distance(point, line.b);
+	if(dista + distb >= len-epsilon && dista + distb <= len+epsilon)
+		return (TRUE);
+	return (FALSE);
+}
+
 static int circle_collision(t_app *app, t_line wall)
 {
 	t_vector2 line_intersection;
 	t_vector2 new_intersection;
 	t_vector2 closest_start;
 	t_vector2 closest_end;
+	
+	t_vector2 move_point;
 
+
+	move_point = ft_vector2_add(app->player.pos, app->player.move_vector);
 	double radius = 1.f;
+	if (ft_point_distance(wall.a, move_point) < radius || ft_point_distance(wall.b, move_point) < radius)
+		return (1);
 
-	if(!ft_line_intersection((t_line){app->player.pos,ft_vector2_add(app->player.pos, app->player.move_vector)}, wall, &line_intersection))
-	{
-		new_intersection = ft_closest_point(ft_vector2_add(app->player.pos, app->player.move_vector), wall);
-		closest_start = ft_closest_point(wall.a, (t_line){app->player.pos,ft_vector2_add(app->player.pos, app->player.move_vector)});
-		closest_end = ft_closest_point(wall.b, (t_line){app->player.pos,ft_vector2_add(app->player.pos, app->player.move_vector)});
-		if(ft_point_distance(new_intersection, ft_vector2_add(app->player.pos, app->player.move_vector)) < radius)
-			return (0);
-		if(ft_point_distance(closest_start, wall.a) < radius || ft_point_distance(closest_end, wall.b) < radius)
-			return (0);
-	}
-	return (1);
+		if(ft_line_intersection((t_line){app->player.pos,move_point}, wall, &line_intersection))
+			return (2);
+		new_intersection = ft_closest_point(move_point, wall);
+		closest_start = ft_closest_point(wall.a, (t_line){app->player.pos,move_point});
+		closest_end = ft_closest_point(wall.b, (t_line){app->player.pos,move_point});
+		ft_printf("intersection x%fy%f, move_end x%fy%f, line_start x%f,y%f, line_end x%fy%f\n",
+			line_intersection.x, line_intersection.y, new_intersection.x, new_intersection.y,
+			closest_start.x, closest_start.y, closest_end.x, closest_end.y);
+		if(ft_point_distance(new_intersection, move_point) < radius && point_on_segment(new_intersection, wall))
+			return (3);
+		if((ft_point_distance(closest_start, wall.a) < radius && point_on_segment(closest_start,(t_line){app->player.pos,move_point})) \
+				|| (ft_point_distance(closest_end, wall.b) < radius && point_on_segment(closest_start,(t_line){app->player.pos,move_point})))
+			return (4);
+		line_intersection.x = 0.f;
+		line_intersection.y = 0.f;
+	return (-1);
 }
 
 /**
@@ -57,7 +80,7 @@ static int	wall_collision_recursive(t_app *app, t_move new, int wall_id)
 		ft_printf("Circle collision %i\n", circle_collision(app,get_wall_line(app, wall_id, i)));
 		if(ft_line_side(get_wall_line(app, wall_id,i), new.pos) != 0)
 		{
-			ft_printf("recursion'\n");
+			//ft_printf("recursion'\n");
 			wall_id = app->sectors[wall_id].wall_types[i];
 			if(wall_id < 0 || (new.elevation + MAX_STEP < app->sectors[wall_id].floor_height ||
 				app->sectors[wall_id].ceiling_height < new.elevation + TALL))
