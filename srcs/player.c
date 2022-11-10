@@ -30,33 +30,32 @@ static int circle_collision(t_app *app, t_line wall)
 	t_vector2 new_intersection;
 	t_vector2 closest_start;
 	t_vector2 closest_end;
-	
 	t_vector2 move_point;
-
-
 	move_point = ft_vector2_add(app->player.pos, app->player.move_vector);
+	t_line move_line = (t_line){app->player.pos,move_point};
 	double radius = 1.f;
-	if (ft_point_distance(wall.a, move_point) < radius || ft_point_distance(wall.b, move_point) < radius)
-		return (1);
+	t_vector2 collision;
+	(void)collision;
 
-		if(ft_line_intersection((t_line){app->player.pos,move_point}, wall, &line_intersection))
-			return (2);
-		new_intersection = ft_closest_point(move_point, wall);
-		closest_start = ft_closest_point(wall.a, (t_line){app->player.pos,move_point});
-		closest_end = ft_closest_point(wall.b, (t_line){app->player.pos,move_point});
-		ft_printf("intersection x%fy%f, move_end x%fy%f, line_start x%f,y%f, line_end x%fy%f\n",
-			line_intersection.x, line_intersection.y, new_intersection.x, new_intersection.y,
-			closest_start.x, closest_start.y, closest_end.x, closest_end.y);
-		if(ft_point_distance(new_intersection, move_point) < radius && point_on_segment(new_intersection, wall))
-			return (3);
-		if((ft_point_distance(closest_start, wall.a) < radius && point_on_segment(closest_start,(t_line){app->player.pos,move_point})) \
-				|| (ft_point_distance(closest_end, wall.b) < radius && point_on_segment(closest_start,(t_line){app->player.pos,move_point})))
-			return (4);
+	new_intersection = ft_closest_point(move_point, wall);
+	closest_start = ft_closest_point(wall.a, move_line);
+	closest_end = ft_closest_point(wall.b, move_line);
+	if ((ft_point_distance(wall.a, move_point) < radius || ft_point_distance(wall.b, move_point) < radius)
+			|| (ft_line_intersection(move_line, wall, &line_intersection))
+			|| (ft_point_distance(new_intersection, move_point) < radius && point_on_segment(new_intersection, wall))
+			|| (ft_point_distance(closest_start, wall.a) < radius && point_on_segment(closest_start, move_line))
+			|| (ft_point_distance(closest_end, wall.b) < radius && point_on_segment(closest_start, move_line)))
+	{
+		
+		//collision = ft_vector2_sub(line_intersection, ft_vector_resize(ft_vector_resize() ,radius)
+		ft_printf("vector resize distance %f n",ft_vector_length(ft_vector_resize(move_point, 1.f)));
+		return (1);
+	}
 		line_intersection.x = 0.f;
 		line_intersection.y = 0.f;
 	return (-1);
 }
-
+//a - r || vec aC || || vec p 1 c || * vec v || vec v ||
 /**
  * @brief Checks if players new position is on the otherside of any wall,
  * 	recurses into the new sector if it's a portal,
