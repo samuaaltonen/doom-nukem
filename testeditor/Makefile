@@ -3,17 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-<<<<<<< HEAD
 #    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/08 13:07:06 by htahvana         ###   ########.fr        #
-=======
-#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
-#                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/09 11:38:29 by saaltone         ###   ########.fr        #
->>>>>>> main
+#    Updated: 2022/11/10 14:30:28 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +22,7 @@ sector_members.c sector_portal.c tex_icons.c tools.c utils_sdl.c utils.c
 
 LIBFT = ../libft/libft.a
 LIBLINEARALGEBRA = ../liblinearalgebra/liblinearalgebra.a
-SDL2 = ./sdl/SDL2_build/lib/libSDL2.a
+SDL2 = ../sdl/SDL2_build/lib/libSDL2.a
 
 SRC_DIR = ./srcs
 SRCS := $(patsubst %, $(SRC_DIR)/%, $(FILES))
@@ -38,9 +31,9 @@ BUILD_DIR = ./compiled
 OBJS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.o))
 DEPS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.d))
 
-SDL_DIR = ./sdl
-SDL_CONF = `sdl/SDL2_build/bin/sdl2-config --cflags --libs`
-SDL_V = SDL2-2.24.2
+SDL_DIR = ../sdl
+SDL_CONF = `../sdl/SDL2_build/bin/sdl2-config --cflags --libs`
+SDL_V = SDL2-2.0.8
 
 FRAMEWORKS = \
 	-framework OpenGL -framework AppKit -framework OpenCl \
@@ -49,7 +42,7 @@ HEADERS = \
 	-I ./includes \
 	-I ../libft/includes \
 	-I ../liblinearalgebra/includes \
-	-I ./sdl/SDL2-2.24.2/include
+	-I ../sdl/SDL2-2.0.8/include
 	
 FLAGS = -Wall -Wextra -Werror -O3 -g -fsanitize=address
 
@@ -77,7 +70,7 @@ $(LIBLINEARALGEBRA):
 	make -C ../liblinearalgebra
 
 $(SDL2): 
-	cd sdl/$(SDL_V)/build && ../configure --prefix=$(PWD)/sdl/SDL2_build/ && make install
+	cd ../sdl/$(SDL_V)/build && ../configure --prefix=$(PWD)/sdl/SDL2_build/ && make install
 
 .PHONY: all clean fclean re
 

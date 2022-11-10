@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/09 13:31:21 by saaltone         ###   ########.fr        #
+#    Updated: 2022/11/10 14:28:36 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -87,7 +87,7 @@ clean:
 	make clean -C ./liblinearalgebra
 	/bin/rm -rf $(BUILD_DIR)
 
-fclean: clean clean-sdl
+fclean: clean
 	make fclean -C ./libft
 	make fclean -C ./liblinearalgebra
 	/bin/rm -f $(NAME)
