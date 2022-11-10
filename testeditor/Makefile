@@ -3,10 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
+<<<<<<< HEAD
 #    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
 #    Updated: 2022/11/08 13:07:06 by htahvana         ###   ########.fr        #
+=======
+#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
+#    Updated: 2022/11/09 11:38:29 by saaltone         ###   ########.fr        #
+>>>>>>> main
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +24,7 @@ CC = gcc
 FILES = app.c help_menu.c editor.c editor_ui.c editor_menu.c \
 events_key.c events_mouse.c events.c export.c import.c player.c \
 image.c main.c render.c render_extra.c render_text.c render_grid.c \
-linedraw.c linedraw_utils.c lists.c sector.c sector_tools.c \
+linedraw.c linedraw_utils.c lists.c menu_sector_info.c sector.c sector_tools.c \
 sector_members.c sector_portal.c tex_icons.c tools.c utils_sdl.c utils.c 
 
 LIBFT = ../libft/libft.a
@@ -27,7 +34,7 @@ SDL2 = ./sdl/SDL2_build/lib/libSDL2.a
 SRC_DIR = ./srcs
 SRCS := $(patsubst %, $(SRC_DIR)/%, $(FILES))
 
-BUILD_DIR = ./build
+BUILD_DIR = ./compiled
 OBJS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.o))
 DEPS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.d))
 

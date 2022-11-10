@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/03 10:44:04 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/09 14:56:30 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ t_vec2_lst	*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point)
 	double		opposite;
 	double		max;
 
+	selection = NULL;
 	max = 0.0f;
 	head = sector->wall_list;
 	while (head->next != sector->wall_list)

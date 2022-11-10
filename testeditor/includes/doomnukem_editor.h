@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/08 12:39:08 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/08 16:36:07 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ enum e_colors {
 	BG_LIGHT = 0x888888,
 	BG_DARK = 0x424242,
 	TEXT = 0xFF111111,
-	ACTIVE_TEXT = 0xFFFF00FF,
+	ACTIVE_TEXT = 0xFFFF0000,
 	PLAYER = 0x00FF00,
 	LINE_A = 0xAABBCC,
 	LINE_B = 0xFF4444
@@ -388,6 +388,8 @@ int				get_line_id(t_vec2_lst *list, t_vec2_lst *wall);
 /**
  * Font
 */
+void			toggle_active_color(t_app *app, int active, char *text,
+					t_point point);
 void			change_font(t_app *app, int size, int color);
 void			load_font(t_app *app);
 void			render_text(t_app *app, t_point position, char *text);
@@ -403,6 +405,7 @@ void			blit_surface(SDL_Surface *src, t_rect *src_rect,
 void			render_help_menu(t_app *app);
 void			load_assets(t_app *app);
 void			render_texture_icons(t_app *app);
+void			render_sector_info(t_app *app);
 
 /**
  * Player

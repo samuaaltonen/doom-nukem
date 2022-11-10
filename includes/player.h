@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/04 11:10:39 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/08 13:54:11 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # define DIRECTION_START_X 0.0
 # define DIRECTION_START_Y 1.0
-# define POSITION_START_X 0.0
-# define POSITION_START_Y 0.0
+# define POSITION_START_X 0.5
+# define POSITION_START_Y 0.5
 # define ROTATION_SPEED 1.8f
 # define MOVEMENT_SPEED 3.2f
 
@@ -43,6 +43,7 @@ typedef struct s_player
 	double			camera_length;
 	double			height;
 	double			elevation;
+	double			horizon;
 	int				current_sector;
 }	t_player;
 

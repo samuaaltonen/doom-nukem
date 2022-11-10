@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_draw_floor.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/26 15:39:12 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/09 15:39:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	draw_floor(t_app *app, int x, t_rayhit *hit)
 	int			y_start;
 	int			y_end;
 	double		distance;
+	double		elevation_offset;
 
 	if (x < 0 || x >= WIN_W)
 		return ;
@@ -52,9 +53,18 @@ void	draw_floor(t_app *app, int x, t_rayhit *hit)
 	if (y_start == y_end || y_start > y_end)
 		return;
 	app->occlusion_bottom[x] = WIN_H - y_start;
+
+	elevation_offset = hit->sector->floor_slope_magnitude * hit->distance
+		* hit->floor_horizon_angle;
+
 	while (y_start < y_end)
 	{
-		distance = ((app->player.height + app->player.elevation) - hit->sector->floor_height) * WIN_H / (y_start - WIN_H / 2);
+		if (hit->sector->floor_slope_height != 0.0) {
+			distance = ((app->player.height + app->player.elevation + elevation_offset) - hit->sector->floor_height - hit->floor_slope_height)
+				* WIN_H / (y_start - WIN_H / 2 + WIN_H * hit->floor_horizon);
+		}
+		else
+			distance = ((app->player.height + app->player.elevation) - hit->sector->floor_height) * WIN_H / (y_start - WIN_H / 2);
 		world_pos.x = hit->position.x - (hit->distance - distance) * hit->ray.x;
 		world_pos.y = hit->position.y - (hit->distance - distance) * hit->ray.y;
 		put_pixel_to_surface(app->surface, x, y_start, get_position_color(
