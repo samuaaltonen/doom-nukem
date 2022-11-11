@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/09 15:56:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/11 12:19:16 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static void	calculate_parent_positions(t_app *app, t_rayhit *hit,
 
 	hit->parent_height = (int)(relative_height
 		* (parent->ceil_height + ceil_slope - parent->floor_height - floor_slope));
-	hit->parent_wall_start = WIN_H / 2 - hit->parent_height
+	hit->parent_wall_start = WIN_H * app->player.horizon - hit->parent_height
 		+ (int)(relative_height * ((app->player.height + app->player.elevation) - parent->floor_height - floor_slope));
 	hit->parent_wall_end = hit->parent_wall_start + hit->parent_height;
 	hit->parent_wall_start_actual = hit->parent_wall_start;
@@ -127,7 +127,7 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 	relative_height = WIN_H / hit->distance;
 	hit->height = (int)(relative_height
 			* (hit->sector->ceil_height + ceil_slope - hit->sector->floor_height - floor_slope));
-	hit->wall_start = WIN_H / 2 - hit->height + (int)(relative_height
+	hit->wall_start = WIN_H * app->player.horizon - hit->height + (int)(relative_height
 			* ((app->player.height + app->player.elevation) - hit->sector->floor_height - floor_slope));
 	hit->wall_start_actual = hit->wall_start;
 	hit->wall_end = hit->wall_start + hit->height;
@@ -164,26 +164,25 @@ static t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 {
 	t_line	ray_line;
 	double	camera_x;
-	double	angle;
 
 	ray_line.a = app->player.pos;
 	camera_x = 2 * x / (double) WIN_W - 1.f;
 	hit->ray = (t_vector2){
-		app->player.dir.x + app->player.cam.x * camera_x, 
+		app->player.dir.x + app->player.cam.x * camera_x,
 		app->player.dir.y + app->player.cam.y * camera_x};
-	ray_line.b = ft_vector_resize(hit->ray, MAX_VIEW_DISTANCE);
-	angle = ft_vector_angle(ray_line.b, app->player.dir);
-	ray_line.b.x += app->player.pos.x;
-	ray_line.b.y += app->player.pos.y;
+	ray_line.b.x = hit->ray.x + app->player.pos.x;
+	ray_line.b.y = hit->ray.y + app->player.pos.y;
 	if (!ft_line_intersection(wall, ray_line, &hit->position))
 		return (FALSE);
 	hit->distance = ft_vector_length((t_vector2){
 		hit->position.x - app->player.pos.x,
 		hit->position.y - app->player.pos.y});
-	hit->texture_offset.x = fmod(ft_vector_length((t_vector2){
+	hit->texture_offset.x = ft_vector_length((t_vector2){
 		wall.a.x - hit->position.x,
-		wall.a.y - hit->position.y}), 1.0);
-	hit->distortion = cos(angle);
+		wall.a.y - hit->position.y});
+	hit->texture_offset.x = hit->texture_offset.x
+		- (double)(int)hit->texture_offset.x;
+	hit->distortion = cos(ft_vector_angle(hit->ray, app->player.dir));
 	hit->distance = hit->distortion * hit->distance;
 	set_wall_vertical_positions(app, hit);
 	return (TRUE);
@@ -210,9 +209,10 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall, int s
 	x = start_x - 1;
 	while (++x < end_x)
 	{
-		if (x % THREAD_COUNT != thread->id)
-			continue ;
-		if (!raycast_hit(app, wall->line, &hit, x))
+		if (x % THREAD_COUNT != thread->id
+			|| wall->start_x > x || wall->end_x < x
+			|| app->occlusion_top[x] + app->occlusion_bottom[x] >= WIN_H
+			|| !raycast_hit(app, wall->line, &hit, x))
 			continue ;
 		if (wall->is_portal)
 		{
