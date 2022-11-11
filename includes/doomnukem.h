@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/11 13:21:20 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/11 16:10:00 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ typedef struct s_app
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];
 	t_wallstack		wallstack;
-	t_thread_data	thread_info[THREAD_COUNT];
 	t_player		player;
 	t_sector		*sectors;
 }	t_app;
@@ -133,8 +132,13 @@ void		handle_movement(t_app *app);
  */
 void		*render_skybox(void *data);
 void		*render_background(void *data);
-void		render_multithreading(t_app *app, void *(*renderer)(void *));
-void		persistent_multithreading(t_app *app, void *(*renderer)(void *));
+
+/**
+ * Multithreading
+ */
+void		threads_init(t_app *app, t_thread_data *threads_data);
+void		threads_create(t_thread_data *threads_data, void *(*renderer)(void *));
+void		threads_work(t_thread_data *threads_data);
 
 /**
  * Player

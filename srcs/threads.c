@@ -6,34 +6,29 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/11 14:40:22 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/11 16:09:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * Renders the current view of the player with multithreading.
-*/
-void	render_multithreading(t_app *app, void *(*renderer)(void *))
+ * Inits thread information structs. They contain info about what part of the
+ * window each thread calculates.
+ */
+void	threads_init(t_app *app, t_thread_data *threads_data)
 {
-	int			id;
-	pthread_t	thread_identifiers[THREAD_COUNT];
+	int	i;
 
-	id = 0;
-	while (id < THREAD_COUNT)
+	i = 0;
+	while (i < THREAD_COUNT)
 	{
-		if (pthread_create(&thread_identifiers[id], NULL, renderer,
-				(void *)(&(app->thread_info)[id])))
-			exit_error(MSG_ERROR_THREADS);
-		id++;
-	}
-	id = 0;
-	while (id < THREAD_COUNT)
-	{
-		if (pthread_join(thread_identifiers[id], NULL) != 0)
-			exit_error(MSG_ERROR_THREADS_JOIN);
-		id++;
+		threads_data[i].app = app;
+		threads_data[i].id = i;
+		threads_data[i].has_work = FALSE;
+		threads_data[i].cond = (pthread_cond_t)PTHREAD_COND_INITIALIZER;
+		threads_data[i].lock = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
+		i++;
 	}
 }
 
@@ -44,16 +39,49 @@ void	render_multithreading(t_app *app, void *(*renderer)(void *))
  * @param app 
  * @param renderer 
  */
-void	persistent_multithreading(t_app *app, void *(*renderer)(void *))
+void	threads_create(t_thread_data *threads_data, void *(*renderer)(void *))
 {
 	int			id;
 
 	id = 0;
 	while (id < THREAD_COUNT)
 	{
-		if (pthread_create(&app->thread_info[id].thread, NULL, renderer,
-				(void *)(&app->thread_info[id])))
+		if (pthread_create(&threads_data[id].thread, NULL, renderer,
+				(void *)(&threads_data[id])))
 			exit_error(MSG_ERROR_THREADS);
 		id++;
+	}
+}
+
+/**
+ * @brief Signals threads to awake them and wait until their work is complete.
+ * 
+ * @param threads_data 
+ */
+void	threads_work(t_thread_data *threads_data)
+{
+	t_bool	all_ready;
+	int		i;
+
+	i = -1;
+	while (++i < THREAD_COUNT)
+	{
+		pthread_mutex_lock(&threads_data[i].lock);
+		threads_data[i].has_work = TRUE;
+		pthread_mutex_unlock(&threads_data[i].lock);
+		pthread_cond_signal(&threads_data[i].cond);
+	}
+	all_ready = FALSE;
+	while (!all_ready)
+	{
+		all_ready = TRUE;
+		i = -1;
+		while (++i < THREAD_COUNT)
+		{
+			pthread_mutex_lock(&threads_data[i].lock);
+			if (threads_data[i].has_work)
+				all_ready = FALSE;
+			pthread_mutex_unlock(&threads_data[i].lock);
+		}
 	}
 }

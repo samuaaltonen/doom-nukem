@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/09 13:24:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/11 15:57:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	config_init(t_app *app)
 	app->conf->fps_total = 0;
 	app->conf->frames_total = 0;
 	ft_strcpy(app->conf->fps_info, "FPS                 ");
-	init_thread_info(app);
 	return (1);
 }
 
