@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assets.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/04 14:15:25 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/11 12:03:19 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # define LASER_PATH "assets/sounds/laser.wav"
 # define SHOT_PATH "assets/sounds/shot.wav"
 # define BUMP_PATH "assets/sounds/bump.wav"
-# define MAP_PATH "./testeditor/test.test"
+# define MAP_PATH "./testmaps/slopes"//"./testeditor/test.test"
 
 /**
  * Texture type enumeration.

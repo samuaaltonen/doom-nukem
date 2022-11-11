@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/09 11:37:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/11 12:19:10 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,7 @@ void    	render_text(t_app *app, t_point position, char *text);
  * UI
  */
 void		render_ui(t_app *app);
-t_rect    	render_button(t_app *app, t_point pos, int size);
+t_rect    	render_button(t_app *app, t_point pos, int size, char *text);
 
 int			check_mouse(t_app *app, t_rect rect);
 void		button_function(t_app *app, t_rect button, void (*f)(t_app *app));

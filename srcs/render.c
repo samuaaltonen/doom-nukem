@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/09 11:42:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/11 12:43:48 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,32 +42,15 @@ void	render_mainmenu(t_app *app)
 	blit_surface(app->assets.title_screen_image, &src, app->surface, &dst);
 	change_font(app, 16, 0xFF00FFFF);
 	rect_from_surface(app->assets.button_idle, &src);
-	button_function(app, render_button(app, (t_point){50, 200}, 2), start_game);
-	render_text(app, (t_point){74, 224}, "START GAME");
-	change_font(app, 16, 0xFF00FFFF);
-	button_function(app, render_button(app, (t_point){50, 300}, 2), do_nothing);
-	render_text(app, (t_point){74, 324}, "SELECT LEVEL");
-	change_font(app, 16, 0xFF00FFFF);
-	button_function(app, render_button(app, (t_point){50, 400}, 2), do_nothing);
-	render_text(app, (t_point){74, 424}, "OPTIONS");
-	change_font(app, 16, 0xFF00FFFF);
-	button_function(app, render_button(app, (t_point){50, 500}, 2), exit_game);
-	render_text(app, (t_point){74, 524}, "QUIT GAME");
-	change_font(app, 16, 0xFF00FFFF);
+	button_function(app,
+		render_button(app, (t_point){50, 200}, 2, "START GAME"), start_game);
+	button_function(app,
+		render_button(app, (t_point){50, 300}, 2, "SELECT LEVEL"), do_nothing);
+	button_function(app,
+		render_button(app, (t_point){50, 400}, 2, "OPTIONS"), do_nothing);
+	button_function(app,
+		render_button(app, (t_point){50, 500}, 2, "QUIT GAME"), exit_game);
 	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
-}
-
-void	render_pointer(t_app *app, int x, int y)
-{
-	t_rect		dst;
-	t_rect		src;
-	
-	rect_from_surface(app->assets.pointer, &src);
-	dst.x = x;
-	dst.y = y;
-	dst.w = app->assets.pointer->w;
-	dst.h = app->assets.pointer->h;
-	blit_surface(app->assets.pointer, &src, app->surface, &dst);
 }
 
 void	render_game(t_app *app)
@@ -85,21 +68,16 @@ void	render_pausemenu(t_app *app)
 	render_sectors(app);
 	change_font(app, 16, 0xFF00FFFF);
 	rect_from_surface(app->assets.button_idle, &src);
-	button_function(app, render_button(app, (t_point){50, 100}, 2), main_menu);
-	render_text(app, (t_point){74, 124}, "MAIN MENU");
-	change_font(app, 16, 0xFF00FFFF);
-	button_function(app, render_button(app, (t_point){50, 200}, 2), pause_game);
-	render_text(app, (t_point){74, 224}, "CONTINUE");
-	change_font(app, 16, 0xFF00FFFF);
-	button_function(app, render_button(app, (t_point){50, 300}, 2), do_nothing);
-	render_text(app, (t_point){74, 324}, "SELECT LEVEL");
-	change_font(app, 16, 0xFF00FFFF);
-	button_function(app, render_button(app, (t_point){50, 400}, 2), do_nothing);
-	render_text(app, (t_point){74, 424}, "OPTIONS");
-	change_font(app, 16, 0xFF00FFFF);
-	button_function(app, render_button(app, (t_point){50, 500}, 2), exit_game);
-	render_text(app, (t_point){74, 524}, "QUIT GAME");
-	change_font(app, 16, 0xFF00FFFF);
+	button_function(app,
+		render_button(app, (t_point){50, 100}, 2, "MAIN MENU"), main_menu);
+	button_function(app,
+		render_button(app, (t_point){50, 200}, 2, "CONTINUE"), pause_game);
+	button_function(app,
+		render_button(app, (t_point){50, 300}, 2, "SELECT LEVEL"), do_nothing);
+	button_function(app,
+		render_button(app, (t_point){50, 400}, 2, "OPTIONS"), do_nothing);
+	button_function(app,
+		render_button(app, (t_point){50, 500}, 2, "QUIT GAME"), exit_game);
 	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
 	render_ui(app);
 }
