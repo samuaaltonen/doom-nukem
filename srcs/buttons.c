@@ -6,11 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/11/11 12:06:27 by dpalacio         ###   ########.fr       */
-=======
-/*   Updated: 2022/11/11 11:45:38 by saaltone         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2022/11/11 12:53:17 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +38,11 @@ void	start_game(t_app *app)
 
 void	pause_game(t_app *app)
 {
+	SDL_WarpMouseInWindow(app->win, WIN_W / 2, WIN_H / 2);
 	if (app->status == STATUS_GAME)
 		app->status = STATUS_PAUSEMENU;
 	else if (app->status == STATUS_PAUSEMENU)
 		app->status = STATUS_GAME;
-	SDL_WarpMouseInWindow(app->win, WIN_W / 2, WIN_H / 2);
 }
 
 void	exit_game(t_app *app)

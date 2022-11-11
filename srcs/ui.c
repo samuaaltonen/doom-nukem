@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/11 12:28:39 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/11 14:08:25 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,19 @@
 void	render_ui(t_app *app)
 {
 	render_button(app, (t_point){10, 10}, 1, app->conf->fps_info);
-	// change_font(app, 16, 0xFF00FFFF);
-	// render_text(app, (t_point){20, 20}, "FPS");
-	// render_text(app, (t_point){20, 20}, app->conf->fps_info);
-	// load_font(app);
+}
+
+void	render_prompt(t_app *app, t_point pos, int size)
+{
+	t_rect		dst;
+	t_rect		src;
+
+	dst.x = pos.x;
+	dst.y = pos.y;
+	dst.w = app->assets.text_prompt->w * size;
+	dst.h = app->assets.text_prompt->h * size;
+	rect_from_surface(app->assets.text_prompt, &src);
+	blit_surface(app->assets.text_prompt, &src, app->surface, &dst);
 }
 
 t_rect	render_button(t_app *app, t_point pos, int size, char *text)

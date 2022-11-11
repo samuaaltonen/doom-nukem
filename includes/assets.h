@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/11 12:03:19 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/11 14:05:53 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # define PANELS_PATH "assets/textures/minecraft_spritesheet.bmp"
 # define SKYBOX_PATH "assets/textures/bg.bmp"
 # define FONT_PATH "assets/fonts/sci-fi_font.bmp"
+# define PROMPT_PATH "assets/ui/prompt.bmp"
 # define BUTTON_IDLE_PATH "assets/ui/button_idle2.bmp"
 # define BUTTON_SELECT_PATH "assets/ui/button_select2.bmp"
 # define BUTTON_PRESS_PATH "assets/ui/button_press2.bmp"
@@ -77,6 +78,7 @@ typedef struct s_font
 typedef struct s_assets
 {
 	t_font			font;
+	SDL_Surface		*text_prompt;
 	SDL_Surface		*button_idle;
 	SDL_Surface		*button_select;
 	SDL_Surface		*button_press;
