@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/11 14:10:05 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/11 16:50:27 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,7 @@ void    	render_text(t_app *app, t_point position, char *text);
 /**
  * UI
  */
+void		render_ui_frame(t_app *app,t_rect area, int size);
 void		render_ui(t_app *app);
 void		render_prompt(t_app *app, t_point pos, int size);
 t_rect    	render_button(t_app *app, t_point pos, int size, char *text);

@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/11 14:23:02 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/11 17:53:03 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	render_mainmenu(t_app *app)
 	blit_surface(app->assets.title_screen_image, &src, app->surface, &dst);
 	rect_from_surface(app->assets.button_idle, &src);
 	render_prompt(app, (t_point){28, 78}, 2);
-	change_font(app, 64, 0xFFd50000);
+	change_font(app, 70, 0xFFd50000);
 	render_text(app, (t_point){50, 100}, "AWAKE");
 	button_function(app,
 		render_button(app, (t_point){50, 180}, 2, "START GAME"), start_game);
@@ -52,6 +52,7 @@ void	render_mainmenu(t_app *app)
 		render_button(app, (t_point){50, 340}, 2, "OPTIONS"), do_nothing);
 	button_function(app,
 		render_button(app, (t_point){50, 420}, 2, "QUIT GAME"), exit_game);
+	render_ui_frame(app, (t_rect){600,300,30,30}, 1);
 	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
 }
 
@@ -76,7 +77,7 @@ void	render_pausemenu(t_app *app)
 	button_function(app,
 		render_button(app, (t_point){50, 180}, 2, "CONTINUE"), pause_game);
 	button_function(app,
-		render_button(app, (t_point){50, 260}, 2, "SELECT LEVEL"), do_nothing);
+		render_button(app, (t_point){50, 260}, 2, "LEVEL EDITOR"), do_nothing);
 	button_function(app,
 		render_button(app, (t_point){50, 340}, 2, "OPTIONS"), do_nothing);
 	button_function(app,

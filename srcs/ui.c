@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/11 14:08:25 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/11 17:52:13 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,10 +17,89 @@ void	render_ui(t_app *app)
 	render_button(app, (t_point){10, 10}, 1, app->conf->fps_info);
 }
 
+void	render_ui_frame(t_app *app,t_rect area, int size)
+{
+	t_rect	dst;
+	t_rect	src;
+
+	dst.x = area.x;
+	dst.y = area.y;
+	dst.w = 10 * size;
+	dst.h = 10 * size;
+	src.x = 0;
+	src.y = 0;
+	src.w = 10;
+	src.h = 10;
+	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
+	dst.x = area.x + dst.w;
+//	dst.y = area.y + dst.h;
+	dst.w = area.w - 2 * dst.w;
+//	dst.h = 12 * size;
+	src.x = 10;
+//	src.y = 0;
+//	src.w = 12;
+//	src.h = 12;
+	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
+	dst.x = area.x + dst.w + 10 * size;
+//	dst.y = area.y + dst.h;
+	dst.w = 10 * size;
+//	dst.h = 12 * size;
+	src.x = 20;
+//	src.y = 0;
+//	src.w = 12;
+//	src.h = 12;
+	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
+	dst.x = area.x;
+	dst.y = area.y + 10 * size;
+//	dst.w = 12 * size;
+	dst.h = area.h - 2 * dst.h;
+	src.x = 0;
+	src.y = 10;
+//	src.w = 12;
+//	src.h = 12;
+	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
+	dst.x = area.x + area.w - size * 10;
+//	dst.y = area.y + 12 * size;
+//	dst.w = 12 * size;
+//	dst.h = area.h - 2 * dst.h;
+	src.x = 20;
+//	src.y = 12;
+//	src.w = 12;
+//	src.h = 12;
+	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
+	dst.x = area.x;
+	dst.y = area.y + area.h - 10 * size;
+	dst.w = 10 * size;
+	dst.h = 10 * size;
+	src.x = 0;
+	src.y = 20;
+	src.w = 10;
+	src.h = 10;
+	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
+	dst.x = area.x + 10 * size;
+	dst.y = area.y + area.h - 10 * size;
+	dst.w = area.w - 2 * dst.w;
+//	dst.h = 12 * size;
+	src.x = 10;
+//	src.y = 0;
+//	src.w = 12;
+//	src.h = 12;
+	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
+	dst.x = area.x + area.w - 10 * size;
+	dst.y = area.y + area.h - 10 * size;
+	dst.w = 10 * size;
+	dst.h = 10 * size;
+	src.x = 20;
+	src.y = 20;
+//	src.w = 12;
+//	src.h = 12;
+	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
+}
+
 void	render_prompt(t_app *app, t_point pos, int size)
 {
-	t_rect		dst;
-	t_rect		src;
+	t_rect	dst;
+	t_rect	src;
 
 	dst.x = pos.x;
 	dst.y = pos.y;
