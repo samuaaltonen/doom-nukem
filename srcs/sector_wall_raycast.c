@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/09 17:49:55 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/11 12:19:16 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static void	calculate_parent_positions(t_app *app, t_rayhit *hit,
 
 	hit->parent_height = (int)(relative_height
 		* (parent->ceil_height + ceil_slope - parent->floor_height - floor_slope));
-	hit->parent_wall_start = WIN_H / 2 - hit->parent_height
+	hit->parent_wall_start = WIN_H * app->player.horizon - hit->parent_height
 		+ (int)(relative_height * ((app->player.height + app->player.elevation) - parent->floor_height - floor_slope));
 	hit->parent_wall_end = hit->parent_wall_start + hit->parent_height;
 	hit->parent_wall_start_actual = hit->parent_wall_start;
@@ -127,7 +127,7 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 	relative_height = WIN_H / hit->distance;
 	hit->height = (int)(relative_height
 			* (hit->sector->ceil_height + ceil_slope - hit->sector->floor_height - floor_slope));
-	hit->wall_start = WIN_H / 2 - hit->height + (int)(relative_height
+	hit->wall_start = WIN_H * app->player.horizon - hit->height + (int)(relative_height
 			* ((app->player.height + app->player.elevation) - hit->sector->floor_height - floor_slope));
 	hit->wall_start_actual = hit->wall_start;
 	hit->wall_end = hit->wall_start + hit->height;

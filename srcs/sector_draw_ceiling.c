@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:17:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/08 12:40:24 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/11 12:33:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,17 +54,18 @@ void	draw_ceiling(t_app *app, int x, t_rayhit *hit)
 		return;
 	app->occlusion_top[x] = hit->wall_start;
 
-	elevation_offset = hit->sector->ceil_slope_magnitude * hit->distance
-		* hit->ceil_horizon_angle;
+	if (hit->ceil_slope_height)
+		elevation_offset = hit->sector->ceil_slope_magnitude * hit->distance
+			* hit->ceil_horizon_angle;
 
 	while (y_end > y_start)
 	{
 		if (hit->sector->ceil_slope_height != 0.0) {
 			distance = ((app->player.height + app->player.elevation + elevation_offset) - hit->sector->ceil_height - hit->ceil_slope_height)
-				* WIN_H / (y_end - WIN_H / 2 + WIN_H * hit->ceil_horizon);
+				* WIN_H / (y_end - WIN_H * app->player.horizon + WIN_H * hit->ceil_horizon);
 		}
 		else
-			distance = ((app->player.height + app->player.elevation) - hit->sector->ceil_height) * WIN_H / (y_end - WIN_H / 2);
+			distance = ((app->player.height + app->player.elevation) - hit->sector->ceil_height) * WIN_H / (y_end - WIN_H * app->player.horizon);
 		world_pos.x = hit->position.x - (hit->distance - distance) * hit->ray.x;
 		world_pos.y = hit->position.y - (hit->distance - distance) * hit->ray.y;
 		put_pixel_to_surface(app->surface, x, y_end, get_position_color(
