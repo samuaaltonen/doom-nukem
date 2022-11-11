@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/11 14:18:24 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/11 14:23:02 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	render_mainmenu(t_app *app)
 	button_function(app,
 		render_button(app, (t_point){50, 180}, 2, "START GAME"), start_game);
 	button_function(app,
-		render_button(app, (t_point){50, 260}, 2, "SELECT LEVEL"), do_nothing);
+		render_button(app, (t_point){50, 260}, 2, "LEVEL EDITOR"), do_nothing);
 	button_function(app,
 		render_button(app, (t_point){50, 340}, 2, "OPTIONS"), do_nothing);
 	button_function(app,
