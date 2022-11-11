@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   conf.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 16:05:20 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/11 14:47:08 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@ void	init_thread_info(t_app *app)
 	{
 		app->thread_info[i].app = app;
 		app->thread_info[i].id = i;
+		app->thread_info[i].has_work = FALSE;
+		app->thread_info[i].cond = (pthread_cond_t)PTHREAD_COND_INITIALIZER;
+		app->thread_info[i].lock = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/09 13:31:21 by saaltone         ###   ########.fr        #
+#    Updated: 2022/11/11 13:05:13 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = gcc
 PWD= $(shell pwd)
 
 FILES = main.c init.c render.c buttons.c error.c conf.c app.c  \
-		events_key.c events_mouse.c events_window.c graphics.c image.c \
+		events_key.c events_mouse.c events_window.c threads.c image.c \
 		helper.c skybox.c player.c events.c audio.c time.c \
 		sector_draw_ceiling.c sector_draw_floor.c sector_draw_wall.c \
 		sector_render.c sector_visible_walls_order.c sector_visible_walls.c \

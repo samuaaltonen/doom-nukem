@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/09 11:37:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/11 13:21:20 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,7 @@ void		handle_movement(t_app *app);
 void		*render_skybox(void *data);
 void		*render_background(void *data);
 void		render_multithreading(t_app *app, void *(*renderer)(void *));
+void		persistent_multithreading(t_app *app, void *(*renderer)(void *));
 
 /**
  * Player

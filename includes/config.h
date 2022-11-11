@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/11 12:40:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/11 15:05:01 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define WIN_NAME "Doom Nukem"
 # define WIN_W 1280
 # define WIN_H 720
-# define THREAD_COUNT 4
+# define THREAD_COUNT 6
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
 # define COLLISION_OFFSET 0.25
@@ -41,6 +41,10 @@ typedef struct s_thread_data
 {
 	void			*app;
 	int				id;
+	t_bool			has_work;
+	pthread_t		thread;
+	pthread_cond_t	cond;
+	pthread_mutex_t	lock;
 }	t_thread_data;
 
 /**
