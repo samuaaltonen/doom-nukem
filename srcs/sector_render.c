@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/11 17:38:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/12 01:49:00 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@
  */
 void	render_sectors(t_app *app)
 {
-	t_thread_data	threads_data[THREAD_COUNT];
-	static t_bool	threads_created;
+	static t_thread_data	threads_data[THREAD_COUNT];
+	static t_bool			threads_created;
 
 	if (!threads_created)
 	{

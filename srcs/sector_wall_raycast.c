@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/11 17:38:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/12 01:52:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -204,6 +204,8 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall,
 	t_rayhit	hit;
 	int			x;
 
+	hit.floor_slope_height = 0.0;
+	hit.ceil_slope_height = 0.0;
 	hit.sector = &app->sectors[wall->sector_id];
 	hit.wall_type = wall->wall_type;
 	hit.texture = app->sectors[wall->sector_id].wall_textures[wall->wall_id];

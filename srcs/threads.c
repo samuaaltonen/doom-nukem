@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/11 16:09:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/12 01:49:08 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@ void	threads_init(t_app *app, t_thread_data *threads_data)
 		threads_data[i].app = app;
 		threads_data[i].id = i;
 		threads_data[i].has_work = FALSE;
-		threads_data[i].cond = (pthread_cond_t)PTHREAD_COND_INITIALIZER;
-		threads_data[i].lock = (pthread_mutex_t)PTHREAD_MUTEX_INITIALIZER;
+		pthread_cond_init(&threads_data[i].cond, NULL);
+		pthread_mutex_init(&threads_data[i].lock, NULL);
 		i++;
 	}
 }
