@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 16:01:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/09 17:33:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/11 17:05:12 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_vector2	ft_closest_point(t_vector2 point, t_line line)
 	double det;
 
 	line_vector.x = line.b.y - line.a.y;
-	line_vector.y = line.b.x - line.a.x;
+	line_vector.y = line.a.x - line.b.x;
 	perp.x = line_vector.x * line.a.x + line_vector.y * line.a.y;
 	perp.y = -line_vector.y * point.x + line_vector.x * point.y;
 	det = line_vector.x * line_vector.x + line_vector.y * line_vector.y;
