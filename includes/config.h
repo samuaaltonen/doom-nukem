@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/11 15:35:04 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/11 16:21:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define MAX_LINE_LENGTH 1048576.0
 
 /**
- * Struct for threads about their specific drawing areas.
+ * Struct for threads about their specific identifiers and locks for signaling.
  */
 typedef struct s_thread_data
 {
@@ -45,8 +45,6 @@ typedef struct s_thread_data
 	pthread_t		thread;
 	pthread_cond_t	cond;
 	pthread_mutex_t	lock;
-	pthread_cond_t	main_cond;
-	pthread_mutex_t	main_lock;
 }	t_thread_data;
 
 /**

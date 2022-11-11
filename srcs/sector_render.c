@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/11 16:18:14 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/11 17:38:11 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	*sector_render_thread(void *data)
 		while (!thread->has_work)
 			pthread_cond_wait(&thread->cond, &thread->lock);
 		sector_stack_render(app, thread,
-			app->sectors[app->player.current_sector].stack_index, 0, WIN_W - 1);
+			app->sectors[app->player.current_sector].stack_index, (t_limit){
+			0, WIN_W - 1});
 		thread->has_work = FALSE;
 		pthread_mutex_unlock(&thread->lock);
 	}
@@ -74,7 +75,8 @@ void	*sector_render_thread(void *data)
  * @param start_x
  * @param end_x
  */
-void	sector_stack_render(t_app *app, t_thread_data *thread, int stack_id, int start_x, int end_x)
+void	sector_stack_render(t_app *app, t_thread_data *thread, int stack_id,
+	t_limit limit)
 {
 	t_wall	*wall;
 	int		i;
@@ -83,12 +85,14 @@ void	sector_stack_render(t_app *app, t_thread_data *thread, int stack_id, int st
 	while (i < app->wallstack.wall_count[stack_id])
 	{
 		wall = &app->wallstack.walls[stack_id][i];
-		sector_walls_raycast(app, thread, wall, start_x, end_x);
+		sector_walls_raycast(app, thread, wall, limit);
 		if (wall->is_portal && wall->is_inside && !wall->is_member)
 			sector_stack_render(app, thread,
 				app->sectors[wall->wall_type].stack_index,
-				ft_max(wall->start_x, start_x),
-				ft_min(wall->end_x, end_x));
+				(t_limit){
+				ft_max(wall->start_x, limit.start),
+				ft_min(wall->end_x, limit.end)
+			});
 		i++;
 	}
 }

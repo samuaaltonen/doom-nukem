@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/11 15:22:40 by saaltone         ###   ########.fr        #
+#    Updated: 2022/11/11 16:22:49 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ PWD= $(shell pwd)
 
 FILES = main.c init.c render.c buttons.c error.c conf.c app.c  \
 		events_key.c events_mouse.c events_window.c threads.c image.c \
-		helper.c skybox.c player.c events.c audio.c time.c \
+		skybox.c player.c events.c audio.c time.c \
 		sector_draw_ceiling.c sector_draw_floor.c sector_draw_wall.c \
 		sector_render.c sector_visible_walls_order.c sector_visible_walls.c \
 		sector_wall_raycast.c sector_wall_prepare.c sector_wall_line.c \
