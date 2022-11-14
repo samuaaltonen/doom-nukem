@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/12 00:59:20 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:10:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ static void read_sector(t_app *app, t_exportsector *export, int sectorid, int se
 	app->sectors[sectorid].corner_count = export->corner_count;
 	export_to_array(app, export, sectorid);
 	app->sectors[sectorid].light = export->light;
+	ft_printf("Light level of sector %d: %i\n", sectorid, export->light);
 	app->sectors[sectorid].ceil_texture = export->ceil_tex;
 	app->sectors[sectorid].ceil_tex_offset = export->ceil_tex_offset;
 	app->sectors[sectorid].floor_texture = export->floor_tex;
@@ -151,6 +152,7 @@ int	import_file(t_app *app, char *path)
 	{
 		if (read(fd, export,sizeof(t_exportsector)) == -1)
 			exit_error(MSG_ERROR_FILE_READ);
+		ft_printf("imported light %d\n", export->light);
 		read_sector(app, export, counter, sector_count);
 		counter++;
 	}

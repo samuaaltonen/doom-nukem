@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:17:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/12 01:00:20 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:15:04 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,8 @@ void	draw_ceiling(t_app *app, int x, t_rayhit *hit)
 			distance = ((app->player.height + app->player.elevation) - hit->sector->ceil_height) * WIN_H / (y_end - WIN_H * app->player.horizon);
 		world_pos.x = hit->position.x - (hit->distance - distance) * hit->ray.x;
 		world_pos.y = hit->position.y - (hit->distance - distance) * hit->ray.y;
-		put_pixel_to_surface(app->surface, x, y_end, get_position_color(
-			app, world_pos, hit->sector->ceil_texture));
+		put_pixel_to_surface(app->surface, x, y_end, shade_color(get_position_color(
+			app, world_pos, hit->sector->ceil_texture), hit->sector->light));
 		y_end--;
 	}
 }

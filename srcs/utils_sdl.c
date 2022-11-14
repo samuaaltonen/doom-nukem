@@ -3,14 +3,49 @@
 /*                                                        :::      ::::::::   */
 /*   utils_sdl.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:38:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/28 15:07:23 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:53:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
+
+/**
+ * @brief Shades color. Shade values can be from -8 to +8. -8 is completely
+ * dark (0x000000), +8 is completely white (0xFFFFFF).
+ *
+ * @param color 
+ * @param shade 
+ * @return int 
+ */
+int	shade_color(int color, int shade)
+{
+	int	r;
+	int	g;
+	int	b;
+
+	if (!shade)
+		return (color);
+	if (shade <= -8)
+		return (0x000000);
+	if (shade >= 8)
+		return (0xFFFFFF);
+	r = color & 0xFF0000;
+	g = color & 0x00FF00;
+	b = color & 0x0000FF;
+	r += (r * shade) >> 3;
+	g += (g * shade) >> 3;
+	b += (b * shade) >> 3;
+	if (r > 0xFF0000)
+		r = 0xFF0000;
+	if (g > 0x00FF00)
+		g = 0x00FF00;
+	if (b > 0x0000FF)
+		b = 0x0000FF;
+	return ((r & 0xFF0000) | (g & 0x00FF00) | (b & 0x0000FF));
+}
 
 /**
  * Returns pixel color at given position.
