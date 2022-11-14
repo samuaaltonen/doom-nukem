@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:38:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/28 15:07:23 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:17:24 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,31 @@ void	blit_surface(SDL_Surface *src, t_rect *src_rect,
 			current.x = 0;
 			current.y++;
 		}
+	}
+}
+
+void	color_surface(SDL_Surface *surface, int color)
+{
+	int		x;
+	int		y;
+	int		pixel_pos;
+	char	*pixel;
+
+	x = 0;
+	y = 0;
+	while (y < surface->h)
+	{
+		while (x < surface->w)
+		{
+			pixel_pos = (y * surface->pitch)
+			+ (x * IMAGE_PIXEL_BYTES);
+			pixel = surface->pixels + pixel_pos;
+			if ((*(int *)pixel & 0xFF000000) != 0x00000000)
+				put_pixel_to_surface(surface, x, y, color);
+			x++;
+		}
+		x = 0;
+		y++;
 	}
 }
 
