@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/14 16:41:47 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:04:18 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,9 +107,7 @@ void		update_fps_counter(t_app *app);
 /**
  * Images
  */
-SDL_Surface	*create_surface(int x, int y);
 SDL_Surface	*load_texture(char *path);
-int			get_pixel_color(SDL_Surface *surface, int x, int y);
 
 /**
  * Events
@@ -210,6 +208,8 @@ void		stop_audio(t_app *app);
 /**
  * utils_sdl
  */
+int			get_pixel_color(SDL_Surface *surface, int x, int y);
+int			shade_color(int color, int shade);
 void		put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color);
 void		flush_surface(SDL_Surface *surface);
 void		blit_surface(SDL_Surface *src, t_rect *src_rect,

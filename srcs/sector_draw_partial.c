@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 17:23:43 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/08 14:17:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:22:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,10 @@ void	draw_portal_partial_parent(t_app *app, int x, t_rayhit *hit)
 	parenthit.wall_start = hit->parent_wall_start;
 	parenthit.wall_end = hit->parent_wall_end;
 	set_wall_vertical_positions(app, &parenthit);
+	parenthit.light = parenthit.sector->light;
 	draw_ceiling(app, x, &parenthit);
 	draw_floor(app, x, &parenthit);
+	parenthit.light = hit->light;
 	parenthit.wall_end = hit->wall_start;
 	if (parenthit.wall_start >= WIN_H - 1)
 		draw_wall(app, x, &parenthit, OCCLUDE_BOTH);
