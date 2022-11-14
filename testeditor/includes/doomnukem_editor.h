@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/08 16:36:07 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/11 17:27:26 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,9 @@
 # define MAX_TEX_COUNT 128
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 8
+# define MAX_WEAPONS 5
+# define MAX_ARMOR 5
+# define INVENTORY_SIZE 10
 # define DEG_IN_RADIAN 0.01745f
 # define PI_HALF 1.57079632679
 # define RADIAN_IN_DEG 57.29578f
@@ -140,11 +143,39 @@ typedef struct s_draw_line
 	int		err;
 }	t_draw_line;
 
+typedef struct s_weapon
+{
+	int		damage;
+	int		range;
+	int		magazine;
+}	t_weapon;
+
+typedef struct s_armor
+{
+	int		offence;
+	int		defence;
+}	t_armor;
+
+typedef struct s_inventory
+{
+	int		ammo;
+	int		potion;
+	int		antidote;
+	int		key;
+	int		jetpack;
+}	t_inventory;
+
 typedef struct s_player
 {
 	t_vector2	position;
 	t_vector2	direction;
 	int			sector;
+	int			health;
+	int			selected_weapon;
+	int			selected_armor;
+	t_weapon	weapons[MAX_WEAPONS];
+	t_armor		armor[MAX_ARMOR];
+	t_inventory	inventory[INVENTORY_SIZE];
 }	t_player;
 
 typedef struct s_sectorlist
@@ -223,6 +254,7 @@ typedef struct s_app
 	t_bool				player_edit;
 	int					sectorcount;
 	int					movement_speed;
+	int					level;
 	t_assets			assets;
 	t_player			player;
 }	t_app;
@@ -403,9 +435,12 @@ void			blit_surface(SDL_Surface *src, t_rect *src_rect,
  * Help menu
 */
 void			render_help_menu(t_app *app);
+void			set_icon_rect(t_rect *rect, t_point point, t_point size);
 void			load_assets(t_app *app);
 void			render_texture_icons(t_app *app);
 void			render_sector_info(t_app *app);
+void			render_icons(t_app *app, SDL_Surface *asset, t_point point, int max);
+void			render_healthbar(t_app *app);
 
 /**
  * Player

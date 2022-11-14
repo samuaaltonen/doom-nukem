@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/12 01:55:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:36:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ void	sdl_init(t_app *app)
  */
 void    load_assets(t_app *app)
 {
+	app->assets.text_prompt = SDL_LoadBMP(PROMPT_PATH);
 	app->assets.button_idle = SDL_LoadBMP(BUTTON_IDLE_PATH);
 	app->assets.button_select = SDL_LoadBMP(BUTTON_SELECT_PATH);
 	app->assets.button_press = SDL_LoadBMP(BUTTON_PRESS_PATH);
