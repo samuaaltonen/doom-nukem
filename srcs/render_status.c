@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/14 17:53:22 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/14 19:09:37 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	render_mainmenu(t_app *app)
 	rect_from_surface(app->assets.title_screen_image, &src);
 	rect_from_surface(app->surface, &dst);
 	blit_surface(app->assets.title_screen_image, &src, app->surface, &dst);
-	rect_from_surface(app->assets.button_idle, &src);
 	render_ui_frame(app, (t_rect){28,78,300,428}, 2, DARK_GREY);
 	change_font(app, 70, DARK_RED);
 	render_text(app, (t_point){50, 100}, "AWAKE");
@@ -65,11 +64,9 @@ void	render_game(t_app *app)
 
 void	render_pausemenu(t_app *app)
 {	
-	t_rect		src;
 	SDL_SetRelativeMouseMode(SDL_FALSE);
 	render_sectors(app);
 	change_font(app, 16, 0xFF00FFFF);
-	rect_from_surface(app->assets.button_idle, &src);
 	render_ui_frame(app, (t_rect){28,78,300,428}, 2, 0x242424);
 	button_function(app,
 		render_button(app, (t_rect){50, 100, 256, 64}, 2, "MAIN MENU"), main_menu);
