@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/08 14:40:15 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:20:21 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,7 @@ typedef struct s_rayhit
 	t_vector2	texture_offset;
 	t_vector2	texture_step;
 	int			height;
+	int			light;
 
 	int			wall_start_actual;
 	int			wall_start;

@@ -3,31 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/28 14:44:42 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:04:32 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * Creates a srface with the specified width and height.
- *
-SDL_Surface	*create_surface(int width, int height)
-{
-	SDL_Surface	*surface;
-
-	surface = SDL_CreateRGBSurfaceWithFormat(0, width, height, 
-		IMAGE_PIXEL_BITS, SDL_PIXELFORMAT_ARGB8888);
-	if (!surface)
-		exit_error(MSG_ERROR_IMAGE_INIT);
-	return (surface);
-}*/
-
-/**
- * Changes color of a specific pixel in surface.
+ * @brief Changes color of a specific pixel in surface.
+ * 
+ * @param surface 
+ * @param x 
+ * @param y 
+ * @param color 
  */
 void	put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color)
 {

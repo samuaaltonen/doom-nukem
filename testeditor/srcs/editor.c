@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/08 14:55:46 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:53:23 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			app->active_sector->ceil_height += HEIGHT_INC;
 		if (app->floor_edit && !app->slope_edit)
 			app->active_sector->floor_height += HEIGHT_INC;
-		if (app->light_edit)
+		if (app->light_edit && app->active_sector->light < 8)
 			app->active_sector->light++;
 		if (app->slope_edit && app->ceiling_edit)
 			app->active_sector->ceil_slope_height += HEIGHT_INC;
@@ -63,7 +63,7 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			app->active_sector->ceil_height -= HEIGHT_INC;
 		if (app->floor_edit && !app->slope_edit)
 			app->active_sector->floor_height -= HEIGHT_INC;
-		if (app->light_edit)
+		if (app->light_edit && app->active_sector->light > -8)
 			app->active_sector->light--;
 		if (app->slope_edit && app->ceiling_edit)
 			app->active_sector->ceil_slope_height -= HEIGHT_INC;
@@ -81,8 +81,6 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			app->active_sector->ceil_tex--;
 		if (app->floor_edit && app->active_sector->floor_tex > 0)
 			app->active_sector->floor_tex--;
-		if (app->light_edit && app->active_sector->light > -5)
-			app->active_sector->light--;
 	}
 	else if (key == SDLK_RIGHT)
 	{
@@ -95,7 +93,5 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			app->active_sector->ceil_tex++;
 		if (app->floor_edit && app->active_sector->floor_tex < MAX_TEX_COUNT)
 			app->active_sector->floor_tex++;
-		if (app->light_edit && app->active_sector->light < 5)
-			app->active_sector->light++;
 	}
 }

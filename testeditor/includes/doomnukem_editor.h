@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/11 17:27:26 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:48:16 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,11 +252,13 @@ typedef struct s_app
 	t_bool				light_edit;
 	t_bool				slope_edit;
 	t_bool				player_edit;
+	t_bool				player_menu;
+	t_bool				mouse_down;
 	int					sectorcount;
 	int					movement_speed;
-	int					level;
 	t_assets			assets;
 	t_player			player;
+	t_point				prev_mouse;
 }	t_app;
 
 typedef struct s_exportsector
@@ -329,6 +331,7 @@ int				events_mouse_click(t_app *app, SDL_Event *event);
 int				events_window_destroy(void);
 int				events_window_other(int windowevent, t_app *app);
 int				dispatch_event(t_app *app, SDL_Event *event);
+int				events_mouse_drag(t_app *app);
 
 /**
  * Map Editor functions
@@ -441,6 +444,7 @@ void			render_texture_icons(t_app *app);
 void			render_sector_info(t_app *app);
 void			render_icons(t_app *app, SDL_Surface *asset, t_point point, int max);
 void			render_healthbar(t_app *app);
+void			render_arrows(t_app *app, t_point left, t_point right);
 
 /**
  * Player

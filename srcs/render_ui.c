@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/14 17:18:38 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:25:58 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,6 @@ void	render_ui_frame(t_app *app,t_rect area, int size, int background)
 	if (background)
 		ui_background(app, area, size, background);
 	size *= 10;
-	color_surface(app->assets.ui_frame, GREEN);
 	ui_topframe(app, area, size);
 	ui_midframe(app, area, size);
 	ui_bottomframe(app, area, size);

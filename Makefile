@@ -6,7 +6,7 @@
 #    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/14 13:49:09 by dpalacio         ###   ########.fr        #
+#    Updated: 2022/11/14 17:25:00 by dpalacio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,9 +39,6 @@ SDL_DIR = ./sdl
 SDL_CONF = `sdl/SDL2_build/bin/sdl2-config --cflags --libs`
 SDL_V = SDL2-2.0.8
 
-FRAMEWORKS = \
-	-framework OpenGL -framework AppKit -framework OpenCl \
-
 HEADERS = \
 	-I ./includes \
 	-I ./libft/includes \
@@ -56,9 +53,8 @@ LIBLINKS = -L ./libft -L ./liblinearalgebra -L/usr/local/lib \
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(LIBLINEARALGEBRA) $(SDL2) $(OBJS) $(DEPS)
-	$(CC) $(OBJS) -o $(NAME) $(SDL_CONF) $(FLAGS) $(HEADERS) $(FRAMEWORKS) $(LIBLINKS)
+	$(CC) $(OBJS) -o $(NAME) $(SDL_CONF) $(FLAGS) $(HEADERS) $(LIBLINKS)
 
-# Create object files with (-MMD also creates dependency files)
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
 	$(CC) $(FLAGS) $(HEADERS) -MMD -c $< -o $@
 
@@ -95,4 +91,4 @@ fclean: clean clean-sdl
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean clean-sdl fclean re
