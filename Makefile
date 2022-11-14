@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/14 15:55:52 by saaltone         ###   ########.fr        #
+#    Updated: 2022/11/14 17:25:00 by dpalacio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,14 @@ NAME = doom-nukem
 CC = gcc
 PWD= $(shell pwd)
 
-FILES = main.c init.c render.c buttons.c error.c conf.c app.c  \
+FILES = main.c init.c render_status.c render_ui.c render_text.c \
+		buttons.c error.c conf.c app.c  \
 		events_key.c events_mouse.c events_window.c threads.c image.c \
 		skybox.c player.c events.c audio.c time.c \
 		sector_draw_ceiling.c sector_draw_floor.c sector_draw_wall.c \
 		sector_render.c sector_visible_walls_order.c sector_visible_walls.c \
 		sector_wall_raycast.c sector_wall_prepare.c sector_wall_line.c \
-		sector_draw_partial.c render_text.c ui.c import.c utils.c utils_sdl.c
+		sector_draw_partial.c import.c utils.c utils_sdl.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a

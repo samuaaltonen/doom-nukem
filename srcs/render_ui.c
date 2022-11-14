@@ -1,32 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ui.c                                               :+:      :+:    :+:   */
+/*   render_ui.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/14 12:34:09 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:25:58 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
+static void	ui_background(t_app *app,t_rect area, int size, int background);
+static void ui_topframe(t_app *app,t_rect area, int size);
+static void ui_midframe(t_app *app,t_rect area, int size);
+static void ui_bottomframe(t_app *app,t_rect area, int size);
+
 void	render_ui(t_app *app)
 {
-	render_ui_frame(app, (t_rect){10, 10, 112, 32}, 1);
+	render_ui_frame(app, (t_rect){10, 10, 112, 32}, 1, 0x242424);
 	change_font(app, 16, 0xFF00FFFF);
 	render_text(app, (t_point){24, 20},  app->conf->fps_info);
 	load_font(app);
 }
 
-void	render_ui_frame(t_app *app,t_rect area, int size)
-{
-	t_rect	dst;
-	t_rect	src;
-
+// void	change_ui(t_app *app, int color)
+// {
 	
-	//frame_background();
+// }
+
+void	render_ui_frame(t_app *app,t_rect area, int size, int background)
+{
+	if (background)
+		ui_background(app, area, size, background);
+	size *= 10;
+	ui_topframe(app, area, size);
+	ui_midframe(app, area, size);
+	ui_bottomframe(app, area, size);
+
+}
+
+static void	ui_background(t_app *app,t_rect area, int size, int background)
+{
 	int	x;
 	int	y;
 	int top;
@@ -41,11 +57,11 @@ void	render_ui_frame(t_app *app,t_rect area, int size)
 		while (x < area.x + area.w)
 		{
 			if (x < area.x + area.w - top)
-				put_pixel_to_surface(app->surface, x, y, 0xFF242424);
+				put_pixel_to_surface(app->surface, x, y, background);
 			x++;
 		}
 		top--;
-		if (y > area.y + area.h - 8 * size)
+		if (y >= area.y + area.h - 8 * size)
 		{
 			x = area.x + bottom;
 			bottom++;
@@ -54,8 +70,13 @@ void	render_ui_frame(t_app *app,t_rect area, int size)
 			x = area.x;
 		y++;
 	}
-	size *= 10;
-	//frame_top();
+}
+
+static void ui_topframe(t_app *app,t_rect area, int size)
+{
+	t_rect	dst;
+	t_rect	src;
+
 	dst.x = area.x;
 	dst.y = area.y;
 	dst.w = size;
@@ -73,17 +94,29 @@ void	render_ui_frame(t_app *app,t_rect area, int size)
 	dst.w = size;
 	src.x = 20;
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
-	//frame_mid();
+}
+
+static void ui_midframe(t_app *app,t_rect area, int size)
+{
+	t_rect	dst;
+	t_rect	src;
+
 	dst.x = area.x;
 	dst.y = area.y + size;
-	dst.h = area.h - 2 * dst.h;
+	dst.h = area.h - 2 * size;
 	src.x = 0;
 	src.y = 10;
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
 	dst.x = area.x + area.w - size;
 	src.x = 20;
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
-	//frame_bottom();
+}
+
+static void ui_bottomframe(t_app *app,t_rect area, int size)
+{
+	t_rect	dst;
+	t_rect	src;
+
 	dst.x = area.x;
 	dst.y = area.y + area.h - size;
 	dst.w = size;
@@ -95,7 +128,7 @@ void	render_ui_frame(t_app *app,t_rect area, int size)
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
 	dst.x = area.x + size;
 	dst.y = area.y + area.h - size;
-	dst.w = area.w - 2 * dst.w;
+	dst.w = area.w - 2 * size;
 	src.x = 10;
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
 	dst.x = area.x + area.w - size;
@@ -120,20 +153,19 @@ t_rect	render_button(t_app *app, t_point pos, int size, char *text)
 	text_pos.x = pos.x + 12 * size;
 	text_pos.y = pos.y + 12 * size;
 	rect_from_surface(app->assets.button_idle, &src);
-	change_font(app, 16, 0xFF00FFFF);
+	change_font(app, 16, CYAN);
 	if (!check_mouse(app, dst))
 		blit_surface(app->assets.button_idle, &src, app->surface, &dst);
 	else if (check_mouse(app, dst))
 	{
-		change_font(app, 16, 0xFF8BC34A);
+		change_font(app, 16, GREEN);
 		if (((SDL_GetMouseState(NULL, NULL)) & SDL_BUTTON_LMASK) != 0)
 			blit_surface(app->assets.button_press, &src, app->surface, &dst);
 		else
 		{
 			blit_surface(app->assets.button_select, &src, app->surface, &dst);
-			change_font(app, 16, 0xFFD50000);
-		}
-			
+			change_font(app, 16, DARK_RED);
+		}		
 	}
 	render_text(app, text_pos, text);
 	load_font(app);
