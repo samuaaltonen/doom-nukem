@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/11 17:52:13 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:34:09 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,10 @@
 
 void	render_ui(t_app *app)
 {
-	render_button(app, (t_point){10, 10}, 1, app->conf->fps_info);
+	render_ui_frame(app, (t_rect){10, 10, 112, 32}, 1);
+	change_font(app, 16, 0xFF00FFFF);
+	render_text(app, (t_point){24, 20},  app->conf->fps_info);
+	load_font(app);
 }
 
 void	render_ui_frame(t_app *app,t_rect area, int size)
@@ -22,91 +25,86 @@ void	render_ui_frame(t_app *app,t_rect area, int size)
 	t_rect	dst;
 	t_rect	src;
 
+	
+	//frame_background();
+	int	x;
+	int	y;
+	int top;
+	int bottom;
+
+	x = area.x;
+	y = area.y;
+	top = 8 * size;
+	bottom = 0;
+	while (y < area.y + area.h)
+	{
+		while (x < area.x + area.w)
+		{
+			if (x < area.x + area.w - top)
+				put_pixel_to_surface(app->surface, x, y, 0xFF242424);
+			x++;
+		}
+		top--;
+		if (y > area.y + area.h - 8 * size)
+		{
+			x = area.x + bottom;
+			bottom++;
+		}
+		else
+			x = area.x;
+		y++;
+	}
+	size *= 10;
+	//frame_top();
 	dst.x = area.x;
 	dst.y = area.y;
-	dst.w = 10 * size;
-	dst.h = 10 * size;
+	dst.w = size;
+	dst.h = size;
 	src.x = 0;
 	src.y = 0;
 	src.w = 10;
 	src.h = 10;
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
-	dst.x = area.x + dst.w;
-//	dst.y = area.y + dst.h;
-	dst.w = area.w - 2 * dst.w;
-//	dst.h = 12 * size;
+	dst.x = area.x + size;
+	dst.w = area.w - 2 * size;
 	src.x = 10;
-//	src.y = 0;
-//	src.w = 12;
-//	src.h = 12;
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
-	dst.x = area.x + dst.w + 10 * size;
-//	dst.y = area.y + dst.h;
-	dst.w = 10 * size;
-//	dst.h = 12 * size;
+	dst.x = area.x + dst.w + size;
+	dst.w = size;
 	src.x = 20;
-//	src.y = 0;
-//	src.w = 12;
-//	src.h = 12;
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
+	//frame_mid();
 	dst.x = area.x;
-	dst.y = area.y + 10 * size;
-//	dst.w = 12 * size;
+	dst.y = area.y + size;
 	dst.h = area.h - 2 * dst.h;
 	src.x = 0;
 	src.y = 10;
-//	src.w = 12;
-//	src.h = 12;
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
-	dst.x = area.x + area.w - size * 10;
-//	dst.y = area.y + 12 * size;
-//	dst.w = 12 * size;
-//	dst.h = area.h - 2 * dst.h;
+	dst.x = area.x + area.w - size;
 	src.x = 20;
-//	src.y = 12;
-//	src.w = 12;
-//	src.h = 12;
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
+	//frame_bottom();
 	dst.x = area.x;
-	dst.y = area.y + area.h - 10 * size;
-	dst.w = 10 * size;
-	dst.h = 10 * size;
+	dst.y = area.y + area.h - size;
+	dst.w = size;
+	dst.h = size;
 	src.x = 0;
 	src.y = 20;
 	src.w = 10;
 	src.h = 10;
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
-	dst.x = area.x + 10 * size;
-	dst.y = area.y + area.h - 10 * size;
+	dst.x = area.x + size;
+	dst.y = area.y + area.h - size;
 	dst.w = area.w - 2 * dst.w;
-//	dst.h = 12 * size;
 	src.x = 10;
-//	src.y = 0;
-//	src.w = 12;
-//	src.h = 12;
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
-	dst.x = area.x + area.w - 10 * size;
-	dst.y = area.y + area.h - 10 * size;
-	dst.w = 10 * size;
-	dst.h = 10 * size;
+	dst.x = area.x + area.w - size;
+	dst.y = area.y + area.h - size;
+	dst.w = size;
+	dst.h = size;
 	src.x = 20;
 	src.y = 20;
-//	src.w = 12;
-//	src.h = 12;
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
-}
-
-void	render_prompt(t_app *app, t_point pos, int size)
-{
-	t_rect	dst;
-	t_rect	src;
-
-	dst.x = pos.x;
-	dst.y = pos.y;
-	dst.w = app->assets.text_prompt->w * size;
-	dst.h = app->assets.text_prompt->h * size;
-	rect_from_surface(app->assets.text_prompt, &src);
-	blit_surface(app->assets.text_prompt, &src, app->surface, &dst);
 }
 
 t_rect	render_button(t_app *app, t_point pos, int size, char *text)
