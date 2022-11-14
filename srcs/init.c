@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/11 16:39:58 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:49:30 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,6 @@ void	sdl_init(t_app *app)
 void    load_assets(t_app *app)
 {
 	app->assets.ui_frame = SDL_LoadBMP(UI_FRAME_PATH);
-	app->assets.ui_frame_bg = SDL_LoadBMP(UI_FRAME_BG_PATH);
-	app->assets.text_prompt = SDL_LoadBMP(PROMPT_PATH);
 	app->assets.button_idle = SDL_LoadBMP(BUTTON_IDLE_PATH);
 	app->assets.button_select = SDL_LoadBMP(BUTTON_SELECT_PATH);
 	app->assets.button_press = SDL_LoadBMP(BUTTON_PRESS_PATH);

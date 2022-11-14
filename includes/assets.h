@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/11 16:40:01 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:49:09 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,9 @@
 # define SKYBOX_PATH "assets/textures/bg.bmp"
 # define FONT_PATH "assets/fonts/sci-fi_font.bmp"
 # define UI_FRAME_PATH "assets/ui/ui_frame.bmp"
-# define UI_FRAME_BG_PATH "assets/ui/ui_frame_bg.bmp"
-# define PROMPT_PATH "assets/ui/prompt.bmp"
-# define BUTTON_IDLE_PATH "assets/ui/button_idle2.bmp"
-# define BUTTON_SELECT_PATH "assets/ui/button_select2.bmp"
-# define BUTTON_PRESS_PATH "assets/ui/button_press2.bmp"
+# define BUTTON_IDLE_PATH "assets/ui/button_idle.bmp"
+# define BUTTON_SELECT_PATH "assets/ui/button_select.bmp"
+# define BUTTON_PRESS_PATH "assets/ui/button_press.bmp"
 # define TITLESCREEN_PATH "assets/images/awakened3.bmp"
 # define POINTER_PATH "assets/ui/mouse_pointer.bmp"
 # define MUSIC_PATH "assets/sounds/title_music.wav"
