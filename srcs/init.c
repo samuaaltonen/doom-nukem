@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/14 12:49:30 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/14 13:02:43 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ int	config_init(t_app *app)
 	app->conf->fps_total = 0;
 	app->conf->frames_total = 0;
 	ft_strcpy(app->conf->fps_info, "FPS                 ");
-	init_thread_info(app);
 	return (1);
 }
 
@@ -66,8 +65,8 @@ void	sdl_init(t_app *app)
 	if (!app->surface)
 		exit_error(MSG_ERROR_WINDOW_SURFACE);
 	app->audio.device_id = SDL_OpenAudioDevice(NULL, 0, &app->audio.wav_spec, NULL, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
-	if (app->audio.device_id < 0)
-		exit_error(MSG_ERROR);	
+	if (!app->audio.device_id)
+		exit_error(MSG_ERROR);
 	SDL_ShowCursor(SDL_DISABLE);
 }
 

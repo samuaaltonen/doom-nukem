@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/14 12:26:06 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/14 13:04:42 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,6 @@ typedef struct s_app
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];
 	t_wallstack		wallstack;
-	t_thread_data	thread_info[THREAD_COUNT];
 	t_player		player;
 	t_sector		*sectors;
 }	t_app;
@@ -110,10 +109,7 @@ void		update_fps_counter(t_app *app);
  */
 SDL_Surface	*create_surface(int x, int y);
 SDL_Surface	*load_texture(char *path);
-void		put_pixel_to_surface_depth(t_app *app, t_point point, int color,
-				double distance);
-void		put_pixel_to_surface_check(t_app *app, t_point point, int color,
-				double distance);
+int			get_pixel_color(SDL_Surface *surface, int x, int y);
 
 /**
  * Events
@@ -133,7 +129,14 @@ void		handle_movement(t_app *app);
  */
 void		*render_skybox(void *data);
 void		*render_background(void *data);
-void		render_multithreading(t_app *app, void *(*renderer)(void *));
+
+/**
+ * Multithreading
+ */
+void		threads_init(t_app *app, t_thread_data *threads_data);
+void		threads_create(t_thread_data *threads_data,
+				void *(*renderer)(void *));
+void		threads_work(t_thread_data *threads_data);
 
 /**
  * Player
@@ -142,35 +145,29 @@ void		player_rotate(t_app *app, double angle);
 void		player_move(t_app *app, t_movement movement, double speed);
 
 /**
- * Helper functions
- */
-double		get_radial_direction(t_vector2 *vector);
-void		clamp_distance(double *distance);
-int			get_pixel_color(SDL_Surface *surface, int x, int y);
-double		distortion_correction(double angle, double distance);
-
-/**
  * Sectors
  */
-t_line			get_wall_line(t_app *app, int sector_id, int wall_id);
-void			sector_visible_walls(t_app *app);
-void			sector_walls_prepare(t_app *app, t_wall *walls, int wall_count);
-void			sector_walls_order(t_app *app, t_wall *walls, int wall_count);
-void			sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall, int start_x, int end_x);
-void			sector_stack_render(t_app *app, t_thread_data *thread, int stack_id, int start_x, int end_x);
-void			*sector_render_thread(void *data);
-void			render_sectors(t_app *app);
+t_line		get_wall_line(t_app *app, int sector_id, int wall_id);
+void		sector_visible_walls(t_app *app);
+void		sector_walls_prepare(t_app *app, t_wall *walls, int wall_count);
+void		sector_walls_order(t_app *app, t_wall *walls, int wall_count);
+void		sector_walls_raycast(t_app *app, t_thread_data *thread,
+				t_wall *wall, t_limit limit);
+void		sector_stack_render(t_app *app, t_thread_data *thread,
+				int stack_id, t_limit limit);
+void		*sector_render_thread(void *data);
+void		render_sectors(t_app *app);
 
 /**
  * Sector draw
 */
-void			set_wall_vertical_positions(t_app *app, t_rayhit *hit);
-void			draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion);
-void			draw_floor(t_app *app, int x, t_rayhit *hit);
-void			draw_ceiling(t_app *app, int x, t_rayhit *hit);
-void			draw_portal_partial(t_app *app, int x, t_rayhit *hit);
-void			draw_portal_partial_parent(t_app *app, int x, t_rayhit *hit);
-void			draw_portal_partial_hole(t_app *app, int x, t_rayhit *hit);
+void		set_wall_vertical_positions(t_app *app, t_rayhit *hit);
+void		draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion);
+void		draw_floor(t_app *app, int x, t_rayhit *hit);
+void		draw_ceiling(t_app *app, int x, t_rayhit *hit);
+void		draw_portal_partial(t_app *app, int x, t_rayhit *hit);
+void		draw_portal_partial_parent(t_app *app, int x, t_rayhit *hit);
+void		draw_portal_partial_hole(t_app *app, int x, t_rayhit *hit);
 
 /**
  * Font
@@ -199,6 +196,7 @@ void		render_titlescreen(t_app *app);
 void		render_pointer(t_app *app, int x, int y);
 void		render_game(t_app *app);
 void		render_pausemenu(t_app *app);
+
 /*
 * AUDIO.C
 */
@@ -214,10 +212,11 @@ void		stop_audio(t_app *app);
 void		put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color);
 void		flush_surface(SDL_Surface *surface);
 void		blit_surface(SDL_Surface *src, t_rect *src_rect,
-	SDL_Surface *dst, t_rect *dst_rect);
+				SDL_Surface *dst, t_rect *dst_rect);
 int			check_blit(SDL_Surface *src, t_rect *src_rect,
-	SDL_Surface *dst, t_rect *dst_rect);
+				SDL_Surface *dst, t_rect *dst_rect);
 void		rect_from_surface(SDL_Surface *surface, t_rect *rect);
+
 /**
  * utils
  */
@@ -226,6 +225,6 @@ void		map_coordinates(t_rect *src, t_rect *dst, t_point *point);
 /**
  * maps 
  */
-int	import_file(t_app *app, char *path);
+int			import_file(t_app *app, char *path);
 
 #endif

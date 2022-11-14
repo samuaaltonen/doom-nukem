@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/11 12:19:16 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/12 01:52:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,16 +198,19 @@ static t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
  * @param start_x 
  * @param end_x 
  */
-void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall, int start_x, int end_x)
+void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall,
+	t_limit limit)
 {
 	t_rayhit	hit;
 	int			x;
 
+	hit.floor_slope_height = 0.0;
+	hit.ceil_slope_height = 0.0;
 	hit.sector = &app->sectors[wall->sector_id];
 	hit.wall_type = wall->wall_type;
 	hit.texture = app->sectors[wall->sector_id].wall_textures[wall->wall_id];
-	x = start_x - 1;
-	while (++x < end_x)
+	x = limit.start - 1;
+	while (++x < limit.end)
 	{
 		if (x % THREAD_COUNT != thread->id
 			|| wall->start_x > x || wall->end_x < x

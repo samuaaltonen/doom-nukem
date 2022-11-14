@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:17:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/11 12:33:27 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/12 01:00:20 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	draw_ceiling(t_app *app, int x, t_rayhit *hit)
 		return;
 	app->occlusion_top[x] = hit->wall_start;
 
+	elevation_offset = 0.0;
 	if (hit->ceil_slope_height)
 		elevation_offset = hit->sector->ceil_slope_magnitude * hit->distance
 			* hit->ceil_horizon_angle;

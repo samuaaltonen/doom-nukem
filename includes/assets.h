@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/14 12:49:09 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/14 13:03:32 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ enum e_texture {
  */
 typedef struct s_font
 {
-	SDL_Surface	*font;
-	int         size;
+	SDL_Surface		*font;
+	int				size;
 }	t_font;
 
 /**
@@ -88,7 +88,6 @@ typedef struct s_assets
 	SDL_Surface		*pointer;
 	SDL_Surface		*sprite;
 	SDL_Surface		*bg;
-	
 }	t_assets;
 
 #endif
