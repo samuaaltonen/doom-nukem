@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/09 16:47:24 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:23:38 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	export_to_list(t_exportsector *export, t_vec2_lst **list, int count)
 	t_vec2_lst	*tmp;
 	t_vector2	point;
 
-	if(!export)
+	if (!export)
 		return ;
 	point.x = export->corners[0].x;
 	point.y = export->corners[0].y;
@@ -34,7 +34,7 @@ static void	export_to_list(t_exportsector *export, t_vec2_lst **list, int count)
 	tmp->tex = export->wall_textures[0];
 	tmp->type = export->wall_types[0];
 	i = 1;
-	while(i < count)
+	while (i < count)
 	{
 		point.x = export->corners[i].x;
 		point.y = export->corners[i].y;
@@ -54,12 +54,12 @@ static void	export_to_list(t_exportsector *export, t_vec2_lst **list, int count)
  * @param sector 
  * @param export 
  */
-void read_sector(t_sector_lst *sector, t_exportsector *export)
+void	read_sector(t_sector_lst *sector, t_exportsector *export)
 {
 	sector->corner_count = export->corner_count;
 	sector->wall_list = NULL;
 	export_to_list(export, &sector->wall_list, export->corner_count);
-	ft_memcpy(sector->member_links,export->member_sectors, MAX_MEMBER_SECTORS * sizeof(int));
+	ft_memcpy(sector->member_links, export->member_sectors, MAX_MEMBER_SECTORS * sizeof(int));
 	sector->light = export->light;
 	sector->floor_height = export->floor_height;
 	sector->ceil_height = export->ceil_height;
@@ -72,19 +72,18 @@ void read_sector(t_sector_lst *sector, t_exportsector *export)
 	sector->floor_slope_wall = 0;
 	sector->ceil_slope_opposite = 0;
 	sector->ceil_slope_wall = 0;
-	ft_printf("floor opposite id %i, pos id %i\n", export->floor_slope_opposite, export->floor_slope_position);
-	if(export->floor_slope_opposite != -1)
+	if (export->floor_slope_opposite != -1)
 		sector->floor_slope_opposite = ft_lstindex(sector->wall_list, export->floor_slope_opposite);
-	if(export->floor_slope_position != -1)
+	if (export->floor_slope_position != -1)
 		sector->floor_slope_wall = ft_lstindex(sector->wall_list, export->floor_slope_position);
 	sector->ceil_slope_height = export->ceil_slope_height;
-	if(export->ceil_slope_opposite != -1)
+	if (export->ceil_slope_opposite != -1)
 		sector->ceil_slope_opposite = ft_lstindex(sector->wall_list, export->ceil_slope_opposite);
-	if(export->ceil_slope_position != -1)
+	if (export->ceil_slope_position != -1)
 		sector->ceil_slope_wall = ft_lstindex(sector->wall_list, export->ceil_slope_position);
 	sector->parent_sector = NULL;
 	sector->next = NULL;
-	ft_printf("0th %i, 1st %i, 2nd %i, 3rd %i\n",sector->member_links[0], sector->member_links[1],sector->member_links[2], sector->member_links[3]);
+	ft_printf("0th %i, 1st %i, 2nd %i, 3rd %i\n", sector->member_links[0], sector->member_links[1], sector->member_links[2], sector->member_links[3]);
 }
 
 /**
@@ -96,6 +95,7 @@ void read_sector(t_sector_lst *sector, t_exportsector *export)
 t_sector_lst	*read_sector_list(t_exportsector *export)
 {
 	t_sector_lst	*new;
+
 	new = (t_sector_lst *)malloc(sizeof(t_sector_lst));
 	if (!new)
 		return (NULL);
@@ -111,8 +111,8 @@ t_sector_lst	*read_sector_list(t_exportsector *export)
  */
 void	relink_sectors(t_app *app)
 {
-	int		i;
-	t_sector_lst *head;
+	int				i;
+	t_sector_lst	*head;
 
 	head = app->sectors;
 	while (head)
@@ -120,19 +120,18 @@ void	relink_sectors(t_app *app)
 		i = 0;
 		while (i < MAX_MEMBER_SECTORS)
 		{
-			if(head->member_links[i] != -1)
+			if (head->member_links[i] != -1)
 			{
-				head->member_sectors[i] = sector_by_index(app, head->member_links[i]);
+				head->member_sectors[i] = sector_by_index(app,
+						head->member_links[i]);
 				head->member_sectors[i]->parent_sector = head;
 			}
 			else
 				head->member_sectors[i] = NULL;
-			
 			i++;
 		}
 		head = head->next;
 	}
-
 }
 
 /**
@@ -145,21 +144,24 @@ void	relink_sectors(t_app *app)
  */
 int	import_file(t_app *app, char *path)
 {
-	int	fd;
-	t_exportsector *export;
-	t_sector_lst *new;
-	size_t counter = 0;
-	size_t sector_count;
+	int				fd;
+	t_exportsector	*export;
+	t_sector_lst	*new;
+	size_t			counter;
+	size_t			sector_count;
 
+	counter = 0;
 	fd = open(path, O_RDONLY, 0755);
-	if(fd < 0)
+	if (fd < 0)
 		exit_error("FILE OPEN ERROR TEMP!");
 	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
-	if (read(fd, &sector_count,(sizeof(size_t))) == -1)
+	if (!export)
+		exit_error(MSG_ERROR_ALLOC);
+	if (read(fd, &sector_count, (sizeof(size_t))) == -1)
 		exit_error(MSG_ERROR_FILE_READ);
-	while(counter++ < sector_count)
+	while (counter++ < sector_count)
 	{
-		if (read(fd, export,sizeof(t_exportsector)) == -1)
+		if (read(fd, export, sizeof(t_exportsector)) == -1)
 			exit_error(MSG_ERROR_FILE_READ);
 		new = read_sector_list(export);
 		put_sector_lst(app, new);

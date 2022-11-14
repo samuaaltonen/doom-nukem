@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editor_menu.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 16:33:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/21 14:27:26 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/03 11:39:04 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
  */
 void	change_selected_wall_tex(t_app *app, t_vec2_lst *wall, int wall_id)
 {
-	(void)app;
 	wall->tex = wall_id;
+	(void)app;
 }
 
 /**
@@ -30,18 +30,17 @@ void	change_selected_wall_tex(t_app *app, t_vec2_lst *wall, int wall_id)
  */
 void	change_walls_type(t_app *app, t_sector_lst *sector)
 {
-	t_vec2_lst *head;
+	t_vec2_lst	*head;
 
-	if(!sector)
+	if (!sector)
 		return ;
 	head = sector->wall_list;
-	while(head)
+	while (head)
 	{
 		head->type = get_sector_id(app, sector->parent_sector);
-
 		head = head->next;
-		if(head == sector->wall_list)
-			break;
+		if (head == sector->wall_list)
+			break ;
 	}
 }
 
@@ -53,15 +52,14 @@ void	change_walls_type(t_app *app, t_sector_lst *sector)
  */
 void	change_walls_tex(t_vec2_lst *walls, int wall_tex)
 {
-	t_vec2_lst *tmp;
+	t_vec2_lst	*tmp;
 
 	tmp = walls;
-	while(tmp)
+	while (tmp)
 	{
 		tmp->tex = wall_tex;
 		tmp = tmp->next;
-		if(tmp == walls)
-			break;
+		if (tmp == walls)
+			break ;
 	}
 }
-

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2022/10/25 10:45:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/09 14:56:30 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,40 +15,45 @@
 //check if list is convex, line_side from every point to every other point
 
 /**
- * Finds and returns the wall in the sector that is furthest from the parallel line to selected point
+ * Finds and returns the wall in the sector that is furthest from the 
+ * parallel line to selected point
  * 
  * ft_vector_length(c) * (sin(ft_vector_angle(line, c))
  * c = vector to iterated point
  */
 t_vec2_lst	*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point)
 {
-	t_vector2 c;
-	t_vec2_lst *head;
-	t_vec2_lst *selection;
-	double	opposite;
-	double	max;
+	t_vector2	c;
+	t_vec2_lst	*head;
+	t_vec2_lst	*selection;
+	double		opposite;
+	double		max;
 
+	selection = NULL;
 	max = 0.0f;
 	head = sector->wall_list;
-	while (head->next != sector->wall_list )
+	while (head->next != sector->wall_list)
 	{
-		c = (t_vector2){head->point.x - point->point.x, head->point.y - point->point.y};
-		opposite = ft_vector_length(c) * sin(ft_vector_angle((t_vector2){point->next->point.x - point->point.x, point->next->point.y - point->point.y}, c));
-		if(opposite > max)
+		c = (t_vector2){head->point.x - point->point.x,
+			head->point.y - point->point.y};
+		opposite = ft_vector_length(c) * sin(ft_vector_angle((t_vector2)
+				{point->next->point.x - point->point.x, point->next->point.y
+					- point->point.y}, c));
+		if (opposite > max)
 		{
 			max = opposite;
 			selection = head;
 		}
 		head = head->next;
 	}
-		return (selection);
-		//ft_printf(" opposite distance %f, \n", ft_vector_length(c) * ( sin(ft_vector_angle(line, c))));
+	return (selection);
+	//ft_printf(" opposite distance %f, \n", ft_vector_length(c) * ( sin(ft_vector_angle(line, c))));
 }
 
 //returns element out the link at the index
 t_vec2_lst	*ft_lstindex(t_vec2_lst *lst, size_t index)
 {
-	size_t	i;
+	size_t		i;
 	t_vec2_lst	*temp;
 
 	i = 0;
@@ -70,8 +75,8 @@ t_vec2_lst	*ft_lstindex(t_vec2_lst *lst, size_t index)
 
 t_sector_lst	*sector_by_index(t_app *app, int index)
 {
-	t_sector_lst *head;
-	int i;
+	t_sector_lst	*head;
+	int				i;
 
 	i = 0;
 	head = app->sectors;

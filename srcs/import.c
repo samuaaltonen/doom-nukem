@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/08 13:49:37 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/12 00:59:20 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,35 @@ static void	export_to_array(t_app *app, t_exportsector *export, int sectorid)
 }
 
 /**
+ * @brief Modifies slope ending coordinates so that slope is always
+ * perpendicular to the starting wall. Returns modified ending coordinate.
+ * 
+ * @param sector 
+ * @param start 
+ * @param end 
+ * @return t_vector2 
+ */
+static t_vector2	slope_perpendicular(t_sector *sector, int start, int end)
+{
+	t_vector2	slope;
+	t_vector2	start_wall;
+	t_vector2	perpendicular;
+	double		perpendicular_distance;
+
+	slope = ft_vector2_sub(sector->corners[end], sector->corners[start]);
+	if (start < sector->corner_count - 1)
+		start_wall = ft_vector2_sub(sector->corners[start + 1], sector->corners[start]);
+	else
+		start_wall = ft_vector2_sub(sector->corners[0], sector->corners[start]);
+	perpendicular = ft_vector_resize(ft_vector_perpendicular(start_wall), 1.0);
+	perpendicular_distance = ft_vector_length(slope) * fabs(cos(ft_vector_angle(slope, perpendicular)));
+	return ((t_vector2){
+		sector->corners[start].x + perpendicular_distance * perpendicular.x,
+		sector->corners[start].y + perpendicular_distance * perpendicular.y
+	});
+}
+
+/**
  * @brief reads imported sector slop points, calculates the slope angles from the points
  * 	angles.y = angle rotation to world direction
  * 	angles.x = floor angle
@@ -32,33 +61,20 @@ static void	export_to_array(t_app *app, t_exportsector *export, int sectorid)
 static void	import_floor_slope(t_exportsector *export, t_sector *sector)
 {
 	t_vector2	point;
-	t_vector2	linedst;
-	t_vector2	opposite;
 
 	if (export->floor_slope_position == -1)
-	{
-		sector->floor_slope_angles = (t_vector2){0.f,0.f};
 		return ;
-	}
 	point = sector->corners[export->floor_slope_position];
-	if (export->floor_slope_position < sector->corner_count)
-		linedst = sector->corners[export->floor_slope_position + 1];
-	else
-		linedst = sector->corners[0];
-	opposite = (t_vector2){sector->corners[export->floor_slope_opposite].x,
-			sector->corners[export->floor_slope_opposite].y};
-	sector->floor_slope_position = (t_vector3){point.x, point.y,
-			export->floor_slope_height};
-	sector->floor_slope_angles.y = ft_vector_angle(
-			ft_vector2_sub(linedst, point),(t_vector2){0.f,1.f});	
-	ft_line_intersection(
-			ft_line_resize((t_line){point, linedst}, MAX_LINE_LENGTH, 2),
-			ft_line_resize((t_line){opposite, ft_vector2_add(
-			ft_vector_perpendicular(ft_vector2_sub(linedst, point)), opposite)},
-			MAX_LINE_LENGTH, 2),&point);
-	sector->floor_slope_angles.x = atan(
-			(export->floor_slope_height - export->floor_height) /
-			ft_vector_length(ft_vector2_sub(opposite, point)));
+	sector->floor_slope_height = export->floor_slope_height - export->floor_height;
+	if (!sector->floor_slope_height)
+		return ;
+	sector->floor_slope_start = point;
+	sector->floor_slope_end = slope_perpendicular(sector,
+		export->floor_slope_position,
+		export->floor_slope_opposite);
+	sector->floor_slope_magnitude = sector->floor_slope_height 
+		/ ft_vector_length(ft_vector2_sub(sector->floor_slope_end,
+			sector->floor_slope_start));
 }
 
 /**
@@ -74,33 +90,20 @@ static void	import_floor_slope(t_exportsector *export, t_sector *sector)
 static void	import_ceil_slope(t_exportsector *export, t_sector *sector)
 {
 	t_vector2	point;
-	t_vector2	linedst;
-	t_vector2	opposite;
 
 	if (export->ceil_slope_position == -1)
-	{
-		sector->ceiling_slope_angles = (t_vector2){0.f,0.f};
 		return ;
-	}
 	point = sector->corners[export->ceil_slope_position];
-	if (export->ceil_slope_position < sector->corner_count)
-		linedst = sector->corners[export->ceil_slope_position + 1];
-	else
-		linedst = sector->corners[0];
-	opposite = (t_vector2){sector->corners[export->ceil_slope_opposite].x,
-			sector->corners[export->ceil_slope_opposite].y};
-	sector->ceiling_slope_position = (t_vector3){point.x, point.y,
-			export->ceil_slope_height};
-	sector->ceiling_slope_angles.y = ft_vector_angle(
-			ft_vector2_sub(linedst, point),(t_vector2){0.f,1.f});	
-	ft_line_intersection(
-			ft_line_resize((t_line){point, linedst}, MAX_LINE_LENGTH, 2),
-			ft_line_resize((t_line){opposite, ft_vector2_add(
-			ft_vector_perpendicular(ft_vector2_sub(linedst, point)), opposite)},
-			MAX_LINE_LENGTH, 2),&point);
-	sector->ceiling_slope_angles.x = atan(
-			(export->ceil_slope_height - export->ceil_height) /
-			ft_vector_length(ft_vector2_sub(opposite, point)));
+	sector->ceil_slope_height = export->ceil_slope_height - export->ceil_height;
+	if (!sector->ceil_slope_height)
+		return ;
+	sector->ceil_slope_start = point;
+	sector->ceil_slope_end = slope_perpendicular(sector,
+		export->ceil_slope_position,
+		export->ceil_slope_opposite);
+	sector->ceil_slope_magnitude = sector->ceil_slope_height 
+		/ ft_vector_length(ft_vector2_sub(sector->ceil_slope_end,
+			sector->ceil_slope_start));
 }
 
 //read sector data from export
@@ -110,16 +113,17 @@ static void read_sector(t_app *app, t_exportsector *export, int sectorid, int se
 	app->sectors[sectorid].corner_count = export->corner_count;
 	export_to_array(app, export, sectorid);
 	app->sectors[sectorid].light = export->light;
-	app->sectors[sectorid].ceiling_texture = export->ceil_tex;
+	app->sectors[sectorid].ceil_texture = export->ceil_tex;
 	app->sectors[sectorid].ceil_tex_offset = export->ceil_tex_offset;
 	app->sectors[sectorid].floor_texture = export->floor_tex;
 	app->sectors[sectorid].floor_tex_offset = export->floor_tex_offset;
-	app->sectors[sectorid].ceiling_height = export->ceil_height;
+	app->sectors[sectorid].ceil_height = export->ceil_height;
 	app->sectors[sectorid].floor_height = export->floor_height;
 	app->sectors[sectorid].parent_sector = export->parent_sector;
+	app->sectors[sectorid].floor_slope_height = 0.0;
+	app->sectors[sectorid].ceil_slope_height = 0.0;
 	import_floor_slope(export, &(app->sectors[sectorid]));
 	import_ceil_slope(export, &(app->sectors[sectorid]));
-		ft_printf("sectorid = %i corners count: %i, floor slope %f, ceil slope %f\n", sectorid, app->sectors[sectorid].corner_count, app->sectors[sectorid].floor_slope_angles.x, app->sectors[sectorid].ceiling_slope_angles.x);
 }
 
 //open a file
@@ -136,7 +140,8 @@ int	import_file(t_app *app, char *path)
 	if(fd < 0)
 		exit_error("FILE OPEN ERROR TEMP!");
 	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
-
+	if (!export)
+		exit_error(MSG_ERROR_ALLOC);
 	if (read(fd, &sector_count,(sizeof(size_t))) == -1)
 		exit_error(MSG_ERROR_FILE_READ);
 	
@@ -149,6 +154,7 @@ int	import_file(t_app *app, char *path)
 		read_sector(app, export, counter, sector_count);
 		counter++;
 	}
+	free(export);
 	ft_printf("sector_count=%i\n",sector_count);
 	close(fd);
 	return (0);

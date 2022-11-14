@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/27 13:55:25 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/08 14:40:15 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,15 +32,22 @@ typedef struct s_sector
 	int				parent_sector;
 	int				light;
 	double			floor_height;
-	double			ceiling_height;
 	int				floor_texture;
 	double			floor_tex_offset;
-	int				ceiling_texture;
+	double			ceil_height;
+	int				ceil_texture;
 	double			ceil_tex_offset;
-	t_vector3		floor_slope_position;
-	t_vector2		floor_slope_angles;
-	t_vector3		ceiling_slope_position;
-	t_vector2		ceiling_slope_angles;
+
+	t_vector2		floor_slope_start;
+	t_vector2		floor_slope_end;
+	double			floor_slope_height;
+	double			floor_slope_magnitude;
+
+	t_vector2		ceil_slope_start;
+	t_vector2		ceil_slope_end;
+	double			ceil_slope_height;
+	double			ceil_slope_magnitude;
+
 	int				stack_index;
 }	t_sector;
 
@@ -81,14 +88,24 @@ typedef struct s_rayhit
 	t_vector2	texture_offset;
 	t_vector2	texture_step;
 	int			height;
+
+	int			wall_start_actual;
 	int			wall_start;
 	int			wall_end;
 	int			wall_type;
+
 	int			parent_height;
+	int			parent_wall_start_actual;
 	int			parent_wall_start;
 	int			parent_wall_end;
-	double		parent_texture_offset_top;
-	double		parent_texture_offset_bottom;
+
+	double		floor_horizon;
+	double		floor_horizon_angle;
+	double		floor_slope_height;
+
+	double		ceil_horizon;
+	double		ceil_horizon_angle;
+	double		ceil_slope_height;
 }	t_rayhit;
 
 /**

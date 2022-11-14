@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:46:18 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/09 17:34:42 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:21:18 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ int			ft_line_intersection(t_line line_a, t_line line_b,
 				t_vector2 *intersection);
 int			ft_line_intersection_through(t_line line_a,
 				t_line line_b);
-t_line	ft_line_resize(t_line line, double length, int side);
+int			ft_line_intersection_segment(t_line line_a, t_line line_b,
+				t_vector2 *intersection);
+t_line		ft_line_resize(t_line line, double length, int side);
 double		ft_vector_dotproduct(t_vector2 a, t_vector2 b);
 double		ft_vector_crossproduct(t_vector2 a, t_vector2 b);
 double		ft_vector_angle(t_vector2 a, t_vector2 b);

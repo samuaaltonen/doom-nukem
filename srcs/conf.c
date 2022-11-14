@@ -3,31 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   conf.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/20 16:05:20 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/11 15:51:20 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
-
-/**
- * Inits thread information structs. They contain info about what part of the
- * window each thread calculates.
- */
-void	init_thread_info(t_app *app)
-{
-	int	i;
-
-	i = 0;
-	while (i < THREAD_COUNT)
-	{
-		app->thread_info[i].app = app;
-		app->thread_info[i].id = i;
-		i++;
-	}
-}
 
 /**
  * Calculates initial camera plane using FOV and player direction vector.

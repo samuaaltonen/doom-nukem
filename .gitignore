@@ -1,11 +1,13 @@
-objs
-build
 compiled
+objs
+sdl/SDL2-2.0.8/build/*
+!sdl/SDL2-2.0.8/build/DontRemoveMe
+SDL2_build
 doom-nukem
 sdl/SDL2_build
 *.a
 *.dSYM
-.vscode/*
+.vscode
 *.o
 .DS_Store
 perf.data*

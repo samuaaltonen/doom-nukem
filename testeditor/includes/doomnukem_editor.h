@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/31 15:57:20 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:48:16 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,24 +35,26 @@
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
 # define MAX_TEX_COUNT 128
+# define MAX_SECTOR_CORNERS 16
+# define MAX_MEMBER_SECTORS 8
+# define MAX_WEAPONS 5
+# define MAX_ARMOR 5
+# define INVENTORY_SIZE 10
 # define DEG_IN_RADIAN 0.01745f
 # define PI_HALF 1.57079632679
 # define RADIAN_IN_DEG 57.29578f
-# define MAP_SPEED 0.25f
+# define MAP_SPEED 0.85f
 # define HEIGHT_INC 0.125f
 # define PANELS_PATH "../assets/textures/minecraft_spritesheet.bmp"
 # define FONT_FILE "../assets/legacy/SpaceMono-Regular.ttf"
 # define FONT_TX "../assets/fonts/sci-fi_font.bmp"
 # define FILE_PATH "./test.test"
-# define MAX_SECTOR_CORNERS 16
-# define MAX_MEMBER_SECTORS 8
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
 # include <pthread.h>
 # include <stdlib.h>
 # include <SDL.h>
-# include <SDL_ttf.h>
 # include "libft.h"
 # include "liblinearalgebra.h"
 
@@ -64,16 +66,6 @@ typedef unsigned char	t_uint8;
 /**
  * Texture type enumeration.
 */
-/* enum e_texture {
-	FLOOR_STONE			= 0,
-	FLOOR_LAMINATE		= 1,
-	FLOOR_STONE_BRICK	= 2,
-	FLOOR_GRAVEL		= 3,
-	WALL_STONE_BRICK	= 15,
-	WALL_FACE			= 16,
-	WALL_ENGRAVED		= 17,
-	WALL_DOOR			= 18
-}; */
 enum e_texture {
 	MINECRAFT_CONCRETE_BLACK	= 0,
 	MINECRAFT_CONCRETE_MAGENTA	= 1,
@@ -120,7 +112,10 @@ enum e_colors {
 	BG_LIGHT = 0x888888,
 	BG_DARK = 0x424242,
 	TEXT = 0xFF111111,
-	ACTIVE_TEXT = 0xFFFF00FF,
+	ACTIVE_TEXT = 0xFFFF0000,
+	PLAYER = 0x00FF00,
+	LINE_A = 0xAABBCC,
+	LINE_B = 0xFF4444
 };
 
 /**
@@ -132,15 +127,15 @@ typedef struct s_point
 	int				y;
 }	t_point;
 
-typedef struct	s_vec2_lst
+typedef struct s_vec2_lst
 {
 	t_vector2			point;
 	int					type;
 	int					tex;
 	struct s_vec2_lst	*next;
-} t_vec2_lst;
+}	t_vec2_lst;
 
-typedef struct	s_draw_line
+typedef struct s_draw_line
 {
 	t_point	dif;
 	t_point	pos;
@@ -148,7 +143,42 @@ typedef struct	s_draw_line
 	int		err;
 }	t_draw_line;
 
-typedef struct	s_sectorlist
+typedef struct s_weapon
+{
+	int		damage;
+	int		range;
+	int		magazine;
+}	t_weapon;
+
+typedef struct s_armor
+{
+	int		offence;
+	int		defence;
+}	t_armor;
+
+typedef struct s_inventory
+{
+	int		ammo;
+	int		potion;
+	int		antidote;
+	int		key;
+	int		jetpack;
+}	t_inventory;
+
+typedef struct s_player
+{
+	t_vector2	position;
+	t_vector2	direction;
+	int			sector;
+	int			health;
+	int			selected_weapon;
+	int			selected_armor;
+	t_weapon	weapons[MAX_WEAPONS];
+	t_armor		armor[MAX_ARMOR];
+	t_inventory	inventory[INVENTORY_SIZE];
+}	t_player;
+
+typedef struct s_sectorlist
 {
 	int					corner_count;
 	t_vec2_lst			*wall_list;
@@ -169,7 +199,7 @@ typedef struct	s_sectorlist
 	t_vec2_lst			*ceil_slope_opposite;
 	double				ceil_slope_height;
 	struct s_sectorlist	*next;
-} t_sector_lst;
+}	t_sector_lst;
 
 /**
  * Struct for font.
@@ -202,7 +232,6 @@ typedef struct s_app
 	int					zoom_range;
 	SDL_Window			*win;
 	SDL_Surface			*surface;
-	TTF_Font			*font;
 	SDL_Surface			*sprite;
 	double				divider;
 	t_vector2			view_pos;
@@ -222,11 +251,17 @@ typedef struct s_app
 	t_bool				floor_edit;
 	t_bool				light_edit;
 	t_bool				slope_edit;
+	t_bool				player_edit;
+	t_bool				player_menu;
+	t_bool				mouse_down;
 	int					sectorcount;
+	int					movement_speed;
 	t_assets			assets;
+	t_player			player;
+	t_point				prev_mouse;
 }	t_app;
 
-typedef struct	s_exportsector
+typedef struct s_exportsector
 {
 	int				corner_count;
 	t_vector2		corners[MAX_SECTOR_CORNERS];
@@ -263,7 +298,7 @@ typedef struct s_rect
 /**
  * Messages
  */
-void		exit_error(char *message);
+void			exit_error(char *message);
 
 /**
  * Configuration
@@ -272,29 +307,31 @@ void		exit_error(char *message);
 /**
  * Application
  */
-int			app_init(t_app **app);
-void		app_prepare(t_app *app);
-void		app_render(t_app *app);
-void		app_loop(t_app *app);
+int				app_init(t_app **app);
+void			app_prepare(t_app *app);
+void			app_render(t_app *app);
+void			app_loop(t_app *app);
 
 /**
  * Images
  */
-SDL_Surface	*init_image(int x, int y);
-void		put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color);
-void		flush_surface(SDL_Surface *surface);
-int			get_pixel_color(SDL_Surface *surface, int x, int y);
+SDL_Surface		*init_image(int x, int y);
+void			put_pixel_to_surface(SDL_Surface *surface, int x,
+					int y, int color);
+void			flush_surface(SDL_Surface *surface);
+int				get_pixel_color(SDL_Surface *surface, int x, int y);
 
 /**
  * Events
  */
-int			events_keyup(int keycode, t_app *app);
-int			events_keydown(int keycode, t_app *app);
-int			events_mouse_track(t_app *app);
-int			events_mouse_click(t_app *app, SDL_Event *event);
-int			events_window_destroy(void);
-int			events_window_other(int windowevent, t_app *app);
-int			dispatch_event(t_app *app, SDL_Event *event);
+int				events_keyup(int keycode, t_app *app);
+int				events_keydown(int keycode, t_app *app);
+int				events_mouse_track(t_app *app);
+int				events_mouse_click(t_app *app, SDL_Event *event);
+int				events_window_destroy(void);
+int				events_window_other(int windowevent, t_app *app);
+int				dispatch_event(t_app *app, SDL_Event *event);
+int				events_mouse_drag(t_app *app);
 
 /**
  * Map Editor functions
@@ -312,27 +349,33 @@ void			render_sectors(t_app *app);
 void			render_selection_point(t_app *app, t_vec2_lst *point, int size);
 void			render_sector_points(t_app *app);
 void			render_fill_active_sector(t_app *app);
-void			draw_list_lines(t_app *app, t_vec2_lst *a, t_vec2_lst *b, int color);
+void			draw_list_lines(t_app *app, t_vec2_lst *a,
+					t_vec2_lst *b, int color);
 void			draw_line(t_app *app, t_vector2 *a, t_vector2 *b, int color);
-void		map_coordinates(t_rect *src, t_rect *dst, t_point *point);
+void			linedraw_low(t_app *app, t_point *a, t_point *b, int color);
+void			linedraw_high(t_app *app, t_point *a, t_point *b, int color);
+int				check_borders(t_app *app, t_point *a, t_point *b);
 
 /**
  * Sector Functions
  */
 t_sector_lst	*new_sector_list(t_vec2_lst *wall_list);
-t_sector_lst	*put_sector_lst(t_app *app, t_sector_lst* new);
+t_sector_lst	*put_sector_lst(t_app *app, t_sector_lst *new);
 t_bool			complete_sector(t_app *app);
-t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop, void (*del)(void *, size_t));
-void			sector_delone(t_sector_lst **sector, void (*del)(void*, size_t));
+t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop,
+					void (*del)(void *, size_t));
+void			sector_delone(t_sector_lst **sector,
+					void (*del)(void*, size_t));
 size_t			ft_lstlen(t_sector_lst *lst);
 t_sector_lst	*sector_by_index(t_app *app, int index);
-int				inside_sector_check(t_app *app, t_sector_lst *sector);
+int				inside_sector_check(t_sector_lst *sector, t_vector2 *mouse);
 t_sector_lst	*click_sector(t_app *app);
 void			sector_edit(t_app *app, SDL_Keycode key);
 t_sector_lst	*find_parent_sector(t_app *app, t_sector_lst *sector);
 t_sector_lst	*find_child_sector(t_app *app);
 int				get_sector_id(t_app *app, t_sector_lst *sector);
 void			cancel_list_creation(t_app *app);
+void			add_member_sector(t_sector_lst *parent, t_sector_lst *child);
 
 /**
  * Point/Wall/Wall_list Functions
@@ -350,14 +393,17 @@ void			reverse_vector_list(t_vec2_lst **head);
  */
 void			zoom_slider(t_app *app);
 void			handle_movement(t_app *app);
-void			snap_to_nearest(t_app *app, t_point *mouse_pos, t_vector2 *snap_pos, double divider);
+void			snap_to_nearest(t_app *app, t_point *mouse_pos,
+					t_vector2 *snap_pos, double divider);
 void			move_divider(t_app *app, SDL_Keycode keycode);
+void			activate_slope(t_app *app, SDL_Keycode keycode);
 
 /**
  * Edit Functions
  */
 void			change_walls_tex(t_vec2_lst *walls, int wall_tex);
-void			change_selected_wall_tex(t_app *app, t_vec2_lst *wall, int wall_id);
+void			change_selected_wall_tex(t_app *app, t_vec2_lst *wall,
+					int wall_id);
 void			link_wall_to_sector(t_app *app);
 void			change_walls_type(t_app *app, t_sector_lst *sector);
 t_vec2_lst		*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point);
@@ -377,17 +423,31 @@ int				get_line_id(t_vec2_lst *list, t_vec2_lst *wall);
 /**
  * Font
 */
-void		change_font(t_app *app, int size, int color);
-void		load_font(t_app *app);
-void		render_text(t_app *app, t_point position, char *text);
-void		rect_from_surface(SDL_Surface *surface, t_rect *rect);
-int			check_blit(SDL_Surface *src, t_rect *src_rect, SDL_Surface *dst, t_rect *dst_rect);
-void		blit_surface(SDL_Surface *src, t_rect *src_rect, SDL_Surface *dst, t_rect *dst_rect);
+void			toggle_active_color(t_app *app, int active, char *text,
+					t_point point);
+void			change_font(t_app *app, int size, int color);
+void			load_font(t_app *app);
+void			render_text(t_app *app, t_point position, char *text);
+void			rect_from_surface(SDL_Surface *surface, t_rect *rect);
+int				check_blit(SDL_Surface *src, t_rect *src_rect,
+					SDL_Surface *dst, t_rect *dst_rect);
+void			blit_surface(SDL_Surface *src, t_rect *src_rect,
+					SDL_Surface *dst, t_rect *dst_rect);
 
 /**
  * Help menu
 */
-void		render_help_menu(t_app *app);
-void		load_assets(t_app *app);
-void		render_texture_icons(t_app *app);
+void			render_help_menu(t_app *app);
+void			set_icon_rect(t_rect *rect, t_point point, t_point size);
+void			load_assets(t_app *app);
+void			render_texture_icons(t_app *app);
+void			render_sector_info(t_app *app);
+void			render_icons(t_app *app, SDL_Surface *asset, t_point point, int max);
+void			render_healthbar(t_app *app);
+void			render_arrows(t_app *app, t_point left, t_point right);
+
+/**
+ * Player
+*/
+void			render_player(t_app *app);
 #endif

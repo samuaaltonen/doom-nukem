@@ -39,8 +39,6 @@ static t_bool	has_visible_corner(t_app *app, t_line wall)
 	if (ft_line_side(right, wall.a) && ft_line_side(right, wall.b)
 		&& !ft_line_side(left, wall.a) && !ft_line_side(left, wall.b))
 		return (TRUE);
-	left = ft_line_resize(left, MAX_LINE_LENGTH, EXTEND_BOTH);
-	right = ft_line_resize(right, MAX_LINE_LENGTH, EXTEND_BOTH);
 	if ((ft_line_intersection(left, wall, &intersection)
 			&& ft_line_side(view_camera, intersection))
 		|| (ft_line_intersection(right, wall, &intersection)
@@ -123,6 +121,7 @@ static void	loop_sector_walls(t_app *app, t_wallstack *wallstack, int index, int
 	t_sector	*sector;
 	t_wall		wall;
 
+	ft_bzero(&wall, sizeof(t_wall));
 	sector = &app->sectors[sector_id];
 	sector->stack_index = index;
 	// Loop through member sector walls

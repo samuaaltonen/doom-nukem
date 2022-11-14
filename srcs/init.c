@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/02 14:35:40 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:22:42 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,27 +41,32 @@ int	config_init(t_app *app)
 	app->conf->rotation_speed = ROTATION_SPEED;
 	app->conf->mouse_active = 1;
 	app->status = STATUS_TITLESCREEN;
+	app->conf->fps_avg = 0;
+	app->conf->fps_total = 0;
+	app->conf->frames_total = 0;
 	ft_strcpy(app->conf->fps_info, "FPS                 ");
-	init_thread_info(app);
 	return (1);
 }
 
 
 /**
  * Prepares the application to be rendered:
- * Creates window, adds event hooks and sets
- * initial player position / direction.
+ * Creates window and opens an audio device
  */
 void	sdl_init(t_app *app)
 {
-	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0)
+	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO) < 0)
 		exit_error(MSG_ERROR_SDL_INIT);
+	SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
 	app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_SHOWN);
 	if (!app->win)
 		exit_error(MSG_ERROR_WINDOW);
 	app->surface = SDL_GetWindowSurface(app->win);
 	if (!app->surface)
 		exit_error(MSG_ERROR_WINDOW_SURFACE);
+	app->audio.device_id = SDL_OpenAudioDevice(NULL, 0, &app->audio.wav_spec, NULL, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
+	if (!app->audio.device_id)
+		exit_error(MSG_ERROR);
 	SDL_ShowCursor(SDL_DISABLE);
 }
 
@@ -70,6 +75,7 @@ void	sdl_init(t_app *app)
  */
 void    load_assets(t_app *app)
 {
+	app->assets.ui_frame = SDL_LoadBMP(UI_FRAME_PATH);
 	app->assets.button_idle = SDL_LoadBMP(BUTTON_IDLE_PATH);
 	app->assets.button_select = SDL_LoadBMP(BUTTON_SELECT_PATH);
 	app->assets.button_press = SDL_LoadBMP(BUTTON_PRESS_PATH);

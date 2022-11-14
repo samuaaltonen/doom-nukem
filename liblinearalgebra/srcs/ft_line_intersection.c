@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_line_intersection.c                           :+:      :+:    :+:   */
+/*   ft_intersection.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -20,26 +20,21 @@
  * See also:
  * https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection
 */
-int	ft_line_intersection(t_line line_a, t_line line_b,
-		t_vector2 *intersection)
+int	ft_line_intersection(t_line a, t_line b, t_vector2 *intersection)
 {
-	double	t;
-	double	u;
 	double	divider;
+	double	x;
+	double	y;
 
-	divider = ((line_a.a.x - line_a.b.x) * (line_b.a.y - line_b.b.y)
-			- (line_a.a.y - line_a.b.y) * (line_b.a.x - line_b.b.x));
-	if (divider == 0.f)
+	divider = (a.a.x - a.b.x) * (b.a.y - b.b.y)
+		- (a.a.y - a.b.y) * (b.a.x - b.b.x);
+	if (!divider)
 		return (0);
-	t = ((line_a.a.x - line_b.a.x) * (line_b.a.y - line_b.b.y)
-			- (line_a.a.y - line_b.a.y) * (line_b.a.x - line_b.b.x))
-		/ divider;
-	u = ((line_a.a.x - line_b.a.x) * (line_a.a.y - line_a.b.y)
-			- (line_a.a.y - line_b.a.y) * (line_a.a.x - line_a.b.x))
-		/ divider;
-	if (t < 0.f || t > 1.f || u < 0.f || u > 1.f)
-		return (0);
-	intersection->x = line_a.a.x + t * (line_a.b.x - line_a.a.x);
-	intersection->y = line_a.a.y + t * (line_a.b.y - line_a.a.y);
+	x = (a.a.x * a.b.y - a.a.y * a.b.x) * (b.a.x - b.b.x)
+		- (a.a.x - a.b.x) * (b.a.x * b.b.y - b.a.y * b.b.x);
+	y = (a.a.x * a.b.y - a.a.y * a.b.x) * (b.a.y - b.b.y)
+		- (a.a.y - a.b.y) * (b.a.x * b.b.y - b.a.y * b.b.x);
+	intersection->x = x / divider;
+	intersection->y = y / divider;
 	return (1);
 }

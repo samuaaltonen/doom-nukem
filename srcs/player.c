@@ -90,7 +90,7 @@ static t_vector2 circle_collision(t_app *app, t_line wall)
 					endpoint_vector = ft_vector_resize(endpoint_vector, ft_vector_length(endpoint_vector) - endpoint_backtrack);
 
 					//ft_printf("endpoint collission x%f, y%f endpoint_backtrack pos x%f, y%f\n", collision.x, collision.y, endpoint_vector.x, endpoint_vector.y);
-					return (ft_vector2_add(app->player.pos, endpoint_vector));
+					//return (ft_vector2_add(app->player.pos, endpoint_vector));
 				}
 			}
 	}
@@ -160,7 +160,7 @@ static int	wall_traversal_recursive(t_app *app, t_move new, int wall_id)
 			//ft_printf("recursion'\n");
 			wall_id = app->sectors[wall_id].wall_types[i];
 			if(wall_id < 0 || (new.elevation + MAX_STEP < app->sectors[wall_id].floor_height ||
-				app->sectors[wall_id].ceiling_height < new.elevation + TALL))
+				app->sectors[wall_id].ceil_height < new.elevation + TALL))
 				return (-1);
 			else
 			{
@@ -193,7 +193,7 @@ static int	wall_traversal_recursive(t_app *app, t_move new, int wall_id)
 		{
 			wall_id = wall_traversal_recursive(app, new, member_id);
 			if(wall_id < 0 || (new.elevation + MAX_STEP < app->sectors[wall_id].floor_height ||
-				app->sectors[wall_id].ceiling_height < new.elevation + TALL))
+				app->sectors[wall_id].ceil_height < new.elevation + TALL))
 				return (-1);
 			else
 			{
@@ -211,7 +211,7 @@ static int	wall_traversal_recursive(t_app *app, t_move new, int wall_id)
 
 static t_bool ceil_collision(t_app *app)
 {
-	if(app->sectors[app->player.current_sector].ceiling_height < app->player.elevation + TALL)
+	if(app->sectors[app->player.current_sector].ceil_height < app->player.elevation + TALL)
 		return (FALSE);
 	return (TRUE);
 }
@@ -283,7 +283,7 @@ void	update_position(t_app *app)
 	{
 		app->player.jump_timer = JUMP_TIME;
 		app->player.velocity = 0.f;
-		app->player.elevation = app->sectors[app->player.current_sector].ceiling_height - TALL;
+		app->player.elevation = app->sectors[app->player.current_sector].ceil_height - TALL;
 	}
 	else
 		app->player.elevation += app->player.velocity * app->conf->delta_time;
@@ -315,8 +315,8 @@ void	player_move(t_app *app, t_movement movement, double speed)
 {
 	t_vector2	perpendicular;
 	if (!(movement == FORWARD || movement == BACKWARD
-			|| movement == LEFT || movement == RIGHT || movement == UP
-			|| movement == DOWN))
+			|| movement == LEFTWARD || movement == RIGHTWARD 
+			|| movement == UPWARD || movement == DOWNWARD))
 		return ;
 	if (movement == FORWARD)
 		app->player.move_vector = ft_vector2_add(app->player.move_vector,
@@ -327,28 +327,28 @@ void	player_move(t_app *app, t_movement movement, double speed)
 				(t_vector2){-app->player.dir.x * app->conf->delta_time,
 				-app->player.dir.y  * app->conf->delta_time});
 		
-	if (movement == LEFT || movement == RIGHT)
+	if (movement == LEFTWARD || movement == RIGHTWARD)
 	{
 		perpendicular = ft_vector_perpendicular(app->player.dir);
-		if (movement == LEFT)
+		if (movement == LEFTWARD)
 			app->player.move_vector = ft_vector2_sub(app->player.move_vector,
 					(t_vector2){perpendicular.x * app->conf->delta_time,
 					perpendicular.y * app->conf->delta_time});
-		if (movement == RIGHT)
+		if (movement == RIGHTWARD)
 			app->player.move_vector = ft_vector2_add(app->player.move_vector,
 					(t_vector2){perpendicular.x * app->conf->delta_time,
 					perpendicular.y * app->conf->delta_time});
 	}
-	if (movement == UP && !app->player.flying)
+	if (movement == UPWARD && !app->player.flying)
 	{
 		app->player.flying = TRUE;
 		app->player.jump_timer = 0.f;
 	}
-	if (movement == UP && app->player.flying && app->player.jump_timer == JUMP_TIME)
+	if (movement == UPWARD && app->player.flying && app->player.jump_timer == JUMP_TIME)
 	{
 		app->player.jetpack_boost = TRUE;
 		app->player.jetpack = TRUE;
 	}
-	if (movement == DOWN)
+	if (movement == DOWNWARD)
 		app->player.elevation -= speed;
 }

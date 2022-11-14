@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/08 13:19:57 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:21:10 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # define DIRECTION_START_X 0.0
 # define DIRECTION_START_Y 1.0
-# define POSITION_START_X 0.0
-# define POSITION_START_Y 0.0
+# define POSITION_START_X 0.5
+# define POSITION_START_Y 0.5
 # define ROTATION_SPEED 1.8f
 # define MOVEMENT_SPEED 3.2f
 # define MOVE_RANGE 0.05f
@@ -30,6 +30,8 @@
 # define MAX_STEP 0.2f
 # define MAX_ANGLE 45.f
 # define TALL 0.7f
+# define HORIZON_UPPER_LIMIT 1.25
+# define HORIZON_LOWER_LIMIT -0.25
 
 /**
  * Movement direction enumeration.
@@ -37,10 +39,10 @@
 typedef enum e_movement {
 	FORWARD = 0,
 	BACKWARD = 1,
-	LEFT = 2,
-	RIGHT = 3,
-	UP = 4,
-	DOWN = 5
+	LEFTWARD = 2,
+	RIGHTWARD = 3,
+	UPWARD = 4,
+	DOWNWARD = 5
 }	t_movement;
 
 /**
@@ -56,6 +58,7 @@ typedef struct s_player
 	double			camera_length;
 	double			height;
 	double			elevation;
+	double			horizon;
 	int				current_sector;
 	t_bool			flying;
 	t_bool			jetpack;
