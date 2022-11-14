@@ -66,9 +66,7 @@ void	threads_work(t_thread_data *threads_data)
 	i = -1;
 	while (++i < THREAD_COUNT)
 	{
-		pthread_mutex_lock(&threads_data[i].lock);
 		threads_data[i].has_work = TRUE;
-		pthread_mutex_unlock(&threads_data[i].lock);
 		pthread_cond_signal(&threads_data[i].cond);
 	}
 	all_ready = FALSE;
@@ -78,7 +76,11 @@ void	threads_work(t_thread_data *threads_data)
 		i = -1;
 		while (++i < THREAD_COUNT)
 		{
-			pthread_mutex_lock(&threads_data[i].lock);
+			if (pthread_mutex_trylock(&threads_data[i].lock))
+			{
+				all_ready = FALSE;
+				continue ;
+			}
 			if (threads_data[i].has_work)
 				all_ready = FALSE;
 			pthread_mutex_unlock(&threads_data[i].lock);
