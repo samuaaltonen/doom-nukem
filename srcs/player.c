@@ -54,43 +54,44 @@ static t_vector2 circle_collision(t_app *app, t_line wall)
 			|| (ft_point_distance(closest_start, wall.a) < radius && point_on_segment(closest_start, move_line))
 			|| (ft_point_distance(closest_end, wall.b) < radius && point_on_segment(closest_end, move_line)))
 			{
-			collision = ft_vector2_sub(line_intersection, ft_vec2_mult(ft_vector_resize(app->player.move_vector, 1.f),
-					(ft_point_distance(line_intersection, app->player.pos)
-					/ ft_point_distance(ft_closest_point(app->player.pos, wall), app->player.pos)) * radius));
-			posofcollision = ft_closest_point(collision, wall);
-			pos3 = ft_vector2_add(collision, (ft_vector2_sub(ft_closest_point(app->player.pos, wall), posofcollision)));
-			//app->player.pos = collision;
-			//collision = ft_vector2_sub(line_intersection, ft_vector_resize(ft_vector_resize() ,radius)
+				collision = ft_vector2_sub(line_intersection, ft_vec2_mult(ft_vector_resize(app->player.move_vector, 1.f),
+						(ft_point_distance(line_intersection, app->player.pos)
+						/ ft_point_distance(ft_closest_point(app->player.pos, wall), app->player.pos)) * radius));
+				posofcollision = ft_closest_point(collision, wall);
+				pos3 = ft_vector2_add(collision, (ft_vector2_sub(ft_closest_point(app->player.pos, wall), posofcollision)));
+				//app->player.pos = collision;
+				//collision = ft_vector2_sub(line_intersection, ft_vector_resize(ft_vector_resize() ,radius)
 
-			if(point_on_segment(posofcollision, wall))
-			{
-				ft_printf("collision on wall x%f, y%f\n", collision.x, collision.y);
-				return (collision);
-			}
-			else
-			{
-				ft_printf("collision on endpoint \n");
-						//return (collision);
-
-				if(ft_point_distance(posofcollision, wall.a) < ft_point_distance(posofcollision, wall.b))
+				if(point_on_segment(posofcollision, wall))
 				{
-					endpoint_nearest = ft_closest_point(wall.a, move_line);
-					endpoint_distance = ft_point_distance (wall.a, endpoint_nearest);
+					ft_printf("collision on wall x%f, y%f\n", collision.x, collision.y);
+					//return (collision);
 				}
 				else
 				{
-					endpoint_nearest = ft_closest_point(wall.b, move_line);
-					endpoint_distance = ft_point_distance (wall.b, endpoint_nearest);
+					ft_printf("collision on endpoint \n");
+							//return (collision);
+
+					if(ft_point_distance(posofcollision, wall.a) < ft_point_distance(posofcollision, wall.b))
+					{
+						endpoint_nearest = ft_closest_point(wall.a, move_line);
+						endpoint_distance = ft_point_distance (wall.a, endpoint_nearest);
+					}
+					else
+					{
+						endpoint_nearest = ft_closest_point(wall.b, move_line);
+						endpoint_distance = ft_point_distance (wall.b, endpoint_nearest);
+					}
+
+					endpoint_backtrack = radius * radius - (endpoint_distance * endpoint_distance);
+
+
+					endpoint_vector = ft_vector2_sub(move_line.a, endpoint_nearest);
+					endpoint_vector = ft_vector_resize(endpoint_vector, ft_vector_length(endpoint_vector) - endpoint_backtrack);
+
+					//ft_printf("endpoint collission x%f, y%f endpoint_backtrack pos x%f, y%f\n", collision.x, collision.y, endpoint_vector.x, endpoint_vector.y);
+					return (ft_vector2_add(app->player.pos, endpoint_vector));
 				}
-
-				endpoint_backtrack = radius * radius - (endpoint_distance * endpoint_distance);
-
-
-				endpoint_vector = ft_vector2_sub(move_line.a, endpoint_nearest);
-				endpoint_vector = ft_vector_resize(endpoint_vector, ft_vector_length(endpoint_vector) - endpoint_backtrack);
-
-				//ft_printf("endpoint collission x%f, y%f endpoint_backtrack pos x%f, y%f\n", collision.x, collision.y, endpoint_vector.x, endpoint_vector.y);
-			}
 			}
 	}
 	return (app->player.pos);
