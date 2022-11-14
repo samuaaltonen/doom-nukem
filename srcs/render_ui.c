@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/14 17:37:41 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/14 19:05:32 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,6 @@ void	render_ui(t_app *app)
 	render_text(app, (t_point){24, 20},  app->conf->fps_info);
 	load_font(app);
 }
-
-// void	change_ui(t_app *app, int color)
-// {
-	
-// }
 
 void	render_ui_frame(t_app *app,t_rect area, int size, int background)
 {
