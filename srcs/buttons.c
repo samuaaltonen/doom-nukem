@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buttons.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/11 12:53:17 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/14 18:53:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@ void	main_menu(t_app *app)
 
 void	do_nothing(t_app *app)
 {
-	if (app)
-		return ;
+	SDL_DestroyWindow(app->win);
+	app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_FULLSCREEN);
+	app->surface = SDL_GetWindowSurface(app->win);
 }
