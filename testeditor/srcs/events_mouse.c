@@ -6,11 +6,37 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/03 11:40:39 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/14 13:20:01 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
+
+/**
+ * Mouse click events in the player menu. Clicking on arrows next to icons
+ * changes the selected weapon/armor.
+*/
+static void	player_menu_events(t_app *app, t_vector2 mouse)
+{
+	t_point	screen_pos;
+
+	screen_pos.x = (mouse.x - app->view_pos.x) * (app->surface->w)
+		/ (app->view_size.x - app->view_pos.x);
+	screen_pos.y = (mouse.y - app->view_pos.y) * (app->surface->h)
+		/ (app->view_size.y - app->view_pos.y);
+	if (screen_pos.x == 25 && screen_pos.y == 76
+		&& app->player.selected_weapon > 1)
+		app->player.selected_weapon--;
+	if (screen_pos.x == 256 && screen_pos.y == 76
+		&& app->player.selected_weapon < MAX_WEAPONS)
+		app->player.selected_weapon++;
+	if (screen_pos.x == 25 && screen_pos.y == 192
+		&& app->player.selected_armor > 1)
+		app->player.selected_armor--;
+	if (screen_pos.x == 256 && screen_pos.y == 192
+		&& app->player.selected_armor < MAX_ARMOR)
+		app->player.selected_armor++;
+}
 
 /**
  * if not in sector creation, select points
@@ -43,7 +69,10 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 	else if (event->button.button == SDL_BUTTON_LEFT)
 	{
 		//if active sector has member sectors find them before linees
-		if (app->active_sector)
+		if (!app->active_sector && app->mouse_track.x == app->player.position.x
+			&& app->mouse_track.y == app->player.position.y)
+			app->player_menu = 1;
+		else if (app->active_sector)
 		{
 			if (app->active_sector->member_sectors[0] && find_child_sector(app))
 				app->active_sector = find_child_sector(app);
@@ -56,12 +85,15 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 			render_player(app);
 			app->player_edit = FALSE;
 		}
+		else if (app->player_menu)
+			player_menu_events(app, app->mouse_track);
 		else
 			app->active_sector = click_sector(app);
 	}
 	else
 	{
 		app->active = NULL;
+		app->player_menu = 0;
 		if (app->active_sector)
 			app->active_sector = app->active_sector->parent_sector;
 		else

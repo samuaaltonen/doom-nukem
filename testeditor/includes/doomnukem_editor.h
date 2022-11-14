@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/11 17:27:26 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/14 13:32:11 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -252,9 +252,9 @@ typedef struct s_app
 	t_bool				light_edit;
 	t_bool				slope_edit;
 	t_bool				player_edit;
+	t_bool				player_menu;
 	int					sectorcount;
 	int					movement_speed;
-	int					level;
 	t_assets			assets;
 	t_player			player;
 }	t_app;
@@ -441,6 +441,7 @@ void			render_texture_icons(t_app *app);
 void			render_sector_info(t_app *app);
 void			render_icons(t_app *app, SDL_Surface *asset, t_point point, int max);
 void			render_healthbar(t_app *app);
+void			render_arrows(t_app *app, t_point left, t_point right);
 
 /**
  * Player

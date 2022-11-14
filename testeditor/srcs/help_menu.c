@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/11 17:27:43 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/14 14:07:25 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,17 +46,23 @@ static void	player_edit_menu(t_app *app)
 {
 	change_font(app, 15, TEXT);
 	render_text(app, (t_point){10, 40}, "WEAPONS");
+	render_arrows(app, (t_point){25, 67}, (t_point){250, 67});
 	render_icons(app, app->assets.sprite, (t_point){40, 60}, MAX_WEAPONS);
 	render_text(app, (t_point){10, 160}, "ARMOR");
+	render_arrows(app, (t_point){25, 187}, (t_point){250, 187});
 	render_icons(app, app->assets.sprite, (t_point){40, 180}, MAX_ARMOR);
 	render_text(app, (t_point){10, 260}, "HEALTH");
+	render_text(app, (t_point){112, 260}, ft_itoa(app->player.health));
+	render_text(app, (t_point){140, 260}, " / 200");
+	render_text(app, (t_point){25, 282}, "<");
 	render_healthbar(app);
+	render_text(app, (t_point){250, 282}, ">");
 	render_text(app, (t_point){10, 320}, "START INVENTORY");
 	render_icons(app, app->assets.sprite, (t_point){40, 340}, 5);
 	render_icons(app, app->assets.sprite, (t_point){40, 380}, 5);
 	toggle_active_color(app, app->player_edit, "PLAYER", (t_point){10, 450});
-	render_text(app, (t_point){100, 440}, ft_ftoa(app->player.position.x, 2));
-	render_text(app, (t_point){100, 460}, ft_ftoa(app->player.position.y, 2));
+	render_text(app, (t_point){100, 440}, ft_ftoa(app->player.position.x, 3));
+	render_text(app, (t_point){100, 460}, ft_ftoa(app->player.position.y, 3));
 	change_font(app, 11, TEXT);
 	render_text(app, (t_point){40, 100}, "DAMAGE");
 	render_text(app, (t_point){40, 115}, "RANGE");
@@ -81,7 +87,7 @@ static void	help_menu_texts(t_app *app)
 	render_text(app, (t_point){10, 10}, "LEVEL EDITOR");
 	if (app->active_sector)
 		sector_edit_menu(app);
-	else if (app->player_edit)
+	else if (app->player_menu)
 		player_edit_menu(app);
 	// else if ()
 	// 	object_edit_menu(app);
