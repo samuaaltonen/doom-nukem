@@ -6,15 +6,17 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/12 01:49:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/14 12:32:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * Inits thread information structs. They contain info about what part of the
- * window each thread calculates.
+ * @brief Initializes thread information structs.
+ * 
+ * @param app 
+ * @param threads_data 
  */
 void	threads_init(t_app *app, t_thread_data *threads_data)
 {
@@ -60,8 +62,7 @@ void	threads_create(t_thread_data *threads_data, void *(*renderer)(void *))
  */
 void	threads_work(t_thread_data *threads_data)
 {
-	t_bool	all_ready;
-	int		i;
+	int	i;
 
 	i = -1;
 	while (++i < THREAD_COUNT)
@@ -69,21 +70,18 @@ void	threads_work(t_thread_data *threads_data)
 		threads_data[i].has_work = TRUE;
 		pthread_cond_signal(&threads_data[i].cond);
 	}
-	all_ready = FALSE;
-	while (!all_ready)
+	while (TRUE)
 	{
-		all_ready = TRUE;
 		i = -1;
 		while (++i < THREAD_COUNT)
 		{
 			if (pthread_mutex_trylock(&threads_data[i].lock))
-			{
-				all_ready = FALSE;
-				continue ;
-			}
-			if (threads_data[i].has_work)
-				all_ready = FALSE;
+				break ;
 			pthread_mutex_unlock(&threads_data[i].lock);
+			if (threads_data[i].has_work)
+				break ;
 		}
+		if (i == THREAD_COUNT)
+			return ;
 	}
 }
