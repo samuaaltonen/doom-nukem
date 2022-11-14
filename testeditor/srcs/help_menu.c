@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/14 14:07:25 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:42:36 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,10 @@ static void	player_edit_menu(t_app *app)
 	render_arrows(app, (t_point){25, 187}, (t_point){250, 187});
 	render_icons(app, app->assets.sprite, (t_point){40, 180}, MAX_ARMOR);
 	render_text(app, (t_point){10, 260}, "HEALTH");
+	if (app->player.health < 1)
+		app->player.health = 1;
+	if (app->player.health > 200)
+		app->player.health = 200;
 	render_text(app, (t_point){112, 260}, ft_itoa(app->player.health));
 	render_text(app, (t_point){140, 260}, " / 200");
 	render_text(app, (t_point){25, 282}, "<");

@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/14 13:20:01 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/14 15:48:03 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 {
 	t_vec2_lst	*tmp;
 
+	app->mouse_down = 0;
 	if (event->button.button == SDL_BUTTON_LEFT && !app->list_ongoing && app->list_creation)
 	{
 		app->active = new_vector_list(&app->mouse_track);
@@ -99,6 +100,12 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 		else
 			app->active_sector = NULL;
 	}
+	return (0);
+}
+
+int	events_mouse_drag(t_app *app)
+{
+	app->mouse_down = 1;
 	return (0);
 }
 
