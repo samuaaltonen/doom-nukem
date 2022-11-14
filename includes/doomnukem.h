@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/14 17:25:11 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:33:51 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,7 +187,7 @@ void    	render_text(t_app *app, t_point position, char *text);
  */
 void		render_ui_frame(t_app *app,t_rect area, int size, int background);
 void		render_ui(t_app *app);
-t_rect    	render_button(t_app *app, t_point pos, int size, char *text);
+t_rect		render_button(t_app *app, t_rect area, int size, char *text);
 
 int			check_mouse(t_app *app, t_rect rect);
 void		button_function(t_app *app, t_rect button, void (*f)(t_app *app));

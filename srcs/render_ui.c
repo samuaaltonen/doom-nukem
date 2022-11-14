@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/14 17:25:58 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:37:41 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,36 +140,31 @@ static void ui_bottomframe(t_app *app,t_rect area, int size)
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
 }
 
-t_rect	render_button(t_app *app, t_point pos, int size, char *text)
+t_rect	render_button(t_app *app, t_rect area, int size, char *text)
 {
-	t_rect		dst;
-	t_rect		src;
 	t_point		text_pos;
 
-	dst.x = pos.x;
-	dst.y = pos.y;
-	dst.w = app->assets.button_idle->w * size;
-	dst.h = app->assets.button_idle->h * size;
-	text_pos.x = pos.x + 12 * size;
-	text_pos.y = pos.y + 12 * size;
-	rect_from_surface(app->assets.button_idle, &src);
+	text_pos.x = area.x + 12 * size;
+	text_pos.y = area.y + 12 * size;
 	change_font(app, 16, CYAN);
-	if (!check_mouse(app, dst))
-		blit_surface(app->assets.button_idle, &src, app->surface, &dst);
-	else if (check_mouse(app, dst))
+	if (!check_mouse(app, area))
+		color_surface(app->assets.ui_frame, CYAN);
+	else if (check_mouse(app, area))
 	{
 		change_font(app, 16, GREEN);
 		if (((SDL_GetMouseState(NULL, NULL)) & SDL_BUTTON_LMASK) != 0)
-			blit_surface(app->assets.button_press, &src, app->surface, &dst);
+			color_surface(app->assets.ui_frame, GREEN);
 		else
 		{
-			blit_surface(app->assets.button_select, &src, app->surface, &dst);
+			color_surface(app->assets.ui_frame, DARK_RED);
 			change_font(app, 16, DARK_RED);
 		}		
 	}
+	render_ui_frame(app, area, size, 0);
 	render_text(app, text_pos, text);
 	load_font(app);
-	return (dst);
+	color_surface(app->assets.ui_frame, CYAN);
+	return (area);
 }
 
 void	render_pointer(t_app *app, int x, int y)

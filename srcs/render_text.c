@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:48:08 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/26 14:57:46 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:40:10 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,26 +92,6 @@ static t_rect	get_char(char *str, int c, int line)
 
 void	change_font(t_app *app, int size, int color)
 {
-	int		x;
-	int		y;
-	int		pixel_pos;
-	char	*pixel;
-
 	app->assets.font.size = size;
-	x = 0;
-	y = 0;
-	while (y < app->assets.font.font->h)
-	{
-		while (x < app->assets.font.font->w)
-		{
-			pixel_pos = (y * app->assets.font.font->pitch)
-			+ (x * IMAGE_PIXEL_BYTES);
-			pixel = app->assets.font.font->pixels + pixel_pos;
-			if ((*(int *)pixel & 0xFF000000) != 0x00000000)
-				put_pixel_to_surface(app->assets.font.font, x, y, color);
-			x++;
-		}
-		x = 0;
-		y++;
-	}
+	color_surface(app->assets.font.font, color);
 }

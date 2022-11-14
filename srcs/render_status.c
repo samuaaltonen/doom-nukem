@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/14 16:48:41 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:53:22 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ void	render_mainmenu(t_app *app)
 	change_font(app, 70, DARK_RED);
 	render_text(app, (t_point){50, 100}, "AWAKE");
 	button_function(app,
-		render_button(app, (t_point){50, 180}, 2, "START GAME"), start_game);
+		render_button(app, (t_rect){50, 180, 256, 64}, 2, "START GAME"), start_game);
 	button_function(app,
-		render_button(app, (t_point){50, 260}, 2, "LEVEL EDITOR"), do_nothing);
+		render_button(app, (t_rect){50, 260, 256, 64}, 2, "LEVEL EDITOR"), do_nothing);
 	button_function(app,
-		render_button(app, (t_point){50, 340}, 2, "OPTIONS"), do_nothing);
+		render_button(app, (t_rect){50, 340, 256, 64}, 2, "OPTIONS"), do_nothing);
 	button_function(app,
-		render_button(app, (t_point){50, 420}, 2, "QUIT GAME"), exit_game);
+		render_button(app, (t_rect){50, 420, 256, 64}, 2, "QUIT GAME"), exit_game);
 	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
 }
 
@@ -72,15 +72,15 @@ void	render_pausemenu(t_app *app)
 	rect_from_surface(app->assets.button_idle, &src);
 	render_ui_frame(app, (t_rect){28,78,300,428}, 2, 0x242424);
 	button_function(app,
-		render_button(app, (t_point){50, 100}, 2, "MAIN MENU"), main_menu);
+		render_button(app, (t_rect){50, 100, 256, 64}, 2, "MAIN MENU"), main_menu);
 	button_function(app,
-		render_button(app, (t_point){50, 180}, 2, "CONTINUE"), pause_game);
+		render_button(app, (t_rect){50, 180, 256, 64}, 2, "CONTINUE"), pause_game);
 	button_function(app,
-		render_button(app, (t_point){50, 260}, 2, "LEVEL EDITOR"), do_nothing);
+		render_button(app, (t_rect){50, 260, 256, 64}, 2, "LEVEL EDITOR"), do_nothing);
 	button_function(app,
-		render_button(app, (t_point){50, 340}, 2, "OPTIONS"), do_nothing);
+		render_button(app, (t_rect){50, 340, 256, 64}, 2, "OPTIONS"), do_nothing);
 	button_function(app,
-		render_button(app, (t_point){50, 420}, 2, "QUIT GAME"), exit_game);
-	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
+		render_button(app, (t_rect){50, 420, 256, 64}, 2, "QUIT GAME"), exit_game);
 	render_ui(app);
+	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
 }
