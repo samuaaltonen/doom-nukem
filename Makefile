@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
+#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/14 17:25:00 by dpalacio         ###   ########.fr        #
+#    Updated: 2022/11/15 15:34:32 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 

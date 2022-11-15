@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/14 14:41:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:48:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,10 @@ void	threads_init(t_app *app, t_thread_data *threads_data)
 		threads_data[i].app = app;
 		threads_data[i].id = i;
 		threads_data[i].has_work = FALSE;
-		pthread_cond_init(&threads_data[i].cond, NULL);
-		pthread_mutex_init(&threads_data[i].lock, NULL);
+		if (pthread_cond_init(&threads_data[i].cond, NULL))
+			exit_error(NULL);
+		if (pthread_mutex_init(&threads_data[i].lock, NULL))
+			exit_error(NULL);
 		i++;
 	}
 }
@@ -43,6 +45,20 @@ void	threads_init(t_app *app, t_thread_data *threads_data)
  */
 void	threads_create(t_thread_data *threads_data, void *(*renderer)(void *))
 {
+	int		id;
+
+	id = 0;
+	while (id < THREAD_COUNT)
+	{
+		if (pthread_create(&threads_data[id].thread, NULL, renderer,
+				(void *)(&threads_data[id])))
+			exit_error(MSG_ERROR_THREADS);
+		id++;
+	}
+}
+
+void	legacy_render_multithreading(t_thread_data *threads_data, void *(*renderer)(void *))
+{
 	int			id;
 
 	id = 0;
@@ -51,6 +67,13 @@ void	threads_create(t_thread_data *threads_data, void *(*renderer)(void *))
 		if (pthread_create(&threads_data[id].thread, NULL, renderer,
 				(void *)(&threads_data[id])))
 			exit_error(MSG_ERROR_THREADS);
+		id++;
+	}
+	id = 0;
+	while (id < THREAD_COUNT)
+	{
+		if (pthread_join(threads_data[id].thread, NULL) != 0)
+			exit_error(MSG_ERROR_THREADS_JOIN);
 		id++;
 	}
 }
@@ -64,12 +87,19 @@ void	threads_work(t_thread_data *threads_data)
 {
 	int	i;
 
+	//ft_printf("{cyan}DEBUG{reset} Starting to awake rendering threads.\n");
 	i = -1;
 	while (++i < THREAD_COUNT)
 	{
+		if (pthread_mutex_lock(&threads_data[i].lock))
+			exit_error(NULL);
 		threads_data[i].has_work = TRUE;
-		pthread_cond_signal(&threads_data[i].cond);
+		if (pthread_cond_signal(&threads_data[i].cond))
+			exit_error(NULL);
+		if (pthread_mutex_unlock(&threads_data[i].lock))
+			exit_error(NULL);
 	}
+	//ft_printf("{cyan}DEBUG{reset} Starting to wait for rendering threads to be finished.\n");
 	while (TRUE)
 	{
 		i = -1;
@@ -77,9 +107,13 @@ void	threads_work(t_thread_data *threads_data)
 		{
 			if (pthread_mutex_trylock(&threads_data[i].lock))
 				break ;
-			pthread_mutex_unlock(&threads_data[i].lock);
+			if (pthread_mutex_unlock(&threads_data[i].lock))
+				exit_error(NULL);
 			if (threads_data[i].has_work)
+			{
+				//ft_printf("Thread %d is still working.\n", i);
 				break ;
+			}
 		}
 		if (i == THREAD_COUNT)
 			return ;
