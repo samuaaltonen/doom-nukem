@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/15 12:29:21 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/15 13:20:06 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	game_options(t_app *app)
 
 void	fullscreen(t_app *app)
 {
-	if (SDL_GetWindowFlags(app->win) & SDL_WINDOW_SHOWN)
+	if (!(SDL_GetWindowFlags(app->win) & SDL_WINDOW_FULLSCREEN))
 	{
 		SDL_DestroyWindow(app->win);
 		app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_FULLSCREEN);
@@ -75,7 +75,7 @@ void	fullscreen(t_app *app)
 	else if (SDL_GetWindowFlags(app->win) & SDL_WINDOW_FULLSCREEN)
 	{
 		SDL_DestroyWindow(app->win);
-		app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_SHOWN);
+		app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, 0);
 	}	
 	app->surface = SDL_GetWindowSurface(app->win);
 }
