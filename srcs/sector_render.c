@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/12 01:49:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/15 14:23:53 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,25 @@ void	render_sectors(t_app *app)
 	static t_thread_data	threads_data[THREAD_COUNT];
 	static t_bool			threads_created;
 
+	/* if (!threads_created)
+	{
+		ft_printf("{cyan}DEBUG{reset} Creating threads for sector rendering.\n");
+		threads_init(app, (t_thread_data *)&threads_data);
+		threads_created = TRUE;
+	} */
 	if (!threads_created)
 	{
+		ft_printf("{yellow}DEBUG{reset} Creating threads for sector rendering.\n");
 		threads_init(app, (t_thread_data *)&threads_data);
 		threads_create((t_thread_data *)&threads_data, sector_render_thread);
 		threads_created = TRUE;
 	}
 	ft_bzero(app->occlusion_top, WIN_W * sizeof(int));
 	ft_bzero(app->occlusion_bottom, WIN_W * sizeof(int));
+	//ft_printf("{cyan}DEBUG{reset} Getting walls.\n");
 	sector_visible_walls(app);
 	threads_work((t_thread_data *)&threads_data);
+	//legacy_render_multithreading((t_thread_data *)&threads_data, legacy_sector_render_thread);
 }
 
 /**
@@ -53,15 +62,28 @@ void	*sector_render_thread(void *data)
 	app = (t_app *)thread->app;
 	while (TRUE)
 	{
-		pthread_mutex_lock(&thread->lock);
-		while (!thread->has_work)
+		/* pthread_mutex_lock(&thread->lock); */
+		//while (!thread->has_work)
 			pthread_cond_wait(&thread->cond, &thread->lock);
 		sector_stack_render(app, thread,
 			app->sectors[app->player.current_sector].stack_index, (t_limit){
 			0, WIN_W - 1});
 		thread->has_work = FALSE;
-		pthread_mutex_unlock(&thread->lock);
+		/* pthread_mutex_unlock(&thread->lock); */
 	}
+	pthread_exit(NULL);
+}
+
+void	*legacy_sector_render_thread(void *data)
+{
+	t_app			*app;
+	t_thread_data	*thread;
+
+	thread = (t_thread_data *)data;
+	app = (t_app *)thread->app;
+	sector_stack_render(app, thread,
+		app->sectors[app->player.current_sector].stack_index, (t_limit){
+		0, WIN_W - 1});
 	pthread_exit(NULL);
 }
 
@@ -86,13 +108,14 @@ void	sector_stack_render(t_app *app, t_thread_data *thread, int stack_id,
 	{
 		wall = &app->wallstack.walls[stack_id][i];
 		sector_walls_raycast(app, thread, wall, limit);
-		if (wall->is_portal && wall->is_inside && !wall->is_member)
-			sector_stack_render(app, thread,
-				app->sectors[wall->wall_type].stack_index,
-				(t_limit){
-				ft_max(wall->start_x, limit.start),
-				ft_min(wall->end_x, limit.end)
-			});
+		if (wall->is_portal && wall->is_inside && !wall->is_member
+			&& app->sectors[wall->wall_type].stack_index > stack_id)
+				sector_stack_render(app, thread,
+					app->sectors[wall->wall_type].stack_index,
+					(t_limit){
+					ft_max(wall->start_x, limit.start),
+					ft_min(wall->end_x, limit.end)
+				});
 		i++;
 	}
 }
