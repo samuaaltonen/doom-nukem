@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/15 14:28:20 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/15 15:57:01 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ typedef struct s_weapon
 {
 	int		damage;
 	int		range;
+	int		fire_rate;
 	int		magazine;
 }	t_weapon;
 
@@ -455,4 +456,9 @@ void			color_surface(SDL_Surface *surface, int color);
  * Player
 */
 void			render_player(t_app *app);
+void			weapons_init(t_app *app);
+void			armor_init(t_app *app);
+void			render_weapon_statics(t_app *app);
+void			render_armor_statics(t_app *app);
+
 #endif

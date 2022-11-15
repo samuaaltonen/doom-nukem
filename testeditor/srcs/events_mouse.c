@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/15 14:21:34 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/15 15:48:40 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,11 @@ static void	player_menu_events(t_app *app)
 	if (screen_pos.x > 250 && screen_pos.x < 260 && screen_pos.y > 67
 		&& screen_pos.y < 78 && app->player.selected_weapon < MAX_WEAPONS)
 		app->player.selected_weapon++;
-	if (screen_pos.x > 20 && screen_pos.x < 35 && screen_pos.y > 187
-		&& screen_pos.y < 197 && app->player.selected_armor > 1)
+	if (screen_pos.x > 20 && screen_pos.x < 35 && screen_pos.y > 193
+		&& screen_pos.y < 202 && app->player.selected_armor > 1)
 		app->player.selected_armor--;
-	if (screen_pos.x > 250 && screen_pos.x < 260 && screen_pos.y > 187
-		&& screen_pos.y < 197 && app->player.selected_armor < MAX_ARMOR)
+	if (screen_pos.x > 250 && screen_pos.x < 260 && screen_pos.y > 193
+		&& screen_pos.y < 202 && app->player.selected_armor < MAX_ARMOR)
 		app->player.selected_armor++;
 }
 

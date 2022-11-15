@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:56:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/15 13:52:44 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:34:52 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,13 +61,13 @@ void	render_healthbar(t_app *app)
 	int		x;
 	int		y;
 	
-	y = 280;
-	while (y <= 300)
+	y = 285;
+	while (y <= 305)
 	{
 		x = 39;
 		while (x <= 240)
 		{
-			if (y == 280 || y == 300 || x == 39 || x == 240)
+			if (y == 285 || y == 305 || x == 39 || x == 240)
 				put_pixel_to_surface(app->surface, x, y, 0x000000);
 			else if (x < (app->player.health + 40))
 				put_pixel_to_surface(app->surface, x, y, 0x00FF00);
@@ -76,11 +76,3 @@ void	render_healthbar(t_app *app)
 		y++;
 	}
 }
-
-/**
-* Renders weapon and armor staticbars on the help menu sidebar.
-*/
-// void	render_statics(t_app *app)
-// {
-	
-// }
