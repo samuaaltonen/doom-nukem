@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   buttons.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/14 18:53:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/15 12:29:21 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,7 @@ void	start_game(t_app *app)
 
 void	pause_game(t_app *app)
 {
-	SDL_WarpMouseInWindow(app->win, WIN_W / 2, WIN_H / 2);
-	if (app->status == STATUS_GAME)
+	if (app->status == STATUS_GAME || app->status == STATUS_GAMEOPTIONS)
 		app->status = STATUS_PAUSEMENU;
 	else if (app->status == STATUS_PAUSEMENU)
 		app->status = STATUS_GAME;
@@ -56,9 +55,34 @@ void	main_menu(t_app *app)
 	app->status = STATUS_MAINMENU;
 }
 
-void	do_nothing(t_app *app)
+void	main_options(t_app *app)
 {
-	SDL_DestroyWindow(app->win);
-	app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_FULLSCREEN);
+	app->status = STATUS_MAINOPTIONS;
+}
+
+void	game_options(t_app *app)
+{
+	app->status = STATUS_GAMEOPTIONS;
+}
+
+void	fullscreen(t_app *app)
+{
+	if (SDL_GetWindowFlags(app->win) & SDL_WINDOW_SHOWN)
+	{
+		SDL_DestroyWindow(app->win);
+		app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_FULLSCREEN);
+	}
+	else if (SDL_GetWindowFlags(app->win) & SDL_WINDOW_FULLSCREEN)
+	{
+		SDL_DestroyWindow(app->win);
+		app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_SHOWN);
+	}	
 	app->surface = SDL_GetWindowSurface(app->win);
+}
+
+
+void	do_nothing(t_app *app)
+{	
+	if (app)
+		return ;
 }
