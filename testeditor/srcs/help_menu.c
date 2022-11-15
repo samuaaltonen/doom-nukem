@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/14 15:42:36 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/15 14:29:08 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,14 @@ static void	player_edit_menu(t_app *app)
 	render_text(app, (t_point){10, 40}, "WEAPONS");
 	render_arrows(app, (t_point){25, 67}, (t_point){250, 67});
 	render_icons(app, app->assets.sprite, (t_point){40, 60}, MAX_WEAPONS);
+	color_surface(app->assets.ui_frame, ACTIVE_TEXT);
+	render_ui_frame(app, (t_rect){(ICON_SIZE / 2) * app->player.selected_weapon
+		+ (10 * app->player.selected_weapon) - 3, 59, 35, 35}, 1, 0);
 	render_text(app, (t_point){10, 160}, "ARMOR");
 	render_arrows(app, (t_point){25, 187}, (t_point){250, 187});
 	render_icons(app, app->assets.sprite, (t_point){40, 180}, MAX_ARMOR);
+	render_ui_frame(app, (t_rect){(ICON_SIZE / 2) * app->player.selected_armor
+		+ (10 * app->player.selected_armor) - 3, 179, 35, 35}, 1, 0);
 	render_text(app, (t_point){10, 260}, "HEALTH");
 	if (app->player.health < 1)
 		app->player.health = 1;
@@ -133,4 +138,5 @@ void	render_help_menu(t_app *app)
 		y++;
 	}
 	help_menu_texts(app);
+	color_surface(app->assets.ui_frame, UI_FRAME);
 }
