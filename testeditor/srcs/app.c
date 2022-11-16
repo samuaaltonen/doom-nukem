@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/14 14:13:39 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/15 16:04:24 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ void	app_prepare(t_app *app)
 	app->movement_speed = 4;
 	load_assets(app);
 	load_font(app);
+	weapons_init(app);
+	armor_init(app);
 	SDL_ShowCursor(SDL_ENABLE);
 }
 

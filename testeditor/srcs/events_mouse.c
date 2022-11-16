@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/14 15:48:03 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/15 15:48:40 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,22 @@
  * Mouse click events in the player menu. Clicking on arrows next to icons
  * changes the selected weapon/armor.
 */
-static void	player_menu_events(t_app *app, t_vector2 mouse)
+static void	player_menu_events(t_app *app)
 {
 	t_point	screen_pos;
 
-	screen_pos.x = (mouse.x - app->view_pos.x) * (app->surface->w)
-		/ (app->view_size.x - app->view_pos.x);
-	screen_pos.y = (mouse.y - app->view_pos.y) * (app->surface->h)
-		/ (app->view_size.y - app->view_pos.y);
-	if (screen_pos.x == 25 && screen_pos.y == 76
-		&& app->player.selected_weapon > 1)
+	SDL_GetMouseState(&screen_pos.x, &screen_pos.y);
+	if (screen_pos.x > 20 && screen_pos.x < 35 && screen_pos.y > 67
+		&& screen_pos.y < 77 && app->player.selected_weapon > 1)
 		app->player.selected_weapon--;
-	if (screen_pos.x == 256 && screen_pos.y == 76
-		&& app->player.selected_weapon < MAX_WEAPONS)
+	if (screen_pos.x > 250 && screen_pos.x < 260 && screen_pos.y > 67
+		&& screen_pos.y < 78 && app->player.selected_weapon < MAX_WEAPONS)
 		app->player.selected_weapon++;
-	if (screen_pos.x == 25 && screen_pos.y == 192
-		&& app->player.selected_armor > 1)
+	if (screen_pos.x > 20 && screen_pos.x < 35 && screen_pos.y > 193
+		&& screen_pos.y < 202 && app->player.selected_armor > 1)
 		app->player.selected_armor--;
-	if (screen_pos.x == 256 && screen_pos.y == 192
-		&& app->player.selected_armor < MAX_ARMOR)
+	if (screen_pos.x > 250 && screen_pos.x < 260 && screen_pos.y > 193
+		&& screen_pos.y < 202 && app->player.selected_armor < MAX_ARMOR)
 		app->player.selected_armor++;
 }
 
@@ -87,7 +84,7 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 			app->player_edit = FALSE;
 		}
 		else if (app->player_menu)
-			player_menu_events(app, app->mouse_track);
+			player_menu_events(app);
 		else
 			app->active_sector = click_sector(app);
 	}

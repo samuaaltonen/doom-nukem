@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/14 15:48:16 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/15 15:57:01 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@
 # define MAP_SPEED 0.85f
 # define HEIGHT_INC 0.125f
 # define PANELS_PATH "../assets/textures/minecraft_spritesheet.bmp"
+# define UI_FRAME_PATH "../assets/ui/ui_frame.bmp"
 # define FONT_FILE "../assets/legacy/SpaceMono-Regular.ttf"
 # define FONT_TX "../assets/fonts/sci-fi_font.bmp"
 # define FILE_PATH "./test.test"
@@ -115,7 +116,8 @@ enum e_colors {
 	ACTIVE_TEXT = 0xFFFF0000,
 	PLAYER = 0x00FF00,
 	LINE_A = 0xAABBCC,
-	LINE_B = 0xFF4444
+	LINE_B = 0xFF4444,
+	UI_FRAME = 0xFF00FFFF
 };
 
 /**
@@ -147,6 +149,7 @@ typedef struct s_weapon
 {
 	int		damage;
 	int		range;
+	int		fire_rate;
 	int		magazine;
 }	t_weapon;
 
@@ -216,6 +219,7 @@ typedef struct s_font
 typedef struct s_assets
 {
 	t_font			font;
+	SDL_Surface		*ui_frame;
 	SDL_Surface		*button_texture;
 	SDL_Surface		*title_screen_image;
 	SDL_Surface		*sprite;
@@ -445,9 +449,16 @@ void			render_sector_info(t_app *app);
 void			render_icons(t_app *app, SDL_Surface *asset, t_point point, int max);
 void			render_healthbar(t_app *app);
 void			render_arrows(t_app *app, t_point left, t_point right);
+void			render_ui_frame(t_app *app,t_rect area, int size, int background);
+void			color_surface(SDL_Surface *surface, int color);
 
 /**
  * Player
 */
 void			render_player(t_app *app);
+void			weapons_init(t_app *app);
+void			armor_init(t_app *app);
+void			render_weapon_statics(t_app *app);
+void			render_armor_statics(t_app *app);
+
 #endif
