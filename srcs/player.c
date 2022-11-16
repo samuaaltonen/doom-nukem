@@ -24,20 +24,23 @@ static t_bool point_on_segment(t_vector2 point, t_line line)
 	return (FALSE);
 }
 
-static t_vector2 circle_collision(t_app *app, t_line wall)
+static int circle_collision(t_app *app, t_line wall, t_vector2 *colpos)
 {
 	t_vector2 line_intersection;
 	t_vector2 new_intersection;
 	t_vector2 closest_start;
 	t_vector2 closest_end;
 
+	double radius = 0.5f;
+
 	t_vector2 move_point;
 	t_vector2 normalized_move_point;
-	normalized_move_point = ft_vector2_add(app->player.pos,ft_vector_resize(app->player.move_vector, 1.f));
+		ft_printf("move vector x%f,y%f\n", app->player.move_vector.x, app->player.move_vector.y);
+
+	normalized_move_point = ft_vector2_add(app->player.pos,ft_vector_resize(app->player.move_vector, radius));
 	move_point = ft_vector2_add(app->player.pos,app->player.move_vector);
 	t_line move_line = (t_line){app->player.pos, move_point};
 	t_line normalized_move_line = (t_line){app->player.pos, normalized_move_point};
-	double radius = 1.f;
 
 	t_vector2 collision;
 	t_vector2 posofcollision;
@@ -64,17 +67,16 @@ static t_vector2 circle_collision(t_app *app, t_line wall)
 				pos3 = ft_vector2_add(collision, (ft_vector2_sub(ft_closest_point(app->player.pos, wall), posofcollision)));
 				//app->player.pos = collision;
 				//collision = ft_vector2_sub(line_intersection, ft_vector_resize(ft_vector_resize() ,radius)
-
 				if(point_on_segment(posofcollision, wall))
 				{
 					ft_printf("collision on wall x%f, y%f\n", collision.x, collision.y);
-					return (collision);
+					*colpos = collision;
+					return (1);
 				}
 				else
 				{
 					ft_printf("collision on endpoint \n");
 							//return (collision);
-
 					if(ft_point_distance(posofcollision, wall.a) < ft_point_distance(posofcollision, wall.b))
 					{
 						endpoint_nearest = ft_closest_point(wall.a, normalized_move_line);
@@ -85,23 +87,23 @@ static t_vector2 circle_collision(t_app *app, t_line wall)
 						endpoint_nearest = ft_closest_point(wall.b, normalized_move_line);
 						endpoint_distance = ft_point_distance (wall.b, endpoint_nearest);
 					}
+					endpoint_backtrack = sqrt(radius * radius - (endpoint_distance * endpoint_distance));
+					ft_printf("normalized movepoint x%f,y%f, endpoint_nearest x%f,y%f, backtrack dist %f ", normalized_move_point.x, normalized_move_point.y,endpoint_nearest.x, endpoint_nearest.y, endpoint_backtrack);
 
-					endpoint_backtrack = radius * radius - (endpoint_distance * endpoint_distance);
-
-
-					endpoint_vector = ft_vector2_sub(normalized_move_line.a, endpoint_nearest);
-					endpoint_vector = ft_vector_resize(endpoint_vector, ft_vector_length(endpoint_vector) - endpoint_backtrack);
-
+					normalized_move_point = ft_vector2_sub(app->player.move_vector,ft_vector2_sub(normalized_move_point, endpoint_nearest));
+					endpoint_vector = ft_vector_resize(normalized_move_point, ft_vector_length(normalized_move_point) - endpoint_backtrack);
+					ft_printf("endpoint_vector x%f,y%f\n", endpoint_vector.x, endpoint_vector.y);
 					//ft_printf("endpoint collission x%f, y%f endpoint_backtrack pos x%f, y%f\n", collision.x, collision.y, endpoint_vector.x, endpoint_vector.y);
-					return (ft_vector2_add(app->player.pos, endpoint_vector));
+					*colpos = ft_vector2_add(app->player.pos,endpoint_vector);
+					return (2);
 				}
 			}
 	}
-	return (app->player.pos);
+	return (0);
 }
 
 //circle collide all walls, pass only collided & ignored portals to recursive wall traversal
-static t_vector2 circle_collisions(t_app *app)
+static int	circle_collisions(t_app *app, t_vector2 *collision)
 {
 	int i;
 	int counter;
@@ -124,8 +126,8 @@ static t_vector2 circle_collisions(t_app *app)
 		{
 			if(ft_line_side(get_wall_line(app, member_id,i), app->player.pos) != 0)
 			{
-				ft_printf("circle tests ");
-				return (circle_collision(app, get_wall_line(app,member_id,i)));
+				//ft_printf("circle tests ");
+				return (circle_collision(app, get_wall_line(app,member_id,i),collision));
 
 				//ft_printf("\n");
 			}
@@ -133,7 +135,7 @@ static t_vector2 circle_collisions(t_app *app)
 		}
 		counter++;
 	}
-	return (app->player.pos);
+	return (0);
 }
 
 //a - r || vec aC || || vec p 1 c || * vec v || vec v ||
@@ -234,7 +236,6 @@ void	update_position(t_app *app)
 	//limit movement speed and slow player to 0
 	if (ft_vector_length(app->player.move_vector) > MOVEMENT_SPEED)
 		app->player.move_vector = ft_vector_resize(app->player.move_vector, MOVEMENT_SPEED);
-	app->player.pos = circle_collisions(app);
 	new = app->player.move_vector;
 	app->player.move_vector = ft_vec2_lerp(app->player.move_vector, (t_vector2){0.f,0.f}, MOVE_DECEL * app->conf->delta_time);
 
@@ -281,6 +282,11 @@ void	update_position(t_app *app)
 	}
 	app->player.pos.y = new.y;
 	app->player.pos.x = new.x;
+	if (circle_collisions(app,&new))
+	{
+	app->player.pos = new;
+	app->player.move_vector = (t_vector2){0.f,0.f};
+	}
 
 	if(!ceil_collision(app))
 	{
