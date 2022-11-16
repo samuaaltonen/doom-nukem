@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/15 16:45:05 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:33:10 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 */
 static void	sector_edit_menu(t_app *app)
 {
-	change_font(app, 15, TEXT);
 	render_text(app, (t_point){10, 40}, "TOGGLE ALL WALLS ( V )");
 	render_text(app, (t_point){10, 60}, "TOGGLE FLOOR ( F )");
 	render_text(app, (t_point){10, 80}, "TOGGLE CEILING ( R )");
@@ -47,14 +46,14 @@ static void	player_edit_menu(t_app *app)
 	render_text(app, (t_point){10, 40}, "WEAPONS");
 	render_arrows(app, (t_point){25, 67}, (t_point){250, 67});
 	render_icons(app, app->assets.sprite, (t_point){40, 60}, MAX_WEAPONS);
-	render_ui_frame(app, (t_rect){(ICON_SIZE / 2) * app->player.selected_weapon
-		+ (10 * app->player.selected_weapon) - 3, 59, 35, 35}, 1, 0);
+	render_ui_frame(app, (t_rect){(ICON_SIZE / 2) * (app->player.selected_weapon + 1)
+		+ (10 * (app->player.selected_weapon + 1)) - 3, 59, 35, 35}, 1, 0);
 	render_weapon_statics(app);
 	render_text(app, (t_point){10, 165}, "ARMOR");
 	render_arrows(app, (t_point){25, 193}, (t_point){250, 193});
 	render_icons(app, app->assets.sprite, (t_point){40, 185}, MAX_ARMOR);
-	render_ui_frame(app, (t_rect){(ICON_SIZE / 2) * app->player.selected_armor
-		+ (10 * app->player.selected_armor) - 3, 184, 35, 35}, 1, 0);
+	render_ui_frame(app, (t_rect){(ICON_SIZE / 2) * (app->player.selected_armor + 1)
+		+ (10 * (app->player.selected_armor + 1)) - 3, 184, 35, 35}, 1, 0);
 	render_armor_statics(app);
 	if (app->player.health < 1)
 		app->player.health = 1;
@@ -64,14 +63,9 @@ static void	player_edit_menu(t_app *app)
 	render_text(app, (t_point){112, 265}, ft_itoa(app->player.health));
 	render_text(app, (t_point){140, 265}, " / 200");
 	render_text(app, (t_point){25, 287}, "<");
-	render_healthbar(app);
 	render_text(app, (t_point){250, 287}, ">");
-	render_text(app, (t_point){10, 320}, "START INVENTORY");
-	render_icons(app, app->assets.sprite, (t_point){40, 340}, 5);
-	render_icons(app, app->assets.sprite, (t_point){40, 380}, 5);
-	toggle_active_color(app, app->player_edit, "PLAYER", (t_point){10, 450});
-	render_text(app, (t_point){100, 440}, ft_ftoa(app->player.position.x, 3));
-	render_text(app, (t_point){100, 460}, ft_ftoa(app->player.position.y, 3));
+	render_healthbar(app);
+	render_inventory(app);
 }
 
 /**

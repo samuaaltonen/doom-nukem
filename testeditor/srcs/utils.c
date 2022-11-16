@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:48:10 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/15 11:47:28 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/16 13:05:05 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,14 @@ void	color_surface(SDL_Surface *surface, int color)
 		x = 0;
 		y++;
 	}
+}
+
+int	check_mouse(t_point screen_pos, t_rect rect)
+{
+	if (screen_pos.x >= rect.x
+		&& screen_pos.y >= rect.y
+		&& screen_pos.x <= (rect.x + rect.w)
+		&& screen_pos.y <= (rect.y + rect.h))
+		return (1);
+	return (0);
 }

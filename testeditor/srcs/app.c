@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/15 16:04:24 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:31:41 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,13 +53,12 @@ void	app_prepare(t_app *app)
 	app->player_edit = 0;
 	app->player.sector = -1;
 	app->player.health = 200;
-	app->player.selected_weapon = 1;
-	app->player.selected_armor = 1;
 	app->movement_speed = 4;
 	load_assets(app);
 	load_font(app);
 	weapons_init(app);
 	armor_init(app);
+	inventory_init(app);
 	SDL_ShowCursor(SDL_ENABLE);
 }
 

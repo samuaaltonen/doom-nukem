@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/15 15:48:40 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:34:42 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,20 @@ static void	player_menu_events(t_app *app)
 	t_point	screen_pos;
 
 	SDL_GetMouseState(&screen_pos.x, &screen_pos.y);
-	if (screen_pos.x > 20 && screen_pos.x < 35 && screen_pos.y > 67
-		&& screen_pos.y < 77 && app->player.selected_weapon > 1)
+	if (check_mouse(screen_pos, (t_rect){20, 67, 10, 10})
+		&& app->player.selected_weapon > 0)
 		app->player.selected_weapon--;
-	if (screen_pos.x > 250 && screen_pos.x < 260 && screen_pos.y > 67
-		&& screen_pos.y < 78 && app->player.selected_weapon < MAX_WEAPONS)
+	if (check_mouse(screen_pos, (t_rect){250, 67, 10, 10})
+		&& app->player.selected_weapon < (MAX_WEAPONS - 1))
 		app->player.selected_weapon++;
-	if (screen_pos.x > 20 && screen_pos.x < 35 && screen_pos.y > 193
-		&& screen_pos.y < 202 && app->player.selected_armor > 1)
+	if (check_mouse(screen_pos, (t_rect){20, 193, 10, 10})
+		&& app->player.selected_armor > 0)
 		app->player.selected_armor--;
-	if (screen_pos.x > 250 && screen_pos.x < 260 && screen_pos.y > 193
-		&& screen_pos.y < 202 && app->player.selected_armor < MAX_ARMOR)
+	if (check_mouse(screen_pos, (t_rect){250, 193, 10, 10})
+		&& app->player.selected_armor < (MAX_ARMOR - 1))
 		app->player.selected_armor++;
+	select_inventory(app, screen_pos);
+	app->player.inventory.selected[5] = check_selected_inventory(app);
 }
 
 /**

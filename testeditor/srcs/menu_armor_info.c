@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:34:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/15 16:46:52 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:29:24 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ static void	render_armor_texts(t_app *app)
 	change_font(app, 11, TEXT);
 	render_text(app, (t_point){40, 225}, "DEFENCE");
 	render_text(app, (t_point){220, 225},
-		ft_itoa(app->player.armor[app->player.selected_armor - 1].defence));
+		ft_itoa(app->player.armor[app->player.selected_armor].defence));
 	render_text(app, (t_point){40, 240}, "OFFENCE");
 	render_text(app, (t_point){220, 240},
-		ft_itoa(app->player.armor[app->player.selected_armor - 1].offence));
+		ft_itoa(app->player.armor[app->player.selected_armor].offence));
 	change_font(app, 15, TEXT);
 	
 }
@@ -59,10 +59,10 @@ void	render_armor_statics(t_app *app)
 		x = 120;
 		while (x < 220)
 		{
-			if (x < app->player.armor[app->player.selected_armor - 1].defence
+			if (x < app->player.armor[app->player.selected_armor].defence
 				+ 120 && y < 235)
 				put_pixel_to_surface(app->surface, x, y, 0x000000);
-			if (x < app->player.armor[app->player.selected_armor - 1].offence
+			if (x < app->player.armor[app->player.selected_armor].offence
 				+ 120 && y > 238 && y < 248)
 				put_pixel_to_surface(app->surface, x, y, 0x000000);
 			x++;

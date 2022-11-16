@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:56:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/15 16:34:52 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:53:47 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ void	render_icons(t_app *app, SDL_Surface *asset, t_point point, int max)
 	t_rect		icon;
 	int			index;
 
-	index = 1;
-	while (index <= max)
+	index = 0;
+	while (index < max)
 	{
-		set_icon_rect(&src, (t_point){ICON_SIZE * index, 0},
+		set_icon_rect(&src, (t_point){ICON_SIZE * (index + 1), 0},
 				(t_point){ICON_SIZE / 2, ICON_SIZE / 2});
 		set_icon_rect(&icon, point, (t_point){ICON_SIZE / 2, ICON_SIZE / 2});
 		blit_surface(asset, &src, app->surface, &icon);
@@ -75,4 +75,24 @@ void	render_healthbar(t_app *app)
 		}
 		y++;
 	}
+}
+
+/**
+ * Event function to change item amount in inventory using the left and
+ * right arrowkeys.
+*/
+void	change_item_amount(t_app *app, SDL_Keycode key)
+{
+	if (app->player.inventory.selected[1] && key == SDLK_LEFT
+		&& app->player.inventory.potion > 1)
+		app->player.inventory.potion--;
+	if (app->player.inventory.selected[2] && key == SDLK_LEFT
+		&& app->player.inventory.antidote > 1)
+		app->player.inventory.antidote--;
+	if (app->player.inventory.selected[1] && key == SDLK_RIGHT
+		&& app->player.inventory.potion < 10)
+		app->player.inventory.potion++;
+	if (app->player.inventory.selected[2] && key == SDLK_RIGHT
+		&& app->player.inventory.antidote < 10)
+		app->player.inventory.antidote++;
 }
