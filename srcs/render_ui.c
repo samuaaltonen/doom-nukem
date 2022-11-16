@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/14 19:05:32 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/16 13:02:48 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,9 +139,9 @@ t_rect	render_button(t_app *app, t_rect area, int size, char *text)
 {
 	t_point		text_pos;
 
-	text_pos.x = area.x + 12 * size;
-	text_pos.y = area.y + 12 * size;
 	change_font(app, 16, CYAN);
+	text_pos.x = area.x + size * 12;
+	text_pos.y = area.y + area.h / 2 - size * 12 / 2;
 	if (!check_mouse(app, area))
 		color_surface(app->assets.ui_frame, CYAN);
 	else if (check_mouse(app, area))

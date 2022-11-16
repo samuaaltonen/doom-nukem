@@ -6,7 +6,7 @@
 #    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/14 17:25:00 by dpalacio         ###   ########.fr        #
+#    Updated: 2022/11/15 13:54:14 by dpalacio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ CC = gcc
 PWD= $(shell pwd)
 
 FILES = main.c init.c render_status.c render_ui.c render_text.c \
-		buttons.c error.c conf.c app.c  \
+		button_function.c error.c conf.c app.c  \
 		events_key.c events_mouse.c events_window.c threads.c image.c \
 		skybox.c player.c events.c audio.c time.c \
 		sector_draw_ceiling.c sector_draw_floor.c sector_draw_wall.c \
@@ -38,6 +38,7 @@ DEPS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.d))
 SDL_DIR = ./sdl
 SDL_CONF = `sdl/SDL2_build/bin/sdl2-config --cflags --libs`
 SDL_V = SDL2-2.0.8
+SDL_VNEW = SDL2-2.24.2
 
 HEADERS = \
 	-I ./includes \
@@ -72,9 +73,18 @@ $(LIBLINEARALGEBRA):
 $(SDL2): 
 	cd sdl/$(SDL_V)/build && ../configure --prefix=$(PWD)/sdl/SDL2_build/ && make install
 
+all_2.24.2: $(LIBFT) $(LIBLINEARALGEBRA) 2.24.2 $(OBJS) $(DEPS)
+	$(CC) $(OBJS) -o $(NAME) $(SDL_CONF) $(FLAGS) $(HEADERS) $(LIBLINKS)
+
+
+2.24.2:
+	cd sdl/$(SDL_VNEW)/build && ../configure --prefix=$(PWD)/sdl/SDL2_build/ && make install
+
 clean-sdl:
 	rm -rf sdl/$(SDL_V)/build/*
 	touch sdl/$(SDL_V)/build/DontRemoveMe
+	rm -rf sdl/$(SDL_VNEW)/build/*
+	touch sdl/$(SDL_VNEW)/build/DontRemoveMe
 	rm -rf sdl/SDL2_build/*
 	touch sdl/SDL2_build/DontRemoveMe
 	rm -f $(SDL2)
