@@ -31,13 +31,13 @@ static int circle_collision(t_app *app, t_line wall, t_vector2 *colpos)
 	t_vector2 closest_start;
 	t_vector2 closest_end;
 
-	double radius = 0.15f;
+	double radius = 0.5f;
 
 	t_vector2 move_point;
 	t_vector2 normalized_move_point;
 		ft_printf("move vector x%f,y%f\n", app->player.move_vector.x, app->player.move_vector.y);
 
-	normalized_move_point = ft_vector2_add(app->player.pos,ft_vector_resize(app->player.move_vector, radius));
+	normalized_move_point = ft_vector2_add(app->player.pos,app->player.move_vector);
 	move_point = ft_vector2_add(app->player.pos,app->player.move_vector);
 	t_line move_line = (t_line){app->player.pos, move_point};
 	t_line normalized_move_line = (t_line){app->player.pos, normalized_move_point};
@@ -57,8 +57,8 @@ static int circle_collision(t_app *app, t_line wall, t_vector2 *colpos)
 	if (ft_line_intersection(move_line, wall, &line_intersection))
 	{
 			if((ft_point_distance(new_intersection, move_point) < radius && point_on_segment(new_intersection, wall))
-			|| (ft_point_distance(closest_start, wall.a) < radius && point_on_segment(closest_start, normalized_move_line))
-			|| (ft_point_distance(closest_end, wall.b) < radius && point_on_segment(closest_end, normalized_move_line)))
+			|| (ft_point_distance(move_point, wall.a) < radius )
+			|| (ft_point_distance(move_point, wall.b) < radius ))
 			{
 				collision = ft_vector2_sub(line_intersection, ft_vec2_mult(ft_vector_resize(app->player.move_vector, 1.f),
 						(ft_point_distance(line_intersection, app->player.pos)
@@ -95,6 +95,7 @@ static int circle_collision(t_app *app, t_line wall, t_vector2 *colpos)
 					ft_printf("endpoint_vector x%f,y%f\n", endpoint_vector.x, endpoint_vector.y);
 					//ft_printf("endpoint collission x%f, y%f endpoint_backtrack pos x%f, y%f\n", collision.x, collision.y, endpoint_vector.x, endpoint_vector.y);
 					*colpos = ft_vector2_add(app->player.pos,endpoint_vector);
+					app->player.move_vector = (t_vector2){0.f,0.f};
 					return (2);
 				}
 			}
