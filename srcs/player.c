@@ -31,7 +31,7 @@ static int circle_collision(t_app *app, t_line wall, t_vector2 *colpos)
 	t_vector2 closest_start;
 	t_vector2 closest_end;
 
-	double radius = 0.5f;
+	double radius = 0.15f;
 
 	t_vector2 move_point;
 	t_vector2 normalized_move_point;
@@ -90,7 +90,7 @@ static int circle_collision(t_app *app, t_line wall, t_vector2 *colpos)
 					endpoint_backtrack = sqrt(radius * radius - (endpoint_distance * endpoint_distance));
 					ft_printf("normalized movepoint x%f,y%f, endpoint_nearest x%f,y%f, backtrack dist %f ", normalized_move_point.x, normalized_move_point.y,endpoint_nearest.x, endpoint_nearest.y, endpoint_backtrack);
 
-					normalized_move_point = ft_vector2_sub(app->player.move_vector,ft_vector2_sub(normalized_move_point, endpoint_nearest));
+					normalized_move_point = ft_vector2_sub(app->player.move_vector,ft_vector2_sub(move_point, endpoint_nearest));
 					endpoint_vector = ft_vector_resize(normalized_move_point, ft_vector_length(normalized_move_point) - endpoint_backtrack);
 					ft_printf("endpoint_vector x%f,y%f\n", endpoint_vector.x, endpoint_vector.y);
 					//ft_printf("endpoint collission x%f, y%f endpoint_backtrack pos x%f, y%f\n", collision.x, collision.y, endpoint_vector.x, endpoint_vector.y);
