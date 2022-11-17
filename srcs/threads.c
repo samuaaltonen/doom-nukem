@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/15 16:48:42 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/17 17:43:30 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ void	threads_work(t_thread_data *threads_data)
 {
 	int	i;
 
-	//ft_printf("{cyan}DEBUG{reset} Starting to awake rendering threads.\n");
 	i = -1;
 	while (++i < THREAD_COUNT)
 	{
@@ -99,23 +98,19 @@ void	threads_work(t_thread_data *threads_data)
 		if (pthread_mutex_unlock(&threads_data[i].lock))
 			exit_error(NULL);
 	}
-	//ft_printf("{cyan}DEBUG{reset} Starting to wait for rendering threads to be finished.\n");
-	while (TRUE)
+	/* while (TRUE)
 	{
 		i = -1;
 		while (++i < THREAD_COUNT)
 		{
-			if (pthread_mutex_trylock(&threads_data[i].lock))
-				break ;
+			if (pthread_mutex_lock(&threads_data[i].lock))
+				exit_error(NULL);
 			if (pthread_mutex_unlock(&threads_data[i].lock))
 				exit_error(NULL);
 			if (threads_data[i].has_work)
-			{
-				//ft_printf("Thread %d is still working.\n", i);
 				break ;
-			}
 		}
 		if (i == THREAD_COUNT)
 			return ;
-	}
+	} */
 }

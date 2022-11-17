@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/04 12:26:20 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/17 16:57:04 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	app_loop(t_app *app)
  */
 void	render_frame(t_app *app)
 {
-	/* flush_surface(app->surface); */
+	/* int	sync_delay; */
 	update_fps_counter(app);
 	if (app->status == STATUS_TITLESCREEN)
 		render_titlescreen(app);
@@ -46,4 +46,10 @@ void	render_frame(t_app *app)
 	else if (app->status == STATUS_PAUSEMENU)
 		render_pausemenu(app);
 	SDL_UpdateWindowSurface(app->win);
+	/* sync_delay = (int)((TARGET_FRAME_TIME - app->conf->delta_time) * 1000);
+	if (sync_delay > 0)
+	{
+		ft_printf("Sync delay %d\n", sync_delay);
+		SDL_Delay(sync_delay);
+	} */
 }
