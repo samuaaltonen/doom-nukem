@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/17 14:11:00 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/17 15:07:00 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 //COLORS
 # define WHITE 0xFFFFFFFF
 # define BLACK 0xFF000000
-# define DARK_RED 0xFFd50000
+# define DARK_RED 0xFFD50000
 # define DARK_GREY 0xFF242424
 # define CYAN 0xFF00FFFF
 # define GREEN 0xFF8BC34A

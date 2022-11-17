@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/15 11:52:53 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/17 14:57:15 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,6 @@ void	app_loop(t_app *app)
 	}
 }
 
-
-
 /**
  * Rendering function to be called in loop hook. Calls individual renderers and
  * draws resulting image(s) to the window.
@@ -44,7 +42,8 @@ void	render_frame(t_app *app)
 		render_game(app);
 	else if (app->status == STATUS_PAUSEMENU)
 		render_pausemenu(app);
-	else if (app->status == STATUS_MAINOPTIONS || app->status == STATUS_GAMEOPTIONS)
+	else if (app->status == STATUS_MAINOPTIONS
+		|| app->status == STATUS_GAMEOPTIONS)
 		render_options(app);
 	SDL_UpdateWindowSurface(app->win);
 }

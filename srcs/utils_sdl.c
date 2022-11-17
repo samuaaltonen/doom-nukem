@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:38:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/14 17:24:41 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/17 14:59:10 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	color_surface(SDL_Surface *surface, int color)
 		while (x < surface->w)
 		{
 			pixel_pos = (y * surface->pitch)
-			+ (x * IMAGE_PIXEL_BYTES);
+				+ (x * IMAGE_PIXEL_BYTES);
 			pixel = surface->pixels + pixel_pos;
 			if ((*(int *)pixel & 0xFF000000) != 0x00000000)
 				put_pixel_to_surface(surface, x, y, color);

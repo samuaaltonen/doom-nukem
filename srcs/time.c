@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:22:26 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/07 12:53:17 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/17 14:56:30 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static void	update_fps_info(t_app *app)
 		app->conf->fps_avg = app->conf->fps_avg / 10;
 	}
 }
-
 
 /**
  * Updates the fps average every 100 frames

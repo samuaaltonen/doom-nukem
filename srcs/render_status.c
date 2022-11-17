@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/17 14:47:56 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/17 15:18:27 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,17 +40,21 @@ void	render_mainmenu(t_app *app)
 	rect_from_surface(app->assets.title_screen_image, &src);
 	rect_from_surface(app->surface, &dst);
 	blit_surface(app->assets.title_screen_image, &src, app->surface, &dst);
-	render_ui_frame(app, (t_rect){28,78,300,428}, 1, DARK_GREY);
+	render_ui_frame(app, (t_rect){28, 78, 300, 428}, 1, DARK_GREY);
 	change_font(app, 70, DARK_RED);
 	render_text(app, (t_rect){50, 100, 800, 800}, "AWAKE");
 	button_function(app,
-		render_button(app, (t_rect){50, 180, 256, 64}, 1, "START GAME"), start_game);
+		render_button(app, (t_rect){50, 180, 256, 64}, 1,
+		"START GAME"), start_game);
 	button_function(app,
-		render_button(app, (t_rect){50, 260, 256, 64}, 1, "LEVEL EDITOR"), do_nothing);
+		render_button(app, (t_rect){50, 260, 256, 64}, 1,
+		"LEVEL EDITOR"), do_nothing);
 	button_function(app,
-		render_button(app, (t_rect){50, 340, 256, 64}, 1, "OPTIONS"), main_options);
+		render_button(app, (t_rect){50, 340, 256, 64}, 1,
+		"OPTIONS"), main_options);
 	button_function(app,
-		render_button(app, (t_rect){50, 420, 256, 64}, 1, "QUIT GAME"), exit_game);
+		render_button(app, (t_rect){50, 420, 256, 64}, 1,
+		"QUIT GAME"), exit_game);
 	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
 }
 
