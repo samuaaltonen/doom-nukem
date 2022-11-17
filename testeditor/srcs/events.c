@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:52 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/07 14:28:42 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/15 15:49:24 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ int	events_mouse_track(t_app *app)
 
 	SDL_GetMouseState(&current_pos.x, &current_pos.y);
 	snap_to_nearest(app, &current_pos, &app->mouse_track, app->divider);
+	if (app->mouse_down && current_pos.y > 285 && current_pos.y < 305
+		&& current_pos.x > 40 && current_pos.x <= 240 && app->player_menu)
+			app->player.health = current_pos.x - 40;
 	return (0);
 }
 
@@ -93,5 +96,7 @@ int	dispatch_event(t_app *app, SDL_Event *event)
 		return (events_mouse_wheel(app, event));
 	if (event->type == SDL_MOUSEBUTTONUP)
 		return (events_mouse_click(app, event));
+	if (event->type == SDL_MOUSEBUTTONDOWN)
+		return (events_mouse_drag(app));
 	return (0);
 }

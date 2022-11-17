@@ -6,7 +6,7 @@
 #    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/10 14:28:36 by htahvana         ###   ########.fr        #
+#    Updated: 2022/11/17 11:57:32 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,13 +15,14 @@ NAME = doom-nukem
 CC = gcc
 PWD= $(shell pwd)
 
-FILES = main.c init.c render.c buttons.c error.c conf.c app.c  \
-		events_key.c events_mouse.c events_window.c graphics.c image.c \
-		helper.c skybox.c player.c events.c audio.c time.c \
+FILES = main.c init.c render_status.c render_ui.c render_text.c \
+		button_function.c error.c conf.c app.c  \
+		events_key.c events_mouse.c events_window.c threads.c image.c \
+		skybox.c player.c events.c audio.c time.c \
 		sector_draw_ceiling.c sector_draw_floor.c sector_draw_wall.c \
 		sector_render.c sector_visible_walls_order.c sector_visible_walls.c \
 		sector_wall_raycast.c sector_wall_prepare.c sector_wall_line.c \
-		sector_draw_partial.c render_text.c ui.c import.c utils.c utils_sdl.c
+		sector_draw_partial.c import.c utils.c utils_sdl.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a
@@ -37,9 +38,7 @@ DEPS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.d))
 SDL_DIR = ./sdl
 SDL_CONF = `sdl/SDL2_build/bin/sdl2-config --cflags --libs`
 SDL_V = SDL2-2.0.8
-
-FRAMEWORKS = \
-	-framework OpenGL -framework AppKit -framework OpenCl \
+SDL_VNEW = SDL2-2.24.2
 
 HEADERS = \
 	-I ./includes \
@@ -55,9 +54,8 @@ LIBLINKS = -L ./libft -L ./liblinearalgebra -L/usr/local/lib \
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(LIBLINEARALGEBRA) $(SDL2) $(OBJS) $(DEPS)
-	$(CC) $(OBJS) -o $(NAME) $(SDL_CONF) $(FLAGS) $(HEADERS) $(FRAMEWORKS) $(LIBLINKS)
+	$(CC) $(OBJS) -o $(NAME) $(SDL_CONF) $(FLAGS) $(HEADERS) $(LIBLINKS)
 
-# Create object files with (-MMD also creates dependency files)
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
 	$(CC) $(FLAGS) $(HEADERS) -MMD -c $< -o $@
 
@@ -75,9 +73,18 @@ $(LIBLINEARALGEBRA):
 $(SDL2): 
 	cd sdl/$(SDL_V)/build && ../configure --prefix=$(PWD)/sdl/SDL2_build/ && make install
 
+all_2.24.2: $(LIBFT) $(LIBLINEARALGEBRA) 2.24.2 $(OBJS) $(DEPS)
+	$(CC) $(OBJS) -o $(NAME) $(SDL_CONF) $(FLAGS) $(HEADERS) $(LIBLINKS)
+
+
+2.24.2:
+	cd sdl/$(SDL_VNEW)/build && ../configure --prefix=$(PWD)/sdl/SDL2_build/ && make install
+
 clean-sdl:
 	rm -rf sdl/$(SDL_V)/build/*
 	touch sdl/$(SDL_V)/build/DontRemoveMe
+	rm -rf sdl/$(SDL_VNEW)/build/*
+	touch sdl/$(SDL_VNEW)/build/DontRemoveMe
 	rm -rf sdl/SDL2_build/*
 	touch sdl/SDL2_build/DontRemoveMe
 	rm -f $(SDL2)
@@ -94,4 +101,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean clean-sdl fclean re

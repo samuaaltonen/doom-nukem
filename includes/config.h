@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/09 16:43:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/16 12:50:42 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,8 @@
 # define FOV 66
 # define MAX_RAY_DISTANCE 25.0
 # define TEX_SIZE 64
-# define MOUSE_SENSITIVITY 20.0
+# define MOUSE_SENSITIVITY_HORIZONTAL 0.3
+# define MOUSE_SENSITIVITY_VERTICAL 0.2
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 8
 # define MAX_VISIBLE_SECTORS 64
@@ -34,12 +35,16 @@
 # define MAX_LINE_LENGTH 1048576.0
 
 /**
- * Struct for threads about their specific drawing areas.
+ * Struct for threads about their specific identifiers and locks for signaling.
  */
 typedef struct s_thread_data
 {
 	void			*app;
 	int				id;
+	t_bool			has_work;
+	pthread_t		thread;
+	pthread_cond_t	cond;
+	pthread_mutex_t	lock;
 }	t_thread_data;
 
 /**

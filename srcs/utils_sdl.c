@@ -6,11 +6,46 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:38:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/28 15:07:23 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/14 17:24:41 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
+
+/**
+ * @brief Shades color. Shade values can be from -8 to +8. -8 is completely
+ * dark (0x000000), +8 is completely white (0xFFFFFF).
+ *
+ * @param color 
+ * @param shade 
+ * @return int 
+ */
+int	shade_color(int color, int shade)
+{
+	int	r;
+	int	g;
+	int	b;
+
+	if (!shade)
+		return (color);
+	if (shade <= -8)
+		return (0x000000);
+	if (shade >= 8)
+		return (0xFFFFFF);
+	r = color & 0xFF0000;
+	g = color & 0x00FF00;
+	b = color & 0x0000FF;
+	r += (r * shade) >> 3;
+	g += (g * shade) >> 3;
+	b += (b * shade) >> 3;
+	if (r > 0xFF0000)
+		r = 0xFF0000;
+	if (g > 0x00FF00)
+		g = 0x00FF00;
+	if (b > 0x0000FF)
+		b = 0x0000FF;
+	return ((r & 0xFF0000) | (g & 0x00FF00) | (b & 0x0000FF));
+}
 
 /**
  * Returns pixel color at given position.
@@ -67,6 +102,31 @@ void	blit_surface(SDL_Surface *src, t_rect *src_rect,
 			current.x = 0;
 			current.y++;
 		}
+	}
+}
+
+void	color_surface(SDL_Surface *surface, int color)
+{
+	int		x;
+	int		y;
+	int		pixel_pos;
+	char	*pixel;
+
+	x = 0;
+	y = 0;
+	while (y < surface->h)
+	{
+		while (x < surface->w)
+		{
+			pixel_pos = (y * surface->pitch)
+			+ (x * IMAGE_PIXEL_BYTES);
+			pixel = surface->pixels + pixel_pos;
+			if ((*(int *)pixel & 0xFF000000) != 0x00000000)
+				put_pixel_to_surface(surface, x, y, color);
+			x++;
+		}
+		x = 0;
+		y++;
 	}
 }
 

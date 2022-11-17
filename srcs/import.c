@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/09 16:42:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:20:00 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,22 +61,14 @@ static t_vector2	slope_perpendicular(t_sector *sector, int start, int end)
 static void	import_floor_slope(t_exportsector *export, t_sector *sector)
 {
 	t_vector2	point;
-	t_vector2	linedst;
-	t_vector2	opposite;
 
 	if (export->floor_slope_position == -1)
 		return ;
 	point = sector->corners[export->floor_slope_position];
-	if (export->floor_slope_position < sector->corner_count + 1)
-		linedst = sector->corners[export->floor_slope_position + 1];
-	else
-		linedst = sector->corners[0];
-	opposite = sector->corners[export->floor_slope_opposite];
 	sector->floor_slope_height = export->floor_slope_height - export->floor_height;
 	if (!sector->floor_slope_height)
 		return ;
 	sector->floor_slope_start = point;
-	/* sector->floor_slope_end = opposite; */
 	sector->floor_slope_end = slope_perpendicular(sector,
 		export->floor_slope_position,
 		export->floor_slope_opposite);
@@ -98,22 +90,14 @@ static void	import_floor_slope(t_exportsector *export, t_sector *sector)
 static void	import_ceil_slope(t_exportsector *export, t_sector *sector)
 {
 	t_vector2	point;
-	t_vector2	linedst;
-	t_vector2	opposite;
 
 	if (export->ceil_slope_position == -1)
 		return ;
 	point = sector->corners[export->ceil_slope_position];
-	if (export->ceil_slope_position < sector->corner_count + 1)
-		linedst = sector->corners[export->ceil_slope_position + 1];
-	else
-		linedst = sector->corners[0];
-	opposite = sector->corners[export->ceil_slope_opposite];
 	sector->ceil_slope_height = export->ceil_slope_height - export->ceil_height;
 	if (!sector->ceil_slope_height)
 		return ;
 	sector->ceil_slope_start = point;
-	/* sector->ceil_slope_end = opposite; */
 	sector->ceil_slope_end = slope_perpendicular(sector,
 		export->ceil_slope_position,
 		export->ceil_slope_opposite);

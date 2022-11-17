@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/08 16:07:45 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:33:10 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 */
 static void	sector_edit_menu(t_app *app)
 {
-	change_font(app, 15, TEXT);
 	render_text(app, (t_point){10, 40}, "TOGGLE ALL WALLS ( V )");
 	render_text(app, (t_point){10, 60}, "TOGGLE FLOOR ( F )");
 	render_text(app, (t_point){10, 80}, "TOGGLE CEILING ( R )");
@@ -42,12 +41,32 @@ static void	sector_edit_menu(t_app *app)
 /**
  * Renders player specific information on the help menu sidebar.
 */
-// static void	player_edit_menu(t_app *app)
-// {
-// 	toggle_active_color(app, app->player_edit, "PLAYER", (t_point){10, 320});
-// 	render_text(app, (t_point){100, 310}, ft_ftoa(app->player.position.x, 2));
-// 	render_text(app, (t_point){100, 330}, ft_ftoa(app->player.position.y, 2));
-// }
+static void	player_edit_menu(t_app *app)
+{
+	render_text(app, (t_point){10, 40}, "WEAPONS");
+	render_arrows(app, (t_point){25, 67}, (t_point){250, 67});
+	render_icons(app, app->assets.sprite, (t_point){40, 60}, MAX_WEAPONS);
+	render_ui_frame(app, (t_rect){(ICON_SIZE / 2) * (app->player.selected_weapon + 1)
+		+ (10 * (app->player.selected_weapon + 1)) - 3, 59, 35, 35}, 1, 0);
+	render_weapon_statics(app);
+	render_text(app, (t_point){10, 165}, "ARMOR");
+	render_arrows(app, (t_point){25, 193}, (t_point){250, 193});
+	render_icons(app, app->assets.sprite, (t_point){40, 185}, MAX_ARMOR);
+	render_ui_frame(app, (t_rect){(ICON_SIZE / 2) * (app->player.selected_armor + 1)
+		+ (10 * (app->player.selected_armor + 1)) - 3, 184, 35, 35}, 1, 0);
+	render_armor_statics(app);
+	if (app->player.health < 1)
+		app->player.health = 1;
+	if (app->player.health > 200)
+		app->player.health = 200;
+	render_text(app, (t_point){10, 265}, "HEALTH");
+	render_text(app, (t_point){112, 265}, ft_itoa(app->player.health));
+	render_text(app, (t_point){140, 265}, " / 200");
+	render_text(app, (t_point){25, 287}, "<");
+	render_text(app, (t_point){250, 287}, ">");
+	render_healthbar(app);
+	render_inventory(app);
+}
 
 /**
  * Renders object specific information on the help menu sidebar.
@@ -63,15 +82,15 @@ static void	help_menu_texts(t_app *app)
 {
 	change_font(app, 20, TEXT);
 	render_text(app, (t_point){10, 10}, "LEVEL EDITOR");
+	change_font(app, 15, TEXT);
 	if (app->active_sector)
 		sector_edit_menu(app);
-	// else if ()
-	// 	player_edit_menu(app);
+	else if (app->player_menu)
+		player_edit_menu(app);
 	// else if ()
 	// 	object_edit_menu(app);
 	else
 	{
-		change_font(app, 15, TEXT);
 		render_text(app, (t_point){10, 40}, "OPEN FILE ( O )");
 		render_text(app, (t_point){10, 60}, "SAVE FILE ( M )");
 		toggle_active_color(app, app->list_creation, "CREATE WALL ( C )",
@@ -106,5 +125,7 @@ void	render_help_menu(t_app *app)
 		}
 		y++;
 	}
+	color_surface(app->assets.ui_frame, ACTIVE_TEXT);
 	help_menu_texts(app);
+	color_surface(app->assets.ui_frame, UI_FRAME);
 }

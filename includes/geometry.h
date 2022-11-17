@@ -29,6 +29,15 @@ typedef struct s_point
 }	t_point;
 
 /**
+ * Sturct for limits.
+ */
+typedef struct s_limit
+{
+	int				start;
+	int				end;
+}	t_limit;
+
+/**
  * Matrix that contains 2 t_point columns.
  */
 typedef	struct s_point_matrix
@@ -36,7 +45,6 @@ typedef	struct s_point_matrix
 	t_point			a;
 	t_point			b;
 }	t_point_matrix;
-
 
 /**
  * Struct for integer coordinate rectangule.

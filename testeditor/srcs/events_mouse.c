@@ -6,11 +6,36 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/03 11:40:39 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:34:42 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
+
+/**
+ * Mouse click events in the player menu. Clicking on arrows next to icons
+ * changes the selected weapon/armor.
+*/
+static void	player_menu_events(t_app *app)
+{
+	t_point	screen_pos;
+
+	SDL_GetMouseState(&screen_pos.x, &screen_pos.y);
+	if (check_mouse(screen_pos, (t_rect){20, 67, 10, 10})
+		&& app->player.selected_weapon > 0)
+		app->player.selected_weapon--;
+	if (check_mouse(screen_pos, (t_rect){250, 67, 10, 10})
+		&& app->player.selected_weapon < (MAX_WEAPONS - 1))
+		app->player.selected_weapon++;
+	if (check_mouse(screen_pos, (t_rect){20, 193, 10, 10})
+		&& app->player.selected_armor > 0)
+		app->player.selected_armor--;
+	if (check_mouse(screen_pos, (t_rect){250, 193, 10, 10})
+		&& app->player.selected_armor < (MAX_ARMOR - 1))
+		app->player.selected_armor++;
+	select_inventory(app, screen_pos);
+	app->player.inventory.selected[5] = check_selected_inventory(app);
+}
 
 /**
  * if not in sector creation, select points
@@ -20,6 +45,7 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 {
 	t_vec2_lst	*tmp;
 
+	app->mouse_down = 0;
 	if (event->button.button == SDL_BUTTON_LEFT && !app->list_ongoing && app->list_creation)
 	{
 		app->active = new_vector_list(&app->mouse_track);
@@ -43,7 +69,10 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 	else if (event->button.button == SDL_BUTTON_LEFT)
 	{
 		//if active sector has member sectors find them before linees
-		if (app->active_sector)
+		if (!app->active_sector && app->mouse_track.x == app->player.position.x
+			&& app->mouse_track.y == app->player.position.y)
+			app->player_menu = 1;
+		else if (app->active_sector)
 		{
 			if (app->active_sector->member_sectors[0] && find_child_sector(app))
 				app->active_sector = find_child_sector(app);
@@ -56,17 +85,26 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 			render_player(app);
 			app->player_edit = FALSE;
 		}
+		else if (app->player_menu)
+			player_menu_events(app);
 		else
 			app->active_sector = click_sector(app);
 	}
 	else
 	{
 		app->active = NULL;
+		app->player_menu = 0;
 		if (app->active_sector)
 			app->active_sector = app->active_sector->parent_sector;
 		else
 			app->active_sector = NULL;
 	}
+	return (0);
+}
+
+int	events_mouse_drag(t_app *app)
+{
+	app->mouse_down = 1;
 	return (0);
 }
 

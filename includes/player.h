@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/08 13:54:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/11 12:39:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 # define POSITION_START_Y 0.5
 # define ROTATION_SPEED 1.8f
 # define MOVEMENT_SPEED 3.2f
+# define HORIZON_UPPER_LIMIT 1.25
+# define HORIZON_LOWER_LIMIT -0.25
 
 /**
  * Movement direction enumeration.

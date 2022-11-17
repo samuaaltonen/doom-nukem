@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sector_wall_translate.c                            :+:      :+:    :+:   */
+/*   sector_wall_prepare.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:46:07 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/25 10:45:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/09 17:06:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,14 +78,12 @@ void	sector_walls_prepare(t_app *app, t_wall *walls, int wall_count)
 		dotproduct = get_wall_dotproduct(app, walls[i]);
 		walls[i].start_x = translate_window_x(app, walls[i].line.a, dotproduct);
 		walls[i].end_x = translate_window_x(app, walls[i].line.b, dotproduct);
-		temp_x = walls[i].end_x;
 		if (walls[i].end_x < walls[i].start_x)
 		{
+			temp_x = walls[i].end_x;
 			walls[i].end_x = walls[i].start_x;
 			walls[i].start_x = temp_x;
 		}
-		walls[i].start_x -= 1;
-		walls[i].end_x += 1;
 		if (walls[i].start_x < -1)
 			walls[i].start_x = -1;
 		if (walls[i].end_x >= WIN_W)

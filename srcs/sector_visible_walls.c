@@ -39,8 +39,6 @@ static t_bool	has_visible_corner(t_app *app, t_line wall)
 	if (ft_line_side(right, wall.a) && ft_line_side(right, wall.b)
 		&& !ft_line_side(left, wall.a) && !ft_line_side(left, wall.b))
 		return (TRUE);
-	left = ft_line_resize(left, MAX_LINE_LENGTH, EXTEND_BOTH);
-	right = ft_line_resize(right, MAX_LINE_LENGTH, EXTEND_BOTH);
 	if ((ft_line_intersection(left, wall, &intersection)
 			&& ft_line_side(view_camera, intersection))
 		|| (ft_line_intersection(right, wall, &intersection)

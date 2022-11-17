@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/09 15:39:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/14 16:21:37 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,21 +54,23 @@ void	draw_floor(t_app *app, int x, t_rayhit *hit)
 		return;
 	app->occlusion_bottom[x] = WIN_H - y_start;
 
-	elevation_offset = hit->sector->floor_slope_magnitude * hit->distance
-		* hit->floor_horizon_angle;
+	elevation_offset = 0.0;
+	if (hit->floor_slope_height)
+		elevation_offset = hit->sector->floor_slope_magnitude * hit->distance
+			* hit->floor_horizon_angle;
 
 	while (y_start < y_end)
 	{
 		if (hit->sector->floor_slope_height != 0.0) {
 			distance = ((app->player.height + app->player.elevation + elevation_offset) - hit->sector->floor_height - hit->floor_slope_height)
-				* WIN_H / (y_start - WIN_H / 2 + WIN_H * hit->floor_horizon);
+				* WIN_H / (y_start - WIN_H * app->player.horizon + WIN_H * hit->floor_horizon);
 		}
 		else
-			distance = ((app->player.height + app->player.elevation) - hit->sector->floor_height) * WIN_H / (y_start - WIN_H / 2);
+			distance = ((app->player.height + app->player.elevation) - hit->sector->floor_height) * WIN_H / (y_start - WIN_H * app->player.horizon);
 		world_pos.x = hit->position.x - (hit->distance - distance) * hit->ray.x;
 		world_pos.y = hit->position.y - (hit->distance - distance) * hit->ray.y;
-		put_pixel_to_surface(app->surface, x, y_start, get_position_color(
-			app, world_pos, hit->sector->floor_texture));
+		put_pixel_to_surface(app->surface, x, y_start, shade_color(get_position_color(
+			app, world_pos, hit->sector->floor_texture), hit->light));
 		y_start++;
 	}
 }

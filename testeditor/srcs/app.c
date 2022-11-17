@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/09 11:38:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:31:41 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,13 @@ void	app_prepare(t_app *app)
 	app->sectors = NULL;
 	app->player_edit = 0;
 	app->player.sector = -1;
+	app->player.health = 200;
 	app->movement_speed = 4;
 	load_assets(app);
 	load_font(app);
+	weapons_init(app);
+	armor_init(app);
+	inventory_init(app);
 	SDL_ShowCursor(SDL_ENABLE);
 }
 
