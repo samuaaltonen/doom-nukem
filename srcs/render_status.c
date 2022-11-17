@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/16 13:42:27 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/17 13:13:44 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	render_options(t_app *app)
 	else if (app->status == STATUS_GAMEOPTIONS)
 		render_sectors(app);
 	render_ui_frame(app, (t_rect){320, 132, 224, 64}, 1, DARK_GREY);
-	change_font(app, 32, CYAN);
+	change_font(app, 32, DARK_RED);
 	render_text(app, (t_point){336, 146}, "OPTIONS");
 	render_ui_frame(app, (t_rect){320, 180, 640, 360}, 1, DARK_GREY);
 	button_function(app,
