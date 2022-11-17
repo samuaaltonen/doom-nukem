@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/16 13:02:48 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/17 12:45:11 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@ static void ui_bottomframe(t_app *app,t_rect area, int size);
 
 void	render_ui(t_app *app)
 {
-	render_ui_frame(app, (t_rect){10, 10, 112, 32}, 1, 0x242424);
-	change_font(app, 16, 0xFF00FFFF);
+	render_ui_frame(app, (t_rect){10, 10, 112, 32}, 1, DARK_GREY);
+	change_font(app, 16, CYAN);
 	render_text(app, (t_point){24, 20},  app->conf->fps_info);
 	load_font(app);
 }
