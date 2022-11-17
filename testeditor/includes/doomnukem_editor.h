@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/16 14:46:19 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/17 14:47:14 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@
 # define MAX_WEAPONS 5
 # define MAX_ARMOR 5
 # define INVENTORY_SIZE 6
+# define MAX_OBJECTS 64
+# define MAX_INTERACTIONS 64
 # define DEG_IN_RADIAN 0.01745f
 # define PI_HALF 1.57079632679
 # define RADIAN_IN_DEG 57.29578f
@@ -206,6 +208,48 @@ typedef struct s_sectorlist
 }	t_sector_lst;
 
 /**
+ * @brief array of objects per entire level
+ * 
+ */
+typedef struct s_object
+{
+	int				type;
+	int				hp;
+	t_vector2		position;
+	t_sector_lst	*sector;
+}	t_object;
+
+/**
+ * @brief Array of interactions for entire level
+ * 		if event_id is 1-4, use target_sector & variable for height/light
+ * 		if event_id is 5, use variable as the line which to read from text file
+ * 		if event_id is 6, use variable as the sound id(cast to int)
+ * 1 activate floor height
+ * 2 activate ceil height
+ * 3 activate ceil&floor height
+ * 4 set light level
+ * 5 open text pop-up
+ * 6 activate sound
+ * 7 activate end level
+ * -1 no events, array delimited by -1
+ * 
+ * if activation_sector is NULL/-1, activator will be the activator_id in the object array
+ * if activation_sector is set & activation_id is -1, the sector itself is the activator
+ * if active_sector is set & activation_id is set, the activator is the decor on the wall_id declared by activation_id in active sector
+ * if the activator is in the object array & the type of the object is an enemy, it only triggers when the enemy dies
+ * target_sector & target_id will be the same in saves
+ */
+typedef struct s_interaction
+{
+	int				event_id;
+	double 			variable;
+	t_sector_lst	*activation_sector;
+	int				activation_id;
+	t_sector_lst	*target_sector;
+	int				target_id;
+}	t_interaction;
+
+/**
  * Struct for font.
  */
 typedef struct s_font
@@ -263,6 +307,8 @@ typedef struct s_app
 	int					movement_speed;
 	t_assets			assets;
 	t_player			player;
+	t_object			objects[MAX_OBJECTS];
+	t_interaction		interactions[MAX_INTERACTIONS];
 }	t_app;
 
 typedef struct s_exportsector
