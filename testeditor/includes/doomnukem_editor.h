@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/17 14:47:14 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/17 17:35:54 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@
 # define MAX_ARMOR 5
 # define INVENTORY_SIZE 6
 # define MAX_OBJECTS 64
+# define MAX_UNIQUE_OBJECTS 64
 # define MAX_INTERACTIONS 64
 # define DEG_IN_RADIAN 0.01745f
 # define PI_HALF 1.57079632679
@@ -231,7 +232,7 @@ typedef struct s_object
  * 5 open text pop-up
  * 6 activate sound
  * 7 activate end level
- * -1 no events, array delimited by -1
+ * 0 no events, array delimited by 0
  * 
  * if activation_sector is NULL/-1, activator will be the activator_id in the object array
  * if activation_sector is set & activation_id is -1, the sector itself is the activator
@@ -246,7 +247,6 @@ typedef struct s_interaction
 	t_sector_lst	*activation_sector;
 	int				activation_id;
 	t_sector_lst	*target_sector;
-	int				target_id;
 }	t_interaction;
 
 /**
@@ -302,12 +302,16 @@ typedef struct s_app
 	t_bool				slope_edit;
 	t_bool				player_edit;
 	t_bool				player_menu;
+	t_bool				interaction_select;
+	t_bool				object_edit;
+	int					object_type;
 	t_bool				mouse_down;
 	int					sectorcount;
 	int					movement_speed;
 	t_assets			assets;
 	t_player			player;
 	t_object			objects[MAX_OBJECTS];
+	int					object_count;
 	t_interaction		interactions[MAX_INTERACTIONS];
 }	t_app;
 
@@ -512,5 +516,14 @@ void			render_player(t_app *app);
 void			weapons_init(t_app *app);
 void			armor_init(t_app *app);
 void			inventory_init(t_app *app);
+
+/**
+ * Objects
+ * 
+ */
+int				new_object(t_app *app);
+void			change_object_id(t_app *app, int keycode);
+void			del_object(t_app *app, int object_id);
+void			link_interaction(t_app *app);
 
 #endif

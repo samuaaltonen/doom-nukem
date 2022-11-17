@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_mouse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/16 14:34:42 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/17 17:32:43 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,12 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 			render_player(app);
 			app->player_edit = FALSE;
 		}
+		else if (app->object_edit)
+		{
+			app->mouse_click = app->mouse_track;
+			new_object(app);
+			app->object_edit = FALSE;
+		}
 		else if (app->player_menu)
 			player_menu_events(app);
 		else
@@ -92,6 +98,7 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 	}
 	else
 	{
+		app->object_type = 0;
 		app->active = NULL;
 		app->player_menu = 0;
 		if (app->active_sector)

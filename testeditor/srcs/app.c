@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/16 14:31:41 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/17 17:37:37 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	app_loop(t_app *app)
 	{
 		while (SDL_PollEvent(&event))
 			dispatch_event(app, &event);
-		ft_printf("x=%f, y=%f modes:c%i,o%i,p%i,r%i,f%i,s%i\n", app->mouse_track.x, app->mouse_track.y, app->list_creation, app->list_ongoing, app->portal_selection, app->ceiling_edit, app->floor_edit, app->slope_edit);
+		ft_printf("x=%f, y=%f modes:c%i,o%i,p%i,r%i,f%i,s%i,n%i,i%i\n", app->mouse_track.x, app->mouse_track.y, app->list_creation, app->list_ongoing, app->portal_selection, app->ceiling_edit, app->floor_edit, app->slope_edit, app->object_edit, app->interaction_select);
 		ft_printf("PLAYER pos x= %f pos y= %f dir x= %f dir y= %f sector= %d\n", app->player.position.x, app->player.position.y, app->player.direction.x, app->player.direction.y, app->player.sector);
 		if (app->active_sector)
 		{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/07 14:22:41 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/17 16:13:28 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,19 @@
 */
 static void	wasd_and_arrow_keys(int keycode, t_app *app)
 {
-	if (keycode == SDLK_RIGHT)
-		sector_edit(app, keycode);
-	if (keycode == SDLK_LEFT)
-		sector_edit(app, keycode);
-	if (keycode == SDLK_UP)
-		sector_edit(app, keycode);
-	if (keycode == SDLK_DOWN)
-		sector_edit(app, keycode);
+	if(!app->object_edit)
+	{
+		if (keycode == SDLK_RIGHT)
+			sector_edit(app, keycode);
+		if (keycode == SDLK_LEFT)
+			sector_edit(app, keycode);
+		if (keycode == SDLK_UP)
+			sector_edit(app, keycode);
+		if (keycode == SDLK_DOWN)
+			sector_edit(app, keycode);
+	}
+	else
+		change_object_id(app, keycode);
 	if (keycode == SDLK_w)
 		app->keystates ^= FORWARD_W_DOWN;
 	if (keycode == SDLK_s)
@@ -52,6 +57,8 @@ static void	edit_mode_keys(int keycode, t_app *app)
 		app->slope_edit = ft_toggle(app->slope_edit);
 	if (keycode == SDLK_v)
 		app->wall_edit = ft_toggle(app->wall_edit);
+	if (keycode == SDLK_n)
+		app->object_edit = ft_toggle(app->object_edit);
 	if (keycode == SDLK_c)
 	{
 		app->list_creation = ft_toggle(app->list_creation);
@@ -71,6 +78,8 @@ int	events_keyup(int keycode, t_app *app)
 		export_file(app, FILE_PATH);
 	if (keycode == SDLK_o)
 		import_file(app, FILE_PATH);
+	if (keycode == SDLK_i)
+		link_interaction(app);
 	if (keycode == SDLK_l)
 		link_wall_to_sector(app);
 	if (keycode == SDLK_DELETE)
