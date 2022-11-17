@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/07 14:22:41 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/17 16:24:41 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,11 @@ int	events_keyup(int keycode, t_app *app)
 	edit_mode_keys(keycode, app);
 	if (keycode == SDLK_m)
 		export_file(app, FILE_PATH);
-	if (keycode == SDLK_o)
+	if (keycode == SDLK_o && !app->imported)
+	{
 		import_file(app, FILE_PATH);
+		app->imported = 1;
+	}
 	if (keycode == SDLK_l)
 		link_wall_to_sector(app);
 	if (keycode == SDLK_DELETE)

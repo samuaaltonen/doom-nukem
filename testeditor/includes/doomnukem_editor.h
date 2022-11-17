@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/17 14:20:31 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/17 16:30:32 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,6 +258,7 @@ typedef struct s_app
 	t_bool				slope_edit;
 	t_bool				player_edit;
 	t_bool				player_menu;
+	t_bool				imported;
 	t_bool				mouse_down;
 	int					sectorcount;
 	int					movement_speed;
