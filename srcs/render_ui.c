@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/17 12:45:11 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/17 14:48:53 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	render_ui(t_app *app)
 {
 	render_ui_frame(app, (t_rect){10, 10, 112, 32}, 1, DARK_GREY);
 	change_font(app, 16, CYAN);
-	render_text(app, (t_point){24, 20},  app->conf->fps_info);
+	render_text(app, (t_rect){24, 20, 112, 32},  app->conf->fps_info);
 	load_font(app);
 }
 
@@ -33,7 +33,6 @@ void	render_ui_frame(t_app *app,t_rect area, int size, int background)
 	ui_topframe(app, area, size);
 	ui_midframe(app, area, size);
 	ui_bottomframe(app, area, size);
-
 }
 
 static void	ui_background(t_app *app,t_rect area, int size, int background)
@@ -137,11 +136,13 @@ static void ui_bottomframe(t_app *app,t_rect area, int size)
 
 t_rect	render_button(t_app *app, t_rect area, int size, char *text)
 {
-	t_point		text_pos;
+	t_rect	text_pos;
 
 	change_font(app, 16, CYAN);
 	text_pos.x = area.x + size * 12;
 	text_pos.y = area.y + area.h / 2 - size * 12 / 2;
+	text_pos.w = area.w;
+	text_pos.h = area.h;
 	if (!check_mouse(app, area))
 		color_surface(app->assets.ui_frame, CYAN);
 	else if (check_mouse(app, area))

@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:48:08 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/14 17:40:10 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/17 14:46:27 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,26 @@ static t_rect	get_rect(int c);
 static void		render_char(t_app *app, t_point *position, t_rect src);
 static t_rect	get_char(char *str, int c, int line);
 
-void	render_text(t_app *app, t_point position, char *text)
+void	render_text(t_app *app, t_rect frame, char *text)
 {
 	int		i;
+	t_point	pos;
 
+	pos.x = frame.x;
+	pos.y = frame.y;
 	i = 0;
 	while (text[i] != '\0')
 	{
-		render_char(app, &position, get_rect(text[i]));
+		if (text[i] == '\n' || pos.x + app->assets.font.size > frame.x + frame.w)
+		{
+			pos.x = frame.x;
+			pos.y += app->assets.font.size * 1.25;
+			if (text[i] == '\n')
+				i++;
+		}
+		if (pos.y + app->assets.font.size > frame.y + frame.h)
+			break ;
+		render_char(app, &pos, get_rect(text[i]));
 		i++;
 	}
 }

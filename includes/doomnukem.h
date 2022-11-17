@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/16 12:34:49 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/17 14:11:00 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,7 +182,7 @@ void		draw_portal_partial_hole(t_app *app, int x, t_rayhit *hit);
  */
 void        load_font(t_app *app);
 void		change_font(t_app *app, int size, int color);
-void    	render_text(t_app *app, t_point position, char *text);
+void		render_text(t_app *app, t_rect frame, char *text);
 
 /**
  * UI
