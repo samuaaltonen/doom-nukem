@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/09 14:56:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/18 13:23:35 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,4 +99,16 @@ size_t	ft_lstlen(t_sector_lst *lst)
 		lst = lst->next;
 	}
 	return (i);
+}
+
+t_point	world_to_screen(t_app *app, t_vector2 pos)
+{
+	return ((t_point){(pos.x - app->view_pos.x) * (app->surface->w) / (app->view_size.x - app->view_pos.x),
+			(pos.y - app->view_pos.y) * (app->surface->h) / (app->view_size.y - app->view_pos.y)});
+}
+
+t_vector2 screen_to_world(t_app *app, t_point pos)
+{
+	return ((t_vector2){app->view_pos.x + (pos.x / (double)app->surface->w) * app->zoom_area.x,
+			app->view_pos.y + (pos.y / (double)app->surface->h) * app->zoom_area.y});
 }

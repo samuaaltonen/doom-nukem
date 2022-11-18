@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/03 11:06:32 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/18 13:50:16 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ void	render_sector_points(t_app *app)
 		head = app->active_sector->wall_list;
 		while (head)
 		{
-			render_selection_point(app, head, 2);
+			render_point(app, head->point, 2, POINT);
 			head = head->next;
 			if (head == app->active_sector->wall_list)
 				break ;
@@ -84,30 +84,27 @@ void	render_sector_points(t_app *app)
  * @param point 
  * @param size 
  */
-void	render_selection_point(t_app *app, t_vec2_lst *point, int size)
+void	render_point(t_app *app, t_vector2 point, int size, int color)
 {
-	t_point		min;
-	t_point		max;
+t_point		min;
+t_point		max;
 
-	if (point)
+	min.x = (point.x - app->view_pos.x)
+		* (app->surface->w) / (app->view_size.x - app->view_pos.x);
+	min.y = (point.y - app->view_pos.y)
+		* (app->surface->h) / (app->view_size.y - app->view_pos.y);
+	max.x = min.x + size;
+	max.y = min.y + size;
+	min.x = min.x - size;
+	min.y = min.y - size;
+	while (min.y < max.y)
 	{
-		min.x = (point->point.x - app->view_pos.x)
-			* (app->surface->w) / (app->view_size.x - app->view_pos.x);
-		min.y = (point->point.y - app->view_pos.y)
-			* (app->surface->h) / (app->view_size.y - app->view_pos.y);
-		max.x = min.x + size;
-		max.y = min.y + size;
-		min.x = min.x - size;
-		min.y = min.y - size;
-		while (min.y < max.y)
+		min.x = max.x - size * 2;
+		while (min.x < max.x)
 		{
-			min.x = max.x - size * 2;
-			while (min.x < max.x)
-			{
-				put_pixel_to_surface(app->surface, min.x, min.y, 0xFF00FF);
-				min.x++;
-			}
-			min.y++;
+			put_pixel_to_surface(app->surface, min.x, min.y, color);
+			min.x++;
 		}
+		min.y++;
 	}
 }

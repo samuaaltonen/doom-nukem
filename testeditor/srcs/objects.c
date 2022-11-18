@@ -6,11 +6,23 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:53:42 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/17 17:34:55 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/18 13:33:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
+
+
+/**
+ * Draws the object to the correct position.
+*/
+void	draw_object_icon(t_app *app, t_vector2 world_pos)
+{
+	t_point screen_pos;
+
+	screen_pos = world_to_screen(app,world_pos);
+	blit_surface(app->assets.sprite,&(t_rect){ICON_SIZE * app->object_type,0, ICON_SIZE, ICON_SIZE},app->surface,&(t_rect){screen_pos.x,screen_pos.y,OBJECT_SCREEN_SIZE,OBJECT_SCREEN_SIZE});
+}
 
 int	new_object(t_app *app)
 {

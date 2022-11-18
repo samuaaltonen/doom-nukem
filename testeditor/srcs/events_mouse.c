@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/17 17:32:43 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/18 14:46:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,11 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 		}
 		else if (app->player_edit)
 		{
-			app->mouse_click = app->mouse_track;
-			app->player.sector = get_sector_id(app, click_sector(app));
-			render_player(app);
-			app->player_edit = FALSE;
+				app->player.position = app->mouse_track;
+				app->player.direction = (t_vector2){0.f,1.f};
+				app->player.sector = click_sector(app);
+				app->player_edit = FALSE;
+				check_player_position(app);
 		}
 		else if (app->object_edit)
 		{

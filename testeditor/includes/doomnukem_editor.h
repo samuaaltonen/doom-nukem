@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/17 17:35:54 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/18 14:55:39 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define WIN_H 720
 # define HELP_MENU_W 280
 # define ICON_SIZE 64
+# define OBJECT_SCREEN_SIZE 16
 # define MSG_ERROR "Error occured"
 # define MSG_ERROR_WINDOW "Could not open a window."
 # define MSG_ERROR_WINDOW_SURFACE "Could not get window surface."
@@ -120,7 +121,8 @@ enum e_colors {
 	PLAYER = 0x00FF00,
 	LINE_A = 0xAABBCC,
 	LINE_B = 0xFF4444,
-	UI_FRAME = 0xFF00FFFF
+	UI_FRAME = 0xFF00FFFF,
+	POINT = 0xFF00FF
 };
 
 /**
@@ -172,19 +174,6 @@ typedef struct s_inventory
 	int		selected[INVENTORY_SIZE];
 }	t_inventory;
 
-typedef struct s_player
-{
-	t_vector2	position;
-	t_vector2	direction;
-	int			sector;
-	int			health;
-	int			selected_weapon;
-	int			selected_armor;
-	t_weapon	weapons[MAX_WEAPONS];
-	t_armor		armor[MAX_ARMOR];
-	t_inventory	inventory;
-}	t_player;
-
 typedef struct s_sectorlist
 {
 	int					corner_count;
@@ -207,6 +196,19 @@ typedef struct s_sectorlist
 	double				ceil_slope_height;
 	struct s_sectorlist	*next;
 }	t_sector_lst;
+
+typedef struct s_player
+{
+	t_vector2		position;
+	t_vector2		direction;
+	t_sector_lst	*sector;
+	int				health;
+	int				selected_weapon;
+	int				selected_armor;
+	t_weapon		weapons[MAX_WEAPONS];
+	t_armor			armor[MAX_ARMOR];
+	t_inventory		inventory;
+}	t_player;
 
 /**
  * @brief array of objects per entire level
@@ -391,6 +393,8 @@ int				events_mouse_drag(t_app *app);
  * Map Editor functions
  * 
  */
+t_point			world_to_screen(t_app *app, t_vector2 pos);
+t_vector2		screen_to_world(t_app *app, t_point pos);
 
 /**
  * Render functions
@@ -400,7 +404,7 @@ void			render_divider(t_app *app);
 void			render_grid(t_app *app, double divider, int color);
 void			render_sector(t_app *app, t_vec2_lst *sector_start);
 void			render_sectors(t_app *app);
-void			render_selection_point(t_app *app, t_vec2_lst *point, int size);
+void			render_point(t_app *app, t_vector2 point, int size, int color);
 void			render_sector_points(t_app *app);
 void			render_fill_active_sector(t_app *app);
 void			draw_list_lines(t_app *app, t_vec2_lst *a,
@@ -516,6 +520,7 @@ void			render_player(t_app *app);
 void			weapons_init(t_app *app);
 void			armor_init(t_app *app);
 void			inventory_init(t_app *app);
+void			check_player_position(t_app *app);
 
 /**
  * Objects
@@ -525,5 +530,6 @@ int				new_object(t_app *app);
 void			change_object_id(t_app *app, int keycode);
 void			del_object(t_app *app, int object_id);
 void			link_interaction(t_app *app);
+void			draw_object_icon(t_app *app, t_vector2 world_pos);
 
 #endif
