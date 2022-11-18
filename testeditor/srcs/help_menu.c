@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/16 14:33:10 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/18 14:52:58 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,10 @@ static void	player_edit_menu(t_app *app)
 /**
  * Renders object specific information on the help menu sidebar.
 */
-// static void	object_edit_menu(t_app *app)
-// {
-// }
+static void	object_edit_menu(t_app *app)
+{
+	(void)app;
+}
 
 /**
  * Renders the help menu texts on the help menu.
@@ -87,8 +88,8 @@ static void	help_menu_texts(t_app *app)
 		sector_edit_menu(app);
 	else if (app->player_menu)
 		player_edit_menu(app);
-	// else if ()
-	// 	object_edit_menu(app);
+	else if (app->object_menu)
+		object_edit_menu(app);
 	else
 	{
 		render_text(app, (t_point){10, 40}, "OPEN FILE ( O )");
@@ -120,12 +121,15 @@ void	render_help_menu(t_app *app)
 		x = 0;
 		while (x < HELP_MENU_W)
 		{
-			put_pixel_to_surface(app->surface, x, y, BG_LIGHT);
+			if (x > (HELP_MENU_W - 3) || x < 2 || y < 2 || y > (WIN_H - 3))
+				put_pixel_to_surface(app->surface, x, y, TEXT);
+			else
+				put_pixel_to_surface(app->surface, x, y, BG_MENU);
 			x++;
 		}
 		y++;
 	}
 	color_surface(app->assets.ui_frame, ACTIVE_TEXT);
 	help_menu_texts(app);
-	color_surface(app->assets.ui_frame, UI_FRAME);
+	color_surface(app->assets.ui_frame, TEXT);
 }
