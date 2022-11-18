@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/18 14:22:27 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/18 14:24:21 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,19 +23,19 @@
  */
 void	render_sectors(t_app *app)
 {
-	/* static t_thread_data	threads_data[THREAD_COUNT]; */
+	static t_thread_data	threads_data[THREAD_COUNT];
 	static t_bool			threads_created;
 
 	if (!threads_created)
 	{
-		threads_init(app, (t_thread_data *)&app->threads_data);
-		threads_create((t_thread_data *)&app->threads_data, sector_render_thread);
+		threads_init(app, (t_thread_data *)&threads_data);
+		threads_create((t_thread_data *)&threads_data, sector_render_thread);
 		threads_created = TRUE;
 	}
 	ft_bzero(app->occlusion_top, WIN_W * sizeof(int));
 	ft_bzero(app->occlusion_bottom, WIN_W * sizeof(int));
 	sector_visible_walls(app);
-	threads_work((t_thread_data *)&app->threads_data);
+	threads_work((t_thread_data *)&threads_data);
 }
 
 /**
