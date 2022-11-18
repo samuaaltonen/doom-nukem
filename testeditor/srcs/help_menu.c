@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/14 15:42:36 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:33:10 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@
 */
 static void	sector_edit_menu(t_app *app)
 {
-	change_font(app, 15, TEXT);
 	render_text(app, (t_point){10, 40}, "TOGGLE ALL WALLS ( V )");
 	render_text(app, (t_point){10, 60}, "TOGGLE FLOOR ( F )");
 	render_text(app, (t_point){10, 80}, "TOGGLE CEILING ( R )");
@@ -44,35 +43,29 @@ static void	sector_edit_menu(t_app *app)
 */
 static void	player_edit_menu(t_app *app)
 {
-	change_font(app, 15, TEXT);
 	render_text(app, (t_point){10, 40}, "WEAPONS");
 	render_arrows(app, (t_point){25, 67}, (t_point){250, 67});
 	render_icons(app, app->assets.sprite, (t_point){40, 60}, MAX_WEAPONS);
-	render_text(app, (t_point){10, 160}, "ARMOR");
-	render_arrows(app, (t_point){25, 187}, (t_point){250, 187});
-	render_icons(app, app->assets.sprite, (t_point){40, 180}, MAX_ARMOR);
-	render_text(app, (t_point){10, 260}, "HEALTH");
+	render_ui_frame(app, (t_rect){(ICON_SIZE / 2) * (app->player.selected_weapon + 1)
+		+ (10 * (app->player.selected_weapon + 1)) - 3, 59, 35, 35}, 1, 0);
+	render_weapon_statics(app);
+	render_text(app, (t_point){10, 165}, "ARMOR");
+	render_arrows(app, (t_point){25, 193}, (t_point){250, 193});
+	render_icons(app, app->assets.sprite, (t_point){40, 185}, MAX_ARMOR);
+	render_ui_frame(app, (t_rect){(ICON_SIZE / 2) * (app->player.selected_armor + 1)
+		+ (10 * (app->player.selected_armor + 1)) - 3, 184, 35, 35}, 1, 0);
+	render_armor_statics(app);
 	if (app->player.health < 1)
 		app->player.health = 1;
 	if (app->player.health > 200)
 		app->player.health = 200;
-	render_text(app, (t_point){112, 260}, ft_itoa(app->player.health));
-	render_text(app, (t_point){140, 260}, " / 200");
-	render_text(app, (t_point){25, 282}, "<");
+	render_text(app, (t_point){10, 265}, "HEALTH");
+	render_text(app, (t_point){112, 265}, ft_itoa(app->player.health));
+	render_text(app, (t_point){140, 265}, " / 200");
+	render_text(app, (t_point){25, 287}, "<");
+	render_text(app, (t_point){250, 287}, ">");
 	render_healthbar(app);
-	render_text(app, (t_point){250, 282}, ">");
-	render_text(app, (t_point){10, 320}, "START INVENTORY");
-	render_icons(app, app->assets.sprite, (t_point){40, 340}, 5);
-	render_icons(app, app->assets.sprite, (t_point){40, 380}, 5);
-	toggle_active_color(app, app->player_edit, "PLAYER", (t_point){10, 450});
-	render_text(app, (t_point){100, 440}, ft_ftoa(app->player.position.x, 3));
-	render_text(app, (t_point){100, 460}, ft_ftoa(app->player.position.y, 3));
-	change_font(app, 11, TEXT);
-	render_text(app, (t_point){40, 100}, "DAMAGE");
-	render_text(app, (t_point){40, 115}, "RANGE");
-	render_text(app, (t_point){40, 130}, "MAGAZINE");
-	render_text(app, (t_point){40, 220}, "OFFENCE");
-	render_text(app, (t_point){40, 235}, "DEFENCE");
+	render_inventory(app);
 }
 
 /**
@@ -89,6 +82,7 @@ static void	help_menu_texts(t_app *app)
 {
 	change_font(app, 20, TEXT);
 	render_text(app, (t_point){10, 10}, "LEVEL EDITOR");
+	change_font(app, 15, TEXT);
 	if (app->active_sector)
 		sector_edit_menu(app);
 	else if (app->player_menu)
@@ -97,7 +91,6 @@ static void	help_menu_texts(t_app *app)
 	// 	object_edit_menu(app);
 	else
 	{
-		change_font(app, 15, TEXT);
 		render_text(app, (t_point){10, 40}, "OPEN FILE ( O )");
 		render_text(app, (t_point){10, 60}, "SAVE FILE ( M )");
 		toggle_active_color(app, app->list_creation, "CREATE WALL ( C )",
@@ -132,5 +125,7 @@ void	render_help_menu(t_app *app)
 		}
 		y++;
 	}
+	color_surface(app->assets.ui_frame, ACTIVE_TEXT);
 	help_menu_texts(app);
+	color_surface(app->assets.ui_frame, UI_FRAME);
 }

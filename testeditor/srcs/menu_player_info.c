@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:56:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/14 15:44:45 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:53:47 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,24 +21,11 @@ void	render_icons(t_app *app, SDL_Surface *asset, t_point point, int max)
 	t_rect		icon;
 	int			index;
 
-	index = 1;
-	while (index <= max)
+	index = 0;
+	while (index < max)
 	{
-		if (index == app->player.selected_weapon && asset == app->assets.sprite)
-		{
-			set_icon_rect(&src, (t_point){ICON_SIZE * (index + max), 0},
+		set_icon_rect(&src, (t_point){ICON_SIZE * (index + 1), 0},
 				(t_point){ICON_SIZE / 2, ICON_SIZE / 2});
-		}
-		else if (index == app->player.selected_armor && asset == app->assets.sprite)
-		{
-			set_icon_rect(&src, (t_point){ICON_SIZE * (index + max), 0},
-				(t_point){ICON_SIZE / 2, ICON_SIZE / 2});
-		}
-		else
-		{
-			set_icon_rect(&src, (t_point){ICON_SIZE * index, 0},
-				(t_point){ICON_SIZE / 2, ICON_SIZE / 2});
-		}
 		set_icon_rect(&icon, point, (t_point){ICON_SIZE / 2, ICON_SIZE / 2});
 		blit_surface(asset, &src, app->surface, &icon);
 		point.x += (ICON_SIZE / 2) + 10;
@@ -53,10 +40,7 @@ void	render_arrows(t_app *app, t_point left, t_point right)
 {
 	t_point	screen_pos;
 
-	screen_pos.x = (app->mouse_track.x - app->view_pos.x) * (app->surface->w)
-		/ (app->view_size.x - app->view_pos.x);
-	screen_pos.y = (app->mouse_track.y - app->view_pos.y) * (app->surface->h)
-		/ (app->view_size.y - app->view_pos.y);
+	SDL_GetMouseState(&screen_pos.x, &screen_pos.y);
 	if ((left.x - 5) < screen_pos.x && (left.x + 10) > screen_pos.x
 		&& left.y < screen_pos.y && (left.y + 10) > screen_pos.y)
 		toggle_active_color(app, 1, "<", left);
@@ -77,13 +61,13 @@ void	render_healthbar(t_app *app)
 	int		x;
 	int		y;
 	
-	y = 280;
-	while (y <= 300)
+	y = 285;
+	while (y <= 305)
 	{
 		x = 39;
 		while (x <= 240)
 		{
-			if (y == 280 || y == 300 || x == 39 || x == 240)
+			if (y == 285 || y == 305 || x == 39 || x == 240)
 				put_pixel_to_surface(app->surface, x, y, 0x000000);
 			else if (x < (app->player.health + 40))
 				put_pixel_to_surface(app->surface, x, y, 0x00FF00);
@@ -94,9 +78,21 @@ void	render_healthbar(t_app *app)
 }
 
 /**
-* Renders weapon and armor staticbars on the help menu sidebar.
+ * Event function to change item amount in inventory using the left and
+ * right arrowkeys.
 */
-// void	render_statics(t_app *app)
-// {
-	
-// }
+void	change_item_amount(t_app *app, SDL_Keycode key)
+{
+	if (app->player.inventory.selected[1] && key == SDLK_LEFT
+		&& app->player.inventory.potion > 1)
+		app->player.inventory.potion--;
+	if (app->player.inventory.selected[2] && key == SDLK_LEFT
+		&& app->player.inventory.antidote > 1)
+		app->player.inventory.antidote--;
+	if (app->player.inventory.selected[1] && key == SDLK_RIGHT
+		&& app->player.inventory.potion < 10)
+		app->player.inventory.potion++;
+	if (app->player.inventory.selected[2] && key == SDLK_RIGHT
+		&& app->player.inventory.antidote < 10)
+		app->player.inventory.antidote++;
+}

@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:00:45 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/07 13:51:29 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/17 10:36:09 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	check_player_position(t_app *app, t_vector2 *point)
 	while (++id < app->player.sector)
 		temp = temp->next;
 	id = -1;
-	while (++id < MAX_MEMBER_SECTORS && temp->member_sectors[id])
+	while (++id < MAX_MEMBER_SECTORS && temp->member_sectors[id] && temp)
 	{
 		if (inside_sector_check(temp->member_sectors[id], &app->mouse_click))
 		{

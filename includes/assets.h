@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assets.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/14 16:16:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/14 19:08:00 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,6 @@
 # define SKYBOX_PATH "assets/textures/bg.bmp"
 # define FONT_PATH "assets/fonts/sci-fi_font.bmp"
 # define UI_FRAME_PATH "assets/ui/ui_frame.bmp"
-# define BUTTON_IDLE_PATH "assets/ui/button_idle.bmp"
-# define BUTTON_SELECT_PATH "assets/ui/button_select.bmp"
-# define BUTTON_PRESS_PATH "assets/ui/button_press.bmp"
 # define TITLESCREEN_PATH "assets/images/awakened3.bmp"
 # define POINTER_PATH "assets/ui/mouse_pointer.bmp"
 # define MUSIC_PATH "assets/sounds/title_music.wav"

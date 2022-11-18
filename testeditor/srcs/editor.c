@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/14 15:53:23 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/16 14:45:16 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			app->active_sector->ceil_tex--;
 		if (app->floor_edit && app->active_sector->floor_tex > 0)
 			app->active_sector->floor_tex--;
+		if (app->player.inventory.selected[5])
+			change_item_amount(app, key);
 	}
 	else if (key == SDLK_RIGHT)
 	{
@@ -93,5 +95,7 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			app->active_sector->ceil_tex++;
 		if (app->floor_edit && app->active_sector->floor_tex < MAX_TEX_COUNT)
 			app->active_sector->floor_tex++;
+		if (app->player.inventory.selected[5])
+			change_item_amount(app, key);
 	}
 }
