@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assets.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/14 19:08:00 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:02:40 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define ASSETS_H
 
 # define PANELS_PATH "assets/textures/minecraft_spritesheet.bmp"
-# define SKYBOX_PATH "assets/textures/bg.bmp"
+# define SKYBOX_PATH "assets/images/skybox.bmp"
 # define FONT_PATH "assets/fonts/sci-fi_font.bmp"
 # define UI_FRAME_PATH "assets/ui/ui_frame.bmp"
 # define TITLESCREEN_PATH "assets/images/awakened3.bmp"

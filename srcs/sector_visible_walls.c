@@ -165,7 +165,7 @@ void	sector_visible_walls(t_app *app)
 	app->wallstack.interesting[0] = app->player.current_sector;
 	app->wallstack.interesting_count = 1;
 	i = 0;
-	while (i < app->wallstack.interesting_count && i < MAX_VISIBLE_SECTORS - 1)
+	while (i < app->wallstack.interesting_count && i < MAX_VISIBLE_SECTORS - 2)
 	{
 		app->wallstack.wall_count[i] = 0;
 		app->wallstack.wall_count[i + 1] = -1;

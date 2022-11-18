@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/18 14:34:46 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:11:08 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,9 @@
 # define FOV 66
 # define MAX_RAY_DISTANCE 25.0
 # define TEX_SIZE 64
+# define SKYBOX_W 1024
+# define SKYBOX_H 576
+# define SKYBOX_ZOOM 2.0
 # define MOUSE_SENSITIVITY_HORIZONTAL 0.3
 # define MOUSE_SENSITIVITY_VERTICAL 0.2
 # define MAX_SECTOR_CORNERS 16
@@ -33,7 +36,6 @@
 # define MAX_VISIBLE_WALLS 256
 # define MAX_VIEW_DISTANCE 100.0
 # define MAX_LINE_LENGTH 1048576.0
-# define TARGET_FRAME_TIME 0.016
 
 /**
  * Struct for threads about their specific identifiers and locks for signaling.

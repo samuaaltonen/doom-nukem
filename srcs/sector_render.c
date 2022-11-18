@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/18 14:33:18 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/18 17:08:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	render_sectors(t_app *app)
 	ft_bzero(app->occlusion_bottom, WIN_W * sizeof(int));
 	sector_visible_walls(app);
 	threads_work((t_thread_data *)&threads_data);
+	/* ft_printf("Player horizon: %f\n", app->player.horizon); */
 }
 
 /**
@@ -61,23 +62,11 @@ void	*sector_render_thread(void *data)
 		sector_stack_render(app, thread,
 			app->sectors[app->player.current_sector].stack_index, (t_limit){
 			0, WIN_W - 1});
+		sector_sky_render(app, thread);
 		thread->has_work = FALSE;
 		if (pthread_mutex_unlock(&thread->lock))
 			exit_error(NULL);
 	}
-	pthread_exit(NULL);
-}
-
-void	*legacy_sector_render_thread(void *data)
-{
-	t_app			*app;
-	t_thread_data	*thread;
-
-	thread = (t_thread_data *)data;
-	app = (t_app *)thread->app;
-	sector_stack_render(app, thread,
-		app->sectors[app->player.current_sector].stack_index, (t_limit){
-		0, WIN_W - 1});
 	pthread_exit(NULL);
 }
 
