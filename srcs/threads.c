@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/17 17:43:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/18 14:07:59 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	threads_work(t_thread_data *threads_data)
 		if (pthread_mutex_unlock(&threads_data[i].lock))
 			exit_error(NULL);
 	}
-	/* while (TRUE)
+	while (TRUE)
 	{
 		i = -1;
 		while (++i < THREAD_COUNT)
@@ -112,5 +112,6 @@ void	threads_work(t_thread_data *threads_data)
 		}
 		if (i == THREAD_COUNT)
 			return ;
-	} */
+		SDL_Delay(1);
+	}
 }
