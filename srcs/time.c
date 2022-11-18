@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:22:26 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/17 15:58:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/18 14:41:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,5 +68,5 @@ static void	update_avg_fps(t_app *app)
 	}
 	app->conf->fps_total += app->conf->fps;
 	app->conf->frames_total++;
-	app->conf->fps_avg = app->conf->fps_chunk / 100;
+	app->conf->fps_avg = (int)((double)app->conf->fps_chunk / 100.0);
 }

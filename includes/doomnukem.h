@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/18 14:28:35 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/18 14:32:15 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_app
 	t_point			mouse_pos;
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];
+	t_thread_data	threads_data[THREAD_COUNT];
 	t_wallstack		wallstack;
 	t_player		player;
 	t_sector		*sectors;
