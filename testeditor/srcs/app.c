@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/18 14:46:10 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:43:45 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,10 +88,12 @@ void	app_render(t_app *app)
 		else
 			draw_line(app, &app->active_last->point, &app->mouse_track, LINE_B);
 	}
+	render_objects(app);
 	render_player(app);
 	zoom_slider(app);
 	render_help_menu(app);
-	draw_object_icon(app,app->mouse_track);
+	if(app->object_edit)
+		draw_object_icon(app,app->mouse_track, app->object_type);
 	SDL_UpdateWindowSurface(app->win);
 }
 
@@ -107,7 +109,7 @@ void	app_loop(t_app *app)
 	{
 		while (SDL_PollEvent(&event))
 			dispatch_event(app, &event);
-		ft_printf("x=%f, y=%f modes:c%i,o%i,p%i,r%i,f%i,s%i,n%i,i%i,player%i\n", app->mouse_track.x, app->mouse_track.y, app->list_creation, app->list_ongoing, app->portal_selection, app->ceiling_edit, app->floor_edit, app->slope_edit, app->object_edit, app->interaction_select, app->player_edit);
+		ft_printf("x=%f, y=%f modes:c%i,o%i,p%i,r%i,f%i,s%i,n%i,i%i,object_menu%i,player%i\n", app->mouse_track.x, app->mouse_track.y, app->list_creation, app->list_ongoing, app->portal_selection, app->ceiling_edit, app->floor_edit, app->slope_edit, app->object_edit, app->interaction_select, app->object_menu, app->player_edit);
 		ft_printf("PLAYER pos x= %f pos y= %f dir x= %f dir y= %f sector= %d\n", app->player.position.x, app->player.position.y, app->player.direction.x, app->player.direction.y, app->player.sector);
 		if (app->active_sector)
 		{

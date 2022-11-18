@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/18 14:46:29 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:43:15 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,14 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 			app->active_last = tmp;
 		}
 	}
+	else if (event->button.button == SDL_BUTTON_LEFT && app->object_edit)
+	{
+		if(valid_object(app))
+		{
+			new_object(app);
+		}
+		app->object_edit = FALSE;
+	}
 	else if (event->button.button == SDL_BUTTON_LEFT)
 	{
 		//if active sector has member sectors find them before linees
@@ -74,23 +82,21 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 			app->player_menu = 1;
 		else if (app->active_sector)
 		{
-			if (app->active_sector->member_sectors[0] && find_child_sector(app))
-				app->active_sector = find_child_sector(app);
-			app->active = find_clicked_vector(app);
-		}
-		else if (app->player_edit)
-		{
+			if (app->player_edit)
+			{
 				app->player.position = app->mouse_track;
 				app->player.direction = (t_vector2){0.f,1.f};
-				app->player.sector = click_sector(app);
+				app->player.sector = app->active_sector;
 				app->player_edit = FALSE;
 				check_player_position(app);
-		}
-		else if (app->object_edit)
-		{
-			app->mouse_click = app->mouse_track;
-			new_object(app);
-			app->object_edit = FALSE;
+			}
+			else if(find_object(app))
+			{
+				app->object_menu = TRUE;
+			}
+			else if (app->active_sector->member_sectors[0] && find_child_sector(app))
+				app->active_sector = find_child_sector(app);
+			app->active = find_clicked_vector(app);
 		}
 		else if (app->player_menu)
 			player_menu_events(app);
@@ -101,7 +107,8 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 	{
 		app->object_type = 0;
 		app->active = NULL;
-		app->player_menu = 0;
+		app->player_menu = FALSE;
+		app->object_menu = FALSE;
 		if (app->active_sector)
 			app->active_sector = app->active_sector->parent_sector;
 		else

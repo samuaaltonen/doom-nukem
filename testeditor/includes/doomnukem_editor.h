@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/18 14:55:39 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:46:47 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,7 @@ typedef struct s_player
 typedef struct s_object
 {
 	int				type;
-	int				hp;
+	int				var;
 	t_vector2		position;
 	t_sector_lst	*sector;
 }	t_object;
@@ -306,6 +306,7 @@ typedef struct s_app
 	t_bool				player_menu;
 	t_bool				interaction_select;
 	t_bool				object_edit;
+	t_bool				object_menu;
 	int					object_type;
 	t_bool				mouse_down;
 	int					sectorcount;
@@ -530,6 +531,9 @@ int				new_object(t_app *app);
 void			change_object_id(t_app *app, int keycode);
 void			del_object(t_app *app, int object_id);
 void			link_interaction(t_app *app);
-void			draw_object_icon(t_app *app, t_vector2 world_pos);
+void			draw_object_icon(t_app *app, t_vector2 world_pos, int id);
+void			render_objects(t_app *app);
+t_bool			valid_object(t_app *app);
+t_bool			find_object(t_app *app);
 
 #endif

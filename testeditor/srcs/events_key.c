@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/17 16:13:28 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/18 16:54:26 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,10 @@ static void	edit_mode_keys(int keycode, t_app *app)
 	if (keycode == SDLK_v)
 		app->wall_edit = ft_toggle(app->wall_edit);
 	if (keycode == SDLK_n)
+	{
 		app->object_edit = ft_toggle(app->object_edit);
+		app->object_menu = FALSE;
+	}
 	if (keycode == SDLK_c)
 	{
 		app->list_creation = ft_toggle(app->list_creation);
