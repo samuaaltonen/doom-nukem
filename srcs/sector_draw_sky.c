@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 14:53:03 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/21 15:31:59 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/21 17:40:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static void	draw_sky(t_app *app, int x)
 			texture_pos.y = fmod(texture_pos.y, (double)SKYBOX_H);
 		put_pixel_to_surface(app->surface, x, y, get_pixel_color(
 				app->assets.bg, (int)texture_pos.x, (int)texture_pos.y));
+		if (y % 2)
+			app->depthmap[y][x] = MAX_VIEW_DISTANCE;
 		y++;
 	}
 }

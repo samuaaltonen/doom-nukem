@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/14 16:21:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/21 17:42:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion_type)
 		if (tex_y >= (double) TEX_SIZE)
 			tex_y = fmod(tex_y, (double) TEX_SIZE);
 		put_pixel_to_surface(app->surface, x, y.start, shade_color(get_pixel_color(app->assets.sprite, tex_x, (int) tex_y), hit->light));
+		if (y.start % 2)
+			app->depthmap[y.start][x] = (float)hit->distance;
 		y.start++;
 	}
 }
