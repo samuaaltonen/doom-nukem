@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:09:50 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/16 14:28:20 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/18 14:47:43 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ static void	render_inventory_texts(t_app *app)
 	render_text(app, (t_point){185, 320},
 		ft_itoa(app->player.inventory.selected[5]));
 	render_text(app, (t_point){195, 320}, " / 2");
-	change_font(app, 11, UI_FRAME);
+	change_font(app, 11, TEXT);
 	render_text(app, (t_point){58, 342}, ft_itoa(app->player.inventory.ammo));
 	render_text(app, (t_point){105, 342},
 		ft_itoa(app->player.inventory.potion));

@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:34:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/16 14:29:24 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/18 14:36:01 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,10 @@ void	render_armor_statics(t_app *app)
 		{
 			if (x < app->player.armor[app->player.selected_armor].defence
 				+ 120 && y < 235)
-				put_pixel_to_surface(app->surface, x, y, 0x000000);
+				put_pixel_to_surface(app->surface, x, y, TEXT);
 			if (x < app->player.armor[app->player.selected_armor].offence
 				+ 120 && y > 238 && y < 248)
-				put_pixel_to_surface(app->surface, x, y, 0x000000);
+				put_pixel_to_surface(app->surface, x, y, TEXT);
 			x++;
 		}
 		y++;

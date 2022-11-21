@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/21 11:48:40 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/21 12:06:34 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ typedef struct s_app
 	t_point			mouse_pos;
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];
+	t_thread_data	threads_data[THREAD_COUNT];
 	t_wallstack		wallstack;
 	t_player		player;
 	t_sector		*sectors;
@@ -165,6 +166,9 @@ void		sector_stack_render(t_app *app, t_thread_data *thread,
 				int stack_id, t_limit limit);
 void		*sector_render_thread(void *data);
 void		render_sectors(t_app *app);
+
+void		legacy_render_multithreading(t_thread_data *threads_data, void *(*renderer)(void *));
+void		*legacy_sector_render_thread(void *data);
 
 /**
  * Sector draw

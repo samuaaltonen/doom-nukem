@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:36:43 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/11 16:31:08 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/18 14:47:10 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	toggle_active_color(t_app *app, int active, char *text, t_point point)
 	}
 	else if (active == 2)
 	{
-		change_font(app, 15, 0xFF00FFFF);
+		change_font(app, 15, 0xFFFF00FF);
 		render_text(app, point, text);
 	}
 	else
