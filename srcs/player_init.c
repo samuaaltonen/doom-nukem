@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/21 15:09:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/21 15:32:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,12 @@ void	init_camera_plane(t_app *app)
  */
 void	init_skybox_plane(t_app *app)
 {
-	(void)app;
+	app->sky.size.y = (int)(WIN_H
+		* (HORIZON_UPPER_LIMIT - HORIZON_LOWER_LIMIT));
+	app->sky.size.x = WIN_W * 4;
+	app->sky.pixel_step.x = SKYBOX_W / (double)app->sky.size.x;
+	app->sky.pixel_step.y = SKYBOX_H / (double)app->sky.size.y;
+	app->sky.start.y = WIN_H * app->player.horizon - app->sky.size.y / 2;
 }
 
 /**
@@ -50,10 +55,12 @@ void	init_skybox_plane(t_app *app)
  */
 void	player_init(t_app *app)
 {
-	app->player = (t_player){
-		(t_vector2){POSITION_START_X, POSITION_START_Y},
-		(t_vector2){DIRECTION_START_X, DIRECTION_START_Y},
-		(t_vector2){0.0, 0.0}, 1.0, 0.5f, 0.f, 0.5, 0};
+	app->player.pos = (t_vector2){POSITION_START_X, POSITION_START_Y};
+	app->player.dir = (t_vector2){DIRECTION_START_X, DIRECTION_START_Y};
+	app->player.height = 0.5;
+	app->player.elevation = 0.0;
+	app->player.horizon = 0.5;
+	app->player.current_sector = 0;
 	init_camera_plane(app);
 	init_skybox_plane(app);
 }

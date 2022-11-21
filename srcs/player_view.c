@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:56:23 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/21 14:59:57 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/21 15:42:15 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
  */
 static void	update_sky_values(t_app *app)
 {
-	(void)app;
+	app->sky.start.y = WIN_H * app->player.horizon - app->sky.size.y / 2;
+	ft_printf("Sky start y: %d\n", app->sky.start.y);
 }
 
 /**
