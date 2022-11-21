@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/18 16:54:26 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:22:44 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 */
 static void	wasd_and_arrow_keys(int keycode, t_app *app)
 {
-	if(!app->object_edit)
+	if(!app->object_new)
 	{
 		if (keycode == SDLK_RIGHT)
 			sector_edit(app, keycode);
@@ -58,10 +58,7 @@ static void	edit_mode_keys(int keycode, t_app *app)
 	if (keycode == SDLK_v)
 		app->wall_edit = ft_toggle(app->wall_edit);
 	if (keycode == SDLK_n)
-	{
-		app->object_edit = ft_toggle(app->object_edit);
-		app->object_menu = FALSE;
-	}
+		toggle_new_object(app, app->object_new);
 	if (keycode == SDLK_c)
 	{
 		app->list_creation = ft_toggle(app->list_creation);

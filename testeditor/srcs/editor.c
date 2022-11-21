@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/18 16:53:36 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:26:21 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 		if (app->slope_edit && app->floor_edit)
 			app->active_sector->floor_slope_height += HEIGHT_INC;
 		if (app->object_menu)
-			app->objects[app->object_type].var += app->divider;
+			app->current_object->var += app->divider;
 	}
 	else if (key == SDLK_DOWN)
 	{
@@ -72,7 +72,7 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 		if (app->slope_edit && app->floor_edit)
 			app->active_sector->floor_slope_height -= HEIGHT_INC;
 		if (app->object_menu)
-			app->objects[app->object_type].var -= app->divider;
+			app->current_object->var -= app->divider;
 	}
 	else if (key == SDLK_LEFT)
 	{
@@ -87,8 +87,8 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			app->active_sector->floor_tex--;
 		if (app->player.inventory.selected[5])
 			change_item_amount(app, key);
-		if (app->object_menu && app->objects[app->object_type].type < 1)
-			app->objects[app->object_type].type--;
+		if (app->object_menu && app->current_object->type < 1)
+			app->current_object->type--;
 	}
 	else if (key == SDLK_RIGHT)
 	{
@@ -103,7 +103,7 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			app->active_sector->floor_tex++;
 		if (app->player.inventory.selected[5])
 			change_item_amount(app, key);
-		if (app->object_menu && app->objects[app->object_type].type < MAX_UNIQUE_OBJECTS - 1)
-			app->objects[app->object_type].type++;
+		if (app->object_menu && app->current_object->type < MAX_UNIQUE_OBJECTS - 1)
+			app->current_object->type++;
 	}
 }

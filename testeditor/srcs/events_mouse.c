@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/21 12:03:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:23:26 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 			app->active_last = tmp;
 		}
 	}
-	else if (event->button.button == SDL_BUTTON_LEFT && app->object_edit)
+	else if (event->button.button == SDL_BUTTON_LEFT && app->object_new)
 	{
 		if(valid_object(app))
 		{
 			new_object(app);
 		}
-		app->object_edit = FALSE;
+		app->object_new = FALSE;
 	}
 	else if (event->button.button == SDL_BUTTON_LEFT)
 	{
@@ -105,7 +105,7 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 	}
 	else
 	{
-		app->object_type = 0;
+		toggle_new_object(app, TRUE);
 		app->active = NULL;
 		app->player_menu = FALSE;
 		app->object_menu = FALSE;

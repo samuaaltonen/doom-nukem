@@ -6,12 +6,30 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:53:42 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/21 12:01:27 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:22:37 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
+
+void	toggle_new_object(t_app *app, t_bool state)
+{
+	if(state)
+	{
+		app->object_new = FALSE;
+		app->current_object->type = 0;
+		app->current_object = NULL;
+	}
+	else
+	{
+		app->object_new = TRUE;
+		app->current_object = &app->objects[app->object_count];
+		app->current_object->type = 1;
+	}
+	app->object_menu = FALSE;
+
+}
 
 t_bool	valid_object(t_app *app)
 {
@@ -40,13 +58,27 @@ t_bool	select_object(t_app *app)
 		if(app->mouse_track.x == app->objects[id].position.x
 			&& app->mouse_track.y == app->objects[id].position.y)
 		{
-			app->object_type = id;
+			app->current_object = &app->objects[id];
 			return (TRUE);
 		}
 		id++;
 	}
 	return (FALSE);
 	
+}
+
+int		get_object_id(t_app *app, t_object *object)
+{
+	int	i;
+
+	i = 0;
+	while (i < MAX_OBJECTS)
+	{
+		if(&app->objects[i] == object)
+			return (i);
+		i++;
+	}
+	return (-1);
 }
 
 /**
@@ -80,8 +112,7 @@ int	new_object(t_app *app)
 {
 	if(app->object_count == MAX_OBJECTS)
 		exit_error("MAX OBJECTS reached\n");
-	app->objects[app->object_count].type = app->object_type;
-	app->objects[app->object_count].var = 0;
+	app->objects[app->object_count].var = 0.f;
 	app->objects[app->object_count].position = app->mouse_track;
 	app->objects[app->object_count].sector = app->active_sector;
 	app->object_count++;
@@ -113,8 +144,8 @@ void	del_object(t_app *app, int object_id)
 
 void	change_object_id(t_app *app, int keycode)
 {
-	if(keycode == SDLK_LEFT && app->object_type > 1)
-		app->object_type--;
-	if(keycode == SDLK_RIGHT && app->object_type < MAX_UNIQUE_OBJECTS)
-		app->object_type++;
+	if(keycode == SDLK_LEFT && app->current_object->type > 1)
+		app->current_object->type--;
+	if(keycode == SDLK_RIGHT && app->current_object->type < MAX_UNIQUE_OBJECTS)
+		app->current_object->type++;
 }
