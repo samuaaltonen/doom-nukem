@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:32:37 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/16 14:31:18 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/18 14:36:48 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,13 +77,13 @@ void	render_weapon_statics(t_app *app)
 		{
 			if (x < app->player.weapons[app->player.selected_weapon].damage
 				+ 120 && y < 110)
-				put_pixel_to_surface(app->surface, x, y, 0x000000);
+				put_pixel_to_surface(app->surface, x, y, TEXT);
 			if (x < app->player.weapons[app->player.selected_weapon].range
 				+ 120 && y > 113 && y < 123)
-				put_pixel_to_surface(app->surface, x, y, 0x000000);
+				put_pixel_to_surface(app->surface, x, y, TEXT);
 			if (x < app->player.weapons[app->player.selected_weapon].range
 				+ 120 && y > 126 && y < 136)
-				put_pixel_to_surface(app->surface, x, y, 0x000000);
+				put_pixel_to_surface(app->surface, x, y, TEXT);
 			x++;
 		}
 		y++;

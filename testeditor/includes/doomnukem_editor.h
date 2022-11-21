@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/17 16:30:32 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/18 14:49:38 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,12 +112,12 @@ enum e_colors {
 	FLOOR_ROTATE = 0x777777,
 	BG_LIGHT = 0x888888,
 	BG_DARK = 0x424242,
-	TEXT = 0xFF111111,
-	ACTIVE_TEXT = 0xFFFF0000,
+	BG_MENU = 0x242424,
+	TEXT = 0xFF00FFFF,
+	ACTIVE_TEXT = 0xFFD50000,
 	PLAYER = 0x00FF00,
 	LINE_A = 0xAABBCC,
 	LINE_B = 0xFF4444,
-	UI_FRAME = 0xFF00FFFF
 };
 
 /**
@@ -258,6 +258,7 @@ typedef struct s_app
 	t_bool				slope_edit;
 	t_bool				player_edit;
 	t_bool				player_menu;
+	t_bool				object_menu;
 	t_bool				imported;
 	t_bool				mouse_down;
 	int					sectorcount;

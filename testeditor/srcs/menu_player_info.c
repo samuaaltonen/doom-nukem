@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:56:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/16 14:53:47 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/18 14:58:41 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,9 @@ void	render_healthbar(t_app *app)
 		while (x <= 240)
 		{
 			if (y == 285 || y == 305 || x == 39 || x == 240)
-				put_pixel_to_surface(app->surface, x, y, 0x000000);
+				put_pixel_to_surface(app->surface, x, y, TEXT);
 			else if (x < (app->player.health + 40))
-				put_pixel_to_surface(app->surface, x, y, 0x00FF00);
+				put_pixel_to_surface(app->surface, x, y, PLAYER);
 			x++;
 		}
 		y++;

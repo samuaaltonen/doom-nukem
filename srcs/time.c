@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:22:26 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/18 14:49:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:47:01 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ static void	update_fps_info(t_app *app)
 		app->conf->fps_avg = app->conf->fps_avg / 10;
 	}
 }
-
 
 /**
  * Updates the fps average every 100 frames

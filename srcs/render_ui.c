@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/17 12:45:11 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:44:39 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ static void ui_bottomframe(t_app *app,t_rect area, int size);
 
 void	render_ui(t_app *app)
 {
-	render_ui_frame(app, (t_rect){10, 10, 112, 32}, 1, DARK_GREY);
-	change_font(app, 16, CYAN);
-	render_text(app, (t_point){24, 20},  app->conf->fps_info);
-	load_font(app);
+	render_crosshair(app);
+	render_text_prompt(app, (t_rect){10, 10, 112, 32}, 1, app->conf->fps_info);
+	//----DEBUG FEATURE 
+	if (app->conf->buttonstates & LEFT_MOUSE)
+		render_text_prompt(app, (t_rect){800, 150, 256, 64}, 1, "This is a nice and wonderful text prompt");
+	//----
 }
 
 void	render_ui_frame(t_app *app,t_rect area, int size, int background)
@@ -33,7 +35,6 @@ void	render_ui_frame(t_app *app,t_rect area, int size, int background)
 	ui_topframe(app, area, size);
 	ui_midframe(app, area, size);
 	ui_bottomframe(app, area, size);
-
 }
 
 static void	ui_background(t_app *app,t_rect area, int size, int background)
@@ -137,11 +138,13 @@ static void ui_bottomframe(t_app *app,t_rect area, int size)
 
 t_rect	render_button(t_app *app, t_rect area, int size, char *text)
 {
-	t_point		text_pos;
+	t_rect	text_pos;
 
 	change_font(app, 16, CYAN);
 	text_pos.x = area.x + size * 12;
 	text_pos.y = area.y + area.h / 2 - size * 12 / 2;
+	text_pos.w = area.w;
+	text_pos.h = area.h;
 	if (!check_mouse(app, area))
 		color_surface(app->assets.ui_frame, CYAN);
 	else if (check_mouse(app, area))
@@ -162,6 +165,18 @@ t_rect	render_button(t_app *app, t_rect area, int size, char *text)
 	return (area);
 }
 
+void	render_text_prompt(t_app *app, t_rect area, int size, char *text)
+{
+	render_ui_frame(app, area, size, DARK_GREY);
+	area.x += size * 12;
+	area.y += size * 12;
+	area.w -= size * 12;
+	area.h -= size * 12;
+	change_font(app, 16, CYAN);
+	render_text(app, area, text);
+	load_font(app);
+}
+
 void	render_pointer(t_app *app, int x, int y)
 {
 	t_rect		dst;
@@ -173,6 +188,19 @@ void	render_pointer(t_app *app, int x, int y)
 	dst.w = app->assets.pointer->w;
 	dst.h = app->assets.pointer->h;
 	blit_surface(app->assets.pointer, &src, app->surface, &dst);
+}
+void	render_crosshair(t_app *app)
+{
+	t_rect	dst;
+	t_rect	src;
+
+	rect_from_surface(app->assets.crosshair, &src);
+	dst.x = WIN_W / 2 - src.w / 2;
+	dst.y = WIN_H / 2 - src.h / 2;
+	dst.w = src.w;
+	dst.h = src.h;
+	blit_surface(app->assets.crosshair, &src, app->surface, &dst);
+	render_text_prompt(app, (t_rect){10, 10, 112, 32}, 1, app->conf->fps_info);
 }
 
 int	check_mouse(t_app *app, t_rect rect)

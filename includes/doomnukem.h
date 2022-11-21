@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/18 15:05:18 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:47:07 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@
 //COLORS
 # define WHITE 0xFFFFFFFF
 # define BLACK 0xFF000000
-# define DARK_RED 0xFFd50000
+# define DARK_RED 0xFFD50000
 # define DARK_GREY 0xFF242424
 # define CYAN 0xFF00FFFF
 # define GREEN 0xFF8BC34A
@@ -177,14 +177,17 @@ void		draw_portal_partial_hole(t_app *app, int x, t_rayhit *hit);
  */
 void        load_font(t_app *app);
 void		change_font(t_app *app, int size, int color);
-void    	render_text(t_app *app, t_point position, char *text);
+void		render_text(t_app *app, t_rect frame, char *text);
 
 /**
  * UI
  */
 void		render_ui_frame(t_app *app,t_rect area, int size, int background);
 void		render_ui(t_app *app);
+void		render_pointer(t_app *app, int x, int y);
+void		render_crosshair(t_app *app);
 t_rect		render_button(t_app *app, t_rect area, int size, char *text);
+void		render_text_prompt(t_app *app, t_rect area, int size, char *text);
 int			check_mouse(t_app *app, t_rect rect);
 
 /**
@@ -206,7 +209,6 @@ void		fullscreen(t_app *app);
  */
 void		render_mainmenu(t_app *app);
 void		render_titlescreen(t_app *app);
-void		render_pointer(t_app *app, int x, int y);
 void		render_game(t_app *app);
 void		render_pausemenu(t_app *app);
 void		render_options(t_app *app);

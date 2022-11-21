@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/17 13:20:12 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/17 15:00:40 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	button_function(t_app *app, t_rect button, void (*f)(t_app *app))
 {
 	if (check_mouse(app, button))
 	{
-		if(app->event.button.clicks == 1)
+		if (app->event.button.clicks == 1)
 		{
 			if (app->event.button.state == SDL_RELEASED)
 				f(app);
@@ -68,7 +68,8 @@ void	fullscreen(t_app *app)
 	if (!(SDL_GetWindowFlags(app->win) & SDL_WINDOW_FULLSCREEN))
 	{
 		SDL_DestroyWindow(app->win);
-		app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_FULLSCREEN);
+		app->win = SDL_CreateWindow(WIN_NAME, 0, 0,
+				WIN_W, WIN_H, SDL_WINDOW_FULLSCREEN);
 	}
 	else if (SDL_GetWindowFlags(app->win) & SDL_WINDOW_FULLSCREEN)
 	{

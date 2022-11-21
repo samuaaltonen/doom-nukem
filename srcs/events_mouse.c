@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_mouse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:40:40 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/11 12:39:54 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/17 15:02:42 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,12 @@ int	events_mouse_motion(t_app *app)
 		delta.y = app->event.motion.yrel;
 		if (delta.x != 0)
 			player_rotate(app,
-				(double) delta.x * MOUSE_SENSITIVITY_HORIZONTAL * app->conf->delta_time);
+				(double) delta.x * MOUSE_SENSITIVITY_HORIZONTAL
+				* app->conf->delta_time);
 		if (delta.y != 0)
 		{
-			app->player.horizon -= delta.y * MOUSE_SENSITIVITY_VERTICAL * app->conf->delta_time;
+			app->player.horizon -= delta.y * MOUSE_SENSITIVITY_VERTICAL
+				* app->conf->delta_time;
 			if (app->player.horizon > HORIZON_UPPER_LIMIT)
 				app->player.horizon = HORIZON_UPPER_LIMIT;
 			if (app->player.horizon < HORIZON_LOWER_LIMIT)

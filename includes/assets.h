@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/18 16:02:40 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:47:11 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define FONT_PATH "assets/fonts/sci-fi_font.bmp"
 # define UI_FRAME_PATH "assets/ui/ui_frame.bmp"
 # define TITLESCREEN_PATH "assets/images/awakened3.bmp"
+# define CROSSHAIR_PATH "assets/ui/crosshair.bmp"
 # define POINTER_PATH "assets/ui/mouse_pointer.bmp"
 # define MUSIC_PATH "assets/sounds/title_music.wav"
 # define LASER_PATH "assets/sounds/laser.wav"
@@ -61,7 +62,7 @@ enum e_texture {
 };
 
 /**
- * Struct for font.
+ * Struct for font. 
  */
 typedef struct s_font
 {
@@ -82,6 +83,7 @@ typedef struct s_assets
 	SDL_Surface		*button_select;
 	SDL_Surface		*button_press;
 	SDL_Surface		*title_screen_image;
+	SDL_Surface		*crosshair;
 	SDL_Surface		*pointer;
 	SDL_Surface		*sprite;
 	SDL_Surface		*bg;
