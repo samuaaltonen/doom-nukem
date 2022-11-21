@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/21 12:18:14 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/21 15:14:48 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,6 @@ void	render_game(t_app *app)
 	handle_movement(app);
 	render_sectors(app);
 	render_ui(app);
-	//----DEBUG FEATURE 
-	if (app->conf->buttonstates & LEFT_MOUSE)
-		render_text_prompt(app, (t_rect){800, 150, 256, 64}, 1, "This is a nice and wonderful text prompt");
-	//----
 }
 
 void	render_pausemenu(t_app *app)

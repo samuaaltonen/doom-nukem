@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/21 12:16:19 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/21 15:14:45 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	events_keyup(int keycode, t_app *app)
 	{
 		if (app->status == STATUS_TITLESCREEN)
 			app->status = STATUS_MAINMENU;
-		//----DEBUG FUNCTIONALITY
+		//----DEBUG FEATURE
 		else if (app->status == STATUS_MAINMENU)
 			start_game(app);
 		//----
