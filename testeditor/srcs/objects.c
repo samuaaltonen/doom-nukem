@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:53:42 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/18 16:56:07 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/21 12:01:27 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_bool	valid_object(t_app *app)
 	return (TRUE);
 }
 
-t_bool	find_object(t_app *app)
+t_bool	select_object(t_app *app)
 {
 	int	id;
 

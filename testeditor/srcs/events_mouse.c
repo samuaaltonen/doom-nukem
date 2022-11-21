@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/18 16:43:15 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/21 12:03:35 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 				app->player_edit = FALSE;
 				check_player_position(app);
 			}
-			else if(find_object(app))
+			else if(select_object(app))
 			{
 				app->object_menu = TRUE;
 			}

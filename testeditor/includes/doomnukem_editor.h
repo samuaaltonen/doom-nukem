@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/18 16:46:47 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/21 12:01:40 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -534,6 +534,6 @@ void			link_interaction(t_app *app);
 void			draw_object_icon(t_app *app, t_vector2 world_pos, int id);
 void			render_objects(t_app *app);
 t_bool			valid_object(t_app *app);
-t_bool			find_object(t_app *app);
+t_bool			select_object(t_app *app);
 
 #endif
