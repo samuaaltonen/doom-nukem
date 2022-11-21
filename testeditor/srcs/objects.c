@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:53:42 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/21 13:22:37 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/21 15:38:58 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	toggle_new_object(t_app *app, t_bool state)
 	if(state)
 	{
 		app->object_new = FALSE;
-		app->current_object->type = 0;
+		if (app->current_object)
+			app->current_object->type = 0;
 		app->current_object = NULL;
 	}
 	else
@@ -89,7 +90,7 @@ void	draw_object_icon(t_app *app, t_vector2 world_pos, int id)
 	t_point screen_pos;
 
 	screen_pos = world_to_screen(app,world_pos);
-	blit_surface(app->assets.sprite,&(t_rect){ICON_SIZE * id, 0, ICON_SIZE, ICON_SIZE},app->surface,&(t_rect){screen_pos.x,screen_pos.y,OBJECT_SCREEN_SIZE,OBJECT_SCREEN_SIZE});
+	blit_surface(app->assets.sprite,&(t_rect){ICON_SIZE * id, 0, ICON_SIZE, ICON_SIZE},app->surface,&(t_rect){screen_pos.x - OBJECT_SCREEN_SIZE / 2,screen_pos.y - OBJECT_SCREEN_SIZE / 2,OBJECT_SCREEN_SIZE,OBJECT_SCREEN_SIZE});
 }
 
 void	render_objects(t_app *app)
@@ -103,6 +104,8 @@ void	render_objects(t_app *app)
 	{
 		if(app->objects[i].type == 0)
 			return ;
+		if(interaction_object_check(app, i))
+			render_point(app, app->objects[i].position,9,INTERACTION);
 		draw_object_icon(app, app->objects[i].position, app->objects[i].type);
 		i++;
 	}
@@ -129,7 +132,7 @@ void	del_object(t_app *app, int object_id)
 		while(i < MAX_INTERACTIONS && app->interactions[i].event_id != 0)
 		{
 			if(app->interactions[i].activation_sector == NULL)
-				app->interactions[i].activation_id--;
+				app->interactions[i].activation_object--;
 			i++;
 		}
 

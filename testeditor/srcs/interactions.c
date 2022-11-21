@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/21 14:42:19 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/21 15:26:36 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,14 @@ static t_bool	new_interaction(t_app *app)
 {
 	if (app->object_menu)
 	{
-		app->current_interaction->activation_id = app->current_object;
+		app->current_interaction->activation_object = app->current_object;
+		app->current_object = NULL;
+		app->object_menu = FALSE;
 	}
 	else if (app->active)
 	{
+		if (app->active->decor == -1)
+			return (FALSE);
 		app->current_interaction->activation_sector = app->active_sector;
 		app->current_interaction->activation_wall = app->active;
 	}
@@ -29,8 +33,6 @@ static t_bool	new_interaction(t_app *app)
 	}
 	else
 		return (FALSE);
-	app->current_object = NULL;
-	app->object_menu = FALSE;
 	return(TRUE);
 }
 
@@ -47,7 +49,7 @@ void	interaction_edit(t_app *app, SDL_Keycode keycode)
 				app->current_interaction->variable -= app->divider;
 
 			}
-			else if (keycode == SDLK_LEFT && app->current_interaction->event_id > 1)
+			else if (keycode == SDLK_LEFT && app->current_interaction->event_id > 0)
 			{
 				app->current_interaction->event_id--;
 			}
@@ -70,7 +72,7 @@ void	link_interaction(t_app *app)
 	}
 	else if(app->current_interaction)
 	{
-		if(app->active_sector)
+		if(app->active_sector && app->current_interaction->event_id > 0 && app->current_interaction->event_id <= 4)
 			app->current_interaction->target_sector = app->active_sector;
 		app->current_interaction = NULL;
 		app->interaction_count++;

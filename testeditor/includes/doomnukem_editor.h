@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/21 14:27:21 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/21 15:15:09 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,7 +124,8 @@ enum e_colors {
 	LINE_A = 0xAABBCC,
 	LINE_B = 0xFF4444,
 	UI_FRAME = 0xFF00FFFF,
-	POINT = 0xFF00FF
+	POINT = 0xFF00FF,
+	INTERACTION = 0x5050FF
 };
 
 /**
@@ -240,8 +241,8 @@ typedef struct s_object
  * 0 no events, array delimited by 0
  * 
  * if activation_sector is NULL/-1, activator will be the activator_id in the object array
- * if activation_sector is set & activation_id is -1, the sector itself is the activator
- * if active_sector is set & activation_id is set, the activator is the decor on the wall_id declared by activation_id in active sector
+ * if activation_sector is set & activation_object is -1, the sector itself is the activator
+ * if active_sector is set & activation_object is set, the activator is the decor on the wall_id declared by activation_object in active sector
  * if the activator is in the object array & the type of the object is an enemy, it only triggers when the enemy dies
  * target_sector & target_id will be the same in saves
  */
@@ -251,7 +252,7 @@ typedef struct s_interaction
 	double 			variable;
 	t_sector_lst	*activation_sector;
 	t_vec2_lst		*activation_wall;
-	t_object		*activation_id;
+	t_object		*activation_object;
 	t_sector_lst	*target_sector;
 }	t_interaction;
 
@@ -543,5 +544,8 @@ t_bool			select_object(t_app *app);
 int				get_object_id(t_app *app, t_object *object);
 void			toggle_new_object(t_app *app, t_bool state);
 void			interaction_edit(t_app *app, SDL_Keycode keycode);
+int				interaction_sector_check(t_app *app, t_sector_lst *sector);
+int				interaction_wall_check(t_app *app, t_vec2_lst *wall);
+int				interaction_object_check(t_app *app, int id);
 
 #endif

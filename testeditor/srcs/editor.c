@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/21 13:53:52 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/21 15:31:14 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,15 @@ t_bool	valid_point(t_app *app)
  */
 void	sector_edit(t_app *app, SDL_Keycode key)
 {
+
 	if (key == SDLK_UP)
 	{
 		if (app->ceiling_edit && !app->slope_edit)
 			app->active_sector->ceil_height += HEIGHT_INC;
 		if (app->floor_edit && !app->slope_edit)
 			app->active_sector->floor_height += HEIGHT_INC;
-		if (app->wall_edit && app->active && app->active->decor < MAX_DECOR)
-			app->active->decor += app->divider;
+		if (app->active && app->active->decor < MAX_DECOR)
+			app->active->decor++;
 		if (app->light_edit && app->active_sector->light < 8)
 			app->active_sector->light++;
 		if (app->slope_edit && app->ceiling_edit)
@@ -67,8 +68,8 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			app->active_sector->ceil_height -= HEIGHT_INC;
 		if (app->floor_edit && !app->slope_edit)
 			app->active_sector->floor_height -= HEIGHT_INC;
-		if (app->wall_edit && app->active && app->active->decor >= 0)
-			app->active->decor -= app->divider;
+		if (app->active && app->active->decor > -1)
+			app->active->decor--;
 		if (app->light_edit && app->active_sector->light > -8)
 			app->active_sector->light--;
 		if (app->slope_edit && app->ceiling_edit)

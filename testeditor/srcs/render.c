@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/18 13:50:16 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/21 15:02:25 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	render_sector(t_app *app, t_vec2_lst *sector_start)
 	{
 		if (tmp->type > -1)
 			draw_list_lines(app, tmp, tmp->next, PORTAL);
+		else if(interaction_wall_check(app, tmp))
+			draw_list_lines(app, tmp, tmp->next, INTERACTION);
 		else
 			draw_list_lines(app, tmp, tmp->next, 0xEEEEEE);
 		if (tmp->next == sector_start)
