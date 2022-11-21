@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/21 13:24:04 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:51:08 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,7 +127,7 @@ void	app_loop(t_app *app)
 			ft_printf("\n");
 		}
 		if (app->active)
-			ft_printf("selected point x:%f, y:%f, tex:%i, type:%i\n", app->active->point.x, app->active->point.y, app->active->tex, app->active->type);
+			ft_printf("selected point x:%f, y:%f, tex:%i, type:%i, decor:%i\n", app->active->point.x, app->active->point.y, app->active->tex, app->active->type, app->active->decor);
 		app_render(app);
 	}
 }

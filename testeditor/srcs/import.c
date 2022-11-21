@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/09 15:12:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:51:44 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ static void	export_to_list(t_exportsector *export, t_vec2_lst **list, int count)
 		put_to_vector_list(list, tmp->next);
 		tmp->next->tex = export->wall_textures[i];
 		tmp->next->type = export->wall_types[i];
+		tmp->next->decor = -1;
 		tmp = tmp->next;
 		i++;
 	}

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/21 13:22:44 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:41:57 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,15 @@
 */
 static void	wasd_and_arrow_keys(int keycode, t_app *app)
 {
-	if(!app->object_new)
-	{
-		if (keycode == SDLK_RIGHT)
-			sector_edit(app, keycode);
-		if (keycode == SDLK_LEFT)
-			sector_edit(app, keycode);
-		if (keycode == SDLK_UP)
-			sector_edit(app, keycode);
-		if (keycode == SDLK_DOWN)
-			sector_edit(app, keycode);
-	}
-	else
-		change_object_id(app, keycode);
+
+	if (keycode == SDLK_RIGHT)
+		sector_edit(app, keycode);
+	if (keycode == SDLK_LEFT)
+		sector_edit(app, keycode);
+	if (keycode == SDLK_UP)
+		sector_edit(app, keycode);
+	if (keycode == SDLK_DOWN)
+		sector_edit(app, keycode);
 	if (keycode == SDLK_w)
 		app->keystates ^= FORWARD_W_DOWN;
 	if (keycode == SDLK_s)

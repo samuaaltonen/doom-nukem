@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/21 13:23:47 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:49:34 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@
 # define MAX_UNIQUE_OBJECTS 64
 # define MAX_INTERACTIONS 64
 # define MAX_UNIQUE_INTERACTIONS 7
+# define MAX_DECOR 10
 # define DEG_IN_RADIAN 0.01745f
 # define PI_HALF 1.57079632679
 # define RADIAN_IN_DEG 57.29578f
@@ -140,6 +141,7 @@ typedef struct s_vec2_lst
 	t_vector2			point;
 	int					type;
 	int					tex;
+	int					decor;
 	struct s_vec2_lst	*next;
 }	t_vec2_lst;
 

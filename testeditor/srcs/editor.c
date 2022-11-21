@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/21 13:26:21 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:53:52 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,8 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			app->active_sector->ceil_height += HEIGHT_INC;
 		if (app->floor_edit && !app->slope_edit)
 			app->active_sector->floor_height += HEIGHT_INC;
+		if (app->wall_edit && app->active && app->active->decor < MAX_DECOR)
+			app->active->decor += app->divider;
 		if (app->light_edit && app->active_sector->light < 8)
 			app->active_sector->light++;
 		if (app->slope_edit && app->ceiling_edit)
@@ -65,6 +67,8 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			app->active_sector->ceil_height -= HEIGHT_INC;
 		if (app->floor_edit && !app->slope_edit)
 			app->active_sector->floor_height -= HEIGHT_INC;
+		if (app->wall_edit && app->active && app->active->decor >= 0)
+			app->active->decor -= app->divider;
 		if (app->light_edit && app->active_sector->light > -8)
 			app->active_sector->light--;
 		if (app->slope_edit && app->ceiling_edit)
@@ -87,7 +91,7 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			app->active_sector->floor_tex--;
 		if (app->player.inventory.selected[5])
 			change_item_amount(app, key);
-		if (app->object_menu && app->current_object->type < 1)
+		if ((app->object_menu || app->object_new) && app->current_object->type > 1)
 			app->current_object->type--;
 	}
 	else if (key == SDLK_RIGHT)
@@ -103,7 +107,7 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			app->active_sector->floor_tex++;
 		if (app->player.inventory.selected[5])
 			change_item_amount(app, key);
-		if (app->object_menu && app->current_object->type < MAX_UNIQUE_OBJECTS - 1)
+		if ((app->object_menu || app->object_new) && app->current_object->type < MAX_UNIQUE_OBJECTS - 1)
 			app->current_object->type++;
 	}
 }
