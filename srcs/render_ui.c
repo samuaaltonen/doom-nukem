@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/21 11:55:14 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:44:39 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,12 @@ static void ui_bottomframe(t_app *app,t_rect area, int size);
 
 void	render_ui(t_app *app)
 {
-	render_ui_frame(app, (t_rect){10, 10, 112, 32}, 1, DARK_GREY);
-	change_font(app, 16, CYAN);
-	render_text(app, (t_rect){24, 20, 112, 32},  app->conf->fps_info);
-	load_font(app);
+	render_crosshair(app);
+	render_text_prompt(app, (t_rect){10, 10, 112, 32}, 1, app->conf->fps_info);
+	//----DEBUG FEATURE 
+	if (app->conf->buttonstates & LEFT_MOUSE)
+		render_text_prompt(app, (t_rect){800, 150, 256, 64}, 1, "This is a nice and wonderful text prompt");
+	//----
 }
 
 void	render_ui_frame(t_app *app,t_rect area, int size, int background)
@@ -186,6 +188,19 @@ void	render_pointer(t_app *app, int x, int y)
 	dst.w = app->assets.pointer->w;
 	dst.h = app->assets.pointer->h;
 	blit_surface(app->assets.pointer, &src, app->surface, &dst);
+}
+void	render_crosshair(t_app *app)
+{
+	t_rect	dst;
+	t_rect	src;
+
+	rect_from_surface(app->assets.crosshair, &src);
+	dst.x = WIN_W / 2 - src.w / 2;
+	dst.y = WIN_H / 2 - src.h / 2;
+	dst.w = src.w;
+	dst.h = src.h;
+	blit_surface(app->assets.crosshair, &src, app->surface, &dst);
+	render_text_prompt(app, (t_rect){10, 10, 112, 32}, 1, app->conf->fps_info);
 }
 
 int	check_mouse(t_app *app, t_rect rect)

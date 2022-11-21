@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/21 12:06:34 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:44:24 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -193,6 +193,8 @@ void		render_text(t_app *app, t_rect frame, char *text);
  */
 void		render_ui_frame(t_app *app,t_rect area, int size, int background);
 void		render_ui(t_app *app);
+void		render_pointer(t_app *app, int x, int y);
+void		render_crosshair(t_app *app);
 t_rect		render_button(t_app *app, t_rect area, int size, char *text);
 void		render_text_prompt(t_app *app, t_rect area, int size, char *text);
 int			check_mouse(t_app *app, t_rect rect);
@@ -216,7 +218,6 @@ void		fullscreen(t_app *app);
  */
 void		render_mainmenu(t_app *app);
 void		render_titlescreen(t_app *app);
-void		render_pointer(t_app *app, int x, int y);
 void		render_game(t_app *app);
 void		render_pausemenu(t_app *app);
 void		render_options(t_app *app);

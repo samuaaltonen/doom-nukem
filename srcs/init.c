@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/21 12:06:52 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:30:11 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void    load_assets(t_app *app)
 {
 	app->assets.ui_frame = SDL_LoadBMP(UI_FRAME_PATH);
 	app->assets.title_screen_image = SDL_LoadBMP(TITLESCREEN_PATH);
+	app->assets.crosshair = SDL_LoadBMP(CROSSHAIR_PATH);
 	app->assets.pointer = SDL_LoadBMP(POINTER_PATH);
 	app->assets.sprite = SDL_LoadBMP(PANELS_PATH);
 	app->assets.bg = SDL_LoadBMP(SKYBOX_PATH);
