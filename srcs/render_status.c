@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/21 12:03:11 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/21 12:18:14 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,23 +67,24 @@ void	render_game(t_app *app)
 	//----DEBUG FEATURE 
 	if (app->conf->buttonstates & LEFT_MOUSE)
 		render_text_prompt(app, (t_rect){800, 150, 256, 64}, 1, "This is a nice and wonderful text prompt");
+	//----
 }
 
 void	render_pausemenu(t_app *app)
 {	
 	SDL_SetRelativeMouseMode(SDL_FALSE);
 	render_sectors(app);
-	render_ui_frame(app, (t_rect){28,78,300,428}, 2, 0x242424);
+	render_ui_frame(app, (t_rect){28,78,300,428}, 1, DARK_GREY);
 	button_function(app,
-		render_button(app, (t_rect){50, 100, 256, 64}, 2, "MAIN MENU"), main_menu);
+		render_button(app, (t_rect){50, 100, 256, 64}, 1, "MAIN MENU"), main_menu);
 	button_function(app,
-		render_button(app, (t_rect){50, 180, 256, 64}, 2, "CONTINUE"), pause_game);
+		render_button(app, (t_rect){50, 180, 256, 64}, 1, "CONTINUE"), pause_game);
 	button_function(app,
-		render_button(app, (t_rect){50, 260, 256, 64}, 2, "LEVEL EDITOR"), do_nothing);
+		render_button(app, (t_rect){50, 260, 256, 64}, 1, "LEVEL EDITOR"), do_nothing);
 	button_function(app,
-		render_button(app, (t_rect){50, 340, 256, 64}, 2, "OPTIONS"), game_options);
+		render_button(app, (t_rect){50, 340, 256, 64}, 1, "OPTIONS"), game_options);
 	button_function(app,
-		render_button(app, (t_rect){50, 420, 256, 64}, 2, "QUIT GAME"), exit_game);
+		render_button(app, (t_rect){50, 420, 256, 64}, 1, "QUIT GAME"), exit_game);
 	render_ui(app);
 	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
 }

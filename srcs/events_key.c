@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/17 15:01:57 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/21 12:16:19 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@ int	events_keyup(int keycode, t_app *app)
 	{
 		if (app->status == STATUS_GAME || app->status == STATUS_PAUSEMENU)
 			pause_game(app);
+		if (app->status == STATUS_MAINMENU)
+			app->status = STATUS_TITLESCREEN;
+			
 	}
 	if (keycode == SDLK_SPACE)
 	{
