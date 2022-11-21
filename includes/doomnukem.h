@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/21 13:47:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/21 14:58:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ void		threads_work(t_thread_data *threads_data);
  * Player
  */
 void		player_rotate(t_app *app, double angle);
+void		player_horizon(t_app *app, double change);
 void		player_move(t_app *app, t_movement movement, double speed);
 
 /**
@@ -157,9 +158,13 @@ void		sector_walls_raycast(t_app *app, t_thread_data *thread,
 				t_wall *wall, t_limit limit);
 void		sector_stack_render(t_app *app, t_thread_data *thread,
 				int stack_id, t_limit limit);
-void		sector_sky_render(t_app *app, t_thread_data *thread);
 void		*sector_render_thread(void *data);
 void		render_sectors(t_app *app);
+
+/**
+ * Sky
+ */
+void		sector_sky_render(t_app *app, t_thread_data *thread);
 
 /**
  * Sector draw
