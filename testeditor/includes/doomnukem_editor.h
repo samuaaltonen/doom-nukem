@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/21 13:49:34 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/21 14:27:21 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -250,7 +250,8 @@ typedef struct s_interaction
 	int				event_id;
 	double 			variable;
 	t_sector_lst	*activation_sector;
-	int				activation_id;
+	t_vec2_lst		*activation_wall;
+	t_object		*activation_id;
 	t_sector_lst	*target_sector;
 }	t_interaction;
 
@@ -307,7 +308,6 @@ typedef struct s_app
 	t_bool				slope_edit;
 	t_bool				player_edit;
 	t_bool				player_menu;
-	t_bool				interaction_select;
 	t_bool				object_new;
 	t_bool				object_menu;
 	t_interaction		*current_interaction;
@@ -320,6 +320,7 @@ typedef struct s_app
 	t_object			objects[MAX_OBJECTS];
 	int					object_count;
 	t_interaction		interactions[MAX_INTERACTIONS];
+	int					interaction_count;
 }	t_app;
 
 typedef struct s_exportsector
@@ -528,7 +529,7 @@ void			inventory_init(t_app *app);
 void			check_player_position(t_app *app);
 
 /**
- * Objects
+ * Objects & Interactions
  * 
  */
 int				new_object(t_app *app);
@@ -541,5 +542,6 @@ t_bool			valid_object(t_app *app);
 t_bool			select_object(t_app *app);
 int				get_object_id(t_app *app, t_object *object);
 void			toggle_new_object(t_app *app, t_bool state);
+void			interaction_edit(t_app *app, SDL_Keycode keycode);
 
 #endif

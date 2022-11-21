@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/21 13:51:08 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/21 14:41:01 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,11 +109,13 @@ void	app_loop(t_app *app)
 	{
 		while (SDL_PollEvent(&event))
 			dispatch_event(app, &event);
-		ft_printf("x=%f, y=%f modes:c%i,o%i,p%i,r%i,f%i,s%i,n%i,i%i,object_menu%i,player%i\n", app->mouse_track.x, app->mouse_track.y, app->list_creation, app->list_ongoing, app->portal_selection, app->ceiling_edit, app->floor_edit, app->slope_edit, app->object_new, app->interaction_select, app->object_menu, app->player_edit);
+		ft_printf("x=%f, y=%f modes:c%i,o%i,p%i,r%i,f%i,s%i,n%i,i%p,object_menu%i,player%i\n", app->mouse_track.x, app->mouse_track.y, app->list_creation, app->list_ongoing, app->portal_selection, app->ceiling_edit, app->floor_edit, app->slope_edit, app->object_new, app->current_interaction, app->object_menu, app->player_edit);
 		if (app->active_sector)
 		{
 			if (app->object_menu)
 				ft_printf("selected object id:%i, type:%i, var:%f ",get_object_id(app, app->current_object), app->current_object->type, app->current_object->var);
+			if (app->current_interaction)
+				ft_printf("current interaction event_id:%i, variable: %f ", app->current_interaction->event_id, app->current_interaction->variable);
 			ft_printf("inside = %i, floor: h:%f,tex:%i,o:%i, ceil: h:%f,tex:%i,o:%i, light:%i\n has members: ", app->active_sector, app->active_sector->floor_height, app->active_sector->floor_tex, app->active_sector->floor_tex_offset, app->active_sector->ceil_height, app->active_sector->ceil_tex, app->active_sector->ceil_tex_offset, app->active_sector->light);
 			for (int i = 0; i < 4 && app->active_sector->member_sectors[i]; ++i)
 				ft_printf("%i ", get_sector_id(app, app->active_sector->member_sectors[i]));
