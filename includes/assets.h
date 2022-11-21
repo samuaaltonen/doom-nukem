@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/14 19:08:00 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/21 10:32:30 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ enum e_texture {
 };
 
 /**
- * Struct for font.
+ * Struct for font. 
  */
 typedef struct s_font
 {

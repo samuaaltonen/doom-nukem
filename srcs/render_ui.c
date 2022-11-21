@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/17 14:48:53 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/21 11:55:14 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,18 @@ t_rect	render_button(t_app *app, t_rect area, int size, char *text)
 	load_font(app);
 	color_surface(app->assets.ui_frame, CYAN);
 	return (area);
+}
+
+void	render_text_prompt(t_app *app, t_rect area, int size, char *text)
+{
+	render_ui_frame(app, area, size, DARK_GREY);
+	area.x += size * 12;
+	area.y += size * 12;
+	area.w -= size * 12;
+	area.h -= size * 12;
+	change_font(app, 16, CYAN);
+	render_text(app, area, text);
+	load_font(app);
 }
 
 void	render_pointer(t_app *app, int x, int y)

@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/17 15:18:27 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/21 12:03:11 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,9 @@ void	render_game(t_app *app)
 	handle_movement(app);
 	render_sectors(app);
 	render_ui(app);
+	//----DEBUG FEATURE 
+	if (app->conf->buttonstates & LEFT_MOUSE)
+		render_text_prompt(app, (t_rect){800, 150, 256, 64}, 1, "This is a nice and wonderful text prompt");
 }
 
 void	render_pausemenu(t_app *app)
@@ -114,7 +117,7 @@ void	render_options(t_app *app)
 	render_text(app, (t_rect){336, 270, 800, 800}, "An equally long text with the numbers 7, 9, 5 and even 5");
 	render_text(app, (t_rect){336, 290, 800, 800}, "With a few (Symbols) and 'quotes'...? and 0 FUCKS given");
 	render_text(app, (t_rect){336, 310, 800, 800}, "And now an extra line\nwith an extra line!");
-	render_text(app, (t_rect){336, 350, 300, 100}, "For the finale: A text that doesn' fit horizontally in the given rectangle AND that doesn't fit vertically so these sentence will be completely unfinished");
+	render_text(app, (t_rect){336, 350, 300, 100}, "For the finale: A text that doesn' fit horizontally in the given rectangle AND that doesn't fit vertically so this sentence will be mostly unfinished");
 
 	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
 }
