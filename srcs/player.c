@@ -83,24 +83,6 @@ static void	update_position(t_app *app, t_vector2 new)
 		app->player.pos.y = new.y;
 }
 
-
-/**
- * Rotates player direction by given angle.
- */
-void	player_rotate(t_app *app, double angle)
-{
-	t_matrix2	rotation;
-
-	rotation = (t_matrix2){
-		(t_vector2){cos(angle), -sin(angle)},
-		(t_vector2){sin(angle), cos(angle)}
-	};
-	app->player.dir = ft_vector_multiply_matrix(app->player.dir, rotation);
-	app->player.cam = ft_vector_multiply_matrix(app->player.cam, rotation);
-	app->conf->skybox_offset = fmod(app->conf->skybox_offset + 720.f, 720.f)
-		+ angle * RADIAN_IN_DEG;
-}
-
 /**
  * Moves player to given direction if there is no collision.
  */

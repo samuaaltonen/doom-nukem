@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/21 14:58:44 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/21 15:09:40 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@
 # include "liblinearalgebra.h"
 # include "assets.h"
 # include "config.h"
-# include "engine.h"
 # include "error.h"
 # include "events.h"
 # include "geometry.h"
+# include "engine.h"
 # include "player.h"
 
 //STATUS MACROS
@@ -104,7 +104,6 @@ void		exit_error(char *message);
  * Configuration
  */
 void		init_thread_info(t_app *app);
-void		init_camera_plane(t_app *app);
 
 /**
  * Application
@@ -143,9 +142,12 @@ void		threads_work(t_thread_data *threads_data);
 /**
  * Player
  */
+void		player_init(t_app *app);
 void		player_rotate(t_app *app, double angle);
 void		player_horizon(t_app *app, double change);
 void		player_move(t_app *app, t_movement movement, double speed);
+void		init_camera_plane(t_app *app);
+void		init_skybox_plane(t_app *app);
 
 /**
  * Sectors

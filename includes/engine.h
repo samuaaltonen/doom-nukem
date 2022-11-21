@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/14 16:20:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/21 14:52:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,12 +134,23 @@ typedef struct s_wall
 typedef struct s_wallstack
 {
 	t_wall	walls[MAX_VISIBLE_SECTORS] \
-			[(MAX_MEMBER_SECTORS + 1) * MAX_SECTOR_CORNERS];
+			[(MAX_MEMBER_SECTORS + 1) * MAX_SECTOR_CORNERS + 1];
 	int		wall_count[MAX_VISIBLE_SECTORS + 1];
 	int		visited[MAX_VISIBLE_SECTORS];
 	int		visited_count;
 	int		interesting[MAX_VISIBLE_SECTORS];
 	int		interesting_count;
 }	t_wallstack;
+
+/**
+ * Struct that contains skybox drawing information. These values are updated
+ * based on player movement.
+ */
+typedef struct s_sky
+{
+	t_point		start;
+	t_point		size;
+	t_vector2	pixel_step;
+}	t_sky;
 
 #endif
