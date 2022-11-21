@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/21 13:30:32 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/21 14:43:23 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@
 # define TITLESCREEN_PATH "assets/images/awakened3.bmp"
 # define CROSSHAIR_PATH "assets/ui/crosshair.bmp"
 # define POINTER_PATH "assets/ui/mouse_pointer.bmp"
+# define SHIELD_PATH "assets/ui/shield.bmp"
+# define HEART_PATH "assets/ui/heart.bmp"
 # define MUSIC_PATH "assets/sounds/title_music.wav"
 # define LASER_PATH "assets/sounds/laser.wav"
 # define SHOT_PATH "assets/sounds/shot.wav"
@@ -85,6 +87,8 @@ typedef struct s_assets
 	SDL_Surface		*title_screen_image;
 	SDL_Surface		*crosshair;
 	SDL_Surface		*pointer;
+	SDL_Surface		*shield;
+	SDL_Surface		*heart;
 	SDL_Surface		*sprite;
 	SDL_Surface		*bg;
 }	t_assets;

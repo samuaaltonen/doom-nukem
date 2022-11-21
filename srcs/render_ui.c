@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/21 13:44:39 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/21 15:06:50 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,11 @@ void	render_ui(t_app *app)
 {
 	render_crosshair(app);
 	render_text_prompt(app, (t_rect){10, 10, 112, 32}, 1, app->conf->fps_info);
+	render_ui_frame(app, (t_rect){1056, 624, 32, 32}, 1, DARK_GREY);
+	render_ui_frame(app, (t_rect){1104, 624, 32, 32}, 1, DARK_GREY);
+	render_ui_frame(app, (t_rect){1152, 592, 64, 64}, 1, DARK_GREY);
+	render_ui_element(app, app->assets.shield, (t_rect){32, 600, 32, 32});
+	render_ui_element(app, app->assets.heart, (t_rect){32, 640, 32, 32});
 	//----DEBUG FEATURE 
 	if (app->conf->buttonstates & LEFT_MOUSE)
 		render_text_prompt(app, (t_rect){800, 150, 256, 64}, 1, "This is a nice and wonderful text prompt");
@@ -200,7 +205,13 @@ void	render_crosshair(t_app *app)
 	dst.w = src.w;
 	dst.h = src.h;
 	blit_surface(app->assets.crosshair, &src, app->surface, &dst);
-	render_text_prompt(app, (t_rect){10, 10, 112, 32}, 1, app->conf->fps_info);
+}
+void	render_ui_element(t_app *app, SDL_Surface *elem, t_rect area)
+{
+	t_rect	src;
+
+	rect_from_surface(app->assets.crosshair, &src);
+	blit_surface(elem, &src, app->surface, &area);
 }
 
 int	check_mouse(t_app *app, t_rect rect)
