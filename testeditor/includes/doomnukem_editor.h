@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/18 14:49:38 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/21 11:53:47 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define MAX_MEMBER_SECTORS 8
 # define MAX_WEAPONS 5
 # define MAX_ARMOR 5
+# define MAX_OBJECTS 17
 # define INVENTORY_SIZE 6
 # define DEG_IN_RADIAN 0.01745f
 # define PI_HALF 1.57079632679
@@ -457,6 +458,8 @@ void			color_surface(SDL_Surface *surface, int color);
 void			change_item_amount(t_app *app, SDL_Keycode key);
 void			render_weapon_statics(t_app *app);
 void			render_armor_statics(t_app *app);
+void			render_object_statics(t_app *app);
+void			render_object_icons(t_app *app, t_point point);
 void			render_inventory(t_app *app);
 void			select_inventory(t_app *app, t_point screen_pos);
 int				check_mouse(t_point screen_pos, t_rect rect);

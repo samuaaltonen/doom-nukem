@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/18 14:52:58 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/21 16:25:11 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,13 +45,13 @@ static void	player_edit_menu(t_app *app)
 {
 	render_text(app, (t_point){10, 40}, "WEAPONS");
 	render_arrows(app, (t_point){25, 67}, (t_point){250, 67});
-	render_icons(app, app->assets.sprite, (t_point){40, 60}, MAX_WEAPONS);
+	render_icons(app, app->assets.sprite, (t_point){40, 60}, MAX_WEAPONS + 1);
 	render_ui_frame(app, (t_rect){(ICON_SIZE / 2) * (app->player.selected_weapon + 1)
 		+ (10 * (app->player.selected_weapon + 1)) - 3, 59, 35, 35}, 1, 0);
 	render_weapon_statics(app);
 	render_text(app, (t_point){10, 165}, "ARMOR");
 	render_arrows(app, (t_point){25, 193}, (t_point){250, 193});
-	render_icons(app, app->assets.sprite, (t_point){40, 185}, MAX_ARMOR);
+	render_icons(app, app->assets.sprite, (t_point){40, 185}, MAX_ARMOR + 1);
 	render_ui_frame(app, (t_rect){(ICON_SIZE / 2) * (app->player.selected_armor + 1)
 		+ (10 * (app->player.selected_armor + 1)) - 3, 184, 35, 35}, 1, 0);
 	render_armor_statics(app);
@@ -73,7 +73,11 @@ static void	player_edit_menu(t_app *app)
 */
 static void	object_edit_menu(t_app *app)
 {
-	(void)app;
+	render_text(app, (t_point){10, 40}, "OBJECTS");
+	render_arrows(app, (t_point){10, 67}, (t_point){265, 67});
+	render_object_icons(app, (t_point){25, 60});
+	render_ui_frame(app, (t_rect){108, 45, 66, 66}, 1, 0);
+	render_object_statics(app);
 }
 
 /**
