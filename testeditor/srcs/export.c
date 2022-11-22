@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/22 16:32:13 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:11:03 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,8 +205,11 @@ int	export_file(t_app *app, char *path)
  	if (write(fd, objects, sizeof(t_export_object) * MAX_OBJECTS) == -1)
 		exit_error("object write error\n");
 	write_interactions(app, (t_export_interaction *)&interactions);
-/* 	if (write(fd, interactions, sizeof(t_export_interaction) * MAX_INTERACTIONS) == -1)
-		exit_error("interaction write error\n"); */
+	for(int i = 0; i < MAX_INTERACTIONS;i++)
+		ft_printf("read interactions id %i, target sector%p, wall%p, object%p\n",app->interactions[i].event_id, app->interactions[i].activation_wall, app->interactions[i].activation_object);
+
+	if (write(fd, interactions, sizeof(t_export_interaction) * MAX_INTERACTIONS) == -1)
+		exit_error("interaction write error\n");
 	free(export);
 	close(fd);
 	return (0);

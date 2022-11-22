@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/22 16:48:02 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:11:27 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,8 +174,8 @@ static void read_player(t_app *app, t_export_player *player)
 
 static void	read_objects(t_app *app, t_export_object *export)
 {
-	t_object temp;
-	int	i;
+	t_object	temp;
+	int			i;
 
 	i = 0;
 	while (i < MAX_OBJECTS)
@@ -187,6 +187,46 @@ static void	read_objects(t_app *app, t_export_object *export)
 			app->object_count++;
 		temp.var = export[i].var;
 		(app->objects[i]) = temp;
+		i++;
+	}
+}
+
+static t_vec2_lst *line_by_index(t_sector_lst *sector, int index)
+{
+	int	i;
+	t_vec2_lst *head;
+
+	i = 0;
+	if (!sector)
+		return (NULL);
+	head = sector->wall_list;
+	while (i < MAX_SECTOR_CORNERS)
+	{
+		if(i == index)
+			return (head);
+		head = head->next;
+		i++;
+	}
+	return (NULL);
+}
+
+static void	read_interactions(t_app *app, t_export_interaction *export)
+{
+	t_interaction	temp;
+	int				i;
+
+	i = 0;
+	while (i < MAX_INTERACTIONS)
+	{
+		temp.event_id = export[i].event_id;
+		if (temp.event_id != 0)
+			app->interaction_count++;
+		temp.variable = export[i].variable;
+		temp.activation_sector = sector_by_index(app, export[i].activation_sector);
+		temp.activation_wall = line_by_index(temp.activation_sector, export[i].activation_wall);
+		temp.activation_object = &app->objects[export->activation_object];
+		temp.target_sector = sector_by_index(app, export[i].target_sector);
+		app->interactions[i] = temp;
 		i++;
 	}
 }
@@ -208,6 +248,7 @@ int	import_file(t_app *app, char *path)
 	size_t			sector_count;
 	t_export_player	player;
 	t_export_object	objects[MAX_OBJECTS];
+	t_export_interaction	interactions[MAX_INTERACTIONS];
 
 	counter = 0;
 	fd = open(path, O_RDONLY, 0755);
@@ -231,8 +272,11 @@ int	import_file(t_app *app, char *path)
 	if (read(fd,&objects, sizeof(t_export_object) * MAX_OBJECTS) ==  -1)
 		exit_error("Object read error\n");
 	read_objects(app, (t_export_object *)&objects);
-	for(int i = 0; i < MAX_OBJECTS;i++)
-		ft_printf("read objects %i\n",app->objects[i].type);
+	if (read(fd, &interactions, sizeof(t_export_interaction) * MAX_INTERACTIONS) == -1)
+		exit_error("Interaction read error\n");
+	read_interactions(app, (t_export_interaction *)&interactions);
+	for(int i = 0; i < MAX_INTERACTIONS;i++)
+		ft_printf("read interactions id %i, target sector%p, wall%p, object%p\n",interactions[i].event_id, interactions[i].activation_wall, interactions[i].activation_object);
 
 	close(fd);
 	app->player.sector = sector_by_index(app,player.sector);
