@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:30:43 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/22 14:32:56 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/22 14:39:11 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,6 @@ double	ft_vector_angle_right(t_vector2 a, t_vector2 b)
 	if (ratio <= -1.0 || ratio >= 1.0)
 		return (0.0);
 	if (ft_vector_crossproduct(a, b) < 0.0)
-		return (acos(ratio) + M_PI);
+		return (2 * M_PI - acos(ratio));
 	return (acos(ratio));
 }
