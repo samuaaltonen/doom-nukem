@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/16 14:34:42 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:48:03 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,35 @@ static void	player_menu_events(t_app *app)
 		app->player.selected_armor++;
 	select_inventory(app, screen_pos);
 	app->player.inventory.selected[5] = check_selected_inventory(app);
+}
+
+static void	object_menu_events(t_app *app)
+{
+	t_point	screen_pos;
+	int		start_y;
+
+	start_y = 220;
+	SDL_GetMouseState(&screen_pos.x, &screen_pos.y);
+	// if (check_mouse(screen_pos, (t_rect){10, 67, 10, 10}))
+	// 	app->sectors->wall_list->tex--;
+	// if (check_mouse(screen_pos, (t_rect){265, 67, 10, 10}))
+	// 	app->sectors->wall_list->tex++;
+	if (check_mouse(screen_pos, (t_rect){90, start_y + 25, 113, 15}))
+		app->event_id = 0;
+	if (check_mouse(screen_pos, (t_rect){100, start_y + 40, 93, 15}))
+		app->event_id = 1;
+	if (check_mouse(screen_pos, (t_rect){90, start_y + 55, 110, 15}))
+		app->event_id = 2;
+	if (check_mouse(screen_pos, (t_rect){50, start_y + 70, 183, 15}))
+		app->event_id = 3;
+	if (check_mouse(screen_pos, (t_rect){125, start_y + 85, 40, 15}))
+		app->event_id = 4;
+	if (check_mouse(screen_pos, (t_rect){110, start_y + 100, 70, 15}))
+		app->event_id = 5;
+	if (check_mouse(screen_pos, (t_rect){125, start_y + 115, 40, 15}))
+		app->event_id = 6;
+	if (check_mouse(screen_pos, (t_rect)(t_rect){102, start_y + 130, 82, 15}))
+		app->event_id = 7;
 }
 
 /**
@@ -87,6 +116,8 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 		}
 		else if (app->player_menu)
 			player_menu_events(app);
+		else if (app->object_menu)
+			object_menu_events(app);
 		else
 			app->active_sector = click_sector(app);
 	}
