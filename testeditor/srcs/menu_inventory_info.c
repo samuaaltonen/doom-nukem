@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:09:50 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/18 14:47:43 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/18 15:57:57 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ void	render_inventory(t_app *app)
 {
 	int		index;
 
-	render_icons(app, app->assets.sprite, (t_point){40, 340}, 5);
+	render_icons(app, app->assets.sprite, (t_point){40, 340}, INVENTORY_SIZE);
 	index = 0;
 	while (index < (INVENTORY_SIZE - 1))
 	{

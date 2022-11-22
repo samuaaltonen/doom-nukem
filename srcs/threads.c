@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/18 14:37:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/21 13:56:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,27 +53,6 @@ void	threads_create(t_thread_data *threads_data, void *(*renderer)(void *))
 		if (pthread_create(&threads_data[id].thread, NULL, renderer,
 				(void *)(&threads_data[id])))
 			exit_error(MSG_ERROR_THREADS);
-		id++;
-	}
-}
-
-void	legacy_render_multithreading(t_thread_data *threads_data, void *(*renderer)(void *))
-{
-	int			id;
-
-	id = 0;
-	while (id < THREAD_COUNT)
-	{
-		if (pthread_create(&threads_data[id].thread, NULL, renderer,
-				(void *)(&threads_data[id])))
-			exit_error(MSG_ERROR_THREADS);
-		id++;
-	}
-	id = 0;
-	while (id < THREAD_COUNT)
-	{
-		if (pthread_join(threads_data[id].thread, NULL) != 0)
-			exit_error(MSG_ERROR_THREADS_JOIN);
 		id++;
 	}
 }

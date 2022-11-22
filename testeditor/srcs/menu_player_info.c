@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:56:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/18 14:58:41 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/18 15:46:02 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,22 @@ void	render_icons(t_app *app, SDL_Surface *asset, t_point point, int max)
 	t_rect		src;
 	t_rect		icon;
 	int			index;
+	int			start_x;
 
-	index = 0;
+	index = 1;
+	start_x = point.x;
 	while (index < max)
 	{
-		set_icon_rect(&src, (t_point){ICON_SIZE * (index + 1), 0},
+		set_icon_rect(&src, (t_point){ICON_SIZE * index, 0},
 				(t_point){ICON_SIZE / 2, ICON_SIZE / 2});
 		set_icon_rect(&icon, point, (t_point){ICON_SIZE / 2, ICON_SIZE / 2});
 		blit_surface(asset, &src, app->surface, &icon);
 		point.x += (ICON_SIZE / 2) + 10;
+		if (index % 5 == 0)
+		{
+			point.y += (ICON_SIZE / 2) + 10;
+			point.x = start_x;
+		}
 		index++;
 	}
 }

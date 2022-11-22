@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/16 14:31:41 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/22 14:52:16 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	app_loop(t_app *app)
 		ft_printf("PLAYER pos x= %f pos y= %f dir x= %f dir y= %f sector= %d\n", app->player.position.x, app->player.position.y, app->player.direction.x, app->player.direction.y, app->player.sector);
 		if (app->active_sector)
 		{
-			ft_printf("inside = %i, floor: h:%f,tex:%i,o:%i, ceil: h:%f,tex:%i,o:%i, light:%i\n has members: ", app->active_sector, app->active_sector->floor_height, app->active_sector->floor_tex, app->active_sector->floor_tex_offset, app->active_sector->ceil_height, app->active_sector->ceil_tex, app->active_sector->ceil_tex_offset, app->active_sector->light);
+			ft_printf("inside = %i, floor: h:%f,tex:%i,o:%i, ceil: h:%f,tex:%i,o:%i, light:%i\n has members: ", get_sector_id(app, app->active_sector), app->active_sector->floor_height, app->active_sector->floor_tex, app->active_sector->floor_tex_offset, app->active_sector->ceil_height, app->active_sector->ceil_tex, app->active_sector->ceil_tex_offset, app->active_sector->light);
 			for (int i = 0; i < 4 && app->active_sector->member_sectors[i]; ++i)
 				ft_printf("%i ", get_sector_id(app, app->active_sector->member_sectors[i]));
 			ft_printf("\n");

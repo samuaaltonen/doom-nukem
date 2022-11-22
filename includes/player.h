@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/22 16:03:33 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/22 18:43:42 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 # define DIRECTION_START_Y 1.0
 # define POSITION_START_X 0.5
 # define POSITION_START_Y 0.5
-# define ROTATION_SPEED 1.8f
-# define MOVEMENT_SPEED 3.2f
+# define ROTATION_SPEED 1.8
+# define MOVEMENT_SPEED 5.0
 # define HORIZON_UPPER_LIMIT 1.25
 # define HORIZON_LOWER_LIMIT -0.25
 
