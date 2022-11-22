@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/21 11:53:47 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:08:12 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -264,6 +264,7 @@ typedef struct s_app
 	t_bool				mouse_down;
 	int					sectorcount;
 	int					movement_speed;
+	int					event_id;
 	t_assets			assets;
 	t_player			player;
 }	t_app;
@@ -460,6 +461,7 @@ void			render_weapon_statics(t_app *app);
 void			render_armor_statics(t_app *app);
 void			render_object_statics(t_app *app);
 void			render_object_icons(t_app *app, t_point point);
+void			render_interaction_texts(t_app *app, int start_y);
 void			render_inventory(t_app *app);
 void			select_inventory(t_app *app, t_point screen_pos);
 int				check_mouse(t_point screen_pos, t_rect rect);

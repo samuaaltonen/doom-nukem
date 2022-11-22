@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:04:04 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/21 16:27:46 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:47:41 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,17 @@ static void	render_object_texts(t_app *app)
 {
 	int	pickable;
 	int	mode;
+	int	type;
 
+	type = 1;
 	pickable = 0;
 	mode = 0;
+	if (type < 5 || type == 10 || type > 15)
+		pickable = 1;
+	if (type < 9 || type == 14 || type == 16)
+		mode = 1;
+	if (type == 12 || type < 16)
+		mode = 1;
 	change_font(app, 11, TEXT);
 	render_text(app, (t_point){113, 120}, "MONSTER");
 	render_text(app, (t_point){40, 140}, "HEALTH");
@@ -66,40 +74,6 @@ static void	render_object_texts(t_app *app)
 }
 
 /**
- * Renders the interaction menu on the help menu sidebar.
-*/
-static void	render_interaction_texts(t_app *app, int start_y)
-{
-	int		x;
-	int		y;
-
-	render_text(app, (t_point){10, start_y}, "INTERACTIONS");
-	y = start_y + 20;
-	while (y < start_y + 141)
-	{
-		x = 10;
-		while (x < 270)
-		{
-			if (y == start_y + 20 || y % 15 == 0 || x == 10 || x == 269)
-				put_pixel_to_surface(app->surface, x, y, TEXT);
-			x++;
-		}
-		y++;
-	}
-	render_ui_frame(app, (t_rect){10, start_y + 20 + (0 * 15), 260, 16}, 1, 0);
-	change_font(app, 11, TEXT);
-	render_text(app, (t_point){90, start_y + 25}, "NO INTERACTION");
-	render_text(app, (t_point){100, start_y + 40}, "FLOOR HEIGHT");
-	render_text(app, (t_point){90, start_y + 55}, "CEILING HEIGHT");
-	render_text(app, (t_point){50, start_y + 70}, "FLOOR AND CEILING HEIGHT");
-	render_text(app, (t_point){125, start_y + 85}, "SOUND");
-	render_text(app, (t_point){110, start_y + 100}, "END LEVEL");
-	render_text(app, (t_point){125, start_y + 115}, "LIGHT");
-	render_text(app, (t_point){102, start_y + 130}, "TEXT POP-UP");
-	change_font(app, 15, TEXT);
-}
-
-/**
 * Renders object staticbars on the help menu sidebar.
 */
 void	render_object_statics(t_app *app)
@@ -135,8 +109,9 @@ void	render_object_icons(t_app *app, t_point point)
 	t_point		size;
 	int			index;
 	int			tex;
-	int			object = 17;
+	int			object;
 
+	object = 17;
 	index = 0;
 	while (index < 5)
 	{

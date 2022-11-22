@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/22 14:35:13 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/22 18:44:38 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ void	player_init(t_app *app)
 	app->player.elevation = 0.0;
 	app->player.horizon = 0.5;
 	app->player.current_sector = 0;
+	app->player.hp = 140;
+	app->player.shield = 200;
 	init_camera_plane(app);
 	init_skybox_plane(app);
 }

@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/21 13:44:39 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/22 18:19:35 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,18 @@ static void	ui_background(t_app *app,t_rect area, int size, int background);
 static void ui_topframe(t_app *app,t_rect area, int size);
 static void ui_midframe(t_app *app,t_rect area, int size);
 static void ui_bottomframe(t_app *app,t_rect area, int size);
+static void	fill_meter(t_app *app, t_rect area, int type, int id);
 
 void	render_ui(t_app *app)
 {
 	render_crosshair(app);
 	render_text_prompt(app, (t_rect){10, 10, 112, 32}, 1, app->conf->fps_info);
+
 	//----DEBUG FEATURE 
+	render_ui_frame(app, (t_rect){960, 624, 64, 64}, 1, DARK_GREY);
+	render_ui_frame(app, (t_rect){1040, 624, 64, 64}, 1, DARK_GREY);
+	render_ui_frame(app, (t_rect){1120, 560, 128, 128}, 1, DARK_GREY);
+	render_player_status(app);
 	if (app->conf->buttonstates & LEFT_MOUSE)
 		render_text_prompt(app, (t_rect){800, 150, 256, 64}, 1, "This is a nice and wonderful text prompt");
 	//----
@@ -200,7 +206,60 @@ void	render_crosshair(t_app *app)
 	dst.w = src.w;
 	dst.h = src.h;
 	blit_surface(app->assets.crosshair, &src, app->surface, &dst);
-	render_text_prompt(app, (t_rect){10, 10, 112, 32}, 1, app->conf->fps_info);
+}
+
+void	render_player_status(t_app *app)
+{
+	render_ui_element(app, app->assets.shield, (t_rect){32, 600, 32, 32});
+	fill_meter(app, (t_rect){80, 600, 16, 32}, 0, 0);
+	fill_meter(app, (t_rect){100, 600, 16, 32}, 0, 1);
+	fill_meter(app, (t_rect){120, 600, 16, 32}, 0, 2);
+	fill_meter(app, (t_rect){140, 600, 16, 32}, 0, 3);
+	fill_meter(app, (t_rect){160, 600, 16, 32}, 0, 4);
+	render_ui_element(app, app->assets.hp, (t_rect){32, 640, 32, 32});
+	fill_meter(app, (t_rect){80, 640, 16, 32}, 1, 0);
+	fill_meter(app, (t_rect){100, 640, 16, 32}, 1, 1);
+	fill_meter(app, (t_rect){120, 640, 16, 32}, 1, 2);
+	fill_meter(app, (t_rect){140, 640, 16, 32}, 1, 3);
+	fill_meter(app, (t_rect){160, 640, 16, 32}, 1, 4);
+}
+
+static void	fill_meter(t_app *app, t_rect area, int type, int id)
+{
+	int	x;
+	int	y;
+	int color;
+	int limit;
+	if (app->player.hp - 40 * id > 0)
+		limit = ((double)app->player.hp - 40.0 * (double)id) * 28.0 / 40.0;
+	else
+		limit = 0;
+	if (type == 0)
+		color = CYAN;
+	if (type == 1)
+		color = DARK_RED;
+	x = area.x + 2;
+	y = area.y + 2;
+	while (y < area.y + area.h - 2)
+	{
+		while (x < area.x + area.w - 2)
+		{
+			if (area.y + area.h - y - 2 <= limit)
+				put_pixel_to_surface(app->surface, x, y, color);
+			x++;
+		}
+		x = area.x + 2;
+		y++;
+	}
+	render_ui_element(app, app->assets.meter, area);
+}
+
+void	render_ui_element(t_app *app, SDL_Surface *elem, t_rect area)
+{
+	t_rect	src;
+
+	rect_from_surface(elem, &src);
+	blit_surface(elem, &src, app->surface, &area);
 }
 
 int	check_mouse(t_app *app, t_rect rect)
