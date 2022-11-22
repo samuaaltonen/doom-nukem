@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/21 17:42:27 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:45:00 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ static t_bool	apply_occlusion(t_app *app, int x, int occlusion, t_limit *y)
 		y->end = WIN_H - app->occlusion_bottom[x];
 	if (y->start == y->end || y->start > y->end)
 		return (FALSE);
+	if (occlusion == OCCLUDE_NONE)
+		return (TRUE);
 	if (occlusion == OCCLUDE_BOTH || occlusion == OCCLUDE_TOP)
 		app->occlusion_top[x] = y->end;
 	if (occlusion == OCCLUDE_BOTH || occlusion == OCCLUDE_BOTTOM)
@@ -66,6 +68,7 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion_type)
 	t_limit		y;
 	int			tex_x;
 	double		tex_y;
+	int			color;
 
 	if (hit->texture == -1 || x < 0 || x >= WIN_W)
 		return ;
@@ -80,9 +83,14 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion_type)
 		tex_y += hit->texture_step.y;
 		if (tex_y >= (double) TEX_SIZE)
 			tex_y = fmod(tex_y, (double) TEX_SIZE);
-		put_pixel_to_surface(app->surface, x, y.start, shade_color(get_pixel_color(app->assets.sprite, tex_x, (int) tex_y), hit->light));
-		if (y.start % 2)
+		color = get_pixel_color(app->assets.sprite, tex_x, (int) tex_y);
+		if (hit->texture != PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID || (color & 0xFFFFFF) > 0)
+		{
+			put_pixel_to_surface(app->surface, x, y.start, shade_color(color, hit->light));
 			app->depthmap[y.start][x] = (float)hit->distance;
+		}
+		else
+			app->depthmap[y.start][x] = MAX_VIEW_DISTANCE;
 		y.start++;
 	}
 }

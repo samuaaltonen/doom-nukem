@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/21 14:52:54 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/22 16:47:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 enum e_occlusion {
 	OCCLUDE_TOP,
 	OCCLUDE_BOTTOM,
-	OCCLUDE_BOTH
+	OCCLUDE_BOTH,
+	OCCLUDE_NONE
 };
 
 /**

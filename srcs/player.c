@@ -56,6 +56,8 @@ static t_bool	is_wall_collision(t_app *app, t_move new)
 				return (FALSE);
 			else
 			{
+				if (app->sectors[app->player.current_sector].wall_textures[i] == PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
+					return (FALSE);
 				app->player.elevation = app->player.elevation + (app->sectors[wall_id].floor_height - app->sectors[app->player.current_sector].floor_height);
 				app->player.current_sector = wall_id;
 				return (TRUE);
