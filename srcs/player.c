@@ -39,6 +39,17 @@ static t_bool	is_wall_collision(t_app *app, t_move new)
 	{
 		if(ft_line_side(get_wall_line(app, app->player.current_sector,i), new.pos) != 0)
 		{
+			/**
+			 * Quick fix for portals that are parallel to other walls.
+			 * TODO: Remove this
+			 */
+			t_line line = get_wall_line(app, app->player.current_sector,i);
+			if (ft_vector_length(ft_vector2_sub(app->player.pos, app->sectors[app->player.current_sector].corners[i])) > ft_vector_length(ft_vector2_sub(line.a, line.b)))
+			{
+				i++;
+				continue ;
+			}
+
 			wall_id = app->sectors[app->player.current_sector].wall_types[i];
 			if(wall_id < 0 || (new.elevation + 0.2f < app->sectors[wall_id].floor_height ||
 				app->sectors[wall_id].ceil_height - app->sectors[wall_id].floor_height < 0.6f))
