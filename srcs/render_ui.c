@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/22 11:38:13 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:58:29 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,17 @@ void	render_ui(t_app *app)
 	render_ui_frame(app, (t_rect){1040, 624, 64, 64}, 1, DARK_GREY);
 	render_ui_frame(app, (t_rect){1120, 560, 128, 128}, 1, DARK_GREY);
 	render_ui_element(app, app->assets.shield, (t_rect){32, 600, 32, 32});
-	render_ui_element(app, app->assets.heart, (t_rect){32, 640, 32, 32});
+	render_ui_element(app, app->assets.meter, (t_rect){80, 600, 32, 32});
+	render_ui_element(app, app->assets.meter, (t_rect){100, 600, 32, 32});
+	render_ui_element(app, app->assets.meter, (t_rect){120, 600, 32, 32});
+	render_ui_element(app, app->assets.meter, (t_rect){140, 600, 32, 32});
+	render_ui_element(app, app->assets.meter, (t_rect){160, 600, 32, 32});
+	render_ui_element(app, app->assets.hp, (t_rect){32, 640, 32, 32});
+	render_ui_element(app, app->assets.meter, (t_rect){80, 640, 32, 32});
+	render_ui_element(app, app->assets.meter, (t_rect){100, 640, 32, 32});
+	render_ui_element(app, app->assets.meter, (t_rect){120, 640, 32, 32});
+	render_ui_element(app, app->assets.meter, (t_rect){140, 640, 32, 32});
+	render_ui_element(app, app->assets.meter, (t_rect){160, 640, 32, 32});
 	if (app->conf->buttonstates & LEFT_MOUSE)
 		render_text_prompt(app, (t_rect){800, 150, 256, 64}, 1, "This is a nice and wonderful text prompt");
 	//----
@@ -211,7 +221,7 @@ void	render_ui_element(t_app *app, SDL_Surface *elem, t_rect area)
 {
 	t_rect	src;
 
-	rect_from_surface(app->assets.heart, &src);
+	rect_from_surface(app->assets.hp, &src);
 	blit_surface(elem, &src, app->surface, &area);
 }
 

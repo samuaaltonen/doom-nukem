@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/21 15:16:16 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:49:43 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ void    load_assets(t_app *app)
 	app->assets.crosshair = SDL_LoadBMP(CROSSHAIR_PATH);
 	app->assets.pointer = SDL_LoadBMP(POINTER_PATH);
 	app->assets.shield = SDL_LoadBMP(SHIELD_PATH);
-	app->assets.heart = SDL_LoadBMP(HEART_PATH);
+	app->assets.hp = SDL_LoadBMP(HP_PATH);
+	app->assets.meter = SDL_LoadBMP(METER_PATH);
 	app->assets.sprite = SDL_LoadBMP(PANELS_PATH);
 	app->assets.bg = SDL_LoadBMP(SKYBOX_PATH);
     load_font(app);

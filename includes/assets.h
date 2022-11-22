@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/21 14:43:23 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:50:10 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,8 @@
 # define CROSSHAIR_PATH "assets/ui/crosshair.bmp"
 # define POINTER_PATH "assets/ui/mouse_pointer.bmp"
 # define SHIELD_PATH "assets/ui/shield.bmp"
-# define HEART_PATH "assets/ui/heart.bmp"
+# define HP_PATH "assets/ui/hp.bmp"
+# define METER_PATH "assets/ui/meter.bmp"
 # define MUSIC_PATH "assets/sounds/title_music.wav"
 # define LASER_PATH "assets/sounds/laser.wav"
 # define SHOT_PATH "assets/sounds/shot.wav"
@@ -88,7 +89,8 @@ typedef struct s_assets
 	SDL_Surface		*crosshair;
 	SDL_Surface		*pointer;
 	SDL_Surface		*shield;
-	SDL_Surface		*heart;
+	SDL_Surface		*hp;
+	SDL_Surface		*meter;
 	SDL_Surface		*sprite;
 	SDL_Surface		*bg;
 }	t_assets;
