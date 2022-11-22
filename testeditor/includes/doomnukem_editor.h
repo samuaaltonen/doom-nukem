@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/21 15:15:09 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:52:33 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,6 +156,7 @@ typedef struct s_draw_line
 
 typedef struct s_weapon
 {
+	t_bool	enabled;
 	int		damage;
 	int		range;
 	int		fire_rate;
@@ -170,12 +171,12 @@ typedef struct s_armor
 
 typedef struct s_inventory
 {
-	int		ammo;
-	int		potion;
-	int		antidote;
-	int		key;
-	int		jetpack;
-	int		selected[INVENTORY_SIZE];
+	int			ammo;
+	int			special_ammo;
+	int			potion;
+	int			antidote;
+	int			key;
+	t_bool		jetpack;
 }	t_inventory;
 
 typedef struct s_sectorlist
@@ -214,6 +215,17 @@ typedef struct s_player
 	t_inventory		inventory;
 }	t_player;
 
+typedef struct s_export_player
+{
+	t_vector2		position;
+	t_vector2		direction;
+	int				sector;
+	int				health;
+	int				weapons;
+	int				armor;
+	t_inventory		inventory;
+}	t_export_player;
+
 /**
  * @brief array of objects per entire level
  * 
@@ -225,6 +237,14 @@ typedef struct s_object
 	t_vector2		position;
 	t_sector_lst	*sector;
 }	t_object;
+
+typedef struct s_export_object
+{
+	int			type;
+	double		var;
+	t_vector2	pos;
+	int			sector;
+}	t_export_object;
 
 /**
  * @brief Array of interactions for entire level
@@ -255,6 +275,16 @@ typedef struct s_interaction
 	t_object		*activation_object;
 	t_sector_lst	*target_sector;
 }	t_interaction;
+
+typedef struct	s_export_interaction
+{
+	int				event_id;
+	double 			variable;
+	int				activation_sector;
+	int				activation_wall;
+	int				activation_object;
+	int				target_sector;
+}	t_export_interaction;
 
 /**
  * Struct for font.
@@ -322,6 +352,8 @@ typedef struct s_app
 	int					object_count;
 	t_interaction		interactions[MAX_INTERACTIONS];
 	int					interaction_count;
+	int					selected[INVENTORY_SIZE];
+
 }	t_app;
 
 typedef struct s_exportsector

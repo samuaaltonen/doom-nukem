@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/21 13:51:44 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/22 16:17:10 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,43 @@ void	relink_sectors(t_app *app)
 	}
 }
 
+static void from_bits(t_app *app, int export, t_weapon *weapons)
+{
+	int	i;
+
+	i = 0;
+	while (i < MAX_WEAPONS)
+	{
+		if (export & 1)
+		{	
+			weapons[i].enabled = TRUE;
+			app->player.selected_weapon = i;
+		}
+		export >>= 1;
+		i++;
+	}
+}
+
+static void read_player(t_app *app, t_export_player *player)
+{
+	app->player_edit = FALSE;
+	app->player_menu = FALSE;
+	app->player.position = player->position;
+	app->player.direction = player->direction;
+	app->player.sector = sector_by_index(app, player->sector);
+	app->player.health = player->health;
+	from_bits(app, player->weapons, app->player.weapons);
+	int	i;
+	i = 0;
+	while (i < MAX_ARMOR)
+	{
+		if (app->player.armor[i].defence == player->armor)
+			app->player.selected_armor = i;
+		i++;
+	}
+	app->player.inventory = player->inventory;
+}
+
 /**
  * @brief Opens a file from the given path
  * 	reads all sector data into the sector list
@@ -150,11 +187,15 @@ int	import_file(t_app *app, char *path)
 	t_sector_lst	*new;
 	size_t			counter;
 	size_t			sector_count;
+	t_export_player player;
 
 	counter = 0;
 	fd = open(path, O_RDONLY, 0755);
 	if (fd < 0)
 		exit_error("FILE OPEN ERROR TEMP!");
+	if (read(fd, &player, sizeof(t_export_player)) == -1)
+			exit_error("player read error\n");
+	read_player(app, &player);
 	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
 	if (!export)
 		exit_error(MSG_ERROR_ALLOC);
@@ -168,6 +209,7 @@ int	import_file(t_app *app, char *path)
 		put_sector_lst(app, new);
 	}
 	close(fd);
+	app->player.sector = sector_by_index(app,player.sector);
 	relink_sectors(app);
 	return (0);
 }

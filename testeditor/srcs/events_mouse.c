@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/21 13:23:26 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:09:53 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	player_menu_events(t_app *app)
 		&& app->player.selected_armor < (MAX_ARMOR - 1))
 		app->player.selected_armor++;
 	select_inventory(app, screen_pos);
-	app->player.inventory.selected[5] = check_selected_inventory(app);
+	app->selected[5] = check_selected_inventory(app);
 }
 
 /**

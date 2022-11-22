@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/21 15:31:14 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/22 14:49:58 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			app->active_sector->ceil_tex--;
 		if (app->floor_edit && app->active_sector->floor_tex > 0)
 			app->active_sector->floor_tex--;
-		if (app->player.inventory.selected[5])
+		if (app->selected[5])
 			change_item_amount(app, key);
 		if ((app->object_menu || app->object_new) && app->current_object->type > 1)
 			app->current_object->type--;
@@ -106,7 +106,7 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			app->active_sector->ceil_tex++;
 		if (app->floor_edit && app->active_sector->floor_tex < MAX_TEX_COUNT)
 			app->active_sector->floor_tex++;
-		if (app->player.inventory.selected[5])
+		if (app->selected[5])
 			change_item_amount(app, key);
 		if ((app->object_menu || app->object_new) && app->current_object->type < MAX_UNIQUE_OBJECTS - 1)
 			app->current_object->type++;

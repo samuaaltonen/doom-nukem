@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:53:42 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/21 15:59:10 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:34:49 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,11 @@ t_bool	valid_object(t_app *app)
 	i = 0;
 	while (i < MAX_OBJECTS && app->objects[i].type != 0)
 	{
-		if(ft_cmp_vec2(app->mouse_track, app->objects[i].position))
+		if (app->active_sector == NULL)
 			return (FALSE);
-		if(!inside_sector_check(app->active_sector, &(app->mouse_track)))
+		if (ft_cmp_vec2(app->mouse_track, app->objects[i].position))
+			return (FALSE);
+		if (!inside_sector_check(app->active_sector, &(app->mouse_track)))
 			return (FALSE);
 		i++;
 	}

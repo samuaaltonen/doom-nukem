@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_player_info.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:56:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/16 14:53:47 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:21:42 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,16 +83,16 @@ void	render_healthbar(t_app *app)
 */
 void	change_item_amount(t_app *app, SDL_Keycode key)
 {
-	if (app->player.inventory.selected[1] && key == SDLK_LEFT
+	if (app->selected[1] && key == SDLK_LEFT
 		&& app->player.inventory.potion > 1)
 		app->player.inventory.potion--;
-	if (app->player.inventory.selected[2] && key == SDLK_LEFT
+	if (app->selected[2] && key == SDLK_LEFT
 		&& app->player.inventory.antidote > 1)
 		app->player.inventory.antidote--;
-	if (app->player.inventory.selected[1] && key == SDLK_RIGHT
+	if (app->selected[1] && key == SDLK_RIGHT
 		&& app->player.inventory.potion < 10)
 		app->player.inventory.potion++;
-	if (app->player.inventory.selected[2] && key == SDLK_RIGHT
+	if (app->selected[2] && key == SDLK_RIGHT
 		&& app->player.inventory.antidote < 10)
 		app->player.inventory.antidote++;
 }
