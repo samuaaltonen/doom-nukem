@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/22 17:11:03 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:44:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,11 +148,12 @@ static void write_interactions(t_app *app, t_export_interaction *interactions)
 	i = 0;
 	while (i < MAX_INTERACTIONS)
 	{
-
 		temp.activation_object = get_object_id(app,app->interactions[i].activation_object);
 		temp.activation_sector = get_sector_id(app,app->interactions[i].activation_sector);
-		if(temp.activation_sector)
+		if(temp.activation_sector != -1)
 			temp.activation_wall = get_line_id(app->interactions[i].activation_sector->wall_list, app->interactions[i].activation_wall);
+		else
+			temp.activation_wall = -1;
 		temp.event_id = app->interactions[i].event_id;
 		temp.target_sector = get_sector_id(app, app->interactions[i].target_sector);
 		temp.variable = app->interactions[i].variable;
@@ -206,8 +207,7 @@ int	export_file(t_app *app, char *path)
 		exit_error("object write error\n");
 	write_interactions(app, (t_export_interaction *)&interactions);
 	for(int i = 0; i < MAX_INTERACTIONS;i++)
-		ft_printf("read interactions id %i, target sector%p, wall%p, object%p\n",app->interactions[i].event_id, app->interactions[i].activation_wall, app->interactions[i].activation_object);
-
+		ft_printf("read interactions id %i, activation sector%i, wall%i, object%i\n",interactions[i].event_id, interactions[i].activation_sector, interactions[i].activation_wall, interactions[i].activation_object);
 	if (write(fd, interactions, sizeof(t_export_interaction) * MAX_INTERACTIONS) == -1)
 		exit_error("interaction write error\n");
 	free(export);

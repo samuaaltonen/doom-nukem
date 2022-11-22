@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/22 17:11:27 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/22 18:05:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -197,7 +197,7 @@ static t_vec2_lst *line_by_index(t_sector_lst *sector, int index)
 	t_vec2_lst *head;
 
 	i = 0;
-	if (!sector)
+	if (!sector || index == -1)
 		return (NULL);
 	head = sector->wall_list;
 	while (i < MAX_SECTOR_CORNERS)
@@ -224,7 +224,10 @@ static void	read_interactions(t_app *app, t_export_interaction *export)
 		temp.variable = export[i].variable;
 		temp.activation_sector = sector_by_index(app, export[i].activation_sector);
 		temp.activation_wall = line_by_index(temp.activation_sector, export[i].activation_wall);
-		temp.activation_object = &app->objects[export->activation_object];
+		if(export[i].activation_object == -1)
+			temp.activation_object = NULL;
+		else
+			temp.activation_object = &(app->objects[export[i].activation_object]);
 		temp.target_sector = sector_by_index(app, export[i].target_sector);
 		app->interactions[i] = temp;
 		i++;
@@ -272,11 +275,15 @@ int	import_file(t_app *app, char *path)
 	if (read(fd,&objects, sizeof(t_export_object) * MAX_OBJECTS) ==  -1)
 		exit_error("Object read error\n");
 	read_objects(app, (t_export_object *)&objects);
+	for(int i = 0; i < MAX_OBJECTS;i++)
+		ft_printf("object id %i, type %i\n", i, app->objects[i].type);
 	if (read(fd, &interactions, sizeof(t_export_interaction) * MAX_INTERACTIONS) == -1)
 		exit_error("Interaction read error\n");
 	read_interactions(app, (t_export_interaction *)&interactions);
 	for(int i = 0; i < MAX_INTERACTIONS;i++)
-		ft_printf("read interactions id %i, target sector%p, wall%p, object%p\n",interactions[i].event_id, interactions[i].activation_wall, interactions[i].activation_object);
+		ft_printf("read interactions id %i, activation sector%i, wall%i, object%i\n",interactions[i].event_id, interactions[i].activation_sector, interactions[i].activation_wall, interactions[i].activation_object);
+	for(int i = 0; i < MAX_INTERACTIONS;i++)
+		ft_printf("pointer interactions id %i, activation sector%p, wall%p, object%p\n",app->interactions[i].event_id, app->interactions[i].activation_sector, app->interactions[i].activation_wall, app->interactions[i].activation_object);
 
 	close(fd);
 	app->player.sector = sector_by_index(app,player.sector);

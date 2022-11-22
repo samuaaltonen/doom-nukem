@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/18 13:23:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:35:03 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,8 @@ t_sector_lst	*sector_by_index(t_app *app, int index)
 
 	i = 0;
 	head = app->sectors;
+	if(index == -1)
+		return (NULL);
 	while (head && i != index)
 	{
 		head = head->next;
