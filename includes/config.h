@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/21 15:30:54 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:56:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 # define MAX_MEMBER_SECTORS 8
 # define MAX_VISIBLE_SECTORS 64
 # define MAX_VISIBLE_WALLS 256
-# define MAX_VIEW_DISTANCE 100.0
+# define MAX_VIEW_DISTANCE 256.0
 # define MAX_LINE_LENGTH 1048576.0
 
 /**

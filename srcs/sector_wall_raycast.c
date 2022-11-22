@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/17 15:08:19 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/22 15:55:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,6 +217,8 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall,
 			|| wall->start_x > x || wall->end_x < x
 			|| app->occlusion_top[x] + app->occlusion_bottom[x] >= WIN_H
 			|| !raycast_hit(app, wall->line, &hit, x))
+			continue ;
+		if (hit.distance > MAX_VIEW_DISTANCE)
 			continue ;
 		if (wall->is_portal)
 		{
