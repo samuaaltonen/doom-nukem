@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/22 17:45:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/22 18:36:07 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion_type)
 	t_limit		y;
 	int			tex_x;
 	double		tex_y;
+	float		depth;
 	int			color;
 
 	if (hit->texture == -1 || x < 0 || x >= WIN_W)
@@ -80,17 +81,17 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion_type)
 	apply_offsets(hit, y, &tex_x, &tex_y);
 	while (y.start < y.end)
 	{
+		depth = (float)hit->distance;
 		tex_y += hit->texture_step.y;
 		if (tex_y >= (double) TEX_SIZE)
 			tex_y = fmod(tex_y, (double) TEX_SIZE);
 		color = get_pixel_color(app->assets.sprite, tex_x, (int) tex_y);
-		if (hit->texture != PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID || (color & 0xFFFFFF) > 0)
-		{
+		if ((color & 0xFF000000) > 0)
 			put_pixel_to_surface(app->surface, x, y.start, shade_color(color, hit->light));
-			app->depthmap[y.start][x] = (float)hit->distance;
-		}
 		else
-			app->depthmap[y.start][x] = MAX_VIEW_DISTANCE;
+			depth = (float)MAX_VIEW_DISTANCE;
+		if (y.start % 2 == app->depthmap_fill_switch)
+			app->depthmap[y.start][x] = depth;
 		y.start++;
 	}
 }

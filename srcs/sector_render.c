@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/22 16:33:24 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/22 18:30:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,7 @@ void	render_sectors(t_app *app)
 	ft_bzero(app->occlusion_bottom, WIN_W * sizeof(int));
 	sector_visible_walls(app);
 	threads_work((t_thread_data *)&threads_data);
-	/* depth(app); */
-	/* ft_printf("Player horizon: %f\n", app->player.horizon); */
+	app->depthmap_fill_switch = !app->depthmap_fill_switch;
 }
 
 /**

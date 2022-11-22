@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/21 17:07:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:57:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_app
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];
 	float			depthmap[WIN_H][WIN_W];
+	t_bool			depthmap_fill_switch;
 	t_wallstack		wallstack;
 	t_player		player;
 	t_sky			sky;
