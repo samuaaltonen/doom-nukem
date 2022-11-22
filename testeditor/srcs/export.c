@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/22 16:16:09 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/22 16:32:13 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,6 @@ static int as_bits(t_app *app, t_weapon weapons[MAX_WEAPONS])
 	{
 		(void)weapons;
 		//if(weapons[i].enabled)
-		ft_printf("selected weapon = %i\n", app->player.selected_weapon);
 		if(i == app->player.selected_weapon)
 			inventory |= 1 << i;
 		i++;
@@ -130,10 +129,11 @@ static void write_objects(t_app *app, t_export_object *objects)
 	i = 0;
 	while (i < MAX_OBJECTS)
 	{
-
 		temp.pos = app->objects[i].position;
 		temp.sector = get_sector_id(app, app->objects[i].sector);
 		temp.type = app->objects[i].type;
+		if(temp.type != 0)
+				ft_printf("object exported %i\n", i);
 		temp.var = app->objects[i].var;
 		(objects[i]) = temp;
 		i++;
@@ -202,10 +202,10 @@ int	export_file(t_app *app, char *path)
 		tmp = tmp->next;
 	}
 	write_objects(app, (t_export_object *)&objects);
-	write_interactions(app, (t_export_interaction *)&interactions);
-/* 	if (write(fd, objects, sizeof(t_export_object) * MAX_OBJECTS))
+ 	if (write(fd, objects, sizeof(t_export_object) * MAX_OBJECTS) == -1)
 		exit_error("object write error\n");
-	if (write(fd, interactions, sizeof(t_export_interaction) * MAX_INTERACTIONS))
+	write_interactions(app, (t_export_interaction *)&interactions);
+/* 	if (write(fd, interactions, sizeof(t_export_interaction) * MAX_INTERACTIONS) == -1)
 		exit_error("interaction write error\n"); */
 	free(export);
 	close(fd);

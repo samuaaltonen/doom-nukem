@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/22 16:17:10 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/22 16:48:02 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,6 +172,25 @@ static void read_player(t_app *app, t_export_player *player)
 	app->player.inventory = player->inventory;
 }
 
+static void	read_objects(t_app *app, t_export_object *export)
+{
+	t_object temp;
+	int	i;
+
+	i = 0;
+	while (i < MAX_OBJECTS)
+	{
+		temp.position = export[i].pos;
+		temp.sector =  sector_by_index(app, export[i].sector);
+		temp.type = export[i].type;
+		if(temp.type > 0)
+			app->object_count++;
+		temp.var = export[i].var;
+		(app->objects[i]) = temp;
+		i++;
+	}
+}
+
 /**
  * @brief Opens a file from the given path
  * 	reads all sector data into the sector list
@@ -187,7 +206,8 @@ int	import_file(t_app *app, char *path)
 	t_sector_lst	*new;
 	size_t			counter;
 	size_t			sector_count;
-	t_export_player player;
+	t_export_player	player;
+	t_export_object	objects[MAX_OBJECTS];
 
 	counter = 0;
 	fd = open(path, O_RDONLY, 0755);
@@ -208,6 +228,12 @@ int	import_file(t_app *app, char *path)
 		new = read_sector_list(export);
 		put_sector_lst(app, new);
 	}
+	if (read(fd,&objects, sizeof(t_export_object) * MAX_OBJECTS) ==  -1)
+		exit_error("Object read error\n");
+	read_objects(app, (t_export_object *)&objects);
+	for(int i = 0; i < MAX_OBJECTS;i++)
+		ft_printf("read objects %i\n",app->objects[i].type);
+
 	close(fd);
 	app->player.sector = sector_by_index(app,player.sector);
 	relink_sectors(app);
