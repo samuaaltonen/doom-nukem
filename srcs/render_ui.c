@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/22 17:33:11 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/22 18:19:35 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,8 +230,8 @@ static void	fill_meter(t_app *app, t_rect area, int type, int id)
 	int	y;
 	int color;
 	int limit;
-	if (app->player.hp - 40 * (id) >= 0)
-		limit = ((double)app->player.hp - 40.0 * ((double)id + 1)) * 28.0 / 40.0;
+	if (app->player.hp - 40 * id > 0)
+		limit = ((double)app->player.hp - 40.0 * (double)id) * 28.0 / 40.0;
 	else
 		limit = 0;
 	if (type == 0)
@@ -244,7 +244,7 @@ static void	fill_meter(t_app *app, t_rect area, int type, int id)
 	{
 		while (x < area.x + area.w - 2)
 		{
-			if (area.y + area.h - y <= limit)
+			if (area.y + area.h - y - 2 <= limit)
 				put_pixel_to_surface(app->surface, x, y, color);
 			x++;
 		}
