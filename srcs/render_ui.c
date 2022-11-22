@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/21 15:17:06 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/22 11:38:13 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	render_ui(t_app *app)
 	render_text_prompt(app, (t_rect){10, 10, 112, 32}, 1, app->conf->fps_info);
 
 	//----DEBUG FEATURE 
-	render_ui_frame(app, (t_rect){1056, 624, 32, 32}, 1, DARK_GREY);
-	render_ui_frame(app, (t_rect){1104, 624, 32, 32}, 1, DARK_GREY);
-	render_ui_frame(app, (t_rect){1152, 592, 64, 64}, 1, DARK_GREY);
+	render_ui_frame(app, (t_rect){960, 624, 64, 64}, 1, DARK_GREY);
+	render_ui_frame(app, (t_rect){1040, 624, 64, 64}, 1, DARK_GREY);
+	render_ui_frame(app, (t_rect){1120, 560, 128, 128}, 1, DARK_GREY);
 	render_ui_element(app, app->assets.shield, (t_rect){32, 600, 32, 32});
 	render_ui_element(app, app->assets.heart, (t_rect){32, 640, 32, 32});
 	if (app->conf->buttonstates & LEFT_MOUSE)
@@ -211,7 +211,7 @@ void	render_ui_element(t_app *app, SDL_Surface *elem, t_rect area)
 {
 	t_rect	src;
 
-	rect_from_surface(app->assets.crosshair, &src);
+	rect_from_surface(app->assets.heart, &src);
 	blit_surface(elem, &src, app->surface, &area);
 }
 
