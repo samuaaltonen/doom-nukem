@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/16 14:45:16 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:34:45 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,29 +72,61 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 	}
 	else if (key == SDLK_LEFT)
 	{
-		if (app->active && app->active->tex > 0)
+		if (app->active && app->active->tex >= 0)
+		{
 			app->active->tex--;
-		if (app->wall_edit && app->active_sector->wall_list->tex > 0
+			if (app->active->tex < 0)
+				app->active->tex = MAX_TEX_COUNT;
+		}
+		if (app->wall_edit && app->active_sector->wall_list->tex >= 0
 			&& !app->active)
+		{
 			app->active_sector->wall_list->tex--;
-		if (app->ceiling_edit && app->active_sector->ceil_tex > 0)
+			if (app->active_sector->wall_list->tex < 0)
+				app->active_sector->wall_list->tex = MAX_TEX_COUNT;
+		}
+		if (app->ceiling_edit && app->active_sector->ceil_tex >= 0)
+		{
 			app->active_sector->ceil_tex--;
-		if (app->floor_edit && app->active_sector->floor_tex > 0)
+			if (app->active_sector->ceil_tex < 0)
+				app->active_sector->ceil_tex = MAX_TEX_COUNT;
+		}
+		if (app->floor_edit && app->active_sector->floor_tex >= 0)
+		{
 			app->active_sector->floor_tex--;
+			if (app->active_sector->floor_tex < 0)
+				app->active_sector->floor_tex = MAX_TEX_COUNT;
+		}
 		if (app->player.inventory.selected[5])
 			change_item_amount(app, key);
 	}
 	else if (key == SDLK_RIGHT)
 	{
-		if (app->active && app->active->tex < MAX_TEX_COUNT)
+		if (app->active && app->active->tex <= MAX_TEX_COUNT)
+		{
 			app->active->tex++;
-		if (app->wall_edit && app->active_sector->wall_list->tex < MAX_TEX_COUNT
+			if (app->active->tex > MAX_TEX_COUNT)
+				app->active->tex = 0;
+		}
+		if (app->wall_edit && app->active_sector->wall_list->tex <= MAX_TEX_COUNT
 			&& !app->active)
+		{
 			app->active_sector->wall_list->tex++;
-		if (app->ceiling_edit && app->active_sector->ceil_tex < MAX_TEX_COUNT)
+			if (app->active_sector->wall_list->tex > MAX_TEX_COUNT)
+				app->active_sector->wall_list->tex = 0;
+		}
+		if (app->ceiling_edit && app->active_sector->ceil_tex <= MAX_TEX_COUNT)
+		{
 			app->active_sector->ceil_tex++;
-		if (app->floor_edit && app->active_sector->floor_tex < MAX_TEX_COUNT)
+			if (app->active_sector->ceil_tex > MAX_TEX_COUNT)
+				app->active_sector->ceil_tex = 0;
+		}
+		if (app->floor_edit && app->active_sector->floor_tex <= MAX_TEX_COUNT)
+		{
 			app->active_sector->floor_tex++;
+			if (app->active_sector->floor_tex > MAX_TEX_COUNT)
+				app->active_sector->floor_tex = 0;
+		}
 		if (app->player.inventory.selected[5])
 			change_item_amount(app, key);
 	}

@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/23 15:52:41 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:28:09 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define THREAD_COUNT 2
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
-# define MAX_TEX_COUNT 128
+# define MAX_TEX_COUNT 17
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 8
 # define MAX_WEAPONS 5
