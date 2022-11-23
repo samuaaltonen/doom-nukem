@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/22 18:37:24 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:47:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@
 # define MAX_VISIBLE_WALLS 256
 # define MAX_VIEW_DISTANCE 256.f
 # define MAX_LINE_LENGTH 1048576.0
+# define MAX_OVERWRITE_PIXELS 100000
 # define PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID 1
 
 /**

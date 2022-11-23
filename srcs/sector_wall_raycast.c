@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/22 18:37:44 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/23 17:03:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,7 +222,7 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall,
 		if (wall->is_portal)
 		{
 			if (hit.texture == PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
-				draw_wall(app, x, &hit, OCCLUDE_NONE);
+				draw_transparent_wall(app, x, &hit);
 			if (wall->is_inside && !wall->is_member)
 				draw_portal_partial(app, x, &hit);
 			if (!wall->is_inside)

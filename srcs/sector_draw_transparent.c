@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sector_draw_wall.c                                 :+:      :+:    :+:   */
+/*   sector_draw_transparent.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/23 17:11:28 by saaltone         ###   ########.fr       */
+/*   Created: 2022/11/23 15:47:41 by saaltone          #+#    #+#             */
+/*   Updated: 2022/11/23 17:18:02 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * @param y 
  * @return t_bool 
  */
-static t_bool	apply_occlusion(t_app *app, int x, int occlusion, t_limit *y)
+static t_bool	apply_occlusion(t_app *app, int x, t_limit *y)
 {
 	if (app->occlusion_top[x] > y->start)
 		y->start = app->occlusion_top[x];
@@ -30,12 +30,6 @@ static t_bool	apply_occlusion(t_app *app, int x, int occlusion, t_limit *y)
 		y->end = WIN_H - app->occlusion_bottom[x];
 	if (y->start == y->end || y->start > y->end)
 		return (FALSE);
-	if (occlusion == OCCLUDE_NONE)
-		return (TRUE);
-	if (occlusion == OCCLUDE_BOTH || occlusion == OCCLUDE_TOP)
-		app->occlusion_top[x] = y->end;
-	if (occlusion == OCCLUDE_BOTH || occlusion == OCCLUDE_BOTTOM)
-		app->occlusion_bottom[x] = WIN_H - y->start;
 	return (TRUE);
 }
 
@@ -63,7 +57,7 @@ static void	apply_offsets(t_rayhit *hit, t_limit y, int *tex_x, double *tex_y)
  * @param hit 
  * @param occlusion_type 
  */
-void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion_type)
+void	draw_transparent_wall(t_app *app, int x, t_rayhit *hit)
 {
 	t_limit		y;
 	int			tex_x;
@@ -76,7 +70,7 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion_type)
 	y.start = hit->wall_start;
 	y.end = hit->wall_end;
 	tex_y = hit->texture_offset.y;
-	if (!apply_occlusion(app, x, occlusion_type, &y))
+	if (!apply_occlusion(app, x, &y))
 		return ;
 	apply_offsets(hit, y, &tex_x, &tex_y);
 	depth = (float)hit->distance;
@@ -86,10 +80,13 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion_type)
 		if (tex_y >= (double) TEX_SIZE)
 			tex_y = fmod(tex_y, (double) TEX_SIZE);
 		color = get_pixel_color(app->assets.sprite, tex_x, (int) tex_y);
-		if ((color & 0xFF000000) > 0)
-			put_pixel_to_surface(app->surface, x, y.start, shade_color(color, hit->light));
-		if (y.start % 2 == app->depthmap_fill_switch)
-			app->depthmap[y.start][x] = depth;
+		if ((color & 0xFF000000) > 0 && app->overwrite_buffer_count < MAX_OVERWRITE_PIXELS)
+		{
+			app->overwrite_buffer[app->overwrite_buffer_count] = (t_buffer_unit){
+				x, y.start, shade_color(color, hit->light), depth
+			};
+			app->overwrite_buffer_count++;
+		}
 		y.start++;
 	}
 }

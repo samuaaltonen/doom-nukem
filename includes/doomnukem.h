@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/22 19:00:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:54:24 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ typedef struct s_app
 	int				occlusion_bottom[WIN_W];
 	float			depthmap[WIN_H][WIN_W];
 	t_bool			depthmap_fill_switch;
+	t_buffer_unit	overwrite_buffer[MAX_OVERWRITE_PIXELS];
+	int				overwrite_buffer_count;
 	t_wallstack		wallstack;
 	t_player		player;
 	t_sky			sky;
@@ -163,6 +165,7 @@ void		sector_walls_raycast(t_app *app, t_thread_data *thread,
 				t_wall *wall, t_limit limit);
 void		sector_stack_render(t_app *app, t_thread_data *thread,
 				int stack_id, t_limit limit);
+void		sector_render_overwrite_buffer(t_app *app, t_thread_data *thread);
 void		*sector_render_thread(void *data);
 void		render_sectors(t_app *app);
 
@@ -181,6 +184,7 @@ void		draw_ceiling(t_app *app, int x, t_rayhit *hit);
 void		draw_portal_partial(t_app *app, int x, t_rayhit *hit);
 void		draw_portal_partial_parent(t_app *app, int x, t_rayhit *hit);
 void		draw_portal_partial_hole(t_app *app, int x, t_rayhit *hit);
+void		draw_transparent_wall(t_app *app, int x, t_rayhit *hit);
 
 /**
  * Font

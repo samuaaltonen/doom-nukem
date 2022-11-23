@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/22 16:47:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/23 16:49:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,5 +153,13 @@ typedef struct s_sky
 	t_point		size;
 	t_vector2	pixel_step;
 }	t_sky;
+
+typedef struct s_buffer_unit
+{
+	int		x;
+	int		y;
+	int		color;
+	float	depth;
+}	t_buffer_unit;
 
 #endif
