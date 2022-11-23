@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/22 15:08:12 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:52:41 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -433,10 +433,10 @@ int				get_line_id(t_vec2_lst *list, t_vec2_lst *wall);
  * Font
 */
 void			toggle_active_color(t_app *app, int active, char *text,
-					t_point point);
+					t_rect point);
 void			change_font(t_app *app, int size, int color);
 void			load_font(t_app *app);
-void			render_text(t_app *app, t_point position, char *text);
+void			render_text(t_app *app, t_rect frame, char *text);
 void			rect_from_surface(SDL_Surface *surface, t_rect *rect);
 int				check_blit(SDL_Surface *src, t_rect *src_rect,
 					SDL_Surface *dst, t_rect *dst_rect);
@@ -451,7 +451,7 @@ void			set_icon_rect(t_rect *rect, t_point point, t_point size);
 void			load_assets(t_app *app);
 void			render_texture_icons(t_app *app);
 void			render_sector_info(t_app *app);
-void			render_icons(t_app *app, SDL_Surface *asset, t_point point, int max);
+void			render_player_icons(t_app *app, SDL_Surface *asset, t_point point, int max);
 void			render_healthbar(t_app *app);
 void			render_arrows(t_app *app, t_point left, t_point right);
 void			render_ui_frame(t_app *app,t_rect area, int size, int background);
@@ -460,7 +460,7 @@ void			change_item_amount(t_app *app, SDL_Keycode key);
 void			render_weapon_statics(t_app *app);
 void			render_armor_statics(t_app *app);
 void			render_object_statics(t_app *app);
-void			render_object_icons(t_app *app, t_point point);
+void			render_icons(t_app *app, t_point point, int id, SDL_Surface *asset);
 void			render_interaction_texts(t_app *app, int start_y);
 void			render_inventory(t_app *app);
 void			select_inventory(t_app *app, t_point screen_pos);

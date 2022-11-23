@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:45:38 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/22 15:33:23 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/22 17:58:44 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	render_interaction_button(t_app *app, t_rect button,
 	if (mouse.x > button.x && mouse.x < button.x + button.w
 		&& mouse.y > button.y && mouse.y < button.y + button.h)
 		change_font(app, 11, ACTIVE_TEXT);
-	render_text(app, (t_point){button.x, button.y}, text);
+	render_text(app, (t_rect){button.x, button.y, button.x + button.w, button.y + button.h}, text);
 	change_font(app, 11, TEXT);
 }
 
@@ -59,7 +59,9 @@ void	render_interaction_texts(t_app *app, int start_y)
 	t_point	mouse;
 
 	SDL_GetMouseState(&mouse.x, &mouse.y);
-	render_text(app, (t_point){10, start_y}, "INTERACTIONS");
+	change_font(app, 15, TEXT);
+	render_text(app, (t_rect){10, start_y, 100, 20}, "INTERACTIONS");
+	change_font(app, 11, TEXT);
 	y = start_y + 20;
 	while (y < start_y + 141)
 	{

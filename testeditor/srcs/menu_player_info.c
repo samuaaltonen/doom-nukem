@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:56:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/18 15:46:02 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:54:24 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
 * Renders weapon, armor and inventory icons on the help menu sidebar.
 */
-void	render_icons(t_app *app, SDL_Surface *asset, t_point point, int max)
+void	render_player_icons(t_app *app, SDL_Surface *asset, t_point point, int max)
 {
 	t_rect		src;
 	t_rect		icon;
@@ -50,14 +50,14 @@ void	render_arrows(t_app *app, t_point left, t_point right)
 	SDL_GetMouseState(&screen_pos.x, &screen_pos.y);
 	if ((left.x - 5) < screen_pos.x && (left.x + 10) > screen_pos.x
 		&& left.y < screen_pos.y && (left.y + 10) > screen_pos.y)
-		toggle_active_color(app, 1, "<", left);
+		toggle_active_color(app, 1, "<", (t_rect){left.x, left.y, 15, 15});
 	else
-		toggle_active_color(app, 0, "<", left);
+		toggle_active_color(app, 0, "<", (t_rect){left.x, left.y, 15, 15});
 	if ((right.x - 5) < screen_pos.x && (right.x + 10) > screen_pos.x
 		&& right.y < screen_pos.y && (right.y + 10) > screen_pos.y)
-		toggle_active_color(app, 1, ">", right);
+		toggle_active_color(app, 1, ">", (t_rect){right.x, right.y, 15, 15});
 	else
-		toggle_active_color(app, 0, ">", right);
+		toggle_active_color(app, 0, ">", (t_rect){right.x, right.y, 15, 15});
 }
 
 /**
