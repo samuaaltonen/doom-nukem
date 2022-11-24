@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:36:43 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/11 16:31:08 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:53:19 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,25 +16,16 @@
  * Toggles the color of the wall, floor and ceiling header based on,
  * if they're active or not.
 */
-void	toggle_active_color(t_app *app, int active, char *text, t_point point)
+void	toggle_active_color(t_app *app, int active, char *text, t_rect point)
 {
-	load_font(app);
 	if (active == 1)
-	{
-		change_font(app, 15, ACTIVE_TEXT);
-		render_text(app, point, text);
-	}
+		change_font(app, 11, ACTIVE_TEXT);
 	else if (active == 2)
-	{
-		change_font(app, 15, 0xFF00FFFF);
-		render_text(app, point, text);
-	}
+		change_font(app, 11, 0xFFFF00FF);
 	else
-	{
-		change_font(app, 15, TEXT);
-		render_text(app, point, text);
-	}
-	change_font(app, 15, TEXT);
+		change_font(app, 11, TEXT);
+	render_text(app, point, text);
+	change_font(app, 11, TEXT);
 }
 
 /**
@@ -53,26 +44,19 @@ void	set_icon_rect(t_rect *rect, t_point point, t_point size)
 */
 static void	place_texture_icons(t_app *app)
 {
-	t_rect		src;
-	t_rect		wall_icon;
-	t_rect		floor_icon;
-	t_rect		ceiling_icon;
-
+	render_arrows(app, (t_point){12, 330}, (t_point){265, 330});
 	if (app->active)
-		set_icon_rect(&src, (t_point){(ICON_SIZE * app->active->tex), 0}, (t_point){ICON_SIZE, ICON_SIZE});
+		render_icons(app, (t_point){25, 320}, app->active->tex,
+			app->assets.sprite);
 	else
-		set_icon_rect(&src, (t_point){(ICON_SIZE
-				* app->active_sector->wall_list->tex), 0}, (t_point){ICON_SIZE, ICON_SIZE});
-	set_icon_rect(&wall_icon, (t_point){22, 420}, (t_point){ICON_SIZE, ICON_SIZE});
-	blit_surface(app->assets.sprite, &src, app->surface, &wall_icon);
-	set_icon_rect(&src, (t_point){(ICON_SIZE
-			* app->active_sector->floor_tex), 0}, (t_point){ICON_SIZE, ICON_SIZE});
-	set_icon_rect(&floor_icon, (t_point){108, 420}, (t_point){ICON_SIZE, ICON_SIZE});
-	blit_surface(app->assets.sprite, &src, app->surface, &floor_icon);
-	set_icon_rect(&src, (t_point){(ICON_SIZE
-			* app->active_sector->ceil_tex), 0}, (t_point){ICON_SIZE, ICON_SIZE});
-	set_icon_rect(&ceiling_icon, (t_point){194, 420}, (t_point){ICON_SIZE, ICON_SIZE});
-	blit_surface(app->assets.sprite, &src, app->surface, &ceiling_icon);
+		render_icons(app, (t_point){25, 320},
+			app->active_sector->wall_list->tex, app->assets.sprite);
+	render_arrows(app, (t_point){12, 428}, (t_point){265, 428});
+	render_icons(app, (t_point){25, 418},
+		app->active_sector->floor_tex, app->assets.sprite);
+	render_arrows(app, (t_point){12, 526}, (t_point){265, 526});
+	render_icons(app, (t_point){25, 516},
+		app->active_sector->ceil_tex, app->assets.sprite);
 }
 
 /**
@@ -83,13 +67,13 @@ void	render_texture_icons(t_app *app)
 	if (app->active_sector)
 	{
 		if (app->active)
-			toggle_active_color(app, 2, "WALL", (t_point){32, 400});
+			toggle_active_color(app, 2, "WALL", (t_rect){125, 292, 200, 15});
 		else
 			toggle_active_color(app, app->wall_edit, "WALL",
-				(t_point){32, 400});
-		toggle_active_color(app, app->floor_edit, "FLOOR", (t_point){113, 400});
+				(t_rect){125, 292, 200, 15});
+		toggle_active_color(app, app->floor_edit, "FLOOR", (t_rect){122, 390, 200, 15});
 		toggle_active_color(app, app->ceiling_edit, "CEILING",
-			(t_point){190, 400});
+			(t_rect){114, 488, 200, 15});
 		place_texture_icons(app);
 	}
 }

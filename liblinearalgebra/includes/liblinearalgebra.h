@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:46:18 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/18 15:43:41 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:47:00 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ t_line		ft_line_resize(t_line line, double length, int side);
 double		ft_vector_dotproduct(t_vector2 a, t_vector2 b);
 double		ft_vector_crossproduct(t_vector2 a, t_vector2 b);
 double		ft_vector_angle(t_vector2 a, t_vector2 b);
+double		ft_vector_angle_right(t_vector2 a, t_vector2 b);
 int			ft_line_side(t_line line, t_vector2 coord);
 t_vector2	ft_vector2_sub(t_vector2 a, t_vector2 b);
 t_vector2	ft_vector2_add(t_vector2 a, t_vector2 b);

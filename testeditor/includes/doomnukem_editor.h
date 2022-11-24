@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 14:14:13 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:52:09 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,11 +35,12 @@
 # define THREAD_COUNT 2
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
-# define MAX_TEX_COUNT 128
+# define MAX_TEX_COUNT 17
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 8
 # define MAX_WEAPONS 5
 # define MAX_ARMOR 5
+# define MAX_OBJECTS 17
 # define INVENTORY_SIZE 6
 # define MAX_OBJECTS 64
 # define MAX_UNIQUE_OBJECTS 64
@@ -119,8 +120,9 @@ enum e_colors {
 	FLOOR_ROTATE = 0x777777,
 	BG_LIGHT = 0x888888,
 	BG_DARK = 0x424242,
-	TEXT = 0xFF111111,
-	ACTIVE_TEXT = 0xFFFF0000,
+	BG_MENU = 0x242424,
+	TEXT = 0xFF00FFFF,
+	ACTIVE_TEXT = 0xFFD50000,
 	PLAYER = 0x00FF00,
 	LINE_A = 0xAABBCC,
 	LINE_B = 0xFF4444,
@@ -354,9 +356,11 @@ typedef struct s_app
 	t_bool				decor_edit;
 	t_interaction		*current_interaction;
 	t_object			*current_object;
+	t_bool				imported;
 	t_bool				mouse_down;
 	int					sectorcount;
 	int					movement_speed;
+	int					event_id;
 	t_assets			assets;
 	t_player			player;
 	t_object			objects[MAX_OBJECTS];
@@ -486,6 +490,7 @@ t_sector_lst	*find_child_sector(t_app *app);
 int				get_sector_id(t_app *app, t_sector_lst *sector);
 void			cancel_list_creation(t_app *app);
 void			add_member_sector(t_sector_lst *parent, t_sector_lst *child);
+void			del_sector_portals(t_app *app, int deleted);
 
 /**
  * Point/Wall/Wall_list Functions
@@ -534,10 +539,10 @@ int				get_line_id(t_vec2_lst *list, t_vec2_lst *wall);
  * Font
 */
 void			toggle_active_color(t_app *app, int active, char *text,
-					t_point point);
+					t_rect point);
 void			change_font(t_app *app, int size, int color);
 void			load_font(t_app *app);
-void			render_text(t_app *app, t_point position, char *text);
+void			render_text(t_app *app, t_rect frame, char *text);
 void			rect_from_surface(SDL_Surface *surface, t_rect *rect);
 int				check_blit(SDL_Surface *src, t_rect *src_rect,
 					SDL_Surface *dst, t_rect *dst_rect);
@@ -552,7 +557,7 @@ void			set_icon_rect(t_rect *rect, t_point point, t_point size);
 void			load_assets(t_app *app);
 void			render_texture_icons(t_app *app);
 void			render_sector_info(t_app *app);
-void			render_icons(t_app *app, SDL_Surface *asset, t_point point, int max);
+void			render_player_icons(t_app *app, SDL_Surface *asset, t_point point, int max);
 void			render_healthbar(t_app *app);
 void			render_arrows(t_app *app, t_point left, t_point right);
 void			render_ui_frame(t_app *app,t_rect area, int size, int background);
@@ -560,6 +565,9 @@ void			color_surface(SDL_Surface *surface, int color);
 void			change_item_amount(t_app *app, SDL_Keycode key);
 void			render_weapon_statics(t_app *app);
 void			render_armor_statics(t_app *app);
+void			render_object_statics(t_app *app);
+void			render_icons(t_app *app, t_point point, int id, SDL_Surface *asset);
+void			render_interaction_texts(t_app *app, int start_y);
 void			render_inventory(t_app *app);
 void			select_inventory(t_app *app, t_point screen_pos);
 int				check_mouse(t_point screen_pos, t_rect rect);

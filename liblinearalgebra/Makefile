@@ -6,7 +6,7 @@
 #    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 10:36:08 by saaltone          #+#    #+#              #
-#    Updated: 2022/11/18 15:43:28 by htahvana         ###   ########.fr        #
+#    Updated: 2022/11/24 16:01:31 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ FILES=ft_vector_length.c \
 	ft_line_resize.c \
 	ft_line_side.c \
 	ft_vector_angle.c \
+	ft_vector_angle_right.c \
 	ft_vector_sub.c \
 	ft_vector_add.c \
 	ft_compare_vectors.c

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:09:50 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/22 15:28:03 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:55:42 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,20 +82,21 @@ void	select_inventory(t_app *app, t_point screen_pos)
 */
 static void	render_inventory_texts(t_app *app)
 {
-	render_text(app, (t_point){10, 320}, "START INVENTORY");
-	render_text(app, (t_point){185, 320},
-		ft_itoa(app->selected[5]));
-	render_text(app, (t_point){195, 320}, " / 2");
-	change_font(app, 11, UI_FRAME);
-	render_text(app, (t_point){58, 342}, ft_itoa(app->player.inventory.ammo));
-	render_text(app, (t_point){105, 342},
-		ft_itoa(app->player.inventory.potion));
-	render_text(app, (t_point){147, 342},
-		ft_itoa(app->player.inventory.antidote));
-	render_text(app, (t_point){190, 342}, ft_itoa(app->player.inventory.key));
-	render_text(app, (t_point){232, 342},
-		ft_itoa(app->player.inventory.jetpack));
 	change_font(app, 15, TEXT);
+	render_text(app, (t_rect){10, 320, 100, 20}, "START INVENTORY");
+	render_text(app, (t_rect){185, 320, 100, 20},
+		ft_itoa(app->player.inventory.selected[5]));
+	render_text(app, (t_rect){195, 320, 100, 20}, " / 2");
+	change_font(app, 11, TEXT);
+	render_text(app, (t_rect){58, 342, 100, 20}, ft_itoa(app->player.inventory.ammo));
+	render_text(app, (t_rect){105, 342, 100, 20},
+		ft_itoa(app->player.inventory.potion));
+	render_text(app, (t_rect){147, 342, 100, 20},
+		ft_itoa(app->player.inventory.antidote));
+	render_text(app, (t_rect){190, 342, 100, 20}, ft_itoa(app->player.inventory.key));
+	render_text(app, (t_rect){232, 342, 100, 20},
+		ft_itoa(app->player.inventory.jetpack));
+	change_font(app, 11, TEXT);
 }
 
 /**
@@ -105,7 +106,7 @@ void	render_inventory(t_app *app)
 {
 	int		index;
 
-	render_icons(app, app->assets.sprite, (t_point){40, 340}, 5);
+	render_player_icons(app, app->assets.sprite, (t_point){40, 340}, INVENTORY_SIZE);
 	index = 0;
 	while (index < (INVENTORY_SIZE - 1))
 	{

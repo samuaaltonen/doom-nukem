@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:36:45 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/18 14:47:49 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:56:50 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,9 @@ t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop,
 		app->player.sector = NULL;
 		app->player_edit = TRUE;
 	}
+	del_sector_portals(app, get_sector_id(app, app->active_sector));
+	if (get_sector_id(app, app->active_sector) < app->player.sector)
+		app->player.sector--;
 	if (head == *pop)
 	{
 		if (prev)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assets.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/14 19:08:00 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/22 19:00:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,15 @@
 # define ASSETS_H
 
 # define PANELS_PATH "assets/textures/minecraft_spritesheet.bmp"
-# define SKYBOX_PATH "assets/textures/bg.bmp"
+# define SKYBOX_PATH "assets/images/skybox.bmp"
 # define FONT_PATH "assets/fonts/sci-fi_font.bmp"
 # define UI_FRAME_PATH "assets/ui/ui_frame.bmp"
 # define TITLESCREEN_PATH "assets/images/awakened3.bmp"
+# define CROSSHAIR_PATH "assets/ui/crosshair.bmp"
 # define POINTER_PATH "assets/ui/mouse_pointer.bmp"
+# define SHIELD_PATH "assets/ui/shield.bmp"
+# define HP_PATH "assets/ui/hp.bmp"
+# define METER_PATH "assets/ui/meter.bmp"
 # define MUSIC_PATH "assets/sounds/title_music.wav"
 # define LASER_PATH "assets/sounds/laser.wav"
 # define SHOT_PATH "assets/sounds/shot.wav"
@@ -61,7 +65,7 @@ enum e_texture {
 };
 
 /**
- * Struct for font.
+ * Struct for font. 
  */
 typedef struct s_font
 {
@@ -82,7 +86,11 @@ typedef struct s_assets
 	SDL_Surface		*button_select;
 	SDL_Surface		*button_press;
 	SDL_Surface		*title_screen_image;
+	SDL_Surface		*crosshair;
 	SDL_Surface		*pointer;
+	SDL_Surface		*shield;
+	SDL_Surface		*hp;
+	SDL_Surface		*meter;
 	SDL_Surface		*sprite;
 	SDL_Surface		*bg;
 }	t_assets;

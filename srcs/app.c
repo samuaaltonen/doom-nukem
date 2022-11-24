@@ -6,15 +6,17 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/15 11:52:53 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/21 12:06:18 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * Main game loop. Polls SDL event queue until it is empty and then 
+ * @brief Main game loop. Polls SDL event queue until it is empty and then 
  * proceeds to next frame.
+ * 
+ * @param app 
  */
 void	app_loop(t_app *app)
 {
@@ -27,11 +29,11 @@ void	app_loop(t_app *app)
 	}
 }
 
-
-
 /**
- * Rendering function to be called in loop hook. Calls individual renderers and
+ * @brief Rendering function to be called in app loop. Calls individual renderers and
  * draws resulting image(s) to the window.
+ * 
+ * @param app 
  */
 void	render_frame(t_app *app)
 {
@@ -44,7 +46,8 @@ void	render_frame(t_app *app)
 		render_game(app);
 	else if (app->status == STATUS_PAUSEMENU)
 		render_pausemenu(app);
-	else if (app->status == STATUS_MAINOPTIONS || app->status == STATUS_GAMEOPTIONS)
+	else if (app->status == STATUS_MAINOPTIONS
+		|| app->status == STATUS_GAMEOPTIONS)
 		render_options(app);
 	SDL_UpdateWindowSurface(app->win);
 }

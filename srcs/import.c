@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/24 15:36:40 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/24 16:07:47 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,8 @@ static void	export_to_array(t_app *app, t_exportsector *export, int sectorid)
 	ft_memcpy(app->sectors[sectorid].wall_textures, export->wall_textures, export->corner_count * sizeof(int));
 	ft_memcpy(app->sectors[sectorid].wall_types, export->wall_types, export->corner_count *  sizeof(int));
 	ft_memcpy(app->sectors[sectorid].member_sectors, export->member_sectors, MAX_MEMBER_SECTORS * sizeof(int));
-	ft_memcpy(app->sectors[sectorid].wall_decor, export->wall_decor, sizeof(export->wall_decor) * MAX_SECTOR_CORNERS);
-	ft_memcpy(app->sectors[sectorid].decor_offset, export->decor_offset, sizeof(export->decor_offset) * MAX_SECTOR_CORNERS);
+	ft_memcpy(app->sectors[sectorid].wall_decor, export->wall_decor, sizeof(export->wall_decor));
+	ft_memcpy(app->sectors[sectorid].decor_offset, export->decor_offset, sizeof(export->decor_offset));
 }
 
 /**
@@ -132,9 +132,9 @@ static void import_player(t_app *app, t_export_player *player)
 {
 	app->player.current_sector = player->sector;
 	app->player.pos = player->position;
-	app->player.health = player->health;
+	app->player.hp = player->health;
 	app->player.weapons = player->weapons;
-	app->player.armor = player->armor;
+	app->player.shield = player->armor;
 	ft_memcpy(&app->player.inventory, &player->inventory, sizeof(t_inventory));
 
 }

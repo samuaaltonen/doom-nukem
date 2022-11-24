@@ -6,7 +6,11 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/11/24 14:17:19 by htahvana         ###   ########.fr       */
+=======
+/*   Updated: 2022/11/23 16:34:45 by ssulkuma         ###   ########.fr       */
+>>>>>>> origin/main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,17 +89,34 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 	}
 	else if (key == SDLK_LEFT)
 	{
-		if (app->active && app->active->tex > 0)
+		if (app->active && app->active->tex >= 0)
+		{
 			app->active->tex--;
-		if (app->wall_edit && app->active_sector->wall_list->tex > 0
+			if (app->active->tex < 0)
+				app->active->tex = MAX_TEX_COUNT;
+		}
+		if (app->wall_edit && app->active_sector->wall_list->tex >= 0
 			&& !app->active)
+		{
 			app->active_sector->wall_list->tex--;
 		if (app->decor_edit && app->active && !app->floor_edit && !app->ceiling_edit && app->active->decor != -1)
 			app->active->decor_offset.x -= app->divider;
 		if (app->ceiling_edit && app->active_sector->ceil_tex > 0)
+			if (app->active_sector->wall_list->tex < 0)
+				app->active_sector->wall_list->tex = MAX_TEX_COUNT;
+		}
+		if (app->ceiling_edit && app->active_sector->ceil_tex >= 0)
+		{
 			app->active_sector->ceil_tex--;
-		if (app->floor_edit && app->active_sector->floor_tex > 0)
+			if (app->active_sector->ceil_tex < 0)
+				app->active_sector->ceil_tex = MAX_TEX_COUNT;
+		}
+		if (app->floor_edit && app->active_sector->floor_tex >= 0)
+		{
 			app->active_sector->floor_tex--;
+			if (app->active_sector->floor_tex < 0)
+				app->active_sector->floor_tex = MAX_TEX_COUNT;
+		}
 		if (app->selected[5])
 			change_item_amount(app, key);
 		if ((app->object_menu || app->object_new) && app->current_object->type > 1)
@@ -103,17 +124,34 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 	}
 	else if (key == SDLK_RIGHT)
 	{
-		if (app->active && app->active->tex < MAX_TEX_COUNT)
+		if (app->active && app->active->tex <= MAX_TEX_COUNT)
+		{
 			app->active->tex++;
-		if (app->wall_edit && app->active_sector->wall_list->tex < MAX_TEX_COUNT
+			if (app->active->tex > MAX_TEX_COUNT)
+				app->active->tex = 0;
+		}
+		if (app->wall_edit && app->active_sector->wall_list->tex <= MAX_TEX_COUNT
 			&& !app->active)
+		{
 			app->active_sector->wall_list->tex++;
 		if (app->decor_edit && app->active && !app->floor_edit && !app->ceiling_edit && app->active->decor != -1)
 			app->active->decor_offset.x += app->divider;
 		if (app->ceiling_edit && app->active_sector->ceil_tex < MAX_TEX_COUNT)
+			if (app->active_sector->wall_list->tex > MAX_TEX_COUNT)
+				app->active_sector->wall_list->tex = 0;
+		}
+		if (app->ceiling_edit && app->active_sector->ceil_tex <= MAX_TEX_COUNT)
+		{
 			app->active_sector->ceil_tex++;
-		if (app->floor_edit && app->active_sector->floor_tex < MAX_TEX_COUNT)
+			if (app->active_sector->ceil_tex > MAX_TEX_COUNT)
+				app->active_sector->ceil_tex = 0;
+		}
+		if (app->floor_edit && app->active_sector->floor_tex <= MAX_TEX_COUNT)
+		{
 			app->active_sector->floor_tex++;
+			if (app->active_sector->floor_tex > MAX_TEX_COUNT)
+				app->active_sector->floor_tex = 0;
+		}
 		if (app->selected[5])
 			change_item_amount(app, key);
 		if ((app->object_menu || app->object_new) && app->current_object->type < MAX_UNIQUE_OBJECTS - 1)

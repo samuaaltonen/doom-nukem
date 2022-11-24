@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 13:53:15 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:46:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,10 @@
 # include "liblinearalgebra.h"
 # include "assets.h"
 # include "config.h"
-# include "engine.h"
 # include "error.h"
 # include "events.h"
 # include "geometry.h"
+# include "engine.h"
 # include "player.h"
 
 //STATUS MACROS
@@ -46,10 +46,10 @@
 //COLORS
 # define WHITE 0xFFFFFFFF
 # define BLACK 0xFF000000
-# define DARK_RED 0xFFd50000
+# define DARK_RED 0xFFD50000
 # define DARK_GREY 0xFF242424
 # define CYAN 0xFF00FFFF
-# define GREEN 0xFF8BC34A
+# define GREEN 0xFF8CFF00
 
 /**
  * Integer type definitions
@@ -82,8 +82,11 @@ typedef struct s_app
 	t_point			mouse_pos;
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];
+	float			depthmap[WIN_H][WIN_W];
+	t_bool			depthmap_fill_switch;
 	t_wallstack		wallstack;
 	t_player		player;
+	t_sky			sky;
 	t_sector		*sectors;
 	t_object		objects[MAX_OBJECTS];
 	t_interaction	interactions[MAX_INTERACTIONS];
@@ -106,7 +109,6 @@ void		exit_error(char *message);
  * Configuration
  */
 void		init_thread_info(t_app *app);
-void		init_camera_plane(t_app *app);
 
 /**
  * Application
@@ -135,12 +137,6 @@ int			dispatch_event(t_app *app, SDL_Event *event);
 void		handle_movement(t_app *app);
 
 /**
- * Graphics
- */
-void		*render_skybox(void *data);
-void		*render_background(void *data);
-
-/**
  * Multithreading
  */
 void		threads_init(t_app *app, t_thread_data *threads_data);
@@ -151,8 +147,12 @@ void		threads_work(t_thread_data *threads_data);
 /**
  * Player
  */
+void		player_init(t_app *app);
 void		player_rotate(t_app *app, double angle);
+void		player_horizon(t_app *app, double change);
 void		player_move(t_app *app, t_movement movement, double speed);
+void		init_camera_plane(t_app *app);
+void		init_skybox_plane(t_app *app);
 
 /**
  * Sectors
@@ -167,6 +167,11 @@ void		sector_stack_render(t_app *app, t_thread_data *thread,
 				int stack_id, t_limit limit);
 void		*sector_render_thread(void *data);
 void		render_sectors(t_app *app);
+
+/**
+ * Sky
+ */
+void		sector_sky_render(t_app *app, t_thread_data *thread);
 
 /**
  * Sector draw
@@ -184,14 +189,19 @@ void		draw_portal_partial_hole(t_app *app, int x, t_rayhit *hit);
  */
 void        load_font(t_app *app);
 void		change_font(t_app *app, int size, int color);
-void    	render_text(t_app *app, t_point position, char *text);
+void		render_text(t_app *app, t_rect frame, char *text);
 
 /**
  * UI
  */
 void		render_ui_frame(t_app *app,t_rect area, int size, int background);
 void		render_ui(t_app *app);
+void		render_player_status(t_app *app);
+void		render_pointer(t_app *app, int x, int y);
+void		render_crosshair(t_app *app);
 t_rect		render_button(t_app *app, t_rect area, int size, char *text);
+void		render_text_prompt(t_app *app, t_rect area, int size, char *text);
+void		render_ui_element(t_app *app, SDL_Surface *elem, t_rect area);
 int			check_mouse(t_app *app, t_rect rect);
 
 /**
@@ -213,7 +223,6 @@ void		fullscreen(t_app *app);
  */
 void		render_mainmenu(t_app *app);
 void		render_titlescreen(t_app *app);
-void		render_pointer(t_app *app, int x, int y);
 void		render_game(t_app *app);
 void		render_pausemenu(t_app *app);
 void		render_options(t_app *app);

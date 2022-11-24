@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:32:37 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/16 14:31:18 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/23 10:57:33 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,20 +45,18 @@ void	weapons_init(t_app *app)
 */
 static void	render_weapon_texts(t_app *app)
 {
-	change_font(app, 11, TEXT);
-	render_text(app, (t_point){40, 100}, "DAMAGE");
-	render_text(app, (t_point){220, 100},
+	render_text(app, (t_rect){40, 102, 100, 15}, "DAMAGE");
+	render_text(app, (t_rect){220, 102, 100, 15},
 		ft_itoa(app->player.weapons[app->player.selected_weapon].damage));
-	render_text(app, (t_point){40, 115}, "RANGE");
-	render_text(app, (t_point){220, 115},
+	render_text(app, (t_rect){40, 115, 100, 15}, "RANGE");
+	render_text(app, (t_rect){220, 115, 100, 15},
 		ft_itoa(app->player.weapons[app->player.selected_weapon].range));
-	render_text(app, (t_point){40, 130}, "RPS");
-	render_text(app, (t_point){220, 130},
+	render_text(app, (t_rect){40, 128, 100, 15}, "RPS");
+	render_text(app, (t_rect){220, 128, 100, 15},
 		ft_itoa(app->player.weapons[app->player.selected_weapon].fire_rate));
-	render_text(app, (t_point){40, 145}, "MAGAZINE");
-	render_text(app, (t_point){120, 145},
+	render_text(app, (t_rect){40, 141, 100, 15}, "MAGAZINE");
+	render_text(app, (t_rect){120, 141, 100, 15},
 		ft_itoa(app->player.weapons[app->player.selected_weapon].magazine));
-	change_font(app, 15, TEXT);
 }
 
 /**
@@ -77,13 +75,13 @@ void	render_weapon_statics(t_app *app)
 		{
 			if (x < app->player.weapons[app->player.selected_weapon].damage
 				+ 120 && y < 110)
-				put_pixel_to_surface(app->surface, x, y, 0x000000);
+				put_pixel_to_surface(app->surface, x, y, TEXT);
 			if (x < app->player.weapons[app->player.selected_weapon].range
 				+ 120 && y > 113 && y < 123)
-				put_pixel_to_surface(app->surface, x, y, 0x000000);
+				put_pixel_to_surface(app->surface, x, y, TEXT);
 			if (x < app->player.weapons[app->player.selected_weapon].range
 				+ 120 && y > 126 && y < 136)
-				put_pixel_to_surface(app->surface, x, y, 0x000000);
+				put_pixel_to_surface(app->surface, x, y, TEXT);
 			x++;
 		}
 		y++;

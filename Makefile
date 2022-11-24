@@ -6,7 +6,7 @@
 #    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/17 11:57:32 by htahvana         ###   ########.fr        #
+#    Updated: 2022/11/24 15:57:25 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,14 +15,38 @@ NAME = doom-nukem
 CC = gcc
 PWD= $(shell pwd)
 
-FILES = main.c init.c render_status.c render_ui.c render_text.c \
-		button_function.c error.c conf.c app.c  \
-		events_key.c events_mouse.c events_window.c threads.c image.c \
-		skybox.c player.c events.c audio.c time.c \
-		sector_draw_ceiling.c sector_draw_floor.c sector_draw_wall.c \
-		sector_render.c sector_visible_walls_order.c sector_visible_walls.c \
-		sector_wall_raycast.c sector_wall_prepare.c sector_wall_line.c \
-		sector_draw_partial.c import.c utils.c utils_sdl.c
+FILES = main.c \
+		init.c \
+		render_status.c \
+		render_ui.c \
+		render_text.c \
+		button_function.c \
+		error.c app.c \
+		events_key.c \
+		events_mouse.c \
+		events_window.c \
+		threads.c \
+		image.c \
+		player.c \
+		player_init.c \
+		player_view.c \
+		events.c \
+		audio.c \
+		time.c \
+		sector_draw_ceiling.c \
+		sector_draw_floor.c \
+		sector_draw_wall.c \
+		sector_render.c \
+		sector_visible_walls_order.c \
+		sector_visible_walls.c \
+		sector_wall_raycast.c \
+		sector_wall_prepare.c \
+		sector_wall_line.c \
+		sector_draw_partial.c \
+		sector_draw_sky.c \
+		import.c \
+		utils.c \
+		utils_sdl.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a

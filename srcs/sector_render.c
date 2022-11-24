@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/12 01:49:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/22 18:30:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	render_sectors(t_app *app)
 	ft_bzero(app->occlusion_bottom, WIN_W * sizeof(int));
 	sector_visible_walls(app);
 	threads_work((t_thread_data *)&threads_data);
+	app->depthmap_fill_switch = !app->depthmap_fill_switch;
 }
 
 /**
@@ -53,14 +54,18 @@ void	*sector_render_thread(void *data)
 	app = (t_app *)thread->app;
 	while (TRUE)
 	{
-		pthread_mutex_lock(&thread->lock);
+		if (pthread_mutex_lock(&thread->lock))
+			exit_error(NULL);
 		while (!thread->has_work)
-			pthread_cond_wait(&thread->cond, &thread->lock);
+			if (pthread_cond_wait(&thread->cond, &thread->lock))
+				exit_error(NULL);
 		sector_stack_render(app, thread,
 			app->sectors[app->player.current_sector].stack_index, (t_limit){
 			0, WIN_W - 1});
+		sector_sky_render(app, thread);
 		thread->has_work = FALSE;
-		pthread_mutex_unlock(&thread->lock);
+		if (pthread_mutex_unlock(&thread->lock))
+			exit_error(NULL);
 	}
 	pthread_exit(NULL);
 }
@@ -72,8 +77,7 @@ void	*sector_render_thread(void *data)
  * @param app
  * @param thread
  * @param stack_id
- * @param start_x
- * @param end_x
+ * @param limit
  */
 void	sector_stack_render(t_app *app, t_thread_data *thread, int stack_id,
 	t_limit limit)
@@ -86,13 +90,14 @@ void	sector_stack_render(t_app *app, t_thread_data *thread, int stack_id,
 	{
 		wall = &app->wallstack.walls[stack_id][i];
 		sector_walls_raycast(app, thread, wall, limit);
-		if (wall->is_portal && wall->is_inside && !wall->is_member)
-			sector_stack_render(app, thread,
-				app->sectors[wall->wall_type].stack_index,
-				(t_limit){
-				ft_max(wall->start_x, limit.start),
-				ft_min(wall->end_x, limit.end)
-			});
+		if (wall->is_portal && wall->is_inside && !wall->is_member
+			&& app->sectors[wall->wall_type].stack_index > stack_id)
+				sector_stack_render(app, thread,
+					app->sectors[wall->wall_type].stack_index,
+					(t_limit){
+					ft_max(wall->start_x, limit.start),
+					ft_min(wall->end_x, limit.end)
+				});
 		i++;
 	}
 }

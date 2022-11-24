@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:35:37 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/04 10:59:23 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/17 14:58:53 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	play_music(t_app *app, char *file)
 	{
 		SDL_LoadWAV(file,
 			&app->audio.wav_spec, &app->audio.music, &app->audio.music_length);	
-		SDL_QueueAudio(app->audio.device_id, app->audio.music, app->audio.music_length);
+		SDL_QueueAudio(app->audio.device_id, app->audio.music,
+			app->audio.music_length);
 		SDL_PauseAudioDevice(app->audio.device_id, 0);
 		SDL_FreeWAV(app->audio.music);
 	}	
@@ -36,7 +37,8 @@ void	play_sound(t_app *app, char *file)
 	size = SDL_GetQueuedAudioSize(app->audio.device_id);
 	ptr = app->audio.music + app->audio.music_length - size;
 	SDL_ClearQueuedAudio(app->audio.device_id);
-	SDL_MixAudioFormat(ptr, app->audio.sound, AUDIO_S16SYS, app->audio.sound_length, SDL_MIX_MAXVOLUME);
+	SDL_MixAudioFormat(ptr, app->audio.sound, AUDIO_S16SYS,
+		app->audio.sound_length, SDL_MIX_MAXVOLUME);
 	SDL_QueueAudio(app->audio.device_id, ptr, size);
 	SDL_PauseAudioDevice(app->audio.device_id, 0);
 	SDL_FreeWAV(app->audio.sound);

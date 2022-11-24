@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/24 13:44:26 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:46:19 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,26 +18,28 @@
 # define WIN_NAME "Doom Nukem"
 # define WIN_W 1280
 # define WIN_H 720
-# define THREAD_COUNT 4
+# define THREAD_COUNT 6
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
 # define COLLISION_OFFSET 0.25
 # define FOV 66
-# define MAX_RAY_DISTANCE 25.0
 # define TEX_SIZE 64
+# define SKYBOX_W 1024 // Optimal size 4x2.5 of window size (5120x1800 for 1280x720)
+# define SKYBOX_H 1024
 # define MOUSE_SENSITIVITY_HORIZONTAL 0.3
 # define MOUSE_SENSITIVITY_VERTICAL 0.2
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 8
 # define MAX_VISIBLE_SECTORS 64
 # define MAX_VISIBLE_WALLS 256
-# define MAX_VIEW_DISTANCE 100.0
+# define MAX_VIEW_DISTANCE 256.f
 # define MAX_LINE_LENGTH 1048576.0
 # define MAX_OBJECTS 64
 # define MAX_UNIQUE_OBJECTS 64
 # define MAX_INTERACTIONS 64
 # define MAX_UNIQUE_INTERACTIONS 7
 # define MAX_DECOR 10
+# define PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID 1
 
 /**
  * Struct for threads about their specific identifiers and locks for signaling.

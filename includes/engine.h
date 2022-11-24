@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/24 15:05:57 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:46:48 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@
 enum e_occlusion {
 	OCCLUDE_TOP,
 	OCCLUDE_BOTTOM,
-	OCCLUDE_BOTH
+	OCCLUDE_BOTH,
+	OCCLUDE_NONE
 };
 
 /**
@@ -138,7 +139,7 @@ typedef struct s_wall
 typedef struct s_wallstack
 {
 	t_wall	walls[MAX_VISIBLE_SECTORS] \
-			[(MAX_MEMBER_SECTORS + 1) * MAX_SECTOR_CORNERS];
+			[(MAX_MEMBER_SECTORS + 1) * MAX_SECTOR_CORNERS + 1];
 	int		wall_count[MAX_VISIBLE_SECTORS + 1];
 	int		visited[MAX_VISIBLE_SECTORS];
 	int		visited_count;
@@ -172,5 +173,15 @@ typedef struct s_object
 	int				sector;
 }	t_object;
 
+/**
+ * Struct that contains skybox drawing information. These values are updated
+ * based on player movement.
+ */
+typedef struct s_sky
+{
+	t_point		start;
+	t_point		size;
+	t_vector2	pixel_step;
+}	t_sky;
 
 #endif
