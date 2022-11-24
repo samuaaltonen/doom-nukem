@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 16:30:26 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/24 17:00:45 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,8 @@ void	sector_stack_render(t_app *app, t_thread_data *thread, int stack_id,
 			copy_occlusion(app->occlusion_top, (int *)&temp_occlusion_top);
 			copy_occlusion(app->occlusion_bottom, (int *)&temp_occlusion_bottom);
 		}
-		if (wall->is_portal && wall->is_inside && !wall->is_member
-			&& app->sectors[wall->wall_type].stack_index > stack_id)
+		if (wall->is_portal && wall->is_inside && !wall->is_member)
+			//&& app->sectors[wall->wall_type].stack_index > stack_id)
 				sector_stack_render(app, thread,
 					app->sectors[wall->wall_type].stack_index,
 					(t_limit){
