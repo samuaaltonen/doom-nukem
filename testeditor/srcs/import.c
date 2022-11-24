@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/22 18:05:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/24 13:33:17 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,8 +183,6 @@ static void	read_objects(t_app *app, t_export_object *export)
 		temp.position = export[i].pos;
 		temp.sector =  sector_by_index(app, export[i].sector);
 		temp.type = export[i].type;
-		if(temp.type > 0)
-			app->object_count++;
 		temp.var = export[i].var;
 		(app->objects[i]) = temp;
 		i++;
@@ -219,8 +217,6 @@ static void	read_interactions(t_app *app, t_export_interaction *export)
 	while (i < MAX_INTERACTIONS)
 	{
 		temp.event_id = export[i].event_id;
-		if (temp.event_id != 0)
-			app->interaction_count++;
 		temp.variable = export[i].variable;
 		temp.activation_sector = sector_by_index(app, export[i].activation_sector);
 		temp.activation_wall = line_by_index(temp.activation_sector, export[i].activation_wall);
@@ -247,25 +243,28 @@ int	import_file(t_app *app, char *path)
 	int				fd;
 	t_exportsector	*export;
 	t_sector_lst	*new;
-	size_t			counter;
-	size_t			sector_count;
+	int				counter;
 	t_export_player	player;
 	t_export_object	objects[MAX_OBJECTS];
 	t_export_interaction	interactions[MAX_INTERACTIONS];
+	t_level_header			header;
+
 
 	counter = 0;
 	fd = open(path, O_RDONLY, 0755);
 	if (fd < 0)
 		exit_error("FILE OPEN ERROR TEMP!");
+	if (read(fd, &header, (sizeof(t_level_header))) == -1)
+		exit_error(MSG_ERROR_FILE_READ);
+	app->interaction_count = header.interaction_count;
+	app->object_count = header.object_count;
 	if (read(fd, &player, sizeof(t_export_player)) == -1)
 			exit_error("player read error\n");
 	read_player(app, &player);
 	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
 	if (!export)
 		exit_error(MSG_ERROR_ALLOC);
-	if (read(fd, &sector_count, (sizeof(size_t))) == -1)
-		exit_error(MSG_ERROR_FILE_READ);
-	while (counter++ < sector_count)
+	while (counter++ < header.sector_count)
 	{
 		if (read(fd, export, sizeof(t_exportsector)) == -1)
 			exit_error(MSG_ERROR_FILE_READ);

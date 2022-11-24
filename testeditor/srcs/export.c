@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/22 17:44:41 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/24 13:31:55 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -174,11 +174,11 @@ int	export_file(t_app *app, char *path)
 	int						fd;
 	t_sector_lst			*tmp;
 	t_exportsector			*export;
-	size_t					counter;
-	size_t					sector_count;
+	int						counter;
 	t_export_player			player;
 	t_export_object			objects[MAX_OBJECTS];
 	t_export_interaction	interactions[MAX_INTERACTIONS];
+	t_level_header			header;
 
 	counter = 0;
 	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
@@ -187,14 +187,17 @@ int	export_file(t_app *app, char *path)
 	fd = open(path, O_WRONLY | O_CREAT, 0755);
 	if (fd < 0)
 		exit_error("FILE OPEN ERROR TEMP!");
+	header.sector_count = ft_lstlen(app->sectors);
+	header.interaction_count = app->interaction_count;
+	header.object_count = app->object_count;
+	header.version = FILE_VERSION;
+	if (write(fd, &header, sizeof(t_level_header)) == -1)
+		exit_error(MSG_ERROR_FILE_WRITE);
 	write_player(app, &player);
  	if (write(fd, &player, sizeof(t_export_player)) == -1)
 		exit_error("Player Write Error\n");
-	sector_count = ft_lstlen(app->sectors);
-	if (write(fd, &sector_count, sizeof(sector_count)) == -1)
-		exit_error(MSG_ERROR_FILE_WRITE);
 	tmp = app->sectors;
-	while (counter++ < sector_count)
+	while (counter++ < header.sector_count)
 	{
 		write_sector(app, tmp, export);
 		ft_printf("exported sector corners %i\n", export->corner_count);

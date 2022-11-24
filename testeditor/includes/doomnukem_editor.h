@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/22 15:52:33 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/24 13:27:56 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@
 # define RADIAN_IN_DEG 57.29578f
 # define MAP_SPEED 0.85f
 # define HEIGHT_INC 0.125f
+# define FILE_VERSION 1;
 # define PANELS_PATH "../assets/textures/minecraft_spritesheet.bmp"
 # define UI_FRAME_PATH "../assets/ui/ui_frame.bmp"
 # define FONT_FILE "../assets/legacy/SpaceMono-Regular.ttf"
@@ -285,6 +286,14 @@ typedef struct	s_export_interaction
 	int				activation_object;
 	int				target_sector;
 }	t_export_interaction;
+
+typedef struct	s_level_header
+{
+	int	version;
+	int	sector_count;
+	int	object_count;
+	int	interaction_count;
+}	t_level_header;
 
 /**
  * Struct for font.
