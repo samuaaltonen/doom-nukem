@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 13:27:56 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/24 14:14:13 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,7 @@ typedef struct s_vec2_lst
 	int					type;
 	int					tex;
 	int					decor;
+	t_vector2			decor_offset;
 	struct s_vec2_lst	*next;
 }	t_vec2_lst;
 
@@ -350,6 +351,7 @@ typedef struct s_app
 	t_bool				player_menu;
 	t_bool				object_new;
 	t_bool				object_menu;
+	t_bool				decor_edit;
 	t_interaction		*current_interaction;
 	t_object			*current_object;
 	t_bool				mouse_down;
@@ -372,6 +374,8 @@ typedef struct s_exportsector
 	int				wall_types[MAX_SECTOR_CORNERS];
 	int				wall_textures[MAX_SECTOR_CORNERS];
 	int				member_sectors[MAX_MEMBER_SECTORS];
+	int				wall_decor[MAX_SECTOR_CORNERS];
+	t_vector2		decor_offset[MAX_SECTOR_CORNERS];
 	int				parent_sector;
 	int				light;
 	double			floor_height;

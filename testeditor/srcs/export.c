@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/24 13:31:55 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/24 14:10:00 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static void	list_to_export(t_exportsector *export, t_vec2_lst *list, int count)
 		export->corners[i].y = tmp->point.y;
 		export->wall_textures[i] = tmp->tex;
 		export->wall_types[i] = tmp->type;
+		export->wall_decor[i] = tmp->decor;
+		export->decor_offset[i] = tmp->decor_offset;
 		tmp = tmp->next;
 		i++;
 	}

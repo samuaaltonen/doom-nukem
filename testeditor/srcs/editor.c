@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/22 14:49:58 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/24 14:17:19 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,10 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			app->active_sector->ceil_height += HEIGHT_INC;
 		if (app->floor_edit && !app->slope_edit)
 			app->active_sector->floor_height += HEIGHT_INC;
-		if (app->active && app->active->decor < MAX_DECOR)
+		if (app->active && !app->floor_edit && !app->ceiling_edit && app->active->decor < MAX_DECOR)
 			app->active->decor++;
+		if (app->decor_edit && app->active && !app->floor_edit && !app->ceiling_edit && app->active->decor != -1)
+			app->active->decor_offset.y += app->divider;
 		if (app->light_edit && app->active_sector->light < 8)
 			app->active_sector->light++;
 		if (app->slope_edit && app->ceiling_edit)
@@ -68,8 +70,10 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			app->active_sector->ceil_height -= HEIGHT_INC;
 		if (app->floor_edit && !app->slope_edit)
 			app->active_sector->floor_height -= HEIGHT_INC;
-		if (app->active && app->active->decor > -1)
+		if (app->active && !app->floor_edit && !app->ceiling_edit && app->active->decor > -1)
 			app->active->decor--;
+		if (app->decor_edit && app->active && !app->floor_edit && !app->ceiling_edit && app->active->decor != -1)
+			app->active->decor_offset.y -= app->divider;
 		if (app->light_edit && app->active_sector->light > -8)
 			app->active_sector->light--;
 		if (app->slope_edit && app->ceiling_edit)
@@ -86,6 +90,8 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 		if (app->wall_edit && app->active_sector->wall_list->tex > 0
 			&& !app->active)
 			app->active_sector->wall_list->tex--;
+		if (app->decor_edit && app->active && !app->floor_edit && !app->ceiling_edit && app->active->decor != -1)
+			app->active->decor_offset.x -= app->divider;
 		if (app->ceiling_edit && app->active_sector->ceil_tex > 0)
 			app->active_sector->ceil_tex--;
 		if (app->floor_edit && app->active_sector->floor_tex > 0)
@@ -102,6 +108,8 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 		if (app->wall_edit && app->active_sector->wall_list->tex < MAX_TEX_COUNT
 			&& !app->active)
 			app->active_sector->wall_list->tex++;
+		if (app->decor_edit && app->active && !app->floor_edit && !app->ceiling_edit && app->active->decor != -1)
+			app->active->decor_offset.x += app->divider;
 		if (app->ceiling_edit && app->active_sector->ceil_tex < MAX_TEX_COUNT)
 			app->active_sector->ceil_tex++;
 		if (app->floor_edit && app->active_sector->floor_tex < MAX_TEX_COUNT)
