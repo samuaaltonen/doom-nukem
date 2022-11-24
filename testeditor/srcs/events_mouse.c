@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_mouse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/22 15:48:03 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:55:12 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static void	player_menu_events(t_app *app)
 		&& app->player.selected_armor < (MAX_ARMOR - 1))
 		app->player.selected_armor++;
 	select_inventory(app, screen_pos);
-	app->player.inventory.selected[5] = check_selected_inventory(app);
+	app->selected[5] = check_selected_inventory(app);
 }
 
 static void	object_menu_events(t_app *app)
@@ -95,6 +95,14 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 			app->active_last = tmp;
 		}
 	}
+	else if (event->button.button == SDL_BUTTON_LEFT && app->object_new)
+	{
+		if(valid_object(app))
+		{
+			new_object(app);
+		}
+		app->object_new = FALSE;
+	}
 	else if (event->button.button == SDL_BUTTON_LEFT)
 	{
 		//if active sector has member sectors find them before linees
@@ -103,16 +111,21 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 			app->player_menu = 1;
 		else if (app->active_sector)
 		{
-			if (app->active_sector->member_sectors[0] && find_child_sector(app))
+			if (app->player_edit)
+			{
+				app->player.position = app->mouse_track;
+				app->player.direction = (t_vector2){0.f,1.f};
+				app->player.sector = app->active_sector;
+				app->player_edit = FALSE;
+				check_player_position(app);
+			}
+			else if(select_object(app))
+			{
+				app->object_menu = TRUE;
+			}
+			else if (app->active_sector->member_sectors[0] && find_child_sector(app))
 				app->active_sector = find_child_sector(app);
 			app->active = find_clicked_vector(app);
-		}
-		else if (app->player_edit)
-		{
-			app->mouse_click = app->mouse_track;
-			app->player.sector = get_sector_id(app, click_sector(app));
-			render_player(app);
-			app->player_edit = FALSE;
 		}
 		else if (app->player_menu)
 			player_menu_events(app);
@@ -123,8 +136,10 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 	}
 	else
 	{
+		toggle_new_object(app, TRUE);
 		app->active = NULL;
-		app->player_menu = 0;
+		app->player_menu = FALSE;
+		app->object_menu = FALSE;
 		if (app->active_sector)
 			app->active_sector = app->active_sector->parent_sector;
 		else

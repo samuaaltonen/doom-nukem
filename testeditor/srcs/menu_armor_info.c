@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:34:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/18 14:36:01 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/23 10:58:56 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,12 @@ void	armor_init(t_app *app)
 */
 static void	render_armor_texts(t_app *app)
 {
-	change_font(app, 11, TEXT);
-	render_text(app, (t_point){40, 225}, "DEFENCE");
-	render_text(app, (t_point){220, 225},
+	render_text(app, (t_rect){40, 227, 50, 15}, "DEFENCE");
+	render_text(app, (t_rect){220, 227, 50, 15},
 		ft_itoa(app->player.armor[app->player.selected_armor].defence));
-	render_text(app, (t_point){40, 240}, "OFFENCE");
-	render_text(app, (t_point){220, 240},
+	render_text(app, (t_rect){40, 240, 50, 15}, "OFFENCE");
+	render_text(app, (t_rect){220, 240, 50, 15},
 		ft_itoa(app->player.armor[app->player.selected_armor].offence));
-	change_font(app, 15, TEXT);
-	
 }
 
 /**

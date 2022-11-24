@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/09 15:12:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/24 14:22:38 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static void	export_to_list(t_exportsector *export, t_vec2_lst **list, int count)
 	*list = tmp;
 	tmp->tex = export->wall_textures[0];
 	tmp->type = export->wall_types[0];
+	tmp->decor = export->wall_decor[0];
+	tmp->decor_offset = export->decor_offset[0];
 	i = 1;
 	while (i < count)
 	{
@@ -42,6 +44,8 @@ static void	export_to_list(t_exportsector *export, t_vec2_lst **list, int count)
 		put_to_vector_list(list, tmp->next);
 		tmp->next->tex = export->wall_textures[i];
 		tmp->next->type = export->wall_types[i];
+		tmp->next->decor = export->wall_decor[i];
+		tmp->next->decor_offset = export->decor_offset[i];
 		tmp = tmp->next;
 		i++;
 	}
@@ -134,6 +138,101 @@ void	relink_sectors(t_app *app)
 	}
 }
 
+static void from_bits(t_app *app, int export, t_weapon *weapons)
+{
+	int	i;
+
+	i = 0;
+	while (i < MAX_WEAPONS)
+	{
+		if (export & 1)
+		{	
+			weapons[i].enabled = TRUE;
+			app->player.selected_weapon = i;
+		}
+		export >>= 1;
+		i++;
+	}
+}
+
+static void read_player(t_app *app, t_export_player *player)
+{
+	app->player_edit = FALSE;
+	app->player_menu = FALSE;
+	app->player.position = player->position;
+	app->player.direction = player->direction;
+	app->player.sector = sector_by_index(app, player->sector);
+	app->player.health = player->health;
+	from_bits(app, player->weapons, app->player.weapons);
+	int	i;
+	i = 0;
+	while (i < MAX_ARMOR)
+	{
+		if (app->player.armor[i].defence == player->armor)
+			app->player.selected_armor = i;
+		i++;
+	}
+	app->player.inventory = player->inventory;
+}
+
+static void	read_objects(t_app *app, t_export_object *export)
+{
+	t_object	temp;
+	int			i;
+
+	i = 0;
+	while (i < MAX_OBJECTS)
+	{
+		temp.position = export[i].pos;
+		temp.sector =  sector_by_index(app, export[i].sector);
+		temp.type = export[i].type;
+		temp.var = export[i].var;
+		(app->objects[i]) = temp;
+		i++;
+	}
+}
+
+static t_vec2_lst *line_by_index(t_sector_lst *sector, int index)
+{
+	int	i;
+	t_vec2_lst *head;
+
+	i = 0;
+	if (!sector || index == -1)
+		return (NULL);
+	head = sector->wall_list;
+	while (i < MAX_SECTOR_CORNERS)
+	{
+		if(i == index)
+			return (head);
+		head = head->next;
+		i++;
+	}
+	return (NULL);
+}
+
+static void	read_interactions(t_app *app, t_export_interaction *export)
+{
+	t_interaction	temp;
+	int				i;
+
+	i = 0;
+	while (i < MAX_INTERACTIONS)
+	{
+		temp.event_id = export[i].event_id;
+		temp.variable = export[i].variable;
+		temp.activation_sector = sector_by_index(app, export[i].activation_sector);
+		temp.activation_wall = line_by_index(temp.activation_sector, export[i].activation_wall);
+		if(export[i].activation_object == -1)
+			temp.activation_object = NULL;
+		else
+			temp.activation_object = &(app->objects[export[i].activation_object]);
+		temp.target_sector = sector_by_index(app, export[i].target_sector);
+		app->interactions[i] = temp;
+		i++;
+	}
+}
+
 /**
  * @brief Opens a file from the given path
  * 	reads all sector data into the sector list
@@ -147,26 +246,49 @@ int	import_file(t_app *app, char *path)
 	int				fd;
 	t_exportsector	*export;
 	t_sector_lst	*new;
-	size_t			counter;
-	size_t			sector_count;
+	int				counter;
+	t_export_player	player;
+	t_export_object	objects[MAX_OBJECTS];
+	t_export_interaction	interactions[MAX_INTERACTIONS];
+	t_level_header			header;
+
 
 	counter = 0;
 	fd = open(path, O_RDONLY, 0755);
 	if (fd < 0)
 		exit_error("FILE OPEN ERROR TEMP!");
+	if (read(fd, &header, (sizeof(t_level_header))) == -1)
+		exit_error(MSG_ERROR_FILE_READ);
+	app->interaction_count = header.interaction_count;
+	app->object_count = header.object_count;
+	if (read(fd, &player, sizeof(t_export_player)) == -1)
+			exit_error("player read error\n");
+	read_player(app, &player);
 	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
 	if (!export)
 		exit_error(MSG_ERROR_ALLOC);
-	if (read(fd, &sector_count, (sizeof(size_t))) == -1)
-		exit_error(MSG_ERROR_FILE_READ);
-	while (counter++ < sector_count)
+	while (counter++ < header.sector_count)
 	{
 		if (read(fd, export, sizeof(t_exportsector)) == -1)
 			exit_error(MSG_ERROR_FILE_READ);
 		new = read_sector_list(export);
 		put_sector_lst(app, new);
 	}
+	if (read(fd,&objects, sizeof(t_export_object) * MAX_OBJECTS) ==  -1)
+		exit_error("Object read error\n");
+	read_objects(app, (t_export_object *)&objects);
+	for(int i = 0; i < MAX_OBJECTS;i++)
+		ft_printf("object id %i, type %i\n", i, app->objects[i].type);
+	if (read(fd, &interactions, sizeof(t_export_interaction) * MAX_INTERACTIONS) == -1)
+		exit_error("Interaction read error\n");
+	read_interactions(app, (t_export_interaction *)&interactions);
+	for(int i = 0; i < MAX_INTERACTIONS;i++)
+		ft_printf("read interactions id %i, activation sector%i, wall%i, object%i\n",interactions[i].event_id, interactions[i].activation_sector, interactions[i].activation_wall, interactions[i].activation_object);
+	for(int i = 0; i < MAX_INTERACTIONS;i++)
+		ft_printf("pointer interactions id %i, activation sector%p, wall%p, object%p\n",app->interactions[i].event_id, app->interactions[i].activation_sector, app->interactions[i].activation_wall, app->interactions[i].activation_object);
+
 	close(fd);
+	app->player.sector = sector_by_index(app,player.sector);
 	relink_sectors(app);
 	return (0);
 }

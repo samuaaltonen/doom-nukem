@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+         #
+#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/22 14:57:28 by ssulkuma         ###   ########.fr        #
+#    Updated: 2022/11/24 16:35:34 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,11 +19,13 @@ events_key.c events_mouse.c events.c export.c import.c player.c \
 image.c main.c render.c render_extra.c render_text.c render_grid.c \
 linedraw.c linedraw_utils.c lists.c menu_sector_info.c sector.c sector_tools.c \
 sector_members.c sector_portal.c tex_icons.c tools.c utils_sdl.c utils.c \
-menu_player_info.c menu_armor_info.c menu_weapon_info.c  menu_inventory_info.c \
-menu_object_info.c menu_interaction_info.c render_ui.c
+menu_player_info.c menu_armor_info.c menu_weapon_info.c menu_inventory_info.c \
+render_ui.c interactions.c objects.c menu_object_info.c \
+menu_interaction_info.c
 
 LIBFT = ../libft/libft.a
 LIBLINEARALGEBRA = ../liblinearalgebra/liblinearalgebra.a
+SDL2 = ../sdl/SDL2_build/lib/libSDL2.a
 
 SRC_DIR = ./srcs
 SRCS := $(patsubst %, $(SRC_DIR)/%, $(FILES))
@@ -32,18 +34,19 @@ BUILD_DIR = ./compiled
 OBJS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.o))
 DEPS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.d))
 
-SDL_DIR = ../sdl/
-SDL_HEADERS = \
-	-I$(SDL_DIR)SDL2.framework/Versions/A/Headers \
+SDL_DIR = ../sdl
+SDL_CONF = `../sdl/SDL2_build/bin/sdl2-config --cflags --libs`
+SDL_V = SDL2-2.0.8
 
-FRAMEWORKS = -F$(SDL_DIR) \
-				-rpath $(SDL_DIR) \
-				-framework OpenGL -framework AppKit -framework OpenCl \
-				-framework SDL2
+FRAMEWORKS = \
+	-framework OpenGL -framework AppKit -framework OpenCl \
 
-HEADERS = -I ./includes -I ../libft/includes -I ../liblinearalgebra/includes \
-		-I /usr/local/include/SDL2 $(SDL_HEADERS)
-
+HEADERS = \
+	-I ./includes \
+	-I ../libft/includes \
+	-I ../liblinearalgebra/includes \
+	-I ../sdl/SDL2-2.0.8/include
+	
 FLAGS = -Wall -Wextra -Werror -O3 -g -fsanitize=address
 
 LIBLINKS = -L ../libft -L ../liblinearalgebra -L/usr/local/lib \
@@ -51,8 +54,8 @@ LIBLINKS = -L ../libft -L ../liblinearalgebra -L/usr/local/lib \
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(LIBLINEARALGEBRA) $(OBJS)
-	$(CC) $(OBJS) -o $(NAME) $(FLAGS) $(HEADERS) $(FRAMEWORKS) $(LIBLINKS)
+$(NAME): $(LIBFT) $(LIBLINEARALGEBRA) $(SDL2) $(OBJS) $(DEPS)
+	$(CC) $(OBJS) -o $(NAME) $(SDL_CONF) $(FLAGS) $(HEADERS) $(FRAMEWORKS) $(LIBLINKS)
 
 # Create object files with (-MMD also creates dependency files)
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
@@ -69,7 +72,17 @@ $(LIBFT):
 $(LIBLINEARALGEBRA):
 	make -C ../liblinearalgebra
 
+$(SDL2): 
+	cd ../sdl/$(SDL_V)/build && ../configure --prefix=$(PWD)/sdl/SDL2_build/ && make install
+
 .PHONY: all clean fclean re
+
+clean-sdl:
+	rm -rf sdl/$(SDL_V)/build/*
+	touch sdl/$(SDL_V)/build/DontRemoveMe
+	rm -rf sdl/SDL2_build/*
+	touch sdl/SDL2_build/DontRemoveMe
+	rm -f $(SDL2)
 
 clean:
 	make clean -C ../libft

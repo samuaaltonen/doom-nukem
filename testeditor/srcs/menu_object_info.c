@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:04:04 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/22 15:47:41 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:56:56 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,44 +31,44 @@ static void	render_object_texts(t_app *app)
 	if (type == 12 || type < 16)
 		mode = 1;
 	change_font(app, 11, TEXT);
-	render_text(app, (t_point){113, 120}, "MONSTER");
-	render_text(app, (t_point){40, 140}, "HEALTH");
-	render_text(app, (t_point){210, 140},"100");
-	render_text(app, (t_point){40, 155}, "DAMAGE");
-	render_text(app, (t_point){210, 155}, "10");
+	render_text(app, (t_rect){113, 120, 120, 15}, "MONSTER");
+	render_text(app, (t_rect){40, 140, 120, 15}, "HEALTH");
+	render_text(app, (t_rect){210, 140, 120, 15},"100");
+	render_text(app, (t_rect){40, 155, 120, 15}, "DAMAGE");
+	render_text(app, (t_rect){210, 155, 120, 15}, "10");
 	if (pickable)
 	{
-		render_text(app, (t_point){50, 170}, "UNPICKABLE");
+		render_text(app, (t_rect){50, 170, 120, 15}, "UNPICKABLE");
 		change_font(app, 11, ACTIVE_TEXT);
-		render_text(app, (t_point){155, 170}, "- PICKABLE -");
+		render_text(app, (t_rect){155, 170, 120, 15}, "- PICKABLE -");
 	}
 	else
 	{
-		render_text(app, (t_point){165, 170}, "PICKABLE");
+		render_text(app, (t_rect){165, 170, 120, 15}, "PICKABLE");
 		change_font(app, 11, ACTIVE_TEXT);
-		render_text(app, (t_point){40, 170}, "- UNPICKABLE -");
+		render_text(app, (t_rect){40, 170, 120, 15}, "- UNPICKABLE -");
 	}
 	change_font(app, 11, TEXT);
 	if (mode == 1)
 	{
-		render_text(app, (t_point){121, 185}, "MOVES");
-		render_text(app, (t_point){175, 185}, "FOLLOWS");
+		render_text(app, (t_rect){121, 185, 120, 15}, "MOVES");
+		render_text(app, (t_rect){175, 185, 120, 15}, "FOLLOWS");
 		change_font(app, 11, ACTIVE_TEXT);
-		render_text(app, (t_point){35, 185}, "- IN PLACE -");
+		render_text(app, (t_rect){35, 185, 120, 15}, "- IN PLACE -");
 	}
 	else if (mode == 2)
 	{
-		render_text(app, (t_point){45, 185}, "IN PLACE");
-		render_text(app, (t_point){175, 185}, "FOLLOWS");
+		render_text(app, (t_rect){45, 185, 120, 15}, "IN PLACE");
+		render_text(app, (t_rect){175, 185, 120, 15}, "FOLLOWS");
 		change_font(app, 11, ACTIVE_TEXT);
-		render_text(app, (t_point){111, 185}, "- MOVES -");
+		render_text(app, (t_rect){111, 185, 120, 15}, "- MOVES -");
 	}
 	else
 	{
-		render_text(app, (t_point){45, 185}, "IN PLACE");
-		render_text(app, (t_point){121, 185}, "MOVES");
+		render_text(app, (t_rect){45, 185, 120, 15}, "IN PLACE");
+		render_text(app, (t_rect){121, 185, 120, 15}, "MOVES");
 		change_font(app, 11, ACTIVE_TEXT);
-		render_text(app, (t_point){165, 185}, "- FOLLOWS -");
+		render_text(app, (t_rect){165, 185, 120, 15}, "- FOLLOWS -");
 	}
 	change_font(app, 15, TEXT);
 }
@@ -99,19 +99,24 @@ void	render_object_statics(t_app *app)
 	render_interaction_texts(app, 220);
 }
 
+static int	find_max(t_app *app, SDL_Surface *asset)
+{
+	if (asset == app->assets.sprite)
+		return (MAX_OBJECTS);
+	return (0);
+}
+
 /**
  * Renders object icons on the help menu sidebar.
 */
-void	render_object_icons(t_app *app, t_point point)
+void	render_icons(t_app *app, t_point point, int id, SDL_Surface *asset)
 {
 	t_rect		src;
 	t_rect		icon;
 	t_point		size;
 	int			index;
 	int			tex;
-	int			object;
 
-	object = 17;
 	index = 0;
 	while (index < 5)
 	{
@@ -122,10 +127,10 @@ void	render_object_icons(t_app *app, t_point point)
 		}
 		else
 			size = (t_point){ICON_SIZE / 2, ICON_SIZE / 2};
-		tex = ICON_SIZE * ((index + object - 2) % (MAX_OBJECTS + 1));
+		tex = ICON_SIZE * ((index + id - 2) % (find_max(app, asset) + 1));
 		set_icon_rect(&src, (t_point){tex, 0}, size);
 		set_icon_rect(&icon, point, size);
-		blit_surface(app->assets.sprite, &src, app->surface, &icon);
+		blit_surface(asset, &src, app->surface, &icon);
 		point.x += (ICON_SIZE / 2) + 10;
 		if (index == 2)
 		{
@@ -134,4 +139,5 @@ void	render_object_icons(t_app *app, t_point point)
 		}
 		index++;
 	}
+	render_ui_frame(app, (t_rect){108, point.y - 14, 66, 66}, 1, 0);
 }

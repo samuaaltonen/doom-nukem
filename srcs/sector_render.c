@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 15:58:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/24 16:30:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ void	render_sectors(t_app *app)
 	}
 	ft_bzero(app->occlusion_top, WIN_W * sizeof(int));
 	ft_bzero(app->occlusion_bottom, WIN_W * sizeof(int));
-	app->overwrite_buffer_count = 0;
 	sector_visible_walls(app);
 	threads_work((t_thread_data *)&threads_data);
 	app->depthmap_fill_switch = !app->depthmap_fill_switch;

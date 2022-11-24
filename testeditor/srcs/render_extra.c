@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_extra.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:55:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/03 14:35:10 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/21 15:40:30 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,11 @@ void	render_fill_active_sector(t_app *app)
 	t_point		min;
 	t_point		max;
 	t_point		cur;
+	int			color;
 
+	color = 0x202020;
+	if(interaction_sector_check(app,app->active_sector))
+		color = INTERACTION;
 	min = (t_point){0, 0};
 	max = (t_point){0, 0};
 	if (app->active_sector)
@@ -87,10 +91,53 @@ void	render_fill_active_sector(t_app *app)
 			cur.x = min.x;
 			while (cur.x < max.x)
 			{
-				put_pixel_to_surface(app->surface, cur.x, cur.y, 0x202020);
+				put_pixel_to_surface(app->surface, cur.x, cur.y, color);
 				cur.x++;
 			}
 			cur.y++;
 		}
 	}
+}
+
+
+int	interaction_sector_check(t_app *app, t_sector_lst *sector)
+{
+	int	i;
+
+	i = 0;
+	while (i < MAX_INTERACTIONS && app->interactions[i].event_id != 0)
+	{	
+		if(!app->interactions[i].activation_wall && app->interactions[i].activation_sector == sector)
+			return (app->interactions[i].event_id);
+		i++;
+	}
+	return (0);
+}
+
+int	interaction_wall_check(t_app *app, t_vec2_lst *wall)
+{
+	int	i;
+
+	i = 0;
+	while (i < MAX_INTERACTIONS && app->interactions[i].event_id != 0)
+	{	
+		if(app->interactions[i].activation_sector && app->interactions[i].activation_wall == wall)
+			return (app->interactions[i].event_id);
+		i++;
+	}
+	return (0);
+}
+
+int	interaction_object_check(t_app *app, int id)
+{
+	int	i;
+
+	i = 0;
+	while (i < MAX_INTERACTIONS && app->interactions[i].event_id != 0)
+	{
+		if(app->interactions[i].activation_object == &app->objects[id])
+			return (app->interactions[i].event_id);
+		i++;
+	}
+	return (0);
 }

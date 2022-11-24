@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 11:47:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/04 14:43:04 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/24 14:14:09 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,18 @@ t_sector_lst	*find_child_sector(t_app *app)
 {
 	int				i;
 	t_sector_lst	*tmp;
+	t_vec2_lst		*wall;
 
+	wall = app->active_sector->wall_list;
+	while (wall)
+	{
+		if (wall->point.x == app->mouse_track.x
+			&& wall->point.y == app->mouse_track.y)
+			return (NULL);
+		wall = wall->next;
+		if (wall == app->active_sector->wall_list)
+			break ;
+	}
 	i = 0;
 	while (i < MAX_MEMBER_SECTORS && app->active_sector->member_sectors[i])
 	{

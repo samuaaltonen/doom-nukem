@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/22 15:50:40 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/23 15:59:33 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,18 @@
 */
 static void	sector_edit_menu(t_app *app)
 {
-	render_text(app, (t_point){10, 40}, "TOGGLE ALL WALLS ( V )");
-	render_text(app, (t_point){10, 60}, "TOGGLE FLOOR ( F )");
-	render_text(app, (t_point){10, 80}, "TOGGLE CEILING ( R )");
-	render_text(app, (t_point){10, 100}, "TOGGLE LIGHT ( T )");
-	render_text(app, (t_point){10, 120}, "TOGGLE SLOPE ( U )");
-	render_text(app, (t_point){10, 150}, "TEX ( LEFT / RIGHT )");
-	render_text(app, (t_point){10, 170}, "HEIGHT ( UP / DOWN )");
+	render_text(app, (t_rect){20, 40, 260, 100}, "TOGGLE ALL WALLS ( V )\nTOG\
+GLE FLOOR ( F )\nTOGGLE CEILING ( R )\nTOGGLE LIGHT ( T )\nTOGGLE SLOPE ( U )");
+	render_text(app, (t_rect){20, 110, 260, 50}, "TEX ( LEFT / RIGHT )\nHEIGHT\
+ ( UP / DOWN )");
 	toggle_active_color(app, app->portal_selection, "CREATE PORTAL ( L )",
-		(t_point){10, 200});
-	render_text(app, (t_point){10, 220}, "SELECT WALL TO CREATE");
-	render_text(app, (t_point){10, 240}, "PORTAL, PRESS 'L', SELECT");
-	render_text(app, (t_point){10, 260}, "SECTOR TO LINK PORTAL TO,");
-	render_text(app, (t_point){10, 280}, "PRESS 'L' AGAIN.");
-	render_text(app, (t_point){10, 300}, "DOUBLE PRESS 'L' TO");
-	render_text(app, (t_point){10, 320}, "REMOVE PORTAL.");
-	render_text(app, (t_point){10, 350}, "CREATE SLOPE ( Y / H )");
-	render_text(app, (t_point){10, 370}, "DELETE SECTOR ( DEL )");
+		(t_rect){20, 145, 260, 15});
+	render_text(app, (t_rect){20, 160, 260, 150}, "SELECT WALL TO CREATE PORTAL\
+, PRESS 'L', SELECT SECTOR TO LINK PORTAL TO, PRESS 'L' AGAIN. DOUBLE PRESS 'L'\
+ TO REMOVE PORTAL.");
+	render_text(app, (t_rect){20, 235, 260, 15}, "CREATE OBJECT ( N )");
+	render_text(app, (t_rect){20, 255, 260, 15}, "CREATE SLOPE ( Y / H )");
+	render_text(app, (t_rect){20, 270, 260, 15}, "DELETE SECTOR ( DEL )");
 	render_texture_icons(app);
 	render_sector_info(app);
 }
@@ -43,15 +38,17 @@ static void	sector_edit_menu(t_app *app)
 */
 static void	player_edit_menu(t_app *app)
 {
-	render_text(app, (t_point){10, 40}, "WEAPONS");
+	change_font(app, 15, TEXT);
+	render_text(app, (t_rect){10, 40, 50, 20}, "WEAPONS");
 	render_arrows(app, (t_point){25, 67}, (t_point){250, 67});
-	render_icons(app, app->assets.sprite, (t_point){40, 60}, MAX_WEAPONS + 1);
+	render_player_icons(app, app->assets.sprite, (t_point){40, 60}, MAX_WEAPONS + 1);
 	render_ui_frame(app, (t_rect){(ICON_SIZE / 2) * (app->player.selected_weapon + 1)
 		+ (10 * (app->player.selected_weapon + 1)) - 3, 59, 35, 35}, 1, 0);
 	render_weapon_statics(app);
-	render_text(app, (t_point){10, 165}, "ARMOR");
+	change_font(app, 15, TEXT);
+	render_text(app, (t_rect){10, 165, 50, 20}, "ARMOR");
 	render_arrows(app, (t_point){25, 193}, (t_point){250, 193});
-	render_icons(app, app->assets.sprite, (t_point){40, 185}, MAX_ARMOR + 1);
+	render_player_icons(app, app->assets.sprite, (t_point){40, 185}, MAX_ARMOR + 1);
 	render_ui_frame(app, (t_rect){(ICON_SIZE / 2) * (app->player.selected_armor + 1)
 		+ (10 * (app->player.selected_armor + 1)) - 3, 184, 35, 35}, 1, 0);
 	render_armor_statics(app);
@@ -59,11 +56,13 @@ static void	player_edit_menu(t_app *app)
 		app->player.health = 1;
 	if (app->player.health > 200)
 		app->player.health = 200;
-	render_text(app, (t_point){10, 265}, "HEALTH");
-	render_text(app, (t_point){112, 265}, ft_itoa(app->player.health));
-	render_text(app, (t_point){140, 265}, " / 200");
-	render_text(app, (t_point){25, 287}, "<");
-	render_text(app, (t_point){250, 287}, ">");
+	change_font(app, 15, TEXT);
+	render_text(app, (t_rect){10, 265, 50, 20}, "HEALTH");
+	render_text(app, (t_rect){112, 265, 50, 20}, ft_itoa(app->player.health));
+	render_text(app, (t_rect){140, 265, 80, 20}, " / 200");
+	change_font(app, 11, TEXT);
+	render_text(app, (t_rect){25, 287, 50, 20}, "<");
+	render_text(app, (t_rect){250, 287, 50, 20}, ">");
 	render_healthbar(app);
 	render_inventory(app);
 }
@@ -73,10 +72,11 @@ static void	player_edit_menu(t_app *app)
 */
 static void	object_edit_menu(t_app *app)
 {
-	render_text(app, (t_point){10, 40}, "OBJECTS");
+	change_font(app, 15, TEXT);
+	render_text(app, (t_rect){10, 40, 50, 20}, "OBJECTS");
+	change_font(app, 11, TEXT);
 	render_arrows(app, (t_point){10, 67}, (t_point){265, 67});
-	render_object_icons(app, (t_point){25, 60});
-	render_ui_frame(app, (t_rect){108, 45, 66, 66}, 1, 0);
+	render_icons(app, (t_point){25, 60}, 17, app->assets.sprite);
 	render_object_statics(app);
 }
 
@@ -85,9 +85,12 @@ static void	object_edit_menu(t_app *app)
 */
 static void	help_menu_texts(t_app *app)
 {
+	int	y;
+
+	y = 40;
 	change_font(app, 20, TEXT);
-	render_text(app, (t_point){10, 10}, "LEVEL EDITOR");
-	change_font(app, 15, TEXT);
+	render_text(app, (t_rect){10, 10, 260, 20}, "LEVEL EDITOR");
+	change_font(app, 11, TEXT);
 	if (app->active_sector)
 		sector_edit_menu(app);
 	else if (app->player_menu)
@@ -96,18 +99,18 @@ static void	help_menu_texts(t_app *app)
 		object_edit_menu(app);
 	else
 	{
-		render_text(app, (t_point){10, 40}, "OPEN FILE ( O )");
-		render_text(app, (t_point){10, 60}, "SAVE FILE ( M )");
-		toggle_active_color(app, app->list_creation, "CREATE WALL ( C )",
-			(t_point){10, 90});
-		render_text(app, (t_point){10, 120}, "LEFT CLICK MOUSE TO");
-		render_text(app, (t_point){10, 140}, "SELECT SECTOR. RIGHT");
-		render_text(app, (t_point){10, 160}, "CLICK TO UNSELECT.");
-		render_text(app, (t_point){10, 180}, "LEFT CLICK CORNER TO");
-		render_text(app, (t_point){10, 200}, "SELECT WALL ON RIGHT.");
-		render_text(app, (t_point){10, 230}, "DIVIDE GRID ( Z / X )");
-		render_text(app, (t_point){10, 260}, "MOVE ( WASD )");
-		render_text(app, (t_point){10, 280}, "ZOOM ( SCROLL )");
+		if (!app->imported)
+			render_text(app, (t_rect){20, y, 260, 15}, "OPEN FILE ( O )");
+		render_text(app, (t_rect){20, y + 15, 260, 15}, "SAVE FILE ( M )");
+		toggle_active_color(app, app->list_creation, "CREATE SECTOR ( C )",
+			(t_rect){20, y + 35, 260, 15});
+		render_text(app, (t_rect){20, y + 55, 260, 100}, "LEFT CLICK MOUSE TO \
+SELECT SECTOR. RIGHT CLICK TO UNSELECT. LEFT CLICK CORNER TO SELECT WALL ON \
+RIGHT. TO CREATE A MEMBER SECTOR, PRESS 'C' WHEN SECTOR IS SELECTED.");
+		render_text(app, (t_rect){20, y + 150, 260, 15}, "DIVIDE GRID \
+( Z / X )");
+		render_text(app, (t_rect){20, y + 165, 260, 15}, "MOVE ( WASD )");
+		render_text(app, (t_rect){20, y + 180, 250, 15}, "ZOOM ( SCROLL )");
 	}
 }
 

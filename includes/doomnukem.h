@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 16:09:51 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/24 16:30:08 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,12 @@ typedef struct s_app
 	int				occlusion_bottom[WIN_W];
 	float			depthmap[WIN_H][WIN_W];
 	t_bool			depthmap_fill_switch;
-	t_buffer_unit	overwrite_buffer[MAX_OVERWRITE_PIXELS];
-	int				overwrite_buffer_count;
 	t_wallstack		wallstack;
 	t_player		player;
 	t_sky			sky;
 	t_sector		*sectors;
+	t_object		objects[MAX_OBJECTS];
+	t_interaction	interactions[MAX_INTERACTIONS];
 }	t_app;
 
 /**

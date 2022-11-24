@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/24 13:16:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/24 16:28:30 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct s_sector
 	int				wall_textures[MAX_SECTOR_CORNERS];
 	int				member_sectors[MAX_MEMBER_SECTORS];
 	int				parent_sector;
+	int				wall_decor[MAX_SECTOR_CORNERS];
+	t_vector2		decor_offset[MAX_SECTOR_CORNERS];
 	int				light;
 	double			floor_height;
 	int				floor_texture;
@@ -59,6 +61,8 @@ typedef struct s_exportsector
 	int				wall_types[MAX_SECTOR_CORNERS];
 	int				wall_textures[MAX_SECTOR_CORNERS];
 	int				member_sectors[MAX_MEMBER_SECTORS];
+	int				wall_decor[MAX_SECTOR_CORNERS];
+	t_vector2		decor_offset[MAX_SECTOR_CORNERS];
 	int				parent_sector;
 	int				light;
 	double			floor_height;
@@ -157,6 +161,32 @@ typedef struct s_wallstack
 	int		interesting[MAX_VISIBLE_SECTORS];
 	int		interesting_count;
 }	t_wallstack;
+
+typedef struct	s_level_header
+{
+	int	version;
+	int	sector_count;
+	int	object_count;
+	int	interaction_count;
+}	t_level_header;
+
+typedef struct s_interaction
+{
+	int				event_id;
+	double 			variable;
+	int				activation_sector;
+	int				activation_wall;
+	int				activation_object;
+	int				target_sector;
+}	t_interaction;
+
+typedef struct s_object
+{
+	int				type;
+	double			var;
+	t_vector2		position;
+	int				sector;
+}	t_object;
 
 /**
  * Struct that contains skybox drawing information. These values are updated

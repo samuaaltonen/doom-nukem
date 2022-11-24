@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:36:45 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/17 14:20:22 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/24 16:33:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,15 +109,12 @@ t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop,
 		prev = head;
 		head = head->next;
 	}
-	if (get_sector_id(app, app->active_sector) == app->player.sector
-		&& app->sectors)
+	if (app->active_sector == app->player.sector)
 	{
-		app->player.sector = -1;
+		app->player.sector = NULL;
 		app->player_edit = TRUE;
 	}
 	del_sector_portals(app, get_sector_id(app, app->active_sector));
-	if (get_sector_id(app, app->active_sector) < app->player.sector)
-		app->player.sector--;
 	if (head == *pop)
 	{
 		if (prev)
