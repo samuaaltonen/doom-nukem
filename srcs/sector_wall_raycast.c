@@ -6,191 +6,83 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 12:28:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/24 14:09:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * @brief Calculates height offset for current rayhit based on sector ceiling
- * slope
+ * @brief Raycast drawing part for portal walls.
  * 
- * @param hit 
- * @return double 
- */
-static double	apply_ceiling_slope(t_rayhit *hit)
-{
-	double		perpendicular_distance;
-	double		pos_angle;
-	t_vector2	slope_vector;
-
-	slope_vector = ft_vector2_sub(hit->sector->ceil_slope_end,
-			hit->sector->ceil_slope_start);
-	pos_angle = ft_vector_angle(ft_vector2_sub(hit->position,
-			hit->sector->ceil_slope_start), slope_vector);
-	perpendicular_distance = cos(pos_angle) * ft_vector_length(ft_vector2_sub(
-		hit->position, hit->sector->ceil_slope_start));
-	hit->ceil_horizon_angle = cos(ft_vector_angle(hit->ray, slope_vector)) / hit->distortion;
-	hit->ceil_horizon = hit->sector->ceil_slope_magnitude * hit->ceil_horizon_angle;
-	hit->ceil_slope_height = perpendicular_distance * hit->sector->ceil_slope_magnitude;
-	return (perpendicular_distance * hit->sector->ceil_slope_magnitude);
-}
-
-/**
- * @brief Calculates height offset for current rayhit based on sector floor
- * slope
+ * If player is looking the wall from inside and wall is not from member sector,
+ * draws possible partial walls on top and bottom of the portal (in case when
+ * portal target sector floor is higher or ceiling is lower than portal sector).
  * 
- * @param hit 
- * @return double 
- */
-static double	apply_floor_slope(t_rayhit *hit)
-{
-	double		perpendicular_distance;
-	double		pos_angle;
-	t_vector2	slope_vector;
-
-	slope_vector = ft_vector2_sub(hit->sector->floor_slope_end,
-			hit->sector->floor_slope_start);
-	pos_angle = ft_vector_angle(ft_vector2_sub(hit->position,
-			hit->sector->floor_slope_start), slope_vector);
-	perpendicular_distance = cos(pos_angle) * ft_vector_length(ft_vector2_sub(
-		hit->position, hit->sector->floor_slope_start));
-	hit->floor_horizon_angle = cos(ft_vector_angle(hit->ray, slope_vector)) / hit->distortion;
-	hit->floor_horizon = hit->sector->floor_slope_magnitude * hit->floor_horizon_angle;
-	hit->floor_slope_height = perpendicular_distance * hit->sector->floor_slope_magnitude;
-	return (perpendicular_distance * hit->sector->floor_slope_magnitude);
-}
-
-/**
- * @brief If wall is a portal, calculate parent positions as well (used in
- * partial wall rendering)
+ * Similarly if portal target is a member sector, draws possible partial parts
+ * using member sector wall textures.
  * 
- * @param app 
- * @param hit 
- * @param relative_height 
- */
-static void	calculate_parent_positions(t_app *app, t_rayhit *hit,
-	double relative_height)
-{
-	t_rayhit	parenthit;
-
-	t_sector	*parent;
-	double		ceil_slope;
-	double		floor_slope;
-
-	ft_memcpy(&parenthit, hit, sizeof(t_rayhit));
-	parent = &app->sectors[hit->sector->parent_sector];
-	parenthit.sector = parent;
-
-	ceil_slope = 0.0;
-	floor_slope = 0.0;
-	if (parent->ceil_slope_height)
-		ceil_slope = apply_ceiling_slope(&parenthit);
-	if (parent->floor_slope_height)
-		floor_slope = apply_floor_slope(&parenthit);
-
-	hit->parent_height = (int)(relative_height
-		* (parent->ceil_height + ceil_slope - parent->floor_height - floor_slope));
-	hit->parent_wall_start = WIN_H * app->player.horizon - hit->parent_height
-		+ (int)(relative_height * ((app->player.height + app->player.elevation) - parent->floor_height - floor_slope));
-	hit->parent_wall_end = hit->parent_wall_start + hit->parent_height;
-	hit->parent_wall_start_actual = hit->parent_wall_start;
-	if (hit->parent_wall_start < 0)
-		hit->parent_wall_start = 0;
-	if (hit->parent_wall_start >= WIN_H)
-		hit->parent_wall_start = WIN_H - 1;
-	if (hit->parent_wall_end < 0)
-		hit->parent_wall_end = 0;
-	if (hit->parent_wall_end >= WIN_H)
-		hit->parent_wall_end = WIN_H - 1;
-}
-
-/**
- * @brief Calculates wall starting and ending positions in window y coordinates.
- * 
- * @param app 
- * @param hit 
- */
-void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
-{
-	double		relative_height;
-	double		ceil_slope;
-	double		floor_slope;
-
-	ceil_slope = 0.0;
-	floor_slope = 0.0;
-	if (hit->sector->ceil_slope_height)
-		ceil_slope = apply_ceiling_slope(hit);
-	if (hit->sector->floor_slope_height)
-		floor_slope = apply_floor_slope(hit);
-	relative_height = WIN_H / hit->distance;
-	hit->height = (int)(relative_height
-			* (hit->sector->ceil_height + ceil_slope - hit->sector->floor_height - floor_slope));
-	hit->wall_start = WIN_H * app->player.horizon - hit->height + (int)(relative_height
-			* ((app->player.height + app->player.elevation) - hit->sector->floor_height - floor_slope));
-	hit->wall_start_actual = hit->wall_start;
-	hit->wall_end = hit->wall_start + hit->height;
-	hit->texture_step.y = TEX_SIZE / relative_height;
-	hit->texture_offset.y = 0;
-
-	if (ceil_slope)
-		hit->wall_start_actual += relative_height * ceil_slope - relative_height * (1 + (int)ceil_slope);
-
-	if (hit->sector->parent_sector >= 0)
-		calculate_parent_positions(app, hit, relative_height);
-	if (hit->wall_start < 0)
-		hit->wall_start = 0;
-	if (hit->wall_end < 0)
-		hit->wall_end = 0;
-	if (hit->wall_start >= WIN_H)
-		hit->wall_start = WIN_H - 1;
-	if (hit->wall_end >= WIN_H)
-		hit->wall_end = WIN_H - 1;
-}
-
-/**
- * @brief Performs raycast from player to wall. Updates values into rayhit
- * struct to be used later in rendering. Returns TRUE if there was a hit and
- * FALSE otherwise.
+ * In case where player is looking the wall from inside, draws ceiling and floor
+ * of a member sector and possibly partial parts when member sector floor is
+ * lower than parent sectors or member sector ceiling is higher than parent
+ * sectors.
  * 
  * @param app 
  * @param wall 
  * @param hit 
  * @param x 
- * @return t_bool 
  */
-static t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
+static void	raycast_portal(t_app *app, t_wall *wall, t_rayhit *hit, int x)
 {
-	t_line	ray_line;
-	double	camera_x;
-
-	ray_line.a = app->player.pos;
-	camera_x = 2 * x / (double) WIN_W - 1.f;
-	hit->ray = (t_vector2){
-		app->player.dir.x + app->player.cam.x * camera_x,
-		app->player.dir.y + app->player.cam.y * camera_x};
-	ray_line.b.x = hit->ray.x + app->player.pos.x;
-	ray_line.b.y = hit->ray.y + app->player.pos.y;
-	if (!ft_line_intersection(wall, ray_line, &hit->position))
-		return (FALSE);
-	hit->distance = ft_vector_length((t_vector2){
-		hit->position.x - app->player.pos.x,
-		hit->position.y - app->player.pos.y});
-	hit->texture_offset.x = ft_vector_length((t_vector2){
-		wall.a.x - hit->position.x,
-		wall.a.y - hit->position.y});
-	hit->texture_offset.x = hit->texture_offset.x
-		- (double)(int)hit->texture_offset.x;
-	hit->distortion = cos(ft_vector_angle(hit->ray, app->player.dir));
-	hit->distance = hit->distortion * hit->distance;
-	set_wall_vertical_positions(app, hit);
-	return (TRUE);
+	if (wall->is_inside && !wall->is_member)
+		draw_portal_partial(app, x, hit);
+	if (!wall->is_inside)
+		draw_portal_partial_parent(app, x, hit);
+	if (wall->is_inside && wall->is_member)
+	{
+		draw_ceiling(app, x, hit);
+		draw_floor(app, x, hit);
+		draw_portal_partial_hole(app, x, hit);
+	}
 }
 
 /**
- * @brief Draws individual sector wall, possible ceiling and floor of that
- * vertical screenline. Also updates occlusion arrays accordingly.
+ * @brief Raycast drawing part for default walls. Draws first ceiling, then
+ * floor and lastly the wall.
+ * 
+ * @param app 
+ * @param hit 
+ * @param x 
+ */
+static void	raycast_default(t_app *app, t_rayhit *hit, int x)
+{
+	draw_ceiling(app, x, hit);
+	draw_floor(app, x, hit);
+	draw_wall(app, x, hit, OCCLUDE_BOTH);
+}
+
+/**
+ * @brief Initializes raycast hit struct.
+ * 
+ * @param app 
+ * @param info 
+ * @param hit 
+ */
+static void	raycast_init(t_app *app, t_raycast_info info, t_rayhit *hit)
+{
+	hit->occlusion_top = info.occlusion_top;
+	hit->occlusion_bottom = info.occlusion_bottom;
+	hit->floor_slope_height = 0.0;
+	hit->ceil_slope_height = 0.0;
+	hit->sector = &app->sectors[info.wall->sector_id];
+	hit->wall_type = info.wall->wall_type;
+	hit->texture = app->sectors[info.wall->sector_id] \
+		.wall_textures[info.wall->wall_id];
+	hit->light = hit->sector->light;
+}
+
+/**
+ * @brief Performs raycast to individual wall.
  * 
  * @param app 
  * @param thread 
@@ -198,70 +90,50 @@ static t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
  * @param start_x 
  * @param end_x 
  */
-void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall,
-	t_limit limit, int *occlusion_top, int *occlusion_bottom)
+void	sector_walls_raycast(t_app *app, t_thread_data *thread,
+	t_raycast_info info)
 {
 	t_rayhit	hit;
 	int			x;
 
-	hit.occlusion_top = occlusion_top;
-	hit.occlusion_bottom = occlusion_bottom;
-	hit.floor_slope_height = 0.0;
-	hit.ceil_slope_height = 0.0;
-	hit.sector = &app->sectors[wall->sector_id];
-	hit.wall_type = wall->wall_type;
-	hit.texture = app->sectors[wall->sector_id].wall_textures[wall->wall_id];
-	hit.light = hit.sector->light;
-	x = limit.start - 1;
-	while (++x < limit.end)
+	raycast_init(app, info, &hit);
+	x = info.limit.start - 1;
+	while (++x < info.limit.end)
 	{
 		if (x % THREAD_COUNT != thread->id
-			|| wall->start_x > x || wall->end_x < x
-			|| occlusion_top[x] + occlusion_bottom[x] >= WIN_H
-			|| !raycast_hit(app, wall->line, &hit, x)
+			|| info.wall->start_x > x || info.wall->end_x < x
+			|| info.occlusion_top[x] + info.occlusion_bottom[x] >= WIN_H
+			|| !raycast_hit(app, info.wall->line, &hit, x)
 			|| hit.distance > (double)MAX_VIEW_DISTANCE)
 			continue ;
-		if (wall->is_portal)
-		{
-			if (wall->is_inside && !wall->is_member)
-				draw_portal_partial(app, x, &hit);
-			if (!wall->is_inside)
-				draw_portal_partial_parent(app, x, &hit);
-			if (wall->is_inside && wall->is_member)
-			{
-				draw_ceiling(app, x, &hit);
-				draw_floor(app, x, &hit);
-				draw_portal_partial_hole(app, x, &hit);
-			}
-			continue ;
-		}
-		draw_ceiling(app, x, &hit);
-		draw_floor(app, x, &hit);
-		draw_wall(app, x, &hit, OCCLUDE_BOTH);
+		if (info.wall->is_portal)
+			raycast_portal(app, info.wall, &hit, x);
+		else
+			raycast_default(app, &hit, x);
 	}
 }
 
+/**
+ * @brief Performs raycast to partially transparent portal wall.
+ * 
+ * @param app 
+ * @param thread 
+ * @param info 
+ */
 void	sector_walls_raycast_transparent(t_app *app, t_thread_data *thread,
-	t_wall *wall, t_limit limit, int *occlusion_top, int *occlusion_bottom)
+	t_raycast_info info)
 {
 	t_rayhit	hit;
 	int			x;
 
-	hit.occlusion_top = occlusion_top;
-	hit.occlusion_bottom = occlusion_bottom;
-	hit.floor_slope_height = 0.0;
-	hit.ceil_slope_height = 0.0;
-	hit.sector = &app->sectors[wall->sector_id];
-	hit.wall_type = wall->wall_type;
-	hit.texture = app->sectors[wall->sector_id].wall_textures[wall->wall_id];
-	hit.light = hit.sector->light;
-	x = limit.start - 1;
-	while (++x < limit.end)
+	raycast_init(app, info, &hit);
+	x = info.limit.start - 1;
+	while (++x < info.limit.end)
 	{
 		if (x % THREAD_COUNT != thread->id
-			|| wall->start_x > x || wall->end_x < x
-			|| occlusion_top[x] + occlusion_bottom[x] >= WIN_H
-			|| !raycast_hit(app, wall->line, &hit, x)
+			|| info.wall->start_x > x || info.wall->end_x < x
+			|| info.occlusion_top[x] + info.occlusion_bottom[x] >= WIN_H
+			|| !raycast_hit(app, info.wall->line, &hit, x)
 			|| hit.distance > (double)MAX_VIEW_DISTANCE)
 			continue ;
 		draw_wall(app, x, &hit, OCCLUDE_NONE);

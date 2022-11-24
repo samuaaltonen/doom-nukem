@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/24 12:23:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/24 13:16:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,9 +127,21 @@ typedef struct s_rayhit
 	double		ceil_horizon_angle;
 	double		ceil_slope_height;
 
-	int				*occlusion_top;
-	int				*occlusion_bottom;
+	int			*occlusion_top;
+	int			*occlusion_bottom;
 }	t_rayhit;
+
+/**
+ * Struct that contains necessary information for starting the raycast for a
+ * specific wall.
+ */
+typedef struct s_raycast_info
+{
+	t_wall	*wall;
+	t_limit	limit;
+	int		*occlusion_top;
+	int		*occlusion_bottom;
+}	t_raycast_info;
 
 /**
  * Wallstack struct. Used when gathering possibly visible walls from sectors and

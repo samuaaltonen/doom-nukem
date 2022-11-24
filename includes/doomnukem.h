@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 12:26:06 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/24 14:40:02 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@
  * Integer type definitions
  */
 typedef unsigned char	t_uint8;
+typedef unsigned int	t_uint32;
 
 typedef struct s_audio
 {
@@ -161,19 +162,19 @@ t_line		get_wall_line(t_app *app, int sector_id, int wall_id);
 void		sector_visible_walls(t_app *app);
 void		sector_walls_prepare(t_app *app, t_wall *walls, int wall_count);
 void		sector_walls_order(t_app *app, t_wall *walls, int wall_count);
-void		sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall,
-				t_limit limit, int *occlusion_top, int *occlusion_bottom);
-void		sector_walls_raycast_transparent(t_app *app, t_thread_data *thread,
-				t_wall *wall, t_limit limit, int *occlusion_top, int *occlusion_bottom);
 void		sector_stack_render(t_app *app, t_thread_data *thread,
 				int stack_id, t_limit limit);
 void		*sector_render_thread(void *data);
 void		render_sectors(t_app *app);
 
 /**
- * Sky
+ * Sector raycast
  */
-void		sector_sky_render(t_app *app, t_thread_data *thread);
+void		sector_walls_raycast(t_app *app, t_thread_data *thread,
+				t_raycast_info info);
+void		sector_walls_raycast_transparent(t_app *app, t_thread_data *thread,
+				t_raycast_info info);
+t_bool		raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x);
 
 /**
  * Sector draw
@@ -185,6 +186,11 @@ void		draw_ceiling(t_app *app, int x, t_rayhit *hit);
 void		draw_portal_partial(t_app *app, int x, t_rayhit *hit);
 void		draw_portal_partial_parent(t_app *app, int x, t_rayhit *hit);
 void		draw_portal_partial_hole(t_app *app, int x, t_rayhit *hit);
+
+/**
+ * Sky
+ */
+void		sector_sky_render(t_app *app, t_thread_data *thread);
 
 /**
  * Font
@@ -256,6 +262,7 @@ void		color_surface(SDL_Surface *surface, int color);
  * utils
  */
 void		map_coordinates(t_rect *src, t_rect *dst, t_point *point);
+void		clamp_int(int *number, int min, int max);
 
 /**
  * maps 

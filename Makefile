@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/24 12:03:53 by saaltone         ###   ########.fr        #
+#    Updated: 2022/11/24 14:08:33 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ FILES = main.c \
 		sector_visible_walls_order.c \
 		sector_visible_walls.c \
 		sector_wall_raycast.c \
+		sector_wall_raycast_hit.c \
 		sector_wall_prepare.c \
 		sector_wall_line.c \
 		sector_draw_partial.c \

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 13:03:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/24 13:14:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,9 @@ void	sector_stack_render(t_app *app, t_thread_data *thread, int stack_id,
 	while (i < app->wallstack.wall_count[stack_id])
 	{
 		wall = &app->wallstack.walls[stack_id][i];
-		sector_walls_raycast(app, thread, wall, limit, app->occlusion_top, app->occlusion_bottom);
+		sector_walls_raycast(app, thread, (t_raycast_info){
+			wall, limit, app->occlusion_top, app->occlusion_bottom
+		});
 		if (app->sectors[wall->sector_id].wall_textures[wall->wall_id]
 			== PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
 		{
@@ -127,8 +129,9 @@ void	sector_stack_render(t_app *app, t_thread_data *thread, int stack_id,
 				});
 		if (app->sectors[wall->sector_id].wall_textures[wall->wall_id]
 			== PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
-			sector_walls_raycast_transparent(app, thread, wall, limit,
-				(int *)&temp_occlusion_top, (int *)&temp_occlusion_bottom);
+			sector_walls_raycast_transparent(app, thread, (t_raycast_info){
+			wall, limit, (int *)&temp_occlusion_top, (int *)&temp_occlusion_bottom
+			});
 		i++;
 	}
 }
