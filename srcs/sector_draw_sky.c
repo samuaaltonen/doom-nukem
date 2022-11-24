@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 14:53:03 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 12:56:35 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:24:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,21 @@ static void	draw_sky(t_app *app, int x)
 			put_pixel_to_surface(app->surface, x, y, get_pixel_color(
 				app->assets.bg, (int)texture_pos.x, (int)texture_pos.y));
 	}
+}
+
+int	get_sky_pixel(t_app *app, int x, int y)
+{
+	t_vector2	texture_pos;
+
+	texture_pos.x = (x + app->sky.start.x) * app->sky.pixel_step.x;
+	texture_pos.y = (y - app->sky.start.y) * app->sky.pixel_step.y;
+	if (texture_pos.x < 0.0)
+		texture_pos.x += app->sky.size.x * app->sky.pixel_step.x;
+	if (texture_pos.x >= (double)SKYBOX_W)
+		texture_pos.x = fmod(texture_pos.x, (double)SKYBOX_W);
+	if (texture_pos.y < 0.0)
+		texture_pos.y += app->sky.size.y * app->sky.pixel_step.y;
+	return (get_pixel_color(app->assets.bg, (int)texture_pos.x, (int)texture_pos.y));
 }
 
 /**

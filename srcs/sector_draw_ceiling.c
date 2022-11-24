@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:17:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 12:25:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:25:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	draw_ceiling(t_app *app, int x, t_rayhit *hit)
 	int			y_end;
 	double		distance;
 	double		elevation_offset;
+	int			color;
 
 	if (x < 0 || x >= WIN_W)
 		return ;
@@ -69,8 +70,11 @@ void	draw_ceiling(t_app *app, int x, t_rayhit *hit)
 			distance = ((app->player.height + app->player.elevation) - hit->sector->ceil_height) * WIN_H / (y_end - WIN_H * app->player.horizon);
 		world_pos.x = hit->position.x - (hit->distance - distance) * hit->ray.x;
 		world_pos.y = hit->position.y - (hit->distance - distance) * hit->ray.y;
-		put_pixel_to_surface(app->surface, x, y_end, shade_color(get_position_color(
-			app, world_pos, hit->sector->ceil_texture), hit->light));
+		color = get_position_color(app, world_pos, hit->sector->ceil_texture);
+		if ((color & 0xFF000000) > 0)
+			put_pixel_to_surface(app->surface, x, y_end, shade_color(color, hit->light));
+		else
+			put_pixel_to_surface(app->surface, x, y_end, get_sky_pixel(app, x, y_end));
 		if (y_end % 2 == app->depthmap_fill_switch)
 			app->depthmap[y_end][x] = (float)distance;
 		y_end--;
