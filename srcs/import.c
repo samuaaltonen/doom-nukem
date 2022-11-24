@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/14 16:20:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:36:40 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,8 @@ static void	export_to_array(t_app *app, t_exportsector *export, int sectorid)
 	ft_memcpy(app->sectors[sectorid].wall_textures, export->wall_textures, export->corner_count * sizeof(int));
 	ft_memcpy(app->sectors[sectorid].wall_types, export->wall_types, export->corner_count *  sizeof(int));
 	ft_memcpy(app->sectors[sectorid].member_sectors, export->member_sectors, MAX_MEMBER_SECTORS * sizeof(int));
+	ft_memcpy(app->sectors[sectorid].wall_decor, export->wall_decor, sizeof(export->wall_decor) * MAX_SECTOR_CORNERS);
+	ft_memcpy(app->sectors[sectorid].decor_offset, export->decor_offset, sizeof(export->decor_offset) * MAX_SECTOR_CORNERS);
 }
 
 /**
@@ -126,15 +128,32 @@ static void read_sector(t_app *app, t_exportsector *export, int sectorid, int se
 	import_ceil_slope(export, &(app->sectors[sectorid]));
 }
 
+static void import_player(t_app *app, t_export_player *player)
+{
+	app->player.current_sector = player->sector;
+	app->player.pos = player->position;
+	app->player.health = player->health;
+	app->player.weapons = player->weapons;
+	app->player.armor = player->armor;
+	ft_memcpy(&app->player.inventory, &player->inventory, sizeof(t_inventory));
+
+}
+
+static void relink_player(t_app *app, t_export_player *player)
+{
+	(void)player;
+	app->player.elevation = app->sectors[app->player.current_sector].floor_height;
+}
+
 //open a file
 int	import_file(t_app *app, char *path)
 {
-	int	fd;
-	t_exportsector *export;
-	size_t counter = 0;
-	size_t sector_count = 0;
-	t_sector	*sectors;
-
+	int						fd;
+	t_exportsector			*export;
+	int						counter = 0;
+	t_level_header			header;
+	t_sector				*sectors;
+	t_export_player			player;
 
 	fd = open(path, O_RDONLY, 0755);
 	if(fd < 0)
@@ -142,20 +161,27 @@ int	import_file(t_app *app, char *path)
 	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
 	if (!export)
 		exit_error(MSG_ERROR_ALLOC);
-	if (read(fd, &sector_count,(sizeof(size_t))) == -1)
+	if (read(fd, &header,(sizeof(t_level_header))) == -1)
 		exit_error(MSG_ERROR_FILE_READ);
-	
-	sectors = (t_sector *)malloc(sizeof(t_sector) * sector_count); 
+	if (read(fd, &player, sizeof(t_export_player)) == -1)
+		exit_error("player read error\n");
+	import_player(app, &player);
+	sectors = (t_sector *)ft_memalloc(sizeof(t_sector) * header.sector_count); 
 	app->sectors = sectors;
-	while(counter < sector_count)
+	while(counter < header.sector_count)
 	{
 		if (read(fd, export,sizeof(t_exportsector)) == -1)
 			exit_error(MSG_ERROR_FILE_READ);
-		read_sector(app, export, counter, sector_count);
+		read_sector(app, export, counter, header.sector_count);
 		counter++;
 	}
 	free(export);
-	ft_printf("sector_count=%i\n",sector_count);
+	if (read(fd, app->objects, sizeof(t_object) * MAX_OBJECTS) ==  -1)
+		exit_error("Object read error\n");
+	if (read(fd, app->interactions, sizeof(t_interaction) * MAX_INTERACTIONS) == -1)
+		exit_error("Interaction read error\n");
+	relink_player(app, &player);
+	ft_printf("sector_count=%i\n",header.sector_count);
 	close(fd);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/16 12:50:42 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/24 13:44:26 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,11 @@
 # define MAX_VISIBLE_WALLS 256
 # define MAX_VIEW_DISTANCE 100.0
 # define MAX_LINE_LENGTH 1048576.0
+# define MAX_OBJECTS 64
+# define MAX_UNIQUE_OBJECTS 64
+# define MAX_INTERACTIONS 64
+# define MAX_UNIQUE_INTERACTIONS 7
+# define MAX_DECOR 10
 
 /**
  * Struct for threads about their specific identifiers and locks for signaling.

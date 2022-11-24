@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/16 12:34:49 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/24 13:53:15 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ typedef struct s_app
 	t_wallstack		wallstack;
 	t_player		player;
 	t_sector		*sectors;
+	t_object		objects[MAX_OBJECTS];
+	t_interaction	interactions[MAX_INTERACTIONS];
 }	t_app;
 
 /**
