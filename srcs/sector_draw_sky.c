@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 14:53:03 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 15:24:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:58:56 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,14 @@ static void	draw_sky(t_app *app, int x)
 	}
 }
 
+/**
+ * @brief Get the sky pixel color.
+ * 
+ * @param app 
+ * @param x 
+ * @param y 
+ * @return int 
+ */
 int	get_sky_pixel(t_app *app, int x, int y)
 {
 	t_vector2	texture_pos;

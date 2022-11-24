@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 13:14:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/24 15:58:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,6 @@ void	*sector_render_thread(void *data)
 		sector_stack_render(app, thread,
 			app->sectors[app->player.current_sector].stack_index, (t_limit){
 			0, WIN_W - 1});
-		sector_sky_render(app, thread);
 		thread->has_work = FALSE;
 		if (pthread_mutex_unlock(&thread->lock))
 			exit_error(NULL);
