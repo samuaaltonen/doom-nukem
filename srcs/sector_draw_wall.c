@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 12:25:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/24 12:55:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,15 +79,17 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion_type)
 	if (!apply_occlusion(hit, x, occlusion_type, &y))
 		return ;
 	apply_offsets(hit, y, &tex_x, &tex_y);
-	depth = (float)hit->distance;
 	while (y.start < y.end)
 	{
+		depth = (float)hit->distance;
 		tex_y += hit->texture_step.y;
 		if (tex_y >= (double) TEX_SIZE)
 			tex_y = fmod(tex_y, (double) TEX_SIZE);
 		color = get_pixel_color(app->assets.sprite, tex_x, (int) tex_y);
 		if ((color & 0xFF000000) > 0)
 			put_pixel_to_surface(app->surface, x, y.start, shade_color(color, hit->light));
+		else if (app->occlusion_top[x] < y.start && app->occlusion_bottom[x] < WIN_H - y.start)
+			depth = MAX_VIEW_DISTANCE;
 		if (y.start % 2 == app->depthmap_fill_switch)
 			app->depthmap[y.start][x] = depth;
 		y.start++;
