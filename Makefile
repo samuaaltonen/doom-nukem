@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/23 16:56:00 by saaltone         ###   ########.fr        #
+#    Updated: 2022/11/24 12:03:53 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,8 +44,6 @@ FILES = main.c \
 		sector_wall_line.c \
 		sector_draw_partial.c \
 		sector_draw_sky.c \
-		sector_draw_transparent.c \
-		sector_overwrite.c \
 		import.c \
 		utils.c \
 		utils_sdl.c

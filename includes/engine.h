@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/23 16:49:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/24 12:23:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,24 @@ typedef struct s_exportsector
 }	t_exportsector;
 
 /**
+ * Wall struct. Contains information of what sector it belongs to and which wall
+ * of that sector it is and precalculated x positions in screen.
+ */
+typedef struct s_wall
+{
+	int				sector_id;
+	int				wall_id;
+	int				wall_type;
+	t_bool			is_member;
+	t_bool			is_portal;
+	t_bool			is_inside;
+	int				already_selected;
+	t_line			line;
+	int				start_x;
+	int				end_x;
+}	t_wall;
+
+/**
  * Rayhit struct.
 */
 typedef struct s_rayhit
@@ -108,25 +126,10 @@ typedef struct s_rayhit
 	double		ceil_horizon;
 	double		ceil_horizon_angle;
 	double		ceil_slope_height;
-}	t_rayhit;
 
-/**
- * Wall struct. Contains information of what sector it belongs to and which wall
- * of that sector it is and precalculated x positions in screen.
- */
-typedef struct s_wall
-{
-	int				sector_id;
-	int				wall_id;
-	int				wall_type;
-	t_bool			is_member;
-	t_bool			is_portal;
-	t_bool			is_inside;
-	int				already_selected;
-	t_line			line;
-	int				start_x;
-	int				end_x;
-}	t_wall;
+	int				*occlusion_top;
+	int				*occlusion_bottom;
+}	t_rayhit;
 
 /**
  * Wallstack struct. Used when gathering possibly visible walls from sectors and

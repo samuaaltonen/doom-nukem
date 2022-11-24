@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/22 18:47:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/24 12:25:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,13 +46,13 @@ void	draw_floor(t_app *app, int x, t_rayhit *hit)
 		return ;
 	y_start = hit->wall_end;
 	y_end = WIN_H - 1;
-	if (app->occlusion_top[x] > y_start)
-		y_start = app->occlusion_top[x];
-	if (app->occlusion_bottom[x] > WIN_H - y_end)
-		y_end = WIN_H - app->occlusion_bottom[x];
+	if (hit->occlusion_top[x] > y_start)
+		y_start = hit->occlusion_top[x];
+	if (hit->occlusion_bottom[x] > WIN_H - y_end)
+		y_end = WIN_H - hit->occlusion_bottom[x];
 	if (y_start == y_end || y_start > y_end)
 		return;
-	app->occlusion_bottom[x] = WIN_H - y_start;
+	hit->occlusion_bottom[x] = WIN_H - y_start;
 
 	elevation_offset = 0.0;
 	if (hit->floor_slope_height)

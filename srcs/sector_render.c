@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/23 17:10:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/24 12:25:32 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,13 +64,29 @@ void	*sector_render_thread(void *data)
 			app->sectors[app->player.current_sector].stack_index, (t_limit){
 			0, WIN_W - 1});
 		sector_sky_render(app, thread);
-		if (app->overwrite_buffer_count)
-			sector_render_overwrite_buffer(app, thread);
 		thread->has_work = FALSE;
 		if (pthread_mutex_unlock(&thread->lock))
 			exit_error(NULL);
 	}
 	pthread_exit(NULL);
+}
+
+/**
+ * @brief Copies occlusion array values.
+ * 
+ * @param source 
+ * @param target 
+ */
+static void	copy_occlusion(int *source, int *target)
+{
+	int	i;
+
+	i = 0;
+	while (i < WIN_W)
+	{
+		target[i] = source[i];
+		i++;
+	}
 }
 
 /**
@@ -85,6 +101,8 @@ void	*sector_render_thread(void *data)
 void	sector_stack_render(t_app *app, t_thread_data *thread, int stack_id,
 	t_limit limit)
 {
+	int		temp_occlusion_top[WIN_W];
+	int		temp_occlusion_bottom[WIN_W];
 	t_wall	*wall;
 	int		i;
 
@@ -92,7 +110,12 @@ void	sector_stack_render(t_app *app, t_thread_data *thread, int stack_id,
 	while (i < app->wallstack.wall_count[stack_id])
 	{
 		wall = &app->wallstack.walls[stack_id][i];
-		sector_walls_raycast(app, thread, wall, limit);
+		sector_walls_raycast(app, thread, wall, limit, app->occlusion_top, app->occlusion_bottom);
+		if (app->sectors[wall->sector_id].wall_textures[wall->wall_id] == PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
+		{
+			copy_occlusion(app->occlusion_top, (int *)&temp_occlusion_top);
+			copy_occlusion(app->occlusion_bottom, (int *)&temp_occlusion_bottom);
+		}
 		if (wall->is_portal && wall->is_inside && !wall->is_member
 			&& app->sectors[wall->wall_type].stack_index > stack_id)
 				sector_stack_render(app, thread,
@@ -101,6 +124,10 @@ void	sector_stack_render(t_app *app, t_thread_data *thread, int stack_id,
 					ft_max(wall->start_x, limit.start),
 					ft_min(wall->end_x, limit.end)
 				});
+		if (app->sectors[wall->sector_id].wall_textures[wall->wall_id] == PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
+		{
+			sector_walls_raycast_transparent(app, thread, wall, limit, (int *)&temp_occlusion_top, (int *)&temp_occlusion_bottom);
+		}
 		i++;
 	}
 }

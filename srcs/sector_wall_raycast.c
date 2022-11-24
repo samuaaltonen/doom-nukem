@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/23 17:03:26 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/24 12:24:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,11 +199,13 @@ static t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
  * @param end_x 
  */
 void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall,
-	t_limit limit)
+	t_limit limit, int *occlusion_top, int *occlusion_bottom)
 {
 	t_rayhit	hit;
 	int			x;
 
+	hit.occlusion_top = occlusion_top;
+	hit.occlusion_bottom = occlusion_bottom;
 	hit.floor_slope_height = 0.0;
 	hit.ceil_slope_height = 0.0;
 	hit.sector = &app->sectors[wall->sector_id];
@@ -215,14 +217,14 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall,
 	{
 		if (x % THREAD_COUNT != thread->id
 			|| wall->start_x > x || wall->end_x < x
-			|| app->occlusion_top[x] + app->occlusion_bottom[x] >= WIN_H
+			|| occlusion_top[x] + occlusion_bottom[x] >= WIN_H
 			|| !raycast_hit(app, wall->line, &hit, x)
 			|| hit.distance > (double)MAX_VIEW_DISTANCE)
 			continue ;
 		if (wall->is_portal)
 		{
-			if (hit.texture == PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
-				draw_transparent_wall(app, x, &hit);
+			/* if (hit.texture == PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
+				draw_transparent_wall(app, x, &hit); */
 			if (wall->is_inside && !wall->is_member)
 				draw_portal_partial(app, x, &hit);
 			if (!wall->is_inside)
@@ -238,5 +240,32 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread, t_wall *wall,
 		draw_ceiling(app, x, &hit);
 		draw_floor(app, x, &hit);
 		draw_wall(app, x, &hit, OCCLUDE_BOTH);
+	}
+}
+
+void	sector_walls_raycast_transparent(t_app *app, t_thread_data *thread,
+	t_wall *wall, t_limit limit, int *occlusion_top, int *occlusion_bottom)
+{
+	t_rayhit	hit;
+	int			x;
+
+	hit.occlusion_top = occlusion_top;
+	hit.occlusion_bottom = occlusion_bottom;
+	hit.floor_slope_height = 0.0;
+	hit.ceil_slope_height = 0.0;
+	hit.sector = &app->sectors[wall->sector_id];
+	hit.wall_type = wall->wall_type;
+	hit.texture = app->sectors[wall->sector_id].wall_textures[wall->wall_id];
+	hit.light = hit.sector->light;
+	x = limit.start - 1;
+	while (++x < limit.end)
+	{
+		if (x % THREAD_COUNT != thread->id
+			|| wall->start_x > x || wall->end_x < x
+			|| occlusion_top[x] + occlusion_bottom[x] >= WIN_H
+			|| !raycast_hit(app, wall->line, &hit, x)
+			|| hit.distance > (double)MAX_VIEW_DISTANCE)
+			continue ;
+		draw_wall(app, x, &hit, OCCLUDE_NONE);
 	}
 }
