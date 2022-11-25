@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/25 14:10:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:21:19 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,8 +109,8 @@ typedef struct s_rayhit
 	t_vector2	position;
 	double		distance;
 	double		distortion;
-	t_vector2	texture_offset;
-	t_vector2	texture_step;
+	double		texture_offset;
+	double		texture_step;
 	int			height;
 	int			light;
 

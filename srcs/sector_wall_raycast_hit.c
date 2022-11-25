@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:06:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 14:44:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:21:40 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,13 +129,15 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 	hit->height = (int)(relative * (hit->sector->ceil_height + ceil_slope
 				- hit->sector->floor_height - floor_slope));
 	hit->wall_start = WIN_H * app->player.horizon - hit->height
-		+ (int)(relative * ((app->player.height + app->player.elevation)
+		+ (int)(relative * (app->player.height + app->player.elevation
 				- hit->sector->floor_height - floor_slope));
 	hit->wall_end = hit->wall_start + hit->height;
-	hit->texture_step.y = TEX_SIZE / relative;
-	hit->texture_offset.y = 0;
-	hit->wall_start_actual = hit->wall_start + relative * ceil_slope
-		- relative * (1 + (int)ceil_slope);
+	hit->texture_step = TEX_SIZE / relative;
+	if (ceil_slope)
+		hit->wall_start_actual = hit->wall_start + relative * ceil_slope
+			- relative * (1.0 + floor(ceil_slope));
+	else
+		hit->wall_start_actual = hit->wall_start;
 	if (hit->sector->parent_sector >= 0)
 		set_parent_vertical_positions(app, hit, relative);
 	clamp_int(&hit->wall_start, 0, WIN_H - 1);
@@ -159,7 +161,7 @@ t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 	double	camera_x;
 
 	ray_line.a = app->player.pos;
-	camera_x = 2 * x / (double) WIN_W - 1.f;
+	camera_x = 2 * x / (double) WIN_W - 1.0;
 	hit->ray = (t_vector2){
 		app->player.dir.x + app->player.cam.x * camera_x,
 		app->player.dir.y + app->player.cam.y * camera_x};
@@ -170,11 +172,10 @@ t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 	hit->distance = ft_vector_length((t_vector2){
 			hit->position.x - app->player.pos.x,
 			hit->position.y - app->player.pos.y});
-	hit->texture_offset.x = ft_vector_length((t_vector2){
+	hit->texture_offset = ft_vector_length((t_vector2){
 			wall.a.x - hit->position.x,
 			wall.a.y - hit->position.y});
-	hit->texture_offset.x = hit->texture_offset.x
-		- (double)(int)hit->texture_offset.x;
+	hit->texture_offset -= floor(hit->texture_offset);
 	hit->distortion = cos(ft_vector_angle(hit->ray, app->player.dir));
 	hit->distance = hit->distortion * hit->distance;
 	set_wall_vertical_positions(app, hit);

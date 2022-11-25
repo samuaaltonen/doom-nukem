@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 15:47:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:21:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static t_bool	apply_occlusion(t_rayhit *hit, int x, int occlusion, t_limit *y)
  */
 static void	apply_offsets(t_rayhit *hit, t_limit y, int *tex_x, double *tex_y)
 {
-	*tex_x = (int)(((double)hit->texture + hit->texture_offset.x) * TEX_SIZE);
-	*tex_y += hit->texture_step.y * (y.start - hit->wall_start_actual);
+	*tex_x = (int)(((double)hit->texture + hit->texture_offset) * TEX_SIZE);
+	*tex_y = hit->texture_step * (y.start - hit->wall_start_actual);
 	if (*tex_y < 0.0)
 		*tex_y += TEX_SIZE * (-*tex_y / TEX_SIZE + 1);
 }
@@ -75,14 +75,13 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion_type)
 		return ;
 	y.start = hit->wall_start;
 	y.end = hit->wall_end;
-	tex_y = hit->texture_offset.y;
 	if (!apply_occlusion(hit, x, occlusion_type, &y))
 		return ;
 	apply_offsets(hit, y, &tex_x, &tex_y);
 	while (y.start < y.end)
 	{
 		depth = (float)hit->distance;
-		tex_y += hit->texture_step.y;
+		tex_y += hit->texture_step;
 		if (tex_y >= (double) TEX_SIZE)
 			tex_y = fmod(tex_y, (double) TEX_SIZE);
 		color = get_pixel_color(app->assets.sprite, tex_x, (int) tex_y);
