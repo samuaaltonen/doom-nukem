@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:09:50 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/25 16:22:50 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:56:05 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,14 +60,14 @@ static void	render_inventory_texts(t_app *app, int x, int y)
 		ft_itoa(app->player.inventory.key));
 	render_text(app, (t_rect){x, y + 44, 30, 20},
 		ft_itoa(app->player.inventory.jetpack));
-	render_text(app, (t_rect){x + 42, y + 44, 30, 20},
-		ft_itoa(app->player.inventory.item1));
-	render_text(app, (t_rect){x + 84, y + 44, 30, 20},
-		ft_itoa(app->player.inventory.item2));
-	render_text(app, (t_rect){x + 128, y + 44, 30, 20},
-		ft_itoa(app->player.inventory.item3));
-	render_text(app, (t_rect){x + 170, y + 44, 30, 20},
-		ft_itoa(app->player.inventory.item4));
+	// render_text(app, (t_rect){x + 42, y + 44, 30, 20},
+	// 	ft_itoa(app->player.inventory.item1));
+	// render_text(app, (t_rect){x + 84, y + 44, 30, 20},
+	// 	ft_itoa(app->player.inventory.item2));
+	// render_text(app, (t_rect){x + 128, y + 44, 30, 20},
+	// 	ft_itoa(app->player.inventory.item3));
+	// render_text(app, (t_rect){x + 170, y + 44, 30, 20},
+	// 	ft_itoa(app->player.inventory.item4));
 	render_text(app, (t_rect){30, y + 90, 255, 50}, "LEFT CLICK ITEMS AND USE \
 ARROW KEYS TO CHANGE THE AMOUNT.");
 }

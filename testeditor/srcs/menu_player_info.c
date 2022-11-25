@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:56:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/25 16:26:50 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:56:22 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,14 +105,14 @@ void	change_item_amount(t_app *app, SDL_Keycode key)
 			app->player.inventory.key--;
 		if (app->selected[5] && app->player.inventory.jetpack > 0)
 			app->player.inventory.jetpack--;
-		if (app->selected[6] && app->player.inventory.item1 > 0)
-			app->player.inventory.item1--;
-		if (app->selected[7] && app->player.inventory.item2 > 0)
-			app->player.inventory.item2--;
-		if (app->selected[8] && app->player.inventory.item3 > 0)
-			app->player.inventory.item3--;
-		if (app->selected[9] && app->player.inventory.item4 > 0)
-			app->player.inventory.item4--;
+		// if (app->selected[6] && app->player.inventory.item1 > 0)
+		// 	app->player.inventory.item1--;
+		// if (app->selected[7] && app->player.inventory.item2 > 0)
+		// 	app->player.inventory.item2--;
+		// if (app->selected[8] && app->player.inventory.item3 > 0)
+		// 	app->player.inventory.item3--;
+		// if (app->selected[9] && app->player.inventory.item4 > 0)
+		// 	app->player.inventory.item4--;
 	}
 	if (key == SDLK_RIGHT)
 	{
@@ -128,13 +128,13 @@ void	change_item_amount(t_app *app, SDL_Keycode key)
 			app->player.inventory.key++;
 		if (app->selected[5] && app->player.inventory.jetpack < 1)
 			app->player.inventory.jetpack++;
-		if (app->selected[6] && app->player.inventory.item1 < MAX_ITEM_CAPACITY)
-			app->player.inventory.item1++;
-		if (app->selected[7] && app->player.inventory.item2 < MAX_ITEM_CAPACITY)
-			app->player.inventory.item2++;
-		if (app->selected[8] && app->player.inventory.item3 < MAX_ITEM_CAPACITY)
-			app->player.inventory.item3++;
-		if (app->selected[9] && app->player.inventory.item4 < MAX_ITEM_CAPACITY)
-			app->player.inventory.item4++;
+		// if (app->selected[6] && app->player.inventory.item1 < MAX_ITEM_CAPACITY)
+		// 	app->player.inventory.item1++;
+		// if (app->selected[7] && app->player.inventory.item2 < MAX_ITEM_CAPACITY)
+		// 	app->player.inventory.item2++;
+		// if (app->selected[8] && app->player.inventory.item3 < MAX_ITEM_CAPACITY)
+		// 	app->player.inventory.item3++;
+		// if (app->selected[9] && app->player.inventory.item4 < MAX_ITEM_CAPACITY)
+		// 	app->player.inventory.item4++;
 	}
 }

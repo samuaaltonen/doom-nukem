@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/25 16:26:05 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:55:34 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,14 +39,14 @@
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 8
 # define MAX_WEAPONS 5
-# define MAX_OBJECTS 64
+# define MAX_ARMOR 5
 # define MAX_UNIQUE_OBJECTS 64
 # define MAX_INTERACTIONS 64
 # define MAX_UNIQUE_INTERACTIONS 7
 # define MAX_DECOR 10
 # define MAX_AMMO 999
 # define MAX_ITEM_CAPACITY 99
-# define MAX_OBJECTS 17
+# define MAX_OBJECTS 64
 # define INVENTORY_SIZE 10
 # define DEG_IN_RADIAN 0.01745f
 # define PI_HALF 1.57079632679
@@ -176,24 +176,11 @@ typedef struct s_inventory
 	int			antidote;
 	int			key;
 	t_bool		jetpack;
-	int			item1;
-	int			item2;
-	int			item3;
-	int			item4;
+	// int			item1;
+	// int			item2;
+	// int			item3;
+	// int			item4;
 }	t_inventory;
-
-typedef struct s_player
-{
-	t_vector2	position;
-	t_vector2	direction;
-	int			sector;
-	int			armor;
-	int			health;
-	int			selected_weapon;
-	int			selected_armor;
-	t_weapon	weapons[MAX_WEAPONS];
-	t_inventory	inventory;
-}	t_player;
 
 typedef struct s_sectorlist
 {
@@ -227,7 +214,7 @@ typedef struct s_player
 	int				selected_weapon;
 	int				selected_armor;
 	t_weapon		weapons[MAX_WEAPONS];
-	t_armor			armor[MAX_ARMOR];
+	int				armor;
 	t_inventory		inventory;
 }	t_player;
 
