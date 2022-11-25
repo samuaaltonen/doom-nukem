@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 16:30:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/25 12:29:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,7 @@ void		draw_portal_partial_hole(t_app *app, int x, t_rayhit *hit);
  * Sky
  */
 int			get_sky_pixel(t_app *app, int x, int y);
+void		sector_sky_render(t_app *app, t_thread_data *thread);
 
 /**
  * Font

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/24 16:28:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/25 14:10:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_wall
 	t_bool			is_member;
 	t_bool			is_portal;
 	t_bool			is_inside;
+	int				already_passed[THREAD_COUNT];
 	int				already_selected;
 	t_line			line;
 	int				start_x;
