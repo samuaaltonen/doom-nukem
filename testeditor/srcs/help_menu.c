@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/23 15:59:33 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:00:01 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,30 +40,32 @@ static void	player_edit_menu(t_app *app)
 {
 	change_font(app, 15, TEXT);
 	render_text(app, (t_rect){10, 40, 50, 20}, "WEAPONS");
-	render_arrows(app, (t_point){25, 67}, (t_point){250, 67});
-	render_player_icons(app, app->assets.sprite, (t_point){40, 60}, MAX_WEAPONS + 1);
-	render_ui_frame(app, (t_rect){(ICON_SIZE / 2) * (app->player.selected_weapon + 1)
-		+ (10 * (app->player.selected_weapon + 1)) - 3, 59, 35, 35}, 1, 0);
-	render_weapon_statics(app);
+	change_font(app, 11, TEXT);
+	render_weapons(app);
+	if (app->player.armor < 1)
+		app->player.armor = 1;
+	if (app->player.armor > 200)
+		app->player.armor = 200;
 	change_font(app, 15, TEXT);
 	render_text(app, (t_rect){10, 165, 50, 20}, "ARMOR");
-	render_arrows(app, (t_point){25, 193}, (t_point){250, 193});
-	render_player_icons(app, app->assets.sprite, (t_point){40, 185}, MAX_ARMOR + 1);
-	render_ui_frame(app, (t_rect){(ICON_SIZE / 2) * (app->player.selected_armor + 1)
-		+ (10 * (app->player.selected_armor + 1)) - 3, 184, 35, 35}, 1, 0);
-	render_armor_statics(app);
+	render_text(app, (t_rect){112, 165, 50, 20}, ft_itoa(app->player.armor));
+	render_text(app, (t_rect){140, 165, 80, 20}, " / 200");
+	change_font(app, 11, TEXT);
+	render_text(app, (t_rect){25, 187, 50, 20}, "<");
+	render_text(app, (t_rect){250, 187, 50, 20}, ">");
+	render_statusbar(app, (t_point){39, 185}, app->player.armor, TEXT);
 	if (app->player.health < 1)
 		app->player.health = 1;
 	if (app->player.health > 200)
 		app->player.health = 200;
 	change_font(app, 15, TEXT);
-	render_text(app, (t_rect){10, 265, 50, 20}, "HEALTH");
-	render_text(app, (t_rect){112, 265, 50, 20}, ft_itoa(app->player.health));
-	render_text(app, (t_rect){140, 265, 80, 20}, " / 200");
+	render_text(app, (t_rect){10, 225, 50, 20}, "HEALTH");
+	render_text(app, (t_rect){112, 225, 50, 20}, ft_itoa(app->player.health));
+	render_text(app, (t_rect){140, 225, 80, 20}, " / 200");
 	change_font(app, 11, TEXT);
-	render_text(app, (t_rect){25, 287, 50, 20}, "<");
-	render_text(app, (t_rect){250, 287, 50, 20}, ">");
-	render_healthbar(app);
+	render_text(app, (t_rect){25, 247, 50, 20}, "<");
+	render_text(app, (t_rect){250, 247, 50, 20}, ">");
+	render_statusbar(app, (t_point){39, 245}, app->player.health, ACTIVE_TEXT);
 	render_inventory(app);
 }
 
@@ -91,8 +93,10 @@ static void	help_menu_texts(t_app *app)
 	change_font(app, 20, TEXT);
 	render_text(app, (t_rect){10, 10, 260, 20}, "LEVEL EDITOR");
 	change_font(app, 11, TEXT);
-	if (app->active_sector)
+	if (app->active_sector && !app->active)
 		sector_edit_menu(app);
+	// else if (app->active)
+	// 	wall_edit_menu(app);
 	else if (app->player_menu)
 		player_edit_menu(app);
 	else if (app->object_menu)

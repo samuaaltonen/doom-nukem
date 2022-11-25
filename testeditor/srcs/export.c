@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/24 14:10:00 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:37:10 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ static void write_player(t_app *app, t_export_player *export)
 	export->sector = get_sector_id(app,app->player.sector);
 	export->health = app->player.health;
 	export->weapons = as_bits(app, app->player.weapons);
-	export->armor = app->player.armor[app->player.selected_armor].defence;
+	export->armor = app->player.armor;
 	export->inventory = app->player.inventory;
 }
 
