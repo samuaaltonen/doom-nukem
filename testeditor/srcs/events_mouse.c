@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_mouse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/24 15:55:12 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:23:39 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,14 +27,8 @@ static void	player_menu_events(t_app *app)
 	if (check_mouse(screen_pos, (t_rect){250, 67, 10, 10})
 		&& app->player.selected_weapon < (MAX_WEAPONS - 1))
 		app->player.selected_weapon++;
-	if (check_mouse(screen_pos, (t_rect){20, 193, 10, 10})
-		&& app->player.selected_armor > 0)
-		app->player.selected_armor--;
-	if (check_mouse(screen_pos, (t_rect){250, 193, 10, 10})
-		&& app->player.selected_armor < (MAX_ARMOR - 1))
-		app->player.selected_armor++;
 	select_inventory(app, screen_pos);
-	app->selected[5] = check_selected_inventory(app);
+	select_weapons(app, screen_pos);
 }
 
 static void	object_menu_events(t_app *app)

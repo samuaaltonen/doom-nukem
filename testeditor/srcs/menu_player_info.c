@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_player_info.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:56:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/24 15:55:47 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:26:50 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,23 +61,24 @@ void	render_arrows(t_app *app, t_point left, t_point right)
 }
 
 /**
-* Renders player healthbar on the help menu sidebar.
+* Renders player statusbar on the help menu sidebar.
 */
-void	render_healthbar(t_app *app)
+void	render_statusbar(t_app *app, t_point point, int statusbar, int color)
 {
 	int		x;
 	int		y;
 	
-	y = 285;
-	while (y <= 305)
+	y = point.y;
+	while (y <= point.y + 20)
 	{
-		x = 39;
-		while (x <= 240)
+		x = point.x;
+		while (x <= point.x + 201)
 		{
-			if (y == 285 || y == 305 || x == 39 || x == 240)
+			if (y == point.y || y == point.y + 20
+				|| x == point.x || x == point.x + 201)
 				put_pixel_to_surface(app->surface, x, y, TEXT);
-			else if (x < (app->player.health + 40))
-				put_pixel_to_surface(app->surface, x, y, PLAYER);
+			else if (x < (statusbar + 40))
+				put_pixel_to_surface(app->surface, x, y, color);
 			x++;
 		}
 		y++;
@@ -90,16 +91,50 @@ void	render_healthbar(t_app *app)
 */
 void	change_item_amount(t_app *app, SDL_Keycode key)
 {
-	if (app->selected[1] && key == SDLK_LEFT
-		&& app->player.inventory.potion > 1)
-		app->player.inventory.potion--;
-	if (app->selected[2] && key == SDLK_LEFT
-		&& app->player.inventory.antidote > 1)
-		app->player.inventory.antidote--;
-	if (app->selected[1] && key == SDLK_RIGHT
-		&& app->player.inventory.potion < 10)
-		app->player.inventory.potion++;
-	if (app->selected[2] && key == SDLK_RIGHT
-		&& app->player.inventory.antidote < 10)
-		app->player.inventory.antidote++;
+	if (key == SDLK_LEFT)
+	{
+		if (app->selected[0] && app->player.inventory.ammo > 0)
+			app->player.inventory.ammo--;
+		if (app->selected[1] && app->player.inventory.special_ammo > 0)
+			app->player.inventory.special_ammo--;
+		if (app->selected[2] && app->player.inventory.potion > 0)
+			app->player.inventory.potion--;
+		if (app->selected[3] && app->player.inventory.antidote > 0)
+			app->player.inventory.antidote--;
+		if (app->selected[4] && app->player.inventory.key > 0)
+			app->player.inventory.key--;
+		if (app->selected[5] && app->player.inventory.jetpack > 0)
+			app->player.inventory.jetpack--;
+		if (app->selected[6] && app->player.inventory.item1 > 0)
+			app->player.inventory.item1--;
+		if (app->selected[7] && app->player.inventory.item2 > 0)
+			app->player.inventory.item2--;
+		if (app->selected[8] && app->player.inventory.item3 > 0)
+			app->player.inventory.item3--;
+		if (app->selected[9] && app->player.inventory.item4 > 0)
+			app->player.inventory.item4--;
+	}
+	if (key == SDLK_RIGHT)
+	{
+		if (app->selected[0] && app->player.inventory.ammo < MAX_AMMO)
+			app->player.inventory.ammo++;
+		if (app->selected[1] && app->player.inventory.special_ammo < MAX_AMMO)
+			app->player.inventory.special_ammo++;
+		if (app->selected[2] && app->player.inventory.potion < MAX_ITEM_CAPACITY)
+			app->player.inventory.potion++;
+		if (app->selected[3] && app->player.inventory.antidote < MAX_ITEM_CAPACITY)
+			app->player.inventory.antidote++;
+		if (app->selected[4] && app->player.inventory.key < MAX_ITEM_CAPACITY)
+			app->player.inventory.key++;
+		if (app->selected[5] && app->player.inventory.jetpack < 1)
+			app->player.inventory.jetpack++;
+		if (app->selected[6] && app->player.inventory.item1 < MAX_ITEM_CAPACITY)
+			app->player.inventory.item1++;
+		if (app->selected[7] && app->player.inventory.item2 < MAX_ITEM_CAPACITY)
+			app->player.inventory.item2++;
+		if (app->selected[8] && app->player.inventory.item3 < MAX_ITEM_CAPACITY)
+			app->player.inventory.item3++;
+		if (app->selected[9] && app->player.inventory.item4 < MAX_ITEM_CAPACITY)
+			app->player.inventory.item4++;
+	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 16:31:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:26:05 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,13 +39,15 @@
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 8
 # define MAX_WEAPONS 5
-# define MAX_ARMOR 5
-# define INVENTORY_SIZE 6
 # define MAX_OBJECTS 64
 # define MAX_UNIQUE_OBJECTS 64
 # define MAX_INTERACTIONS 64
 # define MAX_UNIQUE_INTERACTIONS 7
 # define MAX_DECOR 10
+# define MAX_AMMO 999
+# define MAX_ITEM_CAPACITY 99
+# define MAX_OBJECTS 17
+# define INVENTORY_SIZE 10
 # define DEG_IN_RADIAN 0.01745f
 # define PI_HALF 1.57079632679
 # define RADIAN_IN_DEG 57.29578f
@@ -166,12 +168,6 @@ typedef struct s_weapon
 	int		magazine;
 }	t_weapon;
 
-typedef struct s_armor
-{
-	int		offence;
-	int		defence;
-}	t_armor;
-
 typedef struct s_inventory
 {
 	int			ammo;
@@ -180,7 +176,24 @@ typedef struct s_inventory
 	int			antidote;
 	int			key;
 	t_bool		jetpack;
+	int			item1;
+	int			item2;
+	int			item3;
+	int			item4;
 }	t_inventory;
+
+typedef struct s_player
+{
+	t_vector2	position;
+	t_vector2	direction;
+	int			sector;
+	int			armor;
+	int			health;
+	int			selected_weapon;
+	int			selected_armor;
+	t_weapon	weapons[MAX_WEAPONS];
+	t_inventory	inventory;
+}	t_player;
 
 typedef struct s_sectorlist
 {
@@ -557,18 +570,18 @@ void			load_assets(t_app *app);
 void			render_texture_icons(t_app *app);
 void			render_sector_info(t_app *app);
 void			render_player_icons(t_app *app, SDL_Surface *asset, t_point point, int max);
-void			render_healthbar(t_app *app);
+void			render_statusbar(t_app *app, t_point point, int statusbar, int color);
 void			render_arrows(t_app *app, t_point left, t_point right);
 void			render_ui_frame(t_app *app,t_rect area, int size, int background);
 void			color_surface(SDL_Surface *surface, int color);
 void			change_item_amount(t_app *app, SDL_Keycode key);
-void			render_weapon_statics(t_app *app);
-void			render_armor_statics(t_app *app);
+void			render_weapons(t_app *app);
 void			render_object_statics(t_app *app);
 void			render_icons(t_app *app, t_point point, int id, SDL_Surface *asset);
 void			render_interaction_texts(t_app *app, int start_y);
 void			render_inventory(t_app *app);
 void			select_inventory(t_app *app, t_point screen_pos);
+void			select_weapons(t_app *app, t_point screen_pos);
 int				check_mouse(t_point screen_pos, t_rect rect);
 int				check_selected_inventory(t_app *app);
 
@@ -577,7 +590,6 @@ int				check_selected_inventory(t_app *app);
 */
 void			render_player(t_app *app);
 void			weapons_init(t_app *app);
-void			armor_init(t_app *app);
 void			inventory_init(t_app *app);
 void			check_player_position(t_app *app);
 

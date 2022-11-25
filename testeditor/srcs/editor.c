@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editor.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/24 16:31:53 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:24:11 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,7 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			if (app->active_sector->floor_tex < 0)
 				app->active_sector->floor_tex = MAX_TEX_COUNT;
 		}
-		if (app->selected[5])
+		if (app->player_menu)
 			change_item_amount(app, key);
 		if ((app->object_menu || app->object_new) && app->current_object->type > 1)
 			app->current_object->type--;
@@ -148,7 +148,7 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			if (app->active_sector->floor_tex > MAX_TEX_COUNT)
 				app->active_sector->floor_tex = 0;
 		}
-		if (app->selected[5])
+		if (app->player_menu)
 			change_item_amount(app, key);
 		if ((app->object_menu || app->object_new) && app->current_object->type < MAX_UNIQUE_OBJECTS - 1)
 			app->current_object->type++;
