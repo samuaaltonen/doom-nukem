@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/28 15:55:50 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:28:40 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	render_options(t_app *app)
 	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
 }
 
-void	render_inventory(t_app *app)
+void	render_inventorymenu(t_app *app)
 {
 	SDL_SetRelativeMouseMode(SDL_FALSE);
 	render_sectors(app);

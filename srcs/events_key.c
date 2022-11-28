@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/28 16:00:03 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:23:50 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,9 @@ int	events_keydown(int keycode, t_app *app)
 		//----DEBUG FEATURE
 		if (app->status == STATUS_GAME)
 			app->status = STATUS_INVENTORY;
-		if (app->status == STATUS_INVENTORY)
+		else if (app->status == STATUS_INVENTORY)
 			app->status = STATUS_GAME;
+
 		//----
 		//app->conf->fov++;
 	}

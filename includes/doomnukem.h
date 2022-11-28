@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/28 15:57:18 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:29:59 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define STATUS_PAUSEMENU 3
 # define STATUS_MAINOPTIONS 4
 # define STATUS_GAMEOPTIONS 5
-# define STATUS_INVENTORY 5
+# define STATUS_INVENTORY 6
 
 //BUTTON MACROS
 # define BUTTON_IDLE 0
@@ -237,7 +237,7 @@ void		render_titlescreen(t_app *app);
 void		render_game(t_app *app);
 void		render_pausemenu(t_app *app);
 void		render_options(t_app *app);
-void		render_inventory(t_app *app);
+void		render_inventorymenu(t_app *app);
 
 /*
 * AUDIO.C
