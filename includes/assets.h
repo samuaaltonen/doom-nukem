@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assets.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/22 19:00:35 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/28 15:19:02 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # define POINTER_PATH "assets/ui/mouse_pointer.bmp"
 # define SHIELD_PATH "assets/ui/shield.bmp"
 # define HP_PATH "assets/ui/hp.bmp"
+# define PISTOL_PATH  "assets/textures/pistol.bmp"
 # define METER_PATH "assets/ui/meter.bmp"
 # define MUSIC_PATH "assets/sounds/title_music.wav"
 # define LASER_PATH "assets/sounds/laser.wav"
@@ -90,6 +91,7 @@ typedef struct s_assets
 	SDL_Surface		*pointer;
 	SDL_Surface		*shield;
 	SDL_Surface		*hp;
+	SDL_Surface		*pistol;
 	SDL_Surface		*meter;
 	SDL_Surface		*sprite;
 	SDL_Surface		*bg;

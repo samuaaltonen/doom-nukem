@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/28 12:08:42 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/28 12:26:13 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	player_init(t_app *app)
 	app->player.current_sector = 0;
 	app->player.hp = 200;
 	app->player.weapons = 0;
-	app->player.shield = 90;
+	app->player.shield = 200;
 	app->player.inventory = (t_inventory){0,0,0,0,0,FALSE};
 	init_camera_plane(app);
 	init_skybox_plane(app);
