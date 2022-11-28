@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/22 18:19:35 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/28 12:07:58 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void ui_topframe(t_app *app,t_rect area, int size);
 static void ui_midframe(t_app *app,t_rect area, int size);
 static void ui_bottomframe(t_app *app,t_rect area, int size);
 static void	fill_meter(t_app *app, t_rect area, int type, int id);
+static void	player_status_meter(t_app *app, t_rect area, int value, int color);
 
 void	render_ui(t_app *app)
 {
@@ -211,45 +212,53 @@ void	render_crosshair(t_app *app)
 void	render_player_status(t_app *app)
 {
 	render_ui_element(app, app->assets.shield, (t_rect){32, 600, 32, 32});
-	fill_meter(app, (t_rect){80, 600, 16, 32}, 0, 0);
-	fill_meter(app, (t_rect){100, 600, 16, 32}, 0, 1);
-	fill_meter(app, (t_rect){120, 600, 16, 32}, 0, 2);
-	fill_meter(app, (t_rect){140, 600, 16, 32}, 0, 3);
-	fill_meter(app, (t_rect){160, 600, 16, 32}, 0, 4);
+	player_status_meter(app,(t_rect){80, 600, 16, 32}, app->player.shield, CYAN);
 	render_ui_element(app, app->assets.hp, (t_rect){32, 640, 32, 32});
-	fill_meter(app, (t_rect){80, 640, 16, 32}, 1, 0);
-	fill_meter(app, (t_rect){100, 640, 16, 32}, 1, 1);
-	fill_meter(app, (t_rect){120, 640, 16, 32}, 1, 2);
-	fill_meter(app, (t_rect){140, 640, 16, 32}, 1, 3);
-	fill_meter(app, (t_rect){160, 640, 16, 32}, 1, 4);
+	player_status_meter(app,(t_rect){80, 640, 16, 32}, app->player.hp, DARK_RED);
 }
 
-static void	fill_meter(t_app *app, t_rect area, int type, int id)
+static void	player_status_meter(t_app *app, t_rect area, int value, int color)
+{
+	int meter_value;
+
+	meter_value = value;
+	fill_meter(app, area, meter_value, color);
+	area.x += 20;
+	meter_value -= 40;
+	fill_meter(app, area, meter_value, color);
+	area.x += 20;
+	meter_value -= 40;
+	fill_meter(app, area, meter_value, color);
+	area.x += 20;
+	meter_value -= 40;
+	fill_meter(app, area, meter_value, color);
+	area.x += 20;
+	meter_value -= 40;
+	fill_meter(app, area, meter_value, color);
+}
+
+static void	fill_meter(t_app *app, t_rect area, int value, int color)
 {
 	int	x;
 	int	y;
-	int color;
 	int limit;
-	if (app->player.hp - 40 * id > 0)
-		limit = ((double)app->player.hp - 40.0 * (double)id) * 28.0 / 40.0;
+
+	x = area.x + area.w - 3;
+	y = area.y + area.h - 3;
+	if (value > 0)
+		limit = (28.0 / 40.0) * value;
 	else
 		limit = 0;
-	if (type == 0)
-		color = CYAN;
-	if (type == 1)
-		color = DARK_RED;
-	x = area.x + 2;
-	y = area.y + 2;
-	while (y < area.y + area.h - 2)
+	while (y >= area.y + 2 && limit > 0)
 	{
-		while (x < area.x + area.w - 2)
+		while (x >= area.x + 2)
 		{
-			if (area.y + area.h - y - 2 <= limit)
-				put_pixel_to_surface(app->surface, x, y, color);
-			x++;
+			put_pixel_to_surface(app->surface, x, y, color);
+			x--;
 		}
-		x = area.x + 2;
-		y++;
+		x = area.x + area.w - 3;
+		y--;
+		limit--;
 	}
 	render_ui_element(app, app->assets.meter, area);
 }

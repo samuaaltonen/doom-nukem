@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/24 15:48:51 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/28 10:50:56 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define MOVEMENT_SPEED 5.0
 # define HORIZON_UPPER_LIMIT 1.25
 # define HORIZON_LOWER_LIMIT -0.25
+# define MAX_HP 200
 
 /**
  * Movement direction enumeration.
