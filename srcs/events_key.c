@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/21 15:14:45 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/28 16:00:03 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,12 @@ int	events_keyup(int keycode, t_app *app)
 		app->conf->toggle_loop = ft_toggle(app->conf->toggle_loop);
 	if (keycode == SDLK_TAB)
 	{
+		//----DEBUG FEATURE
 		if (app->status == STATUS_GAME || app->status == STATUS_PAUSEMENU)
 			pause_game(app);
 		if (app->status == STATUS_MAINMENU)
 			app->status = STATUS_TITLESCREEN;
+		//----
 			
 	}
 	if (keycode == SDLK_SPACE)
@@ -86,7 +88,16 @@ int	events_keydown(int keycode, t_app *app)
 	if (keycode == SDLK_u)
 		app->conf->fov--;
 	if (keycode == SDLK_i)
-		app->conf->fov++;
+	{
+		//----DEBUG FEATURE
+		if (app->status == STATUS_GAME)
+			app->status = STATUS_INVENTORY;
+		if (app->status == STATUS_INVENTORY)
+			app->status = STATUS_GAME;
+		//----
+		//app->conf->fov++;
+	}
+		
 	if (keycode == SDLK_u || keycode == SDLK_i)
 		init_camera_plane(app);
 	if (keycode == SDLK_LSHIFT)

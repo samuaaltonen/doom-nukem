@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/28 13:53:04 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/28 15:55:50 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,20 @@ void	render_options(t_app *app)
 	render_text(app, (t_rect){336, 310, 800, 800}, "And now an extra line\nwith an extra line!");
 	render_text(app, (t_rect){336, 350, 300, 100}, "For the finale: A text that doesn' fit horizontally in the given rectangle AND that doesn't fit vertically so this sentence will be mostly unfinished");
 //----
+	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
+}
+
+void	render_inventory(t_app *app)
+{
+	SDL_SetRelativeMouseMode(SDL_FALSE);
+	render_sectors(app);
+	render_ui_frame(app, (t_rect){320, 132, 224, 64}, 1, DARK_GREY);
+	change_font(app, 32, DARK_RED);
+	render_text(app, (t_rect){336, 146, 800, 800}, "INVENTORY");
+	render_ui_frame(app, (t_rect){320, 180, 640, 360}, 1, DARK_GREY);
+
+	button_function(app,
+		render_button(app, (t_rect){880, 488, 60, 32}, 1, "Back"), pause_game);
+
 	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
 }
