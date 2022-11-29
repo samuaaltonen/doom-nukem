@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 23:00:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/29 14:24:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:19:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,10 @@ static t_bool	walls_in_order(t_app *app, t_wall *wall_a, t_wall *wall_b)
 	extended_a = TRUE;
 
 	if (ft_line_intersection_full(a, b) && wall_a->is_inside != wall_b->is_inside) {
-		if (wall_a->sector_id == 1 && wall_a->wall_id == 2 && wall_b->sector_id == 5 && wall_b->wall_id == 1)
-			ft_printf("%d:%d (%d) and %d:%d (%d)\n", wall_a->sector_id, wall_a->wall_id, wall_a->is_inside, wall_b->sector_id, wall_b->wall_id, wall_b->is_inside);
 		if (wall_a->is_inside)
 			return (TRUE);
 		else
 			return (FALSE);
-		/* if (wall_a->is_inside)
-			return (TRUE);
-		else
-			return (FALSE); */
 	}
 
 	// Check intersection
@@ -61,12 +55,6 @@ static t_bool	walls_in_order(t_app *app, t_wall *wall_a, t_wall *wall_b)
 	{
 		extended = ft_line_resize(b, MAX_LINE_LENGTH, EXTEND_BOTH);
 		extended_a = FALSE;
-
-		if (wall_a->sector_id == 1 && wall_a->wall_id == 2 && wall_b->sector_id == 5 && wall_b->wall_id == 1) {
-			ft_printf("b extended, a.a side: %d, a.b side: %d\n", ft_line_side(extended, a.a), ft_line_side(extended, a.b));
-			ft_printf("%f\n", (extended.b.x - extended.a.x) * (b.a.y - extended.a.y)
-				- (extended.b.y - extended.a.y) * (b.a.x - extended.a.x));
-		}
 
 		// If interesction again, no change in order
 		if (ft_line_intersection_through(extended, a))
@@ -84,16 +72,16 @@ static t_bool	walls_in_order(t_app *app, t_wall *wall_a, t_wall *wall_b)
 	 * wall b has priority (return false so switch b before a).
 	 */
 	if (extended_a
-		&& side == ft_line_side(extended, b.a)
-		&& side == ft_line_side(extended, b.b))
+		&& (side == ft_line_side(extended, b.a) || ft_line_point(extended, b.a))
+		&& (side == ft_line_side(extended, b.b) || ft_line_point(extended, b.b)))
 		return (FALSE);
 	/**
-	 * Similarly if b was extended, and wall a not at the same side as player,
+	 * Similarly if b was extended, and wall a is not at the same side as player,
 	 * then b has priority.
 	 */
 	if (!extended_a
-		&& (side != ft_line_side(extended, a.a)
-			|| side != ft_line_side(extended, a.b)))
+		&& ((side != ft_line_side(extended, a.a) && !ft_line_point(extended, a.a))
+			|| (side != ft_line_side(extended, a.b) && !ft_line_point(extended, a.b))))
 		return (FALSE);
 	/**
 	 * All other cases, wall a has priority so it is already in order.
