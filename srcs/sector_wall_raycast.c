@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/25 16:07:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/30 10:41:33 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ static void	raycast_default(t_app *app, t_rayhit *hit, int x)
  */
 static void	raycast_init(t_app *app, t_raycast_info info, t_rayhit *hit)
 {
+	hit->wall_id = info.wall->wall_id;
 	hit->occlusion_top = info.occlusion_top;
 	hit->occlusion_bottom = info.occlusion_bottom;
 	hit->floor_slope_height = 0.0;

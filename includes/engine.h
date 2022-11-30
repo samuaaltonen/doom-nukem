@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/25 16:21:19 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/30 11:35:10 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,7 @@ typedef struct s_wall
 typedef struct s_rayhit
 {
 	t_sector	*sector;
+	int			wall_id;
 	t_vector2	ray;
 	int			texture;
 	t_vector2	position;
@@ -134,6 +135,13 @@ typedef struct s_rayhit
 
 	int			*occlusion_top;
 	int			*occlusion_bottom;
+
+	t_bool		has_decor;
+	int			decor_texture;
+	int			decor_start;
+	int			decor_start_actual;
+	int			decor_end;
+	double		decor_texture_offset;
 }	t_rayhit;
 
 /**

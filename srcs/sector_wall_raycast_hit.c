@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:06:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/25 16:21:40 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/30 11:37:19 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,6 +144,38 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 	clamp_int(&hit->wall_end, 0, WIN_H - 1);
 }
 
+t_bool	decor_hit(t_app *app, t_line wall, t_rayhit *hit)
+{
+	t_line		decor_line;
+	t_vector2	wall_vector;
+	double		wall_length;
+	double		decor_floor;
+
+	if (hit->sector->wall_decor[hit->wall_id] == -1)
+		return (FALSE);
+	wall_vector = ft_vector2_sub(wall.b, wall.a);
+	wall_length = ft_vector_length(wall_vector);
+	decor_line.a = ft_vector2_add(wall.a, ft_vector_resize(wall_vector, (wall_length - DECOR_SIZE) / 2 + hit->sector->decor_offset[hit->wall_id].x));
+	decor_line.b = ft_vector2_add(decor_line.a, ft_vector_resize(wall_vector, 1.0));
+	if (!(ft_vector_length(ft_vector2_sub(hit->position, wall.a))
+		>= ft_vector_length(ft_vector2_sub(decor_line.a, wall.a))
+		&& ft_vector_length(ft_vector2_sub(hit->position, wall.a))
+		<= ft_vector_length(ft_vector2_sub(decor_line.b, wall.a))))
+		return (FALSE);
+	hit->decor_texture = hit->sector->wall_decor[hit->wall_id];
+	hit->decor_texture_offset = ft_vector_length(ft_vector2_sub(hit->position, decor_line.a));
+
+	decor_floor = (hit->sector->ceil_height - hit->sector->floor_height - DECOR_SIZE) / 2 + hit->sector->floor_height + hit->sector->decor_offset[hit->wall_id].y;
+
+	hit->decor_start = WIN_H * app->player.horizon
+		+ (int)(WIN_H / hit->distance * (app->player.height + app->player.elevation - decor_floor - DECOR_SIZE));
+	hit->decor_start_actual = hit->decor_start;
+	hit->decor_end = hit->decor_start + WIN_H / hit->distance * DECOR_SIZE;
+	clamp_int(&hit->decor_start, 0, WIN_H - 1);
+	clamp_int(&hit->decor_end, 0, WIN_H - 1);
+	return (TRUE);
+}
+
 /**
  * @brief Performs raycast from player to wall. Updates values into rayhit
  * struct to be used later in rendering. Returns TRUE if there was a hit and
@@ -179,5 +211,6 @@ t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 	hit->distortion = cos(ft_vector_angle(hit->ray, app->player.dir));
 	hit->distance = hit->distortion * hit->distance;
 	set_wall_vertical_positions(app, hit);
+	hit->has_decor = decor_hit(app, wall, hit);
 	return (TRUE);
 }
