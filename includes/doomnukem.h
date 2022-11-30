@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 16:30:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/30 16:36:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,22 @@ typedef struct s_audio
 	Uint32				sound_length;
 }	t_audio;
 
+
+typedef struct s_render_object
+{
+	double		dist;
+	t_point		end;
+	t_point		start;
+	double		step;
+} t_render_object;
+
+
+typedef struct s_objectstack
+{
+	int				visible_count;
+	t_render_object	objects[MAX_VISIBLE_WALLS];
+}	t_objectstack;
+
 /**
  * Struct for the application.
  */
@@ -86,6 +102,7 @@ typedef struct s_app
 	float			depthmap[WIN_H][WIN_W];
 	t_bool			depthmap_fill_switch;
 	t_wallstack		wallstack;
+	t_objectstack	objectstack;
 	t_player		player;
 	t_sky			sky;
 	t_sector		*sectors;
@@ -268,5 +285,11 @@ void		clamp_int(int *number, int min, int max);
  * maps 
  */
 int			import_file(t_app *app, char *path);
+
+/**
+ * objects
+ */
+void		render_objects(t_app *app);
+
 
 #endif

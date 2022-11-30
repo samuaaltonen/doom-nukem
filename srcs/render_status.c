@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/24 15:50:06 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/30 14:41:00 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	render_game(t_app *app)
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	handle_movement(app);
 	render_sectors(app);
+	render_objects(app);
 	render_ui(app);
 }
 
