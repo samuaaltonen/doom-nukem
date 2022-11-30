@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/30 11:06:46 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/30 11:46:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,6 +175,7 @@ void		sector_walls_raycast(t_app *app, t_thread_data *thread,
 void		sector_walls_raycast_transparent(t_app *app, t_thread_data *thread,
 				t_raycast_info info);
 t_bool		raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x);
+t_bool		raycast_decor(t_app *app, t_line wall, t_rayhit *hit);
 
 /**
  * Sector draw

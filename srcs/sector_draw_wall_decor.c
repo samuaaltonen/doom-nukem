@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/30 11:33:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/30 11:39:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,14 +42,15 @@ static t_bool	apply_occlusion(t_rayhit *hit, int x, t_limit *y)
  */
 static void	apply_offsets(t_rayhit *hit, t_limit y, int *tex_x, double *tex_y)
 {
-	*tex_x = (int)(((double)hit->decor_texture + hit->decor_texture_offset) * TEX_SIZE);
+	*tex_x = (int)(((double)hit->decor_texture + hit->decor_texture_offset)
+			* TEX_SIZE);
 	*tex_y = hit->texture_step * (y.start - hit->decor_start_actual);
 	if (*tex_y < 0.0)
 		*tex_y += TEX_SIZE * (-*tex_y / TEX_SIZE + 1);
 }
 
 /**
- * @brief Draws vertical line of a wall.
+ * @brief Draws vertical line of a wall decoration.
  * 
  * @param app 
  * @param x 
@@ -77,7 +78,8 @@ void	draw_wall_decor(t_app *app, int x, t_rayhit *hit)
 			tex_y = fmod(tex_y, (double) TEX_SIZE);
 		color = get_pixel_color(app->assets.sprite, tex_x, (int) tex_y);
 		if ((color & 0xFF000000) > 0)
-			put_pixel_to_surface(app->surface, x, y.start, shade_color(color, hit->light));
+			put_pixel_to_surface(app->surface, x, y.start,
+				shade_color(color, hit->light));
 		y.start++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/30 10:41:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/30 11:51:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,6 @@ void	sector_walls_raycast_transparent(t_app *app, t_thread_data *thread,
 			|| !raycast_hit(app, info.wall->line, &hit, x)
 			|| hit.distance > (double)MAX_VIEW_DISTANCE)
 			continue ;
-		//ft_printf("x: %d, distance: %f, y start: %d, y start actual: %d, wall height: %d\n", x, hit.distance, hit.wall_start, hit.wall_start_actual, hit.height);
 		draw_wall(app, x, &hit, OCCLUDE_BOTH);
 	}
 }
