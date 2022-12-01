@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 23:00:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/02 13:10:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/29 15:19:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static t_bool	walls_in_order(t_app *app, t_wall *wall_a, t_wall *wall_b)
 	t_line	a;
 	t_line	b;
 	t_line	extended;
-	t_bool		extended_a;
-	int			side;
+	t_bool	extended_a;
+	int		side;
 
 	if (wall_a->is_member && !wall_b->is_member)
 		return (TRUE);
@@ -43,11 +43,19 @@ static t_bool	walls_in_order(t_app *app, t_wall *wall_a, t_wall *wall_b)
 	extended = ft_line_resize(a, MAX_LINE_LENGTH, EXTEND_BOTH);
 	extended_a = TRUE;
 
+	if (ft_line_intersection_full(a, b) && wall_a->is_inside != wall_b->is_inside) {
+		if (wall_a->is_inside)
+			return (TRUE);
+		else
+			return (FALSE);
+	}
+
 	// Check intersection
 	if (ft_line_intersection_through(extended, b))
 	{
 		extended = ft_line_resize(b, MAX_LINE_LENGTH, EXTEND_BOTH);
 		extended_a = FALSE;
+
 		// If interesction again, no change in order
 		if (ft_line_intersection_through(extended, a))
 			return (TRUE);
@@ -64,16 +72,16 @@ static t_bool	walls_in_order(t_app *app, t_wall *wall_a, t_wall *wall_b)
 	 * wall b has priority (return false so switch b before a).
 	 */
 	if (extended_a
-		&& side == ft_line_side(extended, b.a)
-		&& side == ft_line_side(extended, b.b))
+		&& (side == ft_line_side(extended, b.a) || ft_line_point(extended, b.a))
+		&& (side == ft_line_side(extended, b.b) || ft_line_point(extended, b.b)))
 		return (FALSE);
 	/**
-	 * Similarly if b was extended, and wall a not at the same side as player,
+	 * Similarly if b was extended, and wall a is not at the same side as player,
 	 * then b has priority.
 	 */
 	if (!extended_a
-		&& (side != ft_line_side(extended, a.a)
-			|| side != ft_line_side(extended, a.b)))
+		&& ((side != ft_line_side(extended, a.a) && !ft_line_point(extended, a.a))
+			|| (side != ft_line_side(extended, a.b) && !ft_line_point(extended, a.b))))
 		return (FALSE);
 	/**
 	 * All other cases, wall a has priority so it is already in order.
@@ -139,7 +147,7 @@ static int	get_foremost_wall(t_app *app, t_wall *walls, int wall_count)
 	/**
 	 * TODO: Remove 
 	 */
-	//ft_printf("{red}ERROR: Wall ordering has no good pick, going with %d,%d (%d){white}\n", walls[first_nonselected].sector_id, walls[first_nonselected].wall_id, first_nonselected);
+	ft_printf("{red}ERROR: Wall ordering has no good pick, going with %d,%d (%d){white}\n", walls[first_nonselected].sector_id, walls[first_nonselected].wall_id, first_nonselected);
 	return (first_nonselected);
 }
 

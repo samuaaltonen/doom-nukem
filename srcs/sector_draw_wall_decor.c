@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sector_draw_wall.c                                 :+:      :+:    :+:   */
+/*   sector_draw_wall_decor.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/30 11:18:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/30 11:39:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,24 +33,6 @@ static t_bool	apply_occlusion(t_rayhit *hit, int x, t_limit *y)
 }
 
 /**
- * @brief Updates occlusion array values.
- * 
- * @param hit 
- * @param x 
- * @param occlusion 
- * @param y 
- */
-static void	update_occlusion(t_rayhit *hit, int x, int occlusion)
-{
-	if (occlusion == OCCLUDE_NONE)
-		return ;
-	if (occlusion == OCCLUDE_BOTH || occlusion == OCCLUDE_TOP)
-		hit->occlusion_top[x] = hit->wall_end;
-	if (occlusion == OCCLUDE_BOTH || occlusion == OCCLUDE_BOTTOM)
-		hit->occlusion_bottom[x] = WIN_H - hit->wall_start;
-}
-
-/**
  * @brief Applies offsets for texture coordinate.
  * 
  * @param hit 
@@ -60,31 +42,32 @@ static void	update_occlusion(t_rayhit *hit, int x, int occlusion)
  */
 static void	apply_offsets(t_rayhit *hit, t_limit y, int *tex_x, double *tex_y)
 {
-	*tex_x = (int)(((double)hit->texture + hit->texture_offset) * TEX_SIZE);
-	*tex_y = hit->texture_step * (y.start - hit->wall_start_actual);
+	*tex_x = (int)(((double)hit->decor_texture + hit->decor_texture_offset)
+			* TEX_SIZE);
+	*tex_y = hit->texture_step * (y.start - hit->decor_start_actual);
 	if (*tex_y < 0.0)
 		*tex_y += TEX_SIZE * (-*tex_y / TEX_SIZE + 1);
 }
 
 /**
- * @brief Draws vertical line of a wall.
+ * @brief Draws vertical line of a wall decoration.
  * 
  * @param app 
  * @param x 
  * @param hit 
  * @param occlusion_type 
  */
-void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion_type)
+void	draw_wall_decor(t_app *app, int x, t_rayhit *hit)
 {
 	t_limit		y;
 	int			tex_x;
 	double		tex_y;
 	int			color;
 
-	if (hit->texture == -1 || x < 0 || x >= WIN_W)
+	if (hit->decor_texture == -1)
 		return ;
-	y.start = hit->wall_start;
-	y.end = hit->wall_end;
+	y.start = hit->decor_start;
+	y.end = hit->decor_end;
 	if (!apply_occlusion(hit, x, &y))
 		return ;
 	apply_offsets(hit, y, &tex_x, &tex_y);
@@ -95,14 +78,8 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion_type)
 			tex_y = fmod(tex_y, (double) TEX_SIZE);
 		color = get_pixel_color(app->assets.sprite, tex_x, (int) tex_y);
 		if ((color & 0xFF000000) > 0)
-			put_pixel_to_surface(app->surface, x, y.start, shade_color(color, hit->light));
-		else if (app->occlusion_top[x] < y.start && app->occlusion_bottom[x] < WIN_H - y.start)
-			put_pixel_to_surface(app->surface, x, y.start, get_sky_pixel(app, x, y.start));
-		if (y.start % 2 == app->depthmap_fill_switch)
-			app->depthmap[y.start][x] = (float)hit->distance;
+			put_pixel_to_surface(app->surface, x, y.start,
+				shade_color(color, hit->light));
 		y.start++;
 	}
-	if (hit->has_decor)
-		draw_wall_decor(app, x, hit);
-	update_occlusion(hit, x, occlusion_type);
 }

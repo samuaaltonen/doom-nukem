@@ -14,7 +14,7 @@
 
 /**
  * Returns 1 if given coordinate point (vector2) is located at left side of
- * given line and 0 if left side.
+ * given line and 0 if right side. Returns 0 if point is located on line.
  */
 int	ft_line_side(t_line line, t_vector2 coord)
 {

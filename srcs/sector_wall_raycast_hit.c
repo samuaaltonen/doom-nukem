@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:06:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/25 16:21:40 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/11/30 11:51:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static double	apply_ceiling_slope(t_rayhit *hit)
 	double		pos_angle;
 	t_vector2	slope_vector;
 
+	if (!hit->sector->ceil_slope_height)
+		return (0.0);
 	slope_vector = ft_vector2_sub(hit->sector->ceil_slope_end,
 			hit->sector->ceil_slope_start);
 	pos_angle = ft_vector_angle(ft_vector2_sub(hit->position,
@@ -53,6 +55,8 @@ static double	apply_floor_slope(t_rayhit *hit)
 	double		pos_angle;
 	t_vector2	slope_vector;
 
+	if (!hit->sector->floor_slope_height)
+		return (0.0);
 	slope_vector = ft_vector2_sub(hit->sector->floor_slope_end,
 			hit->sector->floor_slope_start);
 	pos_angle = ft_vector_angle(ft_vector2_sub(hit->position,
@@ -115,16 +119,12 @@ static void	set_parent_vertical_positions(t_app *app, t_rayhit *hit,
  */
 void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 {
-	double		relative;
-	double		ceil_slope;
-	double		floor_slope;
+	double	relative;
+	double	ceil_slope;
+	double	floor_slope;
 
-	ceil_slope = 0.0;
-	floor_slope = 0.0;
-	if (hit->sector->ceil_slope_height)
-		ceil_slope = apply_ceiling_slope(hit);
-	if (hit->sector->floor_slope_height)
-		floor_slope = apply_floor_slope(hit);
+	ceil_slope = apply_ceiling_slope(hit);
+	floor_slope = apply_floor_slope(hit);
 	relative = WIN_H / hit->distance;
 	hit->height = (int)(relative * (hit->sector->ceil_height + ceil_slope
 				- hit->sector->floor_height - floor_slope));
@@ -133,11 +133,10 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 				- hit->sector->floor_height - floor_slope));
 	hit->wall_end = hit->wall_start + hit->height;
 	hit->texture_step = TEX_SIZE / relative;
+	hit->wall_start_actual = hit->wall_start;
 	if (ceil_slope)
 		hit->wall_start_actual = hit->wall_start + relative * ceil_slope
 			- relative * (1.0 + floor(ceil_slope));
-	else
-		hit->wall_start_actual = hit->wall_start;
 	if (hit->sector->parent_sector >= 0)
 		set_parent_vertical_positions(app, hit, relative);
 	clamp_int(&hit->wall_start, 0, WIN_H - 1);
@@ -179,5 +178,6 @@ t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 	hit->distortion = cos(ft_vector_angle(hit->ray, app->player.dir));
 	hit->distance = hit->distortion * hit->distance;
 	set_wall_vertical_positions(app, hit);
+	hit->has_decor = raycast_decor(app, wall, hit);
 	return (TRUE);
 }

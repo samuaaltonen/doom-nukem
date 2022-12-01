@@ -20,8 +20,8 @@
 */
 int	ft_line_intersection_through(t_line line_a, t_line line_b)
 {
-	if (ft_line_side(line_a, line_b.a)
-		!= ft_line_side(line_a, line_b.b))
+	if (ft_line_side(line_a, line_b.a) != ft_line_side(line_a, line_b.b)
+		&& !ft_line_point(line_a, line_b.a) && !ft_line_point(line_a, line_b.b))
 		return (1);
 	return (0);
 }
