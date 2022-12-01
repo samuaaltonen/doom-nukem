@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/01 15:25:05 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/01 19:21:40 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	render_ui(t_app *app)
 	render_player_status(app);
 	render_equipment(app);
 	//----DEBUG FEATURE 
-	if (app->conf->buttonstates & LEFT_MOUSE)
+	if (app->conf->buttonstates & RIGHT_MOUSE)
 		render_text_prompt(app, (t_rect){800, 150, 256, 64}, 1, "This is a nice and wonderful text prompt");
 	//----
 }
@@ -41,21 +41,34 @@ void	render_equipment(t_app *app)
 	render_ui_element(app, app->assets.pistol, (t_rect){960, 630, 64, 64});
 	render_text_prompt(app, (t_rect){1040, 624, 64, 64}, 1, "E");
 	render_ui_element(app, app->assets.pistol, (t_rect){1040, 630, 64, 64});
-	render_ui_frame(app, (t_rect){1120, 560, 128, 128}, 1, DARK_GREY);
-	color_surface(app->assets.bullet, CYAN);
-	render_ui_element(app, app->assets.pistol, (t_rect){1120, 624, 64, 64});
-	render_ui_element(app, app->assets.bullet, (t_rect){1136, 576, 4, 10});
-	render_ui_element(app, app->assets.bullet, (t_rect){1142, 576, 4, 10});
-	render_ui_element(app, app->assets.bullet, (t_rect){1148, 576, 4, 10});
-	render_ui_element(app, app->assets.bullet, (t_rect){1154, 576, 4, 10});
-	render_ui_element(app, app->assets.bullet, (t_rect){1160, 576, 4, 10});
-	color_surface(app->assets.bullet, GREY);
-	render_ui_element(app, app->assets.bullet, (t_rect){1166, 576, 4, 10});
-	render_ui_element(app, app->assets.bullet, (t_rect){1172, 576, 4, 10});
-	render_ui_element(app, app->assets.bullet, (t_rect){1178, 576, 4, 10});
-	change_font(app, 16, CYAN);
-	render_text(app, (t_rect){1136, 594, 64, 64}, "217");
 	//----
+	hud_weapon(app, (t_rect){1120, 592, 128, 96});
+}
+
+void	hud_weapon(t_app *app, t_rect rect)
+{
+	int	i;
+
+	i = 0;
+	render_ui_frame(app, rect, 1, DARK_GREY);
+	render_ui_element(app, app->assets.pistol, (t_rect){1152, 630, 64, 64});
+	color_surface(app->assets.bullet, CYAN);
+	rect.x += 16;
+	rect.y += 16;
+	rect.w = 4;
+	rect.h = 8;
+	while (i < app->player.equiped_weapon.magazine)
+	{
+		if (i >= app->player.equiped_weapon.ammo)
+			color_surface(app->assets.bullet, GREY);
+		render_ui_element(app, app->assets.bullet, rect);
+		rect.x += 6;
+		if (i >= app->player.equiped_weapon.ammo)
+			color_surface(app->assets.bullet, GREY);
+		i++;
+	}
+	change_font(app, 16, CYAN);
+	render_text(app, (t_rect){1136, 626, 64, 64}, ft_itoa(app->player.inventory.ammo));
 }
 
 /**

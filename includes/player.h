@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/28 10:50:56 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/01 18:56:49 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,16 @@ typedef struct s_inventory
 	t_bool		jetpack;
 }	t_inventory;
 
+typedef struct s_weapon
+{
+	t_bool	enabled;
+	int		damage;
+	int		range;
+	int		fire_rate;
+	int		magazine;
+	int		ammo;
+}	t_weapon;
+
 /**
  * Struct for player. Contains players position, direction and camera plane.
  */
@@ -60,6 +70,7 @@ typedef struct s_player
 	int				current_sector;
 	int				hp;
 	int				weapons;
+	t_weapon		equiped_weapon;
 	int				shield;
 	t_inventory		inventory;
 }	t_player;
