@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/25 16:00:01 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/01 16:35:36 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,57 @@ static void	object_edit_menu(t_app *app)
 }
 
 /**
+ * Renders wall specific information on the help menu sidebar.
+*/
+static void	wall_edit_menu(t_app *app)
+{
+	t_point	screen_pos;
+	int		index;
+
+	SDL_GetMouseState(&screen_pos.x, &screen_pos.y);
+	toggle_active_color(app, 1, "WALL", (t_rect){125, 32, 200, 15});
+	render_arrows(app, (t_point){12, 70}, (t_point){265, 70});
+	render_icons(app, (t_point){25, 60}, app->active->tex, app->assets.sprite);
+	render_text(app, (t_rect){122, 122, 200, 15}, "DECOR");
+	render_up_and_down_arrows(app, (t_point){263, 160}, (t_point){10, 165}, 8);
+	render_icons(app, (t_point){25, 150}, app->active->decor, app->assets.sprite);
+	if (app->active->decor != -1)
+	{
+		index = find_decor_interaction(app);
+		if (index > 0 && app->interactions[index].event_id != 0)
+		{
+			if (app->interactions[index].event_id == 1)
+				render_text(app, (t_rect){100, 220, 200, 20}, "FLOOR HEIGHT");
+			if (app->interactions[index].event_id == 2)
+				render_text(app, (t_rect){90, 220, 200, 20}, "CEILING HEIGHT");
+			if (app->interactions[index].event_id == 3)
+				render_text(app, (t_rect){50, 220, 220, 20}, "FLOOR AND CEILING HEIGHT");
+			if (app->interactions[index].event_id == 4)
+				render_text(app, (t_rect){125, 220, 200, 20}, "LIGHT");
+			if (app->interactions[index].event_id == 5)
+				render_text(app, (t_rect){110, 220, 200, 20}, "TEXT POP-UP");
+			if (app->interactions[index].event_id == 6)
+				render_text(app, (t_rect){125, 220, 200, 20}, "SOUND");
+			if (app->interactions[index].event_id == 7)
+				render_text(app, (t_rect){102, 220, 200, 20}, "END LEVEL");
+			render_ui_frame(app, (t_rect){47, 238, 190, 16}, 1, 0);
+			render_interaction_button(app, (t_rect){80, 240, 200, 20}, screen_pos, "EDIT INTERACTION");
+		}
+		else
+		{
+			render_text(app, (t_rect){85, 220, 200, 20}, "NO INTERACTION");
+			render_ui_frame(app, (t_rect){42, 238, 190, 16}, 1, 0);
+			render_interaction_button(app, (t_rect){80, 240, 200, 20}, screen_pos, "ADD INTERACTION");
+		}
+		toggle_active_color(app, app->decor_edit, "DECOR OFFSET", (t_rect){25, 270, 200, 20});
+		render_text(app, (t_rect){25, 285, 260, 100}, "ACTIVATE DECOR OFFSET WITH\
+ 'G' AND USE ARROW KEYS TO CHANGE. \n \n  X\n  Y");
+		render_text(app, (t_rect){60, 322, 50, 15}, ft_ftoa(app->active->decor_offset.x, 4));
+		render_text(app, (t_rect){60, 337, 50, 15}, ft_ftoa(app->active->decor_offset.y, 4));
+	}
+}
+
+/**
  * Renders the help menu texts on the help menu.
 */
 static void	help_menu_texts(t_app *app)
@@ -93,10 +144,12 @@ static void	help_menu_texts(t_app *app)
 	change_font(app, 20, TEXT);
 	render_text(app, (t_rect){10, 10, 260, 20}, "LEVEL EDITOR");
 	change_font(app, 11, TEXT);
-	if (app->active_sector && !app->active)
+	if (app->active_sector && !app->active && !app->object_menu)
 		sector_edit_menu(app);
-	// else if (app->active)
-	// 	wall_edit_menu(app);
+	else if (app->active && !app->interaction_menu && !app->object_menu)
+		wall_edit_menu(app);
+	else if (app->interaction_menu)
+		render_interaction_texts(app, 40);
 	else if (app->player_menu)
 		player_edit_menu(app);
 	else if (app->object_menu)

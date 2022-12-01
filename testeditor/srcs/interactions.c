@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interactions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/22 17:30:18 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/30 16:22:22 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,10 @@ void	link_interaction(t_app *app)
 	}
 	else if(app->current_interaction)
 	{
-		if(app->active_sector && app->current_interaction->event_id > 0 && app->current_interaction->event_id <= 4)
-			app->current_interaction->target_sector = app->active_sector;
+		// if(app->active_sector && app->current_interaction->event_id > 0 && app->current_interaction->event_id <= 4)
+		// 	app->current_interaction->target_sector = app->active_sector;
 		app->current_interaction = NULL;
+		app->interaction_menu = FALSE;
 		app->interaction_count++;
 	}
 }

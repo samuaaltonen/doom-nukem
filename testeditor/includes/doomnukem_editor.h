@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/25 16:55:34 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/01 16:28:21 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -352,6 +352,7 @@ typedef struct s_app
 	t_bool				player_menu;
 	t_bool				object_new;
 	t_bool				object_menu;
+	t_bool				interaction_menu;
 	t_bool				decor_edit;
 	t_interaction		*current_interaction;
 	t_object			*current_object;
@@ -559,6 +560,7 @@ void			render_sector_info(t_app *app);
 void			render_player_icons(t_app *app, SDL_Surface *asset, t_point point, int max);
 void			render_statusbar(t_app *app, t_point point, int statusbar, int color);
 void			render_arrows(t_app *app, t_point left, t_point right);
+void			render_up_and_down_arrows(t_app *app, t_point up, t_point down, int size);
 void			render_ui_frame(t_app *app,t_rect area, int size, int background);
 void			color_surface(SDL_Surface *surface, int color);
 void			change_item_amount(t_app *app, SDL_Keycode key);
@@ -566,6 +568,7 @@ void			render_weapons(t_app *app);
 void			render_object_statics(t_app *app);
 void			render_icons(t_app *app, t_point point, int id, SDL_Surface *asset);
 void			render_interaction_texts(t_app *app, int start_y);
+void			render_interaction_button(t_app *app, t_rect button, t_point mouse, char *text);
 void			render_inventory(t_app *app);
 void			select_inventory(t_app *app, t_point screen_pos);
 void			select_weapons(t_app *app, t_point screen_pos);
@@ -598,5 +601,8 @@ void			interaction_edit(t_app *app, SDL_Keycode keycode);
 int				interaction_sector_check(t_app *app, t_sector_lst *sector);
 int				interaction_wall_check(t_app *app, t_vec2_lst *wall);
 int				interaction_object_check(t_app *app, int id);
+int				find_decor_interaction(t_app *app);
+int				find_interaction(t_app *app);
+void			delete_interaction(t_app *app, int id);
 
 #endif

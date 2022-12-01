@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_extra.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:55:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/21 15:40:30 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/01 15:05:42 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,7 @@ int	interaction_sector_check(t_app *app, t_sector_lst *sector)
 	int	i;
 
 	i = 0;
-	while (i < MAX_INTERACTIONS && app->interactions[i].event_id != 0)
+	while (i < MAX_INTERACTIONS)
 	{	
 		if(!app->interactions[i].activation_wall && app->interactions[i].activation_sector == sector)
 			return (app->interactions[i].event_id);
@@ -119,7 +119,7 @@ int	interaction_wall_check(t_app *app, t_vec2_lst *wall)
 	int	i;
 
 	i = 0;
-	while (i < MAX_INTERACTIONS && app->interactions[i].event_id != 0)
+	while (i < MAX_INTERACTIONS)
 	{	
 		if(app->interactions[i].activation_sector && app->interactions[i].activation_wall == wall)
 			return (app->interactions[i].event_id);
@@ -133,7 +133,7 @@ int	interaction_object_check(t_app *app, int id)
 	int	i;
 
 	i = 0;
-	while (i < MAX_INTERACTIONS && app->interactions[i].event_id != 0)
+	while (i < MAX_INTERACTIONS)
 	{
 		if(app->interactions[i].activation_object == &app->objects[id])
 			return (app->interactions[i].event_id);
