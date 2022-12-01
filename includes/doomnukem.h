@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/28 16:29:59 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/01 10:11:58 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ int			events_keydown(int keycode, t_app *app);
 int			events_mouse_motion(t_app *app);
 int			events_mouse_down(int mouse_button, t_app *app);
 int			events_mouse_up(int mouse_button, t_app *app);
+int			events_mouse_wheel(int wheel_dir, t_app *app);
 int			events_window_destroy(void);
 int			events_window_other(int windowevent, t_app *app);
 int			dispatch_event(t_app *app, SDL_Event *event);
