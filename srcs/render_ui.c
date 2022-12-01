@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/28 15:55:55 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/01 12:09:00 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	render_ui(t_app *app)
 	render_text_prompt(app, (t_rect){1040, 624, 64, 64}, 1, "E");
 	render_ui_element(app, app->assets.pistol, (t_rect){1040, 630, 64, 64});
 	render_ui_frame(app, (t_rect){1120, 560, 128, 128}, 1, DARK_GREY);
-	render_ui_element(app, app->assets.pistol, (t_rect){1120, 560, 128, 128});
+	render_ui_element(app, app->assets.pistol, (t_rect){1120, 624, 64, 64});
+	render_ui_element(app, app->assets.bullet, (t_rect){1136, 610, 4, 10});
 	if (app->conf->buttonstates & LEFT_MOUSE)
 		render_text_prompt(app, (t_rect){800, 150, 256, 64}, 1, "This is a nice and wonderful text prompt");
 	//----
@@ -41,7 +42,7 @@ void	render_ui(t_app *app)
 
 /**
  * Renders a ui frame with the background color given as parameter
-*/
+*/	
 void	render_ui_frame(t_app *app,t_rect area, int size, int background)
 {
 	if (background)
