@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/30 16:36:29 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/01 17:20:45 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,10 @@ typedef struct s_audio
 
 typedef struct s_render_object
 {
+	int			id;
 	double		dist;
-	t_point		end;
 	t_point		start;
+	t_vector2	size;
 	double		step;
 } t_render_object;
 
@@ -267,6 +268,8 @@ void		stop_audio(t_app *app);
 int			get_pixel_color(SDL_Surface *surface, int x, int y);
 int			shade_color(int color, int shade);
 void		put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color);
+void		put_pixel_to_surface_check(t_app *app, t_point point, int color, float distance);
+
 void		flush_surface(SDL_Surface *surface);
 void		blit_surface(SDL_Surface *src, t_rect *src_rect,
 				SDL_Surface *dst, t_rect *dst_rect);
