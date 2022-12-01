@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/01 10:29:43 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/01 15:23:51 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@
 # define BLACK 0xFF000000
 # define DARK_RED 0xFFD50000
 # define DARK_GREY 0xFF242424
+# define GREY 0xFF9A9A9A
 # define CYAN 0xFF00FFFF
 # define GREEN 0xFF8CFF00
 
@@ -210,6 +211,7 @@ void		render_text(t_app *app, t_rect frame, char *text);
 void		render_ui_frame(t_app *app,t_rect area, int size, int background);
 void		render_ui(t_app *app);
 void		render_player_status(t_app *app);
+void		render_equipment(t_app *app);
 void		render_pointer(t_app *app, int x, int y);
 void		render_crosshair(t_app *app);
 t_rect		render_button(t_app *app, t_rect area, int size, char *text);

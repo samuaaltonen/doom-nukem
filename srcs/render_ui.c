@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/01 12:09:00 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/01 15:25:05 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,34 @@ void	render_ui(t_app *app)
 	render_crosshair(app);
 	render_text_prompt(app, (t_rect){10, 10, 112, 32}, 1, app->conf->fps_info);
 	render_player_status(app);
+	render_equipment(app);
 	//----DEBUG FEATURE 
+	if (app->conf->buttonstates & LEFT_MOUSE)
+		render_text_prompt(app, (t_rect){800, 150, 256, 64}, 1, "This is a nice and wonderful text prompt");
+	//----
+}
+
+void	render_equipment(t_app *app)
+{
+	//----DEBUG FEATURE
 	render_text_prompt(app, (t_rect){960, 624, 64, 64}, 1, "Q");
 	render_ui_element(app, app->assets.pistol, (t_rect){960, 630, 64, 64});
 	render_text_prompt(app, (t_rect){1040, 624, 64, 64}, 1, "E");
 	render_ui_element(app, app->assets.pistol, (t_rect){1040, 630, 64, 64});
 	render_ui_frame(app, (t_rect){1120, 560, 128, 128}, 1, DARK_GREY);
+	color_surface(app->assets.bullet, CYAN);
 	render_ui_element(app, app->assets.pistol, (t_rect){1120, 624, 64, 64});
-	render_ui_element(app, app->assets.bullet, (t_rect){1136, 610, 4, 10});
-	if (app->conf->buttonstates & LEFT_MOUSE)
-		render_text_prompt(app, (t_rect){800, 150, 256, 64}, 1, "This is a nice and wonderful text prompt");
+	render_ui_element(app, app->assets.bullet, (t_rect){1136, 576, 4, 10});
+	render_ui_element(app, app->assets.bullet, (t_rect){1142, 576, 4, 10});
+	render_ui_element(app, app->assets.bullet, (t_rect){1148, 576, 4, 10});
+	render_ui_element(app, app->assets.bullet, (t_rect){1154, 576, 4, 10});
+	render_ui_element(app, app->assets.bullet, (t_rect){1160, 576, 4, 10});
+	color_surface(app->assets.bullet, GREY);
+	render_ui_element(app, app->assets.bullet, (t_rect){1166, 576, 4, 10});
+	render_ui_element(app, app->assets.bullet, (t_rect){1172, 576, 4, 10});
+	render_ui_element(app, app->assets.bullet, (t_rect){1178, 576, 4, 10});
+	change_font(app, 16, CYAN);
+	render_text(app, (t_rect){1136, 594, 64, 64}, "217");
 	//----
 }
 
@@ -229,21 +247,17 @@ void	render_player_status(t_app *app)
 static void	player_status_meter(t_app *app, t_rect area, int value, int color)
 {
 	int meter_value;
+	int	i;
 
 	meter_value = value;
-	fill_meter(app, area, meter_value, color);
-	area.x += 20;
-	meter_value -= 40;
-	fill_meter(app, area, meter_value, color);
-	area.x += 20;
-	meter_value -= 40;
-	fill_meter(app, area, meter_value, color);
-	area.x += 20;
-	meter_value -= 40;
-	fill_meter(app, area, meter_value, color);
-	area.x += 20;
-	meter_value -= 40;
-	fill_meter(app, area, meter_value, color);
+	i = 4;
+	while (i >= 0)
+	{
+		fill_meter(app, area, meter_value, color);
+		area.x += 20;
+		meter_value -= 40;
+		i--;
+	}
 }
 
 static void	fill_meter(t_app *app, t_rect area, int value, int color)
