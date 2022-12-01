@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editor.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/25 16:24:11 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/01 15:28:25 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			app->active_sector->ceil_height += HEIGHT_INC;
 		if (app->floor_edit && !app->slope_edit)
 			app->active_sector->floor_height += HEIGHT_INC;
-		if (app->active && !app->floor_edit && !app->ceiling_edit && app->active->decor < MAX_DECOR)
+		if (!app->decor_edit && app->active && !app->floor_edit && !app->ceiling_edit && app->active->decor < MAX_DECOR)
 			app->active->decor++;
 		if (app->decor_edit && app->active && !app->floor_edit && !app->ceiling_edit && app->active->decor != -1)
 			app->active->decor_offset.y += app->divider;
@@ -70,7 +70,7 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			app->active_sector->ceil_height -= HEIGHT_INC;
 		if (app->floor_edit && !app->slope_edit)
 			app->active_sector->floor_height -= HEIGHT_INC;
-		if (app->active && !app->floor_edit && !app->ceiling_edit && app->active->decor > -1)
+		if (!app->decor_edit && app->active && !app->floor_edit && !app->ceiling_edit && app->active->decor > -1)
 			app->active->decor--;
 		if (app->decor_edit && app->active && !app->floor_edit && !app->ceiling_edit && app->active->decor != -1)
 			app->active->decor_offset.y -= app->divider;
@@ -85,22 +85,19 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 	}
 	else if (key == SDLK_LEFT)
 	{
-		if (app->active && app->active->tex >= 0)
+		if (!app->decor_edit && app->active && app->active->tex >= 0)
 		{
 			app->active->tex--;
 			if (app->active->tex < 0)
 				app->active->tex = MAX_TEX_COUNT;
 		}
-		if (app->wall_edit && app->active_sector->wall_list->tex >= 0
-			&& !app->active)
-		{
+		if (app->wall_edit && app->active_sector->wall_list->tex >= 0 && !app->active)
 			app->active_sector->wall_list->tex--;
 		if (app->decor_edit && app->active && !app->floor_edit && !app->ceiling_edit && app->active->decor != -1)
 			app->active->decor_offset.x -= app->divider;
 		if (app->ceiling_edit && app->active_sector->ceil_tex > 0)
 			if (app->active_sector->wall_list->tex < 0)
 				app->active_sector->wall_list->tex = MAX_TEX_COUNT;
-		}
 		if (app->ceiling_edit && app->active_sector->ceil_tex >= 0)
 		{
 			app->active_sector->ceil_tex--;
@@ -120,22 +117,19 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 	}
 	else if (key == SDLK_RIGHT)
 	{
-		if (app->active && app->active->tex <= MAX_TEX_COUNT)
+		if (!app->decor_edit && app->active && app->active->tex <= MAX_TEX_COUNT)
 		{
 			app->active->tex++;
 			if (app->active->tex > MAX_TEX_COUNT)
 				app->active->tex = 0;
 		}
-		if (app->wall_edit && app->active_sector->wall_list->tex <= MAX_TEX_COUNT
-			&& !app->active)
-		{
+		if (app->wall_edit && app->active_sector->wall_list->tex <= MAX_TEX_COUNT && !app->active)
 			app->active_sector->wall_list->tex++;
 		if (app->decor_edit && app->active && !app->floor_edit && !app->ceiling_edit && app->active->decor != -1)
 			app->active->decor_offset.x += app->divider;
 		if (app->ceiling_edit && app->active_sector->ceil_tex < MAX_TEX_COUNT)
 			if (app->active_sector->wall_list->tex > MAX_TEX_COUNT)
 				app->active_sector->wall_list->tex = 0;
-		}
 		if (app->ceiling_edit && app->active_sector->ceil_tex <= MAX_TEX_COUNT)
 		{
 			app->active_sector->ceil_tex++;
