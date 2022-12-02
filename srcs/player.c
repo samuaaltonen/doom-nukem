@@ -139,3 +139,32 @@ void	player_move(t_app *app, t_movement movement, double speed)
 	//----
 	update_position(app, new);
 }
+
+void	heal(t_app *app)
+{
+	if (app->player.inventory.potion > 0)
+	{
+		app->player.inventory.potion--;
+		app->player.hp += 40;
+	}
+}
+
+void	shield(t_app *app)
+{
+	if (app->player.inventory.antidote > 0)
+	{
+		app->player.inventory.antidote--;
+		app->player.shield = MAX_HP;
+	}
+}
+
+void	damage(t_app *app, int dmg)
+{	
+	int	to_shield;
+	int	to_hp;
+
+	to_shield = (dmg * app->player.shield) / MAX_HP;
+	to_hp = dmg - to_shield;
+	app->player.shield -= to_shield;
+	app->player.hp -= to_hp;
+}

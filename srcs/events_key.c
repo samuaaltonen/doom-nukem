@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/28 16:23:50 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/02 15:03:04 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,11 @@ int	events_keyup(int keycode, t_app *app)
 		app->conf->keystates ^= CTRL;
 	if (keycode == SDLK_ESCAPE)
 		exit(EXIT_SUCCESS);
+	if (keycode == SDLK_q)
+		heal(app);
 	if (keycode == SDLK_e)
+		shield(app);
+	if (keycode == SDLK_p)
 		app->conf->toggle_loop = ft_toggle(app->conf->toggle_loop);
 	if (keycode == SDLK_TAB)
 	{

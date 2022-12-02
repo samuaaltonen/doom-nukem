@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/02 13:11:42 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/02 15:16:52 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,9 @@ void		player_horizon(t_app *app, double change);
 void		player_move(t_app *app, t_movement movement, double speed);
 void		init_camera_plane(t_app *app);
 void		init_skybox_plane(t_app *app);
+void		heal(t_app *app);
+void		shield(t_app *app);
+void		damage(t_app *app, int dmg);
 
 /**
  * Sectors

@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:40:40 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/01 19:35:19 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/02 15:17:56 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,13 @@ int	events_mouse_down(int mouse_button, t_app *app)
 	if (mouse_button == SDL_BUTTON_RIGHT)
 		app->conf->buttonstates |= RIGHT_MOUSE;
 	if (mouse_button == SDL_BUTTON_MIDDLE)
+	{
 		app->conf->buttonstates |= MIDDLE_MOUSE;
+		//----DEBUG FEATURE
+		damage(app, 50);
+		//----
+	}
+		
 	return (0);
 }
 
