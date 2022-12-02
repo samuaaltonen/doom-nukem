@@ -164,6 +164,8 @@ void	damage(t_app *app, int dmg)
 	int	to_hp;
 
 	to_shield = (dmg * app->player.shield) / MAX_HP;
+	if (to_shield < dmg / 5)
+		to_shield = dmg / 5;
 	to_hp = dmg - to_shield;
 	app->player.shield -= to_shield;
 	app->player.hp -= to_hp;
