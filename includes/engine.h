@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/02 14:39:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/02 15:55:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,17 @@ enum e_occlusion {
 	OCCLUDE_BOTTOM,
 	OCCLUDE_BOTH,
 	OCCLUDE_NONE
+};
+
+enum e_event_id {
+	EVENT_NONE,
+	EVENT_CHANGE_FLOOR_HEIGHT,
+	EVENT_CHANGE_CEIL_HEIGHT,
+	EVENT_CHANGE_BOTH_HEIGHT,
+	EVENT_CHANGE_LIGHT,
+	EVENT_TRIGGER_SOUND,
+	EVENT_DISPLAY_TEXT,
+	EVENT_END_LEVEL
 };
 
 /**

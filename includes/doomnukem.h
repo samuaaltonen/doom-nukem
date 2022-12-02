@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/02 14:38:57 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:07:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -188,6 +188,12 @@ void		draw_ceiling(t_app *app, int x, t_rayhit *hit);
 void		draw_portal_partial(t_app *app, int x, t_rayhit *hit);
 void		draw_portal_partial_parent(t_app *app, int x, t_rayhit *hit);
 void		draw_portal_partial_hole(t_app *app, int x, t_rayhit *hit);
+
+/**
+ * Interactions
+ */
+void		interaction_check(t_app *app);
+void		interaction_trigger(t_app *app, int interaction_index);
 
 /**
  * Sky
