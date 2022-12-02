@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/02 15:16:52 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/02 17:41:03 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define STATUS_PAUSEMENU 3
 # define STATUS_MAINOPTIONS 4
 # define STATUS_GAMEOPTIONS 5
-# define STATUS_INVENTORY 6
+# define STATUS_GAMEOVER 6
 
 //BUTTON MACROS
 # define BUTTON_IDLE 0
@@ -233,7 +233,6 @@ void		start_game(t_app *app);
 void		pause_game(t_app *app);
 void		exit_game(t_app *app);
 void		main_menu(t_app *app);
-void		inventory(t_app *app);
 void		do_nothing(t_app *app);
 void		main_options(t_app *app);
 void		game_options(t_app *app);
@@ -247,7 +246,7 @@ void		render_titlescreen(t_app *app);
 void		render_game(t_app *app);
 void		render_pausemenu(t_app *app);
 void		render_options(t_app *app);
-void		render_inventorymenu(t_app *app);
+void		render_gameover(t_app *app);
 
 /*
 * AUDIO.C

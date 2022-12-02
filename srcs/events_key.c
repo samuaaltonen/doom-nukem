@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/02 15:03:04 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/02 18:13:18 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,6 @@ int	events_keyup(int keycode, t_app *app)
 		if (app->status == STATUS_MAINMENU)
 			app->status = STATUS_TITLESCREEN;
 		//----
-			
 	}
 	if (keycode == SDLK_SPACE)
 	{
@@ -62,6 +61,8 @@ int	events_keyup(int keycode, t_app *app)
 		//----DEBUG FEATURE
 		else if (app->status == STATUS_MAINMENU)
 			start_game(app);
+		if (app->status == STATUS_GAMEOVER)
+			app->status = STATUS_MAINMENU;
 		//----
 		app->conf->keystates ^= SPACE;
 	}
@@ -91,18 +92,6 @@ int	events_keydown(int keycode, t_app *app)
 		app->conf->keystates |= D;
 	if (keycode == SDLK_u)
 		app->conf->fov--;
-	if (keycode == SDLK_i)
-	{
-		//----DEBUG FEATURE
-		if (app->status == STATUS_GAME)
-			app->status = STATUS_INVENTORY;
-		else if (app->status == STATUS_INVENTORY)
-			app->status = STATUS_GAME;
-
-		//----
-		//app->conf->fov++;
-	}
-		
 	if (keycode == SDLK_u || keycode == SDLK_i)
 		init_camera_plane(app);
 	if (keycode == SDLK_LSHIFT)

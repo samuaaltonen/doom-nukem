@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/28 15:47:28 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/02 17:41:05 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,11 +53,6 @@ void	main_menu(t_app *app)
 void	main_options(t_app *app)
 {
 	app->status = STATUS_MAINOPTIONS;
-}
-
-void	inventory(t_app *app)
-{
-	app->status = STATUS_INVENTORY;
 }
 
 void	game_options(t_app *app)

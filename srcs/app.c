@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/28 16:27:48 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/02 17:31:51 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	render_frame(t_app *app)
 	else if (app->status == STATUS_MAINOPTIONS
 		|| app->status == STATUS_GAMEOPTIONS)
 		render_options(app);
-	else if (app->status == STATUS_INVENTORY)
-		render_inventorymenu(app);
+	else if (app->status == STATUS_GAMEOVER)
+		render_gameover(app);
 	SDL_UpdateWindowSurface(app->win);
 }
