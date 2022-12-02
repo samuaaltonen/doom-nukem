@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/02 13:18:48 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:09:52 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ static void	objects_visible(t_app *app)
 			object->size.y  = ft_abs((int)(WIN_H / transform.y));
 			clamp_distance(&transform.y);
 			object->start.x = (int)((WIN_W / 2) * (1.0f + (transform.x / transform.y)));
-			object->start.y = (int)(WIN_H / 2);
+			object->start.y = (int)(WIN_H * app->player.horizon);
 			object->draw_end.x = object->size.x / 2 + object->start.x;
 			object->draw_end.y = object->size.y / 2 + WIN_H / 2;
 			object->dist = transform.y;
