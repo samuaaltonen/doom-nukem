@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 16:31:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:17:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -246,6 +246,7 @@ typedef struct s_export_object
 	int			type;
 	double		var;
 	t_vector2	pos;
+	double		elevation;
 	int			sector;
 }	t_export_object;
 

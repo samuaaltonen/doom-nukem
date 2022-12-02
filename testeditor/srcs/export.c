@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/24 14:10:00 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:23:35 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,9 +132,13 @@ static void write_objects(t_app *app, t_export_object *objects)
 	while (i < MAX_OBJECTS)
 	{
 		temp.pos = app->objects[i].position;
+		if (app->objects[i].sector)
+			temp.elevation = app->objects[i].sector->floor_height;
+		else
+			temp.elevation = 0.f;
 		temp.sector = get_sector_id(app, app->objects[i].sector);
 		temp.type = app->objects[i].type;
-		if(temp.type != 0)
+		if (temp.type != 0)
 				ft_printf("object exported %i\n", i);
 		temp.var = app->objects[i].var;
 		(objects[i]) = temp;

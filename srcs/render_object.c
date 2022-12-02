@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/02 14:09:52 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/02 17:26:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	object_render(t_app *app, t_render_object *object, t_thread_data *thread)
 			//put_pixel_to_surface(app->surface, x, y, get_pixel_color(app->assets.sprites[object->id], (int)texture_pixel.x, (int)texture_pixel.y));
 			//if(y % 2 == !app->depthmap_fill_switch)
 				draw_object_pixel(app, object, (t_point){x, y}, texture_pixel);
-			texture_pixel.y += object->step.x;
+			texture_pixel.y += object->step.y;
 		}
 		texture_pixel.x +=object->step.x;
 	}
@@ -114,7 +114,8 @@ static void	objects_visible(t_app *app)
 		if(app->objects[i].type == 0)
 			continue;
 		vector = ft_vector2_sub(app->objects[i].position, app->player.pos);
-		dist = ft_vector_length(vector);
+		dist = ft_vector_length(vector) * cos(ft_vector_angle(vector, app->player.dir));
+		
 		if(dist < 15.f)
 		{
 				transform = ft_vector_multiply_matrix(vector,
@@ -125,14 +126,25 @@ static void	objects_visible(t_app *app)
 			if(transform.y / dist < 0.75f)
 				continue;
 			object = &(app->objectstack.objects[app->objectstack.visible_count]);
+
+			double scale = (fabs(app->player.elevation - app->objects[i].elevation)) / (20);
+			double angle = atan(fabs(app->player.elevation - app->objects[i].elevation) / dist) * RADIAN_IN_DEG;
+			//new_value = (old_value - old_bottom) / (old_top - old_bottom) * (new_top - new_bottom) + new_bottom;
+			if(angle > 60 || angle < 0)
+				continue;
 			object->size.x  = ft_abs((int)(WIN_H / transform.y));
 			object->size.y  = ft_abs((int)(WIN_H / transform.y));
+			ft_printf("scale %f angle %f", scale, angle);
+
 			clamp_distance(&transform.y);
 			object->start.x = (int)((WIN_W / 2) * (1.0f + (transform.x / transform.y)));
-			object->start.y = (int)(WIN_H * app->player.horizon);
+			//object->start.y = (int)(WIN_H * app->player.horizon + object->size.y * (app->player.elevation + app->player.height - (app->objects[i].elevation + (0.5))));
+			object->start.y = (int)(WIN_H * app->player.horizon + object->size.y * (app->player.elevation + app->player.height - (app->objects[i].elevation + (0.5))));
 			object->draw_end.x = object->size.x / 2 + object->start.x;
-			object->draw_end.y = object->size.y / 2 + WIN_H / 2;
-			object->dist = transform.y;
+			object->size.y += (app->player.horizon) * angle;
+			//object->draw_end.y = object->size.y / 2 + WIN_H * app->player.horizon + object->size.y * (app->player.elevation + app->player.height - (app->objects[i].elevation + 0.5));
+			object->draw_end.y = object->start.y + object->size.y;
+			object->dist = dist;
 			object->start.x = object->start.x - object->size.x / 2;
 			object->start.y = object->start.y - object->size.y / 2;
 			object->step.x = TEX_SIZE / (double)(object->size.x);
@@ -140,7 +152,7 @@ static void	objects_visible(t_app *app)
 
 			app->objectstack.visible_count++;
 
-			ft_printf("object data dist %f, transform x%f, y%f", object->dist, transform.x, transform.y);
+			ft_printf("object data dist %f, transform x%f, y%f, elev %f, player elev %f, object y size", object->dist, transform.x, transform.y, app->objects[i].elevation, (app->player.elevation + app->player.height));
 		}
 	}
 	ft_printf("objects found %i\n", app->objectstack.visible_count);
