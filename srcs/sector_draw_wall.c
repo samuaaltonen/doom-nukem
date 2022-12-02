@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_draw_wall.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 15:47:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:44:51 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,8 +90,8 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion_type)
 			put_pixel_to_surface(app->surface, x, y.start, shade_color(color, hit->light));
 		else if (app->occlusion_top[x] < y.start && app->occlusion_bottom[x] < WIN_H - y.start)
 			put_pixel_to_surface(app->surface, x, y.start, get_sky_pixel(app, x, y.start));
-		if (y.start % 2 == app->depthmap_fill_switch)
-			app->depthmap[y.start][x] = depth;
+		if (y.start % 2 == 0)
+			app->depthmap[y.start / 2][x] = depth;
 		y.start++;
 	}
 }

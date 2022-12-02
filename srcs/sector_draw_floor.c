@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_draw_floor.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 15:53:59 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:45:20 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ void	draw_floor(t_app *app, int x, t_rayhit *hit)
 			put_pixel_to_surface(app->surface, x, y_start, shade_color(color, hit->light));
 		else
 			put_pixel_to_surface(app->surface, x, y_start, get_sky_pixel(app, x, y_start));
-		if (y_start % 2 == app->depthmap_fill_switch)
-			app->depthmap[y_start][x] = (float)distance;
+		if (y_start % 2 == 0)
+			app->depthmap[y_start / 2][x] = (float)distance;
 		y_start++;
 	}
 }

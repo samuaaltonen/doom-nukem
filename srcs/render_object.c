@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/01 17:34:05 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:18:48 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,35 +28,31 @@ void	object_render(t_app *app, t_render_object *object, t_thread_data *thread)
 	int y;
 	
 	t_vector2	texture_pixel;
-	t_point		draw_end;
-	draw_end.x = object->size.x / 2 + object->start.x;
-	draw_end.y = object->size.y / 2 + WIN_H / 2;
+	
 	texture_pixel = (t_vector2){0.f,0.f};
-	object->start.x = object->start.x - object->size.x / 2;
-	object->start.y = object->start.y - object->size.y / 2;
 
-	object->step = TEX_SIZE / (double)(object->size.x);
 	x = object->start.x;
 	/* ft_printf("Test, draw_start x%i, draw_end x%i\n", object->start.x, draw_end.x);
 	ft_printf("Test, size x%f, y%f\n", object->size.x, object->size.y);
 	ft_printf("Test, draw_start y%i, draw_end y%i\n", object->start.y, draw_end.y);
 	ft_printf("Test, Step %f", object->step); */
-	while(++x < draw_end.x)
+	while(++x < object->draw_end.x)
 	{
 		if(x % THREAD_COUNT != thread->id)
 		{
-			texture_pixel.x +=object->step;
+			texture_pixel.x +=object->step.x;
 			continue;
 		}
 		y = object->start.y;
 		texture_pixel.y = 0.f;
-		while (++y <  draw_end.y)
+		while (++y <  object->draw_end.y)
 		{
 			//put_pixel_to_surface(app->surface, x, y, get_pixel_color(app->assets.sprites[object->id], (int)texture_pixel.x, (int)texture_pixel.y));
-			draw_object_pixel(app, object, (t_point){x, y}, texture_pixel);
-			texture_pixel.y += object->step;
+			//if(y % 2 == !app->depthmap_fill_switch)
+				draw_object_pixel(app, object, (t_point){x, y}, texture_pixel);
+			texture_pixel.y += object->step.x;
 		}
-		texture_pixel.x +=object->step;
+		texture_pixel.x +=object->step.x;
 	}
 }
 /**
@@ -105,10 +101,11 @@ void	*object_render_thread(void *data)
 //list all visible objects
 static void	objects_visible(t_app *app)
 {
-	int	i;
-	double	dist;
-	t_vector2 vector;
-	t_vector2 transform;
+	int				i;
+	double			dist;
+	t_vector2		vector;
+	t_vector2		transform;
+	t_render_object	*object;
 
 	i = -1;
 	app->objectstack.visible_count = 0;
@@ -127,14 +124,23 @@ static void	objects_visible(t_app *app)
 			}));
 			if(transform.y / dist < 0.75f)
 				continue;
-			app->objectstack.objects[app->objectstack.visible_count].size.x  = ft_abs((int)(WIN_H / transform.y));
-			app->objectstack.objects[app->objectstack.visible_count].size.y  = ft_abs((int)(WIN_H / transform.y));
+			object = &(app->objectstack.objects[app->objectstack.visible_count]);
+			object->size.x  = ft_abs((int)(WIN_H / transform.y));
+			object->size.y  = ft_abs((int)(WIN_H / transform.y));
 			clamp_distance(&transform.y);
-			app->objectstack.objects[app->objectstack.visible_count].start.x = (int)((WIN_W / 2) * (1.0f + (transform.x / transform.y)));
-			app->objectstack.objects[app->objectstack.visible_count].start.y = (int)(WIN_H / 2);
+			object->start.x = (int)((WIN_W / 2) * (1.0f + (transform.x / transform.y)));
+			object->start.y = (int)(WIN_H / 2);
+			object->draw_end.x = object->size.x / 2 + object->start.x;
+			object->draw_end.y = object->size.y / 2 + WIN_H / 2;
+			object->dist = transform.y;
+			object->start.x = object->start.x - object->size.x / 2;
+			object->start.y = object->start.y - object->size.y / 2;
+			object->step.x = TEX_SIZE / (double)(object->size.x);
+			object->step.y = TEX_SIZE / (double)(object->size.y);
 
-			app->objectstack.objects[app->objectstack.visible_count].dist = transform.y;
 			app->objectstack.visible_count++;
+
+			ft_printf("object data dist %f, transform x%f, y%f", object->dist, transform.x, transform.y);
 		}
 	}
 	ft_printf("objects found %i\n", app->objectstack.visible_count);
@@ -143,7 +149,7 @@ static void	objects_visible(t_app *app)
 
 void	render_objects(t_app *app)
 {
-	static t_thread_data	threads_data[4];
+	static t_thread_data	threads_data[THREAD_COUNT];
 	static t_bool			threads_created;
 
 	if (!threads_created)
@@ -153,10 +159,10 @@ void	render_objects(t_app *app)
 		threads_created = TRUE;
 	}
 	objects_visible(app);
-	for(int i = 0;i < 5;i++)
+/* 	for(int i = 0;i < 5;i++)
 	{
 		ft_printf("stack obj dist %f, pos x%f,y%f, size x%f,y%f\n",app->objectstack.objects[i].dist, app->objectstack.objects[i].start.x, app->objectstack.objects[i].start.y, app->objectstack.objects[i].size.x, app->objectstack.objects[i].size.y);
-	}
+	} */
 	threads_work((t_thread_data *)&threads_data);
 	
 }

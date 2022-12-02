@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/01 17:20:45 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:46:04 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,9 @@ typedef struct s_render_object
 	int			id;
 	double		dist;
 	t_point		start;
+	t_point		draw_end;
 	t_vector2	size;
-	double		step;
+	t_vector2	step;
 } t_render_object;
 
 
@@ -100,7 +101,7 @@ typedef struct s_app
 	t_point			mouse_pos;
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];
-	float			depthmap[WIN_H][WIN_W];
+	float			depthmap[WIN_H / 2][WIN_W];
 	t_bool			depthmap_fill_switch;
 	t_wallstack		wallstack;
 	t_objectstack	objectstack;
