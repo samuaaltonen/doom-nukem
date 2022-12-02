@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/01 15:13:57 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/02 15:16:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	app_loop(t_app *app)
 			if (app->object_menu)
 				ft_printf("selected object id:%i, type:%i, var:%f ",get_object_id(app, app->current_object), app->current_object->type, app->current_object->var);
 			if (app->current_interaction)
-				ft_printf("current interaction event_id:%i, variable: %f ", app->current_interaction->event_id, app->current_interaction->variable);
+				ft_printf("current interaction event_id:%i, variable: %f, targer: %i ", app->current_interaction->event_id, app->current_interaction->variable, app->current_interaction->target_sector);
 			ft_printf("inside = %i, floor: h:%f,tex:%i,o:%i, ceil: h:%f,tex:%i,o:%i, light:%i\n has members: ", app->active_sector, app->active_sector->floor_height, app->active_sector->floor_tex, app->active_sector->floor_tex_offset, app->active_sector->ceil_height, app->active_sector->ceil_tex, app->active_sector->ceil_tex_offset, app->active_sector->light);
 			for (int i = 0; i < 4 && app->active_sector->member_sectors[i]; ++i)
 				ft_printf("%i ", get_sector_id(app, app->active_sector->member_sectors[i]));
