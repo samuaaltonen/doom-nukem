@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/01 16:35:36 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:45:16 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,19 +78,18 @@ static void	object_edit_menu(t_app *app)
 	render_text(app, (t_rect){10, 40, 50, 20}, "OBJECTS");
 	change_font(app, 11, TEXT);
 	render_arrows(app, (t_point){10, 67}, (t_point){265, 67});
-	render_icons(app, (t_point){25, 60}, 17, app->assets.sprite);
+	render_icons(app, (t_point){25, 60}, app->current_object->type,
+		app->assets.sprite);
 	render_object_statics(app);
 }
 
 /**
  * Renders wall specific information on the help menu sidebar.
 */
-static void	wall_edit_menu(t_app *app)
+static void	wall_edit_menu(t_app *app, t_point screen_pos)
 {
-	t_point	screen_pos;
 	int		index;
 
-	SDL_GetMouseState(&screen_pos.x, &screen_pos.y);
 	toggle_active_color(app, 1, "WALL", (t_rect){125, 32, 200, 15});
 	render_arrows(app, (t_point){12, 70}, (t_point){265, 70});
 	render_icons(app, (t_point){25, 60}, app->active->tex, app->assets.sprite);
@@ -100,37 +99,47 @@ static void	wall_edit_menu(t_app *app)
 	if (app->active->decor != -1)
 	{
 		index = find_decor_interaction(app);
-		if (index > 0 && app->interactions[index].event_id != 0)
+		render_current_interaction_status(app, screen_pos, 220, index);
+		toggle_active_color(app, app->decor_edit, "DECOR OFFSET",
+			(t_rect){25, 270, 200, 20});
+		render_text(app, (t_rect){25, 285, 260, 100}, "ACTIVATE DECOR OFFSET \
+WITH 'G' AND USE ARROW KEYS TO CHANGE. \n \n  X\n  Y");
+		render_text(app, (t_rect){60, 322, 50, 15},
+			ft_ftoa(app->active->decor_offset.x, 4));
+		render_text(app, (t_rect){60, 337, 50, 15},
+			ft_ftoa(app->active->decor_offset.y, 4));
+	}
+}
+
+void	render_current_interaction_status(t_app *app, t_point screen_pos, int y, int id)
+{
+	if (id > -1 && app->interactions[id].event_id != 0)
 		{
-			if (app->interactions[index].event_id == 1)
-				render_text(app, (t_rect){100, 220, 200, 20}, "FLOOR HEIGHT");
-			if (app->interactions[index].event_id == 2)
-				render_text(app, (t_rect){90, 220, 200, 20}, "CEILING HEIGHT");
-			if (app->interactions[index].event_id == 3)
-				render_text(app, (t_rect){50, 220, 220, 20}, "FLOOR AND CEILING HEIGHT");
-			if (app->interactions[index].event_id == 4)
-				render_text(app, (t_rect){125, 220, 200, 20}, "LIGHT");
-			if (app->interactions[index].event_id == 5)
-				render_text(app, (t_rect){110, 220, 200, 20}, "TEXT POP-UP");
-			if (app->interactions[index].event_id == 6)
-				render_text(app, (t_rect){125, 220, 200, 20}, "SOUND");
-			if (app->interactions[index].event_id == 7)
-				render_text(app, (t_rect){102, 220, 200, 20}, "END LEVEL");
-			render_ui_frame(app, (t_rect){47, 238, 190, 16}, 1, 0);
-			render_interaction_button(app, (t_rect){80, 240, 200, 20}, screen_pos, "EDIT INTERACTION");
+			if (app->interactions[id].event_id == 1)
+				render_text(app, (t_rect){100, y, 200, 20}, "FLOOR HEIGHT");
+			if (app->interactions[id].event_id == 2)
+				render_text(app, (t_rect){90, y, 200, 20}, "CEILING HEIGHT");
+			if (app->interactions[id].event_id == 3)
+				render_text(app, (t_rect){50, y, 220, 20}, "FLOOR AND CEILING HEIGHT");
+			if (app->interactions[id].event_id == 4)
+				render_text(app, (t_rect){125, y, 200, 20}, "LIGHT");
+			if (app->interactions[id].event_id == 5)
+				render_text(app, (t_rect){110, y, 200, 20}, "TEXT POP-UP");
+			if (app->interactions[id].event_id == 6)
+				render_text(app, (t_rect){125, y, 200, 20}, "SOUND");
+			if (app->interactions[id].event_id == 7)
+				render_text(app, (t_rect){102, y, 200, 20}, "END LEVEL");
+			render_ui_frame(app, (t_rect){47, y + 18, 190, 16}, 1, 0);
+			render_interaction_button(app, (t_rect){80, y + 20, 200, 20},
+				screen_pos, "EDIT INTERACTION");
 		}
 		else
 		{
-			render_text(app, (t_rect){85, 220, 200, 20}, "NO INTERACTION");
-			render_ui_frame(app, (t_rect){42, 238, 190, 16}, 1, 0);
-			render_interaction_button(app, (t_rect){80, 240, 200, 20}, screen_pos, "ADD INTERACTION");
+			render_text(app, (t_rect){85, y, 200, 20}, "NO INTERACTION");
+			render_ui_frame(app, (t_rect){42, y + 18, 190, 16}, 1, 0);
+			render_interaction_button(app, (t_rect){80, y + 20, 200, 20},
+				screen_pos, "ADD INTERACTION");
 		}
-		toggle_active_color(app, app->decor_edit, "DECOR OFFSET", (t_rect){25, 270, 200, 20});
-		render_text(app, (t_rect){25, 285, 260, 100}, "ACTIVATE DECOR OFFSET WITH\
- 'G' AND USE ARROW KEYS TO CHANGE. \n \n  X\n  Y");
-		render_text(app, (t_rect){60, 322, 50, 15}, ft_ftoa(app->active->decor_offset.x, 4));
-		render_text(app, (t_rect){60, 337, 50, 15}, ft_ftoa(app->active->decor_offset.y, 4));
-	}
 }
 
 /**
@@ -138,16 +147,19 @@ static void	wall_edit_menu(t_app *app)
 */
 static void	help_menu_texts(t_app *app)
 {
-	int	y;
+	int		y;
+	t_point	screen_pos;
 
 	y = 40;
+	SDL_GetMouseState(&screen_pos.x, &screen_pos.y);
 	change_font(app, 20, TEXT);
 	render_text(app, (t_rect){10, 10, 260, 20}, "LEVEL EDITOR");
 	change_font(app, 11, TEXT);
 	if (app->active_sector && !app->active && !app->object_menu)
 		sector_edit_menu(app);
-	else if (app->active && !app->interaction_menu && !app->object_menu)
-		wall_edit_menu(app);
+	else if (app->active && !app->interaction_menu && !app->object_menu
+		&& !app->list_creation)
+		wall_edit_menu(app, screen_pos);
 	else if (app->interaction_menu)
 		render_interaction_texts(app, 40);
 	else if (app->player_menu)
@@ -156,7 +168,7 @@ static void	help_menu_texts(t_app *app)
 		object_edit_menu(app);
 	else
 	{
-		if (!app->imported)
+		if (!app->imported && !app->sectors)
 			render_text(app, (t_rect){20, y, 260, 15}, "OPEN FILE ( O )");
 		render_text(app, (t_rect){20, y + 15, 260, 15}, "SAVE FILE ( M )");
 		toggle_active_color(app, app->list_creation, "CREATE SECTOR ( C )",

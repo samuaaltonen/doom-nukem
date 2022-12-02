@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/01 16:28:21 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/02 15:17:21 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -444,6 +444,9 @@ int				events_window_destroy(void);
 int				events_window_other(int windowevent, t_app *app);
 int				dispatch_event(t_app *app, SDL_Event *event);
 int				events_mouse_drag(t_app *app);
+void			player_menu_events(t_app *app, t_point	screen_pos);
+void			interaction_menu_events(t_app *app, int start_y, t_point screen_pos);
+void			activate_interaction_menu(t_app *app, t_point screen_pos);
 
 /**
  * Map Editor functions
@@ -569,6 +572,7 @@ void			render_object_statics(t_app *app);
 void			render_icons(t_app *app, t_point point, int id, SDL_Surface *asset);
 void			render_interaction_texts(t_app *app, int start_y);
 void			render_interaction_button(t_app *app, t_rect button, t_point mouse, char *text);
+void			render_current_interaction_status(t_app *app, t_point screen_pos, int y, int id);
 void			render_inventory(t_app *app);
 void			select_inventory(t_app *app, t_point screen_pos);
 void			select_weapons(t_app *app, t_point screen_pos);
@@ -602,6 +606,7 @@ int				interaction_sector_check(t_app *app, t_sector_lst *sector);
 int				interaction_wall_check(t_app *app, t_vec2_lst *wall);
 int				interaction_object_check(t_app *app, int id);
 int				find_decor_interaction(t_app *app);
+int				find_object_interaction(t_app *app);
 int				find_interaction(t_app *app);
 void			delete_interaction(t_app *app, int id);
 
