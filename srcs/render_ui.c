@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/01 19:21:40 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:19:56 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,10 @@ void	render_ui(t_app *app)
 void	render_equipment(t_app *app)
 {
 	//----DEBUG FEATURE
-	render_text_prompt(app, (t_rect){960, 624, 64, 64}, 1, "Q");
-	render_ui_element(app, app->assets.pistol, (t_rect){960, 630, 64, 64});
-	render_text_prompt(app, (t_rect){1040, 624, 64, 64}, 1, "E");
-	render_ui_element(app, app->assets.pistol, (t_rect){1040, 630, 64, 64});
+
 	//----
+	hud_quickslot(app, (t_rect){960, 624, 64, 64}, "Q");
+	hud_quickslot(app, (t_rect){1040, 624, 64, 64}, "E");
 	hud_weapon(app, (t_rect){1120, 592, 128, 96});
 }
 
@@ -69,6 +68,34 @@ void	hud_weapon(t_app *app, t_rect rect)
 	}
 	change_font(app, 16, CYAN);
 	render_text(app, (t_rect){1136, 626, 64, 64}, ft_itoa(app->player.inventory.ammo));
+}
+
+void	hud_quickslot(t_app *app, t_rect rect, char *slot)
+{
+	SDL_Surface *sprite;
+	int			*amount;
+
+	if (slot[0] == 'Q')
+	{
+		sprite = app->assets.hp;
+		amount = &app->player.inventory.potion;
+	}
+	if (slot[0] == 'E')
+	{
+		sprite = app->assets.shield;
+		amount = &app->player.inventory.antidote;
+	}
+	render_text_prompt(app, rect, 1, slot);
+	rect.x += 8;
+	rect.y += 32;
+	rect.w /= 3;
+	rect.h /= 3;
+	render_ui_element(app, sprite, rect);
+	rect.x += 32;
+	rect.y += 6;
+	rect.w *= 3;
+	rect.h *= 3;
+	render_text(app, rect, ft_itoa(*amount));
 }
 
 /**
@@ -221,7 +248,6 @@ void	render_text_prompt(t_app *app, t_rect area, int size, char *text)
 	area.h -= size * 12;
 	change_font(app, 16, CYAN);
 	render_text(app, area, text);
-	load_font(app);
 }
 
 void	render_pointer(t_app *app, int x, int y)

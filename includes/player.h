@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/01 18:56:49 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:12:10 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,8 @@
 /**
  * Movement direction enumeration.
  */
-typedef enum e_movement {
+typedef enum e_movement
+{
 	FORWARD = 0,
 	BACKWARD = 1,
 	LEFTWARD = 2,

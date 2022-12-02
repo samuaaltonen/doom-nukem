@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:40:40 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/01 19:17:17 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/01 19:35:19 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,6 @@ int	events_mouse_wheel(int wheel_dir, t_app *app)
 			app->player.shield = 0;
 		else if (app->player.shield >= MAX_HP)
 			app->player.shield = MAX_HP;
-	ft_printf("HP: %d\nShield: %d\n\n", app->player.hp, app->player.shield);
 	//----
 		return (0);
 }
