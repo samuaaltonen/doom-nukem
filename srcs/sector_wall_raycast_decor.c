@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:06:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/30 15:19:56 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:39:57 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,16 @@
 static void	set_decor_vertical_positions(t_app *app, t_rayhit *hit)
 {
 	double		decor_floor;
+	double		decor_start;
 
 	decor_floor = (hit->sector->ceil_height - hit->sector->floor_height
 			- DECOR_SIZE) / 2 + hit->sector->floor_height
 		+ hit->sector->decor_offset[hit->wall_id].y;
-	hit->decor_start = (int)(WIN_H * app->player.horizon + WIN_H / hit->distance
+	decor_start = WIN_H * app->player.horizon + WIN_H / hit->distance
 			* (app->player.height + app->player.elevation - decor_floor
-				- DECOR_SIZE));
-	hit->decor_start_actual = hit->decor_start;
+				- DECOR_SIZE);
+	hit->decor_start = (int)decor_start;
+	hit->decor_start_actual = decor_start;
 	hit->decor_end = hit->decor_start + WIN_H / hit->distance * DECOR_SIZE;
 	clamp_int(&hit->decor_start, 0, WIN_H - 1);
 	clamp_int(&hit->decor_end, 0, WIN_H - 1);

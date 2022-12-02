@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/30 11:39:55 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:39:25 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	apply_offsets(t_rayhit *hit, t_limit y, int *tex_x, double *tex_y)
 {
 	*tex_x = (int)(((double)hit->decor_texture + hit->decor_texture_offset)
 			* TEX_SIZE);
-	*tex_y = hit->texture_step * (y.start - hit->decor_start_actual);
+	*tex_y = hit->texture_step * ((double)(y.start + 1) - hit->decor_start_actual);
 	if (*tex_y < 0.0)
 		*tex_y += TEX_SIZE * (-*tex_y / TEX_SIZE + 1);
 }

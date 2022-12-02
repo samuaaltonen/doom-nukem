@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/30 11:35:10 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:39:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,15 +115,15 @@ typedef struct s_rayhit
 	int			height;
 	int			light;
 
-	int			wall_start_actual;
+	double		wall_start_actual;
 	int			wall_start;
 	int			wall_end;
 	int			wall_type;
 
-	int			parent_height;
-	int			parent_wall_start_actual;
+	double		parent_wall_start_actual;
 	int			parent_wall_start;
 	int			parent_wall_end;
+	int			parent_height;
 
 	double		floor_horizon;
 	double		floor_horizon_angle;
@@ -139,7 +139,7 @@ typedef struct s_rayhit
 	t_bool		has_decor;
 	int			decor_texture;
 	int			decor_start;
-	int			decor_start_actual;
+	double		decor_start_actual;
 	int			decor_end;
 	double		decor_texture_offset;
 }	t_rayhit;

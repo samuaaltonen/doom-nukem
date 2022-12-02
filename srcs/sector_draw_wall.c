@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/30 11:18:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:27:16 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ static void	update_occlusion(t_rayhit *hit, int x, int occlusion)
 static void	apply_offsets(t_rayhit *hit, t_limit y, int *tex_x, double *tex_y)
 {
 	*tex_x = (int)(((double)hit->texture + hit->texture_offset) * TEX_SIZE);
-	*tex_y = hit->texture_step * (y.start - hit->wall_start_actual);
+	*tex_y = hit->texture_step * ((double)(y.start + 1) - hit->wall_start_actual);
 	if (*tex_y < 0.0)
-		*tex_y += TEX_SIZE * (-*tex_y / TEX_SIZE + 1);
+		*tex_y += TEX_SIZE * (-*tex_y / TEX_SIZE + 1.0);
 }
 
 /**
@@ -90,7 +90,6 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion_type)
 	apply_offsets(hit, y, &tex_x, &tex_y);
 	while (y.start < y.end)
 	{
-		tex_y += hit->texture_step;
 		if (tex_y >= (double) TEX_SIZE)
 			tex_y = fmod(tex_y, (double) TEX_SIZE);
 		color = get_pixel_color(app->assets.sprite, tex_x, (int) tex_y);
@@ -100,6 +99,7 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion_type)
 			put_pixel_to_surface(app->surface, x, y.start, get_sky_pixel(app, x, y.start));
 		if (y.start % 2 == app->depthmap_fill_switch)
 			app->depthmap[y.start][x] = (float)hit->distance;
+		tex_y += hit->texture_step;
 		y.start++;
 	}
 	if (hit->has_decor)
