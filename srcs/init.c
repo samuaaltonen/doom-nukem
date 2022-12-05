@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/05 18:43:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/05 18:55:21 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,11 @@ void    load_assets(t_app *app)
 	app->assets.meter = SDL_LoadBMP(METER_PATH);
 	app->assets.sprite = SDL_LoadBMP(PANELS_PATH);
 	app->assets.bg = SDL_LoadBMP(SKYBOX_PATH);
+
+	//temp
+	app->assets.sprites[0] = SDL_LoadBMP(SPRITE_PATH2);
+	app->assets.sprites[1] = SDL_LoadBMP(TITLESCREEN_PATH);
+
     load_font(app);
 	load_texts(app);
 }

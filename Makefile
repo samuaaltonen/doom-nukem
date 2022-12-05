@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/12/05 18:42:11 by saaltone         ###   ########.fr        #
+#    Updated: 2022/12/05 18:56:10 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -54,7 +54,8 @@ FILES = main.c \
 		interaction_trigger.c \
 		animation_create.c \
 		animation_progress.c \
-		init_texts.c
+		init_texts.c \
+		render_object.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a

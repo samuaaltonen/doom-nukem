@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/05 18:19:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/05 18:55:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,9 @@
 # define SHOT_PATH "assets/sounds/shot.wav"
 # define BUMP_PATH "assets/sounds/bump.wav"
 # define TEXTS_PATH "assets/texts/texts.txt"
+# define SPRITE_PATH1 "assets/legacy/cannon_64.bmp"
+# define SPRITE_PATH2 "assets/legacy/pillar_64.bmp"
+# define MAX_SPRITES 2
 # define MAP_PATH "./testeditor/test.test"//"./testmaps/slopes"
 
 /**
@@ -59,6 +62,7 @@ typedef struct s_assets
 	SDL_Surface		*meter;
 	SDL_Surface		*sprite;
 	SDL_Surface		*bg;
+	SDL_Surface		*sprites[MAX_SPRITES];
 }	t_assets;
 
 #endif

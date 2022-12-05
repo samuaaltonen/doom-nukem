@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:04:04 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/23 15:56:56 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:51:50 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,27 @@ static void	render_object_texts(t_app *app)
 		change_font(app, 11, ACTIVE_TEXT);
 		render_text(app, (t_rect){165, 185, 120, 15}, "- FOLLOWS -");
 	}
-	change_font(app, 15, TEXT);
+}
+
+/**
+ * Loops through the interaction array to find if the current object
+ * has an interaction or not. Returns array id if it finds one and
+ * -1 if not.
+*/
+int	find_object_interaction(t_app *app)
+{
+	int		index;
+
+	index = 0;
+	while (index <= app->interaction_count)
+	{
+		if (app->interactions[index].activation_object == app->current_object)
+		{
+			return (index);
+		}
+		index++;
+	}
+	return (-1);
 }
 
 /**
@@ -80,7 +100,10 @@ void	render_object_statics(t_app *app)
 {
 	int		x;
 	int		y;
+	int		id;
+	t_point	screen_pos;
 
+	SDL_GetMouseState(&screen_pos.x, &screen_pos.y);
 	y = 140;
 	while (y < 250)
 	{
@@ -96,7 +119,9 @@ void	render_object_statics(t_app *app)
 		y++;
 	}
 	render_object_texts(app);
-	render_interaction_texts(app, 220);
+	change_font(app, 11, TEXT);
+	id = find_object_interaction(app);
+	render_current_interaction_status(app, screen_pos, 210, id);
 }
 
 static int	find_max(t_app *app, SDL_Surface *asset)

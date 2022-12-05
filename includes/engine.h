@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/05 16:46:19 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/05 18:55:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -210,6 +210,7 @@ typedef struct s_object
 	int				type;
 	double			var;
 	t_vector2		position;
+	double			elevation;
 	int				sector;
 }	t_object;
 

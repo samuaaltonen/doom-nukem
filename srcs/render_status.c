@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/05 14:07:47 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/05 18:55:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	render_game(t_app *app)
 	handle_movement(app);
 	progress_animations(app);
 	render_sectors(app);
+	render_objects(app);
 	render_ui(app);
 }
 
