@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/05 15:42:22 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/05 15:50:03 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,8 +129,8 @@ static void	objects_visible(t_app *app)
 			double angle = atan(fabs(app->player.elevation - app->objects[i].elevation) / dist);
 			if(angle > 1.f || angle < 0)
 				continue;
-			object->size.x  = ft_abs((int)(WIN_H / transform.y));
-			object->size.y  = ft_abs((int)(WIN_H / transform.y));
+			object->size.x  = (WIN_H / transform.y);
+			object->size.y  = (WIN_H / transform.y);
 			double squish = object->size.y / cos(angle);
 			squish = object->size.y / squish;
 			double offset = object->size.y;
