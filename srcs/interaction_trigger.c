@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:06:52 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/05 16:44:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:47:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,8 @@ static t_animation	get_light_animation(t_sector *sector, double variable)
 {
 	return ((t_animation){0.0, ANIMATION_DURATION_LIGHT,
 		(variable - sector->light) / ANIMATION_DURATION_LIGHT,
-		&sector->light});
+		&sector->light,
+		variable});
 }
 
 static t_animation	get_height_animation(t_sector *sector, double variable,
@@ -28,6 +29,7 @@ static t_animation	get_height_animation(t_sector *sector, double variable,
 	animation.progress = 0.0;
 	animation.duration = ANIMATION_DURATION_HEIGHT
 		* fabs(variable - sector->floor_height);
+	animation.final_value = *target + (variable - sector->floor_height);
 	if (variable - sector->floor_height < 0.0)
 		animation.increment = -1.0 / ANIMATION_DURATION_HEIGHT;
 	else

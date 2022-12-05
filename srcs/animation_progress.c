@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 13:52:16 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/05 14:40:25 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:48:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
  */
 static void	animation_destroy(t_app *app, int index)
 {
+	*app->animations[index].target = app->animations[index].final_value;
 	if (index < app->animation_count - 1)
 		app->animations[index] = app->animations[app->animation_count - 1];
 	app->animation_count--;

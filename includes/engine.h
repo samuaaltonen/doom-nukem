@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/05 14:47:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/05 16:46:19 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,6 +235,7 @@ typedef struct s_animation
 	double	duration;
 	double	increment;
 	double	*target;
+	double	final_value;
 }	t_animation;
 
 #endif
