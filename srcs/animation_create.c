@@ -1,29 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   interaction_trigger.c                              :+:      :+:    :+:   */
+/*   animation_create.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/02 16:06:52 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/05 13:18:44 by saaltone         ###   ########.fr       */
+/*   Created: 2022/12/05 13:07:09 by saaltone          #+#    #+#             */
+/*   Updated: 2022/12/05 13:12:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * @brief Triggers interaction.
+ * @brief Adds animation to animation array.
  * 
  * @param app 
- * @param interaction_index 
+ * @param animation 
+ * @return t_bool 
  */
-t_bool	interaction_trigger(t_app *app, int interaction_index)
+t_bool	animation_create(t_app *app, t_animation animation)
 {
-	t_interaction	interaction;
-
-	interaction = app->interactions[interaction_index];
-	if (interaction.event_id == EVENT_CHANGE_LIGHT)
-		return (animation_create(app, (t_animation){0.0, DURATION_LIGHT,
-			(void *)&app->sectors[interaction.target_sector], TYPE_DOUBLE}));
+	if (app->animation_count >= MAX_CONCURRENT_ANIMATIONS - 1)
+		return (FALSE);
+	app->animations[app->animation_count] = animation;
+	app->animation_count++;
+	return (TRUE);
 }

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/02 16:07:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/05 13:05:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ typedef struct s_app
 	t_sector		*sectors;
 	t_object		objects[MAX_OBJECTS];
 	t_interaction	interactions[MAX_INTERACTIONS];
+	t_animation		animations[MAX_CONCURRENT_ANIMATIONS];
+	int				animation_count;
 }	t_app;
 
 /**
