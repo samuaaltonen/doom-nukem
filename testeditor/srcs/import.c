@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/24 14:22:38 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/01 15:24:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,14 +164,14 @@ static void read_player(t_app *app, t_export_player *player)
 	app->player.sector = sector_by_index(app, player->sector);
 	app->player.health = player->health;
 	from_bits(app, player->weapons, app->player.weapons);
-	int	i;
-	i = 0;
-	while (i < MAX_ARMOR)
-	{
-		if (app->player.armor[i].defence == player->armor)
-			app->player.selected_armor = i;
-		i++;
-	}
+	// int	i;
+	// i = 0;
+	// while (i < MAX_ARMOR)
+	// {
+	// 	if (app->player.armor[i].defence == player->armor)
+	// 		app->player.selected_armor = i;
+	// 	i++;
+	// }
 	app->player.inventory = player->inventory;
 }
 

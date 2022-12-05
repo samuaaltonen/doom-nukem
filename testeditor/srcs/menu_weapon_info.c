@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:32:37 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/23 10:57:33 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/25 15:57:42 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ static void	render_weapon_texts(t_app *app)
 /**
 * Renders weapon staticbars on the help menu sidebar.
 */
-void	render_weapon_statics(t_app *app)
+static void	render_weapon_statics(t_app *app)
 {
 	int		x;
 	int		y;
@@ -87,4 +87,39 @@ void	render_weapon_statics(t_app *app)
 		y++;
 	}
 	render_weapon_texts(app);
+}
+
+void	render_weapons(t_app *app)
+{
+	int		index;
+
+	render_player_icons(app, app->assets.sprite, (t_point){40, 60}, MAX_WEAPONS + 1);
+	index = 0;
+	while (index < MAX_WEAPONS)
+	{
+		if (app->player.weapons[index].enabled)
+		{
+			render_ui_frame(app, (t_rect){(ICON_SIZE / 2) * (index + 1)
+				+ (10 * (index + 1)) - 3, 59, 35, 35}, 1, 0);
+		}
+		index++;
+	}
+	render_weapon_statics(app);
+}
+
+void	select_weapons(t_app *app, t_point screen_pos)
+{
+	int		index;
+	int		x;
+
+	index = 0;
+	x = 0;
+	while (index < MAX_WEAPONS)
+	{
+		if (check_mouse(screen_pos, (t_rect){(ICON_SIZE / 2) * (index + 1)
+				+ (10 * (index + 1)) - 3, 60, 35, 35}))
+			app->player.weapons[index].enabled
+				= ft_toggle(app->player.weapons[index].enabled);
+		index++;
+	}
 }

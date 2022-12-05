@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/02 14:27:19 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/05 13:54:14 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ typedef struct s_wall
 	t_bool			is_member;
 	t_bool			is_portal;
 	t_bool			is_inside;
+	int				already_passed[THREAD_COUNT];
 	int				already_selected;
 	t_line			line;
 	int				start_x;
@@ -103,25 +104,26 @@ typedef struct s_wall
 typedef struct s_rayhit
 {
 	t_sector	*sector;
+	int			wall_id;
 	t_vector2	ray;
 	int			texture;
 	t_vector2	position;
 	double		distance;
 	double		distortion;
-	t_vector2	texture_offset;
-	t_vector2	texture_step;
+	double		texture_offset;
+	double		texture_step;
 	int			height;
 	int			light;
 
-	int			wall_start_actual;
+	double		wall_start_actual;
 	int			wall_start;
 	int			wall_end;
 	int			wall_type;
 
-	int			parent_height;
-	int			parent_wall_start_actual;
+	double		parent_wall_start_actual;
 	int			parent_wall_start;
 	int			parent_wall_end;
+	int			parent_height;
 
 	double		floor_horizon;
 	double		floor_horizon_angle;
@@ -133,6 +135,13 @@ typedef struct s_rayhit
 
 	int			*occlusion_top;
 	int			*occlusion_bottom;
+
+	t_bool		has_decor;
+	int			decor_texture;
+	int			decor_start;
+	double		decor_start_actual;
+	int			decor_end;
+	double		decor_texture_offset;
 }	t_rayhit;
 
 /**

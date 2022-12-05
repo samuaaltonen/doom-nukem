@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   liblinearalgebra.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:46:18 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 15:47:00 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/11/29 14:34:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ t_vector2	ft_vector_resize(t_vector2 a, double size);
 t_matrix2	ft_matrix_inverse(t_matrix2 matrix);
 int			ft_line_intersection(t_line line_a, t_line line_b,
 				t_vector2 *intersection);
-int			ft_line_intersection_through(t_line line_a,
-				t_line line_b);
+int			ft_line_intersection_full(t_line a, t_line b);
+int			ft_line_intersection_through(t_line line_a, t_line line_b);
 int			ft_line_intersection_segment(t_line line_a, t_line line_b,
 				t_vector2 *intersection);
 t_line		ft_line_resize(t_line line, double length, int side);
@@ -57,6 +57,7 @@ double		ft_vector_dotproduct(t_vector2 a, t_vector2 b);
 double		ft_vector_crossproduct(t_vector2 a, t_vector2 b);
 double		ft_vector_angle(t_vector2 a, t_vector2 b);
 double		ft_vector_angle_right(t_vector2 a, t_vector2 b);
+int			ft_line_point(t_line line, t_vector2 coord);
 int			ft_line_side(t_line line, t_vector2 coord);
 t_vector2	ft_vector2_sub(t_vector2 a, t_vector2 b);
 t_vector2	ft_vector2_add(t_vector2 a, t_vector2 b);

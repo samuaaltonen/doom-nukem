@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:06:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 14:44:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:38:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ static double	apply_ceiling_slope(t_rayhit *hit)
 	double		pos_angle;
 	t_vector2	slope_vector;
 
+	if (!hit->sector->ceil_slope_height)
+		return (0.0);
 	slope_vector = ft_vector2_sub(hit->sector->ceil_slope_end,
 			hit->sector->ceil_slope_start);
 	pos_angle = ft_vector_angle(ft_vector2_sub(hit->position,
@@ -53,6 +55,8 @@ static double	apply_floor_slope(t_rayhit *hit)
 	double		pos_angle;
 	t_vector2	slope_vector;
 
+	if (!hit->sector->floor_slope_height)
+		return (0.0);
 	slope_vector = ft_vector2_sub(hit->sector->floor_slope_end,
 			hit->sector->floor_slope_start);
 	pos_angle = ft_vector_angle(ft_vector2_sub(hit->position,
@@ -83,6 +87,7 @@ static void	set_parent_vertical_positions(t_app *app, t_rayhit *hit,
 	t_sector	*parent;
 	double		ceil_slope;
 	double		floor_slope;
+	double		wall_start;
 
 	ft_memcpy(&parenthit, hit, sizeof(t_rayhit));
 	parent = &app->sectors[hit->sector->parent_sector];
@@ -95,11 +100,12 @@ static void	set_parent_vertical_positions(t_app *app, t_rayhit *hit,
 		floor_slope = apply_floor_slope(&parenthit);
 	hit->parent_height = (int)(relative * (parent->ceil_height + ceil_slope
 				- parent->floor_height - floor_slope));
-	hit->parent_wall_start = WIN_H * app->player.horizon - hit->parent_height
-		+ (int)(relative * ((app->player.height + app->player.elevation)
-				- parent->floor_height - floor_slope));
+	wall_start = WIN_H * app->player.horizon
+			+ relative * (app->player.height + app->player.elevation
+				- parent->ceil_height - ceil_slope);
+	hit->parent_wall_start = (int)wall_start;
 	hit->parent_wall_end = hit->parent_wall_start + hit->parent_height;
-	hit->parent_wall_start_actual = hit->parent_wall_start;
+	hit->parent_wall_start_actual = wall_start;
 	clamp_int(&hit->parent_wall_start, 0, WIN_H - 1);
 	clamp_int(&hit->parent_wall_end, 0, WIN_H - 1);
 }
@@ -115,27 +121,26 @@ static void	set_parent_vertical_positions(t_app *app, t_rayhit *hit,
  */
 void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 {
-	double		relative;
-	double		ceil_slope;
-	double		floor_slope;
+	double	relative;
+	double	ceil_slope;
+	double	floor_slope;
+	double	wall_start;
 
-	ceil_slope = 0.0;
-	floor_slope = 0.0;
-	if (hit->sector->ceil_slope_height)
-		ceil_slope = apply_ceiling_slope(hit);
-	if (hit->sector->floor_slope_height)
-		floor_slope = apply_floor_slope(hit);
+	ceil_slope = apply_ceiling_slope(hit);
+	floor_slope = apply_floor_slope(hit);
 	relative = WIN_H / hit->distance;
 	hit->height = (int)(relative * (hit->sector->ceil_height + ceil_slope
 				- hit->sector->floor_height - floor_slope));
-	hit->wall_start = WIN_H * app->player.horizon - hit->height
-		+ (int)(relative * ((app->player.height + app->player.elevation)
-				- hit->sector->floor_height - floor_slope));
-	hit->wall_end = hit->wall_start + hit->height;
-	hit->texture_step.y = TEX_SIZE / relative;
-	hit->texture_offset.y = 0;
-	hit->wall_start_actual = hit->wall_start + relative * ceil_slope
-		- relative * (1 + (int)ceil_slope);
+	wall_start = WIN_H * app->player.horizon
+			+ relative * (app->player.height + app->player.elevation
+				- hit->sector->ceil_height - ceil_slope);
+	hit->wall_start = (int)wall_start;
+	hit->wall_end = wall_start + hit->height;
+	hit->texture_step = TEX_SIZE / relative;
+	hit->wall_start_actual = wall_start;
+	if (ceil_slope)
+		hit->wall_start_actual = wall_start + relative * ceil_slope
+			- relative * (1.0 + floor(ceil_slope));
 	if (hit->sector->parent_sector >= 0)
 		set_parent_vertical_positions(app, hit, relative);
 	clamp_int(&hit->wall_start, 0, WIN_H - 1);
@@ -159,7 +164,7 @@ t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 	double	camera_x;
 
 	ray_line.a = app->player.pos;
-	camera_x = 2 * x / (double) WIN_W - 1.f;
+	camera_x = 2 * x / (double) WIN_W - 1.0;
 	hit->ray = (t_vector2){
 		app->player.dir.x + app->player.cam.x * camera_x,
 		app->player.dir.y + app->player.cam.y * camera_x};
@@ -170,13 +175,13 @@ t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 	hit->distance = ft_vector_length((t_vector2){
 			hit->position.x - app->player.pos.x,
 			hit->position.y - app->player.pos.y});
-	hit->texture_offset.x = ft_vector_length((t_vector2){
+	hit->texture_offset = ft_vector_length((t_vector2){
 			wall.a.x - hit->position.x,
 			wall.a.y - hit->position.y});
-	hit->texture_offset.x = hit->texture_offset.x
-		- (double)(int)hit->texture_offset.x;
+	hit->texture_offset -= floor(hit->texture_offset);
 	hit->distortion = cos(ft_vector_angle(hit->ray, app->player.dir));
 	hit->distance = hit->distortion * hit->distance;
 	set_wall_vertical_positions(app, hit);
+	hit->has_decor = raycast_decor(app, wall, hit);
 	return (TRUE);
 }

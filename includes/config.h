@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/02 13:01:34 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/05 13:54:11 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # define MAX_UNIQUE_INTERACTIONS 7
 # define MAX_DECOR 10
 # define PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID 1
+# define DECOR_SIZE 1.0
 
 /**
  * Struct for threads about their specific identifiers and locks for signaling.

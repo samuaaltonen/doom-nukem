@@ -155,14 +155,25 @@ static void	loop_sector_walls(t_app *app, t_wallstack *wallstack, int index, int
 }
 
 /**
- * Sets possible visible walls to possible_visible array.
+ * @brief Sets possible visible walls to possible_visible array. Starts with
+ * players current sector (or its parent sector if member). Whenever encouters
+ * a portal in loop_sector_walls, adds it to wallstack.interesting array to
+ * be visited in the next iteration.
+ * 
+ * After gathering all interesting (i.e. possibly visible) walls in wallstack
+ * array, orders them sector by sector.
+ * 
+ * @param app 
  */
 void	sector_visible_walls(t_app *app)
 {
 	int	i;
 
 	app->wallstack.visited[0] = -1;
-	app->wallstack.interesting[0] = app->player.current_sector;
+	if (app->sectors[app->player.current_sector].parent_sector == -1)
+		app->wallstack.interesting[0] = app->player.current_sector;
+	else
+		app->wallstack.interesting[0] = app->sectors[app->player.current_sector].parent_sector;
 	app->wallstack.interesting_count = 1;
 	i = 0;
 	while (i < app->wallstack.interesting_count && i < MAX_VISIBLE_SECTORS - 1)
@@ -173,9 +184,6 @@ void	sector_visible_walls(t_app *app)
 			loop_sector_walls(app, &app->wallstack, i, app->wallstack.interesting[i]);
 		i++;
 	}
-	/**
-	 * Order walls and stack them to main array for rendering
-	 */
 	i = 0;
 	while (app->wallstack.wall_count[i] != -1)
 	{

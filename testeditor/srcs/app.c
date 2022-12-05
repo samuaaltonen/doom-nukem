@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/30 14:00:44 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/05 13:56:24 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,11 @@ void	app_prepare(t_app *app)
 	app->player_edit = 0;
 	app->player.sector = NULL;
 	app->player.health = 200;
+	app->player.armor = 100;
 	app->movement_speed = 4;
 	load_assets(app);
 	load_font(app);
 	weapons_init(app);
-	armor_init(app);
-	inventory_init(app);
 	SDL_ShowCursor(SDL_ENABLE);
 }
 
@@ -115,7 +114,7 @@ void	app_loop(t_app *app)
 			if (app->object_menu)
 				ft_printf("selected object id:%i, type:%i, var:%f ",get_object_id(app, app->current_object), app->current_object->type, app->current_object->var);
 			if (app->current_interaction)
-				ft_printf("current interaction event_id:%i, variable: %f ", app->current_interaction->event_id, app->current_interaction->variable);
+				ft_printf("current interaction event_id:%i, variable: %f, targer: %i ", app->current_interaction->event_id, app->current_interaction->variable, app->current_interaction->target_sector);
 			ft_printf("inside = %i, floor: h:%f,tex:%i,o:%i, ceil: h:%f,tex:%i,o:%i, light:%i\n has members: ", app->active_sector, app->active_sector->floor_height, app->active_sector->floor_tex, app->active_sector->floor_tex_offset, app->active_sector->ceil_height, app->active_sector->ceil_tex, app->active_sector->ceil_tex_offset, app->active_sector->light);
 			for (int i = 0; i < 4 && app->active_sector->member_sectors[i]; ++i)
 				ft_printf("%i ", get_sector_id(app, app->active_sector->member_sectors[i]));
@@ -129,7 +128,7 @@ void	app_loop(t_app *app)
 			ft_printf("\n");
 		}
 		if (app->active)
-			ft_printf("selected point x:%f, y:%f, tex:%i, type:%i, decor:%i\n", app->active->point.x, app->active->point.y, app->active->tex, app->active->type, app->active->decor);
+			ft_printf("selected point x:%f, y:%f, tex:%i, type:%i, decor:%i, decor offset: %f,%f\n", app->active->point.x, app->active->point.y, app->active->tex, app->active->type, app->active->decor, app->active->decor_offset.x, app->active->decor_offset.y);
 		app_render(app);
 	}
 }

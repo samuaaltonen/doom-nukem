@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interactions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/22 17:30:18 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:34:17 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,6 @@ static t_bool	new_interaction(t_app *app)
 	if (app->object_menu)
 	{
 		app->current_interaction->activation_object = app->current_object;
-		app->current_object = NULL;
-		app->object_menu = FALSE;
 	}
 	else if (app->active)
 	{
@@ -72,10 +70,10 @@ void	link_interaction(t_app *app)
 	}
 	else if(app->current_interaction)
 	{
-		if(app->active_sector && app->current_interaction->event_id > 0 && app->current_interaction->event_id <= 4)
-			app->current_interaction->target_sector = app->active_sector;
 		app->current_interaction = NULL;
-		app->interaction_count++;
+		app->interaction_menu = FALSE;
+		if (app->interactions[app->interaction_count].event_id != 0)
+			app->interaction_count++;
 	}
 }
 

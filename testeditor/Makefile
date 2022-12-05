@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/24 16:35:34 by saaltone         ###   ########.fr        #
+#    Updated: 2022/12/02 15:17:54 by ssulkuma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,9 +19,9 @@ events_key.c events_mouse.c events.c export.c import.c player.c \
 image.c main.c render.c render_extra.c render_text.c render_grid.c \
 linedraw.c linedraw_utils.c lists.c menu_sector_info.c sector.c sector_tools.c \
 sector_members.c sector_portal.c tex_icons.c tools.c utils_sdl.c utils.c \
-menu_player_info.c menu_armor_info.c menu_weapon_info.c menu_inventory_info.c \
-render_ui.c interactions.c objects.c menu_object_info.c \
-menu_interaction_info.c
+menu_player_info.c menu_weapon_info.c  menu_inventory_info.c \
+menu_object_info.c menu_interaction_info.c render_ui.c interactions.c \
+objects.c events_menu.c
 
 LIBFT = ../libft/libft.a
 LIBLINEARALGEBRA = ../liblinearalgebra/liblinearalgebra.a

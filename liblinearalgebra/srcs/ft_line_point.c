@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_compare_vectors.c                               :+:      :+:    :+:   */
+/*   ft_line_point.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 15:40:52 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/29 15:20:07 by saaltone         ###   ########.fr       */
+/*   Created: 2022/11/29 14:32:32 by saaltone          #+#    #+#             */
+/*   Updated: 2022/11/29 15:20:41 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "liblinearalgebra.h"
 
-int	ft_cmp_vec2(t_vector2 a, t_vector2 b)
+/**
+ * @brief Returns 1 if coordinate point is located on line, 0 otherwise.
+ * 
+ * @param line 
+ * @param coord 
+ * @return int 
+ */
+int	ft_line_point(t_line line, t_vector2 coord)
 {
-	if (a.x != b.x || a.y != b.y)
-		return (0);
-	return (1);
+	return ((line.b.x - line.a.x) * (coord.y - line.a.y)
+		- (line.b.y - line.a.y) * (coord.x - line.a.x) == 0.0);
 }

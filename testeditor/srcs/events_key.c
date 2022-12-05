@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/24 16:32:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/02 14:35:27 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,13 +78,13 @@ int	events_keyup(int keycode, t_app *app)
 	edit_mode_keys(keycode, app);
 	if (keycode == SDLK_m)
 		export_file(app, FILE_PATH);
-	if (keycode == SDLK_o && !app->imported)
-		import_file(app, FILE_PATH);
-	if (keycode == SDLK_i)
+	if (keycode == SDLK_o && !app->imported && !app->sectors)
 	{
-		link_interaction(app);
+		import_file(app, FILE_PATH);
 		app->imported = 1;
 	}
+	if (keycode == SDLK_i)
+		link_interaction(app);
 	if (keycode == SDLK_l)
 		link_wall_to_sector(app);
 	if (keycode == SDLK_DELETE)

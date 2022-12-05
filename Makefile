@@ -6,7 +6,7 @@
 #    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/30 14:38:13 by htahvana         ###   ########.fr        #
+#    Updated: 2022/12/05 13:56:43 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,10 +41,12 @@ FILES = main.c \
 		sector_visible_walls.c \
 		sector_wall_raycast.c \
 		sector_wall_raycast_hit.c \
+		sector_wall_raycast_decor.c \
 		sector_wall_prepare.c \
 		sector_wall_line.c \
 		sector_draw_partial.c \
 		sector_draw_sky.c \
+		sector_draw_wall_decor.c \
 		import.c \
 		utils.c \
 		utils_sdl.c \

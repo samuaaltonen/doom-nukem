@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/02 13:46:04 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/05 13:54:12 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,12 +194,14 @@ void		sector_walls_raycast(t_app *app, t_thread_data *thread,
 void		sector_walls_raycast_transparent(t_app *app, t_thread_data *thread,
 				t_raycast_info info);
 t_bool		raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x);
+t_bool		raycast_decor(t_app *app, t_line wall, t_rayhit *hit);
 
 /**
  * Sector draw
 */
 void		set_wall_vertical_positions(t_app *app, t_rayhit *hit);
 void		draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion);
+void		draw_wall_decor(t_app *app, int x, t_rayhit *hit);
 void		draw_floor(t_app *app, int x, t_rayhit *hit);
 void		draw_ceiling(t_app *app, int x, t_rayhit *hit);
 void		draw_portal_partial(t_app *app, int x, t_rayhit *hit);
@@ -210,6 +212,7 @@ void		draw_portal_partial_hole(t_app *app, int x, t_rayhit *hit);
  * Sky
  */
 int			get_sky_pixel(t_app *app, int x, int y);
+void		sector_sky_render(t_app *app, t_thread_data *thread);
 
 /**
  * Font
