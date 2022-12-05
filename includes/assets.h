@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/02 17:11:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/05 18:19:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@
 # define LASER_PATH "assets/sounds/laser.wav"
 # define SHOT_PATH "assets/sounds/shot.wav"
 # define BUMP_PATH "assets/sounds/bump.wav"
+# define TEXTS_PATH "assets/texts/texts.txt"
 # define MAP_PATH "./testeditor/test.test"//"./testmaps/slopes"
 
 /**

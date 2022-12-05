@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:56:23 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/22 14:41:10 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/05 17:46:00 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,8 @@
  */
 static void	update_sky_values(t_app *app)
 {
-	app->sky.start.x = app->sky.size.x * ft_vector_angle_right(app->player.dir, (t_vector2){1.0, 0.0}) / M_PI;
+	app->sky.start.x = app->sky.size.x * ft_vector_angle_right(app->player.dir,
+			(t_vector2){1.0, 0.0}) / M_PI;
 	app->sky.start.y = WIN_H * app->player.horizon - app->sky.size.y / 2;
 }
 

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/05 14:07:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/05 18:41:46 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ typedef struct s_app
 	t_interaction	interactions[MAX_INTERACTIONS];
 	t_animation		animations[MAX_CONCURRENT_ANIMATIONS];
 	int				animation_count;
+	char			**texts;
 }	t_app;
 
 /**
@@ -102,6 +103,7 @@ void		sdl_init(t_app *app);
 void		app_init(t_app **app);
 int			config_init(t_app *app);
 void		load_assets(t_app *app);
+void		load_texts(t_app *app);
 
 /**
  * error.c

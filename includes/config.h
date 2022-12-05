@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/05 16:53:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/05 18:34:33 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,13 +38,15 @@
 # define MAX_UNIQUE_OBJECTS 64
 # define MAX_INTERACTIONS 64
 # define MAX_UNIQUE_INTERACTIONS 7
-# define MAX_CONCURRENT_ANIMATIONS 32
 # define MAX_DECOR 10
 # define PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID 1
 # define DECOR_SIZE 1.0
 # define INTERACTION_ACTION_DISTANCE 1.5
+# define MAX_CONCURRENT_ANIMATIONS 16
 # define ANIMATION_DURATION_LIGHT 0.5
 # define ANIMATION_DURATION_HEIGHT 0.25
+# define MAX_TEXT_LINES 32
+# define MAX_TEXT_LINE_LENGTH 1024
 
 /**
  * Struct for threads about their specific identifiers and locks for signaling.
