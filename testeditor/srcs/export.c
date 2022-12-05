@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/25 16:37:10 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/05 15:47:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,6 +182,8 @@ int	export_file(t_app *app, char *path)
 	t_export_interaction	interactions[MAX_INTERACTIONS];
 	t_level_header			header;
 
+	/* app->interaction_count = 2;
+	delete_interaction(app, 1); */
 	counter = 0;
 	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
 	if (!export)
@@ -211,7 +213,8 @@ int	export_file(t_app *app, char *path)
  	if (write(fd, objects, sizeof(t_export_object) * MAX_OBJECTS) == -1)
 		exit_error("object write error\n");
 	write_interactions(app, (t_export_interaction *)&interactions);
-	for(int i = 0; i < MAX_INTERACTIONS;i++)
+	ft_printf("Total interactions: %d\n", app->interaction_count);
+	for(int i = 0; i < MAX_INTERACTIONS; i++)
 		ft_printf("read interactions id %i, activation sector%i, wall%i, object%i\n",interactions[i].event_id, interactions[i].activation_sector, interactions[i].activation_wall, interactions[i].activation_object);
 	if (write(fd, interactions, sizeof(t_export_interaction) * MAX_INTERACTIONS) == -1)
 		exit_error("interaction write error\n");

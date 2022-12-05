@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interactions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/30 16:22:22 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/05 15:09:01 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,11 @@ void	delete_interaction(t_app *app, int id)
 {
 	if(app->interaction_count > 0)
 	{
-		while(id + 1 < MAX_INTERACTIONS && app->interactions[id].event_id != 0)
+		if (id < app->interaction_count - 1)
 		{
-			app->interactions[id] = app->interactions[id + 1];
-			id++;
+			app->interactions[id] = app->interactions[app->interaction_count - 1];
 		}
+		app->interactions[app->interaction_count - 1].event_id = 0;
 		app->interaction_count--;
 	}
 }
