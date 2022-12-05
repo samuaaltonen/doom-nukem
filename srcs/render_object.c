@@ -6,20 +6,42 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/05 17:34:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/05 18:46:16 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
+
+/**
+ * Returns radial direction of a vector.
+ */
+double	get_radial_direction(t_vector2 *vector)
+{
+	double	rad;
+
+	rad = atan2(vector->x, vector->y);
+	if (rad < 0)
+		rad = rad + 2 * M_PI;
+	rad = rad * (180 / M_PI);
+	return (rad);
+}
+
+static void	object_frame(t_vector2 *dir, t_render_object *object)
+{
+	double	rad;
+
+	rad = get_radial_direction(dir);
+	object->frame = ((int)(rad * 8 / 360) % 8);
+}
+
 void	draw_object_pixel(t_app *app, t_render_object *object, t_point window, t_vector2 texture)
 {
 	int	color;
 
-	color = get_pixel_color(app->assets.sprites[object->id], (int)texture.x, (int)texture.y);
+	color = get_pixel_color(app->assets.sprites[object->id], (int)texture.x - ((object->frame) * TEX_SIZE) - TEX_SIZE, (int)texture.y);
 	if ((color & 0xFF000000) > 0)
 		put_pixel_to_surface_check(app, window,color,object->dist);
-		//put_pixel_to_surface(app->surface, window.x, window.y, color);
 }
 
 void	object_render(t_app *app, t_render_object *object, t_thread_data *thread)
@@ -32,36 +54,23 @@ void	object_render(t_app *app, t_render_object *object, t_thread_data *thread)
 	texture_pixel = (t_vector2){0.f,0.f};
 
 	x = object->start.x;
-	/* ft_printf("Test, draw_start x%i, draw_end x%i\n", object->start.x, draw_end.x);
-	ft_printf("Test, size x%f, y%f\n", object->size.x, object->size.y);
-	ft_printf("Test, draw_start y%i, draw_end y%i\n", object->start.y, draw_end.y);
-	ft_printf("Test, Step %f", object->step); */
 	while(++x < object->draw_end.x)
 	{
 		if(x % THREAD_COUNT != thread->id)
 		{
-			texture_pixel.x +=object->step.x;
+			texture_pixel.x += object->step.x;
 			continue;
 		}
 		y = object->start.y;
 		texture_pixel.y = 0.f;
 		while (++y <  object->draw_end.y)
 		{
-			//put_pixel_to_surface(app->surface, x, y, get_pixel_color(app->assets.sprites[object->id], (int)texture_pixel.x, (int)texture_pixel.y));
 			//if(y % 2 == !app->depthmap_fill_switch)
 				draw_object_pixel(app, object, (t_point){x, y}, texture_pixel);
 			texture_pixel.y += object->step.y;
 		}
 		texture_pixel.x +=object->step.x;
 	}
-}
-/**
- * Clamps distance to maximum distance.
- */
-void	clamp_distance(double *distance)
-{
-	if (*distance > MAX_LINE_LENGTH)
-		*distance = MAX_LINE_LENGTH;
 }
 
 void	objects_render(t_app *app, t_thread_data *thread)
@@ -170,6 +179,8 @@ static void	set_object(t_app *app, t_render_object *object, double *angle,
 		object->start.y = object->start.y - object->size.y / 2;
 		object->step = (t_vector2){TEX_SIZE / (double)(object->size.x),
 				TEX_SIZE / (double)(object->size.y)};
+		object_frame(&(app->player.dir), object);
+		ft_printf("object frame %i\n", object->frame);
 		app->objectstack.visible_count++;
 }
 

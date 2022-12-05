@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/01 17:09:06 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/05 18:53:19 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ void    load_assets(t_app *app)
 	app->assets.bg = SDL_LoadBMP(SKYBOX_PATH);
 
 	//temp
-	app->assets.sprites[0] = SDL_LoadBMP(SPRITE_PATH2);
+	app->assets.sprites[0] = SDL_LoadBMP(SPRITE_PATH1);
 	app->assets.sprites[1] = SDL_LoadBMP(TITLESCREEN_PATH);
 
     load_font(app);
