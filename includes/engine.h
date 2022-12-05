@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/05 13:14:56 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/05 14:13:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ typedef struct s_sector
 	int				parent_sector;
 	int				wall_decor[MAX_SECTOR_CORNERS];
 	t_vector2		decor_offset[MAX_SECTOR_CORNERS];
-	int				light;
+	double			light;
 	double			floor_height;
 	int				floor_texture;
 	double			floor_tex_offset;
@@ -227,14 +227,14 @@ typedef struct s_sky
 /**
  * Animation struct that contains information about animation duration and its
  * progress. Also contains pointer to a variable that is modified every time
- * animation progresses. Target type specifies variable type.
+ * animation progresses.
  */
 typedef struct s_animation
 {
 	double	progress;
 	double	duration;
-	void	*target;
-	int		target_type;
+	double	increment;
+	double	*target;
 }	t_animation;
 
 #endif

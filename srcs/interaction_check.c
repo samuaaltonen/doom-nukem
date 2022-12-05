@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:06:37 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/02 17:01:25 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/05 13:27:59 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,15 +33,15 @@ static t_bool	is_near_activation_decor(t_app *app, int sector_id, int wall_id)
 	wall_line = get_wall_line(app, sector_id, wall_id);
 	wall_vector = ft_vector2_sub(wall_line.b, wall_line.a);
 	decor_start = ft_vector2_add(wall_line.a, ft_vector_resize(wall_vector,
-		(ft_vector_length(wall_vector) - DECOR_SIZE) / 2
-			+ app->sectors[sector_id].decor_offset[wall_id].x));
+				(ft_vector_length(wall_vector) - DECOR_SIZE) / 2
+				+ app->sectors[sector_id].decor_offset[wall_id].x));
 	decor_center = ft_vector2_add(decor_start, ft_vector_resize(wall_vector,
-		DECOR_SIZE / 2));
+				DECOR_SIZE / 2));
 	if (ft_vector_length(ft_vector2_sub(app->player.pos, decor_center))
 		> INTERACTION_ACTION_DISTANCE)
 		return (FALSE);
 	decor_floor = (app->sectors[sector_id].ceil_height
-		- app->sectors[sector_id].floor_height - DECOR_SIZE) / 2
+			- app->sectors[sector_id].floor_height - DECOR_SIZE) / 2
 		+ app->sectors[sector_id].floor_height
 		+ app->sectors[sector_id].decor_offset[wall_id].y;
 	if (fabs(decor_floor - app->player.elevation) > INTERACTION_ACTION_DISTANCE)
