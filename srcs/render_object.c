@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/05 13:49:03 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/05 15:42:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,17 +126,23 @@ static void	objects_visible(t_app *app)
 			if(transform.y / dist < 0.75f)
 				continue;
 			object = &(app->objectstack.objects[app->objectstack.visible_count]);
-
-			double scale = (fabs(app->player.elevation - app->objects[i].elevation)) / (20);
-			double angle = atan(fabs(app->player.elevation - app->objects[i].elevation) / dist) * RADIAN_IN_DEG;
-			//new_value = (old_value - old_bottom) / (old_top - old_bottom) * (new_top - new_bottom) + new_bottom;
-			if(angle > 60 || angle < 0)
+			double angle = atan(fabs(app->player.elevation - app->objects[i].elevation) / dist);
+			if(angle > 1.f || angle < 0)
 				continue;
 			object->size.x  = ft_abs((int)(WIN_H / transform.y));
 			object->size.y  = ft_abs((int)(WIN_H / transform.y));
-			ft_printf("scale %f angle %f", scale, angle);
+			double squish = object->size.y / cos(angle);
+			squish = object->size.y / squish;
+			double offset = object->size.y;
+
 			object->start.x = (int)((WIN_W / 2) * (1.0f + (transform.x / transform.y)));
-			object->start.y = (int)(WIN_H * app->player.horizon + object->size.y * (app->player.elevation + app->player.height - (app->objects[i].elevation + (0.5))));
+			//object->start.y = (int)(WIN_H * app->player.horizon + object->size.y * (app->player.elevation + app->player.height - (app->objects[i].elevation + (0.5))));
+			object->start.y = (int)(WIN_H * app->player.horizon + object->size.y * ((app->player.elevation + app->player.height) - (app->objects[i].elevation + 0.5)));
+			object->size.y = squish * object->size.y;
+			offset = (offset - object->size.y) / 2;
+			ft_printf("angle %f, squish %f offset %f ", angle, squish, offset);
+			object->start.y += (int)offset;
+			//object->start.y = object->start.y + (object->size.y - ft_abs((int)(WIN_H / transform.y))) / 2;
 			object->draw_end.x = object->size.x / 2 + object->start.x;
 			object->draw_end.y = object->start.y + object->size.y;
 			object->dist = dist * cos(ft_vector_angle(vector, app->player.dir));
