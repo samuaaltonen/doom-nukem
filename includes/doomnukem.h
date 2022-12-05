@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/05 13:54:12 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/05 17:23:23 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ typedef struct s_app
 	t_sky			sky;
 	t_sector		*sectors;
 	t_object		objects[MAX_OBJECTS];
+	t_object		tmp_objects[MAX_TEMP_OBJECTS];
 	t_interaction	interactions[MAX_INTERACTIONS];
 }	t_app;
 

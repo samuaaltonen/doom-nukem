@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/05 13:54:11 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/05 17:19:05 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define MAX_LINE_LENGTH 1048576.0
 # define MAX_OBJECTS 64
 # define MAX_UNIQUE_OBJECTS 64
+# define MAX_TEMP_OBJECTS 64
 # define MAX_INTERACTIONS 64
 # define MAX_UNIQUE_INTERACTIONS 7
 # define MAX_DECOR 10
