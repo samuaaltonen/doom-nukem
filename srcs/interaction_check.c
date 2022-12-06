@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:06:37 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/05 13:27:59 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:26:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,29 @@ void	interaction_check(t_app *app)
 			&& is_near_activation_decor(app,
 				app->interactions[i].activation_sector,
 				app->interactions[i].activation_wall))
+			interaction_trigger(app, i);
+		i++;
+	}
+}
+
+/**
+ * @brief Loops through interaction array and checks if any interactivable
+ * events are can be triggered by entering the sector.
+ * 
+ * @param app 
+ * @param sector_id 
+ */
+void	interaction_check_portal(t_app *app, int sector_id)
+{
+	int	i;
+
+	i = 0;
+	while (i < MAX_INTERACTIONS)
+	{
+		if (app->interactions[i].event_id == EVENT_NONE)
+			break ;
+		if (app->interactions[i].activation_sector == sector_id
+			&& app->interactions[i].activation_wall == -1)
 			interaction_trigger(app, i);
 		i++;
 	}

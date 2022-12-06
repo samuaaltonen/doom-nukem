@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/06 13:43:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:24:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,6 +218,7 @@ void		draw_portal_partial_hole(t_app *app, int x, t_rayhit *hit);
  * Interactions
  */
 void		interaction_check(t_app *app);
+void		interaction_check_portal(t_app *app, int sector_id);
 void		interaction_trigger(t_app *app, int interaction_index);
 
 /**

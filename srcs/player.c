@@ -59,6 +59,7 @@ static t_bool	is_wall_collision(t_app *app, t_move new)
 				if (app->sectors[app->player.current_sector].wall_textures[i] == PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
 					return (FALSE);
 				app->player.current_sector = wall_id;
+				interaction_check_portal(app, wall_id);
 				return (TRUE);
 			}
 		}
