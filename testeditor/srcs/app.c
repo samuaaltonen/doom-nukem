@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/05 13:56:24 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/06 14:38:36 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	app_prepare(t_app *app)
 	app->zoom_range = 5;
 	app->sectorcount = 0;
 	app->sectors = NULL;
-	app->player_edit = 0;
+	app->player_edit = 1;
 	app->player.sector = NULL;
 	app->player.health = 200;
 	app->player.armor = 100;

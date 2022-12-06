@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:38:26 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/02 15:44:17 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/06 14:23:24 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	activate_interaction_menu(t_app *app, t_point screen_pos)
 	else if (check_mouse(screen_pos, (t_rect){42, 228, 190, 16})
 		&& app->object_menu)
 		active = 2;
-	else if (check_mouse(screen_pos, (t_rect){42, 238, 190, 16})
+	else if (check_mouse(screen_pos, (t_rect){42, 618, 190, 16})
 		&& app->active_sector)
 		active = 3;
 	else
@@ -86,7 +86,7 @@ void	activate_interaction_menu(t_app *app, t_point screen_pos)
 	else if (active == 2)
 		interaction_id = find_object_interaction(app);
 	else
-		interaction_id = 1; //find_sector_interaction(app);
+		interaction_id = find_sector_interaction(app);
 	if (interaction_id != -1)
 		app->current_interaction = &app->interactions[interaction_id];
 	else
