@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/05 18:55:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:26:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 void	app_init(t_app **app)
 {
 	*app = (t_app *)malloc(sizeof(t_app));
-	ft_bzero(*app, sizeof(t_app));
 	if (!(*app))
 		exit_error(NULL);
+	ft_bzero(*app, sizeof(t_app));
 }
 
 /**

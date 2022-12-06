@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/05 18:55:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:43:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,8 @@ typedef struct s_app
 	t_animation		animations[MAX_CONCURRENT_ANIMATIONS];
 	int				animation_count;
 	char			**texts;
+	int				text_lengths[MAX_TEXT_LINES];
+	t_textmodal		textmodal;
 }	t_app;
 
 /**
@@ -223,6 +225,11 @@ void		interaction_trigger(t_app *app, int interaction_index);
  */
 t_bool		animation_create(t_app *app, t_animation animation);
 void		progress_animations(t_app *app);
+
+/**
+ * Textmodal animations
+ */
+void		render_textmodals(t_app *app);
 
 /**
  * Sky

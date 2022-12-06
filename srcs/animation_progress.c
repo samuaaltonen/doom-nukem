@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 13:52:16 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/05 16:48:27 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:02:11 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,5 +44,14 @@ void	progress_animations(t_app *app)
 		if (app->animations[i].progress >= app->animations[i].duration)
 			animation_destroy(app, i);
 		i++;
+	}
+	if (app->textmodal.duration > 0.0)
+	{
+		app->textmodal.progress += app->conf->delta_time;
+		if (app->textmodal.progress >= app->textmodal.duration)
+		{
+			app->textmodal.progress = 0.0;
+			app->textmodal.duration = 0.0;
+		}
 	}
 }

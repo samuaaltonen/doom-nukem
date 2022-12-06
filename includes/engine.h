@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/05 18:55:28 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:52:15 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,14 +26,9 @@ enum e_event_id {
 	EVENT_CHANGE_CEIL_HEIGHT,
 	EVENT_CHANGE_FLOOR_AND_CEIL_HEIGHT,
 	EVENT_CHANGE_LIGHT,
-	EVENT_TRIGGER_SOUND,
 	EVENT_DISPLAY_TEXT,
+	EVENT_TRIGGER_SOUND,
 	EVENT_END_LEVEL
-};
-
-enum e_animation_target_type {
-	TYPE_INT,
-	TYPE_DOUBLE,
 };
 
 /**
@@ -238,5 +233,15 @@ typedef struct s_animation
 	double	*target;
 	double	final_value;
 }	t_animation;
+
+/**
+ * Animation struct for textmodals.
+ */
+typedef struct s_textmodal
+{
+	double	progress;
+	double	duration;
+	int		text;
+}	t_textmodal;
 
 #endif

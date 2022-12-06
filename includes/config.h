@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/05 18:55:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/06 14:54:57 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define WIN_NAME "Doom Nukem"
 # define WIN_W 1280
 # define WIN_H 720
-# define THREAD_COUNT 4
+# define THREAD_COUNT 6
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
 # define COLLISION_OFFSET 0.25
@@ -43,9 +43,11 @@
 # define DECOR_SIZE 1.0
 # define INTERACTION_ACTION_DISTANCE 1.5
 # define MAX_CONCURRENT_ANIMATIONS 16
-# define ANIMATION_DURATION_LIGHT 0.5
-# define ANIMATION_DURATION_HEIGHT 0.25
-# define MAX_TEXT_LINES 32
+# define ANIMATION_DURATION_LIGHT 0.5 // seconds per light level
+# define ANIMATION_DURATION_HEIGHT 0.25 // seconds per meter
+# define ANIMATION_DURATION_TEXT 0.015625 // seconds per char
+# define ANIMATION_DURATION_TEXT_END 3.5 // seconds after full text displayed
+# define MAX_TEXT_LINES 16
 # define MAX_TEXT_LINE_LENGTH 1024
 
 /**

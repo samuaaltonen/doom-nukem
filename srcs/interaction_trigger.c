@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:06:52 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/05 17:42:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/06 14:59:51 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,14 @@ void	interaction_trigger(t_app *app, int interaction_index)
 
 	interaction = &app->interactions[interaction_index];
 	variable = interaction->variable;
+	if (interaction->event_id == EVENT_DISPLAY_TEXT && !app->textmodal.duration)
+	{
+		app->textmodal.text = (int)variable;
+		if (app->textmodal.text < 0 || app->textmodal.text >= MAX_TEXT_LINES)
+			return ;
+		app->textmodal.duration = (double)app->text_lengths[app->textmodal.text]
+			* ANIMATION_DURATION_TEXT + ANIMATION_DURATION_TEXT_END;
+	}
 	if (interaction->target_sector == -1)
 		return ;
 	interaction_trigger_sector(app, interaction, variable);

@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/12/05 18:56:10 by saaltone         ###   ########.fr        #
+#    Updated: 2022/12/06 13:31:33 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -55,6 +55,7 @@ FILES = main.c \
 		animation_create.c \
 		animation_progress.c \
 		init_texts.c \
+		textmodal.c \
 		render_object.c
 
 LIBFT = ./libft/libft.a
