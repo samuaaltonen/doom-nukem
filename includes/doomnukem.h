@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/06 16:24:26 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:49:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include "geometry.h"
 # include "engine.h"
 # include "player.h"
+# include "interactions.h"
 
 //STATUS MACROS
 # define STATUS_TITLESCREEN 0
@@ -68,7 +69,6 @@ typedef struct s_audio
 	Uint32				sound_length;
 }	t_audio;
 
-
 typedef struct s_render_object
 {
 	int			id;
@@ -77,8 +77,7 @@ typedef struct s_render_object
 	t_point		draw_end;
 	t_vector2	size;
 	t_vector2	step;
-} t_render_object;
-
+}	t_render_object;
 
 typedef struct s_objectstack
 {
@@ -241,14 +240,14 @@ void		sector_sky_render(t_app *app, t_thread_data *thread);
 /**
  * Font
  */
-void        load_font(t_app *app);
+void		load_font(t_app *app);
 void		change_font(t_app *app, int size, int color);
 void		render_text(t_app *app, t_rect frame, char *text);
 
 /**
  * UI
  */
-void		render_ui_frame(t_app *app,t_rect area, int size, int background);
+void		render_ui_frame(t_app *app, t_rect area, int size, int background);
 void		render_ui(t_app *app);
 void		render_player_status(t_app *app);
 void		render_pointer(t_app *app, int x, int y);
@@ -284,7 +283,7 @@ void		render_options(t_app *app);
 /*
 * AUDIO.C
 */
-void    	play_music(t_app *app, char *file);
+void		play_music(t_app *app, char *file);
 void		play_sound(t_app *app, char *file);
 void		pause_audio(t_app *app);
 void		unpause_audio(t_app *app);
@@ -296,7 +295,8 @@ void		stop_audio(t_app *app);
 int			get_pixel_color(SDL_Surface *surface, int x, int y);
 int			shade_color(int color, int shade);
 void		put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color);
-void		put_pixel_to_surface_check(t_app *app, t_point point, int color, float distance);
+void		put_pixel_to_surface_check(t_app *app, t_point point, int color,
+				float distance);
 
 void		flush_surface(SDL_Surface *surface);
 void		blit_surface(SDL_Surface *src, t_rect *src_rect,
@@ -321,6 +321,5 @@ int			import_file(t_app *app, char *path);
  * objects
  */
 void		render_objects(t_app *app);
-
 
 #endif

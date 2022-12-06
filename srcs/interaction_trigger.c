@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:06:52 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/06 16:30:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:40:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,9 +92,7 @@ static void	interaction_trigger_sector(t_app *app, t_interaction *interaction,
  */
 void	interaction_trigger(t_app *app, int interaction_index)
 {
-	static const char	*sound_paths[] = {
-		SOUND_LASER_PATH,
-		SOUND_SHOT_PATH,
+	static const char	*sound_paths[] = {SOUND_LASER_PATH, SOUND_SHOT_PATH,
 		SOUND_BUMP_PATH};
 	t_interaction		*interaction;
 	double				variable;
@@ -104,7 +102,8 @@ void	interaction_trigger(t_app *app, int interaction_index)
 	if (interaction->event_id == EVENT_DISPLAY_TEXT && !app->textmodal.duration)
 	{
 		app->textmodal.text = (int)variable;
-		if (app->textmodal.text < 0 || app->textmodal.text >= MAX_TEXT_LINES)
+		if (app->textmodal.text < 0 || app->textmodal.text >= MAX_TEXT_LINES
+			|| app->text_lengths[app->textmodal.text] == 0)
 			return ;
 		app->textmodal.duration = (double)app->text_lengths[app->textmodal.text]
 			* ANIMATION_DURATION_TEXT + ANIMATION_DURATION_TEXT_END;

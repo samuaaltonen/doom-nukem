@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/06 14:54:57 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:43:57 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define COLLISION_OFFSET 0.25
 # define FOV 66
 # define TEX_SIZE 64
-# define SKYBOX_W 1024 // Optimal size 4x2.5 of window size (5120x1800 for 1280x720)
+# define SKYBOX_W 1024 // Optimal size 4x2.5 of window size (5120x1800)
 # define SKYBOX_H 1024
 # define MOUSE_SENSITIVITY_HORIZONTAL 0.3
 # define MOUSE_SENSITIVITY_VERTICAL 0.2
