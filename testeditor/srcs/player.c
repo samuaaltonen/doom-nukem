@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:00:45 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/29 13:39:58 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/06 11:12:35 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ void	render_player(t_app *app)
 		point = app->player.position;
 	else
 		point = app->mouse_track;
-	render_point(app, point, 5, PLAYER);
+	if (!app->list_creation || (app->list_creation && app->player.sector))
+		render_point(app, point, 5, PLAYER);
 }

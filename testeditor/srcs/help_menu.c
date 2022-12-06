@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/02 16:45:16 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:31:13 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * Renders the sector specific information on the help menu sidebar.
 */
-static void	sector_edit_menu(t_app *app)
+static void	sector_edit_menu(t_app *app, t_point screen_pos)
 {
 	render_text(app, (t_rect){20, 40, 260, 100}, "TOGGLE ALL WALLS ( V )\nTOG\
 GLE FLOOR ( F )\nTOGGLE CEILING ( R )\nTOGGLE LIGHT ( T )\nTOGGLE SLOPE ( U )");
@@ -30,7 +30,7 @@ GLE FLOOR ( F )\nTOGGLE CEILING ( R )\nTOGGLE LIGHT ( T )\nTOGGLE SLOPE ( U )");
 	render_text(app, (t_rect){20, 255, 260, 15}, "CREATE SLOPE ( Y / H )");
 	render_text(app, (t_rect){20, 270, 260, 15}, "DELETE SECTOR ( DEL )");
 	render_texture_icons(app);
-	render_sector_info(app);
+	render_sector_info(app, screen_pos);
 }
 
 /**
@@ -109,6 +109,16 @@ WITH 'G' AND USE ARROW KEYS TO CHANGE. \n \n  X\n  Y");
 		render_text(app, (t_rect){60, 337, 50, 15},
 			ft_ftoa(app->active->decor_offset.y, 4));
 	}
+	if (app->active->type != -1)
+	{
+		toggle_active_color(app, 1, "- PORTAL -", (t_rect){50, 360, 200, 20});
+		toggle_active_color(app, 0, "NO PORTAL", (t_rect){155, 360, 200, 20});
+	}
+	else
+	{
+		toggle_active_color(app, 0, "PORTAL", (t_rect){60, 360, 200, 20});
+		toggle_active_color(app, 1, "- NO PORTAL -", (t_rect){145, 360, 200, 20});
+	}
 }
 
 void	render_current_interaction_status(t_app *app, t_point screen_pos, int y, int id)
@@ -155,8 +165,8 @@ static void	help_menu_texts(t_app *app)
 	change_font(app, 20, TEXT);
 	render_text(app, (t_rect){10, 10, 260, 20}, "LEVEL EDITOR");
 	change_font(app, 11, TEXT);
-	if (app->active_sector && !app->active && !app->object_menu)
-		sector_edit_menu(app);
+	if (app->active_sector && !app->active && !app->object_menu && !app->interaction_menu)
+		sector_edit_menu(app, screen_pos);
 	else if (app->active && !app->interaction_menu && !app->object_menu
 		&& !app->list_creation)
 		wall_edit_menu(app, screen_pos);

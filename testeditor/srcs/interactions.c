@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interactions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/05 18:55:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/06 14:45:01 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 static t_bool	new_interaction(t_app *app)
 {
 	if (app->object_menu)
-	{
 		app->current_interaction->activation_object = app->current_object;
-	}
 	else if (app->active)
 	{
 		if (app->active->decor == -1)
@@ -26,11 +24,12 @@ static t_bool	new_interaction(t_app *app)
 		app->current_interaction->activation_wall = app->active;
 	}
 	else if (app->active_sector)
-	{
 		app->current_interaction->activation_sector = app->active_sector;
-	}
 	else
 		return (FALSE);
+	app->current_interaction->target_sector = app->active_sector;
+	if (app->active_sector->parent_sector)
+		app->current_interaction->target_sector = app->active_sector->parent_sector;
 	return(TRUE);
 }
 
