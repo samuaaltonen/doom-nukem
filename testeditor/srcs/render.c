@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/21 15:02:25 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:04:45 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,5 +108,39 @@ t_point		max;
 			min.x++;
 		}
 		min.y++;
+	}
+}
+
+/**
+ * @brief Midpoint Circle Algorithm, calculates only one octant
+ * 3 - 2 * rad avoids overdraw -rad works as well
+ * 4 / 6 and 4 / 10 make the circle more circular
+ */
+void draw_circle(t_app *app, t_point pos, int rad, int color)
+{
+	t_point	tmp;
+	int	err;
+
+	tmp.x = 0;
+	tmp.y = rad;
+	err = 3 - 2 * rad;
+	while (tmp.x <= tmp.y)
+	{
+		put_pixel_to_surface(app->surface, pos.x + tmp.x, pos.y + tmp.y, color);
+		put_pixel_to_surface(app->surface, pos.x + tmp.y, pos.y + tmp.x, color);
+		put_pixel_to_surface(app->surface, pos.x - tmp.x, pos.y + tmp.y, color);
+		put_pixel_to_surface(app->surface, pos.x - tmp.y, pos.y + tmp.x, color);
+		put_pixel_to_surface(app->surface, pos.x + tmp.x, pos.y - tmp.y, color);
+		put_pixel_to_surface(app->surface, pos.x + tmp.y, pos.y - tmp.x, color);
+		put_pixel_to_surface(app->surface, pos.x - tmp.x, pos.y - tmp.y, color);
+		put_pixel_to_surface(app->surface, pos.x - tmp.y, pos.y - tmp.x, color);
+		if (err < 0)
+			err += 4 * tmp.x + 6;
+		else
+		{
+			err += 4 * (tmp.x - tmp.y) + 10;
+			tmp.y--;
+		}
+		tmp.x++;
 	}
 }

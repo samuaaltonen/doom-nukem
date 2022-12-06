@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/05 13:56:19 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/06 14:52:38 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -473,6 +473,7 @@ void			draw_line(t_app *app, t_vector2 *a, t_vector2 *b, int color);
 void			linedraw_low(t_app *app, t_point *a, t_point *b, int color);
 void			linedraw_high(t_app *app, t_point *a, t_point *b, int color);
 int				check_borders(t_app *app, t_point *a, t_point *b);
+void			draw_circle(t_app *app, t_point pos, int rad, int color);
 
 /**
  * Sector Functions
