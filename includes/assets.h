@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/05 13:54:10 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:54:08 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@
 # define LASER_PATH "assets/sounds/laser.wav"
 # define SHOT_PATH "assets/sounds/shot.wav"
 # define BUMP_PATH "assets/sounds/bump.wav"
-# define SPRITE_PATH1 "assets/legacy/cannon_64.bmp"
+# define SPRITE_PATH1 "assets/legacy/palleted.bmp"
 # define SPRITE_PATH2 "assets/legacy/pillar_64.bmp"
 # define MAX_SPRITES 2
 # define MAP_PATH "./testeditor/test.test"//"./testmaps/slopes"
