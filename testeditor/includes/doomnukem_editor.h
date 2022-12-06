@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/05 13:56:19 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:46:27 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -560,7 +560,7 @@ void			render_help_menu(t_app *app);
 void			set_icon_rect(t_rect *rect, t_point point, t_point size);
 void			load_assets(t_app *app);
 void			render_texture_icons(t_app *app);
-void			render_sector_info(t_app *app);
+void			render_sector_info(t_app *app, t_point screen_pos);
 void			render_player_icons(t_app *app, SDL_Surface *asset, t_point point, int max);
 void			render_statusbar(t_app *app, t_point point, int statusbar, int color);
 void			render_arrows(t_app *app, t_point left, t_point right);
@@ -608,6 +608,7 @@ int				interaction_wall_check(t_app *app, t_vec2_lst *wall);
 int				interaction_object_check(t_app *app, int id);
 int				find_decor_interaction(t_app *app);
 int				find_object_interaction(t_app *app);
+int				find_sector_interaction(t_app *app);
 int				find_interaction(t_app *app);
 void			delete_interaction(t_app *app, int id);
 
