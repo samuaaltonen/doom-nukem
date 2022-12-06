@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:06:52 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/06 15:20:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:32:15 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,8 @@ void	interaction_trigger(t_app *app, int interaction_index)
 	if (interaction->event_id == EVENT_TRIGGER_SOUND
 		&& (int)variable >= 0 && (int)variable < 2)
 		play_sound(app, (char *)sound_paths[(int)variable]);
+	/* if (interaction->event_id == EVENT_END_LEVEL)
+		app->status = STATUS_END_LEVEL; */
 	if (interaction->target_sector == -1)
 		return ;
 	interaction_trigger_sector(app, interaction, variable);
