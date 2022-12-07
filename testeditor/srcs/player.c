@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:00:45 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/06 11:12:35 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/07 14:15:17 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	check_player_position(t_app *app)
 {
 	int			id;
 
-	if (!app->sectors || !app->player.sector)
+	if (!app->sectors || !app->player.sector
+		|| app->active_sector->parent_sector)
 	{
 		app->player_edit = TRUE;
 		return ;
