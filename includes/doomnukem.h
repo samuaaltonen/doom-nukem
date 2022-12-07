@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/07 14:55:10 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/07 18:27:55 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,12 @@ typedef struct s_color
 	int	b;
 }	t_color;
 
+typedef struct s_timer
+{
+	struct timespec	start;
+	double			seconds;
+}	t_timer;
+
 /**
  * Struct for the application.
  */
@@ -101,6 +107,7 @@ typedef struct s_app
 	t_sector		*sectors;
 	t_object		objects[MAX_OBJECTS];
 	t_interaction	interactions[MAX_INTERACTIONS];
+	t_timer			timer;
 }	t_app;
 
 /**
@@ -127,7 +134,10 @@ void		init_thread_info(t_app *app);
 void		render_frame(t_app *app);
 void		app_loop(t_app *app);
 void		render_game(t_app *app);
+
 void		update_fps_counter(t_app *app);
+void		start_timer(t_timer *timer, double seconds);
+int			check_timer(t_timer *timer);
 
 /**
  * Images
@@ -167,6 +177,7 @@ void		init_camera_plane(t_app *app);
 void		init_skybox_plane(t_app *app);
 void		heal(t_app *app);
 void		shield(t_app *app);
+void		regen(t_app *app, int *value);
 void		damage(t_app *app, int dmg);
 
 /**

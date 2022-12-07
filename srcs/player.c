@@ -158,6 +158,16 @@ void	shield(t_app *app)
 	}
 }
 
+void	regen(t_app *app, int *value)
+{
+	if (check_timer(&app->timer))
+	{
+		if (*value % 40 != 0)
+			(*value)++;
+	}
+
+}
+
 void	damage(t_app *app, int dmg)
 {	
 	int	to_shield;
@@ -168,5 +178,10 @@ void	damage(t_app *app, int dmg)
 		to_shield = dmg / 5;
 	to_hp = dmg - to_shield;
 	app->player.shield -= to_shield;
+	if (app->player.shield < 0)
+		app->player.shield = 0;
 	app->player.hp -= to_hp;
+	if (app->player.hp < 0)
+		app->player.hp = 0;
+		start_timer(&app->timer, 2);
 }

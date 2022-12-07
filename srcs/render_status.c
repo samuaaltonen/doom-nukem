@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/02 18:10:45 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/07 18:28:37 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ void	render_game(t_app *app)
 	handle_movement(app);
 	render_sectors(app);
 	render_ui(app);
+	regen(app, &app->player.hp);
+	regen(app, &app->player.shield);
 	if (app->player.hp == 0)
 		app->status = STATUS_GAMEOVER;
 }

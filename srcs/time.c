@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:22:26 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/21 13:47:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/07 18:24:38 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,4 +68,26 @@ static void	update_avg_fps(t_app *app)
 	app->conf->fps_total += app->conf->fps;
 	app->conf->frames_total++;
 	app->conf->fps_avg = (int)((double)app->conf->fps_chunk / 100.0);
+}
+
+void	start_timer(t_timer *timer, double seconds)
+{
+	clock_gettime(CLOCK_REALTIME, &timer->start);
+	timer->seconds = seconds;
+}
+
+int	check_timer(t_timer *timer)
+{
+	struct timespec	now;
+	struct timespec delta;
+	double			delta_seconds;
+	
+	clock_gettime(CLOCK_REALTIME, &now);
+	delta.tv_nsec = now.tv_nsec - timer->start.tv_nsec;
+	delta.tv_sec = now.tv_sec - timer->start.tv_sec;
+	delta_seconds = (double)delta.tv_sec + 1.0e-9 * delta.tv_nsec;
+	if (delta_seconds >= timer->seconds)
+		return (1);
+	else
+		return (0);
 }
