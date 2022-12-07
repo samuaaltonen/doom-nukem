@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:38:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/07 10:57:21 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/07 14:30:23 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ void	blit_surface(SDL_Surface *src, t_rect *src_rect,
 				point.y = current.y;
 				map_coordinates(dst_rect, src_rect, &point);
 				pixel = get_pixel_color(src, point.x, point.y);
-//				if ((pixel & 0xFF000000) > 0)
+				if ((pixel & 0xFF000000) > 0)
 					put_pixel_to_surface(dst, current.x + dst_rect->x,
 						current.y + dst_rect->y, pixel);
 				current.x++;
@@ -121,7 +121,7 @@ void	color_surface(SDL_Surface *surface, int color)
 			pixel_pos = (y * surface->pitch)
 				+ (x * IMAGE_PIXEL_BYTES);
 			pixel = surface->pixels + pixel_pos;
-			if ((*(int *)pixel & 0xFF000000) != 0x00000000)
+			if ((*(int *)pixel & 0xFF000000) > 0)
 				put_pixel_to_surface(surface, x, y, color);
 			x++;
 		}
