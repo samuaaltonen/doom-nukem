@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/02 17:41:03 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/07 10:31:43 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,14 @@ typedef struct s_audio
 	Uint8				*sound;
 	Uint32				sound_length;
 }	t_audio;
+
+typedef struct s_color
+{
+	int	a;
+	int	r;
+	int g;
+	int	b;
+}	t_color;
 
 /**
  * Struct for the application.
@@ -270,6 +278,9 @@ int			check_blit(SDL_Surface *src, t_rect *src_rect,
 				SDL_Surface *dst, t_rect *dst_rect);
 void		rect_from_surface(SDL_Surface *surface, t_rect *rect);
 void		color_surface(SDL_Surface *surface, int color);
+int			blend_pixel(t_color base, t_color top);
+t_color		int_to_argb(int color);
+int			argb_to_int(t_color color);
 
 /**
  * utils

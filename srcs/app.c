@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/02 17:31:51 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/07 11:47:38 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void	app_loop(t_app *app)
  */
 void	render_frame(t_app *app)
 {
+	flush_surface(app->surface);
 	update_fps_counter(app);
 	if (app->status == STATUS_TITLESCREEN)
 		render_titlescreen(app);
