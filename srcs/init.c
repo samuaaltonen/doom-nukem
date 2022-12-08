@@ -91,6 +91,7 @@ void    load_assets(t_app *app)
 
     load_font(app);
 	load_texts(app);
+	load_music(app, MUSIC_PATH);
 }
 
 /**

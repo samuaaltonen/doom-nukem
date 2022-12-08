@@ -28,7 +28,6 @@ void	render_titlescreen(t_app *app)
 	change_font(app, 32, WHITE);
 	render_text(app, (t_rect){504, WIN_H - 170, 800, 800}, "PRESS SPACE");
 	load_font(app);
-	play_music(app, MUSIC_PATH);
 }
 
 void	render_mainmenu(t_app *app)

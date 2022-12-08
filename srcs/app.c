@@ -50,4 +50,5 @@ void	render_frame(t_app *app)
 		|| app->status == STATUS_GAMEOPTIONS)
 		render_options(app);
 	SDL_UpdateWindowSurface(app->win);
+	play_music(app);
 }
