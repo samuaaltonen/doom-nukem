@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/12/08 14:40:33 by saaltone         ###   ########.fr        #
+#    Updated: 2022/12/08 15:49:22 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,6 +50,7 @@ FILES = main.c \
 		sector_wall_line.c \
 		import.c \
 		utils.c \
+		utils_color.c \
 		utils_sdl.c \
 		interaction_check.c \
 		interaction_trigger.c \

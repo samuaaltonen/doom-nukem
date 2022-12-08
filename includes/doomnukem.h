@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/08 14:41:16 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:23:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -299,8 +299,6 @@ int			shade_color(int color, int shade);
 void		put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color);
 void		put_pixel_to_surface_check(t_app *app, t_point point, int color,
 				float distance);
-
-void		flush_surface(SDL_Surface *surface);
 void		blit_surface(SDL_Surface *src, t_rect *src_rect,
 				SDL_Surface *dst, t_rect *dst_rect);
 int			check_blit(SDL_Surface *src, t_rect *src_rect,

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/05 17:57:03 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/06 13:50:54 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:52:56 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	load_texts(t_app *app)
 	int		i;
 
 	fd = open(TEXTS_PATH, O_RDONLY, 0755);
-	if(fd < 0)
+	if (fd < 0)
 		exit_error(MSG_ERROR_FILE_READ);
 	count = read(fd, &buffer, MAX_TEXT_LINES * MAX_TEXT_LINE_LENGTH);
 	if (count == -1)
