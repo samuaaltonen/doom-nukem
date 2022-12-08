@@ -48,13 +48,19 @@ static t_bool	has_visible_corner(t_app *app, t_line wall)
 }
 
 /**
- * Determines if wall is possibly visible from player view.
+ * @brief Determines if wall is possibly visible from player view.
  * Checks side first. If player position is at left side of a wall, player is
- * outside of that wall.
+ * outside of that wall (unless member sectors wall).
  * After that checks if either wall corners are left side of camera plane vector
  * (so they can be visible).
+ * 
+ * @param app 
+ * @param walls 
+ * @param walls_count 
+ * @param wall 
  */
-static void	check_possible_visible(t_app *app, t_wall *walls, int *walls_count, t_wall wall)
+static void	check_possible_visible(t_app *app, t_wall *walls, int *walls_count,
+	t_wall wall)
 {
 	t_bool		is_inside;
 	t_bool		is_portal;
@@ -64,15 +70,12 @@ static void	check_possible_visible(t_app *app, t_wall *walls, int *walls_count, 
 	is_inside = !wall.is_member;
 	wall_line = get_wall_line(app, wall.sector_id, wall.wall_id);
 	player_side = ft_line_side(wall_line, app->player.pos);
-	// Not member sector, player need to on right side of all walls (clockwise)
 	if (!wall.is_member && player_side)
 		return ;
 	is_portal = FALSE;
-	if (app->sectors[wall.sector_id].wall_types[wall.wall_id] != -1 || wall.is_member)
+	if (app->sectors[wall.sector_id].wall_types[wall.wall_id] != -1
+		|| wall.is_member)
 		is_portal = TRUE;
-	/** Is member, now player need to be on left side of all walls. If not, mark
-	 * wall as not portal (it is now only considered as "inside" wall within
-	 * portal/member) */
 	if (wall.is_member && !player_side)
 		is_inside = TRUE;
 	if (!has_visible_corner(app, wall_line))
@@ -84,38 +87,36 @@ static void	check_possible_visible(t_app *app, t_wall *walls, int *walls_count, 
 }
 
 /**
- * @brief Returns TRUE if a sector has already been visited. If not, sets sector
- * as visited.
+ * @brief Initializes wall struct.
  * 
- * @param visited 
+ * @param wall 
+ * @param sector 
  * @param sector_id 
- * @return t_bool 
+ * @param wall_index 
  */
-static t_bool	has_been_visited(int *visited, int sector_id)
+static void	initialize_wall_data(t_wall *wall, t_sector *sector, int sector_id,
+	int wall_index)
 {
-	int	i;
-
-	i = 0;
-	while (i < MAX_VISIBLE_SECTORS)
-	{
-		if (visited[i] == -1)
-			break ;
-		if (visited[i] == sector_id)
-			return (TRUE);
-		i++;
-	}
-	if (i == MAX_VISIBLE_SECTORS)
-		return (TRUE);
-	visited[i] = sector_id;
-	if (i < MAX_VISIBLE_SECTORS - 1)
-		visited[i + 1] = -1;
-	return (FALSE);
+	wall->sector_id = sector_id;
+	wall->wall_id = wall_index;
+	wall->wall_type = sector->wall_types[wall_index];
+	wall->is_member = FALSE;
+	if (sector->parent_sector != -1)
+		wall->is_member = TRUE;
 }
 
 /**
- * Loops through sectors walls to check which of them might be visible.
+ * @brief Loops through sectors walls to check which of them might be visible.
+ * If it encounters a wall that is portal, adds that portals destination sector
+ * to interesting array in wallstack (to be also visited).
+ * 
+ * @param app 
+ * @param wallstack 
+ * @param index 
+ * @param sector_id 
  */
-static void	loop_sector_walls(t_app *app, t_wallstack *wallstack, int index, int sector_id)
+void	sector_visible_walls(t_app *app, t_wallstack *wallstack, int index,
+	int sector_id)
 {
 	int			i;
 	t_sector	*sector;
@@ -124,74 +125,20 @@ static void	loop_sector_walls(t_app *app, t_wallstack *wallstack, int index, int
 	ft_bzero(&wall, sizeof(t_wall));
 	sector = &app->sectors[sector_id];
 	sector->stack_index = index;
-	// Loop through member sector walls
 	i = -1;
-	while (++i < MAX_MEMBER_SECTORS)
-	{
-		// Break loop when -1 is found (no members after that anyways)
-		if (sector->member_sectors[i] == -1)
-			break ;
-		loop_sector_walls(app, wallstack, index, sector->member_sectors[i]);
-	}
-	// Loop through sector walls
+	while (++i < MAX_MEMBER_SECTORS && sector->member_sectors[i] != -1)
+		sector_visible_walls(app, wallstack, index, sector->member_sectors[i]);
 	i = -1;
 	while (++i < sector->corner_count)
 	{
-		// If wall is a portal, add portal destination to be interesting sector
 		if (sector->parent_sector == -1 && sector->wall_types[i] != -1)
 		{
-			wallstack->interesting[wallstack->interesting_count] = sector->wall_types[i];
+			wallstack->interesting[wallstack->interesting_count]
+				= sector->wall_types[i];
 			wallstack->interesting_count++;
 		}
-		wall.sector_id = sector_id;
-		wall.wall_id = i;
-		wall.wall_type = sector->wall_types[i];
-		wall.is_member = FALSE;
-		if (sector->parent_sector != -1)
-			wall.is_member = TRUE;
+		initialize_wall_data(&wall, sector, sector_id, i);
 		check_possible_visible(app, (t_wall *)&wallstack->walls[index],
 			(int *)&wallstack->wall_count[index], wall);
-	}
-}
-
-/**
- * @brief Sets possible visible walls to possible_visible array. Starts with
- * players current sector (or its parent sector if member). Whenever encouters
- * a portal in loop_sector_walls, adds it to wallstack.interesting array to
- * be visited in the next iteration.
- * 
- * After gathering all interesting (i.e. possibly visible) walls in wallstack
- * array, orders them sector by sector.
- * 
- * @param app 
- */
-void	sector_visible_walls(t_app *app)
-{
-	int	i;
-
-	app->wallstack.visited[0] = -1;
-	if (app->sectors[app->player.current_sector].parent_sector == -1)
-		app->wallstack.interesting[0] = app->player.current_sector;
-	else
-		app->wallstack.interesting[0] = app->sectors[app->player.current_sector].parent_sector;
-	app->wallstack.interesting_count = 1;
-	i = 0;
-	while (i < app->wallstack.interesting_count && i < MAX_VISIBLE_SECTORS - 1)
-	{
-		app->wallstack.wall_count[i] = 0;
-		app->wallstack.wall_count[i + 1] = -1;
-		if (!has_been_visited((int *)&app->wallstack.visited, app->wallstack.interesting[i]))
-			loop_sector_walls(app, &app->wallstack, i, app->wallstack.interesting[i]);
-		i++;
-	}
-	i = 0;
-	while (app->wallstack.wall_count[i] != -1)
-	{
-		if (app->wallstack.wall_count[i] > 0)
-		{
-			sector_walls_prepare(app, (t_wall *)&app->wallstack.walls[i], app->wallstack.wall_count[i]);
-			sector_walls_order(app, (t_wall *)&app->wallstack.walls[i], app->wallstack.wall_count[i]);
-		}
-		i++;
 	}
 }

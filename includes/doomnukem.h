@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/06 16:49:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/08 14:41:16 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,7 +183,9 @@ void		init_skybox_plane(t_app *app);
  * Sectors
  */
 t_line		get_wall_line(t_app *app, int sector_id, int wall_id);
-void		sector_visible_walls(t_app *app);
+void		sector_wallstack_build(t_app *app);
+void		sector_visible_walls(t_app *app, t_wallstack *wallstack, int index,
+				int sector_id);
 void		sector_walls_prepare(t_app *app, t_wall *walls, int wall_count);
 void		sector_walls_order(t_app *app, t_wall *walls, int wall_count);
 void		sector_stack_render(t_app *app, t_thread_data *thread,
