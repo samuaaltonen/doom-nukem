@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/08 18:51:24 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/08 19:10:55 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ void	draw_object_pixel(t_app *app, t_render_object *object, t_point window, t_ve
 	else
 		color = get_pixel_color(app->assets.sprites[PROJECTILE_SPRITE], (int)texture.x - ((object->frame) * object->tex_size) - object->tex_size, (int)texture.y * (object_type - (MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES)));
 	if ((color & 0xFF000000) > 0)
-		put_pixel_to_surface(app->surface,window.x,window.y,color);
-		//put_pixel_to_surface_check(app, window,color,object->dist);
+		put_pixel_to_surface_check(app, window,color,object->dist);
 }
 
 void	object_render(t_app *app, t_render_object *object, t_thread_data *thread)
@@ -176,8 +175,8 @@ static t_bool	init_temp_object(t_app *app, int i, t_render_object *object,
 		return (FALSE);
 	object->id = i;
 	object->tex_size = TEX_PICKUP;
-	object->size.x  = (WIN_H / transform.y / 3);
-	object->size.y  = (WIN_H / transform.y / 3);
+	object->size.x  = (WIN_H / transform.y);
+	object->size.y  = (WIN_H / transform.y);
 	object->start.x = (int)((WIN_W / 2) * (1.0f + (transform.x / transform.y)));
 	return (TRUE);
 }
@@ -186,20 +185,16 @@ static void	set_object(t_app *app, t_render_object *object, double *angle,
 	t_object *original_obj)
 {
 		double			offset;
-		double			elevation_offset;
 
-		elevation_offset = 0.5;
-	/* 	if(app->objects[object->id].type < MAX_SMALL_OBJECTS)
-			elevation_offset = 0.25; */
 		object->start.y = (int)(WIN_H * app->player.horizon + object->size.y
 		* ((app->player.elevation + app->player.height)
-		- (original_obj->elevation + elevation_offset)));
+		- (original_obj->elevation + 0.5)));
 		offset = object->size.y;
-		object->size.y = cos(*angle) * object->size.y;			
+		object->size.y = cos(*angle) * object->size.y;
 		offset = (offset - object->size.y) / 2;
 		object->start.y += (int)offset;
-		object->draw_end.x = object->size.x / 2 + object->start.x;
-		object->draw_end.y = object->start.y + object->size.y;
+		object->draw_end.x = object->start.x + object->size.x / 2;
+		object->draw_end.y = object->start.y + object->size.y / 2;
 		object->start.x = object->start.x - object->size.x / 2;
 		object->start.y = object->start.y - object->size.y / 2;
 		object->step = (t_vector2){object->tex_size / (double)(object->size.x),
