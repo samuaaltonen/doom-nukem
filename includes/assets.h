@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/06 13:54:08 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:01:25 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,20 @@
 # define LASER_PATH "assets/sounds/laser.wav"
 # define SHOT_PATH "assets/sounds/shot.wav"
 # define BUMP_PATH "assets/sounds/bump.wav"
-# define SPRITE_PATH1 "assets/legacy/palleted.bmp"
-# define SPRITE_PATH2 "assets/legacy/pillar_64.bmp"
-# define MAX_SPRITES 2
+//# define PICKUP_PATH "assets/images/testcolors.bmp"
+# define PICKUP_PATH "assets/images/Objects_Small_Spritesheet.bmp"
+# define OBJECT_PATH "assets/images/Objects_Spritesheet.bmp"
+# define MONSTER_1_PATH "assets/images/MONSTER1_Spritesheet.bmp"
+# define SPRITE_PATH "assets/images/projectiles.bmp"
+# define MAX_SPRITES 4
 # define MAP_PATH "./testeditor/test.test"//"./testmaps/slopes"
 
+enum e_spritesheet {
+	SMALL_SPRITE,
+	BIG_SPRITE,
+	ENEMY_SPRITE,
+	PROJECTILE_SPRITE
+};
 /**
  * Struct for font. 
  */

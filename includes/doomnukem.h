@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/05 17:47:54 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/08 16:28:37 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ typedef struct s_audio
 typedef struct s_render_object
 {
 	int			id;
+	int			tex_size;
 	int			frame;
 	double		dist;
 	t_point		start;
@@ -110,6 +111,7 @@ typedef struct s_app
 	t_sky			sky;
 	t_sector		*sectors;
 	t_object		objects[MAX_OBJECTS];
+	float			object_states[MAX_OBJECTS];
 	t_object		tmp_objects[MAX_TEMP_OBJECTS];
 	t_interaction	interactions[MAX_INTERACTIONS];
 }	t_app;

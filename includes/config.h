@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/05 17:19:05 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:20:54 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,15 @@
 # define WIN_NAME "Doom Nukem"
 # define WIN_W 1280
 # define WIN_H 720
-# define THREAD_COUNT 4
+# define THREAD_COUNT 1
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
 # define COLLISION_OFFSET 0.25
 # define FOV 66
 # define TEX_SIZE 64
+# define TEX_PICKUP 44
+# define TEX_OBJECT 128
+# define SMALL_OBJECT_IDS 2
 # define SKYBOX_W 1024 // Optimal size 4x2.5 of window size (5120x1800 for 1280x720)
 # define SKYBOX_H 1024
 # define MOUSE_SENSITIVITY_HORIZONTAL 0.3
@@ -34,8 +37,20 @@
 # define MAX_VISIBLE_WALLS 256
 # define MAX_VIEW_DISTANCE 256.f
 # define MAX_LINE_LENGTH 1048576.0
+# define SPRITE_ANGLES 90
+# define MAX_SMALL_OBJECTS 5
+# define MAX_BIG_OBJECTS 5
+# define MAX_ENEMY_TYPES 1
+# define MAX_PROJECTILES 5
+# define MAX_OBJECT_DISTANCE 15.f
+/* object type defines for now
+	< MAX_SMALL_OBJECTS = small objects
+	< MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS = big objects
+	< MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES = enemy
+	>= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES = projectiles
+*/
+# define MAX_ENEMY_STATES 3
 # define MAX_OBJECTS 64
-# define MAX_UNIQUE_OBJECTS 64
 # define MAX_TEMP_OBJECTS 64
 # define MAX_INTERACTIONS 64
 # define MAX_UNIQUE_INTERACTIONS 7

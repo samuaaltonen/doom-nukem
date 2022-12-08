@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/05 18:53:19 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:57:37 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,11 +84,13 @@ void    load_assets(t_app *app)
 	app->assets.sprite = SDL_LoadBMP(PANELS_PATH);
 	app->assets.bg = SDL_LoadBMP(SKYBOX_PATH);
 
-	//temp
-	app->assets.sprites[0] = SDL_LoadBMP(SPRITE_PATH1);
-	app->assets.sprites[1] = SDL_LoadBMP(TITLESCREEN_PATH);
+	//temp 2d object array in 0, 2d object array in 1, 2d per enemy arrays from then on
+	app->assets.sprites[0] = SDL_LoadBMP(PICKUP_PATH);
+	app->assets.sprites[1] = SDL_LoadBMP(OBJECT_PATH);
+	app->assets.sprites[2] = SDL_LoadBMP(MONSTER_1_PATH);
+	app->assets.sprites[3] = SDL_LoadBMP(SPRITE_PATH);
 
-    load_font(app);
+	load_font(app);
 }
 
 /**
