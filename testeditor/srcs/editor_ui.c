@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:09:02 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/03 14:25:50 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/01 17:24:42 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,9 @@ void	zoom_slider(t_app *app)
 
 	y = app->surface->h / 4;
 	zoom_point = y + (app->surface->h / 2) / 6 * app->zoom_range;
+	render_up_and_down_arrows(app, (t_point){app->surface->w - 33, y - 13},
+		(t_point){app->surface->w - 33, app->surface->h - (app->surface->h / 4)
+		+ 10}, 16);
 	while (y <= (app->surface->h - (app->surface->h / 4) + 10))
 	{
 		x = app->surface->w - 30;
@@ -30,9 +33,9 @@ void	zoom_slider(t_app *app)
 		{
 			if (x == (app->surface->w - 25) || y == app->surface->h / 4
 				|| y == (app->surface->h - (app->surface->h / 4) + 10))
-				put_pixel_to_surface(app->surface, x, y, 0xFFFFFF);
+				put_pixel_to_surface(app->surface, x, y, TEXT);
 			if (y >= zoom_point && y <= zoom_point + 10)
-				put_pixel_to_surface(app->surface, x, y, 0xFFFFFF);
+				put_pixel_to_surface(app->surface, x, y, TEXT);
 			x++;
 		}
 		y++;

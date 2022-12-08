@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lists.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:42:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/02 15:50:24 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/01 15:22:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,10 @@ t_vec2_lst	*new_vector_list(t_vector2 *point)
 	new->point.y = point->y;
 	new->tex = -1;
 	new->type = -1;
+	new->decor = -1;
 	new->next = NULL;
+	new->decor_offset.x = 0.0;
+	new->decor_offset.y = 0.0;
 	return (new);
 }
 

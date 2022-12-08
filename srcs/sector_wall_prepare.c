@@ -6,16 +6,21 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:46:07 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/09 17:06:44 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:52:32 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * Translates world coordinate position to camera space and converts it to
+ * @brief Translates world coordinate position to camera space and converts it to
  * window x position.
-*/
+ * 
+ * @param app 
+ * @param coord 
+ * @param dotproduct 
+ * @return int 
+ */
 static int	translate_window_x(t_app *app, t_vector2 coord, double dotproduct)
 {
 	t_vector2	ray;
@@ -23,7 +28,6 @@ static int	translate_window_x(t_app *app, t_vector2 coord, double dotproduct)
 
 	ray = (t_vector2){coord.x - app->player.pos.x, coord.y - app->player.pos.y};
 	angle = ft_vector_angle(ray, app->player.dir);
-	// If left side, mark angle as negative
 	if (ft_line_side((t_line){app->player.pos,
 			(t_vector2){app->player.pos.x + app->player.dir.x,
 			app->player.pos.y + app->player.dir.y}}, coord))
@@ -43,9 +47,13 @@ static int	translate_window_x(t_app *app, t_vector2 coord, double dotproduct)
 }
 
 /**
- * Gets wall dotproduct. Returns negative if viewing from outside (member
+ * @brief Gets wall dotproduct. Returns negative if viewing from outside (member
  * sectors).
-*/
+ * 
+ * @param app 
+ * @param wall 
+ * @return double 
+ */
 static double	get_wall_dotproduct(t_app *app, t_wall wall)
 {
 	double	dotproduct;
@@ -60,9 +68,13 @@ static double	get_wall_dotproduct(t_app *app, t_wall wall)
 }
 
 /**
- * Prepares selected walls to be rendered. Calculates their translated x
+ * @brief Prepares selected walls to be rendered. Calculates their translated x
  * positions in screen.
-*/
+ * 
+ * @param app 
+ * @param walls 
+ * @param wall_count 
+ */
 void	sector_walls_prepare(t_app *app, t_wall *walls, int wall_count)
 {
 	double	dotproduct;
@@ -73,8 +85,8 @@ void	sector_walls_prepare(t_app *app, t_wall *walls, int wall_count)
 	while (++i < wall_count)
 	{
 		walls[i].line = get_wall_line(app,
-			walls[i].sector_id,
-			walls[i].wall_id);
+				walls[i].sector_id,
+				walls[i].wall_id);
 		dotproduct = get_wall_dotproduct(app, walls[i]);
 		walls[i].start_x = translate_window_x(app, walls[i].line.a, dotproduct);
 		walls[i].end_x = translate_window_x(app, walls[i].line.b, dotproduct);

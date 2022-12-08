@@ -1,4 +1,4 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/11 14:11:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/08 16:30:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,7 +157,10 @@ static int	wall_traversal_recursive(t_app *app, t_move new, int wall_id)
 					return (-1);
 				else
 				{
+					if (app->sectors[app->player.current_sector].wall_textures[i] == PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
+						return (FALSE);
 					app->player.current_sector = wall_id;
+					interaction_check_portal(app, wall_id);
 					if(new.elevation != app->sectors[wall_id].floor_height)
 						app->player.flying = TRUE;
 					return(wall_id);
@@ -186,6 +189,7 @@ static int	wall_traversal_recursive(t_app *app, t_move new, int wall_id)
 			else
 			{
 				app->player.current_sector = wall_id;
+				interaction_check_portal(app, wall_id);
 				if(new.elevation != app->sectors[wall_id].floor_height)
 					app->player.flying = TRUE;
 				return(wall_id);
@@ -240,7 +244,7 @@ void	update_position(t_app *app)
 			app->player.velocity += JETPACK;
 	}
 
-	ft_printf("elevation %f, floor_height%f, pos x%f, y%f\n", app->player.elevation, app->sectors[app->player.current_sector].floor_height, app->player.pos.x, app->player.pos.y);
+	//ft_printf("elevation %f, floor_height%f, pos x%f, y%f\n", app->player.elevation, app->sectors[app->player.current_sector].floor_height, app->player.pos.x, app->player.pos.y);
 	//ft_printf("test timer %f, velocity %f jetpack %b\n", app->player.jump_timer, app->player.velocity, app->player.jetpack);
 	//checks if player is under floor and resets player to floor
 	if(app->player.elevation < app->sectors[app->player.current_sector].floor_height)
@@ -282,24 +286,6 @@ void	update_position(t_app *app)
 	app->player.jetpack_boost = FALSE;
 }
 
-
-/**
- * Rotates player direction by given angle.
- */
-void	player_rotate(t_app *app, double angle)
-{
-	t_matrix2	rotation;
-
-	rotation = (t_matrix2){
-		(t_vector2){cos(angle), -sin(angle)},
-		(t_vector2){sin(angle), cos(angle)}
-	};
-	app->player.dir = ft_vector_multiply_matrix(app->player.dir, rotation);
-	app->player.cam = ft_vector_multiply_matrix(app->player.cam, rotation);
-	app->conf->skybox_offset = fmod(app->conf->skybox_offset + 720.f, 720.f)
-		+ angle * RADIAN_IN_DEG;
-}
-
 /**
  * Moves player to given direction if there is no collision.
  */
@@ -334,7 +320,7 @@ void	player_move(t_app *app, t_movement movement, double speed)
 	if (movement == UPWARD && !app->player.flying)
 	{
 		app->player.flying = TRUE;
-		app->player.jump_timer = 0.f;
+		app->player.jump_timer = 0.0;
 	}
 	if (movement == UPWARD && app->player.flying && app->player.jump_timer == JUMP_TIME)
 	{

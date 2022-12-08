@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/14 16:21:10 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/08 16:06:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,16 @@ typedef enum e_movement {
 	DOWNWARD = 5
 }	t_movement;
 
+typedef struct s_inventory
+{
+	int			ammo;
+	int			special_ammo;
+	int			potion;
+	int			antidote;
+	int			key;
+	t_bool		jetpack;
+}	t_inventory;
+
 /**
  * Struct for player. Contains players position, direction and camera plane.
  */
@@ -64,12 +74,27 @@ typedef struct s_player
 	t_bool			jetpack;
 	t_bool			jetpack_boost;
 	double			jump_timer;
+	int				hp;
+	int				weapons;
+	int				shield;
+	t_inventory		inventory;
 }	t_player;
+
+typedef struct s_export_player
+{
+	t_vector2		position;
+	t_vector2		direction;
+	int				sector;
+	int				health;
+	int				weapons;
+	int				armor;
+	t_inventory		inventory;
+}	t_export_player;
 
 typedef struct s_move
 {
 	t_vector2	pos;
 	double		elevation;
-} t_move;
+}	t_move;
 
 #endif

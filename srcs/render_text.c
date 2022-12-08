@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:48:08 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/26 14:57:46 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/11/21 11:41:08 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,40 @@ static t_rect	get_rect(int c);
 static void		render_char(t_app *app, t_point *position, t_rect src);
 static t_rect	get_char(char *str, int c, int line);
 
-void	render_text(t_app *app, t_point position, char *text)
+void	render_text(t_app *app, t_rect frame, char *text)
 {
 	int		i;
+	int		word;
+	t_point	pos;
 
+	pos.x = frame.x;
+	pos.y = frame.y;
 	i = 0;
+	word = 1;
 	while (text[i] != '\0')
 	{
-		render_char(app, &position, get_rect(text[i]));
+		if (i > 0 && text[i - 1] == ' ')
+		{
+			word = i;
+			while (text[word] != ' ' && text[word] != '\0')
+				word++;
+			if (pos.x + 12 * (word - i) > frame.x + frame.w)
+			{
+				pos.x = frame.x;
+				pos.y += app->assets.font.size * 1.25;
+				if (text[i] == ' ')
+					i++;
+			}
+		}
+		if (text[i] == '\n')
+		{
+			pos.x = frame.x;
+			pos.y += app->assets.font.size * 1.25;
+			i++;
+		}
+		if (pos.y + app->assets.font.size > frame.y + frame.h)
+			break ;
+		render_char(app, &pos, get_rect(text[i]));
 		i++;
 	}
 }
@@ -92,26 +118,6 @@ static t_rect	get_char(char *str, int c, int line)
 
 void	change_font(t_app *app, int size, int color)
 {
-	int		x;
-	int		y;
-	int		pixel_pos;
-	char	*pixel;
-
 	app->assets.font.size = size;
-	x = 0;
-	y = 0;
-	while (y < app->assets.font.font->h)
-	{
-		while (x < app->assets.font.font->w)
-		{
-			pixel_pos = (y * app->assets.font.font->pitch)
-			+ (x * IMAGE_PIXEL_BYTES);
-			pixel = app->assets.font.font->pixels + pixel_pos;
-			if ((*(int *)pixel & 0xFF000000) != 0x00000000)
-				put_pixel_to_surface(app->assets.font.font, x, y, color);
-			x++;
-		}
-		x = 0;
-		y++;
-	}
+	color_surface(app->assets.font.font, color);
 }

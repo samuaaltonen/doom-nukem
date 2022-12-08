@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:56:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/14 15:44:45 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/11/25 16:56:22 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,33 +15,27 @@
 /**
 * Renders weapon, armor and inventory icons on the help menu sidebar.
 */
-void	render_icons(t_app *app, SDL_Surface *asset, t_point point, int max)
+void	render_player_icons(t_app *app, SDL_Surface *asset, t_point point, int max)
 {
 	t_rect		src;
 	t_rect		icon;
 	int			index;
+	int			start_x;
 
 	index = 1;
-	while (index <= max)
+	start_x = point.x;
+	while (index < max)
 	{
-		if (index == app->player.selected_weapon && asset == app->assets.sprite)
-		{
-			set_icon_rect(&src, (t_point){ICON_SIZE * (index + max), 0},
+		set_icon_rect(&src, (t_point){ICON_SIZE * index, 0},
 				(t_point){ICON_SIZE / 2, ICON_SIZE / 2});
-		}
-		else if (index == app->player.selected_armor && asset == app->assets.sprite)
-		{
-			set_icon_rect(&src, (t_point){ICON_SIZE * (index + max), 0},
-				(t_point){ICON_SIZE / 2, ICON_SIZE / 2});
-		}
-		else
-		{
-			set_icon_rect(&src, (t_point){ICON_SIZE * index, 0},
-				(t_point){ICON_SIZE / 2, ICON_SIZE / 2});
-		}
 		set_icon_rect(&icon, point, (t_point){ICON_SIZE / 2, ICON_SIZE / 2});
 		blit_surface(asset, &src, app->surface, &icon);
 		point.x += (ICON_SIZE / 2) + 10;
+		if (index % 5 == 0)
+		{
+			point.y += (ICON_SIZE / 2) + 10;
+			point.x = start_x;
+		}
 		index++;
 	}
 }
@@ -53,40 +47,38 @@ void	render_arrows(t_app *app, t_point left, t_point right)
 {
 	t_point	screen_pos;
 
-	screen_pos.x = (app->mouse_track.x - app->view_pos.x) * (app->surface->w)
-		/ (app->view_size.x - app->view_pos.x);
-	screen_pos.y = (app->mouse_track.y - app->view_pos.y) * (app->surface->h)
-		/ (app->view_size.y - app->view_pos.y);
+	SDL_GetMouseState(&screen_pos.x, &screen_pos.y);
 	if ((left.x - 5) < screen_pos.x && (left.x + 10) > screen_pos.x
 		&& left.y < screen_pos.y && (left.y + 10) > screen_pos.y)
-		toggle_active_color(app, 1, "<", left);
+		toggle_active_color(app, 1, "<", (t_rect){left.x, left.y, 15, 15});
 	else
-		toggle_active_color(app, 0, "<", left);
+		toggle_active_color(app, 0, "<", (t_rect){left.x, left.y, 15, 15});
 	if ((right.x - 5) < screen_pos.x && (right.x + 10) > screen_pos.x
 		&& right.y < screen_pos.y && (right.y + 10) > screen_pos.y)
-		toggle_active_color(app, 1, ">", right);
+		toggle_active_color(app, 1, ">", (t_rect){right.x, right.y, 15, 15});
 	else
-		toggle_active_color(app, 0, ">", right);
+		toggle_active_color(app, 0, ">", (t_rect){right.x, right.y, 15, 15});
 }
 
 /**
-* Renders player healthbar on the help menu sidebar.
+* Renders player statusbar on the help menu sidebar.
 */
-void	render_healthbar(t_app *app)
+void	render_statusbar(t_app *app, t_point point, int statusbar, int color)
 {
 	int		x;
 	int		y;
 	
-	y = 280;
-	while (y <= 300)
+	y = point.y;
+	while (y <= point.y + 20)
 	{
-		x = 39;
-		while (x <= 240)
+		x = point.x;
+		while (x <= point.x + 201)
 		{
-			if (y == 280 || y == 300 || x == 39 || x == 240)
-				put_pixel_to_surface(app->surface, x, y, 0x000000);
-			else if (x < (app->player.health + 40))
-				put_pixel_to_surface(app->surface, x, y, 0x00FF00);
+			if (y == point.y || y == point.y + 20
+				|| x == point.x || x == point.x + 201)
+				put_pixel_to_surface(app->surface, x, y, TEXT);
+			else if (x < (statusbar + 40))
+				put_pixel_to_surface(app->surface, x, y, color);
 			x++;
 		}
 		y++;
@@ -94,9 +86,55 @@ void	render_healthbar(t_app *app)
 }
 
 /**
-* Renders weapon and armor staticbars on the help menu sidebar.
+ * Event function to change item amount in inventory using the left and
+ * right arrowkeys.
 */
-// void	render_statics(t_app *app)
-// {
-	
-// }
+void	change_item_amount(t_app *app, SDL_Keycode key)
+{
+	if (key == SDLK_LEFT)
+	{
+		if (app->selected[0] && app->player.inventory.ammo > 0)
+			app->player.inventory.ammo--;
+		if (app->selected[1] && app->player.inventory.special_ammo > 0)
+			app->player.inventory.special_ammo--;
+		if (app->selected[2] && app->player.inventory.potion > 0)
+			app->player.inventory.potion--;
+		if (app->selected[3] && app->player.inventory.antidote > 0)
+			app->player.inventory.antidote--;
+		if (app->selected[4] && app->player.inventory.key > 0)
+			app->player.inventory.key--;
+		if (app->selected[5] && app->player.inventory.jetpack > 0)
+			app->player.inventory.jetpack--;
+		// if (app->selected[6] && app->player.inventory.item1 > 0)
+		// 	app->player.inventory.item1--;
+		// if (app->selected[7] && app->player.inventory.item2 > 0)
+		// 	app->player.inventory.item2--;
+		// if (app->selected[8] && app->player.inventory.item3 > 0)
+		// 	app->player.inventory.item3--;
+		// if (app->selected[9] && app->player.inventory.item4 > 0)
+		// 	app->player.inventory.item4--;
+	}
+	if (key == SDLK_RIGHT)
+	{
+		if (app->selected[0] && app->player.inventory.ammo < MAX_AMMO)
+			app->player.inventory.ammo++;
+		if (app->selected[1] && app->player.inventory.special_ammo < MAX_AMMO)
+			app->player.inventory.special_ammo++;
+		if (app->selected[2] && app->player.inventory.potion < MAX_ITEM_CAPACITY)
+			app->player.inventory.potion++;
+		if (app->selected[3] && app->player.inventory.antidote < MAX_ITEM_CAPACITY)
+			app->player.inventory.antidote++;
+		if (app->selected[4] && app->player.inventory.key < MAX_ITEM_CAPACITY)
+			app->player.inventory.key++;
+		if (app->selected[5] && app->player.inventory.jetpack < 1)
+			app->player.inventory.jetpack++;
+		// if (app->selected[6] && app->player.inventory.item1 < MAX_ITEM_CAPACITY)
+		// 	app->player.inventory.item1++;
+		// if (app->selected[7] && app->player.inventory.item2 < MAX_ITEM_CAPACITY)
+		// 	app->player.inventory.item2++;
+		// if (app->selected[8] && app->player.inventory.item3 < MAX_ITEM_CAPACITY)
+		// 	app->player.inventory.item3++;
+		// if (app->selected[9] && app->player.inventory.item4 < MAX_ITEM_CAPACITY)
+		// 	app->player.inventory.item4++;
+	}
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:22:26 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/07 12:53:17 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:23:15 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ static void	update_fps_info(t_app *app);
 static void	update_avg_fps(t_app *app);
 
 /**
- * Calculates frame delta time and sets FPS accordingly.
+ * @brief Calculates frame delta time and sets FPS accordingly.
+ * 
+ * @param app 
  */
 void	update_fps_counter(t_app *app)
 {
@@ -31,11 +33,13 @@ void	update_fps_counter(t_app *app)
 	app->conf->fps = (int)(1 / app->conf->delta_time);
 	app->conf->fps_clock = time_now;
 	update_avg_fps(app);
-    update_fps_info(app);
+	update_fps_info(app);
 }
 
 /**
- * Updates the info string with given value backwards from given index
+ * @brief Updates the info string with given value backwards from given index
+ * 
+ * @param app 
  */
 static void	update_fps_info(t_app *app)
 {
@@ -51,9 +55,10 @@ static void	update_fps_info(t_app *app)
 	}
 }
 
-
 /**
- * Updates the fps average every 100 frames
+ * @brief Updates the fps average every 100 frames
+ * 
+ * @param app 
  */
 static void	update_avg_fps(t_app *app)
 {
@@ -68,5 +73,5 @@ static void	update_avg_fps(t_app *app)
 	}
 	app->conf->fps_total += app->conf->fps;
 	app->conf->frames_total++;
-	app->conf->fps_avg = app->conf->fps_chunk / 100;
+	app->conf->fps_avg = (int)((double)app->conf->fps_chunk / 100.0);
 }

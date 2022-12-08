@@ -6,74 +6,21 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:38:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/14 15:53:47 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:51:15 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * @brief Shades color. Shade values can be from -8 to +8. -8 is completely
- * dark (0x000000), +8 is completely white (0xFFFFFF).
- *
- * @param color 
- * @param shade 
- * @return int 
- */
-int	shade_color(int color, int shade)
-{
-	int	r;
-	int	g;
-	int	b;
-
-	if (!shade)
-		return (color);
-	if (shade <= -8)
-		return (0x000000);
-	if (shade >= 8)
-		return (0xFFFFFF);
-	r = color & 0xFF0000;
-	g = color & 0x00FF00;
-	b = color & 0x0000FF;
-	r += (r * shade) >> 3;
-	g += (g * shade) >> 3;
-	b += (b * shade) >> 3;
-	if (r > 0xFF0000)
-		r = 0xFF0000;
-	if (g > 0x00FF00)
-		g = 0x00FF00;
-	if (b > 0x0000FF)
-		b = 0x0000FF;
-	return ((r & 0xFF0000) | (g & 0x00FF00) | (b & 0x0000FF));
-}
-
-/**
- * Returns pixel color at given position.
- */
-int	get_pixel_color(SDL_Surface *surface, int x, int y)
-{
-	int		pixel_pos;
-	char	*pixel;
-
-	pixel_pos = (y * surface->pitch) + (x * IMAGE_PIXEL_BYTES);
-	if (pixel_pos < 0 || x >= surface->w || y >= surface->h)
-		return (0);
-	pixel = surface->pixels + pixel_pos;
-	return (*(int *)pixel);
-}
-
-/**
- * Flushes image (sets all pixels to black)
- */
-void	flush_surface(SDL_Surface *surface)
-{
-	ft_bzero(surface->pixels, surface->h * surface->pitch);
-}
-
-/**
- * Blits a source rectangle from a source surface into a destination
+ * @brief Blits a source rectangle from a source surface into a destination
  * rectangle from the destination surface. Scales the source to fit
  * the destination.
+ * 
+ * @param src 
+ * @param src_rect 
+ * @param dst 
+ * @param dst_rect 
  */
 void	blit_surface(SDL_Surface *src, t_rect *src_rect,
 	SDL_Surface *dst, t_rect *dst_rect)
@@ -106,7 +53,44 @@ void	blit_surface(SDL_Surface *src, t_rect *src_rect,
 }
 
 /**
- * Checks for errors before blitting the surfaces
+ * @brief Fills al pixels in surface with color.
+ * 
+ * @param surface 
+ * @param color 
+ */
+void	color_surface(SDL_Surface *surface, int color)
+{
+	int		x;
+	int		y;
+	int		pixel_pos;
+	char	*pixel;
+
+	x = 0;
+	y = 0;
+	while (y < surface->h)
+	{
+		while (x < surface->w)
+		{
+			pixel_pos = (y * surface->pitch)
+				+ (x * IMAGE_PIXEL_BYTES);
+			pixel = surface->pixels + pixel_pos;
+			if ((*(int *)pixel & 0xFF000000) != 0x00000000)
+				put_pixel_to_surface(surface, x, y, color);
+			x++;
+		}
+		x = 0;
+		y++;
+	}
+}
+
+/**
+ * @brief Checks for errors before blitting the surfaces.
+ * 
+ * @param src 
+ * @param src_rect 
+ * @param dst 
+ * @param dst_rect 
+ * @return int 
  */
 int	check_blit(SDL_Surface *src, t_rect *src_rect,
 	SDL_Surface *dst, t_rect *dst_rect)
@@ -122,8 +106,10 @@ int	check_blit(SDL_Surface *src, t_rect *src_rect,
 }
 
 /**
- * Sets the given rectangle parameters to the size
- * of the given surface.
+ * @brief Sets the given rectangle parameters to the size of the given surface.
+ * 
+ * @param surface 
+ * @param rect 
  */
 void	rect_from_surface(SDL_Surface *surface, t_rect *rect)
 {

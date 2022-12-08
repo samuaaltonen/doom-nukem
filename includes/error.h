@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:51:24 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/21 17:00:20 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:17:32 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@
 # define MSG_ERROR_ALLOC "Could not allocate memory."
 # define MSG_ERROR_IMAGE_INIT "Image initialization failed."
 # define MSG_ERROR_THREADS "Could not create a thread."
-# define MSG_ERROR_THREADS_JOIN "Could not join threads."
+# define MSG_ERROR_THREADS_SIGNAL "Error with waking up a thread or \
+locking/unlocking a mutex."
 # define MSG_ERROR_TEXTURE_FILE_ACCESS "Could not open/close a texture file."
 # define MSG_ERROR_TEXTURE_LOAD_FAILED "Texture files are invalid."
 # define MSG_ERROR_FONT "Could not open font file."

@@ -6,95 +6,117 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/14 15:48:03 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/07 13:54:42 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Mouse click events in the player menu. Clicking on arrows next to icons
- * changes the selected weapon/armor.
+ * Left mouse click events when list creation is toggled on. Creates a
+ * linked list from the clicked points, checking that their position is valid
+ * and completes the drawn sector.
 */
-static void	player_menu_events(t_app *app, t_vector2 mouse)
-{
-	t_point	screen_pos;
-
-	screen_pos.x = (mouse.x - app->view_pos.x) * (app->surface->w)
-		/ (app->view_size.x - app->view_pos.x);
-	screen_pos.y = (mouse.y - app->view_pos.y) * (app->surface->h)
-		/ (app->view_size.y - app->view_pos.y);
-	if (screen_pos.x == 25 && screen_pos.y == 76
-		&& app->player.selected_weapon > 1)
-		app->player.selected_weapon--;
-	if (screen_pos.x == 256 && screen_pos.y == 76
-		&& app->player.selected_weapon < MAX_WEAPONS)
-		app->player.selected_weapon++;
-	if (screen_pos.x == 25 && screen_pos.y == 192
-		&& app->player.selected_armor > 1)
-		app->player.selected_armor--;
-	if (screen_pos.x == 256 && screen_pos.y == 192
-		&& app->player.selected_armor < MAX_ARMOR)
-		app->player.selected_armor++;
-}
-
-/**
- * if not in sector creation, select points
- * else add new points to list or starts a new list
- */
-int	events_mouse_click(t_app *app, SDL_Event *event)
+static int	list_creation_events(t_app *app)
 {
 	t_vec2_lst	*tmp;
 
-	app->mouse_down = 0;
-	if (event->button.button == SDL_BUTTON_LEFT && !app->list_ongoing && app->list_creation)
+	if (!app->list_ongoing)
 	{
 		app->active = new_vector_list(&app->mouse_track);
 		app->active_last = app->active;
 		app->list_ongoing = TRUE;
 	}
-	else if ((event->button.button == SDL_BUTTON_RIGHT
-			|| event->button.button == SDL_BUTTON_MIDDLE) && app->list_ongoing)
-		cancel_list_creation(app);
-	else if (event->button.button == SDL_BUTTON_LEFT && app->list_ongoing)
+	else
 	{
-		if (app->mouse_track.x == app->active->point.x && app->mouse_track.y == app->active->point.y)
+		if (app->mouse_track.x == app->active->point.x
+			&& app->mouse_track.y == app->active->point.y && valid_sector(app))
 			return (complete_sector(app));
-		else if (valid_point(app))
+		else if (valid_point(app) && app->active)
 		{
 			tmp = new_vector_list(&app->mouse_track);
 			put_to_vector_list(&app->active, tmp);
 			app->active_last = tmp;
 		}
 	}
-	else if (event->button.button == SDL_BUTTON_LEFT)
+	return (0);
+}
+
+/**
+ * Left mouse click events when there's an active sector. If player edit mode
+ * is toggled on, places player on map. If object is clicked, selcts object
+ * and changes menu to object menu. Clicking member sectors selects them as
+ * active sector.
+*/
+static void	active_sector_events(t_app *app)
+{
+	if (app->player_edit)
 	{
-		//if active sector has member sectors find them before linees
-		if (!app->active_sector && app->mouse_track.x == app->player.position.x
-			&& app->mouse_track.y == app->player.position.y)
-			app->player_menu = 1;
-		else if (app->active_sector)
-		{
-			if (app->active_sector->member_sectors[0] && find_child_sector(app))
-				app->active_sector = find_child_sector(app);
-			app->active = find_clicked_vector(app);
-		}
-		else if (app->player_edit)
-		{
-			app->mouse_click = app->mouse_track;
-			app->player.sector = get_sector_id(app, click_sector(app));
-			render_player(app);
-			app->player_edit = FALSE;
-		}
-		else if (app->player_menu)
-			player_menu_events(app, app->mouse_track);
-		else
-			app->active_sector = click_sector(app);
+		app->player.position = app->mouse_track;
+		app->player.direction = (t_vector2){0.f,1.f};
+		app->player.sector = app->active_sector;
+		app->player_edit = FALSE;
+		check_player_position(app);
 	}
+	else if (select_object(app))
+		app->object_menu = TRUE;
+	else if (app->active_sector->member_sectors[0]
+		&& find_child_sector(app))
+		app->active_sector = find_child_sector(app);
+	app->active = find_clicked_vector(app);
+}
+
+/**
+ * All the events happening from left mouse click.
+*/
+static int	left_click_events(t_app *app, t_point screen_pos)
+{
+	if (app->list_creation)
+		return (list_creation_events(app));
+	else if (app->object_new)
+	{
+		if (valid_object(app))
+			new_object(app);
+		app->object_new = FALSE;
+	}
+	else if (app->player_menu)
+		player_menu_events(app, screen_pos);
+	else if (app->interaction_menu && app->current_interaction)
+		interaction_menu_events(app, 40, screen_pos);
+	else if (!app->active_sector && app->mouse_track.x == app->player.position.x
+		&& app->mouse_track.y == app->player.position.y)
+		app->player_menu = TRUE;
+	else if (check_mouse(screen_pos, (t_rect){0, 0, HELP_MENU_W, WIN_H})
+		&& !app->interaction_menu)
+		activate_interaction_menu(app, screen_pos);
+	else if (app->active_sector)
+		active_sector_events(app);
+	else
+		app->active_sector = click_sector(app);
+	return (0);
+}
+
+/**
+ * All events happening from mouse button up.
+ */
+int	events_mouse_click(t_app *app, SDL_Event *event)
+{
+	t_point		screen_pos;
+
+	app->mouse_down = FALSE;
+	SDL_GetMouseState(&screen_pos.x, &screen_pos.y);
+	if (event->button.button == SDL_BUTTON_LEFT)
+		return (left_click_events(app, screen_pos));
 	else
 	{
+		if (app->list_ongoing)
+			cancel_list_creation(app);
+		if (app->interaction_menu)
+			link_interaction(app);
+		toggle_new_object(app, TRUE);
 		app->active = NULL;
-		app->player_menu = 0;
+		app->player_menu = FALSE;
+		app->object_menu = FALSE;
 		if (app->active_sector)
 			app->active_sector = app->active_sector->parent_sector;
 		else
@@ -103,9 +125,12 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 	return (0);
 }
 
+/**
+ * Changes mouse_down state to true when mouse button left is pressed down.
+*/
 int	events_mouse_drag(t_app *app)
 {
-	app->mouse_down = 1;
+	app->mouse_down = TRUE;
 	return (0);
 }
 
@@ -117,6 +142,7 @@ void	cancel_list_creation(t_app *app)
 	del_vector_list(&(app->active));
 	app->active = NULL;
 	app->active_last = NULL;
+	app->active_sector = NULL;
 	app->list_ongoing = FALSE;
 	app->list_creation = FALSE;
 }

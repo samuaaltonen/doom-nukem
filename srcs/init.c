@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/14 16:22:42 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:56:01 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,13 @@ int	config_init(t_app *app)
 	return (1);
 }
 
-
 /**
  * Prepares the application to be rendered:
  * Creates window and opens an audio device
  */
 void	sdl_init(t_app *app)
 {
-	if(SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO) < 0)
+	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS | SDL_INIT_AUDIO) < 0)
 		exit_error(MSG_ERROR_SDL_INIT);
 	SDL_SetHint(SDL_HINT_RENDER_DRIVER, "opengl");
 	app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_SHOWN);
@@ -64,7 +63,8 @@ void	sdl_init(t_app *app)
 	app->surface = SDL_GetWindowSurface(app->win);
 	if (!app->surface)
 		exit_error(MSG_ERROR_WINDOW_SURFACE);
-	app->audio.device_id = SDL_OpenAudioDevice(NULL, 0, &app->audio.wav_spec, NULL, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
+	app->audio.device_id = SDL_OpenAudioDevice(NULL, 0, &app->audio.wav_spec,
+		NULL, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
 	if (!app->audio.device_id)
 		exit_error(MSG_ERROR);
 	SDL_ShowCursor(SDL_DISABLE);
@@ -76,14 +76,21 @@ void	sdl_init(t_app *app)
 void    load_assets(t_app *app)
 {
 	app->assets.ui_frame = SDL_LoadBMP(UI_FRAME_PATH);
-	app->assets.button_idle = SDL_LoadBMP(BUTTON_IDLE_PATH);
-	app->assets.button_select = SDL_LoadBMP(BUTTON_SELECT_PATH);
-	app->assets.button_press = SDL_LoadBMP(BUTTON_PRESS_PATH);
 	app->assets.title_screen_image = SDL_LoadBMP(TITLESCREEN_PATH);
+	app->assets.crosshair = SDL_LoadBMP(CROSSHAIR_PATH);
 	app->assets.pointer = SDL_LoadBMP(POINTER_PATH);
+	app->assets.shield = SDL_LoadBMP(SHIELD_PATH);
+	app->assets.hp = SDL_LoadBMP(HP_PATH);
+	app->assets.meter = SDL_LoadBMP(METER_PATH);
 	app->assets.sprite = SDL_LoadBMP(PANELS_PATH);
 	app->assets.bg = SDL_LoadBMP(SKYBOX_PATH);
+
+	//temp
+	app->assets.sprites[0] = SDL_LoadBMP(SPRITE_PATH2);
+	app->assets.sprites[1] = SDL_LoadBMP(TITLESCREEN_PATH);
+
     load_font(app);
+	load_texts(app);
 }
 
 /**

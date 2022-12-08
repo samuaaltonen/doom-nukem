@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/04 14:46:06 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/02 16:03:57 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,12 +45,15 @@ int	events_keyup(int keycode, t_app *app)
 	{
 		if (app->status == STATUS_GAME || app->status == STATUS_PAUSEMENU)
 			pause_game(app);
+		if (app->status == STATUS_MAINMENU)
+			app->status = STATUS_TITLESCREEN;
+			
 	}
 	if (keycode == SDLK_SPACE)
 	{
 		if (app->status == STATUS_TITLESCREEN)
 			app->status = STATUS_MAINMENU;
-		//----DEBUG FUNCTIONALITY
+		//----DEBUG FEATURE
 		else if (app->status == STATUS_MAINMENU)
 			start_game(app);
 		//----
@@ -92,5 +95,7 @@ int	events_keydown(int keycode, t_app *app)
 		app->conf->keystates |= CTRL;
 	if (keycode == SDLK_SPACE)
 		app->conf->keystates |= SPACE;
+	if (keycode == SDLK_f)
+		interaction_check(app);
 	return (0);
 }

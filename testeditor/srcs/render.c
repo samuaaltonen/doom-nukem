@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/03 11:06:32 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:04:45 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	render_sector(t_app *app, t_vec2_lst *sector_start)
 	{
 		if (tmp->type > -1)
 			draw_list_lines(app, tmp, tmp->next, PORTAL);
+		else if(interaction_wall_check(app, tmp))
+			draw_list_lines(app, tmp, tmp->next, INTERACTION);
 		else
 			draw_list_lines(app, tmp, tmp->next, 0xEEEEEE);
 		if (tmp->next == sector_start)
@@ -66,7 +68,7 @@ void	render_sector_points(t_app *app)
 		head = app->active_sector->wall_list;
 		while (head)
 		{
-			render_selection_point(app, head, 2);
+			render_point(app, head->point, 2, POINT);
 			head = head->next;
 			if (head == app->active_sector->wall_list)
 				break ;
@@ -84,30 +86,61 @@ void	render_sector_points(t_app *app)
  * @param point 
  * @param size 
  */
-void	render_selection_point(t_app *app, t_vec2_lst *point, int size)
+void	render_point(t_app *app, t_vector2 point, int size, int color)
 {
-	t_point		min;
-	t_point		max;
+t_point		min;
+t_point		max;
 
-	if (point)
+	min.x = (point.x - app->view_pos.x)
+		* (app->surface->w) / (app->view_size.x - app->view_pos.x);
+	min.y = (point.y - app->view_pos.y)
+		* (app->surface->h) / (app->view_size.y - app->view_pos.y);
+	max.x = min.x + size;
+	max.y = min.y + size;
+	min.x = min.x - size;
+	min.y = min.y - size;
+	while (min.y < max.y)
 	{
-		min.x = (point->point.x - app->view_pos.x)
-			* (app->surface->w) / (app->view_size.x - app->view_pos.x);
-		min.y = (point->point.y - app->view_pos.y)
-			* (app->surface->h) / (app->view_size.y - app->view_pos.y);
-		max.x = min.x + size;
-		max.y = min.y + size;
-		min.x = min.x - size;
-		min.y = min.y - size;
-		while (min.y < max.y)
+		min.x = max.x - size * 2;
+		while (min.x < max.x)
 		{
-			min.x = max.x - size * 2;
-			while (min.x < max.x)
-			{
-				put_pixel_to_surface(app->surface, min.x, min.y, 0xFF00FF);
-				min.x++;
-			}
-			min.y++;
+			put_pixel_to_surface(app->surface, min.x, min.y, color);
+			min.x++;
 		}
+		min.y++;
+	}
+}
+
+/**
+ * @brief Midpoint Circle Algorithm, calculates only one octant
+ * 3 - 2 * rad avoids overdraw -rad works as well
+ * 4 / 6 and 4 / 10 make the circle more circular
+ */
+void draw_circle(t_app *app, t_point pos, int rad, int color)
+{
+	t_point	tmp;
+	int	err;
+
+	tmp.x = 0;
+	tmp.y = rad;
+	err = 3 - 2 * rad;
+	while (tmp.x <= tmp.y)
+	{
+		put_pixel_to_surface(app->surface, pos.x + tmp.x, pos.y + tmp.y, color);
+		put_pixel_to_surface(app->surface, pos.x + tmp.y, pos.y + tmp.x, color);
+		put_pixel_to_surface(app->surface, pos.x - tmp.x, pos.y + tmp.y, color);
+		put_pixel_to_surface(app->surface, pos.x - tmp.y, pos.y + tmp.x, color);
+		put_pixel_to_surface(app->surface, pos.x + tmp.x, pos.y - tmp.y, color);
+		put_pixel_to_surface(app->surface, pos.x + tmp.y, pos.y - tmp.x, color);
+		put_pixel_to_surface(app->surface, pos.x - tmp.x, pos.y - tmp.y, color);
+		put_pixel_to_surface(app->surface, pos.x - tmp.y, pos.y - tmp.x, color);
+		if (err < 0)
+			err += 4 * tmp.x + 6;
+		else
+		{
+			err += 4 * (tmp.x - tmp.y) + 10;
+			tmp.y--;
+		}
+		tmp.x++;
 	}
 }
