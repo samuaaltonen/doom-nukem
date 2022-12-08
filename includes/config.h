@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/08 18:20:54 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/08 19:41:02 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@
 # define TEX_SIZE 64
 # define TEX_PICKUP 44
 # define TEX_OBJECT 128
-# define SMALL_OBJECT_IDS 2
 # define SKYBOX_W 1024 // Optimal size 4x2.5 of window size (5120x1800 for 1280x720)
 # define SKYBOX_H 1024
 # define MOUSE_SENSITIVITY_HORIZONTAL 0.3

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/08 19:10:55 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/08 19:45:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,11 +42,11 @@ void	draw_object_pixel(t_app *app, t_render_object *object, t_point window, t_ve
 
 	object_type = app->objects[object->id].type;
 	if(object_type < MAX_SMALL_OBJECTS)
-		color = get_pixel_color(app->assets.sprites[SMALL_SPRITE], (int)texture.x - ((object->frame) * object->tex_size) - object->tex_size, (int)texture.y + ((object_type - 1) * object->tex_size) + 1);
+		color = get_pixel_color(app->assets.sprites[SMALL_SPRITE], (int)texture.x - ((object->frame) * object->tex_size) - object->tex_size, (int)texture.y + (object_type - 1) * object->tex_size);
 	else if(object_type < MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS)
-		color = get_pixel_color(app->assets.sprites[BIG_SPRITE], (int)texture.x - ((object->frame) * object->tex_size) - object->tex_size, (int)texture.y * (object_type - MAX_SMALL_OBJECTS));
+		color = get_pixel_color(app->assets.sprites[BIG_SPRITE], (int)texture.x - ((object->frame) * object->tex_size) - object->tex_size, (int)texture.y + (object_type - MAX_SMALL_OBJECTS) * object->tex_size);
 	else if(object_type < MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES)
-		color = get_pixel_color(app->assets.sprites[ENEMY_SPRITE], (int)texture.x - ((object->frame) * object->tex_size) - object->tex_size, (int)(texture.y * (app->object_states[object->id])));
+		color = get_pixel_color(app->assets.sprites[ENEMY_SPRITE], (int)texture.x - ((object->frame) * object->tex_size) - object->tex_size, (int)(texture.y + ((int)app->object_states[object->id]) * object->tex_size));
 	else
 		color = get_pixel_color(app->assets.sprites[PROJECTILE_SPRITE], (int)texture.x - ((object->frame) * object->tex_size) - object->tex_size, (int)texture.y * (object_type - (MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES)));
 	if ((color & 0xFF000000) > 0)
@@ -118,11 +118,11 @@ void	*object_render_thread(void *data)
 
 static int	object_tex_size(t_app *app, int id)
 {
-	if(app->objects[id].type < SMALL_OBJECT_IDS)
+	if(app->objects[id].type < MAX_SMALL_OBJECTS)
 	{
 		return (TEX_PICKUP);
 	}
-	return (TEX_PICKUP);
+	return (TEX_OBJECT);
 }
 
 static t_bool	init_object(t_app *app, int i, t_render_object *object,
@@ -222,7 +222,7 @@ static void	objects_visible(t_app *app)
 		if (!init_object(app, i,object,&angle))
 			continue;
 		set_object(app, object, &angle, &(app->objects[i]));
-		ft_printf("object frame %i, object texsize %i, type %i, size x%f,y%f\n", object->frame, object->tex_size, app->objects[object->id].type, object->size.x, object->size.y);
+		ft_printf("id %i, object frame %i, object texsize %i, type %i, state %f, size x%f,y%f\n", object->id, object->frame, object->tex_size, app->objects[object->id].type, app->object_states[object->id] ,object->size.x, object->size.y);
 
 	}
 	i = -1;

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/30 14:41:00 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/08 19:33:21 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,18 @@ void	render_mainmenu(t_app *app)
 	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
 }
 
+static void update_states(t_app *app)
+{
+	app->object_states[0] += 5.f * app->conf->delta_time;
+	if(app->object_states[0] > MAX_ENEMY_STATES)
+		app->object_states[0] = 0.f;
+}
+
 void	render_game(t_app *app)
 {
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	handle_movement(app);
+	update_states(app);
 	render_sectors(app);
 	render_objects(app);
 	render_ui(app);
