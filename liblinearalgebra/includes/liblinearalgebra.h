@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   liblinearalgebra.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:46:18 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/29 14:34:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:01:09 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,22 @@ typedef struct s_line {
 	t_vector2	b;
 }	t_line;
 
+/**
+ * Struct for integer coordinate point.
+ */
+typedef struct s_point
+{
+	int				x;
+	int				y;
+}	t_point;
+
+typedef struct s_triangle
+{
+	t_point	a;
+	t_point	b;
+	t_point	c;
+}	t_triangle;
+
 double		ft_vector_length(t_vector2 a);
 t_vector2	ft_vector_multiply_matrix(t_vector2 vector, t_matrix2 matrix);
 t_vector2	ft_vector_perpendicular(t_vector2 a);
@@ -62,5 +78,7 @@ int			ft_line_side(t_line line, t_vector2 coord);
 t_vector2	ft_vector2_sub(t_vector2 a, t_vector2 b);
 t_vector2	ft_vector2_add(t_vector2 a, t_vector2 b);
 int			ft_cmp_vec2(t_vector2 a, t_vector2 b);
+void		ft_point_swap(t_point *a, t_point *b);
+void		ft_swap(int *a, int *b);
 
 #endif

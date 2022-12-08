@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/06 15:09:56 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/08 14:37:18 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,15 +131,6 @@ enum e_colors {
 	POINT = 0xFF00FF,
 	INTERACTION = 0x5050FF
 };
-
-/**
- * Struct for integer coordinate point.
- */
-typedef struct s_point
-{
-	int				x;
-	int				y;
-}	t_point;
 
 typedef struct s_vec2_lst
 {
@@ -612,5 +603,10 @@ int				find_object_interaction(t_app *app);
 int				find_sector_interaction(t_app *app);
 int				find_interaction(t_app *app);
 void			delete_interaction(t_app *app, int id);
+
+
+void	fill_triangle(t_app *app, t_point a, t_point b, t_point c, int color);
+void	draw_point_line(t_app *app, t_point a, t_point b, int color);
+
 
 #endif
