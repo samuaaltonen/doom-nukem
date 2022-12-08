@@ -19,15 +19,6 @@
 # define PI_3_QUARTERS 2.35619449019
 
 /**
- * Struct for integer coordinate point.
- */
-typedef struct s_point
-{
-	int				x;
-	int				y;
-}	t_point;
-
-/**
  * Sturct for limits.
  */
 typedef struct s_limit
