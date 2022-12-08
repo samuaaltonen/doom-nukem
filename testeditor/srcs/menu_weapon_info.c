@@ -109,11 +109,9 @@ void	render_weapons(t_app *app)
 
 void	select_weapons(t_app *app, t_point screen_pos)
 {
-	int		index;
-	int		x;
+	int	index;
 
 	index = 0;
-	x = 0;
 	while (index < MAX_WEAPONS)
 	{
 		if (check_mouse(screen_pos, (t_rect){(ICON_SIZE / 2) * (index + 1)
