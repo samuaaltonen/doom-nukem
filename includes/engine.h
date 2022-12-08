@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/05 18:55:28 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:48:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,6 @@ enum e_occlusion {
 	OCCLUDE_BOTTOM,
 	OCCLUDE_BOTH,
 	OCCLUDE_NONE
-};
-
-enum e_event_id {
-	EVENT_NONE,
-	EVENT_CHANGE_FLOOR_HEIGHT,
-	EVENT_CHANGE_CEIL_HEIGHT,
-	EVENT_CHANGE_FLOOR_AND_CEIL_HEIGHT,
-	EVENT_CHANGE_LIGHT,
-	EVENT_TRIGGER_SOUND,
-	EVENT_DISPLAY_TEXT,
-	EVENT_END_LEVEL
-};
-
-enum e_animation_target_type {
-	TYPE_INT,
-	TYPE_DOUBLE,
 };
 
 /**
@@ -187,23 +171,13 @@ typedef struct s_wallstack
 	int		interesting_count;
 }	t_wallstack;
 
-typedef struct	s_level_header
+typedef struct s_level_header
 {
 	int	version;
 	int	sector_count;
 	int	object_count;
 	int	interaction_count;
 }	t_level_header;
-
-typedef struct s_interaction
-{
-	int				event_id;
-	double 			variable;
-	int				activation_sector;
-	int				activation_wall;
-	int				activation_object;
-	int				target_sector;
-}	t_interaction;
 
 typedef struct s_object
 {
@@ -224,19 +198,5 @@ typedef struct s_sky
 	t_point		size;
 	t_vector2	pixel_step;
 }	t_sky;
-
-/**
- * Animation struct that contains information about animation duration and its
- * progress. Also contains pointer to a variable that is modified every time
- * animation progresses.
- */
-typedef struct s_animation
-{
-	double	progress;
-	double	duration;
-	double	increment;
-	double	*target;
-	double	final_value;
-}	t_animation;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/05 18:55:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/08 14:41:16 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include "geometry.h"
 # include "engine.h"
 # include "player.h"
+# include "interactions.h"
 
 //STATUS MACROS
 # define STATUS_TITLESCREEN 0
@@ -68,7 +69,6 @@ typedef struct s_audio
 	Uint32				sound_length;
 }	t_audio;
 
-
 typedef struct s_render_object
 {
 	int			id;
@@ -77,8 +77,7 @@ typedef struct s_render_object
 	t_point		draw_end;
 	t_vector2	size;
 	t_vector2	step;
-} t_render_object;
-
+}	t_render_object;
 
 typedef struct s_objectstack
 {
@@ -113,6 +112,8 @@ typedef struct s_app
 	t_animation		animations[MAX_CONCURRENT_ANIMATIONS];
 	int				animation_count;
 	char			**texts;
+	int				text_lengths[MAX_TEXT_LINES];
+	t_textmodal		textmodal;
 }	t_app;
 
 /**
@@ -182,7 +183,9 @@ void		init_skybox_plane(t_app *app);
  * Sectors
  */
 t_line		get_wall_line(t_app *app, int sector_id, int wall_id);
-void		sector_visible_walls(t_app *app);
+void		sector_wallstack_build(t_app *app);
+void		sector_visible_walls(t_app *app, t_wallstack *wallstack, int index,
+				int sector_id);
 void		sector_walls_prepare(t_app *app, t_wall *walls, int wall_count);
 void		sector_walls_order(t_app *app, t_wall *walls, int wall_count);
 void		sector_stack_render(t_app *app, t_thread_data *thread,
@@ -216,6 +219,7 @@ void		draw_portal_partial_hole(t_app *app, int x, t_rayhit *hit);
  * Interactions
  */
 void		interaction_check(t_app *app);
+void		interaction_check_portal(t_app *app, int sector_id);
 void		interaction_trigger(t_app *app, int interaction_index);
 
 /**
@@ -223,6 +227,11 @@ void		interaction_trigger(t_app *app, int interaction_index);
  */
 t_bool		animation_create(t_app *app, t_animation animation);
 void		progress_animations(t_app *app);
+
+/**
+ * Textmodal animations
+ */
+void		render_textmodals(t_app *app);
 
 /**
  * Sky
@@ -233,14 +242,14 @@ void		sector_sky_render(t_app *app, t_thread_data *thread);
 /**
  * Font
  */
-void        load_font(t_app *app);
+void		load_font(t_app *app);
 void		change_font(t_app *app, int size, int color);
 void		render_text(t_app *app, t_rect frame, char *text);
 
 /**
  * UI
  */
-void		render_ui_frame(t_app *app,t_rect area, int size, int background);
+void		render_ui_frame(t_app *app, t_rect area, int size, int background);
 void		render_ui(t_app *app);
 void		render_player_status(t_app *app);
 void		render_pointer(t_app *app, int x, int y);
@@ -276,7 +285,7 @@ void		render_options(t_app *app);
 /*
 * AUDIO.C
 */
-void    	play_music(t_app *app, char *file);
+void		play_music(t_app *app, char *file);
 void		play_sound(t_app *app, char *file);
 void		pause_audio(t_app *app);
 void		unpause_audio(t_app *app);
@@ -288,7 +297,8 @@ void		stop_audio(t_app *app);
 int			get_pixel_color(SDL_Surface *surface, int x, int y);
 int			shade_color(int color, int shade);
 void		put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color);
-void		put_pixel_to_surface_check(t_app *app, t_point point, int color, float distance);
+void		put_pixel_to_surface_check(t_app *app, t_point point, int color,
+				float distance);
 
 void		flush_surface(SDL_Surface *surface);
 void		blit_surface(SDL_Surface *src, t_rect *src_rect,
@@ -313,6 +323,5 @@ int			import_file(t_app *app, char *path);
  * objects
  */
 void		render_objects(t_app *app);
-
 
 #endif

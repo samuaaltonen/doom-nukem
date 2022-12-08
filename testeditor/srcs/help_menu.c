@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/06 14:18:02 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/07 10:23:04 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,21 @@ WITH 'G' AND USE ARROW KEYS TO CHANGE. \n \n  X\n  Y");
 		render_text(app, (t_rect){60, 337, 50, 15},
 			ft_ftoa(app->active->decor_offset.y, 4));
 	}
+	if (app->active->type != -1)
+	{
+		toggle_active_color(app, 1, "- PORTAL -", (t_rect){50, 360, 200, 20});
+		toggle_active_color(app, 0, "NO PORTAL", (t_rect){155, 360, 200, 20});
+	}
+	else
+	{
+		toggle_active_color(app, 0, "PORTAL", (t_rect){60, 360, 200, 20});
+		toggle_active_color(app, 1, "- NO PORTAL -", (t_rect){145, 360, 200, 20});
+	}
+	toggle_active_color(app, app->portal_selection, "CREATE PORTAL ( L )",
+		(t_rect){25, 390, 260, 15});
+	render_text(app, (t_rect){25, 410, 265, 150}, "SELECT WALL TO CREATE PORTAL\
+, PRESS 'L', SELECT SECTOR TO LINK PORTAL TO, PRESS 'L' AGAIN. DOUBLE PRESS 'L'\
+ TO REMOVE PORTAL.");
 }
 
 void	render_current_interaction_status(t_app *app, t_point screen_pos, int y, int id)

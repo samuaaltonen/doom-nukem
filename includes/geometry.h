@@ -1,4 +1,3 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
@@ -7,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:48:59 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/21 17:00:25 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:47:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +39,7 @@ typedef struct s_limit
 /**
  * Matrix that contains 2 t_point columns.
  */
-typedef	struct s_point_matrix
+typedef struct s_point_matrix
 {
 	t_point			a;
 	t_point			b;

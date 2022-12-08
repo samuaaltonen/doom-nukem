@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_object.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/05 13:49:03 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/06 13:46:41 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,14 +127,14 @@ static void	objects_visible(t_app *app)
 				continue;
 			object = &(app->objectstack.objects[app->objectstack.visible_count]);
 
-			double scale = (fabs(app->player.elevation - app->objects[i].elevation)) / (20);
+			//double scale = (fabs(app->player.elevation - app->objects[i].elevation)) / (20);
 			double angle = atan(fabs(app->player.elevation - app->objects[i].elevation) / dist) * RADIAN_IN_DEG;
 			//new_value = (old_value - old_bottom) / (old_top - old_bottom) * (new_top - new_bottom) + new_bottom;
 			if(angle > 60 || angle < 0)
 				continue;
 			object->size.x  = ft_abs((int)(WIN_H / transform.y));
 			object->size.y  = ft_abs((int)(WIN_H / transform.y));
-			ft_printf("scale %f angle %f", scale, angle);
+			//ft_printf("scale %f angle %f", scale, angle);
 			object->start.x = (int)((WIN_W / 2) * (1.0f + (transform.x / transform.y)));
 			object->start.y = (int)(WIN_H * app->player.horizon + object->size.y * (app->player.elevation + app->player.height - (app->objects[i].elevation + (0.5))));
 			object->draw_end.x = object->size.x / 2 + object->start.x;
@@ -145,10 +145,10 @@ static void	objects_visible(t_app *app)
 			object->step.x = TEX_SIZE / (double)(object->size.x);
 			object->step.y = TEX_SIZE / (double)(object->size.y);
 			app->objectstack.visible_count++;
-			ft_printf("object data dist %f, start.y %i, transform y%f, elev %f, player elev %f, object y size %f", object->dist, object->start.y, transform.y / dist, app->objects[i].elevation, (app->player.elevation + app->player.height), object->size.y);
+			//ft_printf("object data dist %f, start.y %i, transform y%f, elev %f, player elev %f, object y size %f", object->dist, object->start.y, transform.y / dist, app->objects[i].elevation, (app->player.elevation + app->player.height), object->size.y);
 		}
 	}
-	ft_printf("objects found %i\n", app->objectstack.visible_count);
+	//ft_printf("objects found %i\n", app->objectstack.visible_count);
 }
 
 

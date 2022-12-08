@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/05 18:55:55 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/06 15:17:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@
 # define HP_PATH "assets/ui/hp.bmp"
 # define METER_PATH "assets/ui/meter.bmp"
 # define MUSIC_PATH "assets/sounds/title_music.wav"
-# define LASER_PATH "assets/sounds/laser.wav"
-# define SHOT_PATH "assets/sounds/shot.wav"
-# define BUMP_PATH "assets/sounds/bump.wav"
+# define SOUND_LASER_PATH "assets/sounds/laser.wav"
+# define SOUND_SHOT_PATH "assets/sounds/shot.wav"
+# define SOUND_BUMP_PATH "assets/sounds/bump.wav"
 # define TEXTS_PATH "assets/texts/texts.txt"
 # define SPRITE_PATH1 "assets/legacy/cannon_64.bmp"
 # define SPRITE_PATH2 "assets/legacy/pillar_64.bmp"

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/25 14:24:14 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/08 14:38:21 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	render_sectors(t_app *app)
 	}
 	ft_bzero(app->occlusion_top, WIN_W * sizeof(int));
 	ft_bzero(app->occlusion_bottom, WIN_W * sizeof(int));
-	sector_visible_walls(app);
+	sector_wallstack_build(app);
 	threads_work((t_thread_data *)&threads_data);
 	app->depthmap_fill_switch = !app->depthmap_fill_switch;
 }
@@ -89,6 +89,41 @@ static void	copy_occlusion(t_app *app, int *top, int *bottom)
 }
 
 /**
+ * @brief Renders a wall. If wall type is portal, recurses into that sector with
+ * sector_stack_render.
+ * 
+ * @param app 
+ * @param thread 
+ * @param limit 
+ * @param wall 
+ */
+static void	sector_render_wall(t_app *app, t_thread_data *thread, t_limit limit,
+	t_wall *wall)
+{
+	int		top[WIN_W];
+	int		bottom[WIN_W];
+
+	sector_walls_raycast(app, thread, (t_raycast_info){wall, limit,
+		app->occlusion_top, app->occlusion_bottom});
+	if (app->sectors[wall->sector_id].wall_textures[wall->wall_id]
+		== PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
+		copy_occlusion(app, (int *)&top, (int *)&bottom);
+	if (wall->is_portal && wall->is_inside && !wall->is_member
+		&& wall->already_passed[thread->id] < MAX_SECTOR_CORNERS)
+	{
+		wall->already_passed[thread->id]++;
+		sector_stack_render(app, thread,
+			app->sectors[wall->wall_type].stack_index,
+			(t_limit){ft_max(wall->start_x, limit.start),
+			ft_min(wall->end_x, limit.end)});
+	}
+	if (app->sectors[wall->sector_id].wall_textures[wall->wall_id]
+		== PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
+		sector_walls_raycast_transparent(app, thread, (t_raycast_info){
+			wall, limit, (int *)&top, (int *)&bottom});
+}
+
+/**
  * @brief Renders one sector stacks walls one by one. When portal is
  * encountered, recurses into that.
  *
@@ -100,34 +135,12 @@ static void	copy_occlusion(t_app *app, int *top, int *bottom)
 void	sector_stack_render(t_app *app, t_thread_data *thread, int stack_id,
 	t_limit limit)
 {
-	int		top[WIN_W];
-	int		bottom[WIN_W];
-	t_wall	*wall;
 	int		i;
 
-	i = 0;
-	while (i < app->wallstack.wall_count[stack_id])
+	i = -1;
+	while (++i < app->wallstack.wall_count[stack_id])
 	{
-		wall = &app->wallstack.walls[stack_id][i];
-		sector_walls_raycast(app, thread, (t_raycast_info){wall,limit,
-			app->occlusion_top, app->occlusion_bottom});
-		if (app->sectors[wall->sector_id].wall_textures[wall->wall_id]
-			== PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
-			copy_occlusion(app, (int *)&top, (int *)&bottom);
-		if (wall->is_portal && wall->is_inside && !wall->is_member
-			&& wall->already_passed[thread->id] < MAX_SECTOR_CORNERS)
-		{
-			wall->already_passed[thread->id]++;
-			sector_stack_render(app, thread,
-				app->sectors[wall->wall_type].stack_index,
-				(t_limit){ft_max(wall->start_x, limit.start),
-				ft_min(wall->end_x, limit.end)
-			});
-		}
-		if (app->sectors[wall->sector_id].wall_textures[wall->wall_id]
-			== PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
-			sector_walls_raycast_transparent(app, thread, (t_raycast_info){
-			wall, limit, (int *)&top, (int *)&bottom});
-		i++;
+		sector_render_wall(app, thread, limit,
+			&app->wallstack.walls[stack_id][i]);
 	}
 }

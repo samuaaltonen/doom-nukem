@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/12/05 18:56:10 by saaltone         ###   ########.fr        #
+#    Updated: 2022/12/08 14:40:33 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,8 +40,9 @@ FILES = main.c \
 		sector_draw_partial.c \
 		sector_draw_sky.c \
 		sector_render.c \
-		sector_visible_walls_order.c \
-		sector_visible_walls.c \
+		sector_wallstack.c \
+		sector_wallstack_order.c \
+		sector_wallstack_visible.c \
 		sector_wall_raycast.c \
 		sector_wall_raycast_hit.c \
 		sector_wall_raycast_decor.c \
@@ -55,6 +56,7 @@ FILES = main.c \
 		animation_create.c \
 		animation_progress.c \
 		init_texts.c \
+		textmodal.c \
 		render_object.c
 
 LIBFT = ./libft/libft.a

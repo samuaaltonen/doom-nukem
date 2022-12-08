@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_draw_wall.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/05 13:56:01 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:59:22 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,31 @@ static void	update_occlusion(t_rayhit *hit, int x, int occlusion)
 static void	apply_offsets(t_rayhit *hit, t_limit y, int *tex_x, double *tex_y)
 {
 	*tex_x = (int)(((double)hit->texture + hit->texture_offset) * TEX_SIZE);
-	*tex_y = hit->texture_step * ((double)(y.start + 1) - hit->wall_start_actual);
+	*tex_y = hit->texture_step
+		* ((double)(y.start + 1) - hit->wall_start_actual);
 	if (*tex_y < 0.0)
 		*tex_y += TEX_SIZE * (-*tex_y / TEX_SIZE + 1.0);
+}
+
+/**
+ * @brief Draws wall pixel to coordinate in window surface.
+ * 
+ * @param app 
+ * @param hit 
+ * @param coord 
+ * @param color 
+ */
+static void	draw_wall_pixel(t_app *app, t_rayhit *hit, t_point coord, int color)
+{
+	if ((color & 0xFF000000) > 0)
+		put_pixel_to_surface(app->surface, coord.x, coord.y,
+			shade_color(color, hit->light));
+	else if (app->occlusion_top[coord.x] < coord.y
+		&& app->occlusion_bottom[coord.x] < WIN_H - coord.y)
+		put_pixel_to_surface(app->surface, coord.x, coord.y,
+			get_sky_pixel(app, coord.x, coord.y));
+	if (coord.y % 2 == 0)
+		app->depthmap[coord.y / 2][coord.x] = (float)hit->distance;
 }
 
 /**
@@ -93,12 +115,7 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion_type)
 		if (tex_y >= (double) TEX_SIZE)
 			tex_y = fmod(tex_y, (double) TEX_SIZE);
 		color = get_pixel_color(app->assets.sprite, tex_x, (int) tex_y);
-		if ((color & 0xFF000000) > 0)
-			put_pixel_to_surface(app->surface, x, y.start, shade_color(color, hit->light));
-		else if (app->occlusion_top[x] < y.start && app->occlusion_bottom[x] < WIN_H - y.start)
-			put_pixel_to_surface(app->surface, x, y.start, get_sky_pixel(app, x, y.start));
-		if (y.start % 2 == 0)
-			app->depthmap[y.start / 2][x] = (float)hit->distance;
+		draw_wall_pixel(app, hit, (t_point){x, y.start}, color);
 		tex_y += hit->texture_step;
 		y.start++;
 	}
