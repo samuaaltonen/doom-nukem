@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/09 13:15:23 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/09 15:28:45 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,8 @@ typedef struct s_app
 	char			**texts;
 	int				text_lengths[MAX_TEXT_LINES];
 	t_textmodal		textmodal;
-	t_timer			timer;
+	t_timer			regen_timer;
+	t_timer			shoot_timer;
 }	t_app;
 
 /**

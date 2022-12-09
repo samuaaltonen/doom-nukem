@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/09 11:43:27 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/09 15:39:11 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ typedef struct s_weapon
 	t_bool	enabled;
 	int		damage;
 	int		range;
-	int		fire_rate;
+	double	fire_rate;
 	int		magazine;
 	int		ammo;
 }	t_weapon;

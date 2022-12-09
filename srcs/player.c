@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/09 13:50:32 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/09 16:03:27 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,7 +161,7 @@ void	shield(t_app *app)
 
 void	regen(t_app *app, int *value)
 {
-	if (check_timer(&app->timer) && *value % 40 != 0)
+	if (check_timer(&app->regen_timer) && *value % 40 != 0)
 			(*value)++;
 
 }
@@ -181,29 +181,33 @@ void	damage(t_app *app, int dmg)
 	app->player.hp -= to_hp;
 	if (app->player.hp < 0)
 		app->player.hp = 0;
-		start_timer(&app->timer, 5);
+		start_timer(&app->regen_timer, 5);
 }
 
 void	player_shoot(t_app *app)
 {
-	if (app->player.equiped_weapon.ammo > 0)
+	if (check_timer(&app->shoot_timer) && app->player.equiped_weapon.ammo > 0)
 	{
 		play_sound(app, SOUND_SHOT_PATH);
 		app->player.equiped_weapon.ammo--;
 		app->player.inventory.ammo--;
+		start_timer(&app->shoot_timer, app->player.equiped_weapon.fire_rate);
 	}
-	else
+	else if (app->player.equiped_weapon.ammo <= 0 && app->player.inventory.ammo > 0)
 		player_reload(app);
+	
 }
 
 void	player_reload(t_app *app)
 {
-	if (app->player.equiped_weapon.ammo < app->player.equiped_weapon.magazine)
+	if (check_timer(&app->shoot_timer) && app->player.inventory.ammo
+		&& app->player.equiped_weapon.ammo < app->player.equiped_weapon.magazine)
 	{
 		play_sound(app, SOUND_RELOAD_PATH);
 		if (app->player.equiped_weapon.magazine <= app->player.inventory.ammo)
 			app->player.equiped_weapon.ammo = app->player.equiped_weapon.magazine;
 		else
 			app->player.equiped_weapon.ammo = app->player.inventory.ammo;
+	start_timer(&app->shoot_timer, 0.8);
 	}
 }

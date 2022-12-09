@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/09 11:48:39 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/09 15:43:19 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	player_init(t_app *app)
 	app->player.weapons = 0;
 	app->player.equiped_weapon.magazine = 9;
 	app->player.equiped_weapon.ammo = 9;
-	app->player.inventory = (t_inventory){0, 0, 0, 0, 0, FALSE};
+	app->player.equiped_weapon.fire_rate = 0.15;
 	//----
 	init_camera_plane(app);
 	init_skybox_plane(app);
