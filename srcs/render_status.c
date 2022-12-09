@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/07 18:28:37 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/09 11:49:04 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,10 @@ void	render_game(t_app *app)
 {
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	handle_movement(app);
+	progress_animations(app);
 	render_sectors(app);
+	render_objects(app);
+	render_textmodals(app);
 	render_ui(app);
 	regen(app, &app->player.hp);
 	regen(app, &app->player.shield);

@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/01 12:04:00 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/09 11:37:28 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,13 @@
 # define BULLET_PATH  "assets/textures/bullet.bmp"
 # define METER_PATH "assets/ui/meter.bmp"
 # define MUSIC_PATH "assets/sounds/title_music.wav"
-# define LASER_PATH "assets/sounds/laser.wav"
-# define SHOT_PATH "assets/sounds/shot.wav"
-# define BUMP_PATH "assets/sounds/bump.wav"
+# define SOUND_LASER_PATH "assets/sounds/laser.wav"
+# define SOUND_SHOT_PATH "assets/sounds/shot.wav"
+# define SOUND_BUMP_PATH "assets/sounds/bump.wav"
+# define TEXTS_PATH "assets/texts/texts.txt"
+# define SPRITE_PATH1 "assets/legacy/cannon_64.bmp"
+# define SPRITE_PATH2 "assets/legacy/pillar_64.bmp"
+# define MAX_SPRITES 2
 # define MAP_PATH "./testeditor/test.test"//"./testmaps/slopes"
 
 /**
@@ -62,6 +66,7 @@ typedef struct s_assets
 	SDL_Surface		*meter;
 	SDL_Surface		*sprite;
 	SDL_Surface		*bg;
+	SDL_Surface		*sprites[MAX_SPRITES];
 }	t_assets;
 
 #endif

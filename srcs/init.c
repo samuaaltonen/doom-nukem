@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/01 12:03:47 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/09 11:47:38 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 void	app_init(t_app **app)
 {
 	*app = (t_app *)malloc(sizeof(t_app));
-	ft_bzero(*app, sizeof(t_app));
 	if (!(*app))
 		exit_error(NULL);
+	ft_bzero(*app, sizeof(t_app));
 }
 
 /**
@@ -63,7 +63,8 @@ void	sdl_init(t_app *app)
 	app->surface = SDL_GetWindowSurface(app->win);
 	if (!app->surface)
 		exit_error(MSG_ERROR_WINDOW_SURFACE);
-	app->audio.device_id = SDL_OpenAudioDevice(NULL, 0, &app->audio.wav_spec, NULL, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
+	app->audio.device_id = SDL_OpenAudioDevice(NULL, 0, &app->audio.wav_spec,
+		NULL, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
 	if (!app->audio.device_id)
 		exit_error(MSG_ERROR);
 	SDL_ShowCursor(SDL_DISABLE);
@@ -85,7 +86,13 @@ void    load_assets(t_app *app)
 	app->assets.meter = SDL_LoadBMP(METER_PATH);
 	app->assets.sprite = SDL_LoadBMP(PANELS_PATH);
 	app->assets.bg = SDL_LoadBMP(SKYBOX_PATH);
+
+	//temp
+	app->assets.sprites[0] = SDL_LoadBMP(SPRITE_PATH2);
+	app->assets.sprites[1] = SDL_LoadBMP(TITLESCREEN_PATH);
+
     load_font(app);
+	load_texts(app);
 }
 
 /**

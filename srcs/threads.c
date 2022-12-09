@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/29 16:30:51 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:21:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	threads_create(t_thread_data *threads_data, void *(*renderer)(void *))
 
 /**
  * @brief Signals threads to awake them and wait until their work is complete.
+ * If there is still some thread working, waits 1ms before checking it again.
  * 
  * @param threads_data 
  */
@@ -70,27 +71,22 @@ void	threads_work(t_thread_data *threads_data)
 	while (++i < THREAD_COUNT)
 	{
 		if (pthread_mutex_lock(&threads_data[i].lock))
-			exit_error(NULL);
+			exit_error(MSG_ERROR_THREADS_SIGNAL);
 		threads_data[i].has_work = TRUE;
-		if (pthread_cond_signal(&threads_data[i].cond))
-			exit_error(NULL);
-		if (pthread_mutex_unlock(&threads_data[i].lock))
-			exit_error(NULL);
+		if (pthread_cond_signal(&threads_data[i].cond)
+			|| pthread_mutex_unlock(&threads_data[i].lock))
+			exit_error(MSG_ERROR_THREADS_SIGNAL);
 	}
-	while (TRUE)
+	i = -1;
+	while (++i < THREAD_COUNT)
 	{
-		i = -1;
-		while (++i < THREAD_COUNT)
+		if (pthread_mutex_lock(&threads_data[i].lock)
+			|| pthread_mutex_unlock(&threads_data[i].lock))
+			exit_error(MSG_ERROR_THREADS_SIGNAL);
+		if (threads_data[i].has_work)
 		{
-			if (pthread_mutex_lock(&threads_data[i].lock))
-				exit_error(NULL);
-			if (pthread_mutex_unlock(&threads_data[i].lock))
-				exit_error(NULL);
-			if (threads_data[i].has_work)
-				break ;
+			SDL_Delay(1);
+			i = -1;
 		}
-		if (i == THREAD_COUNT)
-			return ;
-		SDL_Delay(1);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/07 18:17:45 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/09 11:43:27 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,6 @@ typedef struct s_move
 {
 	t_vector2	pos;
 	double		elevation;
-} t_move;
+}	t_move;
 
 #endif

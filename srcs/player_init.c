@@ -6,17 +6,19 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/01 19:17:59 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/09 11:48:39 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * Calculates initial camera plane using FOV and player direction vector.
+ * @brief Calculates initial camera plane using FOV and player direction vector.
  * Camera plane is always perpendicular to the direction vector.
  * 
  * cameralength = directionlength * tan(FOV / 2)
+ * 
+ * @param app 
  */
 void	init_camera_plane(t_app *app)
 {
@@ -41,12 +43,13 @@ void	init_camera_plane(t_app *app)
 void	init_skybox_plane(t_app *app)
 {
 	app->sky.size.y = (int)(WIN_H
-		+ WIN_H * (HORIZON_UPPER_LIMIT - 0.5)
-		+ WIN_H * (0.5 - HORIZON_LOWER_LIMIT));
+			+ WIN_H * (HORIZON_UPPER_LIMIT - 0.5)
+			+ WIN_H * (0.5 - HORIZON_LOWER_LIMIT));
 	app->sky.size.x = WIN_W * 4;
 	app->sky.pixel_step.x = SKYBOX_W / (double)app->sky.size.x;
 	app->sky.pixel_step.y = SKYBOX_H / (double)app->sky.size.y;
-	app->sky.start.x = app->sky.size.x * ft_vector_angle_right(app->player.dir, (t_vector2){1.0, 0.0}) / (M_PI * 2);
+	app->sky.start.x = app->sky.size.x * ft_vector_angle_right(app->player.dir,
+			(t_vector2){1.0, 0.0}) / (M_PI * 2);
 	app->sky.start.y = WIN_H * app->player.horizon - app->sky.size.y / 2;
 }
 
@@ -67,7 +70,7 @@ void	player_init(t_app *app)
 	app->player.weapons = 0;
 	app->player.equiped_weapon.magazine = 9;
 	app->player.equiped_weapon.ammo = 9;
-	app->player.inventory = (t_inventory){0,0,0,0,0,FALSE};
+	app->player.inventory = (t_inventory){0, 0, 0, 0, 0, FALSE};
 	//----
 	init_camera_plane(app);
 	init_skybox_plane(app);

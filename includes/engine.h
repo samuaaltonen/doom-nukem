@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/30 11:35:10 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:48:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ typedef struct s_sector
 	int				parent_sector;
 	int				wall_decor[MAX_SECTOR_CORNERS];
 	t_vector2		decor_offset[MAX_SECTOR_CORNERS];
-	int				light;
+	double			light;
 	double			floor_height;
 	int				floor_texture;
 	double			floor_tex_offset;
@@ -115,15 +115,15 @@ typedef struct s_rayhit
 	int			height;
 	int			light;
 
-	int			wall_start_actual;
+	double		wall_start_actual;
 	int			wall_start;
 	int			wall_end;
 	int			wall_type;
 
-	int			parent_height;
-	int			parent_wall_start_actual;
+	double		parent_wall_start_actual;
 	int			parent_wall_start;
 	int			parent_wall_end;
+	int			parent_height;
 
 	double		floor_horizon;
 	double		floor_horizon_angle;
@@ -139,7 +139,7 @@ typedef struct s_rayhit
 	t_bool		has_decor;
 	int			decor_texture;
 	int			decor_start;
-	int			decor_start_actual;
+	double		decor_start_actual;
 	int			decor_end;
 	double		decor_texture_offset;
 }	t_rayhit;
@@ -171,7 +171,7 @@ typedef struct s_wallstack
 	int		interesting_count;
 }	t_wallstack;
 
-typedef struct	s_level_header
+typedef struct s_level_header
 {
 	int	version;
 	int	sector_count;
@@ -179,21 +179,12 @@ typedef struct	s_level_header
 	int	interaction_count;
 }	t_level_header;
 
-typedef struct s_interaction
-{
-	int				event_id;
-	double 			variable;
-	int				activation_sector;
-	int				activation_wall;
-	int				activation_object;
-	int				target_sector;
-}	t_interaction;
-
 typedef struct s_object
 {
 	int				type;
 	double			var;
 	t_vector2		position;
+	double			elevation;
 	int				sector;
 }	t_object;
 
@@ -207,13 +198,5 @@ typedef struct s_sky
 	t_point		size;
 	t_vector2	pixel_step;
 }	t_sky;
-
-typedef struct s_buffer_unit
-{
-	int		x;
-	int		y;
-	int		color;
-	float	depth;
-}	t_buffer_unit;
 
 #endif

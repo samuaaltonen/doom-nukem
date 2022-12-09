@@ -1,36 +1,80 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   sector_visible_walls_order.c                       :+:      :+:    :+:   */
+/*   sector_wallstack_order.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 23:00:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/29 15:19:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:01:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * Checks order of 2 given walls.
- *
- * Ordering is done by extending other wall (a) to infinity and then checking
- * for intersection points with the other wall (b). If there is no intersection
- * and wall (b) both corners are at the same side as player position relative
- * to extended wall then drawing priority is with wall (b).
+ * @brief Compares walls relative to player position.
+ * 
+ * Ordering is done by extending other wall (a) to be very long and then
+ * checking for intersection points with the other wall (b). If there is no
+ * intersection and wall (b) both corners are at the same side as player
+ * position relative to extended wall then drawing priority is with wall (b).
+ * 
  * If wall (b) both corners are at different side as player position
  * relative to extended (a) wall, then priority is with wall (a).
+ * 
  * If there is intersection, extend the other one. (if both cases has intersect,
- * then order doesn't matter (invalid sector)).
+ * determines walls to already be in order).
+ * 
+ * @param app 
+ * @param a 
+ * @param b 
+ * @return t_bool 
+ */
+static t_bool	compare_walls(t_app *app, t_line a, t_line b)
+{
+	t_line	extend;
+	t_bool	extend_a;
+	int		side;
+
+	extend = ft_line_resize(a, MAX_LINE_LENGTH, EXTEND_BOTH);
+	extend_a = TRUE;
+	if (ft_line_intersection_through(extend, b))
+	{
+		extend = ft_line_resize(b, MAX_LINE_LENGTH, EXTEND_BOTH);
+		extend_a = FALSE;
+		if (ft_line_intersection_through(extend, a))
+			return (TRUE);
+	}
+	side = ft_line_side(extend, app->player.pos);
+	if (extend_a
+		&& (side == ft_line_side(extend, b.a) || ft_line_point(extend, b.a))
+		&& (side == ft_line_side(extend, b.b) || ft_line_point(extend, b.b)))
+		return (FALSE);
+	if (!extend_a
+		&& ((side != ft_line_side(extend, a.a) && !ft_line_point(extend, a.a))
+			|| (side != ft_line_side(extend, a.b)
+				&& !ft_line_point(extend, a.b))))
+		return (FALSE);
+	return (TRUE);
+}
+
+/**
+ * @brief Checks order of 2 given walls.
+ * 
+ * If both wall segments belong to same line (i.e. 2 member sectors next to
+ * each other = full intersection), prioritizes a wall that player is looking
+ * from inside. In any other case, checks the order relative to player.
+ * 
+ * @param app 
+ * @param wall_a 
+ * @param wall_b 
+ * @return t_bool 
  */
 static t_bool	walls_in_order(t_app *app, t_wall *wall_a, t_wall *wall_b)
 {
 	t_line	a;
 	t_line	b;
-	t_line	extended;
-	t_bool	extended_a;
-	int		side;
 
 	if (wall_a->is_member && !wall_b->is_member)
 		return (TRUE);
@@ -38,60 +82,24 @@ static t_bool	walls_in_order(t_app *app, t_wall *wall_a, t_wall *wall_b)
 		return (FALSE);
 	a = get_wall_line(app, wall_a->sector_id, wall_a->wall_id);
 	b = get_wall_line(app, wall_b->sector_id, wall_b->wall_id);
-
-	// Extend wall_a to infinity / very long
-	extended = ft_line_resize(a, MAX_LINE_LENGTH, EXTEND_BOTH);
-	extended_a = TRUE;
-
-	if (ft_line_intersection_full(a, b) && wall_a->is_inside != wall_b->is_inside) {
+	if (ft_line_intersection_full(a, b)
+		&& wall_a->is_inside != wall_b->is_inside)
+	{
 		if (wall_a->is_inside)
 			return (TRUE);
 		else
 			return (FALSE);
 	}
-
-	// Check intersection
-	if (ft_line_intersection_through(extended, b))
-	{
-		extended = ft_line_resize(b, MAX_LINE_LENGTH, EXTEND_BOTH);
-		extended_a = FALSE;
-
-		// If interesction again, no change in order
-		if (ft_line_intersection_through(extended, a))
-			return (TRUE);
-	}
-
-	/** 
-	 * Check side with player pos relative to extended wall.
-	 */
-	// Get player side (1 if left side of line)
-	side = ft_line_side(extended, app->player.pos);
-
-	/**
-	 * If wall a was extended and wall b is at the same side as player, then 
-	 * wall b has priority (return false so switch b before a).
-	 */
-	if (extended_a
-		&& (side == ft_line_side(extended, b.a) || ft_line_point(extended, b.a))
-		&& (side == ft_line_side(extended, b.b) || ft_line_point(extended, b.b)))
-		return (FALSE);
-	/**
-	 * Similarly if b was extended, and wall a is not at the same side as player,
-	 * then b has priority.
-	 */
-	if (!extended_a
-		&& ((side != ft_line_side(extended, a.a) && !ft_line_point(extended, a.a))
-			|| (side != ft_line_side(extended, a.b) && !ft_line_point(extended, a.b))))
-		return (FALSE);
-	/**
-	 * All other cases, wall a has priority so it is already in order.
-	 */
-	return (TRUE);
+	return (compare_walls(app, a, b));
 }
 
 /**
- * Returns TRUE if there is overlap in translated window x coordinates.
-*/
+ * @brief Returns TRUE if there is overlap in translated window x coordinates.
+ * 
+ * @param wall_a 
+ * @param wall_b 
+ * @return t_bool 
+ */
 t_bool	walls_overlap(t_wall *wall_a, t_wall *wall_b)
 {
 	int	overlap_start;
@@ -105,7 +113,7 @@ t_bool	walls_overlap(t_wall *wall_a, t_wall *wall_b)
 }
 
 /**
- * Returns foremost wall from all possibly visible walls
+ * @brief Returns foremost wall from all possibly visible walls
  * 
  * Loops through all walls
  * - if a wall has already been picked, skip
@@ -117,7 +125,12 @@ t_bool	walls_overlap(t_wall *wall_a, t_wall *wall_b)
  * - compares walls (i, j), if they are not in order, break, (i) is not foremost
  * - if order was fine with all walls that (i) was compared with, return (i)
  * - if there was no clear foremost wall returns first non picked one
-*/
+ * 
+ * @param app 
+ * @param walls 
+ * @param wall_count 
+ * @return int 
+ */
 static int	get_foremost_wall(t_app *app, t_wall *walls, int wall_count)
 {
 	int		first_nonselected;
@@ -144,16 +157,16 @@ static int	get_foremost_wall(t_app *app, t_wall *walls, int wall_count)
 		if (j == wall_count)
 			return (i);
 	}
-	/**
-	 * TODO: Remove 
-	 */
-	ft_printf("{red}ERROR: Wall ordering has no good pick, going with %d,%d (%d){white}\n", walls[first_nonselected].sector_id, walls[first_nonselected].wall_id, first_nonselected);
 	return (first_nonselected);
 }
 
 /**
- * Orders possible visible walls.
-*/
+ * @brief Orders possible visible walls.
+ * 
+ * @param app 
+ * @param walls 
+ * @param wall_count 
+ */
 void	sector_walls_order(t_app *app, t_wall *walls, int wall_count)
 {
 	t_wall	temp[MAX_VISIBLE_WALLS];

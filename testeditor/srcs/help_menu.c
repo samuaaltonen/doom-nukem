@@ -6,116 +6,56 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/25 16:00:01 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:20:04 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Renders the sector specific information on the help menu sidebar.
+ * The main help menu texts, shown when no specific edit mode is on.
 */
-static void	sector_edit_menu(t_app *app)
+static void	main_menu(t_app *app, int y)
 {
-	render_text(app, (t_rect){20, 40, 260, 100}, "TOGGLE ALL WALLS ( V )\nTOG\
-GLE FLOOR ( F )\nTOGGLE CEILING ( R )\nTOGGLE LIGHT ( T )\nTOGGLE SLOPE ( U )");
-	render_text(app, (t_rect){20, 110, 260, 50}, "TEX ( LEFT / RIGHT )\nHEIGHT\
- ( UP / DOWN )");
-	toggle_active_color(app, app->portal_selection, "CREATE PORTAL ( L )",
-		(t_rect){20, 145, 260, 15});
-	render_text(app, (t_rect){20, 160, 260, 150}, "SELECT WALL TO CREATE PORTAL\
-, PRESS 'L', SELECT SECTOR TO LINK PORTAL TO, PRESS 'L' AGAIN. DOUBLE PRESS 'L'\
- TO REMOVE PORTAL.");
-	render_text(app, (t_rect){20, 235, 260, 15}, "CREATE OBJECT ( N )");
-	render_text(app, (t_rect){20, 255, 260, 15}, "CREATE SLOPE ( Y / H )");
-	render_text(app, (t_rect){20, 270, 260, 15}, "DELETE SECTOR ( DEL )");
-	render_texture_icons(app);
-	render_sector_info(app);
+	if (!app->imported && !app->sectors)
+		render_text(app, (t_rect){20, y, 260, 15}, "OPEN FILE ( O )");
+	render_text(app, (t_rect){20, y + 15, 260, 15}, "SAVE FILE ( M )");
+	toggle_active_color(app, app->list_creation, "CREATE SECTOR ( C )",
+		(t_rect){20, y + 35, 260, 15});
+	render_text(app, (t_rect){20, y + 55, 260, 100}, "LEFT CLICK MOUSE TO \
+SELECT SECTOR. RIGHT CLICK TO UNSELECT. LEFT CLICK CORNER TO SELECT WALL ON \
+RIGHT. TO CREATE A MEMBER SECTOR, PRESS 'C' WHEN SECTOR IS SELECTED.");
+	render_text(app, (t_rect){20, y + 150, 260, 15}, "DIVIDE GRID ( Z / X )");
+	render_text(app, (t_rect){20, y + 165, 260, 15}, "MOVE ( WASD )");
+	render_text(app, (t_rect){20, y + 180, 250, 15}, "ZOOM ( SCROLL )");
 }
 
 /**
- * Renders player specific information on the help menu sidebar.
-*/
-static void	player_edit_menu(t_app *app)
-{
-	change_font(app, 15, TEXT);
-	render_text(app, (t_rect){10, 40, 50, 20}, "WEAPONS");
-	change_font(app, 11, TEXT);
-	render_weapons(app);
-	if (app->player.armor < 1)
-		app->player.armor = 1;
-	if (app->player.armor > 200)
-		app->player.armor = 200;
-	change_font(app, 15, TEXT);
-	render_text(app, (t_rect){10, 165, 50, 20}, "ARMOR");
-	render_text(app, (t_rect){112, 165, 50, 20}, ft_itoa(app->player.armor));
-	render_text(app, (t_rect){140, 165, 80, 20}, " / 200");
-	change_font(app, 11, TEXT);
-	render_text(app, (t_rect){25, 187, 50, 20}, "<");
-	render_text(app, (t_rect){250, 187, 50, 20}, ">");
-	render_statusbar(app, (t_point){39, 185}, app->player.armor, TEXT);
-	if (app->player.health < 1)
-		app->player.health = 1;
-	if (app->player.health > 200)
-		app->player.health = 200;
-	change_font(app, 15, TEXT);
-	render_text(app, (t_rect){10, 225, 50, 20}, "HEALTH");
-	render_text(app, (t_rect){112, 225, 50, 20}, ft_itoa(app->player.health));
-	render_text(app, (t_rect){140, 225, 80, 20}, " / 200");
-	change_font(app, 11, TEXT);
-	render_text(app, (t_rect){25, 247, 50, 20}, "<");
-	render_text(app, (t_rect){250, 247, 50, 20}, ">");
-	render_statusbar(app, (t_point){39, 245}, app->player.health, ACTIVE_TEXT);
-	render_inventory(app);
-}
-
-/**
- * Renders object specific information on the help menu sidebar.
-*/
-static void	object_edit_menu(t_app *app)
-{
-	change_font(app, 15, TEXT);
-	render_text(app, (t_rect){10, 40, 50, 20}, "OBJECTS");
-	change_font(app, 11, TEXT);
-	render_arrows(app, (t_point){10, 67}, (t_point){265, 67});
-	render_icons(app, (t_point){25, 60}, 17, app->assets.sprite);
-	render_object_statics(app);
-}
-
-/**
- * Renders the help menu texts on the help menu.
+ * Renders the correct menu texts on the help menu sidebar depending what
+ * editing mode is on.
 */
 static void	help_menu_texts(t_app *app)
 {
-	int	y;
+	t_point	screen_pos;
 
-	y = 40;
+	SDL_GetMouseState(&screen_pos.x, &screen_pos.y);
 	change_font(app, 20, TEXT);
 	render_text(app, (t_rect){10, 10, 260, 20}, "LEVEL EDITOR");
 	change_font(app, 11, TEXT);
-	if (app->active_sector && !app->active)
-		sector_edit_menu(app);
-	// else if (app->active)
-	// 	wall_edit_menu(app);
+	if (app->active_sector && !app->active && !app->object_menu
+		&& !app->interaction_menu)
+		sector_edit_menu(app, screen_pos, 40);
+	else if (app->active && !app->interaction_menu && !app->object_menu
+		&& !app->list_creation)
+		wall_edit_menu(app, screen_pos);
+	else if (app->interaction_menu)
+		interaction_edit_menu(app, 40, screen_pos);
 	else if (app->player_menu)
 		player_edit_menu(app);
 	else if (app->object_menu)
 		object_edit_menu(app);
 	else
-	{
-		if (!app->imported)
-			render_text(app, (t_rect){20, y, 260, 15}, "OPEN FILE ( O )");
-		render_text(app, (t_rect){20, y + 15, 260, 15}, "SAVE FILE ( M )");
-		toggle_active_color(app, app->list_creation, "CREATE SECTOR ( C )",
-			(t_rect){20, y + 35, 260, 15});
-		render_text(app, (t_rect){20, y + 55, 260, 100}, "LEFT CLICK MOUSE TO \
-SELECT SECTOR. RIGHT CLICK TO UNSELECT. LEFT CLICK CORNER TO SELECT WALL ON \
-RIGHT. TO CREATE A MEMBER SECTOR, PRESS 'C' WHEN SECTOR IS SELECTED.");
-		render_text(app, (t_rect){20, y + 150, 260, 15}, "DIVIDE GRID \
-( Z / X )");
-		render_text(app, (t_rect){20, y + 165, 260, 15}, "MOVE ( WASD )");
-		render_text(app, (t_rect){20, y + 180, 250, 15}, "ZOOM ( SCROLL )");
-	}
+		main_menu(app, 40);
 }
 
 /**

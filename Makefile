@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/11/30 11:42:05 by saaltone         ###   ########.fr        #
+#    Updated: 2022/12/08 15:49:22 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,20 +36,29 @@ FILES = main.c \
 		sector_draw_ceiling.c \
 		sector_draw_floor.c \
 		sector_draw_wall.c \
+		sector_draw_wall_decor.c \
+		sector_draw_partial.c \
+		sector_draw_sky.c \
 		sector_render.c \
-		sector_visible_walls_order.c \
-		sector_visible_walls.c \
+		sector_wallstack.c \
+		sector_wallstack_order.c \
+		sector_wallstack_visible.c \
 		sector_wall_raycast.c \
 		sector_wall_raycast_hit.c \
 		sector_wall_raycast_decor.c \
 		sector_wall_prepare.c \
 		sector_wall_line.c \
-		sector_draw_partial.c \
-		sector_draw_sky.c \
-		sector_draw_wall_decor.c \
 		import.c \
 		utils.c \
-		utils_sdl.c
+		utils_color.c \
+		utils_sdl.c \
+		interaction_check.c \
+		interaction_trigger.c \
+		animation_create.c \
+		animation_progress.c \
+		init_texts.c \
+		textmodal.c \
+		render_object.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a

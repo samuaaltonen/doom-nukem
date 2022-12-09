@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interactions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/22 17:30:18 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:13:21 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,7 @@
 static t_bool	new_interaction(t_app *app)
 {
 	if (app->object_menu)
-	{
 		app->current_interaction->activation_object = app->current_object;
-		app->current_object = NULL;
-		app->object_menu = FALSE;
-	}
 	else if (app->active)
 	{
 		if (app->active->decor == -1)
@@ -30,9 +26,13 @@ static t_bool	new_interaction(t_app *app)
 	else if (app->active_sector)
 	{
 		app->current_interaction->activation_sector = app->active_sector;
+		app->current_interaction->activation_wall = NULL;
 	}
 	else
 		return (FALSE);
+	app->current_interaction->target_sector = app->active_sector;
+	if (app->active_sector->parent_sector)
+		app->current_interaction->target_sector = app->active_sector->parent_sector;
 	return(TRUE);
 }
 
@@ -72,10 +72,15 @@ void	link_interaction(t_app *app)
 	}
 	else if(app->current_interaction)
 	{
-		if(app->active_sector && app->current_interaction->event_id > 0 && app->current_interaction->event_id <= 4)
-			app->current_interaction->target_sector = app->active_sector;
 		app->current_interaction = NULL;
-		app->interaction_count++;
+		app->interaction_menu = FALSE;
+		if (app->interactions[app->interaction_count].event_id != 0)
+		{
+			ft_printf("{cyan}Linking interaction.{reset}\n");
+			app->interaction_count++;
+		}
+		else
+			ft_printf("{red}Interaction event is 0.{reset}\n");
 	}
 }
 
@@ -83,11 +88,11 @@ void	delete_interaction(t_app *app, int id)
 {
 	if(app->interaction_count > 0)
 	{
-		while(id + 1 < MAX_INTERACTIONS && app->interactions[id].event_id != 0)
+		if (id < app->interaction_count - 1)
 		{
-			app->interactions[id] = app->interactions[id + 1];
-			id++;
+			app->interactions[id] = app->interactions[app->interaction_count - 1];
 		}
+		app->interactions[app->interaction_count - 1].event_id = 0;
 		app->interaction_count--;
 	}
 }

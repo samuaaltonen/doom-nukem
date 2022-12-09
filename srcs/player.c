@@ -1,4 +1,4 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/11 14:11:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:50:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static t_bool	is_wall_collision(t_app *app, t_move new)
 				if (app->sectors[app->player.current_sector].wall_textures[i] == PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
 					return (FALSE);
 				app->player.current_sector = wall_id;
+				interaction_check_portal(app, wall_id);
 				return (TRUE);
 			}
 		}

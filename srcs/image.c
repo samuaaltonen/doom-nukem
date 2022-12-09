@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/07 16:27:31 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/09 11:46:32 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ int	blend_pixel(t_color base, t_color top)
 	color.a = 0xFF;
 	return (argb_to_int(color));
 	
+
 }
 
 t_color	int_to_argb(int color)
@@ -72,4 +73,28 @@ t_color	int_to_argb(int color)
 int	argb_to_int(t_color color)
 {
 	return (color.b + (color.g << 8) + (color.r << 16) + (color.a << 24));
+}
+/**
+ * @brief Changes color of a specific pixel in surface.
+ * 
+ * @param surface 
+ * @param x 
+ * @param y 
+ * @param color 
+ */
+void	put_pixel_to_surface_check(t_app *app, t_point point, int color, float distance)
+{
+	int		pixel_pos;
+	char	*pixel;
+
+	pixel_pos = (point.y * app->surface->pitch) + (point.x * IMAGE_PIXEL_BYTES);
+	if (pixel_pos < 0 || point.x >= app->surface->w || point.y >= app->surface->h)
+		return ;
+	if(app->depthmap[point.y / 2][point.x] >= distance)
+	{
+		pixel = app->surface->pixels + pixel_pos;
+		if(point.y % 2)
+			app->depthmap[point.y / 2][point.x] = distance;
+		*(int *)pixel = color;
+	}
 }

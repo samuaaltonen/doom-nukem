@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:06:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/30 11:51:14 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:51:19 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ static void	set_parent_vertical_positions(t_app *app, t_rayhit *hit,
 	t_sector	*parent;
 	double		ceil_slope;
 	double		floor_slope;
+	double		wall_start;
 
 	ft_memcpy(&parenthit, hit, sizeof(t_rayhit));
 	parent = &app->sectors[hit->sector->parent_sector];
@@ -99,11 +100,12 @@ static void	set_parent_vertical_positions(t_app *app, t_rayhit *hit,
 		floor_slope = apply_floor_slope(&parenthit);
 	hit->parent_height = (int)(relative * (parent->ceil_height + ceil_slope
 				- parent->floor_height - floor_slope));
-	hit->parent_wall_start = WIN_H * app->player.horizon - hit->parent_height
-		+ (int)(relative * ((app->player.height + app->player.elevation)
-				- parent->floor_height - floor_slope));
+	wall_start = WIN_H * app->player.horizon
+		+ relative * (app->player.height + app->player.elevation
+			- parent->ceil_height - ceil_slope);
+	hit->parent_wall_start = (int)wall_start;
 	hit->parent_wall_end = hit->parent_wall_start + hit->parent_height;
-	hit->parent_wall_start_actual = hit->parent_wall_start;
+	hit->parent_wall_start_actual = wall_start;
 	clamp_int(&hit->parent_wall_start, 0, WIN_H - 1);
 	clamp_int(&hit->parent_wall_end, 0, WIN_H - 1);
 }
@@ -122,20 +124,22 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 	double	relative;
 	double	ceil_slope;
 	double	floor_slope;
+	double	wall_start;
 
 	ceil_slope = apply_ceiling_slope(hit);
 	floor_slope = apply_floor_slope(hit);
 	relative = WIN_H / hit->distance;
 	hit->height = (int)(relative * (hit->sector->ceil_height + ceil_slope
 				- hit->sector->floor_height - floor_slope));
-	hit->wall_start = WIN_H * app->player.horizon - hit->height
-		+ (int)(relative * (app->player.height + app->player.elevation
-				- hit->sector->floor_height - floor_slope));
-	hit->wall_end = hit->wall_start + hit->height;
+	wall_start = WIN_H * app->player.horizon
+		+ relative * (app->player.height + app->player.elevation
+			- hit->sector->ceil_height - ceil_slope);
+	hit->wall_start = (int)wall_start;
+	hit->wall_end = wall_start + hit->height;
 	hit->texture_step = TEX_SIZE / relative;
-	hit->wall_start_actual = hit->wall_start;
+	hit->wall_start_actual = wall_start;
 	if (ceil_slope)
-		hit->wall_start_actual = hit->wall_start + relative * ceil_slope
+		hit->wall_start_actual = wall_start + relative * ceil_slope
 			- relative * (1.0 + floor(ceil_slope));
 	if (hit->sector->parent_sector >= 0)
 		set_parent_vertical_positions(app, hit, relative);

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/30 11:26:27 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:43:57 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define COLLISION_OFFSET 0.25
 # define FOV 66
 # define TEX_SIZE 64
-# define SKYBOX_W 1024 // Optimal size 4x2.5 of window size (5120x1800 for 1280x720)
+# define SKYBOX_W 1024 // Optimal size 4x2.5 of window size (5120x1800)
 # define SKYBOX_H 1024
 # define MOUSE_SENSITIVITY_HORIZONTAL 0.3
 # define MOUSE_SENSITIVITY_VERTICAL 0.2
@@ -41,6 +41,14 @@
 # define MAX_DECOR 10
 # define PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID 1
 # define DECOR_SIZE 1.0
+# define INTERACTION_ACTION_DISTANCE 1.5
+# define MAX_CONCURRENT_ANIMATIONS 16
+# define ANIMATION_DURATION_LIGHT 0.5 // seconds per light level
+# define ANIMATION_DURATION_HEIGHT 0.25 // seconds per meter
+# define ANIMATION_DURATION_TEXT 0.015625 // seconds per char
+# define ANIMATION_DURATION_TEXT_END 3.5 // seconds after full text displayed
+# define MAX_TEXT_LINES 16
+# define MAX_TEXT_LINE_LENGTH 1024
 
 /**
  * Struct for threads about their specific identifiers and locks for signaling.

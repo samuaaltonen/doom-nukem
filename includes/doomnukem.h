@@ -6,7 +6,11 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2022/12/07 18:27:55 by dpalacio         ###   ########.fr       */
+=======
+/*   Updated: 2022/12/08 15:23:54 by saaltone         ###   ########.fr       */
+>>>>>>> main
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +33,7 @@
 # include "geometry.h"
 # include "engine.h"
 # include "player.h"
+# include "interactions.h"
 
 //STATUS MACROS
 # define STATUS_TITLESCREEN 0
@@ -70,6 +75,7 @@ typedef struct s_audio
 	Uint32				sound_length;
 }	t_audio;
 
+<<<<<<< HEAD
 typedef struct s_color
 {
 	int	a;
@@ -83,6 +89,23 @@ typedef struct s_timer
 	struct timespec	start;
 	double			seconds;
 }	t_timer;
+=======
+typedef struct s_render_object
+{
+	int			id;
+	double		dist;
+	t_point		start;
+	t_point		draw_end;
+	t_vector2	size;
+	t_vector2	step;
+}	t_render_object;
+
+typedef struct s_objectstack
+{
+	int				visible_count;
+	t_render_object	objects[MAX_VISIBLE_WALLS];
+}	t_objectstack;
+>>>>>>> main
 
 /**
  * Struct for the application.
@@ -99,15 +122,24 @@ typedef struct s_app
 	t_point			mouse_pos;
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];
-	float			depthmap[WIN_H][WIN_W];
+	float			depthmap[WIN_H / 2][WIN_W];
 	t_bool			depthmap_fill_switch;
 	t_wallstack		wallstack;
+	t_objectstack	objectstack;
 	t_player		player;
 	t_sky			sky;
 	t_sector		*sectors;
 	t_object		objects[MAX_OBJECTS];
 	t_interaction	interactions[MAX_INTERACTIONS];
+<<<<<<< HEAD
 	t_timer			timer;
+=======
+	t_animation		animations[MAX_CONCURRENT_ANIMATIONS];
+	int				animation_count;
+	char			**texts;
+	int				text_lengths[MAX_TEXT_LINES];
+	t_textmodal		textmodal;
+>>>>>>> main
 }	t_app;
 
 /**
@@ -117,6 +149,7 @@ void		sdl_init(t_app *app);
 void		app_init(t_app **app);
 int			config_init(t_app *app);
 void		load_assets(t_app *app);
+void		load_texts(t_app *app);
 
 /**
  * error.c
@@ -184,7 +217,9 @@ void		damage(t_app *app, int dmg);
  * Sectors
  */
 t_line		get_wall_line(t_app *app, int sector_id, int wall_id);
-void		sector_visible_walls(t_app *app);
+void		sector_wallstack_build(t_app *app);
+void		sector_visible_walls(t_app *app, t_wallstack *wallstack, int index,
+				int sector_id);
 void		sector_walls_prepare(t_app *app, t_wall *walls, int wall_count);
 void		sector_walls_order(t_app *app, t_wall *walls, int wall_count);
 void		sector_stack_render(t_app *app, t_thread_data *thread,
@@ -215,6 +250,24 @@ void		draw_portal_partial_parent(t_app *app, int x, t_rayhit *hit);
 void		draw_portal_partial_hole(t_app *app, int x, t_rayhit *hit);
 
 /**
+ * Interactions
+ */
+void		interaction_check(t_app *app);
+void		interaction_check_portal(t_app *app, int sector_id);
+void		interaction_trigger(t_app *app, int interaction_index);
+
+/**
+ * Animations
+ */
+t_bool		animation_create(t_app *app, t_animation animation);
+void		progress_animations(t_app *app);
+
+/**
+ * Textmodal animations
+ */
+void		render_textmodals(t_app *app);
+
+/**
  * Sky
  */
 int			get_sky_pixel(t_app *app, int x, int y);
@@ -223,14 +276,14 @@ void		sector_sky_render(t_app *app, t_thread_data *thread);
 /**
  * Font
  */
-void        load_font(t_app *app);
+void		load_font(t_app *app);
 void		change_font(t_app *app, int size, int color);
 void		render_text(t_app *app, t_rect frame, char *text);
 
 /**
  * UI
  */
-void		render_ui_frame(t_app *app,t_rect area, int size, int background);
+void		render_ui_frame(t_app *app, t_rect area, int size, int background);
 void		render_ui(t_app *app);
 void		render_player_status(t_app *app);
 void		render_equipment(t_app *app);
@@ -270,7 +323,7 @@ void		render_gameover(t_app *app);
 /*
 * AUDIO.C
 */
-void    	play_music(t_app *app, char *file);
+void		play_music(t_app *app, char *file);
 void		play_sound(t_app *app, char *file);
 void		pause_audio(t_app *app);
 void		unpause_audio(t_app *app);
@@ -282,7 +335,8 @@ void		stop_audio(t_app *app);
 int			get_pixel_color(SDL_Surface *surface, int x, int y);
 int			shade_color(int color, int shade);
 void		put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color);
-void		flush_surface(SDL_Surface *surface);
+void		put_pixel_to_surface_check(t_app *app, t_point point, int color,
+				float distance);
 void		blit_surface(SDL_Surface *src, t_rect *src_rect,
 				SDL_Surface *dst, t_rect *dst_rect);
 int			check_blit(SDL_Surface *src, t_rect *src_rect,
@@ -303,5 +357,10 @@ void		clamp_int(int *number, int min, int max);
  * maps 
  */
 int			import_file(t_app *app, char *path);
+
+/**
+ * objects
+ */
+void		render_objects(t_app *app);
 
 #endif

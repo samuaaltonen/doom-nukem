@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:55:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/21 15:40:30 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:17:15 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	render_fill_active_sector(t_app *app)
 	t_vec2_lst	*b;
 	t_point		min;
 	t_point		max;
-	t_point		cur;
+	//t_point		cur;
 	int			color;
 
 	color = 0x202020;
@@ -82,19 +82,7 @@ void	render_fill_active_sector(t_app *app)
 				b = a->next;
 			else
 				b = b->next;
-			//draw triangle start-a-b
-		}
-		//wip draw square instead
-		cur = (t_point){min.x, min.y};
-		while (cur.y < max.y)
-		{
-			cur.x = min.x;
-			while (cur.x < max.x)
-			{
-				put_pixel_to_surface(app->surface, cur.x, cur.y, color);
-				cur.x++;
-			}
-			cur.y++;
+			fill_triangle(app, world_to_screen(app,app->active_sector->wall_list->point), world_to_screen(app, a->point), world_to_screen(app, b->point),color);
 		}
 	}
 }
@@ -105,7 +93,7 @@ int	interaction_sector_check(t_app *app, t_sector_lst *sector)
 	int	i;
 
 	i = 0;
-	while (i < MAX_INTERACTIONS && app->interactions[i].event_id != 0)
+	while (i < MAX_INTERACTIONS)
 	{	
 		if(!app->interactions[i].activation_wall && app->interactions[i].activation_sector == sector)
 			return (app->interactions[i].event_id);
@@ -119,7 +107,7 @@ int	interaction_wall_check(t_app *app, t_vec2_lst *wall)
 	int	i;
 
 	i = 0;
-	while (i < MAX_INTERACTIONS && app->interactions[i].event_id != 0)
+	while (i < MAX_INTERACTIONS)
 	{	
 		if(app->interactions[i].activation_sector && app->interactions[i].activation_wall == wall)
 			return (app->interactions[i].event_id);
@@ -133,7 +121,7 @@ int	interaction_object_check(t_app *app, int id)
 	int	i;
 
 	i = 0;
-	while (i < MAX_INTERACTIONS && app->interactions[i].event_id != 0)
+	while (i < MAX_INTERACTIONS)
 	{
 		if(app->interactions[i].activation_object == &app->objects[id])
 			return (app->interactions[i].event_id);

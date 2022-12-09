@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/02 18:13:18 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/09 11:45:12 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,7 @@ int	events_keydown(int keycode, t_app *app)
 		app->conf->keystates |= CTRL;
 	if (keycode == SDLK_SPACE)
 		app->conf->keystates |= SPACE;
+	if (keycode == SDLK_f)
+		interaction_check(app);
 	return (0);
 }

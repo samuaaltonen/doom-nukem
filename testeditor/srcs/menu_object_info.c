@@ -6,11 +6,41 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:04:04 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/23 15:56:56 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/08 18:08:29 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
+
+/**
+ * Based on the object type, highlights the correct movement type (moves,
+ * follows, in place) on the help menu sidebar.
+*/
+static void	render_object_movement_type(t_app *app, int movement)
+{
+	change_font(app, 11, TEXT);
+	if (movement == 1)
+	{
+		render_text(app, (t_rect){121, 185, 120, 15}, "MOVES");
+		render_text(app, (t_rect){175, 185, 120, 15}, "FOLLOWS");
+		change_font(app, 11, ACTIVE_TEXT);
+		render_text(app, (t_rect){35, 185, 120, 15}, "- IN PLACE -");
+	}
+	else if (movement == 2)
+	{
+		render_text(app, (t_rect){45, 185, 120, 15}, "IN PLACE");
+		render_text(app, (t_rect){175, 185, 120, 15}, "FOLLOWS");
+		change_font(app, 11, ACTIVE_TEXT);
+		render_text(app, (t_rect){111, 185, 120, 15}, "- MOVES -");
+	}
+	else
+	{
+		render_text(app, (t_rect){45, 185, 120, 15}, "IN PLACE");
+		render_text(app, (t_rect){121, 185, 120, 15}, "MOVES");
+		change_font(app, 11, ACTIVE_TEXT);
+		render_text(app, (t_rect){165, 185, 120, 15}, "- FOLLOWS -");
+	}
+}
 
 /**
  * Renders object related texts on the help menu sidebar.
@@ -18,22 +48,22 @@
 static void	render_object_texts(t_app *app)
 {
 	int	pickable;
-	int	mode;
+	int	movement;
 	int	type;
 
 	type = 1;
 	pickable = 0;
-	mode = 0;
+	movement = 0;
 	if (type < 5 || type == 10 || type > 15)
 		pickable = 1;
 	if (type < 9 || type == 14 || type == 16)
-		mode = 1;
+		movement = 1;
 	if (type == 12 || type < 16)
-		mode = 1;
+		movement = 1;
 	change_font(app, 11, TEXT);
 	render_text(app, (t_rect){113, 120, 120, 15}, "MONSTER");
 	render_text(app, (t_rect){40, 140, 120, 15}, "HEALTH");
-	render_text(app, (t_rect){210, 140, 120, 15},"100");
+	render_text(app, (t_rect){210, 140, 120, 15}, "100");
 	render_text(app, (t_rect){40, 155, 120, 15}, "DAMAGE");
 	render_text(app, (t_rect){210, 155, 120, 15}, "10");
 	if (pickable)
@@ -48,29 +78,7 @@ static void	render_object_texts(t_app *app)
 		change_font(app, 11, ACTIVE_TEXT);
 		render_text(app, (t_rect){40, 170, 120, 15}, "- UNPICKABLE -");
 	}
-	change_font(app, 11, TEXT);
-	if (mode == 1)
-	{
-		render_text(app, (t_rect){121, 185, 120, 15}, "MOVES");
-		render_text(app, (t_rect){175, 185, 120, 15}, "FOLLOWS");
-		change_font(app, 11, ACTIVE_TEXT);
-		render_text(app, (t_rect){35, 185, 120, 15}, "- IN PLACE -");
-	}
-	else if (mode == 2)
-	{
-		render_text(app, (t_rect){45, 185, 120, 15}, "IN PLACE");
-		render_text(app, (t_rect){175, 185, 120, 15}, "FOLLOWS");
-		change_font(app, 11, ACTIVE_TEXT);
-		render_text(app, (t_rect){111, 185, 120, 15}, "- MOVES -");
-	}
-	else
-	{
-		render_text(app, (t_rect){45, 185, 120, 15}, "IN PLACE");
-		render_text(app, (t_rect){121, 185, 120, 15}, "MOVES");
-		change_font(app, 11, ACTIVE_TEXT);
-		render_text(app, (t_rect){165, 185, 120, 15}, "- FOLLOWS -");
-	}
-	change_font(app, 15, TEXT);
+	render_object_movement_type(app, movement);
 }
 
 /**
@@ -96,48 +104,25 @@ void	render_object_statics(t_app *app)
 		y++;
 	}
 	render_object_texts(app);
-	render_interaction_texts(app, 220);
-}
-
-static int	find_max(t_app *app, SDL_Surface *asset)
-{
-	if (asset == app->assets.sprite)
-		return (MAX_OBJECTS);
-	return (0);
 }
 
 /**
- * Renders object icons on the help menu sidebar.
+ * Renders object specific information on the help menu sidebar.
 */
-void	render_icons(t_app *app, t_point point, int id, SDL_Surface *asset)
+void	object_edit_menu(t_app *app)
 {
-	t_rect		src;
-	t_rect		icon;
-	t_point		size;
-	int			index;
-	int			tex;
+	int			id;
+	t_point		screen_pos;
 
-	index = 0;
-	while (index < 5)
-	{
-		if (index == 2)
-		{
-			size = (t_point){ICON_SIZE, ICON_SIZE};
-			point.y -= 14;
-		}
-		else
-			size = (t_point){ICON_SIZE / 2, ICON_SIZE / 2};
-		tex = ICON_SIZE * ((index + id - 2) % (find_max(app, asset) + 1));
-		set_icon_rect(&src, (t_point){tex, 0}, size);
-		set_icon_rect(&icon, point, size);
-		blit_surface(asset, &src, app->surface, &icon);
-		point.x += (ICON_SIZE / 2) + 10;
-		if (index == 2)
-		{
-			point.x += (ICON_SIZE / 2);
-			point.y += 14;
-		}
-		index++;
-	}
-	render_ui_frame(app, (t_rect){108, point.y - 14, 66, 66}, 1, 0);
+	SDL_GetMouseState(&screen_pos.x, &screen_pos.y);
+	change_font(app, 15, TEXT);
+	render_text(app, (t_rect){10, 40, 50, 20}, "OBJECTS");
+	change_font(app, 11, TEXT);
+	render_arrows(app, (t_point){10, 67}, (t_point){265, 67});
+	render_icons(app, (t_point){25, 60}, app->current_object->type,
+		app->assets.sprite);
+	render_object_statics(app);
+	change_font(app, 11, TEXT);
+	id = find_object_interaction(app);
+	render_current_interaction_status(app, screen_pos, 210, id);
 }

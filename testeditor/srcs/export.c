@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/25 16:37:10 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/06 16:18:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,9 +132,13 @@ static void write_objects(t_app *app, t_export_object *objects)
 	while (i < MAX_OBJECTS)
 	{
 		temp.pos = app->objects[i].position;
+		if (app->objects[i].sector)
+			temp.elevation = app->objects[i].sector->floor_height;
+		else
+			temp.elevation = 0.f;
 		temp.sector = get_sector_id(app, app->objects[i].sector);
 		temp.type = app->objects[i].type;
-		if(temp.type != 0)
+		if (temp.type != 0)
 				ft_printf("object exported %i\n", i);
 		temp.var = app->objects[i].var;
 		(objects[i]) = temp;
@@ -152,14 +156,14 @@ static void write_interactions(t_app *app, t_export_interaction *interactions)
 	{
 		temp.activation_object = get_object_id(app,app->interactions[i].activation_object);
 		temp.activation_sector = get_sector_id(app,app->interactions[i].activation_sector);
-		if(temp.activation_sector != -1)
+		if(temp.activation_sector != -1 && app->interactions[i].activation_wall)
 			temp.activation_wall = get_line_id(app->interactions[i].activation_sector->wall_list, app->interactions[i].activation_wall);
 		else
 			temp.activation_wall = -1;
 		temp.event_id = app->interactions[i].event_id;
 		temp.target_sector = get_sector_id(app, app->interactions[i].target_sector);
 		temp.variable = app->interactions[i].variable;
-		(interactions[i]) = temp;
+		interactions[i] = temp;
 		i++;
 	}
 }
@@ -182,6 +186,9 @@ int	export_file(t_app *app, char *path)
 	t_export_interaction	interactions[MAX_INTERACTIONS];
 	t_level_header			header;
 
+	//app->interaction_count = 2;
+	/* for (int i = 0; i < 2; i++)
+		delete_interaction(app, 0); */
 	counter = 0;
 	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
 	if (!export)
@@ -211,7 +218,8 @@ int	export_file(t_app *app, char *path)
  	if (write(fd, objects, sizeof(t_export_object) * MAX_OBJECTS) == -1)
 		exit_error("object write error\n");
 	write_interactions(app, (t_export_interaction *)&interactions);
-	for(int i = 0; i < MAX_INTERACTIONS;i++)
+	ft_printf("Total interactions: %d\n", app->interaction_count);
+	for(int i = 0; i < MAX_INTERACTIONS; i++)
 		ft_printf("read interactions id %i, activation sector%i, wall%i, object%i\n",interactions[i].event_id, interactions[i].activation_sector, interactions[i].activation_wall, interactions[i].activation_object);
 	if (write(fd, interactions, sizeof(t_export_interaction) * MAX_INTERACTIONS) == -1)
 		exit_error("interaction write error\n");
