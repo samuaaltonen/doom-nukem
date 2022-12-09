@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/08 16:06:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/09 15:14:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@
 # define TALL 0.7f
 # define HORIZON_UPPER_LIMIT 1.25
 # define HORIZON_LOWER_LIMIT -0.25
+# define PLAYER_HEIGHT 0.5
+# define COLLISION_OFFSET 0.5
 
 /**
  * Movement direction enumeration.
@@ -66,7 +68,6 @@ typedef struct s_player
 	double			velocity;
 	t_vector2		cam;
 	double			camera_length;
-	double			height;
 	double			elevation;
 	double			horizon;
 	int				current_sector;

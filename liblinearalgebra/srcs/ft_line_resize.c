@@ -13,19 +13,24 @@
 #include "liblinearalgebra.h"
 
 /**
- * Extends line to given length. If both_sides is seleted, extends both ends
- * of the line.
+ * @brief Extends line to given length. If both_sides is seleted, extends both
+ * ends of the line.
+ * 
+ * @param line 
+ * @param length 
+ * @param side 
+ * @return t_line 
  */
 t_line	ft_line_resize(t_line line, double length, int side)
 {
 	t_line		resized;
 	t_vector2	line_direction;
 
-	if(!length)
+	if (!length)
 	{
-		resized.a = (t_vector2){0.f,0.f};
-		resized.b = (t_vector2){0.f,0.f};
-			return (resized);
+		resized.a = (t_vector2){0.0, 0.0};
+		resized.b = (t_vector2){0.0, 0.0};
+		return (resized);
 	}
 	line_direction = ft_vector_resize((t_vector2){
 			line.b.x - line.a.x,

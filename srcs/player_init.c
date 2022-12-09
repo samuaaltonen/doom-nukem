@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/05 17:45:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/09 15:03:30 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	player_init(t_app *app)
 {
 	app->player.pos = (t_vector2){POSITION_START_X, POSITION_START_Y};
 	app->player.dir = (t_vector2){DIRECTION_START_X, DIRECTION_START_Y};
-	app->player.height = 0.5;
 	app->player.elevation = 0.0;
 	app->player.horizon = 0.5;
 	app->player.current_sector = 0;

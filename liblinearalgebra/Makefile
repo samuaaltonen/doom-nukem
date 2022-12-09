@@ -6,13 +6,13 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 10:36:08 by saaltone          #+#    #+#              #
-#    Updated: 2022/12/08 16:05:09 by saaltone         ###   ########.fr        #
+#    Updated: 2022/12/09 15:34:43 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME=liblinearalgebra.a
 CC = gcc
-FLAGS=-Wall -Werror -Wextra -O3
+FLAGS=-Wall -Werror -Wextra -flto -Ofast
 
 FILES=ft_vector_length.c \
 	ft_vector_multiply_matrix.c \
@@ -27,6 +27,7 @@ FILES=ft_vector_length.c \
 	ft_vector_crossproduct.c \
 	ft_line_resize.c \
 	ft_line_point.c \
+	ft_line_segment_point.c \
 	ft_line_side.c \
 	ft_vector_angle.c \
 	ft_vector_angle_right.c \

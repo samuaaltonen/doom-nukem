@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/12/08 16:04:35 by saaltone         ###   ########.fr        #
+#    Updated: 2022/12/09 15:03:16 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ FILES = main.c \
 		player.c \
 		player_init.c \
 		player_view.c \
+		player_collision.c \
 		events.c \
 		audio.c \
 		time.c \

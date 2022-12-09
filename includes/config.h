@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/08 16:04:42 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/09 15:14:30 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@
 # define THREAD_COUNT 6
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
-# define COLLISION_OFFSET 0.25
 # define FOV 66
 # define TEX_SIZE 64
 # define SKYBOX_W 1024 // Optimal size 4x2.5 of window size (5120x1800)

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/08 16:00:14 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/09 14:49:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,6 +179,8 @@ void		player_move(t_app *app, t_movement movement, double speed);
 void		update_position(t_app *app);
 void		init_camera_plane(t_app *app);
 void		init_skybox_plane(t_app *app);
+
+t_bool		circle_collision(t_app *app, t_line wall, t_vector2 *colpos);
 
 /**
  * Sectors

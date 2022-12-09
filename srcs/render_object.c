@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/06 13:46:41 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/09 14:54:19 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,7 +136,7 @@ static void	objects_visible(t_app *app)
 			object->size.y  = ft_abs((int)(WIN_H / transform.y));
 			//ft_printf("scale %f angle %f", scale, angle);
 			object->start.x = (int)((WIN_W / 2) * (1.0f + (transform.x / transform.y)));
-			object->start.y = (int)(WIN_H * app->player.horizon + object->size.y * (app->player.elevation + app->player.height - (app->objects[i].elevation + (0.5))));
+			object->start.y = (int)(WIN_H * app->player.horizon + object->size.y * (app->player.elevation + PLAYER_HEIGHT - (app->objects[i].elevation + (0.5))));
 			object->draw_end.x = object->size.x / 2 + object->start.x;
 			object->draw_end.y = object->start.y + object->size.y;
 			object->dist = dist * cos(ft_vector_angle(vector, app->player.dir));
@@ -145,7 +145,7 @@ static void	objects_visible(t_app *app)
 			object->step.x = TEX_SIZE / (double)(object->size.x);
 			object->step.y = TEX_SIZE / (double)(object->size.y);
 			app->objectstack.visible_count++;
-			//ft_printf("object data dist %f, start.y %i, transform y%f, elev %f, player elev %f, object y size %f", object->dist, object->start.y, transform.y / dist, app->objects[i].elevation, (app->player.elevation + app->player.height), object->size.y);
+			//ft_printf("object data dist %f, start.y %i, transform y%f, elev %f, player elev %f, object y size %f", object->dist, object->start.y, transform.y / dist, app->objects[i].elevation, (app->player.elevation + PLAYER_HEIGHT), object->size.y);
 		}
 	}
 	//ft_printf("objects found %i\n", app->objectstack.visible_count);

@@ -6,12 +6,13 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:46:18 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/08 16:07:47 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/09 15:33:16 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBLINEARALGEBRA_H
 # define LIBLINEARALGEBRA_H
+# define LINE_POINT_EPSILON 0.0009765625
 # include "math.h"
 
 enum e_line_resize_side {
@@ -74,6 +75,7 @@ double		ft_vector_crossproduct(t_vector2 a, t_vector2 b);
 double		ft_vector_angle(t_vector2 a, t_vector2 b);
 double		ft_vector_angle_right(t_vector2 a, t_vector2 b);
 int			ft_line_point(t_line line, t_vector2 coord);
+int			ft_line_segment_point(t_line line, t_vector2 point);
 int			ft_line_side(t_line line, t_vector2 coord);
 t_vector2	ft_vector2_sub(t_vector2 a, t_vector2 b);
 t_vector2	ft_vector2_add(t_vector2 a, t_vector2 b);
