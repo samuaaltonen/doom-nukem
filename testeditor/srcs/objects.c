@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:53:42 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/09 15:38:01 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/09 16:22:13 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,25 @@ void	del_object(t_app *app, int object_id)
 	}
 	app->object_menu = FALSE;
 	app->current_object= NULL;
+}
+
+void	del_all_objects_in_sector(t_app *app)
+{
+	int		id;
+
+	id = app->object_count - 1;
+	while (id >= 0)
+	{
+		if (app->objects[id].sector == app->active_sector)
+		{
+			app->current_object = &(app->objects[id]);
+			app->current_interaction = &(app->interactions[find_object_interaction(app)]);
+			del_object(app, id);
+			app->current_object = NULL;
+			app->current_interaction = NULL;
+		}
+		id--;
+	}
 }
 
 void	change_object_id(t_app *app, int keycode)

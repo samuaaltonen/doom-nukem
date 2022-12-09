@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/08 18:13:31 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/09 16:07:48 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -592,6 +592,7 @@ void			check_player_position(t_app *app);
 int				new_object(t_app *app);
 void			change_object_id(t_app *app, int keycode);
 void			del_object(t_app *app, int object_id);
+void			del_all_objects_in_sector(t_app *app);
 void			link_interaction(t_app *app);
 void			draw_object_icon(t_app *app, t_vector2 world_pos, int id);
 void			render_objects(t_app *app);
