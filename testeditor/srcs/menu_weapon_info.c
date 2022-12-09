@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:32:37 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/25 15:57:42 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:13:49 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	weapons_init(t_app *app)
 }
 
 /**
- * Renders weapon related texts on the help menu sidebar.
+ * Renders weapon related texts on the help menu sidebar when player edit
+ * mode is turned on.
 */
 static void	render_weapon_texts(t_app *app)
 {
@@ -60,7 +61,8 @@ static void	render_weapon_texts(t_app *app)
 }
 
 /**
-* Renders weapon staticbars on the help menu sidebar.
+* Renders weapon staticbars on the help menu sidebar when player edit mode
+ * is turned on.
 */
 static void	render_weapon_statics(t_app *app)
 {
@@ -79,7 +81,7 @@ static void	render_weapon_statics(t_app *app)
 			if (x < app->player.weapons[app->player.selected_weapon].range
 				+ 120 && y > 113 && y < 123)
 				put_pixel_to_surface(app->surface, x, y, TEXT);
-			if (x < app->player.weapons[app->player.selected_weapon].range
+			if (x < app->player.weapons[app->player.selected_weapon].fire_rate
 				+ 120 && y > 126 && y < 136)
 				put_pixel_to_surface(app->surface, x, y, TEXT);
 			x++;
@@ -89,11 +91,16 @@ static void	render_weapon_statics(t_app *app)
 	render_weapon_texts(app);
 }
 
+/**
+ * Renders the weapon icons and selection frame around the icon if the weapon
+ * is enabled.
+*/
 void	render_weapons(t_app *app)
 {
 	int		index;
 
-	render_player_icons(app, app->assets.sprite, (t_point){40, 60}, MAX_WEAPONS + 1);
+	render_player_icons(app, app->assets.sprite,
+		(t_point){40, 60}, MAX_WEAPONS + 1);
 	index = 0;
 	while (index < MAX_WEAPONS)
 	{
@@ -107,6 +114,10 @@ void	render_weapons(t_app *app)
 	render_weapon_statics(app);
 }
 
+/**
+ * If left mouse click is within the icon rectangles, toggles the weapon's
+ * selection on/off.
+*/
 void	select_weapons(t_app *app, t_point screen_pos)
 {
 	int	index;
