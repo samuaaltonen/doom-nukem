@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/08 15:50:28 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/09 13:50:32 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,7 +143,7 @@ void	player_move(t_app *app, t_movement movement, double speed)
 
 void	heal(t_app *app)
 {
-	if (app->player.inventory.potion > 0)
+	if (app->player.inventory.potion > 0 && app->player.hp < MAX_HP)
 	{
 		app->player.inventory.potion--;
 		app->player.hp += 40;
@@ -182,4 +182,28 @@ void	damage(t_app *app, int dmg)
 	if (app->player.hp < 0)
 		app->player.hp = 0;
 		start_timer(&app->timer, 5);
+}
+
+void	player_shoot(t_app *app)
+{
+	if (app->player.equiped_weapon.ammo > 0)
+	{
+		play_sound(app, SOUND_SHOT_PATH);
+		app->player.equiped_weapon.ammo--;
+		app->player.inventory.ammo--;
+	}
+	else
+		player_reload(app);
+}
+
+void	player_reload(t_app *app)
+{
+	if (app->player.equiped_weapon.ammo < app->player.equiped_weapon.magazine)
+	{
+		play_sound(app, SOUND_RELOAD_PATH);
+		if (app->player.equiped_weapon.magazine <= app->player.inventory.ammo)
+			app->player.equiped_weapon.ammo = app->player.equiped_weapon.magazine;
+		else
+			app->player.equiped_weapon.ammo = app->player.inventory.ammo;
+	}
 }

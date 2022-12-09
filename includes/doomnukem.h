@@ -6,11 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2022/12/07 18:27:55 by dpalacio         ###   ########.fr       */
-=======
-/*   Updated: 2022/12/08 15:23:54 by saaltone         ###   ########.fr       */
->>>>>>> main
+/*   Updated: 2022/12/09 13:15:23 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,21 +71,6 @@ typedef struct s_audio
 	Uint32				sound_length;
 }	t_audio;
 
-<<<<<<< HEAD
-typedef struct s_color
-{
-	int	a;
-	int	r;
-	int g;
-	int	b;
-}	t_color;
-
-typedef struct s_timer
-{
-	struct timespec	start;
-	double			seconds;
-}	t_timer;
-=======
 typedef struct s_render_object
 {
 	int			id;
@@ -105,7 +86,20 @@ typedef struct s_objectstack
 	int				visible_count;
 	t_render_object	objects[MAX_VISIBLE_WALLS];
 }	t_objectstack;
->>>>>>> main
+
+typedef struct s_color
+{
+	int	a;
+	int	r;
+	int g;
+	int	b;
+}	t_color;
+
+typedef struct s_timer
+{
+	struct timespec	start;
+	double			seconds;
+}	t_timer;
 
 /**
  * Struct for the application.
@@ -131,15 +125,12 @@ typedef struct s_app
 	t_sector		*sectors;
 	t_object		objects[MAX_OBJECTS];
 	t_interaction	interactions[MAX_INTERACTIONS];
-<<<<<<< HEAD
-	t_timer			timer;
-=======
 	t_animation		animations[MAX_CONCURRENT_ANIMATIONS];
 	int				animation_count;
 	char			**texts;
 	int				text_lengths[MAX_TEXT_LINES];
 	t_textmodal		textmodal;
->>>>>>> main
+	t_timer			timer;
 }	t_app;
 
 /**
@@ -206,6 +197,8 @@ void		player_init(t_app *app);
 void		player_rotate(t_app *app, double angle);
 void		player_horizon(t_app *app, double change);
 void		player_move(t_app *app, t_movement movement, double speed);
+void		player_shoot(t_app *app);
+void		player_reload(t_app *app);
 void		init_camera_plane(t_app *app);
 void		init_skybox_plane(t_app *app);
 void		heal(t_app *app);

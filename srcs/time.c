@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:22:26 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/09 11:49:31 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/09 11:59:31 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ static void	update_avg_fps(t_app *app)
 	{
 		app->conf->fps_chunk = app->conf->fps_total;
 	}
+	
 	if (app->conf->frames_total > 100)
 	{
 		app->conf->frames_total = 0;
