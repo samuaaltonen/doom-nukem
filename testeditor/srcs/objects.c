@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objects.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:53:42 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/22 15:34:49 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/09 15:38:01 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,22 +129,29 @@ void	del_object(t_app *app, int object_id)
 	int	i;
 
 	i = 0;
-	if(app->object_count > 0)
+	if (app->object_count > 0)
 	{
-		while(i < MAX_INTERACTIONS && app->interactions[i].event_id != 0)
+		while (i < MAX_INTERACTIONS && app->interactions[i].event_id != 0)
 		{
-			if(app->interactions[i].activation_sector == NULL)
+			if (app->interactions[i].activation_object == &(app->objects[object_id]))
+			{
+				delete_interaction(app, find_object_interaction(app));
+				continue ;
+			}
+			if (app->interactions[i].activation_sector == NULL 
+				&& get_object_id(app, app->interactions[i].activation_object) > object_id)
 				app->interactions[i].activation_object--;
 			i++;
 		}
-
-		while(object_id + 1 < MAX_OBJECTS && app->objects[object_id].type != 0)
+		while (object_id + 1 < MAX_OBJECTS && app->objects[object_id].type != 0)
 		{
 			app->objects[object_id] = app->objects[object_id + 1];
 			object_id++;
 		}
 		app->object_count--;
 	}
+	app->object_menu = FALSE;
+	app->current_object= NULL;
 }
 
 void	change_object_id(t_app *app, int keycode)

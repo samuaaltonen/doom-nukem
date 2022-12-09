@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interactions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/06 16:13:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/09 14:25:21 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,13 +86,19 @@ void	link_interaction(t_app *app)
 
 void	delete_interaction(t_app *app, int id)
 {
-	if(app->interaction_count > 0)
+	if (app->interaction_count > 0 && id > -1)
 	{
-		if (id < app->interaction_count - 1)
+		while (id < app->interaction_count)
 		{
-			app->interactions[id] = app->interactions[app->interaction_count - 1];
+			app->interactions[id] = app->interactions[id + 1];
+			id++;
 		}
-		app->interactions[app->interaction_count - 1].event_id = 0;
+		app->interactions[id].event_id = 0;
+		app->interactions[id].variable = 0;
+		app->interactions[id].target_sector = NULL;
+		app->interactions[id].activation_sector = NULL;
+		app->interactions[id].activation_wall = NULL;
+		app->interactions[id].activation_object = NULL;
 		app->interaction_count--;
 	}
 }
