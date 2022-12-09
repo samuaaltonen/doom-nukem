@@ -317,7 +317,8 @@ void		render_gameover(t_app *app);
 /*
 * AUDIO.C
 */
-void		play_music(t_app *app, char *file);
+void		load_music(t_app *app, char *file);
+void		play_music(t_app *app);
 void		play_sound(t_app *app, char *file);
 void		pause_audio(t_app *app);
 void		unpause_audio(t_app *app);

@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:36:43 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/08 18:10:03 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/08 19:11:41 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,11 @@ void	set_icon_rect(t_rect *rect, t_point point, t_point size)
 static int	find_max(t_app *app, SDL_Surface *asset)
 {
 	if (asset == app->assets.sprite)
-		return (MAX_OBJECTS);
+		return (MAX_TEX_COUNT);
+	// if (asset == app->assets.object)
+	// 	return (MAX_OBJECTS);
+	// if (asset == app->assets.decor)
+	// 	return (MAX_DECOR);
 	return (0);
 }
 

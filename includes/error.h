@@ -19,6 +19,12 @@
 # define MSG_ERROR_SDL_INIT "Could not initialize SDL."
 # define MSG_ERROR_ALLOC "Could not allocate memory."
 # define MSG_ERROR_IMAGE_INIT "Image initialization failed."
+# define MSG_ERROR_AUDIO_DEVICE "Could not use audio device. Please check \
+audio driver. When PulseAudio/Alsa is used (linux), check that \
+following environment variable are set: \nexport SDL_AUDIODRIVER=alsa \
+\nexport AUDIODEV pulse\n\nAlso make sure following packages are installed:\n\
+libasound2-dev libpulse-dev (if you just installed these packages, also remake \
+sdl)"
 # define MSG_ERROR_THREADS "Could not create a thread."
 # define MSG_ERROR_THREADS_SIGNAL "Error with waking up a thread or \
 locking/unlocking a mutex."

@@ -39,9 +39,6 @@ SDL_DIR = ../sdl
 SDL_CONF = `../sdl/SDL2_build/bin/sdl2-config --cflags --libs`
 SDL_V = SDL2-2.0.8
 
-FRAMEWORKS = \
-	-framework OpenGL -framework AppKit -framework OpenCl \
-
 HEADERS = \
 	-I ./includes \
 	-I ../libft/includes \
@@ -56,7 +53,7 @@ LIBLINKS = -L ../libft -L ../liblinearalgebra -L/usr/local/lib \
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(LIBLINEARALGEBRA) $(SDL2) $(OBJS) $(DEPS)
-	$(CC) $(OBJS) -o $(NAME) $(SDL_CONF) $(FLAGS) $(HEADERS) $(FRAMEWORKS) $(LIBLINKS)
+	$(CC) $(OBJS) -o $(NAME) $(SDL_CONF) $(FLAGS) $(HEADERS) $(LIBLINKS)
 
 # Create object files with (-MMD also creates dependency files)
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)

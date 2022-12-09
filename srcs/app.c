@@ -52,4 +52,5 @@ void	render_frame(t_app *app)
 	else if (app->status == STATUS_GAMEOVER)
 		render_gameover(app);
 	SDL_UpdateWindowSurface(app->win);
+	play_music(app);
 }

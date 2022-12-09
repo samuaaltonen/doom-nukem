@@ -166,7 +166,7 @@ static void ui_topframe(t_app *app,t_rect area, int size)
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
 }
 
-static void ui_midframe(t_app *app,t_rect area, int size)
+static void ui_midframe(t_app *app, t_rect area, int size)
 {
 	t_rect	dst;
 	t_rect	src;
@@ -174,8 +174,11 @@ static void ui_midframe(t_app *app,t_rect area, int size)
 	dst.x = area.x;
 	dst.y = area.y + size;
 	dst.h = area.h - 2 * size;
+	dst.w = size;
 	src.x = 0;
 	src.y = 10;
+	src.w = 10;
+	src.h = 10;
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
 	dst.x = area.x + area.w - size;
 	src.x = 20;
