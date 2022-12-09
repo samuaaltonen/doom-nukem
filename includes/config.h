@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/08 19:41:02 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/09 17:18:19 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@
 # define MAX_VISIBLE_WALLS 256
 # define MAX_VIEW_DISTANCE 256.f
 # define MAX_LINE_LENGTH 1048576.0
+# define SMALL_SCALE 0.34375
 # define SPRITE_ANGLES 90
-# define MAX_SMALL_OBJECTS 5
-# define MAX_BIG_OBJECTS 5
-# define MAX_ENEMY_TYPES 1
-# define MAX_PROJECTILES 5
+# define MAX_SMALL_OBJECTS 3
+# define MAX_BIG_OBJECTS 3
+# define MAX_ENEMY_TYPES 2
+# define MAX_PROJECTILES 3
 # define MAX_OBJECT_DISTANCE 15.f
 /* object type defines for now
 	< MAX_SMALL_OBJECTS = small objects
@@ -48,7 +49,7 @@
 	< MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES = enemy
 	>= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES = projectiles
 */
-# define MAX_ENEMY_STATES 3
+# define MAX_ENEMY_STATES 2
 # define MAX_OBJECTS 64
 # define MAX_TEMP_OBJECTS 64
 # define MAX_INTERACTIONS 64

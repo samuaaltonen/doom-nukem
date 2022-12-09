@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/08 19:45:22 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/09 17:25:47 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,30 @@ void	draw_object_pixel(t_app *app, t_render_object *object, t_point window, t_ve
 	int	object_type;
 
 	object_type = app->objects[object->id].type;
-	if(object_type < MAX_SMALL_OBJECTS)
+	if(object_type <= MAX_SMALL_OBJECTS)
 		color = get_pixel_color(app->assets.sprites[SMALL_SPRITE], (int)texture.x - ((object->frame) * object->tex_size) - object->tex_size, (int)texture.y + (object_type - 1) * object->tex_size);
-	else if(object_type < MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS)
-		color = get_pixel_color(app->assets.sprites[BIG_SPRITE], (int)texture.x - ((object->frame) * object->tex_size) - object->tex_size, (int)texture.y + (object_type - MAX_SMALL_OBJECTS) * object->tex_size);
-	else if(object_type < MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES)
-		color = get_pixel_color(app->assets.sprites[ENEMY_SPRITE], (int)texture.x - ((object->frame) * object->tex_size) - object->tex_size, (int)(texture.y + ((int)app->object_states[object->id]) * object->tex_size));
+	else if(object_type <= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS)
+		color = get_pixel_color(app->assets.sprites[BIG_SPRITE], (int)texture.x - ((object->frame) * object->tex_size) - object->tex_size, (int)texture.y + (object_type - MAX_SMALL_OBJECTS - 1) * object->tex_size);
+	else if(object_type <= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES)
+		color = get_pixel_color(app->assets.sprites[ENEMY_SPRITE + object_type - (MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS)] , (int)texture.x - ((object->frame) * object->tex_size) - object->tex_size, (int)(texture.y + ((int)app->object_states[0]) * object->tex_size));
 	else
 		color = get_pixel_color(app->assets.sprites[PROJECTILE_SPRITE], (int)texture.x - ((object->frame) * object->tex_size) - object->tex_size, (int)texture.y * (object_type - (MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES)));
 	if ((color & 0xFF000000) > 0)
-		put_pixel_to_surface_check(app, window,color,object->dist);
+		put_pixel_to_surface(app->surface, window.x, window.y,color);
+		//put_pixel_to_surface_check(app, window,color,object->dist);
+}
+
+static void	init_draw_area(t_render_object *object)
+{
+	object->draw_start = object->start;
+	if (object->draw_start.x < 0)
+		object->draw_start.x = 0;
+	if (object->draw_start.y < 0)
+		object->draw_start.y = 0;
+	if (object->end.x >= WIN_W)
+		object->end.x = WIN_W - 1;
+	if (object->end.y >= WIN_H)
+		object->end.y = WIN_H - 1;
 }
 
 void	object_render(t_app *app, t_render_object *object, t_thread_data *thread)
@@ -60,19 +74,19 @@ void	object_render(t_app *app, t_render_object *object, t_thread_data *thread)
 	
 	t_vector2	texture_pixel;
 	
-	texture_pixel = (t_vector2){0.f,0.f};
+	texture_pixel = (t_vector2){(object->draw_start.x - object->start.x) * object->step.x,0.f};
 
-	x = object->start.x;
-	while(++x < object->draw_end.x)
+	x = object->draw_start.x;
+	while(++x < object->end.x)
 	{
 		if(x % THREAD_COUNT != thread->id)
 		{
 			texture_pixel.x += object->step.x;
 			continue;
 		}
-		y = object->start.y;
-		texture_pixel.y = 0.f;
-		while (++y <  object->draw_end.y)
+		y = object->draw_start.y;
+		texture_pixel.y = (object->draw_start.y - object->start.y) * object->step.y;
+		while (++y <  object->end.y)
 		{
 			//if(y % 2 == !app->depthmap_fill_switch)
 				draw_object_pixel(app, object, (t_point){x, y}, texture_pixel);
@@ -118,7 +132,7 @@ void	*object_render_thread(void *data)
 
 static int	object_tex_size(t_app *app, int id)
 {
-	if(app->objects[id].type < MAX_SMALL_OBJECTS)
+	if(app->objects[id].type <= MAX_SMALL_OBJECTS)
 	{
 		return (TEX_PICKUP);
 	}
@@ -141,14 +155,17 @@ static t_bool	init_object(t_app *app, int i, t_render_object *object,
 			/ dist);
 	if(*angle > 1.f || *angle < 0)
 		return (FALSE);
+
 	transform = ft_vector_multiply_matrix(vector,
 	ft_matrix_inverse((t_matrix2){app->player.cam, app->player.dir}));
 	if(transform.y / dist < 0.75f)
 		return (FALSE);
+	if(object->tex_size == TEX_PICKUP)
+		transform = (t_vector2){transform.x / SMALL_SCALE, 
+			transform.y / SMALL_SCALE};
 	object->id = i;
 	object->tex_size = object_tex_size(app, object->id);
-	object->size.x  = (WIN_H / transform.y);
-	object->size.y  = (WIN_H / transform.y);
+	object->size = (t_vector2){WIN_H / transform.y, WIN_H / transform.y};
 	object->start.x = (int)((WIN_W / 2) * (1.0f + (transform.x / transform.y)));
 	return (TRUE);
 }
@@ -186,15 +203,20 @@ static void	set_object(t_app *app, t_render_object *object, double *angle,
 {
 		double			offset;
 
-		object->start.y = (int)(WIN_H * app->player.horizon + object->size.y
-		* ((app->player.elevation + app->player.height)
-		- (original_obj->elevation + 0.5)));
+		if(object->tex_size == TEX_PICKUP)
+			object->start.y = (int)(WIN_H * app->player.horizon + object->size.y
+				/ SMALL_SCALE * ((app->player.elevation + app->player.height) 
+				- (original_obj->elevation + SMALL_SCALE / 2)));
+		else
+			object->start.y = (int)(WIN_H * app->player.horizon + object->size.y
+				 * ((app->player.elevation + app->player.height) 
+				- (original_obj->elevation + 0.5)));
 		offset = object->size.y;
 		object->size.y = cos(*angle) * object->size.y;
 		offset = (offset - object->size.y) / 2;
 		object->start.y += (int)offset;
-		object->draw_end.x = object->start.x + object->size.x / 2;
-		object->draw_end.y = object->start.y + object->size.y / 2;
+		object->end.x = object->start.x + object->size.x / 2;
+		object->end.y = object->start.y + object->size.y / 2;
 		object->start.x = object->start.x - object->size.x / 2;
 		object->start.y = object->start.y - object->size.y / 2;
 		object->step = (t_vector2){object->tex_size / (double)(object->size.x),
@@ -202,6 +224,7 @@ static void	set_object(t_app *app, t_render_object *object, double *angle,
 		object->frame = 0;
 		if(app->objects[object->id].type < MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES)
 			object_frame(&(app->player.dir), object);
+		init_draw_area(object);
 		app->objectstack.visible_count++;
 }
 
@@ -222,6 +245,8 @@ static void	objects_visible(t_app *app)
 		if (!init_object(app, i,object,&angle))
 			continue;
 		set_object(app, object, &angle, &(app->objects[i]));
+		/* if(app->objects[i].type > MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS && app->objects[i].type < MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES)
+			ft_printf("enemy value %i ",ENEMY_SPRITE + MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + 1 - app->objects[i].type); */
 		ft_printf("id %i, object frame %i, object texsize %i, type %i, state %f, size x%f,y%f\n", object->id, object->frame, object->tex_size, app->objects[object->id].type, app->object_states[object->id] ,object->size.x, object->size.y);
 
 	}

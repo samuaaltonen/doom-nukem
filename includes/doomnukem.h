@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/08 16:28:37 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/09 16:07:21 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,21 @@ typedef struct s_audio
 	Uint32				sound_length;
 }	t_audio;
 
-
+typedef struct s_enemy_state
+{
+	int		id;
+	t_point	pos;
+	int		state_count;
+	int		states[4][2];
+	int		idle;
+	int		idle_count;
+	int		attack;
+	int		attack_count;
+	int		death;
+	int		death_count;
+	int		walk;
+	int		walk_count;
+}	t_enemy_state;
 typedef struct s_render_object
 {
 	int			id;
@@ -76,11 +90,11 @@ typedef struct s_render_object
 	int			frame;
 	double		dist;
 	t_point		start;
-	t_point		draw_end;
+	t_point		draw_start;
+	t_point		end;
 	t_vector2	size;
 	t_vector2	step;
 } t_render_object;
-
 
 typedef struct s_objectstack
 {
@@ -111,6 +125,7 @@ typedef struct s_app
 	t_sky			sky;
 	t_sector		*sectors;
 	t_object		objects[MAX_OBJECTS];
+	t_enemy_state	enemies[MAX_OBJECTS];
 	float			object_states[MAX_OBJECTS];
 	t_object		tmp_objects[MAX_TEMP_OBJECTS];
 	t_interaction	interactions[MAX_INTERACTIONS];
