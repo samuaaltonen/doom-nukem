@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/09 16:03:27 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/09 16:47:08 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,6 @@ void	player_reload(t_app *app)
 			app->player.equiped_weapon.ammo = app->player.equiped_weapon.magazine;
 		else
 			app->player.equiped_weapon.ammo = app->player.inventory.ammo;
-	start_timer(&app->shoot_timer, 0.8);
+		start_timer(&app->shoot_timer, 0.8);
 	}
 }
