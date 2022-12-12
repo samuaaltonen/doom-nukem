@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interactions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/09 14:25:21 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:56:42 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,19 @@ void	interaction_edit(t_app *app, SDL_Keycode keycode)
 	if(app->current_interaction)
 	{
 			if (keycode == SDLK_UP)
-			{
 				app->current_interaction->variable += app->divider;
-			}
 			else if (keycode == SDLK_DOWN)
-			{
 				app->current_interaction->variable -= app->divider;
-
-			}
 			else if (keycode == SDLK_LEFT && app->current_interaction->event_id > 0)
-			{
 				app->current_interaction->event_id--;
-			}
 			else if (keycode == SDLK_RIGHT && app->current_interaction->event_id < 7)
-			{
 				app->current_interaction->event_id++;
+			if(app->var_edit)
+			{
+				if (keycode == SDLK_UP)
+					app->current_interaction->editable += app->divider;
+				else if (keycode == SDLK_DOWN)
+					app->current_interaction->editable -= app->divider;
 			}
 	}
 }

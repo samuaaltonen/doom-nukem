@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/01 15:24:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:58:55 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,7 @@ static void	read_interactions(t_app *app, t_export_interaction *export)
 	{
 		temp.event_id = export[i].event_id;
 		temp.variable = export[i].variable;
+		temp.editable = export[i].editable;
 		temp.activation_sector = sector_by_index(app, export[i].activation_sector);
 		temp.activation_wall = line_by_index(temp.activation_sector, export[i].activation_wall);
 		if(export[i].activation_object == -1)

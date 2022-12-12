@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/12 14:13:42 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:46:30 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	draw_object_pixel(t_app *app, t_render_object *object, t_point window, t_ve
 	else if(object_type <= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES + MAX_PROJECTILES)
 		color = get_pixel_color(app->assets.sprites[PROJECTILE_SPRITE], (int)texture.x - ((object->frame) * object->tex_size) - object->tex_size, (int)texture.y * (object_type - (MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES)));
 	if ((color & 0xFF000000) > 0)
-		put_pixel_to_surface(app->surface, window.x, window.y,color);
-		//put_pixel_to_surface_check(app, window,color,object->dist);
+		//put_pixel_to_surface(app->surface, window.x, window.y,color);
+		put_pixel_to_surface_check(app, window,color,object->dist);
 }
 
 static void	init_draw_area(t_render_object *object)

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/12 14:12:56 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:15:08 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define MOUSE_SENSITIVITY_HORIZONTAL 0.3
 # define MOUSE_SENSITIVITY_VERTICAL 0.2
 # define MAX_SECTOR_CORNERS 16
-# define MAX_MEMBER_SECTORS 8
+# define MAX_MEMBER_SECTORS 16
 # define MAX_VISIBLE_SECTORS 64
 # define MAX_VISIBLE_WALLS 256
 # define MAX_VIEW_DISTANCE 256.f
@@ -50,7 +50,7 @@
 	>= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES = projectiles
 */
 # define MAX_ENEMY_STATES 2
-# define MAX_OBJECTS 64
+# define MAX_OBJECTS 128
 # define MAX_TEMP_OBJECTS 64
 # define MAX_INTERACTIONS 64
 # define MAX_UNIQUE_INTERACTIONS 7

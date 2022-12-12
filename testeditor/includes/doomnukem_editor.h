@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/09 16:07:48 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:19:30 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define IMAGE_PIXEL_BITS 32
 # define MAX_TEX_COUNT 17
 # define MAX_SECTOR_CORNERS 16
-# define MAX_MEMBER_SECTORS 8
+# define MAX_MEMBER_SECTORS 16
 # define MAX_WEAPONS 5
 # define MAX_ARMOR 5
 # define MAX_UNIQUE_OBJECTS 64
@@ -46,14 +46,14 @@
 # define MAX_DECOR 10
 # define MAX_AMMO 999
 # define MAX_ITEM_CAPACITY 99
-# define MAX_OBJECTS 64
+# define MAX_OBJECTS 128
 # define INVENTORY_SIZE 10
 # define DEG_IN_RADIAN 0.01745f
 # define PI_HALF 1.57079632679
 # define RADIAN_IN_DEG 57.29578f
 # define MAP_SPEED 0.85f
 # define HEIGHT_INC 0.125f
-# define FILE_VERSION 1;
+# define FILE_VERSION 2;
 # define PANELS_PATH "../assets/textures/minecraft_spritesheet.bmp"
 # define UI_FRAME_PATH "../assets/ui/ui_frame.bmp"
 # define FONT_FILE "../assets/legacy/SpaceMono-Regular.ttf"
@@ -265,6 +265,7 @@ typedef struct s_interaction
 {
 	int				event_id;
 	double 			variable;
+	double			editable;
 	t_sector_lst	*activation_sector;
 	t_vec2_lst		*activation_wall;
 	t_object		*activation_object;
@@ -275,6 +276,7 @@ typedef struct	s_export_interaction
 {
 	int				event_id;
 	double 			variable;
+	double			editable;
 	int				activation_sector;
 	int				activation_wall;
 	int				activation_object;
@@ -335,6 +337,7 @@ typedef struct s_app
 	t_bool				list_creation;
 	t_bool				list_ongoing;
 	t_bool				portal_selection;
+	t_bool				var_edit;
 	t_bool				wall_edit;
 	t_bool				ceiling_edit;
 	t_bool				floor_edit;
