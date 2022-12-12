@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 17:13:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/09 17:15:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:04:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	ft_line_intersection_segment(t_line line_a, t_line line_b,
 		/ divider;
 	if (t < 0.f || t > 1.f || u < 0.f || u > 1.f)
 		return (0);
+	if (!intersection)
+		return (1);
 	intersection->x = line_a.a.x + t * (line_a.b.x - line_a.a.x);
 	intersection->y = line_a.a.y + t * (line_a.b.y - line_a.a.y);
 	return (1);

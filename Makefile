@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/12/09 15:03:16 by saaltone         ###   ########.fr        #
+#    Updated: 2022/12/12 15:21:49 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -49,6 +49,7 @@ FILES = main.c \
 		sector_wall_raycast_decor.c \
 		sector_wall_prepare.c \
 		sector_wall_line.c \
+		sector_elevation.c \
 		import.c \
 		utils.c \
 		utils_color.c \

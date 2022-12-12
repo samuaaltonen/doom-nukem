@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/09 15:57:41 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:28:01 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,19 +28,14 @@ static int	circle_collisions(t_app *app, t_vector2 *collision)
 	}
 	//member sector walls
 	counter = 0;
-	while(app->sectors[app->player.current_sector].member_sectors[counter] >= 0)
+	while (app->sectors[app->player.current_sector].member_sectors[counter] >= 0)
 	{
 		i= 0;
 		member_id = app->sectors[app->player.current_sector].member_sectors[counter];
-		while(i < app->sectors[member_id].corner_count)
+		while (i < app->sectors[member_id].corner_count)
 		{
-			if(ft_line_side(get_wall_line(app, member_id,i), app->player.pos) != 0)
-			{
-				//ft_printf("circle tests ");
+			if (ft_line_side(get_wall_line(app, member_id,i), app->player.pos) != 0)
 				return (circle_collision(app, get_wall_line(app,member_id,i),collision));
-
-				//ft_printf("\n");
-			}
 			i++;
 		}
 		counter++;
@@ -56,52 +51,54 @@ static int	circle_collisions(t_app *app, t_vector2 *collision)
  * 
  * @param app 
  * @param new 
- * @param wall_id 
+ * @param sector_id 
  * @return int 
  */
-static int	wall_traversal_recursive(t_app *app, t_move new, int wall_id)
+static int	wall_traversal_recursive(t_app *app, t_move new, int sector_id)
 {
-	int	i;
-	int member_id;
-	int counter;
+	t_line	wall_line;
+	int		i;
+	int		member_id;
+	int		portal_id;
+	int		counter;
 
 	i = -1;
-
-	while (++i < app->sectors[wall_id].corner_count)
+	while (++i < app->sectors[sector_id].corner_count)
 	{
-		//ft_printf("Circle collision %i\n", circle_collision(app,get_wall_line(app, wall_id, i)));
-		if(ft_line_side(get_wall_line(app, wall_id,i), new.pos) != 0)
+		wall_line = get_wall_line(app, sector_id, i);
+		if (!ft_line_side(wall_line, new.pos))
+			continue ;
+		if (!ft_line_intersection_segment((t_line){app->player.pos, new.pos}, wall_line, NULL))
+			continue ;
+		portal_id = app->sectors[sector_id].wall_types[i];
+		if (portal_id < 0
+			|| (new.elevation + MAX_STEP < app->sectors[portal_id].floor_height
+				||	app->sectors[portal_id].ceil_height < new.elevation + TALL))
+			return (-1);
+		else
 		{
-			//ft_printf("recursion'\n");
-			wall_id = app->sectors[wall_id].wall_types[i];
-			if(wall_id < 0 || (new.elevation + MAX_STEP < app->sectors[wall_id].floor_height ||
-				app->sectors[wall_id].ceil_height < new.elevation + TALL))
+			if (app->sectors[sector_id].wall_textures[i] == PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
+				return (-1);
+			portal_id = wall_traversal_recursive(app, new, portal_id);
+			if (portal_id < 0)
 				return (-1);
 			else
 			{
-				wall_id = wall_traversal_recursive(app, new, wall_id);
-				if(wall_id < 0)
-					return (-1);
-				else
-				{
-					if (app->sectors[app->player.current_sector].wall_textures[i] == PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
-						return (FALSE);
-					app->player.current_sector = wall_id;
-					interaction_check_portal(app, wall_id);
-					if(new.elevation != app->sectors[wall_id].floor_height)
-						app->player.flying = TRUE;
-					return(wall_id);
-				}
-			} 
+				app->player.current_sector = portal_id;
+				interaction_check_portal(app, portal_id);
+				if (new.elevation != app->sectors[portal_id].floor_height)
+					app->player.flying = TRUE;
+				return (portal_id);
+			}
 		}
 	}
 
 	//member sector walls
 	counter = 0;
-	while(app->sectors[wall_id].member_sectors[counter] >= 0)
+	while(app->sectors[sector_id].member_sectors[counter] >= 0)
 	{
 		i = -1;
-		member_id = app->sectors[wall_id].member_sectors[counter];
+		member_id = app->sectors[sector_id].member_sectors[counter];
 		while (++i < app->sectors[member_id].corner_count)
 		{
 			if(ft_line_side(get_wall_line(app, member_id ,i), new.pos) != 0)
@@ -109,28 +106,27 @@ static int	wall_traversal_recursive(t_app *app, t_move new, int wall_id)
 		}
 		if(i == app->sectors[member_id].corner_count)
 		{
-			wall_id = wall_traversal_recursive(app, new, member_id);
-			if(wall_id < 0 || (new.elevation + MAX_STEP < app->sectors[wall_id].floor_height ||
-				app->sectors[wall_id].ceil_height < new.elevation + TALL))
+			portal_id = wall_traversal_recursive(app, new, member_id);
+			if(portal_id < 0 || (new.elevation + MAX_STEP < app->sectors[portal_id].floor_height ||
+				app->sectors[portal_id].ceil_height < new.elevation + TALL))
 				return (-1);
 			else
 			{
-				app->player.current_sector = wall_id;
-				interaction_check_portal(app, wall_id);
-				if(new.elevation != app->sectors[wall_id].floor_height)
+				app->player.current_sector = portal_id;
+				interaction_check_portal(app, portal_id);
+				if(new.elevation != app->sectors[portal_id].floor_height)
 					app->player.flying = TRUE;
-				return(wall_id);
+				return(portal_id);
 			}
 		}
 		counter++;
 	}
-	return (wall_id);
+	return (sector_id);
 }
-
 
 static t_bool ceil_collision(t_app *app)
 {
-	if(app->sectors[app->player.current_sector].ceil_height < app->player.elevation + TALL)
+	if(get_sector_ceil_height(app, app->player.current_sector, app->player.pos) < app->player.elevation + TALL)
 		return (FALSE);
 	return (TRUE);
 }
@@ -155,6 +151,11 @@ void	update_position(t_app *app)
 
 	app->player.move_pos = ft_vector2_add(app->player.pos, app->player.move_vector);
 
+	double	pos_floor_height = get_sector_floor_height(app, app->player.current_sector, app->player.pos);
+
+	if (!app->player.flying && app->player.elevation > pos_floor_height)
+		app->player.elevation = pos_floor_height;
+
 	//if player is in the air, apply gravity(depending on jetpack), keep jumping
 	if(app->player.flying)
 	{
@@ -176,14 +177,16 @@ void	update_position(t_app *app)
 	//ft_printf("elevation %f, floor_height%f, pos x%f, y%f\n", app->player.elevation, app->sectors[app->player.current_sector].floor_height, app->player.pos.x, app->player.pos.y);
 	//ft_printf("test timer %f, velocity %f jetpack %b\n", app->player.jump_timer, app->player.velocity, app->player.jetpack);
 	//checks if player is under floor and resets player to floor
-	if(app->player.elevation < app->sectors[app->player.current_sector].floor_height)
+	
+	if (app->player.elevation < pos_floor_height)
 	{
 		app->player.flying = FALSE;
 		app->player.velocity = 0.f;
 		app->player.jump_timer = JUMP_TIME;
 		app->player.jetpack = FALSE;
-		app->player.elevation = app->sectors[app->player.current_sector].floor_height;
+		app->player.elevation = pos_floor_height;
 	}
+
 	new.x = new.x * MOVE_ACCEL * app->conf->delta_time;
 	new.y = new.y * MOVE_ACCEL * app->conf->delta_time;
 
@@ -200,15 +203,14 @@ void	update_position(t_app *app)
 	app->player.pos.x = new.x;
 	if (circle_collisions(app,&new))
 	{
-	app->player.pos = new;
-	app->player.move_vector = (t_vector2){0.f,0.f};
+		/* app->player.pos = new;
+		app->player.move_vector = (t_vector2){0.f,0.f}; */
 	}
-
 	if(!ceil_collision(app))
 	{
 		app->player.jump_timer = JUMP_TIME;
 		app->player.velocity = 0.f;
-		app->player.elevation = app->sectors[app->player.current_sector].ceil_height - TALL;
+		app->player.elevation = get_sector_ceil_height(app, app->player.current_sector, app->player.pos) - TALL;
 	}
 	else
 		app->player.elevation += app->player.velocity * app->conf->delta_time;

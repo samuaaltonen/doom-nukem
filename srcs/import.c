@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/05 14:14:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:24:10 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,7 @@ static void import_player(t_app *app, t_export_player *player)
 static void relink_player(t_app *app, t_export_player *player)
 {
 	(void)player;
-	app->player.elevation = app->sectors[app->player.current_sector].floor_height;
+	app->player.elevation = get_sector_floor_height(app, app->player.current_sector, app->player.pos);
 }
 
 //open a file

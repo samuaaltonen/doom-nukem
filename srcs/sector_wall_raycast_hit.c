@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:06:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/09 14:54:19 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:59:40 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static double	apply_ceiling_slope(t_rayhit *hit)
 	double		pos_angle;
 	t_vector2	slope_vector;
 
-	if (!hit->sector->ceil_slope_height)
+	if (!hit->sector->ceil_slope_magnitude)
 		return (0.0);
 	slope_vector = ft_vector2_sub(hit->sector->ceil_slope_end,
 			hit->sector->ceil_slope_start);
@@ -55,7 +55,7 @@ static double	apply_floor_slope(t_rayhit *hit)
 	double		pos_angle;
 	t_vector2	slope_vector;
 
-	if (!hit->sector->floor_slope_height)
+	if (!hit->sector->floor_slope_magnitude)
 		return (0.0);
 	slope_vector = ft_vector2_sub(hit->sector->floor_slope_end,
 			hit->sector->floor_slope_start);
@@ -94,9 +94,9 @@ static void	set_parent_vertical_positions(t_app *app, t_rayhit *hit,
 	parenthit.sector = parent;
 	ceil_slope = 0.0;
 	floor_slope = 0.0;
-	if (parent->ceil_slope_height)
+	if (parent->ceil_slope_magnitude)
 		ceil_slope = apply_ceiling_slope(&parenthit);
-	if (parent->floor_slope_height)
+	if (parent->floor_slope_magnitude)
 		floor_slope = apply_floor_slope(&parenthit);
 	hit->parent_height = (int)(relative * (parent->ceil_height + ceil_slope
 				- parent->floor_height - floor_slope));

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/09 14:49:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:22:18 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,8 @@ t_bool		circle_collision(t_app *app, t_line wall, t_vector2 *colpos);
 /**
  * Sectors
  */
+double		get_sector_floor_height(t_app *app, int sector_id, t_vector2 pos);
+double		get_sector_ceil_height(t_app *app, int sector_id, t_vector2 pos);
 t_line		get_wall_line(t_app *app, int sector_id, int wall_id);
 void		sector_wallstack_build(t_app *app);
 void		sector_visible_walls(t_app *app, t_wallstack *wallstack, int index,

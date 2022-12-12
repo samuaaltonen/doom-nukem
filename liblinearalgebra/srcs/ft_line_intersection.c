@@ -34,6 +34,8 @@ int	ft_line_intersection(t_line a, t_line b, t_vector2 *intersection)
 		- (a.a.x - a.b.x) * (b.a.x * b.b.y - b.a.y * b.b.x);
 	y = (a.a.x * a.b.y - a.a.y * a.b.x) * (b.a.y - b.b.y)
 		- (a.a.y - a.b.y) * (b.a.x * b.b.y - b.a.y * b.b.x);
+	if (!intersection)
+		return (1);
 	intersection->x = x / divider;
 	intersection->y = y / divider;
 	return (1);

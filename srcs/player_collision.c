@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:42:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/12 13:54:41 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:15:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,15 @@ static t_bool	collision_possible(t_app *app, t_line wall)
 		|| ft_point_distance(app->player.move_pos, wall.b) < COLLISION_OFFSET);
 }
 
+/**
+ * @brief If there is a collision, calculates collision position on movement
+ * line.
+ * 
+ * @param app 
+ * @param wall 
+ * @param collision 
+ * @return t_bool 
+ */
 static t_bool	get_collision(t_app *app, t_line wall, t_vector2 *collision)
 {
 	t_vector2	line_intersection;
@@ -39,12 +48,22 @@ static t_bool	get_collision(t_app *app, t_line wall, t_vector2 *collision)
 	if (!ft_line_intersection((t_line){app->player.pos, app->player.move_pos},
 			wall, &line_intersection))
 		return (FALSE);
-	*collision = ft_vector2_sub(line_intersection,ft_vec2_mult(ft_vector_resize(app->player.move_vector, 1.f),
-			(ft_point_distance(line_intersection, app->player.pos)
-			/ ft_point_distance(ft_closest_point(app->player.pos, wall), app->player.pos)) * COLLISION_OFFSET));
+	*collision = ft_vector2_sub(line_intersection, 
+			ft_vec2_mult(ft_vector_resize(app->player.move_vector, 1.f),
+				ft_point_distance(line_intersection, app->player.pos)
+					/ ft_point_distance(ft_closest_point(app->player.pos, wall),
+						app->player.pos) * COLLISION_OFFSET));
 	return (TRUE);
 }
 
+/**
+ * @brief Checks collision on wall endpoints and calculates backtracking change.
+ * 
+ * @param app 
+ * @param wall 
+ * @param collision_pos 
+ * @return t_vector2 
+ */
 static t_vector2	collision_on_endpoint(t_app *app, t_line wall, t_vector2 collision_pos)
 {
 	t_vector2	endpoint_nearest;
@@ -66,10 +85,10 @@ static t_vector2	collision_on_endpoint(t_app *app, t_line wall, t_vector2 collis
 		endpoint_distance = ft_point_distance(wall.b, endpoint_nearest);
 	}
 	endpoint_backtrack = sqrt(COLLISION_OFFSET * COLLISION_OFFSET - (endpoint_distance * endpoint_distance));
-	ft_printf("normalized movepoint x%f,y%f, endpoint_nearest x%f,y%f, backtrack dist %f ", app->player.move_pos.x, app->player.move_pos.y, endpoint_nearest.x, endpoint_nearest.y, endpoint_backtrack);
+	//ft_printf("normalized movepoint x%f,y%f, endpoint_nearest x%f,y%f, backtrack dist %f ", app->player.move_pos.x, app->player.move_pos.y, endpoint_nearest.x, endpoint_nearest.y, endpoint_backtrack);
 	app->player.move_pos = ft_vector2_sub(app->player.move_vector, ft_vector2_sub(app->player.move_pos, endpoint_nearest));
 	endpoint_vector = ft_vector_resize(app->player.move_pos, ft_vector_length(app->player.move_pos) - endpoint_backtrack);
-	ft_printf("endpoint_vector x%f,y%f\n", endpoint_vector.x, endpoint_vector.y);
+	//ft_printf("endpoint_vector x%f,y%f\n", endpoint_vector.x, endpoint_vector.y);
 	return (ft_vector2_add(app->player.pos, endpoint_vector));
 }
 
@@ -93,11 +112,11 @@ t_bool	circle_collision(t_app *app, t_line wall, t_vector2 *colpos)
 	collision_pos = ft_closest_point(collision, wall);
 	if (ft_point_on_segment(wall, collision_pos))
 	{
-		ft_printf("collision on wall x%f, y%f\n", collision.x, collision.y);
+		//ft_printf("collision on wall x%f, y%f\n", collision.x, collision.y);
 		*colpos = collision;
 		return (TRUE);
 	}
-	ft_printf("collision on endpoint \n");
+	//ft_printf("collision on endpoint \n");
 	*colpos = collision_on_endpoint(app, wall, collision_pos);
 	return (TRUE);
 }
