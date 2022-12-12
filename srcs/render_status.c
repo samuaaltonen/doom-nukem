@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/09 17:28:39 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/12 13:08:04 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,27 @@ void	render_mainmenu(t_app *app)
 
 static void update_states(t_app *app)
 {
-	app->object_states[0] += 5.f * app->conf->delta_time;
-	if(app->object_states[0] > 10)
-		app->object_states[0] = 0.f;
+	int	i;
+
+	(void)app;
+	i = -1;
+	while (++i < app->conf->header.object_count)
+	{
+		if(app->objects[i].type == MONSTER1)
+		{
+			ft_printf("test\n");
+			app->object_states[i] += 5.f * app->conf->delta_time;
+			if(app->object_states[i] > 2)
+				app->object_states[i] = 0.f;
+		}
+		else if(app->objects[i].type == MONSTER2)
+		{
+			app->object_states[i] += 5.f * app->conf->delta_time;
+			if(app->object_states[i] > 10)
+				app->object_states[i] = 0.f;
+		}
+	}
+
 }
 
 void	render_game(t_app *app)

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/09 17:18:19 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/12 12:34:02 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,14 @@ typedef struct s_thread_data
 	pthread_mutex_t	lock;
 }	t_thread_data;
 
+typedef struct	s_level_header
+{
+	int	version;
+	int	sector_count;
+	int	object_count;
+	int	interaction_count;
+}	t_level_header;
+
 /**
  * Struct for configuration variables of the application.
  */
@@ -88,6 +96,7 @@ typedef struct s_conf
 	double			delta_time;
 	double			skybox_offset;
 	int				fov;
+	t_level_header	header;
 	int				keystates;
 	int				buttonstates;
 	int				mouse_active;

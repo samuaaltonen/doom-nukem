@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/24 16:07:47 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/12 12:32:43 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -151,7 +151,6 @@ int	import_file(t_app *app, char *path)
 	int						fd;
 	t_exportsector			*export;
 	int						counter = 0;
-	t_level_header			header;
 	t_sector				*sectors;
 	t_export_player			player;
 
@@ -161,18 +160,18 @@ int	import_file(t_app *app, char *path)
 	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
 	if (!export)
 		exit_error(MSG_ERROR_ALLOC);
-	if (read(fd, &header,(sizeof(t_level_header))) == -1)
+	if (read(fd, &app->conf->header,(sizeof(t_level_header))) == -1)
 		exit_error(MSG_ERROR_FILE_READ);
 	if (read(fd, &player, sizeof(t_export_player)) == -1)
 		exit_error("player read error\n");
 	import_player(app, &player);
-	sectors = (t_sector *)ft_memalloc(sizeof(t_sector) * header.sector_count); 
+	sectors = (t_sector *)ft_memalloc(sizeof(t_sector) * app->conf->header.sector_count); 
 	app->sectors = sectors;
-	while(counter < header.sector_count)
+	while(counter < app->conf->header.sector_count)
 	{
 		if (read(fd, export,sizeof(t_exportsector)) == -1)
 			exit_error(MSG_ERROR_FILE_READ);
-		read_sector(app, export, counter, header.sector_count);
+		read_sector(app, export, counter, app->conf->header.sector_count);
 		counter++;
 	}
 	free(export);
@@ -181,7 +180,7 @@ int	import_file(t_app *app, char *path)
 	if (read(fd, app->interactions, sizeof(t_interaction) * MAX_INTERACTIONS) == -1)
 		exit_error("Interaction read error\n");
 	relink_player(app, &player);
-	ft_printf("sector_count=%i\n",header.sector_count);
+	ft_printf("sector_count=%i\n",app->conf->header.sector_count);
 	close(fd);
 	return (0);
 }
