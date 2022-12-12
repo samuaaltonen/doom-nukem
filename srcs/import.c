@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/12 12:32:43 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:10:17 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ static void read_sector(t_app *app, t_exportsector *export, int sectorid, int se
 	(void)sector_count;
 	app->sectors[sectorid].corner_count = export->corner_count;
 	export_to_array(app, export, sectorid);
-	app->sectors[sectorid].light = export->light;
+	app->sectors[sectorid].light = (double)export->light;
 	app->sectors[sectorid].ceil_texture = export->ceil_tex;
 	app->sectors[sectorid].ceil_tex_offset = export->ceil_tex_offset;
 	app->sectors[sectorid].floor_texture = export->floor_tex;

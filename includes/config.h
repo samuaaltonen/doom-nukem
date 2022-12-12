@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/12 12:34:02 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:12:56 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define WIN_NAME "Doom Nukem"
 # define WIN_W 1280
 # define WIN_H 720
-# define THREAD_COUNT 1
+# define THREAD_COUNT 6
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
 # define COLLISION_OFFSET 0.25
@@ -57,6 +57,14 @@
 # define MAX_DECOR 10
 # define PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID 1
 # define DECOR_SIZE 1.0
+# define INTERACTION_ACTION_DISTANCE 1.5
+# define MAX_CONCURRENT_ANIMATIONS 16
+# define ANIMATION_DURATION_LIGHT 0.5 // seconds per light level
+# define ANIMATION_DURATION_HEIGHT 0.25 // seconds per meter
+# define ANIMATION_DURATION_TEXT 0.015625 // seconds per char
+# define ANIMATION_DURATION_TEXT_END 3.5 // seconds after full text displayed
+# define MAX_TEXT_LINES 16
+# define MAX_TEXT_LINE_LENGTH 1024
 
 /**
  * Struct for threads about their specific identifiers and locks for signaling.

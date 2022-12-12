@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/12 13:35:36 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:13:42 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,7 +259,7 @@ static void	objects_visible(t_app *app)
 		set_object(app, object, &angle, &(app->objects[i]));
 		/* if(app->objects[i].type > MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS && app->objects[i].type < MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES)
 			ft_printf("enemy value %i ",ENEMY_SPRITE + MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + 1 - app->objects[i].type); */
-		ft_printf("id %i, object frame %i, object texsize %i, type %i, state %f, size x%f,y%f\n", object->id, object->frame, object->tex_size, app->objects[object->id].type, app->object_states[object->id] ,object->size.x, object->size.y);
+		//ft_printf("id %i, object frame %i, object texsize %i, type %i, state %f, size x%f,y%f\n", object->id, object->frame, object->tex_size, app->objects[object->id].type, app->object_states[object->id] ,object->size.x, object->size.y);
 
 	}
 	i = -1;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:21:47 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/27 10:36:51 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:52:08 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,10 @@ int	main(void)
 	t_app	*app;
 
 	app_init(&app);
-	sdl_init(app);	
+	sdl_init(app);
 	if (!config_init(app))
 		exit_error(NULL);
 	load_assets(app);
-
 	app_loop(app);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:53:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/04 14:42:03 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/07 13:59:53 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,4 +77,27 @@ int	inside_sector_check(t_sector_lst *sector, t_vector2 *mouse)
 			break ;
 	}
 	return (1);
+}
+
+/**
+ * Checks if the sector is valid and can be completed. Returns 1 if sector is
+ * valid and 0 if sector is invalid. If invalid, cancels list creation and
+ * deletes the drawn lines.
+*/
+t_bool	valid_sector(t_app *app)
+{
+	t_vec2_lst	*tmp;
+
+	tmp = app->active;
+	while (tmp)
+	{
+		if (tmp->next && ft_line_side((t_line){tmp->point, tmp->next->point},
+			app->mouse_track))
+		{
+			cancel_list_creation(app);
+			return (FALSE);
+		}
+		tmp = tmp->next;
+	}
+	return (TRUE);
 }

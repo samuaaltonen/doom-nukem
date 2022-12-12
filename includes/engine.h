@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/12 12:49:33 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:13:05 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ typedef struct s_sector
 	int				parent_sector;
 	int				wall_decor[MAX_SECTOR_CORNERS];
 	t_vector2		decor_offset[MAX_SECTOR_CORNERS];
-	int				light;
+	double			light;
 	double			floor_height;
 	int				floor_texture;
 	double			floor_tex_offset;
@@ -176,16 +176,6 @@ typedef struct s_wallstack
 	int		interesting_count;
 }	t_wallstack;
 
-typedef struct s_interaction
-{
-	int				event_id;
-	double 			variable;
-	int				activation_sector;
-	int				activation_wall;
-	int				activation_object;
-	int				target_sector;
-}	t_interaction;
-
 typedef struct s_object
 {
 	int				type;
@@ -205,13 +195,5 @@ typedef struct s_sky
 	t_point		size;
 	t_vector2	pixel_step;
 }	t_sky;
-
-typedef struct s_buffer_unit
-{
-	int		x;
-	int		y;
-	int		color;
-	float	depth;
-}	t_buffer_unit;
 
 #endif

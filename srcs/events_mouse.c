@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_mouse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:40:40 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/21 15:01:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/09 15:27:16 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,17 +41,57 @@ int	events_mouse_down(int mouse_button, t_app *app)
 	if (mouse_button == SDL_BUTTON_RIGHT)
 		app->conf->buttonstates |= RIGHT_MOUSE;
 	if (mouse_button == SDL_BUTTON_MIDDLE)
+	{
 		app->conf->buttonstates |= MIDDLE_MOUSE;
+		//----DEBUG FEATURE
+		damage(app, 20);
+		//----
+	}
+		
 	return (0);
 }
 
 int	events_mouse_up(int mouse_button, t_app *app)
 {
 	if (mouse_button == SDL_BUTTON_LEFT)
+	{
 		app->conf->buttonstates ^= LEFT_MOUSE;
+		//----DEBUG FEATURE
+		player_shoot(app);
+		//----
+	}
+		
 	if (mouse_button == SDL_BUTTON_RIGHT)
+	{
 		app->conf->buttonstates ^= RIGHT_MOUSE;
+		//----DEBUG FEATURE
+		player_reload(app);
+		//----
+	}
+	
 	if (mouse_button == SDL_BUTTON_MIDDLE)
 		app->conf->buttonstates ^= MIDDLE_MOUSE;
 	return (0);
+}
+
+int	events_mouse_wheel(int wheel_dir, t_app *app)
+{
+	//----DEBUG FEATURE
+		app->player.hp += wheel_dir;
+		if (app->player.hp <= 0)
+		{
+			app->player.hp = 0;
+			app->player.shield += wheel_dir;
+		}
+		else if (app->player.hp >= MAX_HP)
+		{
+			app->player.hp = MAX_HP;
+			app->player.shield += wheel_dir;
+		}
+		if (app->player.shield <= 0)
+			app->player.shield = 0;
+		else if (app->player.shield >= MAX_HP)
+			app->player.shield = MAX_HP;
+	//----
+		return (0);
 }

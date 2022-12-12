@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/24 15:48:51 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/09 15:39:11 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,13 @@
 # define MOVEMENT_SPEED 5.0
 # define HORIZON_UPPER_LIMIT 1.25
 # define HORIZON_LOWER_LIMIT -0.25
+# define MAX_HP 200
 
 /**
  * Movement direction enumeration.
  */
-typedef enum e_movement {
+typedef enum e_movement
+{
 	FORWARD = 0,
 	BACKWARD = 1,
 	LEFTWARD = 2,
@@ -44,6 +46,16 @@ typedef struct s_inventory
 	t_bool		jetpack;
 }	t_inventory;
 
+typedef struct s_weapon
+{
+	t_bool	enabled;
+	int		damage;
+	int		range;
+	double	fire_rate;
+	int		magazine;
+	int		ammo;
+}	t_weapon;
+
 /**
  * Struct for player. Contains players position, direction and camera plane.
  */
@@ -59,6 +71,7 @@ typedef struct s_player
 	int				current_sector;
 	int				hp;
 	int				weapons;
+	t_weapon		equiped_weapon;
 	int				shield;
 	t_inventory		inventory;
 }	t_player;
@@ -78,6 +91,6 @@ typedef struct s_move
 {
 	t_vector2	pos;
 	double		elevation;
-} t_move;
+}	t_move;
 
 #endif

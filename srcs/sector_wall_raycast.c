@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/02 14:36:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/05 14:14:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	raycast_init(t_app *app, t_raycast_info info, t_rayhit *hit)
 	hit->wall_type = info.wall->wall_type;
 	hit->texture = app->sectors[info.wall->sector_id] \
 		.wall_textures[info.wall->wall_id];
-	hit->light = hit->sector->light;
+	hit->light = (int)hit->sector->light;
 }
 
 /**

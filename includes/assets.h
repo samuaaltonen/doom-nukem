@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/09 16:44:01 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:01:56 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,15 @@
 # define POINTER_PATH "assets/ui/mouse_pointer.bmp"
 # define SHIELD_PATH "assets/ui/shield.bmp"
 # define HP_PATH "assets/ui/hp.bmp"
+# define PISTOL_PATH  "assets/textures/pistol.bmp"
+# define BULLET_PATH  "assets/textures/bullet.bmp"
 # define METER_PATH "assets/ui/meter.bmp"
 # define MUSIC_PATH "assets/sounds/title_music.wav"
-# define LASER_PATH "assets/sounds/laser.wav"
-# define SHOT_PATH "assets/sounds/shot.wav"
-# define BUMP_PATH "assets/sounds/bump.wav"
+# define SOUND_LASER_PATH "assets/sounds/laser.wav"
+# define SOUND_SHOT_PATH "assets/sounds/pistol_shot.wav"
+# define SOUND_RELOAD_PATH "assets/sounds/pistol_reload.wav"
+# define SOUND_BUMP_PATH "assets/sounds/bump.wav"
+# define TEXTS_PATH "assets/texts/texts.txt"
 # define PICKUP_PATH "assets/images/Objects_small_sheet.bmp"
 # define OBJECT_PATH "assets/images/Objects_full_sheet.bmp"
 # define MONSTER_1_PATH "assets/images/Monster1_Half_sheet.bmp"
@@ -67,6 +71,8 @@ typedef struct s_assets
 	SDL_Surface		*pointer;
 	SDL_Surface		*shield;
 	SDL_Surface		*hp;
+	SDL_Surface		*pistol;
+	SDL_Surface		*bullet;
 	SDL_Surface		*meter;
 	SDL_Surface		*sprite;
 	SDL_Surface		*bg;

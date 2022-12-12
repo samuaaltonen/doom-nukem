@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/05 13:56:19 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/09 16:07:48 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -131,15 +131,6 @@ enum e_colors {
 	POINT = 0xFF00FF,
 	INTERACTION = 0x5050FF
 };
-
-/**
- * Struct for integer coordinate point.
- */
-typedef struct s_point
-{
-	int				x;
-	int				y;
-}	t_point;
 
 typedef struct s_vec2_lst
 {
@@ -473,6 +464,7 @@ void			draw_line(t_app *app, t_vector2 *a, t_vector2 *b, int color);
 void			linedraw_low(t_app *app, t_point *a, t_point *b, int color);
 void			linedraw_high(t_app *app, t_point *a, t_point *b, int color);
 int				check_borders(t_app *app, t_point *a, t_point *b);
+void			draw_circle(t_app *app, t_point pos, int rad, int color);
 
 /**
  * Sector Functions
@@ -495,6 +487,7 @@ int				get_sector_id(t_app *app, t_sector_lst *sector);
 void			cancel_list_creation(t_app *app);
 void			add_member_sector(t_sector_lst *parent, t_sector_lst *child);
 void			del_sector_portals(t_app *app, int deleted);
+t_bool			valid_sector(t_app *app);
 
 /**
  * Point/Wall/Wall_list Functions
@@ -560,7 +553,6 @@ void			render_help_menu(t_app *app);
 void			set_icon_rect(t_rect *rect, t_point point, t_point size);
 void			load_assets(t_app *app);
 void			render_texture_icons(t_app *app);
-void			render_sector_info(t_app *app);
 void			render_player_icons(t_app *app, SDL_Surface *asset, t_point point, int max);
 void			render_statusbar(t_app *app, t_point point, int statusbar, int color);
 void			render_arrows(t_app *app, t_point left, t_point right);
@@ -571,12 +563,17 @@ void			change_item_amount(t_app *app, SDL_Keycode key);
 void			render_weapons(t_app *app);
 void			render_object_statics(t_app *app);
 void			render_icons(t_app *app, t_point point, int id, SDL_Surface *asset);
-void			render_interaction_texts(t_app *app, int start_y);
+void			interaction_edit_menu(t_app *app, int start_y, t_point screen_pos);
 void			render_interaction_button(t_app *app, t_rect button, t_point mouse, char *text);
 void			render_current_interaction_status(t_app *app, t_point screen_pos, int y, int id);
 void			render_inventory(t_app *app);
 void			select_inventory(t_app *app, t_point screen_pos);
 void			select_weapons(t_app *app, t_point screen_pos);
+void			object_edit_menu(t_app *app);
+void			player_edit_menu(t_app *app);
+void			wall_edit_menu(t_app *app, t_point screen_pos);
+void			sector_edit_menu(t_app *app, t_point screen_pos, int y);
+void			render_interaction_explanations(t_app *app, int start_y);
 int				check_mouse(t_point screen_pos, t_rect rect);
 int				check_selected_inventory(t_app *app);
 
@@ -595,6 +592,7 @@ void			check_player_position(t_app *app);
 int				new_object(t_app *app);
 void			change_object_id(t_app *app, int keycode);
 void			del_object(t_app *app, int object_id);
+void			del_all_objects_in_sector(t_app *app);
 void			link_interaction(t_app *app);
 void			draw_object_icon(t_app *app, t_vector2 world_pos, int id);
 void			render_objects(t_app *app);
@@ -608,7 +606,13 @@ int				interaction_wall_check(t_app *app, t_vec2_lst *wall);
 int				interaction_object_check(t_app *app, int id);
 int				find_decor_interaction(t_app *app);
 int				find_object_interaction(t_app *app);
+int				find_sector_interaction(t_app *app);
 int				find_interaction(t_app *app);
 void			delete_interaction(t_app *app, int id);
+
+
+void	fill_triangle(t_app *app, t_point a, t_point b, t_point c, int color);
+void	draw_point_line(t_app *app, t_point a, t_point b, int color);
+
 
 #endif

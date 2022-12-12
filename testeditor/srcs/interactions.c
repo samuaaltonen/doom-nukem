@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/02 16:34:17 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/09 14:25:21 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,7 @@
 static t_bool	new_interaction(t_app *app)
 {
 	if (app->object_menu)
-	{
 		app->current_interaction->activation_object = app->current_object;
-	}
 	else if (app->active)
 	{
 		if (app->active->decor == -1)
@@ -28,9 +26,13 @@ static t_bool	new_interaction(t_app *app)
 	else if (app->active_sector)
 	{
 		app->current_interaction->activation_sector = app->active_sector;
+		app->current_interaction->activation_wall = NULL;
 	}
 	else
 		return (FALSE);
+	app->current_interaction->target_sector = app->active_sector;
+	if (app->active_sector->parent_sector)
+		app->current_interaction->target_sector = app->active_sector->parent_sector;
 	return(TRUE);
 }
 
@@ -73,19 +75,30 @@ void	link_interaction(t_app *app)
 		app->current_interaction = NULL;
 		app->interaction_menu = FALSE;
 		if (app->interactions[app->interaction_count].event_id != 0)
+		{
+			ft_printf("{cyan}Linking interaction.{reset}\n");
 			app->interaction_count++;
+		}
+		else
+			ft_printf("{red}Interaction event is 0.{reset}\n");
 	}
 }
 
 void	delete_interaction(t_app *app, int id)
 {
-	if(app->interaction_count > 0)
+	if (app->interaction_count > 0 && id > -1)
 	{
-		while(id + 1 < MAX_INTERACTIONS && app->interactions[id].event_id != 0)
+		while (id < app->interaction_count)
 		{
 			app->interactions[id] = app->interactions[id + 1];
 			id++;
 		}
+		app->interactions[id].event_id = 0;
+		app->interactions[id].variable = 0;
+		app->interactions[id].target_sector = NULL;
+		app->interactions[id].activation_sector = NULL;
+		app->interactions[id].activation_wall = NULL;
+		app->interactions[id].activation_object = NULL;
 		app->interaction_count--;
 	}
 }

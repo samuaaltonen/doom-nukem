@@ -6,27 +6,11 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:36:43 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/23 15:53:19 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/08 19:11:41 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
-
-/**
- * Toggles the color of the wall, floor and ceiling header based on,
- * if they're active or not.
-*/
-void	toggle_active_color(t_app *app, int active, char *text, t_rect point)
-{
-	if (active == 1)
-		change_font(app, 11, ACTIVE_TEXT);
-	else if (active == 2)
-		change_font(app, 11, 0xFFFF00FF);
-	else
-		change_font(app, 11, TEXT);
-	render_text(app, point, text);
-	change_font(app, 11, TEXT);
-}
 
 /**
  * Sets correct coordinate points and size for the icon rectangles.
@@ -40,40 +24,89 @@ void	set_icon_rect(t_rect *rect, t_point point, t_point size)
 }
 
 /**
- * Blits texture icons to the surface.
+ * Gets the max amount of the asset based on what asset it is.
 */
-static void	place_texture_icons(t_app *app)
+static int	find_max(t_app *app, SDL_Surface *asset)
 {
-	render_arrows(app, (t_point){12, 330}, (t_point){265, 330});
-	if (app->active)
-		render_icons(app, (t_point){25, 320}, app->active->tex,
-			app->assets.sprite);
-	else
-		render_icons(app, (t_point){25, 320},
-			app->active_sector->wall_list->tex, app->assets.sprite);
-	render_arrows(app, (t_point){12, 428}, (t_point){265, 428});
-	render_icons(app, (t_point){25, 418},
-		app->active_sector->floor_tex, app->assets.sprite);
-	render_arrows(app, (t_point){12, 526}, (t_point){265, 526});
-	render_icons(app, (t_point){25, 516},
-		app->active_sector->ceil_tex, app->assets.sprite);
+	if (asset == app->assets.sprite)
+		return (MAX_TEX_COUNT);
+	// if (asset == app->assets.object)
+	// 	return (MAX_OBJECTS);
+	// if (asset == app->assets.decor)
+	// 	return (MAX_DECOR);
+	return (0);
 }
 
 /**
- * Renders wall, floor and ceiling texture icons when a sector is selected.
+ * Defines size of icon to either 32x32 or 64x64 if the icon is the middle one.
 */
-void	render_texture_icons(t_app *app)
+static t_point	get_icon_size(int index, t_point *point)
 {
-	if (app->active_sector)
+	if (index == 2)
 	{
-		if (app->active)
-			toggle_active_color(app, 2, "WALL", (t_rect){125, 292, 200, 15});
-		else
-			toggle_active_color(app, app->wall_edit, "WALL",
-				(t_rect){125, 292, 200, 15});
-		toggle_active_color(app, app->floor_edit, "FLOOR", (t_rect){122, 390, 200, 15});
-		toggle_active_color(app, app->ceiling_edit, "CEILING",
-			(t_rect){114, 488, 200, 15});
-		place_texture_icons(app);
+		point->y -= 14;
+		return ((t_point){ICON_SIZE, ICON_SIZE});
+	}
+	else
+		return ((t_point){ICON_SIZE / 2, ICON_SIZE / 2});
+}
+
+/**
+ * Renders five icons on the help menu sidebar, where the icon in the middle
+ * is bigger than the two on the left and right.
+*/
+void	render_icons(t_app *app, t_point point, int id, SDL_Surface *asset)
+{
+	t_rect		src;
+	t_rect		icon;
+	t_point		size;
+	int			index;
+	int			tex;
+
+	index = 0;
+	while (index < 5)
+	{
+		size = get_icon_size(index, &point);
+		tex = ICON_SIZE * ((index + id - 2) % (find_max(app, asset) + 1));
+		set_icon_rect(&src, (t_point){tex, 0}, size);
+		set_icon_rect(&icon, point, size);
+		blit_surface(asset, &src, app->surface, &icon);
+		point.x += (ICON_SIZE / 2) + 10;
+		if (index == 2)
+		{
+			point.x += (ICON_SIZE / 2);
+			point.y += 14;
+		}
+		index++;
+	}
+	render_ui_frame(app, (t_rect){108, point.y - 14, 66, 66}, 1, 0);
+}
+
+/**
+* Renders same sized player menu icons on the help menu sidebar.
+*/
+void	render_player_icons(t_app *app, SDL_Surface *asset,
+										t_point point, int max)
+{
+	t_rect		src;
+	t_rect		icon;
+	int			index;
+	int			start_x;
+
+	index = 1;
+	start_x = point.x;
+	while (index < max)
+	{
+		set_icon_rect(&src, (t_point){ICON_SIZE * index, 0},
+			(t_point){ICON_SIZE / 2, ICON_SIZE / 2});
+		set_icon_rect(&icon, point, (t_point){ICON_SIZE / 2, ICON_SIZE / 2});
+		blit_surface(asset, &src, app->surface, &icon);
+		point.x += (ICON_SIZE / 2) + 10;
+		if (index % 5 == 0)
+		{
+			point.y += (ICON_SIZE / 2) + 10;
+			point.x = start_x;
+		}
+		index++;
 	}
 }

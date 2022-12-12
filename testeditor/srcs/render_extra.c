@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_extra.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:55:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/01 15:05:42 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/08 15:17:15 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ void	render_fill_active_sector(t_app *app)
 	t_vec2_lst	*b;
 	t_point		min;
 	t_point		max;
-	t_point		cur;
+	//t_point		cur;
 	int			color;
 
 	color = 0x202020;
@@ -82,19 +82,7 @@ void	render_fill_active_sector(t_app *app)
 				b = a->next;
 			else
 				b = b->next;
-			//draw triangle start-a-b
-		}
-		//wip draw square instead
-		cur = (t_point){min.x, min.y};
-		while (cur.y < max.y)
-		{
-			cur.x = min.x;
-			while (cur.x < max.x)
-			{
-				put_pixel_to_surface(app->surface, cur.x, cur.y, color);
-				cur.x++;
-			}
-			cur.y++;
+			fill_triangle(app, world_to_screen(app,app->active_sector->wall_list->point), world_to_screen(app, a->point), world_to_screen(app, b->point),color);
 		}
 	}
 }

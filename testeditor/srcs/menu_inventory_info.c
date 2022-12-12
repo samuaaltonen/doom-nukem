@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:09:50 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/25 16:56:05 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/08 17:16:52 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 /**
  * Toggles the selection button on the inventory, checking that
- * mouse is inside button rectangle and max 2 items are selected.
+ * mouse is inside button rectangle.
 */
 void	select_inventory(t_app *app, t_point screen_pos)
 {
@@ -41,7 +41,7 @@ void	select_inventory(t_app *app, t_point screen_pos)
 }
 
 /**
- * Renders inventory related texts on the help menu sidebar.
+ * Renders inventory related texts and item capacity on the help menu sidebar.
 */
 static void	render_inventory_texts(t_app *app, int x, int y)
 {
@@ -73,7 +73,8 @@ ARROW KEYS TO CHANGE THE AMOUNT.");
 }
 
 /**
- * Renders the start inventory to the help menu sidebar.
+ * Renders the start inventory icons and selection frame to the help menu
+ * sidebar.
 */
 void	render_inventory(t_app *app)
 {

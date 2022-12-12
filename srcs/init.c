@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/09 17:19:26 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:10:56 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 void	app_init(t_app **app)
 {
 	*app = (t_app *)malloc(sizeof(t_app));
-	ft_bzero(*app, sizeof(t_app));
 	if (!(*app))
 		exit_error(NULL);
+	ft_bzero(*app, sizeof(t_app));
 }
 
 /**
@@ -63,7 +63,8 @@ void	sdl_init(t_app *app)
 	app->surface = SDL_GetWindowSurface(app->win);
 	if (!app->surface)
 		exit_error(MSG_ERROR_WINDOW_SURFACE);
-	app->audio.device_id = SDL_OpenAudioDevice(NULL, 0, &app->audio.wav_spec, NULL, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
+	app->audio.device_id = SDL_OpenAudioDevice(NULL, 0, &app->audio.wav_spec,
+		NULL, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
 	if (!app->audio.device_id)
 		exit_error(MSG_ERROR);
 	SDL_ShowCursor(SDL_DISABLE);
@@ -80,6 +81,8 @@ void    load_assets(t_app *app)
 	app->assets.pointer = SDL_LoadBMP(POINTER_PATH);
 	app->assets.shield = SDL_LoadBMP(SHIELD_PATH);
 	app->assets.hp = SDL_LoadBMP(HP_PATH);
+	app->assets.pistol = SDL_LoadBMP(PISTOL_PATH);
+	app->assets.bullet = SDL_LoadBMP(BULLET_PATH);
 	app->assets.meter = SDL_LoadBMP(METER_PATH);
 	app->assets.sprite = SDL_LoadBMP(PANELS_PATH);
 	app->assets.bg = SDL_LoadBMP(SKYBOX_PATH);
@@ -91,6 +94,8 @@ void    load_assets(t_app *app)
 	app->assets.sprites[3] = SDL_LoadBMP(MONSTER_1_PATH);
 	app->assets.sprites[4] = SDL_LoadBMP(MONSTER_2_PATH);
 	load_font(app);
+	load_texts(app);
+	load_music(app, MUSIC_PATH);
 }
 
 /**

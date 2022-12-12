@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/02 14:35:27 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/09 10:39:29 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,8 +87,10 @@ int	events_keyup(int keycode, t_app *app)
 		link_interaction(app);
 	if (keycode == SDLK_l)
 		link_wall_to_sector(app);
-	if (keycode == SDLK_DELETE)
+	if (keycode == SDLK_DELETE && !app->current_object)
 		sector_pop(app, &(app->active_sector), NULL);
+	if (keycode == SDLK_DELETE && app->current_object)
+		del_object(app, get_object_id(app, app->current_object));
 	if (keycode == SDLK_y || keycode == SDLK_h)
 		activate_slope(app, keycode);
 	if (keycode == SDLK_x || keycode == SDLK_z)

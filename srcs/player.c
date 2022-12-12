@@ -1,12 +1,12 @@
- /* ************************************************************************** */
+/* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/10/11 14:11:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/09 16:47:08 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static t_bool	is_wall_collision(t_app *app, t_move new)
 				if (app->sectors[app->player.current_sector].wall_textures[i] == PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
 					return (FALSE);
 				app->player.current_sector = wall_id;
+				interaction_check_portal(app, wall_id);
 				return (TRUE);
 			}
 		}
@@ -138,4 +139,75 @@ void	player_move(t_app *app, t_movement movement, double speed)
 	}
 	//----
 	update_position(app, new);
+}
+
+void	heal(t_app *app)
+{
+	if (app->player.inventory.potion > 0 && app->player.hp < MAX_HP)
+	{
+		app->player.inventory.potion--;
+		app->player.hp += 40;
+	}
+}
+
+void	shield(t_app *app)
+{
+	if (app->player.inventory.antidote > 0)
+	{
+		app->player.inventory.antidote--;
+		app->player.shield = MAX_HP;
+	}
+}
+
+void	regen(t_app *app, int *value)
+{
+	if (check_timer(&app->regen_timer) && *value % 40 != 0)
+			(*value)++;
+
+}
+
+void	damage(t_app *app, int dmg)
+{	
+	int	to_shield;
+	int	to_hp;
+
+	to_shield = (dmg * app->player.shield) / MAX_HP;
+	if (to_shield < dmg / 5)
+		to_shield = dmg / 5;
+	to_hp = dmg - to_shield;
+	app->player.shield -= to_shield;
+	if (app->player.shield < 0)
+		app->player.shield = 0;
+	app->player.hp -= to_hp;
+	if (app->player.hp < 0)
+		app->player.hp = 0;
+		start_timer(&app->regen_timer, 5);
+}
+
+void	player_shoot(t_app *app)
+{
+	if (check_timer(&app->shoot_timer) && app->player.equiped_weapon.ammo > 0)
+	{
+		play_sound(app, SOUND_SHOT_PATH);
+		app->player.equiped_weapon.ammo--;
+		app->player.inventory.ammo--;
+		start_timer(&app->shoot_timer, app->player.equiped_weapon.fire_rate);
+	}
+	else if (app->player.equiped_weapon.ammo <= 0 && app->player.inventory.ammo > 0)
+		player_reload(app);
+	
+}
+
+void	player_reload(t_app *app)
+{
+	if (check_timer(&app->shoot_timer) && app->player.inventory.ammo
+		&& app->player.equiped_weapon.ammo < app->player.equiped_weapon.magazine)
+	{
+		play_sound(app, SOUND_RELOAD_PATH);
+		if (app->player.equiped_weapon.magazine <= app->player.inventory.ammo)
+			app->player.equiped_weapon.ammo = app->player.equiped_weapon.magazine;
+		else
+			app->player.equiped_weapon.ammo = app->player.inventory.ammo;
+		start_timer(&app->shoot_timer, 0.8);
+	}
 }

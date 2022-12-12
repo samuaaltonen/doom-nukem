@@ -1,13 +1,12 @@
-
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
 /*   geometry.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:48:59 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/10/21 17:00:25 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/09 11:32:50 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +17,6 @@
 # define RADIAN_IN_DEG 57.29578
 # define PI_HALF 1.57079632679
 # define PI_3_QUARTERS 2.35619449019
-
-/**
- * Struct for integer coordinate point.
- */
-typedef struct s_point
-{
-	int				x;
-	int				y;
-}	t_point;
 
 /**
  * Sturct for limits.
@@ -40,7 +30,7 @@ typedef struct s_limit
 /**
  * Matrix that contains 2 t_point columns.
  */
-typedef	struct s_point_matrix
+typedef struct s_point_matrix
 {
 	t_point			a;
 	t_point			b;

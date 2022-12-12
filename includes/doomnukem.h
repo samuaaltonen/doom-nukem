@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/12 13:59:00 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:08:00 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include "geometry.h"
 # include "engine.h"
 # include "player.h"
+# include "interactions.h"
 
 //STATUS MACROS
 # define STATUS_TITLESCREEN 0
@@ -37,6 +38,7 @@
 # define STATUS_PAUSEMENU 3
 # define STATUS_MAINOPTIONS 4
 # define STATUS_GAMEOPTIONS 5
+# define STATUS_GAMEOVER 6
 
 //BUTTON MACROS
 # define BUTTON_IDLE 0
@@ -48,6 +50,7 @@
 # define BLACK 0xFF000000
 # define DARK_RED 0xFFD50000
 # define DARK_GREY 0xFF242424
+# define GREY 0xFF9A9A9A
 # define CYAN 0xFF00FFFF
 # define GREEN 0xFF8CFF00
 
@@ -102,13 +105,27 @@ typedef struct s_render_object
 	t_point		end;
 	t_vector2	size;
 	t_vector2	step;
-} t_render_object;
+}	t_render_object;
 
 typedef struct s_objectstack
 {
 	int				visible_count;
 	t_render_object	objects[MAX_VISIBLE_WALLS];
 }	t_objectstack;
+
+typedef struct s_color
+{
+	int	a;
+	int	r;
+	int g;
+	int	b;
+}	t_color;
+
+typedef struct s_timer
+{
+	struct timespec	start;
+	double			seconds;
+}	t_timer;
 
 /**
  * Struct for the application.
@@ -137,6 +154,13 @@ typedef struct s_app
 	float			object_states[MAX_OBJECTS];
 	t_object		tmp_objects[MAX_TEMP_OBJECTS];
 	t_interaction	interactions[MAX_INTERACTIONS];
+	t_animation		animations[MAX_CONCURRENT_ANIMATIONS];
+	int				animation_count;
+	char			**texts;
+	int				text_lengths[MAX_TEXT_LINES];
+	t_textmodal		textmodal;
+	t_timer			regen_timer;
+	t_timer			shoot_timer;
 }	t_app;
 
 /**
@@ -146,6 +170,7 @@ void		sdl_init(t_app *app);
 void		app_init(t_app **app);
 int			config_init(t_app *app);
 void		load_assets(t_app *app);
+void		load_texts(t_app *app);
 
 /**
  * error.c
@@ -163,7 +188,10 @@ void		init_thread_info(t_app *app);
 void		render_frame(t_app *app);
 void		app_loop(t_app *app);
 void		render_game(t_app *app);
+
 void		update_fps_counter(t_app *app);
+void		start_timer(t_timer *timer, double seconds);
+int			check_timer(t_timer *timer);
 
 /**
  * Images
@@ -178,6 +206,7 @@ int			events_keydown(int keycode, t_app *app);
 int			events_mouse_motion(t_app *app);
 int			events_mouse_down(int mouse_button, t_app *app);
 int			events_mouse_up(int mouse_button, t_app *app);
+int			events_mouse_wheel(int wheel_dir, t_app *app);
 int			events_window_destroy(void);
 int			events_window_other(int windowevent, t_app *app);
 int			dispatch_event(t_app *app, SDL_Event *event);
@@ -198,14 +227,22 @@ void		player_init(t_app *app);
 void		player_rotate(t_app *app, double angle);
 void		player_horizon(t_app *app, double change);
 void		player_move(t_app *app, t_movement movement, double speed);
+void		player_shoot(t_app *app);
+void		player_reload(t_app *app);
 void		init_camera_plane(t_app *app);
 void		init_skybox_plane(t_app *app);
+void		heal(t_app *app);
+void		shield(t_app *app);
+void		regen(t_app *app, int *value);
+void		damage(t_app *app, int dmg);
 
 /**
  * Sectors
  */
 t_line		get_wall_line(t_app *app, int sector_id, int wall_id);
-void		sector_visible_walls(t_app *app);
+void		sector_wallstack_build(t_app *app);
+void		sector_visible_walls(t_app *app, t_wallstack *wallstack, int index,
+				int sector_id);
 void		sector_walls_prepare(t_app *app, t_wall *walls, int wall_count);
 void		sector_walls_order(t_app *app, t_wall *walls, int wall_count);
 void		sector_stack_render(t_app *app, t_thread_data *thread,
@@ -236,6 +273,24 @@ void		draw_portal_partial_parent(t_app *app, int x, t_rayhit *hit);
 void		draw_portal_partial_hole(t_app *app, int x, t_rayhit *hit);
 
 /**
+ * Interactions
+ */
+void		interaction_check(t_app *app);
+void		interaction_check_portal(t_app *app, int sector_id);
+void		interaction_trigger(t_app *app, int interaction_index);
+
+/**
+ * Animations
+ */
+t_bool		animation_create(t_app *app, t_animation animation);
+void		progress_animations(t_app *app);
+
+/**
+ * Textmodal animations
+ */
+void		render_textmodals(t_app *app);
+
+/**
  * Sky
  */
 int			get_sky_pixel(t_app *app, int x, int y);
@@ -244,16 +299,19 @@ void		sector_sky_render(t_app *app, t_thread_data *thread);
 /**
  * Font
  */
-void        load_font(t_app *app);
+void		load_font(t_app *app);
 void		change_font(t_app *app, int size, int color);
 void		render_text(t_app *app, t_rect frame, char *text);
 
 /**
  * UI
  */
-void		render_ui_frame(t_app *app,t_rect area, int size, int background);
+void		render_ui_frame(t_app *app, t_rect area, int size, int background);
 void		render_ui(t_app *app);
 void		render_player_status(t_app *app);
+void		render_equipment(t_app *app);
+void		hud_weapon(t_app *app, t_rect rect);
+void		hud_quickslot(t_app *app, t_rect rect, char *slot);
 void		render_pointer(t_app *app, int x, int y);
 void		render_crosshair(t_app *app);
 t_rect		render_button(t_app *app, t_rect area, int size, char *text);
@@ -283,11 +341,13 @@ void		render_titlescreen(t_app *app);
 void		render_game(t_app *app);
 void		render_pausemenu(t_app *app);
 void		render_options(t_app *app);
+void		render_gameover(t_app *app);
 
 /*
 * AUDIO.C
 */
-void    	play_music(t_app *app, char *file);
+void		load_music(t_app *app, char *file);
+void		play_music(t_app *app);
 void		play_sound(t_app *app, char *file);
 void		pause_audio(t_app *app);
 void		unpause_audio(t_app *app);
@@ -299,15 +359,17 @@ void		stop_audio(t_app *app);
 int			get_pixel_color(SDL_Surface *surface, int x, int y);
 int			shade_color(int color, int shade);
 void		put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color);
-void		put_pixel_to_surface_check(t_app *app, t_point point, int color, float distance);
-
-void		flush_surface(SDL_Surface *surface);
+void		put_pixel_to_surface_check(t_app *app, t_point point, int color,
+				float distance);
 void		blit_surface(SDL_Surface *src, t_rect *src_rect,
 				SDL_Surface *dst, t_rect *dst_rect);
 int			check_blit(SDL_Surface *src, t_rect *src_rect,
 				SDL_Surface *dst, t_rect *dst_rect);
 void		rect_from_surface(SDL_Surface *surface, t_rect *rect);
 void		color_surface(SDL_Surface *surface, int color);
+int			blend_pixel(t_color base, t_color top);
+t_color		int_to_argb(int color);
+int			argb_to_int(t_color color);
 
 /**
  * utils
@@ -324,6 +386,5 @@ int			import_file(t_app *app, char *path);
  * objects
  */
 void		render_objects(t_app *app);
-
 
 #endif

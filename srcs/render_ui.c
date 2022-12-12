@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/22 18:19:35 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/02 13:19:56 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,90 @@ static void ui_topframe(t_app *app,t_rect area, int size);
 static void ui_midframe(t_app *app,t_rect area, int size);
 static void ui_bottomframe(t_app *app,t_rect area, int size);
 static void	fill_meter(t_app *app, t_rect area, int type, int id);
+static void	player_status_meter(t_app *app, t_rect area, int value, int color);
 
+/**
+ * Renders all elements of the HUD
+*/
 void	render_ui(t_app *app)
 {
 	render_crosshair(app);
 	render_text_prompt(app, (t_rect){10, 10, 112, 32}, 1, app->conf->fps_info);
-
-	//----DEBUG FEATURE 
-	render_ui_frame(app, (t_rect){960, 624, 64, 64}, 1, DARK_GREY);
-	render_ui_frame(app, (t_rect){1040, 624, 64, 64}, 1, DARK_GREY);
-	render_ui_frame(app, (t_rect){1120, 560, 128, 128}, 1, DARK_GREY);
 	render_player_status(app);
-	if (app->conf->buttonstates & LEFT_MOUSE)
+	render_equipment(app);
+	//----DEBUG FEATURE 
+	if (app->conf->buttonstates & RIGHT_MOUSE)
 		render_text_prompt(app, (t_rect){800, 150, 256, 64}, 1, "This is a nice and wonderful text prompt");
 	//----
 }
 
+void	render_equipment(t_app *app)
+{
+	//----DEBUG FEATURE
+
+	//----
+	hud_quickslot(app, (t_rect){960, 624, 64, 64}, "Q");
+	hud_quickslot(app, (t_rect){1040, 624, 64, 64}, "E");
+	hud_weapon(app, (t_rect){1120, 592, 128, 96});
+}
+
+void	hud_weapon(t_app *app, t_rect rect)
+{
+	int	i;
+
+	i = 0;
+	render_ui_frame(app, rect, 1, DARK_GREY);
+	render_ui_element(app, app->assets.pistol, (t_rect){1152, 630, 64, 64});
+	color_surface(app->assets.bullet, CYAN);
+	rect.x += 16;
+	rect.y += 16;
+	rect.w = 4;
+	rect.h = 8;
+	while (i < app->player.equiped_weapon.magazine)
+	{
+		if (i >= app->player.equiped_weapon.ammo)
+			color_surface(app->assets.bullet, GREY);
+		render_ui_element(app, app->assets.bullet, rect);
+		rect.x += 6;
+		if (i >= app->player.equiped_weapon.ammo)
+			color_surface(app->assets.bullet, GREY);
+		i++;
+	}
+	change_font(app, 16, CYAN);
+	render_text(app, (t_rect){1136, 626, 64, 64}, ft_itoa(app->player.inventory.ammo));
+}
+
+void	hud_quickslot(t_app *app, t_rect rect, char *slot)
+{
+	SDL_Surface *sprite;
+	int			*amount;
+
+	if (slot[0] == 'Q')
+	{
+		sprite = app->assets.hp;
+		amount = &app->player.inventory.potion;
+	}
+	if (slot[0] == 'E')
+	{
+		sprite = app->assets.shield;
+		amount = &app->player.inventory.antidote;
+	}
+	render_text_prompt(app, rect, 1, slot);
+	rect.x += 8;
+	rect.y += 32;
+	rect.w /= 3;
+	rect.h /= 3;
+	render_ui_element(app, sprite, rect);
+	rect.x += 32;
+	rect.y += 6;
+	rect.w *= 3;
+	rect.h *= 3;
+	render_text(app, rect, ft_itoa(*amount));
+}
+
+/**
+ * Renders a ui frame with the background color given as parameter
+*/	
 void	render_ui_frame(t_app *app,t_rect area, int size, int background)
 {
 	if (background)
@@ -98,7 +166,7 @@ static void ui_topframe(t_app *app,t_rect area, int size)
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
 }
 
-static void ui_midframe(t_app *app,t_rect area, int size)
+static void ui_midframe(t_app *app, t_rect area, int size)
 {
 	t_rect	dst;
 	t_rect	src;
@@ -106,8 +174,11 @@ static void ui_midframe(t_app *app,t_rect area, int size)
 	dst.x = area.x;
 	dst.y = area.y + size;
 	dst.h = area.h - 2 * size;
+	dst.w = size;
 	src.x = 0;
 	src.y = 10;
+	src.w = 10;
+	src.h = 10;
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
 	dst.x = area.x + area.w - size;
 	src.x = 20;
@@ -180,7 +251,6 @@ void	render_text_prompt(t_app *app, t_rect area, int size, char *text)
 	area.h -= size * 12;
 	change_font(app, 16, CYAN);
 	render_text(app, area, text);
-	load_font(app);
 }
 
 void	render_pointer(t_app *app, int x, int y)
@@ -211,45 +281,49 @@ void	render_crosshair(t_app *app)
 void	render_player_status(t_app *app)
 {
 	render_ui_element(app, app->assets.shield, (t_rect){32, 600, 32, 32});
-	fill_meter(app, (t_rect){80, 600, 16, 32}, 0, 0);
-	fill_meter(app, (t_rect){100, 600, 16, 32}, 0, 1);
-	fill_meter(app, (t_rect){120, 600, 16, 32}, 0, 2);
-	fill_meter(app, (t_rect){140, 600, 16, 32}, 0, 3);
-	fill_meter(app, (t_rect){160, 600, 16, 32}, 0, 4);
+	player_status_meter(app,(t_rect){80, 600, 16, 32}, app->player.shield, CYAN);
 	render_ui_element(app, app->assets.hp, (t_rect){32, 640, 32, 32});
-	fill_meter(app, (t_rect){80, 640, 16, 32}, 1, 0);
-	fill_meter(app, (t_rect){100, 640, 16, 32}, 1, 1);
-	fill_meter(app, (t_rect){120, 640, 16, 32}, 1, 2);
-	fill_meter(app, (t_rect){140, 640, 16, 32}, 1, 3);
-	fill_meter(app, (t_rect){160, 640, 16, 32}, 1, 4);
+	player_status_meter(app,(t_rect){80, 640, 16, 32}, app->player.hp, DARK_RED);
 }
 
-static void	fill_meter(t_app *app, t_rect area, int type, int id)
+static void	player_status_meter(t_app *app, t_rect area, int value, int color)
+{
+	int meter_value;
+	int	i;
+
+	meter_value = value;
+	i = 4;
+	while (i >= 0)
+	{
+		fill_meter(app, area, meter_value, color);
+		area.x += 20;
+		meter_value -= 40;
+		i--;
+	}
+}
+
+static void	fill_meter(t_app *app, t_rect area, int value, int color)
 {
 	int	x;
 	int	y;
-	int color;
 	int limit;
-	if (app->player.hp - 40 * id > 0)
-		limit = ((double)app->player.hp - 40.0 * (double)id) * 28.0 / 40.0;
+
+	x = area.x + area.w - 3;
+	y = area.y + area.h - 3;
+	if (value > 0)
+		limit = (28.0 / 40.0) * value;
 	else
 		limit = 0;
-	if (type == 0)
-		color = CYAN;
-	if (type == 1)
-		color = DARK_RED;
-	x = area.x + 2;
-	y = area.y + 2;
-	while (y < area.y + area.h - 2)
+	while (y >= area.y + 2 && limit > 0)
 	{
-		while (x < area.x + area.w - 2)
+		while (x >= area.x + 2)
 		{
-			if (area.y + area.h - y - 2 <= limit)
-				put_pixel_to_surface(app->surface, x, y, color);
-			x++;
+			put_pixel_to_surface(app->surface, x, y, color);
+			x--;
 		}
-		x = area.x + 2;
-		y++;
+		x = area.x + area.w - 3;
+		y--;
+		limit--;
 	}
 	render_ui_element(app, app->assets.meter, area);
 }

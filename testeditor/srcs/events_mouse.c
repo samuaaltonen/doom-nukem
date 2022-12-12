@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/02 15:48:40 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/07 13:54:42 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,9 +30,9 @@ static int	list_creation_events(t_app *app)
 	else
 	{
 		if (app->mouse_track.x == app->active->point.x
-			&& app->mouse_track.y == app->active->point.y)
+			&& app->mouse_track.y == app->active->point.y && valid_sector(app))
 			return (complete_sector(app));
-		else if (valid_point(app))
+		else if (valid_point(app) && app->active)
 		{
 			tmp = new_vector_list(&app->mouse_track);
 			put_to_vector_list(&app->active, tmp);
@@ -142,6 +142,7 @@ void	cancel_list_creation(t_app *app)
 	del_vector_list(&(app->active));
 	app->active = NULL;
 	app->active_last = NULL;
+	app->active_sector = NULL;
 	app->list_ongoing = FALSE;
 	app->list_creation = FALSE;
 }
