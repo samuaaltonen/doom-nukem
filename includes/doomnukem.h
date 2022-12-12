@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/12 12:31:57 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/12 13:59:00 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,21 +68,29 @@ typedef struct s_audio
 	Uint32				sound_length;
 }	t_audio;
 
+
+/**
+ * @brief states 
+ * 0 idle
+ * 1 attack
+ * 2 death
+ * 3 walk
+ * 
+ * if object doesn't have death, it won't have walk either and so on
+ * state count implies if it has just idle(0) or idle and attack(1) and so on
+ * 
+ */
 typedef struct s_enemy_state
 {
-	int		id;
-	t_point	pos;
-	int		state_count;
-	int		states[4][2];
-	int		idle;
-	int		idle_count;
-	int		attack;
-	int		attack_count;
-	int		death;
-	int		death_count;
-	int		walk;
-	int		walk_count;
+	int			id;
+	t_point		pos;
+	t_vector2	dir;
+	int			current_state;
+	int			next_state;
+	int			state_count;
+	int			states[4];
 }	t_enemy_state;
+
 typedef struct s_render_object
 {
 	int			id;
