@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/06 16:48:55 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:13:05 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,11 @@ enum e_occlusion {
 	OCCLUDE_BOTTOM,
 	OCCLUDE_BOTH,
 	OCCLUDE_NONE
+};
+
+enum e_objects {
+	MONSTER1 = 7,
+	MONSTER2 = 8
 };
 
 /**
@@ -170,14 +175,6 @@ typedef struct s_wallstack
 	int		interesting[MAX_VISIBLE_SECTORS];
 	int		interesting_count;
 }	t_wallstack;
-
-typedef struct s_level_header
-{
-	int	version;
-	int	sector_count;
-	int	object_count;
-	int	interaction_count;
-}	t_level_header;
 
 typedef struct s_object
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interactions.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 16:47:58 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/06 16:49:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:49:07 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef struct s_interaction
 {
 	int				event_id;
 	double			variable;
+	double			editable;
 	int				activation_sector;
 	int				activation_wall;
 	int				activation_object;

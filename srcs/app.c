@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/08 16:17:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:31:19 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,8 @@ void	render_frame(t_app *app)
 	else if (app->status == STATUS_MAINOPTIONS
 		|| app->status == STATUS_GAMEOPTIONS)
 		render_options(app);
+	else if (app->status == STATUS_GAMEOVER)
+		render_gameover(app);
 	SDL_UpdateWindowSurface(app->win);
+	play_music(app);
 }

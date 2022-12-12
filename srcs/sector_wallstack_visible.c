@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_wallstack_visible.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:49:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/08 15:49:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:08:07 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

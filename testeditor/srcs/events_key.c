@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/02 14:35:27 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:58:00 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ static void	edit_mode_keys(int keycode, t_app *app)
 		app->wall_edit = ft_toggle(app->wall_edit);
 	if (keycode == SDLK_g)
 		app->decor_edit = ft_toggle(app->decor_edit);
+	if (keycode == SDLK_e)
+		app->var_edit = ft_toggle(app->var_edit);
 	if (keycode == SDLK_n)
 		toggle_new_object(app, app->object_new);
 	if (keycode == SDLK_c)
@@ -87,8 +89,10 @@ int	events_keyup(int keycode, t_app *app)
 		link_interaction(app);
 	if (keycode == SDLK_l)
 		link_wall_to_sector(app);
-	if (keycode == SDLK_DELETE)
+	if (keycode == SDLK_DELETE && !app->current_object)
 		sector_pop(app, &(app->active_sector), NULL);
+	if (keycode == SDLK_DELETE && app->current_object)
+		del_object(app, get_object_id(app, app->current_object));
 	if (keycode == SDLK_y || keycode == SDLK_h)
 		activate_slope(app, keycode);
 	if (keycode == SDLK_x || keycode == SDLK_z)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/06 16:18:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:58:35 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,6 +163,7 @@ static void write_interactions(t_app *app, t_export_interaction *interactions)
 		temp.event_id = app->interactions[i].event_id;
 		temp.target_sector = get_sector_id(app, app->interactions[i].target_sector);
 		temp.variable = app->interactions[i].variable;
+		temp.editable = app->interactions[i].editable;
 		interactions[i] = temp;
 		i++;
 	}

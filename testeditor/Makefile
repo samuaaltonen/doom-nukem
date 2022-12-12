@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
+#    By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/12/06 17:02:30 by htahvana         ###   ########.fr        #
+#    Updated: 2022/12/08 18:14:20 by ssulkuma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,8 @@ linedraw.c linedraw_utils.c lists.c menu_sector_info.c sector.c sector_tools.c \
 sector_members.c sector_portal.c tex_icons.c tools.c utils_sdl.c utils.c \
 menu_player_info.c menu_weapon_info.c  menu_inventory_info.c \
 menu_object_info.c menu_interaction_info.c render_ui.c interactions.c \
-objects.c events_menu.c triangle.c
+objects.c events_menu.c help_menu_tools.c interaction_tools.c \
+menu_interaction_tools.c menu_wall_info.c triangle.c
 
 LIBFT = ../libft/libft.a
 LIBLINEARALGEBRA = ../liblinearalgebra/liblinearalgebra.a
@@ -38,9 +39,6 @@ SDL_DIR = ../sdl
 SDL_CONF = `../sdl/SDL2_build/bin/sdl2-config --cflags --libs`
 SDL_V = SDL2-2.0.8
 
-FRAMEWORKS = \
-	-framework OpenGL -framework AppKit -framework OpenCl \
-
 HEADERS = \
 	-I ./includes \
 	-I ../libft/includes \
@@ -55,7 +53,7 @@ LIBLINKS = -L ../libft -L ../liblinearalgebra -L/usr/local/lib \
 all: $(NAME)
 
 $(NAME): $(LIBFT) $(LIBLINEARALGEBRA) $(SDL2) $(OBJS) $(DEPS)
-	$(CC) $(OBJS) -o $(NAME) $(SDL_CONF) $(FLAGS) $(HEADERS) $(FRAMEWORKS) $(LIBLINKS)
+	$(CC) $(OBJS) -o $(NAME) $(SDL_CONF) $(FLAGS) $(HEADERS) $(LIBLINKS)
 
 # Create object files with (-MMD also creates dependency files)
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)

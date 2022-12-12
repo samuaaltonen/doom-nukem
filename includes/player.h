@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/12 15:40:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:32:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,16 +29,17 @@
 # define JETPACK_FALL 0.25f
 # define MAX_STEP 0.2f
 # define MAX_ANGLE 45.f
-# define TALL 0.7f
 # define HORIZON_UPPER_LIMIT 1.25
 # define HORIZON_LOWER_LIMIT -0.25
 # define PLAYER_HEIGHT 0.5
 # define COLLISION_OFFSET 0.5
+# define MAX_HP 200
 
 /**
  * Movement direction enumeration.
  */
-typedef enum e_movement {
+typedef enum e_movement
+{
 	FORWARD = 0,
 	BACKWARD = 1,
 	LEFTWARD = 2,
@@ -56,6 +57,16 @@ typedef struct s_inventory
 	int			key;
 	t_bool		jetpack;
 }	t_inventory;
+
+typedef struct s_weapon
+{
+	t_bool	enabled;
+	int		damage;
+	int		range;
+	double	fire_rate;
+	int		magazine;
+	int		ammo;
+}	t_weapon;
 
 /**
  * Struct for player. Contains players position, direction and camera plane.
@@ -78,6 +89,7 @@ typedef struct s_player
 	double			jump_timer;
 	int				hp;
 	int				weapons;
+	t_weapon		equiped_weapon;
 	int				shield;
 	t_inventory		inventory;
 }	t_player;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_sdl.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:38:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/08 15:51:15 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/09 11:49:41 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ void	blit_surface(SDL_Surface *src, t_rect *src_rect,
 				point.y = current.y;
 				map_coordinates(dst_rect, src_rect, &point);
 				pixel = get_pixel_color(src, point.x, point.y);
-				if ((pixel & 0xFF000000) != 0x00000000)
+				if ((pixel & 0xFF000000) > 0)
 					put_pixel_to_surface(dst, current.x + dst_rect->x,
 						current.y + dst_rect->y, pixel);
 				current.x++;
@@ -74,7 +74,7 @@ void	color_surface(SDL_Surface *surface, int color)
 			pixel_pos = (y * surface->pitch)
 				+ (x * IMAGE_PIXEL_BYTES);
 			pixel = surface->pixels + pixel_pos;
-			if ((*(int *)pixel & 0xFF000000) != 0x00000000)
+			if ((*(int *)pixel & 0xFF000000) > 0)
 				put_pixel_to_surface(surface, x, y, color);
 			x++;
 		}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/02 16:03:57 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/09 11:45:12 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,20 @@ int	events_keyup(int keycode, t_app *app)
 		app->conf->keystates ^= CTRL;
 	if (keycode == SDLK_ESCAPE)
 		exit(EXIT_SUCCESS);
+	if (keycode == SDLK_q)
+		heal(app);
 	if (keycode == SDLK_e)
+		shield(app);
+	if (keycode == SDLK_p)
 		app->conf->toggle_loop = ft_toggle(app->conf->toggle_loop);
 	if (keycode == SDLK_TAB)
 	{
+		//----DEBUG FEATURE
 		if (app->status == STATUS_GAME || app->status == STATUS_PAUSEMENU)
 			pause_game(app);
 		if (app->status == STATUS_MAINMENU)
 			app->status = STATUS_TITLESCREEN;
-			
+		//----
 	}
 	if (keycode == SDLK_SPACE)
 	{
@@ -56,6 +61,8 @@ int	events_keyup(int keycode, t_app *app)
 		//----DEBUG FEATURE
 		else if (app->status == STATUS_MAINMENU)
 			start_game(app);
+		if (app->status == STATUS_GAMEOVER)
+			app->status = STATUS_MAINMENU;
 		//----
 		app->conf->keystates ^= SPACE;
 	}
@@ -85,8 +92,6 @@ int	events_keydown(int keycode, t_app *app)
 		app->conf->keystates |= D;
 	if (keycode == SDLK_u)
 		app->conf->fov--;
-	if (keycode == SDLK_i)
-		app->conf->fov++;
 	if (keycode == SDLK_u || keycode == SDLK_i)
 		init_camera_plane(app);
 	if (keycode == SDLK_LSHIFT)

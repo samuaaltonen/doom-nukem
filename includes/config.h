@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/09 15:14:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:31:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,34 @@
 # define IMAGE_PIXEL_BITS 32
 # define FOV 66
 # define TEX_SIZE 64
-# define SKYBOX_W 1024 // Optimal size 4x2.5 of window size (5120x1800)
+# define TEX_PICKUP 44
+# define TEX_OBJECT 128
+# define SKYBOX_W 1024 // Optimal size 4x2.5 of window size (5120x1800 for 1280x720)
 # define SKYBOX_H 1024
 # define MOUSE_SENSITIVITY_HORIZONTAL 0.3
 # define MOUSE_SENSITIVITY_VERTICAL 0.2
 # define MAX_SECTOR_CORNERS 16
-# define MAX_MEMBER_SECTORS 8
+# define MAX_MEMBER_SECTORS 16
 # define MAX_VISIBLE_SECTORS 64
 # define MAX_VISIBLE_WALLS 256
 # define MAX_VIEW_DISTANCE 256.f
 # define MAX_LINE_LENGTH 1048576.0
-# define MAX_OBJECTS 64
-# define MAX_UNIQUE_OBJECTS 64
+# define SMALL_SCALE 0.34375
+# define SPRITE_ANGLES 90
+# define MAX_SMALL_OBJECTS 3
+# define MAX_BIG_OBJECTS 3
+# define MAX_ENEMY_TYPES 2
+# define MAX_PROJECTILES 3
+# define MAX_OBJECT_DISTANCE 15.f
+/* object type defines for now
+	< MAX_SMALL_OBJECTS = small objects
+	< MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS = big objects
+	< MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES = enemy
+	>= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES = projectiles
+*/
+# define MAX_ENEMY_STATES 2
+# define MAX_OBJECTS 128
+# define MAX_TEMP_OBJECTS 64
 # define MAX_INTERACTIONS 64
 # define MAX_UNIQUE_INTERACTIONS 7
 # define MAX_DECOR 10
@@ -62,6 +78,14 @@ typedef struct s_thread_data
 	pthread_mutex_t	lock;
 }	t_thread_data;
 
+typedef struct	s_level_header
+{
+	int	version;
+	int	sector_count;
+	int	object_count;
+	int	interaction_count;
+}	t_level_header;
+
 /**
  * Struct for configuration variables of the application.
  */
@@ -79,6 +103,7 @@ typedef struct s_conf
 	double			delta_time;
 	double			skybox_offset;
 	int				fov;
+	t_level_header	header;
 	int				keystates;
 	int				buttonstates;
 	int				mouse_active;

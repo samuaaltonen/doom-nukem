@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/08 15:56:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:33:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,21 @@ void    load_assets(t_app *app)
 	app->assets.pointer = SDL_LoadBMP(POINTER_PATH);
 	app->assets.shield = SDL_LoadBMP(SHIELD_PATH);
 	app->assets.hp = SDL_LoadBMP(HP_PATH);
+	app->assets.pistol = SDL_LoadBMP(PISTOL_PATH);
+	app->assets.bullet = SDL_LoadBMP(BULLET_PATH);
 	app->assets.meter = SDL_LoadBMP(METER_PATH);
 	app->assets.sprite = SDL_LoadBMP(PANELS_PATH);
 	app->assets.bg = SDL_LoadBMP(SKYBOX_PATH);
 
-	//temp
-	app->assets.sprites[0] = SDL_LoadBMP(SPRITE_PATH2);
-	app->assets.sprites[1] = SDL_LoadBMP(TITLESCREEN_PATH);
-
-    load_font(app);
+	//temp 2d object array in 0, 2d object array in 1, 2d per enemy arrays from then on
+	app->assets.sprites[0] = SDL_LoadBMP(PICKUP_PATH);
+	app->assets.sprites[1] = SDL_LoadBMP(OBJECT_PATH);
+	app->assets.sprites[2] = SDL_LoadBMP(SPRITE_PATH);
+	app->assets.sprites[3] = SDL_LoadBMP(MONSTER_1_PATH);
+	app->assets.sprites[4] = SDL_LoadBMP(MONSTER_2_PATH);
+	load_font(app);
 	load_texts(app);
+	load_music(app, MUSIC_PATH);
 }
 
 /**

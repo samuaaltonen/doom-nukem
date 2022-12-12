@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/08 15:19:00 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:19:30 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@
 # define IMAGE_PIXEL_BITS 32
 # define MAX_TEX_COUNT 17
 # define MAX_SECTOR_CORNERS 16
-# define MAX_MEMBER_SECTORS 8
+# define MAX_MEMBER_SECTORS 16
 # define MAX_WEAPONS 5
 # define MAX_ARMOR 5
 # define MAX_UNIQUE_OBJECTS 64
@@ -46,14 +46,14 @@
 # define MAX_DECOR 10
 # define MAX_AMMO 999
 # define MAX_ITEM_CAPACITY 99
-# define MAX_OBJECTS 64
+# define MAX_OBJECTS 128
 # define INVENTORY_SIZE 10
 # define DEG_IN_RADIAN 0.01745f
 # define PI_HALF 1.57079632679
 # define RADIAN_IN_DEG 57.29578f
 # define MAP_SPEED 0.85f
 # define HEIGHT_INC 0.125f
-# define FILE_VERSION 1;
+# define FILE_VERSION 2;
 # define PANELS_PATH "../assets/textures/minecraft_spritesheet.bmp"
 # define UI_FRAME_PATH "../assets/ui/ui_frame.bmp"
 # define FONT_FILE "../assets/legacy/SpaceMono-Regular.ttf"
@@ -265,6 +265,7 @@ typedef struct s_interaction
 {
 	int				event_id;
 	double 			variable;
+	double			editable;
 	t_sector_lst	*activation_sector;
 	t_vec2_lst		*activation_wall;
 	t_object		*activation_object;
@@ -275,6 +276,7 @@ typedef struct	s_export_interaction
 {
 	int				event_id;
 	double 			variable;
+	double			editable;
 	int				activation_sector;
 	int				activation_wall;
 	int				activation_object;
@@ -335,6 +337,7 @@ typedef struct s_app
 	t_bool				list_creation;
 	t_bool				list_ongoing;
 	t_bool				portal_selection;
+	t_bool				var_edit;
 	t_bool				wall_edit;
 	t_bool				ceiling_edit;
 	t_bool				floor_edit;
@@ -553,7 +556,6 @@ void			render_help_menu(t_app *app);
 void			set_icon_rect(t_rect *rect, t_point point, t_point size);
 void			load_assets(t_app *app);
 void			render_texture_icons(t_app *app);
-void			render_sector_info(t_app *app, t_point screen_pos);
 void			render_player_icons(t_app *app, SDL_Surface *asset, t_point point, int max);
 void			render_statusbar(t_app *app, t_point point, int statusbar, int color);
 void			render_arrows(t_app *app, t_point left, t_point right);
@@ -564,12 +566,17 @@ void			change_item_amount(t_app *app, SDL_Keycode key);
 void			render_weapons(t_app *app);
 void			render_object_statics(t_app *app);
 void			render_icons(t_app *app, t_point point, int id, SDL_Surface *asset);
-void			render_interaction_texts(t_app *app, int start_y);
+void			interaction_edit_menu(t_app *app, int start_y, t_point screen_pos);
 void			render_interaction_button(t_app *app, t_rect button, t_point mouse, char *text);
 void			render_current_interaction_status(t_app *app, t_point screen_pos, int y, int id);
 void			render_inventory(t_app *app);
 void			select_inventory(t_app *app, t_point screen_pos);
 void			select_weapons(t_app *app, t_point screen_pos);
+void			object_edit_menu(t_app *app);
+void			player_edit_menu(t_app *app);
+void			wall_edit_menu(t_app *app, t_point screen_pos);
+void			sector_edit_menu(t_app *app, t_point screen_pos, int y);
+void			render_interaction_explanations(t_app *app, int start_y);
 int				check_mouse(t_point screen_pos, t_rect rect);
 int				check_selected_inventory(t_app *app);
 
@@ -588,6 +595,7 @@ void			check_player_position(t_app *app);
 int				new_object(t_app *app);
 void			change_object_id(t_app *app, int keycode);
 void			del_object(t_app *app, int object_id);
+void			del_all_objects_in_sector(t_app *app);
 void			link_interaction(t_app *app);
 void			draw_object_icon(t_app *app, t_vector2 world_pos, int id);
 void			render_objects(t_app *app);

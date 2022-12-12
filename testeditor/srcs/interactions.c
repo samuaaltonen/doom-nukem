@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interactions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/06 16:13:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/12 14:56:42 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,21 +41,19 @@ void	interaction_edit(t_app *app, SDL_Keycode keycode)
 	if(app->current_interaction)
 	{
 			if (keycode == SDLK_UP)
-			{
 				app->current_interaction->variable += app->divider;
-			}
 			else if (keycode == SDLK_DOWN)
-			{
 				app->current_interaction->variable -= app->divider;
-
-			}
 			else if (keycode == SDLK_LEFT && app->current_interaction->event_id > 0)
-			{
 				app->current_interaction->event_id--;
-			}
 			else if (keycode == SDLK_RIGHT && app->current_interaction->event_id < 7)
-			{
 				app->current_interaction->event_id++;
+			if(app->var_edit)
+			{
+				if (keycode == SDLK_UP)
+					app->current_interaction->editable += app->divider;
+				else if (keycode == SDLK_DOWN)
+					app->current_interaction->editable -= app->divider;
 			}
 	}
 }
@@ -86,13 +84,19 @@ void	link_interaction(t_app *app)
 
 void	delete_interaction(t_app *app, int id)
 {
-	if(app->interaction_count > 0)
+	if (app->interaction_count > 0 && id > -1)
 	{
-		if (id < app->interaction_count - 1)
+		while (id < app->interaction_count)
 		{
-			app->interactions[id] = app->interactions[app->interaction_count - 1];
+			app->interactions[id] = app->interactions[id + 1];
+			id++;
 		}
-		app->interactions[app->interaction_count - 1].event_id = 0;
+		app->interactions[id].event_id = 0;
+		app->interactions[id].variable = 0;
+		app->interactions[id].target_sector = NULL;
+		app->interactions[id].activation_sector = NULL;
+		app->interactions[id].activation_wall = NULL;
+		app->interactions[id].activation_object = NULL;
 		app->interaction_count--;
 	}
 }

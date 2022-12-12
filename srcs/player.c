@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/12 16:28:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:33:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static int	wall_traversal_recursive(t_app *app, t_move new, int sector_id)
 		portal_id = app->sectors[sector_id].wall_types[i];
 		if (portal_id < 0
 			|| (new.elevation + MAX_STEP < app->sectors[portal_id].floor_height
-				||	app->sectors[portal_id].ceil_height < new.elevation + TALL))
+				||	app->sectors[portal_id].ceil_height < new.elevation + PLAYER_HEIGHT))
 			return (-1);
 		else
 		{
@@ -108,7 +108,7 @@ static int	wall_traversal_recursive(t_app *app, t_move new, int sector_id)
 		{
 			portal_id = wall_traversal_recursive(app, new, member_id);
 			if(portal_id < 0 || (new.elevation + MAX_STEP < app->sectors[portal_id].floor_height ||
-				app->sectors[portal_id].ceil_height < new.elevation + TALL))
+				app->sectors[portal_id].ceil_height < new.elevation + PLAYER_HEIGHT))
 				return (-1);
 			else
 			{
@@ -126,7 +126,7 @@ static int	wall_traversal_recursive(t_app *app, t_move new, int sector_id)
 
 static t_bool ceil_collision(t_app *app)
 {
-	if(get_sector_ceil_height(app, app->player.current_sector, app->player.pos) < app->player.elevation + TALL)
+	if(get_sector_ceil_height(app, app->player.current_sector, app->player.pos) < app->player.elevation + PLAYER_HEIGHT)
 		return (FALSE);
 	return (TRUE);
 }
@@ -210,7 +210,7 @@ void	update_position(t_app *app)
 	{
 		app->player.jump_timer = JUMP_TIME;
 		app->player.velocity = 0.f;
-		app->player.elevation = get_sector_ceil_height(app, app->player.current_sector, app->player.pos) - TALL;
+		app->player.elevation = get_sector_ceil_height(app, app->player.current_sector, app->player.pos) - PLAYER_HEIGHT;
 	}
 	else
 		app->player.elevation += app->player.velocity * app->conf->delta_time;
@@ -260,4 +260,75 @@ void	player_move(t_app *app, t_movement movement, double speed)
 	}
 	if (movement == DOWNWARD)
 		app->player.elevation -= speed;
+}
+
+void	heal(t_app *app)
+{
+	if (app->player.inventory.potion > 0 && app->player.hp < MAX_HP)
+	{
+		app->player.inventory.potion--;
+		app->player.hp += 40;
+	}
+}
+
+void	shield(t_app *app)
+{
+	if (app->player.inventory.antidote > 0)
+	{
+		app->player.inventory.antidote--;
+		app->player.shield = MAX_HP;
+	}
+}
+
+void	regen(t_app *app, int *value)
+{
+	if (check_timer(&app->regen_timer) && *value % 40 != 0)
+			(*value)++;
+
+}
+
+void	damage(t_app *app, int dmg)
+{	
+	int	to_shield;
+	int	to_hp;
+
+	to_shield = (dmg * app->player.shield) / MAX_HP;
+	if (to_shield < dmg / 5)
+		to_shield = dmg / 5;
+	to_hp = dmg - to_shield;
+	app->player.shield -= to_shield;
+	if (app->player.shield < 0)
+		app->player.shield = 0;
+	app->player.hp -= to_hp;
+	if (app->player.hp < 0)
+		app->player.hp = 0;
+		start_timer(&app->regen_timer, 5);
+}
+
+void	player_shoot(t_app *app)
+{
+	if (check_timer(&app->shoot_timer) && app->player.equiped_weapon.ammo > 0)
+	{
+		play_sound(app, SOUND_SHOT_PATH);
+		app->player.equiped_weapon.ammo--;
+		app->player.inventory.ammo--;
+		start_timer(&app->shoot_timer, app->player.equiped_weapon.fire_rate);
+	}
+	else if (app->player.equiped_weapon.ammo <= 0 && app->player.inventory.ammo > 0)
+		player_reload(app);
+	
+}
+
+void	player_reload(t_app *app)
+{
+	if (check_timer(&app->shoot_timer) && app->player.inventory.ammo
+		&& app->player.equiped_weapon.ammo < app->player.equiped_weapon.magazine)
+	{
+		play_sound(app, SOUND_RELOAD_PATH);
+		if (app->player.equiped_weapon.magazine <= app->player.inventory.ammo)
+			app->player.equiped_weapon.ammo = app->player.equiped_weapon.magazine;
+		else
+			app->player.equiped_weapon.ammo = app->player.inventory.ammo;
+		start_timer(&app->shoot_timer, 0.8);
+	}
 }
