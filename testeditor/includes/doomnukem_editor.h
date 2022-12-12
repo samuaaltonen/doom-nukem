@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/12 15:19:30 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:31:44 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,8 @@
 # define WIN_W 1280
 # define WIN_H 720
 # define HELP_MENU_W 280
+# define TEX_SIZE 128
+# define SMALL_ICON 32
 # define ICON_SIZE 64
 # define OBJECT_SCREEN_SIZE 16
 # define MSG_ERROR "Error occured"
@@ -35,7 +37,7 @@
 # define THREAD_COUNT 2
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
-# define MAX_TEX_COUNT 17
+# define MAX_TEX_COUNT 73
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 16
 # define MAX_WEAPONS 5
@@ -54,7 +56,8 @@
 # define MAP_SPEED 0.85f
 # define HEIGHT_INC 0.125f
 # define FILE_VERSION 2;
-# define PANELS_PATH "../assets/textures/minecraft_spritesheet.bmp"
+# define PANELS_PATH "../assets/textures/spritesheet_full.bmp"
+# define OBJECTS_PATH "../assets/images/Objects_icons.bmp"
 # define UI_FRAME_PATH "../assets/ui/ui_frame.bmp"
 # define FONT_FILE "../assets/legacy/SpaceMono-Regular.ttf"
 # define FONT_TX "../assets/fonts/sci-fi_font.bmp"
@@ -310,6 +313,7 @@ typedef struct s_assets
 	SDL_Surface		*button_texture;
 	SDL_Surface		*title_screen_image;
 	SDL_Surface		*sprite;
+	SDL_Surface		*objects;
 	SDL_Surface		*bg;
 }	t_assets;
 
@@ -323,7 +327,6 @@ typedef struct s_app
 	int					zoom_range;
 	SDL_Window			*win;
 	SDL_Surface			*surface;
-	SDL_Surface			*sprite;
 	double				divider;
 	t_vector2			view_pos;
 	t_vector2			view_size;

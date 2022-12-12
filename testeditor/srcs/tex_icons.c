@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tex_icons.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:36:43 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/08 19:11:41 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:24:11 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static t_point	get_icon_size(int index, t_point *point)
 		return ((t_point){ICON_SIZE, ICON_SIZE});
 	}
 	else
-		return ((t_point){ICON_SIZE / 2, ICON_SIZE / 2});
+		return ((t_point){SMALL_ICON, SMALL_ICON});
 }
 
 /**
@@ -67,14 +67,14 @@ void	render_icons(t_app *app, t_point point, int id, SDL_Surface *asset)
 	while (index < 5)
 	{
 		size = get_icon_size(index, &point);
-		tex = ICON_SIZE * ((index + id - 2) % (find_max(app, asset) + 1));
-		set_icon_rect(&src, (t_point){tex, 0}, size);
+		tex = TEX_SIZE * ((index + id - 2) % (find_max(app, asset) + 1));
+		set_icon_rect(&src, (t_point){tex, 0}, (t_point){TEX_SIZE, TEX_SIZE});
 		set_icon_rect(&icon, point, size);
 		blit_surface(asset, &src, app->surface, &icon);
-		point.x += (ICON_SIZE / 2) + 10;
+		point.x += (SMALL_ICON) + 10;
 		if (index == 2)
 		{
-			point.x += (ICON_SIZE / 2);
+			point.x += (SMALL_ICON);
 			point.y += 14;
 		}
 		index++;
@@ -97,14 +97,14 @@ void	render_player_icons(t_app *app, SDL_Surface *asset,
 	start_x = point.x;
 	while (index < max)
 	{
-		set_icon_rect(&src, (t_point){ICON_SIZE * index, 0},
-			(t_point){ICON_SIZE / 2, ICON_SIZE / 2});
-		set_icon_rect(&icon, point, (t_point){ICON_SIZE / 2, ICON_SIZE / 2});
+		set_icon_rect(&src, (t_point){TEX_SIZE * index, 0},
+			(t_point){SMALL_ICON, SMALL_ICON});
+		set_icon_rect(&icon, point, (t_point){SMALL_ICON, SMALL_ICON});
 		blit_surface(asset, &src, app->surface, &icon);
-		point.x += (ICON_SIZE / 2) + 10;
+		point.x += (SMALL_ICON) + 10;
 		if (index % 5 == 0)
 		{
-			point.y += (ICON_SIZE / 2) + 10;
+			point.y += (SMALL_ICON) + 10;
 			point.x = start_x;
 		}
 		index++;

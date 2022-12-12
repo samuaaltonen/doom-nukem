@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:48:10 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/16 13:05:05 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:34:15 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 void	load_assets(t_app *app)
 {
 	app->assets.sprite = SDL_LoadBMP(PANELS_PATH);
+	app->assets.objects = SDL_LoadBMP(OBJECTS_PATH);
 	app->assets.ui_frame = SDL_LoadBMP(UI_FRAME_PATH);
 }
 

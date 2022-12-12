@@ -6,14 +6,14 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/12 14:01:56 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/12 15:41:45 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ASSETS_H
 # define ASSETS_H
 
-# define PANELS_PATH "assets/textures/minecraft_spritesheet.bmp"
+# define PANELS_PATH "assets/textures/spritesheet_full.bmp"
 # define SKYBOX_PATH "assets/images/skybox.bmp"
 # define FONT_PATH "assets/fonts/sci-fi_font.bmp"
 # define UI_FRAME_PATH "assets/ui/ui_frame.bmp"

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_weapon_info.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:32:37 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/08 17:13:49 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/12 16:18:49 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ void	render_weapons(t_app *app)
 	{
 		if (app->player.weapons[index].enabled)
 		{
-			render_ui_frame(app, (t_rect){(ICON_SIZE / 2) * (index + 1)
+			render_ui_frame(app, (t_rect){(SMALL_ICON) * (index + 1)
 				+ (10 * (index + 1)) - 3, 59, 35, 35}, 1, 0);
 		}
 		index++;
@@ -125,7 +125,7 @@ void	select_weapons(t_app *app, t_point screen_pos)
 	index = 0;
 	while (index < MAX_WEAPONS)
 	{
-		if (check_mouse(screen_pos, (t_rect){(ICON_SIZE / 2) * (index + 1)
+		if (check_mouse(screen_pos, (t_rect){(SMALL_ICON) * (index + 1)
 				+ (10 * (index + 1)) - 3, 60, 35, 35}))
 			app->player.weapons[index].enabled
 				= ft_toggle(app->player.weapons[index].enabled);

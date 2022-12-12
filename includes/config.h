@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/12 16:31:28 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/12 17:10:44 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
 # define FOV 66
-# define TEX_SIZE 64
+# define TEX_SIZE 128
 # define TEX_PICKUP 44
 # define TEX_OBJECT 128
 # define SKYBOX_W 1024 // Optimal size 4x2.5 of window size (5120x1800 for 1280x720)
