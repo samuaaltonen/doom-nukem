@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 10:36:08 by saaltone          #+#    #+#              #
-#    Updated: 2022/12/09 15:34:43 by saaltone         ###   ########.fr        #
+#    Updated: 2022/12/09 15:43:20 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,7 +27,6 @@ FILES=ft_vector_length.c \
 	ft_vector_crossproduct.c \
 	ft_line_resize.c \
 	ft_line_point.c \
-	ft_line_segment_point.c \
 	ft_line_side.c \
 	ft_vector_angle.c \
 	ft_vector_angle_right.c \
@@ -39,6 +38,7 @@ FILES=ft_vector_length.c \
 	ft_vector_multiply.c \
 	ft_vector_normalize.c \
 	ft_point_distance.c \
+	ft_point_on_segment.c \
 	ft_compare_vectors.c \
 	ft_swap.c
 

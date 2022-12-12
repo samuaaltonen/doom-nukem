@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_line_segment_point.c                            :+:      :+:    :+:   */
+/*   ft_point_on_segment.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 15:24:38 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/09 15:31:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/09 15:43:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @param point 
  * @return int 
  */
-int	ft_line_segment_point(t_line line, t_vector2 point)
+int	ft_point_on_segment(t_line line, t_vector2 point)
 {
 	double	len;
 	double	dista;

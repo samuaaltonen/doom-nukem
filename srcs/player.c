@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/09 15:04:44 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/09 15:57:41 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,6 +152,8 @@ void	update_position(t_app *app)
 		app->player.move_vector = ft_vector_resize(app->player.move_vector, MOVEMENT_SPEED);
 	new = app->player.move_vector;
 	app->player.move_vector = ft_vec2_lerp(app->player.move_vector, (t_vector2){0.f,0.f}, MOVE_DECEL * app->conf->delta_time);
+
+	app->player.move_pos = ft_vector2_add(app->player.pos, app->player.move_vector);
 
 	//if player is in the air, apply gravity(depending on jetpack), keep jumping
 	if(app->player.flying)

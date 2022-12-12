@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/09 15:14:44 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/09 15:55:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ typedef struct s_player
 	t_vector2		pos;
 	t_vector2		dir;
 	t_vector2		move_vector;
+	t_vector2		move_pos;
 	double			velocity;
 	t_vector2		cam;
 	double			camera_length;
