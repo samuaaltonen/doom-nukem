@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/12 16:33:17 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:15:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,9 @@ static int	wall_traversal_recursive(t_app *app, t_move new, int sector_id)
 		if(i == app->sectors[member_id].corner_count)
 		{
 			portal_id = wall_traversal_recursive(app, new, member_id);
-			if(portal_id < 0 || (new.elevation + MAX_STEP < app->sectors[portal_id].floor_height ||
-				app->sectors[portal_id].ceil_height < new.elevation + PLAYER_HEIGHT))
+			if (portal_id < 0
+				|| (new.elevation + MAX_STEP < get_sector_floor_height(app, portal_id, new.pos)
+					||	get_sector_ceil_height(app, portal_id, new.pos) < new.elevation + PLAYER_HEIGHT))
 				return (-1);
 			else
 			{
