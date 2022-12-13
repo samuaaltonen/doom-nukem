@@ -6,20 +6,33 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 15:52:24 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/08 15:04:07 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/13 14:01:17 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
-static void	sort_triangle(t_point *a, t_point *b, t_point *c)
+static t_bool	sort_triangle(t_point *a, t_point *b, t_point *c)
 {
+	int	same;
+
+	same = 0;
+	if(a->y == b->y)
+		same++;
+	if(a->y == c->y)
+		same++;
+	if(b->y == c->y)
+		same++;
+	
+	if(same == 3)
+		return (FALSE);
 	if (a->y > b->y)
 		ft_point_swap(a, b);
 	if (a->y > c->y) 
 		ft_point_swap(a, c);
 	if (b->y > c->y)
 		ft_point_swap(b, c);
+	return (TRUE);
 }
 
 static void	calculate_top(t_triangle triangle, t_point *pos, t_point *heights, t_point *hor)
@@ -67,22 +80,24 @@ void fill_triangle(t_app *app, t_point a, t_point b, t_point c, int color)
 	t_point hor;
 	t_point heights;
 
-	sort_triangle(&a, &b, &c);
-	heights.x = c.y - a.y;
-	heights.y = b.y - a.y + 1;
-	pos.y = a.y - 1;
-	while (++pos.y <= b.y)
+	if(sort_triangle(&a, &b, &c))
 	{
-		calculate_top((t_triangle){a,b,c}, &pos, &heights, &hor);
-		while (++pos.x <= hor.y)
-			put_pixel_to_surface(app->surface, pos.x, pos.y, color);
-	}
-	heights.y = c.y - b.y + 1;
-	pos.y = b.y - 1;
-	while (++pos.y <= c.y)
-	{
-		calculate_bot((t_triangle){a,b,c}, &pos, &heights, &hor);
-		while (++pos.x <= hor.y)
-			put_pixel_to_surface(app->surface, pos.x, pos.y, color);
+		heights.x = c.y - a.y;
+		heights.y = b.y - a.y + 1;
+		pos.y = a.y - 1;
+		while (++pos.y <= b.y)
+		{
+			calculate_top((t_triangle){a,b,c}, &pos, &heights, &hor);
+			while (++pos.x <= hor.y)
+				put_pixel_to_surface(app->surface, pos.x, pos.y, color);
+		}
+		heights.y = c.y - b.y + 1;
+		pos.y = b.y - 1;
+		while (++pos.y <= c.y)
+		{
+			calculate_bot((t_triangle){a,b,c}, &pos, &heights, &hor);
+			while (++pos.x <= hor.y)
+				put_pixel_to_surface(app->surface, pos.x, pos.y, color);
+		}
 	}
 }
