@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:04:04 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/08 18:08:29 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/13 14:00:16 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,7 @@ void	object_edit_menu(t_app *app)
 	change_font(app, 11, TEXT);
 	render_arrows(app, (t_point){10, 67}, (t_point){265, 67});
 	render_icons(app, (t_point){25, 60}, app->current_object->type,
-		app->assets.sprite);
+		app->assets.objects);
 	render_object_statics(app);
 	change_font(app, 11, TEXT);
 	id = find_object_interaction(app);
