@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:57:21 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/13 13:00:03 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:34:15 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	shield(t_app *app)
 
 void	regen(t_app *app, int *value)
 {
-	if (check_timer(&app->regen_timer) && *value % 40 != 0)
+	if (!check_timer(&app->regen_timer) && *value % 40 != 0)
 			(*value)++;
 
 }
@@ -52,5 +52,5 @@ void	damage(t_app *app, int dmg)
 	app->player.hp -= to_hp;
 	if (app->player.hp < 0)
 		app->player.hp = 0;
-		start_timer(&app->regen_timer, 5);
+		start_timer(&app->regen_timer, REGEN_TIME);
 }

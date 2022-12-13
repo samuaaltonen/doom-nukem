@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:22:26 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/09 11:59:31 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:32:36 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,8 +93,8 @@ int	check_timer(t_timer *timer)
 	delta.tv_nsec = now.tv_nsec - timer->start.tv_nsec;
 	delta.tv_sec = now.tv_sec - timer->start.tv_sec;
 	delta_seconds = (double)delta.tv_sec + 1.0e-9 * delta.tv_nsec;
-	if (delta_seconds >= timer->seconds)
-		return (1);
+	if (delta_seconds < timer->seconds)
+		return (timer->seconds - delta_seconds);
 	else
 		return (0);
 }
