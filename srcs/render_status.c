@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_status.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/12 16:31:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:09:08 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,13 +68,13 @@ static void update_states(t_app *app)
 		if(app->objects[i].type == MONSTER1)
 		{
 			app->object_states[i] += 5.f * app->conf->delta_time;
-			if(app->object_states[i] > 2)
+			if(app->object_states[i] > 8)
 				app->object_states[i] = 0.f;
 		}
 		else if(app->objects[i].type == MONSTER2)
 		{
 			app->object_states[i] += 5.f * app->conf->delta_time;
-			if(app->object_states[i] > 10)
+			if(app->object_states[i] > 12)
 				app->object_states[i] = 0.f;
 		}
 	}

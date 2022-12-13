@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/12 15:41:45 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:34:06 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define ASSETS_H
 
 # define PANELS_PATH "assets/textures/spritesheet_full.bmp"
-# define SKYBOX_PATH "assets/images/skybox.bmp"
+# define SKYBOX_PATH "assets/images/panorama_space.bmp"
 # define FONT_PATH "assets/fonts/sci-fi_font.bmp"
 # define UI_FRAME_PATH "assets/ui/ui_frame.bmp"
 # define TITLESCREEN_PATH "assets/images/awakened3.bmp"
@@ -32,8 +32,8 @@
 # define SOUND_BUMP_PATH "assets/sounds/bump.wav"
 # define TEXTS_PATH "assets/texts/texts.txt"
 # define PICKUP_PATH "assets/images/Objects_small_sheet.bmp"
-# define OBJECT_PATH "assets/images/Objects_full_sheet.bmp"
-# define MONSTER_1_PATH "assets/images/Monster1_Half_sheet.bmp"
+# define OBJECT_PATH "assets/images/Objects_Big_sheet.bmp"
+# define MONSTER_1_PATH "assets/images/Monster1_full_sheet.bmp"
 # define MONSTER_2_PATH "assets/images/Monster2_full_sheet.bmp"
 # define SPRITE_PATH "assets/images/projectiles.bmp"
 # define MAX_SPRITES 5

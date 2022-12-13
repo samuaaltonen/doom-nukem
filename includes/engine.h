@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/12 14:13:05 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:31:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ enum e_occlusion {
 };
 
 enum e_objects {
-	MONSTER1 = 7,
-	MONSTER2 = 8
+	MONSTER1 = 9,
+	MONSTER2 = 10
 };
 
 /**
