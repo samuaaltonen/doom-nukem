@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:40:40 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/09 15:27:16 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/13 12:55:17 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,13 @@ int	events_mouse_motion(t_app *app)
 int	events_mouse_down(int mouse_button, t_app *app)
 {
 	if (mouse_button == SDL_BUTTON_LEFT)
+	{
 		app->conf->buttonstates |= LEFT_MOUSE;
+		//----DEBUG FEATURE
+		player_shoot(app);
+		//----
+	}
+		
 	if (mouse_button == SDL_BUTTON_RIGHT)
 		app->conf->buttonstates |= RIGHT_MOUSE;
 	if (mouse_button == SDL_BUTTON_MIDDLE)
@@ -56,9 +62,6 @@ int	events_mouse_up(int mouse_button, t_app *app)
 	if (mouse_button == SDL_BUTTON_LEFT)
 	{
 		app->conf->buttonstates ^= LEFT_MOUSE;
-		//----DEBUG FEATURE
-		player_shoot(app);
-		//----
 	}
 		
 	if (mouse_button == SDL_BUTTON_RIGHT)
