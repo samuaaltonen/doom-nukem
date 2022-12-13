@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/12 17:10:44 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:34:37 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@
 # define TEX_SIZE 128
 # define TEX_PICKUP 44
 # define TEX_OBJECT 128
-# define SKYBOX_W 1024 // Optimal size 4x2.5 of window size (5120x1800 for 1280x720)
-# define SKYBOX_H 1024
+# define SKYBOX_W 1792 // Optimal size 4x2.5 of window size (5120x1800 for 1280x720)
+# define SKYBOX_H 630
 # define MOUSE_SENSITIVITY_HORIZONTAL 0.3
 # define MOUSE_SENSITIVITY_VERTICAL 0.2
 # define MAX_SECTOR_CORNERS 16
@@ -37,7 +37,7 @@
 # define MAX_LINE_LENGTH 1048576.0
 # define SMALL_SCALE 0.34375
 # define SPRITE_ANGLES 90
-# define MAX_SMALL_OBJECTS 3
+# define MAX_SMALL_OBJECTS 5
 # define MAX_BIG_OBJECTS 3
 # define MAX_ENEMY_TYPES 2
 # define MAX_PROJECTILES 3
