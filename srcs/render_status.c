@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/13 11:45:15 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/13 14:40:37 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,12 @@ void	render_game(t_app *app)
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	update_states(app);
 	progress_animations(app);
-	handle_movement(app);
-	update_position(app);
+	player_control(app);
 	render_sectors(app);
 	render_objects(app);
 	render_textmodals(app);
 	render_ui(app);
-	regen(app, &app->player.hp);
-	regen(app, &app->player.shield);
+
 	if (app->player.hp == 0)
 		app->status = STATUS_GAMEOVER;
 }

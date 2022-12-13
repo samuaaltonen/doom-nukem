@@ -6,17 +6,37 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/13 13:31:39 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:10:03 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
+ * @brief Handles player controls
+ * 
+ * @param app
+ */
+void	player_control(t_app *app)
+{
+	handle_movement(app);
+	update_position(app);
+	regen(app, &app->player.hp);
+	regen(app, &app->player.shield);
+	if (app->conf->buttonstates & LEFT_MOUSE)
+		player_shoot(app);
+	if (app->conf->keystates & R)
+		player_reload(app);
+	if (app->conf->keystates & Q)
+		heal(app);
+	if (app->conf->keystates & E)
+		shield(app);
+}
+
+/**
  * @brief Handles player movement and direction depending on keystate.
  * 
  * @param app
- * @return int
  */
 void	handle_movement(t_app *app)
 {
@@ -46,7 +66,7 @@ void	handle_movement(t_app *app)
 
 void	player_shoot(t_app *app)
 {
-	if (!check_timer(&app->shoot_timer) && app->player.equiped_weapon.ammo > 0)
+	if (check_timer(&app->shoot_timer) && app->player.equiped_weapon.ammo > 0)
 	{
 		play_sound(app, SOUND_SHOT_PATH);
 		app->player.equiped_weapon.ammo--;
@@ -59,7 +79,7 @@ void	player_shoot(t_app *app)
 
 void	player_reload(t_app *app)
 {
-	if (!check_timer(&app->shoot_timer) && app->player.inventory.ammo
+	if (check_timer(&app->shoot_timer) && app->player.inventory.ammo
 		&& app->player.equiped_weapon.ammo < app->player.equiped_weapon.magazine)
 	{
 		play_sound(app, SOUND_RELOAD_PATH);

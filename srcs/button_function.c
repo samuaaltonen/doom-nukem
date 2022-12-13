@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   button_function.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/12 16:31:17 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/13 14:50:05 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	start_game(t_app *app)
 {
 	player_init(app);
 	import_file(app, MAP_PATH);
+	player_init(app);
 	app->status = STATUS_GAME;
 }
 

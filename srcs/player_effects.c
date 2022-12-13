@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:57:21 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/13 13:34:15 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:07:27 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,19 @@
 
 void	heal(t_app *app)
 {
-	if (app->player.inventory.potion > 0 && app->player.hp < MAX_HP)
+	if (check_timer(&app->item_timer) && app->player.inventory.potion > 0
+        && app->player.hp < MAX_HP)
 	{
 		app->player.inventory.potion--;
 		app->player.hp += 40;
+        start_timer(&app->item_timer, 2);
 	}
 }
 
 void	shield(t_app *app)
 {
-	if (app->player.inventory.antidote > 0)
+	if (check_timer(&app->item_timer) && app->player.inventory.antidote > 0
+        && app->player.shield < MAX_HP)
 	{
 		app->player.inventory.antidote--;
 		app->player.shield = MAX_HP;
@@ -32,7 +35,7 @@ void	shield(t_app *app)
 
 void	regen(t_app *app, int *value)
 {
-	if (!check_timer(&app->regen_timer) && *value % 40 != 0)
+	if (check_timer(&app->regen_timer) && *value % 40 != 0)
 			(*value)++;
 
 }
