@@ -1,2 +1,2 @@
-Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-Yo.
+Hello!
+A bitmap image file loaded into memory becomes a DIB data structure – an important component of the Windows GDI API. The in-memory DIB data structure is almost the same as the BMP file format, but it does not contain the 14-byte bitmap file header and begins with the DIB header. For DIBs loaded in memory, the color table can also consist of 16-bit entries that constitute indexes to the currently realized palette[8] (an additional level of indirection), instead of explicit RGB color definitions.

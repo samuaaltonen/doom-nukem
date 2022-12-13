@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/13 13:15:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:12:33 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ static int	wall_traversal_recursive(t_app *app, t_move new, int sector_id)
 			return (-1);
 		else
 		{
-			if (app->sectors[sector_id].wall_textures[i] == PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
+			if (app->sectors[sector_id].wall_textures[i] == PARTIALLY_TRANSPARENT_TEXTURE_ID)
 				return (-1);
 			portal_id = wall_traversal_recursive(app, new, portal_id);
 			if (portal_id < 0)

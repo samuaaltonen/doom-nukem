@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/08 14:38:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:13:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ static void	sector_render_wall(t_app *app, t_thread_data *thread, t_limit limit,
 	sector_walls_raycast(app, thread, (t_raycast_info){wall, limit,
 		app->occlusion_top, app->occlusion_bottom});
 	if (app->sectors[wall->sector_id].wall_textures[wall->wall_id]
-		== PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
+		== PARTIALLY_TRANSPARENT_TEXTURE_ID)
 		copy_occlusion(app, (int *)&top, (int *)&bottom);
 	if (wall->is_portal && wall->is_inside && !wall->is_member
 		&& wall->already_passed[thread->id] < MAX_SECTOR_CORNERS)
@@ -118,7 +118,7 @@ static void	sector_render_wall(t_app *app, t_thread_data *thread, t_limit limit,
 			ft_min(wall->end_x, limit.end)});
 	}
 	if (app->sectors[wall->sector_id].wall_textures[wall->wall_id]
-		== PARTIALLY_TRANSPARENT_PORTAL_TEXTURE_ID)
+		== PARTIALLY_TRANSPARENT_TEXTURE_ID)
 		sector_walls_raycast_transparent(app, thread, (t_raycast_info){
 			wall, limit, (int *)&top, (int *)&bottom});
 }
