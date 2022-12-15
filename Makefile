@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
+#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/12/13 13:00:00 by dpalacio         ###   ########.fr        #
+#    Updated: 2022/12/15 16:37:57 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -86,18 +86,18 @@ HEADERS = \
 	-I ./liblinearalgebra/includes \
 	-I ./sdl/SDL2-2.0.8/include
 
-FLAGS = -Wall -Wextra -Werror -flto -Ofast -g
+FLAGS = -MMD -Wall -Wextra -Werror -flto -Ofast -g
 
 LIBLINKS = -L ./libft -L ./liblinearalgebra -L/usr/local/lib \
 		-llinearalgebra -lft -lm
 
 all: $(NAME)
 
-$(NAME): $(LIBFT) $(LIBLINEARALGEBRA) $(SDL2) $(OBJS) $(DEPS)
+$(NAME): $(LIBFT) $(LIBLINEARALGEBRA) $(SDL2) $(OBJS)
 	$(CC) $(OBJS) -o $(NAME) $(SDL_CONF) $(FLAGS) $(HEADERS) $(LIBLINKS)
 
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
-	$(CC) $(FLAGS) $(HEADERS) -MMD -c $< -o $@
+	$(CC) $(HEADERS) $(FLAGS) -c $< -o $@
 
 -include $(DEPS)
 
