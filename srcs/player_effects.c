@@ -56,5 +56,5 @@ void	damage(t_app *app, int dmg)
 	app->player.hp -= to_hp;
 	if (app->player.hp < 0)
 		app->player.hp = 0;
-		start_timer(&app->regen_timer, REGEN_TIME);
+	start_timer(&app->regen_timer, REGEN_TIME);
 }

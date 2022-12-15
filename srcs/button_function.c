@@ -28,7 +28,18 @@ void	start_game(t_app *app)
 {
 	player_init(app);
 	import_file(app, MAP_PATH);
-	player_init(app);
+	//----DEBUG FEATURE
+	app->player.inventory.potion = 5;
+	app->player.inventory.antidote = 5;
+	app->player.inventory.ammo = 20;
+	app->player.weapons = 0;
+	app->player.equiped_weapon.magazine = 9;
+	if (app->player.equiped_weapon.magazine <= app->player.inventory.ammo)
+		app->player.equiped_weapon.ammo = app->player.equiped_weapon.magazine;
+	else
+		app->player.equiped_weapon.ammo = app->player.inventory.ammo;
+	app->player.equiped_weapon.fire_rate = 0.2;
+	//----
 	app->status = STATUS_GAME;
 }
 
