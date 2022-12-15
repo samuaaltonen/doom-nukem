@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/15 17:29:51 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:40:59 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ void	sdl_init(t_app *app)
 void	define_enemies(t_app *app)
 {
 	app->enemy_def[0].state_count = 4;
+	app->enemy_def[0].range = 3.f;
 	app->enemy_def[0].states[0][0] = 0.f;
 	app->enemy_def[0].states[0][1] = 1.f;
 	app->enemy_def[0].states[0][2] = 1.f;
@@ -87,6 +88,7 @@ void	define_enemies(t_app *app)
 	app->enemy_def[0].states[3][2] = 1.f;
 
 	app->enemy_def[1].state_count = 4;
+	app->enemy_def[1].range = 1.f;
 	app->enemy_def[1].states[0][0] = 0.f;
 	app->enemy_def[1].states[0][1] = 1.f;
 	app->enemy_def[1].states[0][2] = 1.f;

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/15 17:33:30 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:40:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,15 +87,17 @@ enum e_enemy_states
  * 2 death
  * 3 walk
  * 
+ * 
+ * 
  * if object doesn't have death, it won't have walk either and so on
  * state count implies if it has just idle(0) or idle and attack(1) and so on
  * states[4][2] 4 states, state sheet start and animation frame duration 
  */
- 
 typedef struct s_enemy_def
 {
-	int	state_count;
-	float states[4][3];
+	int		state_count;
+	double	range;
+	float	states[4][3];
 }	t_enemy_def;
 
 
