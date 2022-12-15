@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/15 13:12:17 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/15 15:12:51 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,10 @@ void	player_control(t_app *app)
 		heal(app);
 	if (app->conf->keystates & E)
 		shield(app);
+	if (app->conf->keystates & SHIFT)
+		app->conf->movement_speed = RUN_SPEED;
+	else
+		app->conf->movement_speed = MOVEMENT_SPEED;
 }
 
 /**

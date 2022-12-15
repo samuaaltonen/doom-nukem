@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/15 13:25:39 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/15 14:56:39 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,9 @@
 # define DIRECTION_START_Y 1.0
 # define POSITION_START_X 0.5
 # define POSITION_START_Y 0.5
-# define ROTATION_SPEED 1.8f
-# define MOVEMENT_SPEED 2.0f
+# define ROTATION_SPEED 1.5f
+# define MOVEMENT_SPEED 0.02f
+# define RUN_SPEED 0.1f
 # define MOVE_RANGE 0.05f
 # define MOVE_ACCEL 100.f
 # define MOVE_DECEL 10.f

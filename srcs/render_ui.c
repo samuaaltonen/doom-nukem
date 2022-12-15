@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/13 13:07:21 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/15 15:01:04 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,6 @@ void	render_ui(t_app *app)
 	render_text_prompt(app, (t_rect){10, 10, 112, 32}, 1, app->conf->fps_info);
 	render_player_status(app);
 	render_equipment(app);
-	//----DEBUG FEATURE 
-	if (app->conf->buttonstates & RIGHT_MOUSE)
-		render_text_prompt(app, (t_rect){800, 150, 256, 64}, 1, "This is a nice and wonderful text prompt");
-	//----
 }
 
 void	render_equipment(t_app *app)

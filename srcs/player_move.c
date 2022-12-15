@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/15 13:25:56 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/15 15:10:22 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,8 +145,8 @@ void	update_position(t_app *app)
 	if(app->player.move_vector.y >= -epsilon && app->player.move_vector.y <= epsilon)
 		app->player.move_vector.y = 0.f;
 	//limit movement speed and slow player to 0
-	if (ft_vector_length(app->player.move_vector) > MOVEMENT_SPEED)
-		app->player.move_vector = ft_vector_resize(app->player.move_vector, MOVEMENT_SPEED);
+	if (ft_vector_length(app->player.move_vector) > app->conf->movement_speed)
+		app->player.move_vector = ft_vector_resize(app->player.move_vector, app->conf->movement_speed);
 	new = app->player.move_vector;
 	app->player.move_vector = ft_vec2_lerp(app->player.move_vector, (t_vector2){0.f,0.f}, MOVE_DECEL * app->conf->delta_time);
 
@@ -262,5 +262,3 @@ void	player_move(t_app *app, t_movement movement, double speed)
 	if (movement == DOWNWARD)
 		app->player.elevation -= speed;
 }
-
-
