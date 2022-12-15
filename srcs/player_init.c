@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/12 16:33:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:00:52 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,15 @@ void	player_init(t_app *app)
 	app->player.horizon = 0.5;
 	app->player.current_sector = 0;
 	//----DEBUG FEATURE
+	app->player.inventory.potion = 5;
+	app->player.inventory.antidote = 5;
+	app->player.inventory.ammo = 20;
 	app->player.weapons = 0;
 	app->player.equiped_weapon.magazine = 9;
-	app->player.equiped_weapon.ammo = 9;
+	if (app->player.equiped_weapon.magazine <= app->player.inventory.ammo)
+		app->player.equiped_weapon.ammo = app->player.equiped_weapon.magazine;
+	else
+		app->player.equiped_weapon.ammo = app->player.inventory.ammo;
 	app->player.equiped_weapon.fire_rate = 0.2;
 	//----
 	init_camera_plane(app);

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/12/12 15:21:49 by saaltone         ###   ########.fr        #
+#    Updated: 2022/12/13 13:00:00 by dpalacio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,12 @@ FILES = main.c \
 		events_window.c \
 		threads.c \
 		image.c \
-		player.c \
-		player_init.c \
-		player_view.c \
 		player_collision.c \
+		player_control.c \
+		player_effects.c \
+		player_init.c \
+		player_move.c \
+		player_view.c \
 		events.c \
 		audio.c \
 		time.c \

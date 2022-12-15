@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/02 13:19:56 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:07:21 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,6 @@ void	render_ui(t_app *app)
 
 void	render_equipment(t_app *app)
 {
-	//----DEBUG FEATURE
-
-	//----
 	hud_quickslot(app, (t_rect){960, 624, 64, 64}, "Q");
 	hud_quickslot(app, (t_rect){1040, 624, 64, 64}, "E");
 	hud_weapon(app, (t_rect){1120, 592, 128, 96});

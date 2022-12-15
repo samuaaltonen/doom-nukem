@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/12 16:33:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/13 14:38:18 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,6 +161,7 @@ typedef struct s_app
 	t_textmodal		textmodal;
 	t_timer			regen_timer;
 	t_timer			shoot_timer;
+	t_timer			item_timer;
 }	t_app;
 
 /**
@@ -224,6 +225,7 @@ void		threads_work(t_thread_data *threads_data);
  * Player
  */
 void		player_init(t_app *app);
+void		player_control(t_app *app);
 void		player_rotate(t_app *app, double angle);
 void		player_horizon(t_app *app, double change);
 void		player_move(t_app *app, t_movement movement, double speed);

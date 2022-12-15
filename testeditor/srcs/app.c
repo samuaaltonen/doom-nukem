@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/09 14:18:35 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/15 14:47:14 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,17 +129,17 @@ void	app_loop(t_app *app)
 		}
 		if (app->active)
 			ft_printf("selected point x:%f, y:%f, tex:%i, type:%i, decor:%i, decor offset: %f,%f\n", app->active->point.x, app->active->point.y, app->active->tex, app->active->type, app->active->decor, app->active->decor_offset.x, app->active->decor_offset.y);
-		for (int index = 0; index < 10; index++)
-		{
-			ft_printf("INDEX %i\n", index);
-			ft_printf("ID %i VARIABLE %f TARGET %i SECTOR %i WALL %i OBJECT %i\n\n", app->interactions[index].event_id, app->interactions[index].variable, app->interactions[index].target_sector, app->interactions[index].activation_sector, app->interactions[index].activation_wall, app->interactions[index].activation_object);
-		}
-		for (int index = 0; index < 10; index++)
-		{
-			ft_printf("COUNT %i\n", app->object_count);
-			ft_printf("INDEX %i\n", index);
-			ft_printf("TYPE %i SECTOR %i\n\n", app->objects[index].type, app->objects[index].sector);
-		}
+		// for (int index = 0; index < 10; index++)
+		// {
+		// 	ft_printf("INDEX %i\n", index);
+		// 	ft_printf("ID %i VARIABLE %f TARGET %i SECTOR %i WALL %i OBJECT %i\n\n", app->interactions[index].event_id, app->interactions[index].variable, app->interactions[index].target_sector, app->interactions[index].activation_sector, app->interactions[index].activation_wall, app->interactions[index].activation_object);
+		// }
+		// for (int index = 0; index < 10; index++)
+		// {
+		// 	ft_printf("COUNT %i\n", app->object_count);
+		// 	ft_printf("INDEX %i\n", index);
+		// 	ft_printf("TYPE %i SECTOR %i\n\n", app->objects[index].type, app->objects[index].sector);
+		// }
 		app_render(app);
 	}
 }
