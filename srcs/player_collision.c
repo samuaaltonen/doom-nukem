@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:42:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/12 14:15:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/15 18:06:21 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,11 +112,11 @@ t_bool	circle_collision(t_app *app, t_line wall, t_vector2 *colpos)
 	collision_pos = ft_closest_point(collision, wall);
 	if (ft_point_on_segment(wall, collision_pos))
 	{
-		//ft_printf("collision on wall x%f, y%f\n", collision.x, collision.y);
+		ft_printf("collision on wall x%f, y%f\n", collision.x, collision.y);
 		*colpos = collision;
 		return (TRUE);
 	}
-	//ft_printf("collision on endpoint \n");
+	ft_printf("collision on endpoint \n");
 	*colpos = collision_on_endpoint(app, wall, collision_pos);
 	return (TRUE);
 }
