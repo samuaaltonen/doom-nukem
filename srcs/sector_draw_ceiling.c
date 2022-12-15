@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:17:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/09 14:54:19 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:28:07 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,9 +93,14 @@ static void	draw_ceiling_pixel(t_app *app, t_rayhit *hit, t_point coord,
 	t_vector2	world_pos;
 	int			color;
 
-	world_pos.x = hit->position.x - (hit->distance - distance) * hit->ray.x;
-	world_pos.y = hit->position.y - (hit->distance - distance) * hit->ray.y;
-	color = get_position_color(app, world_pos, hit->sector->ceil_texture);
+	if (hit->sector->ceil_texture == FULLY_TRANSPARENT_TEXTURE_ID)
+		color = 0;
+	else
+	{
+		world_pos.x = hit->position.x - (hit->distance - distance) * hit->ray.x;
+		world_pos.y = hit->position.y - (hit->distance - distance) * hit->ray.y;
+		color = get_position_color(app, world_pos, hit->sector->ceil_texture);
+	}
 	if ((color & 0xFF000000) > 0)
 		put_pixel_to_surface(app->surface, coord.x, coord.y,
 			shade_color(color, hit->light));

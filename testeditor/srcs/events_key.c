@@ -3,33 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   events_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/12 14:58:00 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/13 13:54:32 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Keyup events for WASD and arrow keys.
-*/
-static void	wasd_and_arrow_keys(int keycode, t_app *app)
+ * Events for arrow keys.
+ */
+static void	handle_arrow_keys(int keycode, t_app *app)
 {
-	if (app->current_interaction == NULL)
+	if (app->current_interaction)
 	{
-		if (keycode == SDLK_RIGHT)
-			sector_edit(app, keycode);
-		if (keycode == SDLK_LEFT)
-			sector_edit(app, keycode);
-		if (keycode == SDLK_UP)
-			sector_edit(app, keycode);
-		if (keycode == SDLK_DOWN)
-			sector_edit(app, keycode);
-	}
-	else
 		interaction_edit(app, keycode);
+		return ;
+	}
+	if (keycode == SDLK_RIGHT)
+		sector_edit(app, keycode);
+	if (keycode == SDLK_LEFT)
+		sector_edit(app, keycode);
+	if (keycode == SDLK_UP)
+		sector_edit(app, keycode);
+	if (keycode == SDLK_DOWN)
+		sector_edit(app, keycode);
+}
+
+/**
+ * Events for WASD keys.
+*/
+static void	handle_wasd_keys(int keycode, t_app *app)
+{
 	if (keycode == SDLK_w)
 		app->keystates ^= FORWARD_W_DOWN;
 	if (keycode == SDLK_s)
@@ -76,7 +83,7 @@ static void	edit_mode_keys(int keycode, t_app *app)
  */
 int	events_keyup(int keycode, t_app *app)
 {
-	wasd_and_arrow_keys(keycode, app);
+	handle_wasd_keys(keycode, app);
 	edit_mode_keys(keycode, app);
 	if (keycode == SDLK_m)
 		export_file(app, FILE_PATH);
@@ -107,6 +114,7 @@ int	events_keyup(int keycode, t_app *app)
  */
 int	events_keydown(int keycode, t_app *app)
 {
+	handle_arrow_keys(keycode, app);
 	if (keycode == SDLK_w)
 		app->keystates |= FORWARD_W_DOWN;
 	if (keycode == SDLK_s)

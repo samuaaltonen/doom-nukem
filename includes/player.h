@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/13 13:34:08 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/15 13:25:39 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,16 @@
 # define POSITION_START_X 0.5
 # define POSITION_START_Y 0.5
 # define ROTATION_SPEED 1.8f
-# define MOVEMENT_SPEED 3.2f
+# define MOVEMENT_SPEED 2.0f
 # define MOVE_RANGE 0.05f
 # define MOVE_ACCEL 100.f
 # define MOVE_DECEL 10.f
 # define GRAVITY 10.f
 # define JUMP_SIZE 2.f
 # define JUMP_TIME 0.1f
+# define JETPACK_START 0.3
 # define JETPACK 1.f
-# define JETPACK_FALL 0.25f
+# define JETPACK_FALL 0.125f
 # define MAX_STEP 0.2f
 # define MAX_ANGLE 45.f
 # define HORIZON_UPPER_LIMIT 1.25

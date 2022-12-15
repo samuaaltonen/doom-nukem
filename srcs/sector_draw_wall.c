@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/06 16:59:22 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/13 15:25:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,10 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion_type)
 	{
 		if (tex_y >= (double) TEX_SIZE)
 			tex_y = fmod(tex_y, (double) TEX_SIZE);
-		color = get_pixel_color(app->assets.sprite, tex_x, (int) tex_y);
+		if (hit->texture == 1)
+			color = 0;
+		else
+			color = get_pixel_color(app->assets.sprite, tex_x, (int) tex_y);
 		draw_wall_pixel(app, hit, (t_point){x, y.start}, color);
 		tex_y += hit->texture_step;
 		y.start++;

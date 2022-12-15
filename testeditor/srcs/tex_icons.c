@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tex_icons.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:36:43 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/12 16:24:11 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/13 14:02:21 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,8 @@ static int	find_max(t_app *app, SDL_Surface *asset)
 {
 	if (asset == app->assets.sprite)
 		return (MAX_TEX_COUNT);
-	// if (asset == app->assets.object)
-	// 	return (MAX_OBJECTS);
+	if (asset == app->assets.objects)
+		return (MAX_UNIQUE_OBJECTS);
 	// if (asset == app->assets.decor)
 	// 	return (MAX_DECOR);
 	return (0);
@@ -67,8 +67,11 @@ void	render_icons(t_app *app, t_point point, int id, SDL_Surface *asset)
 	while (index < 5)
 	{
 		size = get_icon_size(index, &point);
-		tex = TEX_SIZE * ((index + id - 2) % (find_max(app, asset) + 1));
-		set_icon_rect(&src, (t_point){tex, 0}, (t_point){TEX_SIZE, TEX_SIZE});
+		tex = TEX_SIZE * ((index + id - 2) % (find_max(app, asset)));
+		if (asset == app->assets.objects)
+			set_icon_rect(&src, (t_point){0, tex - TEX_SIZE}, (t_point){TEX_SIZE, TEX_SIZE});
+		else
+			set_icon_rect(&src, (t_point){tex, 0}, (t_point){TEX_SIZE, TEX_SIZE});
 		set_icon_rect(&icon, point, size);
 		blit_surface(asset, &src, app->surface, &icon);
 		point.x += (SMALL_ICON) + 10;
