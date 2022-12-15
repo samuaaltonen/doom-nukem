@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:57:21 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/13 15:07:27 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/15 13:12:10 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	heal(t_app *app)
 	{
 		app->player.inventory.potion--;
 		app->player.hp += 40;
-        start_timer(&app->item_timer, 2);
+        start_timer(&app->item_timer, 5);
 	}
 }
 
@@ -30,6 +30,7 @@ void	shield(t_app *app)
 	{
 		app->player.inventory.antidote--;
 		app->player.shield = MAX_HP;
+		start_timer(&app->item_timer, 5);
 	}
 }
 

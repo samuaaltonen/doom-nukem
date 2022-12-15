@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/13 15:10:04 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/15 13:10:30 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ int	events_keydown(int keycode, t_app *app)
 		app->conf->fov--;
 	if (keycode == SDLK_u || keycode == SDLK_i)
 		init_camera_plane(app);
+	if (keycode == SDLK_q)
 		app->conf->keystates |= Q;
 	if (keycode == SDLK_e)
 		app->conf->keystates |= E;
