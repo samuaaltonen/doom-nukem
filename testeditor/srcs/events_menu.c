@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:38:26 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/06 14:23:24 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/15 14:45:01 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,9 @@ void	player_menu_events(t_app *app, t_point	screen_pos)
 */
 void	interaction_menu_events(t_app *app, int start_y, t_point screen_pos)
 {
+	int		id;
+	int		i;
+
 	if (screen_pos.x > HELP_MENU_W)
 	{
 		app->current_interaction->target_sector = click_sector(app);
@@ -39,8 +42,20 @@ void	interaction_menu_events(t_app *app, int start_y, t_point screen_pos)
 	if (check_mouse(screen_pos, (t_rect){90, start_y + 25, 113, 15}))
 	{
 		if (app->current_interaction->event_id)
-			delete_interaction(app, find_interaction(app));
-		app->current_interaction->event_id = 0;
+		{
+			i = find_interaction(app);
+			id = i;
+			while (id < MAX_INTERACTIONS && app->interactions[i].event_id != 0)
+			{
+				if (&(app->interactions[id]) == app->current_interaction)
+					delete_interaction(app, id);
+				id++;
+			}
+		}
+		else
+			app->current_interaction->event_id = 0;
+		app->current_interaction = NULL;
+		app->interaction_menu = FALSE;
 	}
 	if (check_mouse(screen_pos, (t_rect){100, start_y + 40, 93, 15}))
 		app->current_interaction->event_id = 1;
