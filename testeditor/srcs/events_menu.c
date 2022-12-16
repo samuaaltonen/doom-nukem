@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:38:26 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/15 14:45:01 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/16 13:50:18 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,11 @@ void	interaction_menu_events(t_app *app, int start_y, t_point screen_pos)
 					delete_interaction(app, id);
 				id++;
 			}
+			app->current_interaction = NULL;
+			app->interaction_menu = FALSE;
 		}
 		else
 			app->current_interaction->event_id = 0;
-		app->current_interaction = NULL;
-		app->interaction_menu = FALSE;
 	}
 	if (check_mouse(screen_pos, (t_rect){100, start_y + 40, 93, 15}))
 		app->current_interaction->event_id = 1;
@@ -82,28 +82,53 @@ void	interaction_menu_events(t_app *app, int start_y, t_point screen_pos)
 */
 void	activate_interaction_menu(t_app *app, t_point screen_pos)
 {
-	int		active;
 	int		interaction_id;
 
-	if (check_mouse(screen_pos, (t_rect){42, 238, 190, 16}) && app->active)
-		active = 1;
-	else if (check_mouse(screen_pos, (t_rect){42, 228, 190, 16})
-		&& app->object_menu)
-		active = 2;
-	else if (check_mouse(screen_pos, (t_rect){42, 618, 190, 16})
-		&& app->active_sector)
-		active = 3;
-	else
-		return ;
-	app->interaction_menu = TRUE;
-	if (active == 1)
-		interaction_id = find_decor_interaction(app);
-	else if (active == 2)
-		interaction_id = find_object_interaction(app);
-	else
-		interaction_id = find_sector_interaction(app);
-	if (interaction_id != -1)
+	if (check_mouse(screen_pos, (t_rect){25, 210, 15, 15}) && app->object_menu)
+	{
+		if (!app->current_interaction)
+			app->current_interaction = &app->interactions[find_object_interaction(app, app->interaction_count, 0)];
+		interaction_id = find_object_interaction(app, find_interaction(app) - 1, 0);
+		if (interaction_id < 0)
+			return ;
 		app->current_interaction = &app->interactions[interaction_id];
+		return ;
+	}
+	if (check_mouse(screen_pos, (t_rect){255, 210, 15, 15}) && app->object_menu)
+	{
+		if (!app->current_interaction)
+			app->current_interaction = &app->interactions[find_object_interaction(app, 0, 1)];
+		interaction_id = find_object_interaction(app, find_interaction(app) + 1, 1);
+		if (interaction_id < 0)
+			return ;
+		app->current_interaction = &app->interactions[interaction_id];
+		return ;
+	}
+	if (!app->current_interaction && app->object_menu)
+		interaction_id = find_object_interaction(app, 0, 1);
+	else if (!app->current_interaction && app->active)
+		interaction_id = find_decor_interaction(app);
+	else if (!app->current_interaction && app->active_sector)
+		interaction_id = find_sector_interaction(app);
 	else
+		interaction_id = find_interaction(app);
+	if (interaction_id < 0)
+		app->current_interaction = NULL;
+	else
+		app->current_interaction = &app->interactions[interaction_id];
+	if ((check_mouse(screen_pos, (t_rect){42, 228, 190, 16}) && app->object_menu)
+		|| (check_mouse(screen_pos, (t_rect){42, 238, 190, 16}) && app->active)
+		|| (check_mouse(screen_pos, (t_rect){42, 618, 190, 16}) && app->active_sector))
+	{
+		if (!app->current_interaction)
+			link_interaction(app);
+		app->interaction_menu = TRUE;
+		
+	}
+	if ((check_mouse(screen_pos, (t_rect){42, 248, 190, 16}) && app->object_menu))
+	{
+		app->current_interaction = NULL;
 		link_interaction(app);
+		app->interaction_menu = TRUE;
+	}
 }

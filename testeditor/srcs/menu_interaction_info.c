@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:45:38 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/08 18:07:34 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/16 13:37:35 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	has_interaction(t_app *app, t_point screen_pos, int y, int id)
 	if (app->interactions[id].event_id == 4)
 		render_text(app, (t_rect){125, y, 200, 20}, "LIGHT");
 	if (app->interactions[id].event_id == 5)
-		render_text(app, (t_rect){110, y, 200, 20}, "TEXT POP-UP");
+		render_text(app, (t_rect){105, y, 200, 20}, "TEXT POP-UP");
 	if (app->interactions[id].event_id == 6)
 		render_text(app, (t_rect){125, y, 200, 20}, "SOUND");
 	if (app->interactions[id].event_id == 7)
@@ -34,6 +34,10 @@ static void	has_interaction(t_app *app, t_point screen_pos, int y, int id)
 	render_ui_frame(app, (t_rect){47, y + 18, 190, 16}, 1, 0);
 	render_interaction_button(app, (t_rect){80, y + 20, 200, 20},
 		screen_pos, "EDIT INTERACTION");
+	render_ui_frame(app, (t_rect){47, y + 43, 190, 16}, 1, 0);
+	render_interaction_button(app, (t_rect){80, y + 45, 200, 20},
+		screen_pos, "ADD INTERACTION");
+	render_arrows(app, (t_point){25, y}, (t_point){255, y});
 }
 
 /**
@@ -47,7 +51,7 @@ void	render_current_interaction_status(t_app *app, t_point screen_pos,
 		has_interaction(app, screen_pos, y, id);
 	else
 	{
-		render_text(app, (t_rect){85, y, 200, 20}, "NO INTERACTION");
+		render_text(app, (t_rect){80, y, 200, 20}, "NO INTERACTIONS");
 		render_ui_frame(app, (t_rect){42, y + 18, 190, 16}, 1, 0);
 		render_interaction_button(app, (t_rect){80, y + 20, 200, 20},
 			screen_pos, "ADD INTERACTION");

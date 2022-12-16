@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objects.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:53:42 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/12 16:36:48 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/16 13:59:29 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	toggle_new_object(t_app *app, t_bool state)
 		app->current_object->type = 1;
 	}
 	app->object_menu = FALSE;
-
+	app->current_interaction = NULL;
 }
 
 t_bool	valid_object(t_app *app)
@@ -135,7 +135,7 @@ void	del_object(t_app *app, int object_id)
 		{
 			if (app->interactions[i].activation_object == &(app->objects[object_id]))
 			{
-				delete_interaction(app, find_object_interaction(app));
+				delete_interaction(app, find_object_interaction(app, 0, 1));
 				continue ;
 			}
 			if (app->interactions[i].activation_sector == NULL 
@@ -164,7 +164,7 @@ void	del_all_objects_in_sector(t_app *app)
 		if (app->objects[id].sector == app->active_sector)
 		{
 			app->current_object = &(app->objects[id]);
-			app->current_interaction = &(app->interactions[find_object_interaction(app)]);
+			app->current_interaction = &(app->interactions[find_object_interaction(app, 0, 1)]);
 			del_object(app, id);
 			app->current_object = NULL;
 			app->current_interaction = NULL;
