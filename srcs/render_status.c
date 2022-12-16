@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_status.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/15 17:34:22 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:42:50 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,16 @@ void	render_mainmenu(t_app *app)
 	render_text(app, (t_rect){50, 100, 800, 800}, "AWAKE");
 	button_function(app,
 		render_button(app, (t_rect){50, 180, 256, 64}, 1,
-		"START GAME"), start_game);
+			"START GAME"), start_game);
 	button_function(app,
 		render_button(app, (t_rect){50, 260, 256, 64}, 1,
-		"LEVEL EDITOR"), do_nothing);
+			"LEVEL EDITOR"), do_nothing);
 	button_function(app,
 		render_button(app, (t_rect){50, 340, 256, 64}, 1,
-		"OPTIONS"), main_options);
+			"OPTIONS"), main_options);
 	button_function(app,
 		render_button(app, (t_rect){50, 420, 256, 64}, 1,
-		"QUIT GAME"), exit_game);
+			"QUIT GAME"), exit_game);
 	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
 }
 
@@ -67,7 +67,6 @@ void	render_game(t_app *app)
 	render_objects(app);
 	render_textmodals(app);
 	render_ui(app);
-
 	if (app->player.hp == 0)
 		app->status = STATUS_GAMEOVER;
 }
@@ -76,17 +75,22 @@ void	render_pausemenu(t_app *app)
 {	
 	SDL_SetRelativeMouseMode(SDL_FALSE);
 	render_sectors(app);
-	render_ui_frame(app, (t_rect){28,78,300,428}, 1, DARK_GREY);
+	render_ui_frame(app, (t_rect){28, 78, 300, 428}, 1, DARK_GREY);
 	button_function(app,
-		render_button(app, (t_rect){50, 100, 256, 64}, 1, "MAIN MENU"), main_menu);
+		render_button(app, (t_rect){50, 100, 256, 64}, 1, "MAIN MENU"),
+		main_menu);
 	button_function(app,
-		render_button(app, (t_rect){50, 180, 256, 64}, 1, "CONTINUE"), pause_game);
+		render_button(app, (t_rect){50, 180, 256, 64}, 1, "CONTINUE"),
+		pause_game);
 	button_function(app,
-		render_button(app, (t_rect){50, 260, 256, 64}, 1, "LEVEL EDITOR"), do_nothing);
+		render_button(app, (t_rect){50, 260, 256, 64}, 1, "LEVEL EDITOR"),
+		do_nothing);
 	button_function(app,
-		render_button(app, (t_rect){50, 340, 256, 64}, 1, "OPTIONS"), game_options);
+		render_button(app, (t_rect){50, 340, 256, 64}, 1, "OPTIONS"),
+		game_options);
 	button_function(app,
-		render_button(app, (t_rect){50, 420, 256, 64}, 1, "QUIT GAME"), exit_game);
+		render_button(app, (t_rect){50, 420, 256, 64}, 1, "QUIT GAME"),
+		exit_game);
 	render_ui(app);
 	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
 }
@@ -108,13 +112,16 @@ void	render_options(t_app *app)
 	render_text(app, (t_rect){336, 146, 800, 800}, "OPTIONS");
 	render_ui_frame(app, (t_rect){320, 180, 640, 360}, 1, DARK_GREY);
 	button_function(app,
-		render_button(app, (t_rect){340, 200, 160, 32}, 1, "FULLSCREEN"), fullscreen);
+		render_button(app, (t_rect){340, 200, 160, 32}, 1, "FULLSCREEN"),
+		fullscreen);
 	if (app->status == STATUS_MAINOPTIONS)
-	button_function(app,
-		render_button(app, (t_rect){880, 488, 60, 32}, 1, "Back"), main_menu);
+		button_function(app,
+			render_button(app, (t_rect){880, 488, 60, 32}, 1, "Back"),
+			main_menu);
 	if (app->status == STATUS_GAMEOPTIONS)
-	button_function(app,
-		render_button(app, (t_rect){880, 488, 60, 32}, 1, "Back"), pause_game);
+		button_function(app,
+			render_button(app, (t_rect){880, 488, 60, 32}, 1, "Back"),
+			pause_game);
 	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
 }
 

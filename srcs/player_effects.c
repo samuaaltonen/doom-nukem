@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:57:21 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/16 14:23:10 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:30:06 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,6 @@ void	regen(t_app *app, int *value)
 		(*value)++;
 		start_timer(&app->regen_timer, 0.05);
 	}
-			
-
 }
 
 void	damage(t_app *app, int dmg)
