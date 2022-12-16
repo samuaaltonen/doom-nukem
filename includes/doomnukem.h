@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/15 15:11:47 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/16 12:21:06 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,6 +232,7 @@ void		player_move(t_app *app, t_movement movement, double speed);
 void		update_position(t_app *app);
 void		player_shoot(t_app *app);
 void		player_reload(t_app *app);
+void		jetpack(t_app *app);
 void		init_camera_plane(t_app *app);
 void		init_skybox_plane(t_app *app);
 void		heal(t_app *app);

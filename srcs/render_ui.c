@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/15 15:01:04 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/16 13:16:03 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	render_equipment(t_app *app)
 
 void	hud_weapon(t_app *app, t_rect rect)
 {
-	int	i;
+	int		i;
+	char	*ammo;
 
 	i = 0;
 	render_ui_frame(app, rect, 1, DARK_GREY);
@@ -59,24 +60,26 @@ void	hud_weapon(t_app *app, t_rect rect)
 			color_surface(app->assets.bullet, GREY);
 		i++;
 	}
+	ammo = ft_itoa(app->player.inventory.ammo);
 	change_font(app, 16, CYAN);
-	render_text(app, (t_rect){1136, 626, 64, 64}, ft_itoa(app->player.inventory.ammo));
+	render_text(app, (t_rect){1136, 626, 64, 64}, ammo);
+	free(ammo);
 }
 
 void	hud_quickslot(t_app *app, t_rect rect, char *slot)
 {
 	SDL_Surface *sprite;
-	int			*amount;
+	char		*amount;
 
 	if (slot[0] == 'Q')
 	{
 		sprite = app->assets.hp;
-		amount = &app->player.inventory.potion;
+		amount = ft_itoa(app->player.inventory.potion);
 	}
 	if (slot[0] == 'E')
 	{
 		sprite = app->assets.shield;
-		amount = &app->player.inventory.antidote;
+		amount = ft_itoa(app->player.inventory.antidote);
 	}
 	render_text_prompt(app, rect, 1, slot);
 	rect.x += 8;
@@ -88,7 +91,8 @@ void	hud_quickslot(t_app *app, t_rect rect, char *slot)
 	rect.y += 6;
 	rect.w *= 3;
 	rect.h *= 3;
-	render_text(app, rect, ft_itoa(*amount));
+	render_text(app, rect, amount);
+	free(amount);
 }
 
 /**

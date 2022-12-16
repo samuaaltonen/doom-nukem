@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/15 15:12:51 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/16 12:20:45 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	player_control(t_app *app)
 		app->conf->movement_speed = RUN_SPEED;
 	else
 		app->conf->movement_speed = MOVEMENT_SPEED;
+	if (app->conf->keystates & C)
+		jetpack(app);
 }
 
 /**
@@ -93,4 +95,19 @@ void	player_reload(t_app *app)
 			app->player.equiped_weapon.ammo = app->player.inventory.ammo;
 		start_timer(&app->shoot_timer, 0.8);
 	}
+}
+
+void	jetpack(t_app *app)
+{
+		if (check_timer(&app->item_timer) && app->player.jetpack)
+		{
+			app->player.jetpack = FALSE;
+			start_timer(&app->item_timer, 5);
+		}
+			
+		else if (check_timer(&app->item_timer) && !app->player.jetpack)
+		{
+			app->player.jetpack = TRUE;
+			start_timer(&app->item_timer, 5);
+		}
 }
