@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:32:25 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/08 18:01:26 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:34:22 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,17 +18,20 @@
 */
 static void	render_wall_decor_options(t_app *app, t_point screen_pos)
 {
-	int		index;
+	int		id;
 
-	index = find_decor_interaction(app);
-	render_current_interaction_status(app, screen_pos, 220, index);
-	toggle_active_color(app, app->decor_edit, "DECOR OFFSET",
-		(t_rect){25, 270, 200, 20});
-	render_text(app, (t_rect){25, 285, 260, 100}, "ACTIVATE DECOR OFFSET \
+	if (!app->current_interaction)
+		id = find_decor_interaction(app, 0, 1);
+	else
+		id = find_interaction(app);
+	render_current_interaction_status(app, screen_pos, 220, id);
+	toggle_active_color(app, app->decor_edit, "DECOR OFFSET ( G )",
+		(t_rect){25, 290, 200, 20});
+	render_text(app, (t_rect){25, 305, 260, 100}, "ACTIVATE DECOR OFFSET \
 WITH 'G' AND USE ARROW KEYS TO CHANGE. \n \n  X\n  Y");
-	render_text(app, (t_rect){60, 322, 50, 15},
+	render_text(app, (t_rect){60, 342, 50, 15},
 		ft_ftoa(app->active->decor_offset.x, 4));
-	render_text(app, (t_rect){60, 337, 50, 15},
+	render_text(app, (t_rect){60, 357, 50, 15},
 		ft_ftoa(app->active->decor_offset.y, 4));
 }
 
@@ -39,18 +42,18 @@ static void	render_portal_status(t_app *app)
 {
 	if (app->active->type != -1)
 	{
-		toggle_active_color(app, 1, "- PORTAL -", (t_rect){50, 360, 200, 20});
-		toggle_active_color(app, 0, "NO PORTAL", (t_rect){155, 360, 200, 20});
+		toggle_active_color(app, 1, "- PORTAL -", (t_rect){50, 380, 200, 20});
+		toggle_active_color(app, 0, "NO PORTAL", (t_rect){155, 380, 200, 20});
 	}
 	else
 	{
-		toggle_active_color(app, 0, "PORTAL", (t_rect){60, 360, 200, 20});
+		toggle_active_color(app, 0, "PORTAL", (t_rect){60, 380, 200, 20});
 		toggle_active_color(app, 1, "- NO PORTAL -",
-			(t_rect){145, 360, 200, 20});
+			(t_rect){145, 380, 200, 20});
 	}
 	toggle_active_color(app, app->portal_selection, "CREATE PORTAL ( L )",
-		(t_rect){25, 390, 260, 15});
-	render_text(app, (t_rect){25, 410, 265, 150}, "SELECT WALL TO CREATE PORTAL\
+		(t_rect){25, 410, 260, 15});
+	render_text(app, (t_rect){25, 430, 265, 150}, "SELECT WALL TO CREATE PORTAL\
 , PRESS 'L', SELECT SECTOR TO LINK PORTAL TO, PRESS 'L' AGAIN. DOUBLE PRESS 'L'\
  TO REMOVE PORTAL.");
 }

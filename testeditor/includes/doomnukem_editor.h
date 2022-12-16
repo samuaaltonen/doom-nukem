@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/16 14:08:51 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:31:52 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -587,7 +587,7 @@ void			interaction_edit(t_app *app, SDL_Keycode keycode);
 int				interaction_sector_check(t_app *app, t_sector_lst *sector);
 int				interaction_wall_check(t_app *app, t_vec2_lst *wall);
 int				interaction_object_check(t_app *app, int id);
-int				find_decor_interaction(t_app *app);
+int				find_decor_interaction(t_app *app, int start_id, t_bool direction);
 int				find_object_interaction(t_app *app, int start_id, t_bool direction);
 int				find_sector_interaction(t_app *app);
 int				find_interaction(t_app *app);
