@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:38:26 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/16 15:15:24 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:50:00 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,12 +127,34 @@ void	activate_interaction_menu(t_app *app, t_point screen_pos)
 		app->current_interaction = &app->interactions[interaction_id];
 		return ;
 	}
+	if (check_mouse(screen_pos, (t_rect){25, 600, 15, 15})
+		&& app->active_sector && !app->active)
+	{
+		if (!app->current_interaction)
+			app->current_interaction = &app->interactions[find_sector_interaction(app, app->interaction_count, 0)];
+		interaction_id = find_sector_interaction(app, find_interaction(app) - 1, 0);
+		if (interaction_id < 0)
+			return ;
+		app->current_interaction = &app->interactions[interaction_id];
+		return ;
+	}
+	if (check_mouse(screen_pos, (t_rect){255, 600, 15, 15})
+		&& app->active_sector && !app->active)
+	{
+		if (!app->current_interaction)
+			app->current_interaction = &app->interactions[find_sector_interaction(app, 0, 1)];
+		interaction_id = find_sector_interaction(app, find_interaction(app) + 1, 1);
+		if (interaction_id < 0)
+			return ;
+		app->current_interaction = &app->interactions[interaction_id];
+		return ;
+	}
 	if (!app->current_interaction && app->object_menu)
 		interaction_id = find_object_interaction(app, 0, 1);
 	else if (!app->current_interaction && app->active)
 		interaction_id = find_decor_interaction(app, 0, 1);
 	else if (!app->current_interaction && app->active_sector)
-		interaction_id = find_sector_interaction(app);
+		interaction_id = find_sector_interaction(app, 0, 1);
 	else
 		interaction_id = find_interaction(app);
 	if (interaction_id < 0)
@@ -149,7 +171,8 @@ void	activate_interaction_menu(t_app *app, t_point screen_pos)
 		
 	}
 	if ((check_mouse(screen_pos, (t_rect){42, 248, 190, 16}) && app->object_menu)
-		|| (check_mouse(screen_pos, (t_rect){42, 258, 200, 20}) && app->active))
+		|| (check_mouse(screen_pos, (t_rect){42, 258, 200, 20}) && app->active)
+		|| (check_mouse(screen_pos, (t_rect){42, 638, 190, 16}) && app->active_sector))
 	{
 		app->current_interaction = NULL;
 		link_interaction(app);

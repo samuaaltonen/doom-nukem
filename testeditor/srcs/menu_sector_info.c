@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:54:40 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/08 18:03:07 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:40:18 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,10 @@ static void	render_walls_info(t_app *app, t_point screen_pos)
 		(t_rect){28, 365, 260, 15});
 	render_text(app, (t_rect){235, 364, 100, 15},
 		ft_itoa(app->active_sector->light));
-	id = find_sector_interaction(app);
+	if (!app->current_interaction)
+		id = find_sector_interaction(app, 0, 1);
+	else
+		id = find_interaction(app);
 	render_current_interaction_status(app, screen_pos, 600, id);
 }
 

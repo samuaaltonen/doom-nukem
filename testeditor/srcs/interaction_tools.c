@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:21:08 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/16 14:30:55 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:38:25 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,18 +68,32 @@ int	find_decor_interaction(t_app *app, int start_id, t_bool direction)
  * has an interaction or not. Returns array id if it finds one and
  * -1 if not.
 */
-int	find_sector_interaction(t_app *app)
+int	find_sector_interaction(t_app *app, int start_id, t_bool direction)
 {
 	int		index;
 
-	index = 0;
-	while (index <= app->interaction_count)
+	if (start_id < 0 && start_id > app->interaction_count)
+		return (-1);
+	index = start_id;
+	if (direction == 1)
+	{
+		while (index < app->interaction_count)
+		{
+			if (app->interactions[index].activation_sector == app->active_sector
+			&& !app->interactions[index].activation_wall
+			&& !app->interactions[index].activation_object)
+				return (index);
+			index++;
+		}
+		return (-1);
+	}
+	while (index >= 0)
 	{
 		if (app->interactions[index].activation_sector == app->active_sector
 			&& !app->interactions[index].activation_wall
 			&& !app->interactions[index].activation_object)
 			return (index);
-		index++;
+		index--;
 	}
 	return (-1);
 }
