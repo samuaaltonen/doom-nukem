@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/16 13:25:41 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:37:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,10 +168,10 @@ typedef struct s_app
 	t_sky			sky;
 	t_sector		*sectors;
 	t_object		objects[MAX_OBJECTS];
-	t_enemy_state	enemies[MAX_OBJECTS];
-	t_enemy_def		enemy_def[MAX_ENEMY_TYPES];
 	float			object_states[MAX_OBJECTS];
 	t_object		tmp_objects[MAX_TEMP_OBJECTS];
+	t_enemy_state	enemies[MAX_OBJECTS];
+	t_enemy_def		enemy_def[MAX_ENEMY_TYPES];
 	t_interaction	interactions[MAX_INTERACTIONS];
 	t_animation		animations[MAX_CONCURRENT_ANIMATIONS];
 	int				animation_count;
