@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assets.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/13 15:34:06 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/15 13:38:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define ASSETS_H
 
 # define PANELS_PATH "assets/textures/spritesheet_full.bmp"
-# define SKYBOX_PATH "assets/images/panorama_space.bmp"
+# define SKYBOX_PATH "assets/images/skybox.bmp"
 # define FONT_PATH "assets/fonts/sci-fi_font.bmp"
 # define UI_FRAME_PATH "assets/ui/ui_frame.bmp"
 # define TITLESCREEN_PATH "assets/images/awakened3.bmp"

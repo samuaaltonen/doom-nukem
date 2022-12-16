@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/12 16:31:44 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/15 14:38:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,30 +77,6 @@
 typedef unsigned char	t_uint8;
 
 /**
- * Texture type enumeration.
-*/
-enum e_texture {
-	MINECRAFT_CONCRETE_BLACK	= 0,
-	MINECRAFT_CONCRETE_MAGENTA	= 1,
-	MINECRAFT_DIRT_PODZOL_SIDE	= 2,
-	MINECRAFT_DIRT_PODZOL_TOP	= 3,
-	MINECRAFT_END_BRICKS		= 4,
-	MINECRAFT_ENDSTONE			= 5,
-	MINECRAFT_GRASS_SIDE		= 6,
-	MINECRAFT_SNOW_SIDE			= 7,
-	MINECRAFT_LOG_OAK			= 8,
-	MINECRAFT_LOG_BIRCH			= 9,
-	MINECRAFT_NETHER_BRICK		= 10,
-	MINECRAFT_OBSIDIAN			= 11,
-	MINECRAFT_PLANK_ACACIA		= 12,
-	MINECRAFT_PLANKS_OAK		= 13,
-	MINECRAFT_PLANKS_BIRCH		= 14,
-	MINECRAFT_NETHER_BRICK_RED	= 15,
-	MINECRAFT_REDSTONE_LAMP		= 16,
-	MINECRAFT_TNT				= 17
-};
-
-/**
  * Keystate enumeration.
  * Keystate enumerations use powers of 2 for bit stacking operations.
  */
@@ -114,7 +90,8 @@ enum e_keystate {
 	ROTATE_LEFT_DOWN = 0b1000000,
 	ROTATE_RIGHT_DOWN = 0b10000000,
 	C_BUTTON = 0b100000000,
-	V_BUTTON = 0b1000000000
+	V_BUTTON = 0b1000000000,
+	SHIFT_DOWN = 0b10000000000
 };
 
 enum e_colors {

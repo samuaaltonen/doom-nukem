@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_status.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/15 13:26:27 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/15 17:34:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,34 +57,10 @@ void	render_mainmenu(t_app *app)
 	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
 }
 
-static void update_states(t_app *app)
-{
-	int	i;
-
-	(void)app;
-	i = -1;
-	while (++i < app->conf->header.object_count)
-	{
-		if(app->objects[i].type == MONSTER1)
-		{
-			app->object_states[i] += 5.f * app->conf->delta_time;
-			if(app->object_states[i] > 8)
-				app->object_states[i] = 0.f;
-		}
-		else if(app->objects[i].type == MONSTER2)
-		{
-			app->object_states[i] += 5.f * app->conf->delta_time;
-			if(app->object_states[i] > 12)
-				app->object_states[i] = 0.f;
-		}
-	}
-
-}
-
 void	render_game(t_app *app)
 {
 	SDL_SetRelativeMouseMode(SDL_TRUE);
-	update_states(app);
+	update_enemy_states(app);
 	progress_animations(app);
 	player_control(app);
 	render_sectors(app);

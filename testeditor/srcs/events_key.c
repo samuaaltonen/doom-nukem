@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/13 13:54:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/15 14:39:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,8 @@ int	events_keyup(int keycode, t_app *app)
 		move_divider(app, keycode);
 	if (keycode == SDLK_ESCAPE)
 		exit(EXIT_SUCCESS);
+	if (keycode == SDLK_LSHIFT)
+		app->keystates ^= SHIFT_DOWN;
 	return (0);
 }
 
@@ -123,6 +125,8 @@ int	events_keydown(int keycode, t_app *app)
 		app->keystates |= LEFT_DOWN;
 	if (keycode == SDLK_d)
 		app->keystates |= RIGHT_DOWN;
+	if (keycode == SDLK_LSHIFT)
+		app->keystates |= SHIFT_DOWN;
 	return (0);
 }
 

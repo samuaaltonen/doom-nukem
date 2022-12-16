@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editor.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/13 14:05:25 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/15 14:40:53 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,13 +44,17 @@ t_bool	valid_point(t_app *app)
  */
 void	sector_edit(t_app *app, SDL_Keycode key)
 {
+	double	increment;
 
+	increment = HEIGHT_INC;
+	if (app->keystates & SHIFT_DOWN)
+		increment = app->divider;
 	if (key == SDLK_UP)
 	{
 		if (app->ceiling_edit && !app->slope_edit)
-			app->active_sector->ceil_height += HEIGHT_INC;
+			app->active_sector->ceil_height += increment;
 		if (app->floor_edit && !app->slope_edit)
-			app->active_sector->floor_height += HEIGHT_INC;
+			app->active_sector->floor_height += increment;
 		if (!app->decor_edit && app->active && !app->floor_edit
 			&& !app->ceiling_edit)
 		{
@@ -64,18 +68,18 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 		if (app->light_edit && app->active_sector->light < 8)
 			app->active_sector->light++;
 		if (app->slope_edit && app->ceiling_edit)
-			app->active_sector->ceil_slope_height += HEIGHT_INC;
+			app->active_sector->ceil_slope_height += increment;
 		if (app->slope_edit && app->floor_edit)
-			app->active_sector->floor_slope_height += HEIGHT_INC;
+			app->active_sector->floor_slope_height += increment;
 		if (app->object_menu)
 			app->current_object->var += app->divider;
 	}
 	else if (key == SDLK_DOWN)
 	{
 		if (app->ceiling_edit && !app->slope_edit)
-			app->active_sector->ceil_height -= HEIGHT_INC;
+			app->active_sector->ceil_height -= increment;
 		if (app->floor_edit && !app->slope_edit)
-			app->active_sector->floor_height -= HEIGHT_INC;
+			app->active_sector->floor_height -= increment;
 		if (!app->decor_edit && app->active && !app->floor_edit
 			&& !app->ceiling_edit)
 		{
@@ -89,9 +93,9 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 		if (app->light_edit && app->active_sector->light > -8)
 			app->active_sector->light--;
 		if (app->slope_edit && app->ceiling_edit)
-			app->active_sector->ceil_slope_height -= HEIGHT_INC;
+			app->active_sector->ceil_slope_height -= increment;
 		if (app->slope_edit && app->floor_edit)
-			app->active_sector->floor_slope_height -= HEIGHT_INC;
+			app->active_sector->floor_slope_height -= increment;
 		if (app->object_menu)
 			app->current_object->var -= app->divider;
 	}

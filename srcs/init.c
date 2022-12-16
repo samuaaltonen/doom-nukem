@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/15 15:07:39 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/16 13:26:25 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,75 @@ void	sdl_init(t_app *app)
 	SDL_ShowCursor(SDL_DISABLE);
 }
 
+void	define_enemies(t_app *app)
+{
+	app->enemy_def[0].state_count = 4;
+	app->enemy_def[0].range = 3.f;
+	app->enemy_def[0].states[0][0] = 0.f;
+	app->enemy_def[0].states[0][1] = 1.f;
+	app->enemy_def[0].states[0][2] = 1.f;
+	app->enemy_def[0].states[1][0] = 1.f;
+	app->enemy_def[0].states[1][1] = 2.f;
+	app->enemy_def[0].states[1][2] = 5.f;
+	app->enemy_def[0].states[2][0] = 3.f;
+	app->enemy_def[0].states[2][1] = 2.f;
+	app->enemy_def[0].states[2][2] = 1.f;
+	app->enemy_def[0].states[3][0] = 5.f;
+	app->enemy_def[0].states[3][1] = 3.f;
+	app->enemy_def[0].states[3][2] = 1.f;
+
+	app->enemy_def[1].state_count = 4;
+	app->enemy_def[1].range = 1.f;
+	app->enemy_def[1].states[0][0] = 0.f;
+	app->enemy_def[1].states[0][1] = 1.f;
+	app->enemy_def[1].states[0][2] = 1.f;
+	app->enemy_def[1].states[1][0] = 1.f;
+	app->enemy_def[1].states[1][1] = 5.f;
+	app->enemy_def[1].states[1][2] = 5.f;
+	app->enemy_def[1].states[2][0] = 6.f;
+	app->enemy_def[1].states[2][1] = 2.f;
+	app->enemy_def[1].states[2][2] = 1.f;
+	app->enemy_def[1].states[3][0] = 8.f;
+	app->enemy_def[1].states[3][1] = 4.f;
+	app->enemy_def[1].states[3][2] = 1.f;
+
+/* 	app->enemy_def[2].state_count = 3;
+	app->enemy_def[2].states[0][0] = 0;
+	app->enemy_def[2].states[0][1] = 1;
+	app->enemy_def[2].states[1][0] = 1;
+	app->enemy_def[2].states[1][1] = 2;
+	app->enemy_def[2].states[2][0] = 3;
+	app->enemy_def[2].states[2][1] = 2;
+	app->enemy_def[2].states[3][0] = 0;
+	app->enemy_def[2].states[3][1] = 0; */
+}
+
+void	init_enemies(t_app *app)
+{
+	int	i;
+	int	enemy_count;
+
+	enemy_count = 0;
+	i = -1;
+	while(++i < app->conf->header.object_count)
+	{
+		if(app->objects[i].type >= MONSTER1 && app->objects[i].type < MONSTER1 + MAX_ENEMY_TYPES)
+		{
+			app->enemies[enemy_count].id = i;
+			app->enemies[enemy_count].pos = app->objects[i].position;
+			app->enemies[enemy_count].dead = FALSE;
+			app->enemies[enemy_count].agressive = FALSE;
+			app->enemies[enemy_count].dir = (t_vector2){0.f,0.f};
+			enemy_count++;
+		}
+	}
+	ft_printf("%i enemy count \n", enemy_count);
+}
+
 /**
  * Loads all game assets
  */
-void    load_assets(t_app *app)
+void	load_assets(t_app *app)
 {
 	app->assets.ui_frame = SDL_LoadBMP(UI_FRAME_PATH);
 	app->assets.title_screen_image = SDL_LoadBMP(TITLESCREEN_PATH);
