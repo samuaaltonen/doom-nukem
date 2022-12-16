@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/13 15:00:52 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/16 16:25:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	init_skybox_plane(t_app *app)
 	app->sky.size.y = (int)(WIN_H
 			+ WIN_H * (HORIZON_UPPER_LIMIT - 0.5)
 			+ WIN_H * (0.5 - HORIZON_LOWER_LIMIT));
-	app->sky.size.x = WIN_W * 4;
+	app->sky.size.x = WIN_W * 2;
 	app->sky.pixel_step.x = SKYBOX_W / (double)app->sky.size.x;
 	app->sky.pixel_step.y = SKYBOX_H / (double)app->sky.size.y;
 	app->sky.start.x = app->sky.size.x * ft_vector_angle_right(app->player.dir,

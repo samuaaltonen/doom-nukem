@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/15 15:00:25 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/16 17:11:06 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,22 +18,22 @@
 # define WIN_NAME "Doom Nukem"
 # define WIN_W 1280
 # define WIN_H 720
-# define THREAD_COUNT 6
+# define THREAD_COUNT 12
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
 # define FOV 66
 # define TEX_SIZE 128
 # define TEX_PICKUP 44
 # define TEX_OBJECT 128
-# define SKYBOX_W 1792
-# define SKYBOX_H 640
+# define SKYBOX_W 1536
+# define SKYBOX_H 1088
 # define MOUSE_SENSITIVITY_HORIZONTAL 0.3
 # define MOUSE_SENSITIVITY_VERTICAL 0.2
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 16
 # define MAX_VISIBLE_SECTORS 64
 # define MAX_VISIBLE_WALLS 256
-# define MAX_VIEW_DISTANCE 256.f
+# define MAX_VIEW_DISTANCE 1280.0
 # define MAX_LINE_LENGTH 1048576.0
 # define SMALL_SCALE 0.34375
 # define SPRITE_ANGLES 90
@@ -108,8 +108,6 @@ typedef struct s_conf
 	int				keystates;
 	int				buttonstates;
 	int				mouse_active;
-	double			movement_speed;
-	double			rotation_speed;
 }	t_conf;
 
 #endif

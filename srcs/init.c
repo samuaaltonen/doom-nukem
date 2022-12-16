@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/12 16:33:28 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:29:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@ int	config_init(t_app *app)
 	clock_gettime(CLOCK_REALTIME, &app->conf->fps_clock);
 	app->conf->fov = FOV;
 	app->conf->skybox_offset = 360.f;
-	app->conf->movement_speed = MOVEMENT_SPEED;
-	app->conf->rotation_speed = ROTATION_SPEED;
 	app->conf->mouse_active = 1;
 	app->status = STATUS_TITLESCREEN;
 	app->conf->fps_avg = 0;

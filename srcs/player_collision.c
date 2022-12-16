@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:42:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/15 18:06:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:05:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,16 +43,20 @@ static t_bool	collision_possible(t_app *app, t_line wall)
  */
 static t_bool	get_collision(t_app *app, t_line wall, t_vector2 *collision)
 {
+	t_vector2	cancel;
 	t_vector2	line_intersection;
 
 	if (!ft_line_intersection((t_line){app->player.pos, app->player.move_pos},
 			wall, &line_intersection))
 		return (FALSE);
-	*collision = ft_vector2_sub(line_intersection, 
+	ft_printf("move len: %f\n", ft_point_distance(app->player.pos, app->player.move_pos));
+	cancel = ft_vector_resize(ft_vector2_sub(app->player.move_pos, ft_closest_point(app->player.move_pos, wall)), COLLISION_OFFSET);
+	/* *collision = ft_vector2_sub(line_intersection, 
 			ft_vec2_mult(ft_vector_resize(app->player.move_vector, 1.f),
 				ft_point_distance(line_intersection, app->player.pos)
 					/ ft_point_distance(ft_closest_point(app->player.pos, wall),
-						app->player.pos) * COLLISION_OFFSET));
+						app->player.pos) * COLLISION_OFFSET)); */
+	*collision = ft_vector2_add(ft_closest_point(app->player.move_pos, wall), cancel);
 	return (TRUE);
 }
 

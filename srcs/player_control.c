@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_control.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/15 13:12:17 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:30:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,27 +41,21 @@ void	player_control(t_app *app)
 void	handle_movement(t_app *app)
 {
 	if (app->conf->keystates & UP || app->conf->keystates & W)
-		player_move(app, FORWARD,
-			app->conf->movement_speed * app->conf->delta_time);
+		player_move(app, FORWARD, MOVE_ACCEL * app->conf->delta_time);
 	if (app->conf->keystates & DOWN || app->conf->keystates & S)
-		player_move(app, BACKWARD,
-			app->conf->movement_speed * app->conf->delta_time);
+		player_move(app, BACKWARD, MOVE_ACCEL * app->conf->delta_time);
 	if (app->conf->keystates & A)
-		player_move(app, LEFTWARD,
-			app->conf->movement_speed * app->conf->delta_time);
+		player_move(app, LEFTWARD, MOVE_ACCEL * app->conf->delta_time);
 	if (app->conf->keystates & D)
-		player_move(app, RIGHTWARD,
-			app->conf->movement_speed * app->conf->delta_time);
+		player_move(app, RIGHTWARD, MOVE_ACCEL * app->conf->delta_time);
 	if (app->conf->keystates & LEFT)
-		player_rotate(app, -app->conf->rotation_speed * app->conf->delta_time);
+		player_rotate(app, -ROTATION_SPEED * app->conf->delta_time);
 	if (app->conf->keystates & RIGHT)
-		player_rotate(app, app->conf->rotation_speed * app->conf->delta_time);
+		player_rotate(app, ROTATION_SPEED * app->conf->delta_time);
 	if (app->conf->keystates & SPACE)
-		player_move(app, UPWARD,
-			app->conf->movement_speed * app->conf->delta_time);
+		player_move(app, UPWARD, MOVE_ACCEL * app->conf->delta_time);
 	if (app->conf->keystates & CTRL)
-		player_move(app, DOWNWARD,
-			app->conf->movement_speed * app->conf->delta_time);
+		player_move(app, DOWNWARD, MOVE_ACCEL * app->conf->delta_time);
 }
 
 void	player_shoot(t_app *app)

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/15 18:07:47 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/16 17:12:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,25 @@
 # define DIRECTION_START_Y 1.0
 # define POSITION_START_X 0.5
 # define POSITION_START_Y 0.5
-# define ROTATION_SPEED 1.8f
-# define MOVEMENT_SPEED 2.0f
+# define ROTATION_SPEED 1.8
+# define MOVEMENT_SPEED 1.0
+# define RUNNING_SPEED 2.0
 # define MOVE_RANGE 0.05f
-# define MOVE_ACCEL 100.f
-# define MOVE_DECEL 10.f
-# define GRAVITY 10.f
-# define JUMP_SIZE 2.f
-# define JUMP_TIME 0.1f
+# define MOVE_ACCEL 0.125
+# define MOVE_DECEL 2.5
+# define MOVE_MIN 0.0001
+# define GRAVITY 10.0
+# define JUMP_SIZE 2.0
+# define JUMP_TIME 0.1
 # define JETPACK_START 0.3
 # define JETPACK 1.f
-# define JETPACK_FALL 0.125f
-# define MAX_STEP 0.2f
-# define MAX_ANGLE 45.f
+# define JETPACK_FALL 0.125
+# define MAX_STEP 0.2
+# define MAX_ANGLE 45.0
 # define HORIZON_UPPER_LIMIT 1.25
 # define HORIZON_LOWER_LIMIT -0.25
 # define PLAYER_HEIGHT 0.5
-# define COLLISION_OFFSET 0.125
+# define COLLISION_OFFSET 0.25
 # define MAX_HP 200
 # define REGEN_TIME 5
 
