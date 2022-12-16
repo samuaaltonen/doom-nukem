@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/15 15:00:25 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:48:38 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define THREAD_COUNT 6
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
-# define FOV 66
+# define FOV 83
 # define TEX_SIZE 128
 # define TEX_PICKUP 44
 # define TEX_OBJECT 128
