@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/16 17:11:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/16 17:18:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,15 +190,9 @@ static void	limit_speed(t_app *app)
 		app->player.move_vector = (t_vector2){0.0, 0.0};
 		return ;
 	}
-	if (app->conf->keystates & SHIFT && velocity > RUNNING_SPEED)
-	{
+	if (velocity > app->player.move_speed)
 		app->player.move_vector = ft_vector_resize(app->player.move_vector,
-			RUNNING_SPEED);
-		return ;
-	}
-	if (velocity > MOVEMENT_SPEED)
-		app->player.move_vector = ft_vector_resize(app->player.move_vector,
-			MOVEMENT_SPEED);
+			app->player.move_speed);
 }
 
 /**
@@ -248,7 +242,7 @@ void	update_position(t_app *app)
 		app->player.flying = FALSE;
 		app->player.velocity = 0.f;
 		app->player.jump_timer = JUMP_TIME;
-		app->player.jetpack = FALSE;
+	//	app->player.jetpack = FALSE;
 		app->player.elevation = pos_floor_height;
 	}
 
@@ -321,11 +315,12 @@ void	player_move(t_app *app, t_movement movement, double speed)
 	}
 	if (movement == UPWARD && app->player.flying && app->player.jump_timer == JUMP_TIME)
 	{
-		app->player.jetpack_boost = TRUE;
-		app->player.jetpack = TRUE;
+		//----DEBUG FEATURE
+		if (app->player.jetpack == TRUE)
+			app->player.jetpack_boost = TRUE;
+		//----
+	//	app->player.jetpack = TRUE;
 	}
 	if (movement == DOWNWARD)
 		app->player.elevation -= speed;
 }
-
-

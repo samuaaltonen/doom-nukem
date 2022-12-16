@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/16 17:11:06 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/16 17:23:30 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define THREAD_COUNT 12
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
-# define FOV 66
+# define FOV 83
 # define TEX_SIZE 128
 # define TEX_PICKUP 44
 # define TEX_OBJECT 128
@@ -102,7 +102,6 @@ typedef struct s_conf
 	struct timespec	fps_clock;
 	char			fps_info[20];
 	double			delta_time;
-	double			skybox_offset;
 	int				fov;
 	t_level_header	header;
 	int				keystates;

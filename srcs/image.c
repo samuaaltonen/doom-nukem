@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/09 11:46:32 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/15 14:42:52 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ int	argb_to_int(t_color color)
 {
 	return (color.b + (color.g << 8) + (color.r << 16) + (color.a << 24));
 }
+
 /**
  * @brief Changes color of a specific pixel in surface.
  * 

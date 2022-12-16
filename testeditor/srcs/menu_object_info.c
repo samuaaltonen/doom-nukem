@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:04:04 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/13 14:00:16 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/15 18:32:17 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,9 @@ void	object_edit_menu(t_app *app)
 		app->assets.objects);
 	render_object_statics(app);
 	change_font(app, 11, TEXT);
-	id = find_object_interaction(app);
+	if (!app->current_interaction)
+		id = find_object_interaction(app, 0, 1);
+	else
+		id = find_object_interaction(app, find_interaction(app), 1);
 	render_current_interaction_status(app, screen_pos, 210, id);
 }

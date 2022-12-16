@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_ui.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/15 16:25:55 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:08:06 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,6 @@ void	render_ui(t_app *app)
 	render_text_prompt(app, (t_rect){10, 10, 112, 32}, 1, app->conf->fps_info);
 	render_player_status(app);
 	render_equipment(app);
-	//----DEBUG FEATURE 
-	if (app->conf->buttonstates & RIGHT_MOUSE)
-		render_text_prompt(app, (t_rect){800, 150, 256, 64}, 1, "This is a nice and wonderful text prompt");
-	//----
 }
 
 void	render_equipment(t_app *app)
@@ -43,8 +39,8 @@ void	render_equipment(t_app *app)
 
 void	hud_weapon(t_app *app, t_rect rect)
 {
-	char	*text;
 	int		i;
+	char	*ammo;
 
 	i = 0;
 	render_ui_frame(app, rect, 1, DARK_GREY);
@@ -64,29 +60,26 @@ void	hud_weapon(t_app *app, t_rect rect)
 			color_surface(app->assets.bullet, GREY);
 		i++;
 	}
+	ammo = ft_itoa(app->player.inventory.ammo);
 	change_font(app, 16, CYAN);
-	text = ft_itoa(app->player.inventory.ammo);
-	if (!text)
-		return ;
-	render_text(app, (t_rect){1136, 626, 64, 64}, text);
-	free(text);
+	render_text(app, (t_rect){1136, 626, 64, 64}, ammo);
+	free(ammo);
 }
 
 void	hud_quickslot(t_app *app, t_rect rect, char *slot)
 {
 	SDL_Surface *sprite;
-	int			*amount;
-	char		*text;
+	char			*amount;
 
 	if (slot[0] == 'Q')
 	{
 		sprite = app->assets.hp;
-		amount = &app->player.inventory.potion;
+		amount = ft_itoa(app->player.inventory.potion);
 	}
 	if (slot[0] == 'E')
 	{
 		sprite = app->assets.shield;
-		amount = &app->player.inventory.antidote;
+		amount = ft_itoa(app->player.inventory.antidote);
 	}
 	render_text_prompt(app, rect, 1, slot);
 	rect.x += 8;
@@ -98,11 +91,8 @@ void	hud_quickslot(t_app *app, t_rect rect, char *slot)
 	rect.y += 6;
 	rect.w *= 3;
 	rect.h *= 3;
-	text = ft_itoa(*amount);
-	if (!text)
-		return ;
-	render_text(app, rect, text);
-	free(text);
+	render_text(app, rect, amount);
+	free(amount);
 }
 
 /**

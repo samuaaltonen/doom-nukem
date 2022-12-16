@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/16 16:25:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/16 17:25:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	init_skybox_plane(t_app *app)
 	app->sky.pixel_step.x = SKYBOX_W / (double)app->sky.size.x;
 	app->sky.pixel_step.y = SKYBOX_H / (double)app->sky.size.y;
 	app->sky.start.x = app->sky.size.x * ft_vector_angle_right(app->player.dir,
-			(t_vector2){1.0, 0.0}) / (M_PI * 2);
+			(t_vector2){1.0, 0.0}) / M_PI;
 	app->sky.start.y = WIN_H * app->player.horizon - app->sky.size.y / 2;
 }
 
@@ -65,18 +65,6 @@ void	player_init(t_app *app)
 	app->player.elevation = 0.0;
 	app->player.horizon = 0.5;
 	app->player.current_sector = 0;
-	//----DEBUG FEATURE
-	app->player.inventory.potion = 5;
-	app->player.inventory.antidote = 5;
-	app->player.inventory.ammo = 20;
-	app->player.weapons = 0;
-	app->player.equiped_weapon.magazine = 9;
-	if (app->player.equiped_weapon.magazine <= app->player.inventory.ammo)
-		app->player.equiped_weapon.ammo = app->player.equiped_weapon.magazine;
-	else
-		app->player.equiped_weapon.ammo = app->player.inventory.ammo;
-	app->player.equiped_weapon.fire_rate = 0.2;
-	//----
 	init_camera_plane(app);
 	init_skybox_plane(app);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/13 14:38:18 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:37:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,26 +72,44 @@ typedef struct s_audio
 }	t_audio;
 
 
+enum e_enemy_states
+{
+	IDLE,
+	ATTACK,
+	DEATH,
+	WALK
+};
+
 /**
- * @brief states 
+ * @brief enemy definition states 
  * 0 idle
  * 1 attack
  * 2 death
  * 3 walk
  * 
+ * 
+ * 
  * if object doesn't have death, it won't have walk either and so on
  * state count implies if it has just idle(0) or idle and attack(1) and so on
- * 
+ * states[4][2] 4 states, state sheet start and animation frame duration 
  */
+typedef struct s_enemy_def
+{
+	int		state_count;
+	double	range;
+	float	states[4][3];
+}	t_enemy_def;
+
+
 typedef struct s_enemy_state
 {
 	int			id;
-	t_point		pos;
+	t_vector2	pos;
 	t_vector2	dir;
-	int			current_state;
-	int			next_state;
-	int			state_count;
-	int			states[4];
+	t_bool		dead;
+	t_bool		agressive;
+	int			state;
+	int			next;
 }	t_enemy_state;
 
 typedef struct s_render_object
@@ -150,9 +168,10 @@ typedef struct s_app
 	t_sky			sky;
 	t_sector		*sectors;
 	t_object		objects[MAX_OBJECTS];
-	t_enemy_state	enemies[MAX_OBJECTS];
 	float			object_states[MAX_OBJECTS];
 	t_object		tmp_objects[MAX_TEMP_OBJECTS];
+	t_enemy_state	enemies[MAX_OBJECTS];
+	t_enemy_def		enemy_def[MAX_ENEMY_TYPES];
 	t_interaction	interactions[MAX_INTERACTIONS];
 	t_animation		animations[MAX_CONCURRENT_ANIMATIONS];
 	int				animation_count;
@@ -232,6 +251,7 @@ void		player_move(t_app *app, t_movement movement, double speed);
 void		update_position(t_app *app);
 void		player_shoot(t_app *app);
 void		player_reload(t_app *app);
+void		jetpack(t_app *app);
 void		init_camera_plane(t_app *app);
 void		init_skybox_plane(t_app *app);
 void		heal(t_app *app);
@@ -393,5 +413,8 @@ int			import_file(t_app *app, char *path);
  * objects
  */
 void		render_objects(t_app *app);
+void		init_enemies(t_app *app);
+void		update_enemy_states(t_app *app);
+void		define_enemies(t_app *app);
 
 #endif

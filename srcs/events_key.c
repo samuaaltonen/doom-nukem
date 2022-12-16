@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/15 13:10:30 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:37:54 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	events_keyup(int keycode, t_app *app)
 		app->conf->keystates ^= E;
 	if (keycode == SDLK_r)
 		app->conf->keystates ^= R;
+	if (keycode == SDLK_c)
+		app->conf->keystates ^= C;
 	if (keycode == SDLK_LSHIFT)
 		app->conf->keystates ^= SHIFT;
 	if (keycode == SDLK_LCTRL)
@@ -67,6 +69,24 @@ int	events_keyup(int keycode, t_app *app)
 			app->status = STATUS_MAINMENU;
 		//----
 		app->conf->keystates ^= SPACE;
+	}
+	if (keycode == SDLK_7)
+	{
+		app->enemies[1].next = ATTACK;
+		app->enemies[0].next = ATTACK;
+		ft_printf("Set to ATTACK\n");
+	}
+		if (keycode == SDLK_8)
+	{
+		app->enemies[1].next = DEATH;
+		app->enemies[0].next = DEATH;
+		ft_printf("Set to DEATH\n");
+	}
+		if (keycode == SDLK_9)
+	{
+		app->enemies[1].next = WALK;
+		app->enemies[0].next = WALK;
+		ft_printf("Set to WALK\n");
 	}
 	return (0);
 }
@@ -102,6 +122,8 @@ int	events_keydown(int keycode, t_app *app)
 		app->conf->keystates |= E;
 	if (keycode == SDLK_r)
 		app->conf->keystates |= R;
+	if (keycode == SDLK_c)
+		app->conf->keystates |= C;
 	if (keycode == SDLK_LSHIFT)
 		app->conf->keystates |= SHIFT;
 	if (keycode == SDLK_LCTRL)

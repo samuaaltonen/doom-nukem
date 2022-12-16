@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/21 14:56:23 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/05 17:46:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/16 17:23:19 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,6 @@ void	player_rotate(t_app *app, double angle)
 	};
 	app->player.dir = ft_vector_multiply_matrix(app->player.dir, rotation);
 	app->player.cam = ft_vector_multiply_matrix(app->player.cam, rotation);
-	app->conf->skybox_offset = fmod(app->conf->skybox_offset + 720.f, 720.f)
-		+ angle * RADIAN_IN_DEG;
 	update_sky_values(app);
 }
 
