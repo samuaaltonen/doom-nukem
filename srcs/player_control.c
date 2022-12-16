@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/16 12:20:45 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/16 13:36:56 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,12 +102,12 @@ void	jetpack(t_app *app)
 		if (check_timer(&app->item_timer) && app->player.jetpack)
 		{
 			app->player.jetpack = FALSE;
-			start_timer(&app->item_timer, 5);
+			start_timer(&app->item_timer, 1);
 		}
 			
 		else if (check_timer(&app->item_timer) && !app->player.jetpack)
 		{
 			app->player.jetpack = TRUE;
-			start_timer(&app->item_timer, 5);
+			start_timer(&app->item_timer, 1);
 		}
 }

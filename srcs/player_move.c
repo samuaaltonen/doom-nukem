@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/15 15:10:22 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/16 13:43:17 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,7 @@ void	update_position(t_app *app)
 		app->player.flying = FALSE;
 		app->player.velocity = 0.f;
 		app->player.jump_timer = JUMP_TIME;
-		app->player.jetpack = FALSE;
+	//	app->player.jetpack = FALSE;
 		app->player.elevation = pos_floor_height;
 	}
 
@@ -256,8 +256,11 @@ void	player_move(t_app *app, t_movement movement, double speed)
 	}
 	if (movement == UPWARD && app->player.flying && app->player.jump_timer == JUMP_TIME)
 	{
-		app->player.jetpack_boost = TRUE;
-		app->player.jetpack = TRUE;
+		//----DEBUG FEATURE
+		if (app->player.jetpack == TRUE)
+			app->player.jetpack_boost = TRUE;
+		//----
+	//	app->player.jetpack = TRUE;
 	}
 	if (movement == DOWNWARD)
 		app->player.elevation -= speed;
