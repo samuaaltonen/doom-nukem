@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/16 14:02:15 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/16 16:27:18 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 void	button_function(t_app *app, t_rect button, void (*f)(t_app *app))
 {
-	if (check_mouse(app, button))
+	if (check_mouse(app, button) && app->event.button.clicks == 1
+		&& app->event.button.state == SDL_RELEASED
+		&& check_timer(&app->button_timer))
 	{
-		if (app->event.button.clicks == 1)
-		{
-			if (app->event.button.state == SDL_RELEASED)
-				f(app);
-		}
+		f(app);
+		start_timer(&app->button_timer, 0.5);
 	}
+
 }
 
 void	start_game(t_app *app)
@@ -87,6 +87,11 @@ void	fullscreen(t_app *app)
 		app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, 0);
 	}	
 	app->surface = SDL_GetWindowSurface(app->win);
+}
+
+void	controls(t_app *app)
+{
+	app->status = STATUS_CONTROLS;
 }
 
 void	do_nothing(t_app *app)

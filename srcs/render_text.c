@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:48:08 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/21 11:41:08 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/16 16:09:50 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ static t_rect	get_char(char *str, int c, int line)
 	else if (line == 1 || line == 2)
 		width = 10;
 	else
-		width = 8;
+		width = 12;
 	i = 0;
 	while (str[i] != '\0')
 	{

@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/16 13:25:41 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/16 16:22:45 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,7 @@
 # define STATUS_MAINOPTIONS 4
 # define STATUS_GAMEOPTIONS 5
 # define STATUS_GAMEOVER 6
+# define STATUS_CONTROLS 7
 
 //BUTTON MACROS
 # define BUTTON_IDLE 0
@@ -178,6 +179,7 @@ typedef struct s_app
 	char			**texts;
 	int				text_lengths[MAX_TEXT_LINES];
 	t_textmodal		textmodal;
+	t_timer			button_timer;
 	t_timer			regen_timer;
 	t_timer			shoot_timer;
 	t_timer			item_timer;
@@ -359,6 +361,7 @@ void		do_nothing(t_app *app);
 void		main_options(t_app *app);
 void		game_options(t_app *app);
 void		fullscreen(t_app *app);
+void		controls(t_app *app);
 
 /**
  * Render Game Status
@@ -369,6 +372,7 @@ void		render_game(t_app *app);
 void		render_pausemenu(t_app *app);
 void		render_options(t_app *app);
 void		render_gameover(t_app *app);
+void		render_controls(t_app *app);
 
 /*
 * AUDIO.C
