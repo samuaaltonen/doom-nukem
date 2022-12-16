@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/16 13:25:15 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/16 13:29:40 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	hud_weapon(t_app *app, t_rect rect)
 void	hud_quickslot(t_app *app, t_rect rect, char *slot)
 {
 	SDL_Surface *sprite;
-	char		*amount;
+	char			*amount;
 
 	if (slot[0] == 'Q')
 	{
@@ -91,8 +91,7 @@ void	hud_quickslot(t_app *app, t_rect rect, char *slot)
 	rect.y += 6;
 	rect.w *= 3;
 	rect.h *= 3;
-	render_text(app, rect, amount);
-	free(amount);
+	render_text(app, rect, ft_itoa(*amount));
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/16 13:11:19 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/16 13:30:57 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,6 @@ void	player_init(t_app *app)
 	app->player.horizon = 0.5;
 	app->player.current_sector = 0;
 	//----DEBUG FEATURE
-	app->player.inventory.potion = 5;
-	app->player.inventory.antidote = 5;
 	app->player.inventory.ammo = 20;
 	app->player.weapons = 0;
 	app->player.equiped_weapon.magazine = 9;
