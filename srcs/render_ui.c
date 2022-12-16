@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/16 13:29:40 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:08:06 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,8 @@ void	hud_quickslot(t_app *app, t_rect rect, char *slot)
 	rect.y += 6;
 	rect.w *= 3;
 	rect.h *= 3;
-	render_text(app, rect, ft_itoa(*amount));
+	render_text(app, rect, amount);
+	free(amount);
 }
 
 /**

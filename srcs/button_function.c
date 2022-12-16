@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   button_function.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/15 17:33:56 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/16 14:02:15 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,9 @@ void	start_game(t_app *app)
 	player_init(app);
 	import_file(app, MAP_PATH);
 	//----DEBUG FEATURE
+	app->player.inventory.ammo = 20;
 	app->player.inventory.potion = 5;
 	app->player.inventory.antidote = 5;
-	app->player.inventory.ammo = 20;
 	app->player.weapons = 0;
 	app->player.equiped_weapon.magazine = 9;
 	if (app->player.equiped_weapon.magazine <= app->player.inventory.ammo)
