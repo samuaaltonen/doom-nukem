@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/12 16:30:26 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/19 13:58:02 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,7 +287,7 @@ int	import_file(t_app *app, char *path)
 		ft_printf("read interactions id %i, activation sector%i, wall%i, object%i\n",interactions[i].event_id, interactions[i].activation_sector, interactions[i].activation_wall, interactions[i].activation_object);
 	for(int i = 0; i < MAX_INTERACTIONS;i++)
 		ft_printf("pointer interactions id %i, activation sector%p, wall%p, object%p\n",app->interactions[i].event_id, app->interactions[i].activation_sector, app->interactions[i].activation_wall, app->interactions[i].activation_object);
-
+	free(export);
 	close(fd);
 	app->player.sector = sector_by_index(app,player.sector);
 	relink_sectors(app);

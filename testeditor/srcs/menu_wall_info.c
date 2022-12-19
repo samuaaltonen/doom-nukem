@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:32:25 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/19 11:29:53 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/19 15:45:22 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 static void	render_wall_decor_options(t_app *app, t_point screen_pos)
 {
 	int		id;
+	char	*offset;
 
 	if (!app->current_interaction)
 		id = find_decor_interaction(app, 0, 1);
@@ -29,10 +30,12 @@ static void	render_wall_decor_options(t_app *app, t_point screen_pos)
 		(t_rect){25, 290, 200, 20});
 	render_text(app, (t_rect){25, 305, 260, 100}, "ACTIVATE DECOR OFFSET \
 WITH 'G' AND USE ARROW KEYS TO CHANGE. \n \n  X\n  Y");
-	render_text(app, (t_rect){60, 342, 50, 15},
-		ft_ftoa(app->active->decor_offset.x, 4));
-	render_text(app, (t_rect){60, 357, 50, 15},
-		ft_ftoa(app->active->decor_offset.y, 4));
+	offset = ft_ftoa(app->active->decor_offset.x, 4);
+	render_text(app, (t_rect){60, 342, 50, 15}, offset);
+	free(offset);
+	offset = ft_ftoa(app->active->decor_offset.y, 4);
+	render_text(app, (t_rect){60, 357, 50, 15}, offset);
+	free(offset);
 }
 
 /**

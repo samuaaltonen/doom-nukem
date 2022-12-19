@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_weapon_info.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:32:37 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/12 16:18:49 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:12:59 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,18 +46,24 @@ void	weapons_init(t_app *app)
 */
 static void	render_weapon_texts(t_app *app)
 {
+	char	*statics;
+
 	render_text(app, (t_rect){40, 102, 100, 15}, "DAMAGE");
-	render_text(app, (t_rect){220, 102, 100, 15},
-		ft_itoa(app->player.weapons[app->player.selected_weapon].damage));
+	statics = ft_itoa(app->player.weapons[app->player.selected_weapon].damage);
+	render_text(app, (t_rect){220, 102, 100, 15}, statics);
+	free(statics);
 	render_text(app, (t_rect){40, 115, 100, 15}, "RANGE");
-	render_text(app, (t_rect){220, 115, 100, 15},
-		ft_itoa(app->player.weapons[app->player.selected_weapon].range));
+	statics = ft_itoa(app->player.weapons[app->player.selected_weapon].range);
+	render_text(app, (t_rect){220, 115, 100, 15}, statics);
+	free(statics);
 	render_text(app, (t_rect){40, 128, 100, 15}, "RPS");
-	render_text(app, (t_rect){220, 128, 100, 15},
-		ft_itoa(app->player.weapons[app->player.selected_weapon].fire_rate));
+	statics = ft_itoa(app->player.weapons[app->player.selected_weapon].fire_rate);
+	render_text(app, (t_rect){220, 128, 100, 15}, statics);
+	free(statics);
 	render_text(app, (t_rect){40, 141, 100, 15}, "MAGAZINE");
-	render_text(app, (t_rect){120, 141, 100, 15},
-		ft_itoa(app->player.weapons[app->player.selected_weapon].magazine));
+	statics = ft_itoa(app->player.weapons[app->player.selected_weapon].magazine);
+	render_text(app, (t_rect){120, 141, 100, 15}, statics);
+	free(statics);
 }
 
 /**
