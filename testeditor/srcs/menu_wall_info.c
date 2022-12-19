@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:32:25 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/16 14:34:22 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/19 11:29:53 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,25 @@ void	wall_edit_menu(t_app *app, t_point screen_pos)
 	if (app->active->decor != -1)
 		render_wall_decor_options(app, screen_pos);
 	render_portal_status(app);
+}
+
+/**
+ * Deletes all existing decor interactions for a specific wall decor.
+*/
+void	del_all_decor_interactions(t_app *app)
+{
+	int		id;
+
+	id = 0;
+	while (id <= app->interaction_count)
+	{
+		if (app->interactions[id].activation_wall == app->active
+			&& app->interactions[id].activation_sector == app->active_sector)
+		{
+			delete_interaction(app, id);
+			continue ;
+		}
+		id++;
+	}
+	app->current_interaction = NULL;
 }
