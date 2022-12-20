@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/20 14:06:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/20 15:20:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static t_bool	enter_portal(t_app *app, int portal_id, t_vector2 pos)
 }
 
 //circle collide all walls, pass only collided & ignored portals to recursive wall traversal
-static t_bool	has_collisions(t_app *app, t_vector2 *collision)
+static t_bool	wall_collisions(t_app *app, t_vector2 *collision)
 {
 	t_line	wall_line;
 	int		i;
@@ -48,8 +48,6 @@ static t_bool	has_collisions(t_app *app, t_vector2 *collision)
 	int		member_id;
 
 	i = -1;
-
-	//parent sector walls
 	while (++i < app->sectors[app->player.current_sector].corner_count)
 	{
 		wall_line = get_wall_line(app, app->player.current_sector, i);
@@ -63,21 +61,21 @@ static t_bool	has_collisions(t_app *app, t_vector2 *collision)
 			return (TRUE);
 		}
 		if (!ft_line_side(wall_line, app->player.pos))
-			continue ;
+			return (FALSE);
 		if (!enter_portal(app, app->sectors[app->player.current_sector].wall_types[i], *collision))
 			return (TRUE);
 		ft_printf("{green}Collision with portal %d to sector %d. Entering portal.{reset}\n", i, app->sectors[app->player.current_sector].wall_types[i]);
 	}
-	//member sector walls
 	i = 0;
 	while (app->sectors[app->player.current_sector].member_sectors[i] >= 0)
 	{
-		j = 0;
 		member_id = app->sectors[app->player.current_sector].member_sectors[i];
-		while (i < app->sectors[member_id].corner_count)
+		j = -1;
+		while (++j < app->sectors[member_id].corner_count)
 		{
-			return (circle_collision(app, get_wall_line(app,member_id,i),collision));
-			j++;
+			if (!circle_collision(app, get_wall_line(app, member_id, j), collision))
+				continue ;
+			return (TRUE);
 		}
 		i++;
 	}
@@ -213,8 +211,6 @@ void	update_position(t_app *app)
 	app->player.move_pos = ft_vector2_add(app->player.pos, ft_vec2_mult(app->player.move_vector, app->conf->delta_time));
 	new = app->player.move_pos;
 
-	//ft_printf("Frame movespeed: %.100f\n", ft_vector_length(ft_vector2_sub(app->player.move_pos, app->player.pos)));
-
 	double	pos_floor_height = get_sector_floor_height(app, app->player.current_sector, app->player.pos);
 
 	if (!app->player.flying && app->player.elevation > pos_floor_height)
@@ -237,10 +233,6 @@ void	update_position(t_app *app)
 		if(app->player.jetpack_boost)
 			app->player.velocity += JETPACK;
 	}
-
-	//ft_printf("elevation %f, floor_height%f, pos x%f, y%f\n", app->player.elevation, app->sectors[app->player.current_sector].floor_height, app->player.pos.x, app->player.pos.y);
-	//ft_printf("test timer %f, velocity %f jetpack %b\n", app->player.jump_timer, app->player.velocity, app->player.jetpack);
-	//checks if player is under floor and resets player to floor
 	
 	if (app->player.elevation < pos_floor_height)
 	{
@@ -257,13 +249,14 @@ void	update_position(t_app *app)
 		app->player.velocity = 0.f;
 		return ;
 	} */
-	app->player.pos.y = new.y;
-	app->player.pos.x = new.x;
-	if (has_collisions(app, &new))
+	if (wall_collisions(app, &new))
+		app->player.move_pos = new;
+	if (wall_collisions(app, &new))
 	{
-		app->player.pos = new;
-		app->player.move_vector = (t_vector2){0.f, 0.f};
+		app->player.move_vector = (t_vector2){0.f,0.f};
+		app->player.move_pos = new;
 	}
+	app->player.pos = app->player.move_pos;
 	if(!ceil_collision(app))
 	{
 		app->player.jump_timer = JUMP_TIME;

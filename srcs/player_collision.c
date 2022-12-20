@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:42:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/16 15:05:55 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/20 15:03:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ static t_bool	collision_possible(t_app *app, t_line wall)
 
 /**
  * @brief If there is a collision, calculates collision position on movement
- * line.
+ * line. Also checks if collision is on the other side of the wall (i.e. when
+ * FPS is very low and movement speed high) and sets collision cancel direction
+ * accordingly.
  * 
  * @param app 
  * @param wall 
@@ -45,18 +47,19 @@ static t_bool	get_collision(t_app *app, t_line wall, t_vector2 *collision)
 {
 	t_vector2	cancel;
 	t_vector2	line_intersection;
+	t_vector2	on_wall;
 
 	if (!ft_line_intersection((t_line){app->player.pos, app->player.move_pos},
 			wall, &line_intersection))
 		return (FALSE);
-	ft_printf("move len: %f\n", ft_point_distance(app->player.pos, app->player.move_pos));
-	cancel = ft_vector_resize(ft_vector2_sub(app->player.move_pos, ft_closest_point(app->player.move_pos, wall)), COLLISION_OFFSET);
-	/* *collision = ft_vector2_sub(line_intersection, 
-			ft_vec2_mult(ft_vector_resize(app->player.move_vector, 1.f),
-				ft_point_distance(line_intersection, app->player.pos)
-					/ ft_point_distance(ft_closest_point(app->player.pos, wall),
-						app->player.pos) * COLLISION_OFFSET)); */
-	*collision = ft_vector2_add(ft_closest_point(app->player.move_pos, wall), cancel);
+	on_wall = ft_closest_point(app->player.move_pos, wall);
+	cancel = ft_vector_resize(ft_vector2_sub(app->player.move_pos, on_wall),
+		COLLISION_OFFSET + MOVE_MIN);
+	if (ft_line_side(wall, ft_vector2_add(on_wall, cancel))
+		== ft_line_side(wall, app->player.pos))
+		*collision = ft_vector2_add(on_wall, cancel);
+	else
+		*collision = ft_vector2_sub(on_wall, cancel);
 	return (TRUE);
 }
 
@@ -68,7 +71,7 @@ static t_bool	get_collision(t_app *app, t_line wall, t_vector2 *collision)
  * @param collision_pos 
  * @return t_vector2 
  */
-static t_vector2	collision_on_endpoint(t_app *app, t_line wall, t_vector2 collision_pos)
+/* static t_vector2	collision_on_endpoint(t_app *app, t_line wall, t_vector2 collision_pos)
 {
 	t_vector2	endpoint_nearest;
 	double		endpoint_backtrack;
@@ -94,7 +97,7 @@ static t_vector2	collision_on_endpoint(t_app *app, t_line wall, t_vector2 collis
 	endpoint_vector = ft_vector_resize(app->player.move_pos, ft_vector_length(app->player.move_pos) - endpoint_backtrack);
 	//ft_printf("endpoint_vector x%f,y%f\n", endpoint_vector.x, endpoint_vector.y);
 	return (ft_vector2_add(app->player.pos, endpoint_vector));
-}
+} */
 
 /**
  * @brief Checks player collision with a wall. If there is collision, returns
@@ -102,25 +105,25 @@ static t_vector2	collision_on_endpoint(t_app *app, t_line wall, t_vector2 collis
  * 
  * @param app 
  * @param wall 
- * @param colpos 
+ * @param position 
  * @return t_bool 
  */
-t_bool	circle_collision(t_app *app, t_line wall, t_vector2 *colpos)
+t_bool	circle_collision(t_app *app, t_line wall, t_vector2 *position)
 {
 	t_vector2	collision;
-	t_vector2	collision_pos;
+	t_vector2	collision_on_line;
 
 	if (!collision_possible(app, wall)
 		|| !get_collision(app, wall, &collision))
 		return (FALSE);
-	collision_pos = ft_closest_point(collision, wall);
-	if (ft_point_on_segment(wall, collision_pos))
+	collision_on_line = ft_closest_point(collision, wall);
+	if (ft_point_on_segment(wall, collision_on_line))
 	{
 		ft_printf("collision on wall x%f, y%f\n", collision.x, collision.y);
-		*colpos = collision;
+		*position = collision;
 		return (TRUE);
 	}
 	ft_printf("collision on endpoint \n");
-	*colpos = collision_on_endpoint(app, wall, collision_pos);
+	/* *position = collision_on_endpoint(app, wall, collision_on_line); */
 	return (TRUE);
 }
