@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/20 14:05:28 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/20 18:18:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,17 +20,17 @@
 # define ROTATION_SPEED 1.8
 # define MOVEMENT_SPEED 6.0
 # define RUNNING_SPEED 10.0
-# define MOVE_RANGE 0.05f
+# define MOVE_RANGE 0.05
 # define MOVE_ACCEL 90.0
 # define MOVE_DECEL 5.0
 # define MOVE_MIN 0.0001
-# define GRAVITY 10.0
-# define JUMP_SIZE 2.0
-# define JUMP_TIME 0.1
-# define JETPACK_START 0.3
-# define JETPACK 1.f
-# define JETPACK_FALL 0.125
-# define MAX_STEP 0.2
+# define GRAVITY -20.0
+# define JUMP_FORCE 5.0
+# define JETPACK 1.0
+# define JETPACK_FALL 0.01
+# define JETPACK_ASCENT 4.0
+# define JETPACK_DESCENT -4.0
+# define MAX_STEP 0.3
 # define MAX_ANGLE 45.0
 # define HORIZON_UPPER_LIMIT 1.25
 # define HORIZON_LOWER_LIMIT -0.25
@@ -82,17 +82,18 @@ typedef struct s_player
 	t_vector2		move_vector;
 	t_vector2		move_pos;
 	double			move_speed;
-	double			velocity;
 	t_bool			is_decelerating;
 	t_vector2		cam;
 	double			camera_length;
 	double			elevation;
+	double			elevation_velocity;
 	double			horizon;
 	int				current_sector;
 	t_bool			flying;
 	t_bool			jetpack;
 	t_bool			jetpack_boost;
 	double			jump_timer;
+	double			step_timer;
 	int				hp;
 	int				weapons;
 	t_weapon		equiped_weapon;

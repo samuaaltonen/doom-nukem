@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/20 14:02:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/20 18:18:11 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,12 @@ void	handle_movement(t_app *app)
 		player_rotate(app, -ROTATION_SPEED * app->conf->delta_time);
 	if (app->conf->keystates & RIGHT)
 		player_rotate(app, ROTATION_SPEED * app->conf->delta_time);
-	if (app->conf->keystates & SPACE)
-		player_move(app, UPWARD, MOVE_ACCEL * app->conf->delta_time);
-	if (app->conf->keystates & CTRL)
-		player_move(app, DOWNWARD, MOVE_ACCEL * app->conf->delta_time);
+	if (app->conf->keystates & SPACE && !app->player.jetpack)
+		player_move(app, UPWARD, JUMP_FORCE);
+	if (app->conf->keystates & SPACE && app->player.jetpack)
+		player_move(app, UPWARD, JETPACK_ASCENT * app->conf->delta_time);
+	if (app->conf->keystates & CTRL && app->player.jetpack)
+		player_move(app, DOWNWARD, JETPACK_DESCENT * app->conf->delta_time);
 }
 
 void	player_shoot(t_app *app)
@@ -94,15 +96,17 @@ void	player_reload(t_app *app)
 
 void	jetpack(t_app *app)
 {
-		if (check_timer(&app->item_timer) && app->player.jetpack)
-		{
-			app->player.jetpack = FALSE;
-			start_timer(&app->item_timer, 1);
-		}
-			
-		else if (check_timer(&app->item_timer) && !app->player.jetpack)
-		{
-			app->player.jetpack = TRUE;
-			start_timer(&app->item_timer, 1);
-		}
+	if (check_timer(&app->item_timer) && app->player.jetpack)
+	{
+		app->player.jetpack = FALSE;
+		app->player.elevation_velocity = JETPACK_FALL;
+		start_timer(&app->item_timer, 1);
+	}
+	else if (check_timer(&app->item_timer) && !app->player.jetpack)
+	{
+		app->player.jetpack = TRUE;
+		app->player.flying = TRUE;
+		app->player.elevation_velocity = 0.0;
+		start_timer(&app->item_timer, 1);
+	}
 }

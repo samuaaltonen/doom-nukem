@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/20 15:20:17 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/20 18:18:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,15 @@
 
 /**
  * @brief Checks if player can move to target sector (if not too high elevation
- * difference with floor/ceiling). If moving to the sector is possible, changes
- * player sector id.
+ * difference with floor/ceiling). If moving to the sector is possible and
+ * player position is located in the sector, changes player sector id.
  * 
  * @param app 
  * @param portal_id 
  * @return t_bool 
  */
-static t_bool	enter_portal(t_app *app, int portal_id, t_vector2 pos)
+static t_bool	enter_portal(t_app *app, int portal_id, t_vector2 pos,
+	t_bool enter)
 {
 	double	target_floor;
 	double	target_ceil;
@@ -31,6 +32,8 @@ static t_bool	enter_portal(t_app *app, int portal_id, t_vector2 pos)
 	if (app->player.elevation + MAX_STEP < target_floor
 		|| target_ceil < app->player.elevation + PLAYER_HEIGHT)
 		return (FALSE);
+	if (!enter)
+		return (TRUE);
 	app->player.current_sector = portal_id;
 	interaction_check_portal(app, portal_id);
 	if (app->player.elevation != target_floor)
@@ -60,11 +63,10 @@ static t_bool	wall_collisions(t_app *app, t_vector2 *collision)
 			ft_printf("{cyan}Collision with wall id %d.{reset}\n", i);
 			return (TRUE);
 		}
-		if (!ft_line_side(wall_line, app->player.pos))
-			return (FALSE);
-		if (!enter_portal(app, app->sectors[app->player.current_sector].wall_types[i], *collision))
+		if (!enter_portal(app,
+			app->sectors[app->player.current_sector].wall_types[i], *collision,
+				ft_line_side(wall_line, app->player.pos)))
 			return (TRUE);
-		ft_printf("{green}Collision with portal %d to sector %d. Entering portal.{reset}\n", i, app->sectors[app->player.current_sector].wall_types[i]);
 	}
 	i = 0;
 	while (app->sectors[app->player.current_sector].member_sectors[i] >= 0)
@@ -73,9 +75,12 @@ static t_bool	wall_collisions(t_app *app, t_vector2 *collision)
 		j = -1;
 		while (++j < app->sectors[member_id].corner_count)
 		{
-			if (!circle_collision(app, get_wall_line(app, member_id, j), collision))
+			wall_line = get_wall_line(app, member_id, j);
+			if (!circle_collision(app, wall_line, collision))
 				continue ;
-			return (TRUE);
+			if (!enter_portal(app, member_id, *collision,
+					!ft_line_side(wall_line, app->player.pos)))
+				return (TRUE);
 		}
 		i++;
 	}
@@ -166,9 +171,9 @@ static t_bool	wall_collisions(t_app *app, t_vector2 *collision)
 
 static t_bool ceil_collision(t_app *app)
 {
-	if(get_sector_ceil_height(app, app->player.current_sector, app->player.pos) < app->player.elevation + PLAYER_HEIGHT)
-		return (FALSE);
-	return (TRUE);
+	if (get_sector_ceil_height(app, app->player.current_sector, app->player.pos) < app->player.elevation + PLAYER_HEIGHT)
+		return (TRUE);
+	return (FALSE);
 }
 
 /**
@@ -181,6 +186,8 @@ static t_bool	limit_speed(t_app *app)
 {
 	double	speed;
 
+	if (app->player.elevation_velocity < GRAVITY)
+		app->player.elevation_velocity = GRAVITY;
 	speed = ft_vector_length(app->player.move_vector);
 	if (speed < MOVE_MIN)
 	{
@@ -205,12 +212,6 @@ void	update_position(t_app *app)
 {
 	t_vector2 new;
 
-	if (!limit_speed(app))
-		return ;
-
-	app->player.move_pos = ft_vector2_add(app->player.pos, ft_vec2_mult(app->player.move_vector, app->conf->delta_time));
-	new = app->player.move_pos;
-
 	double	pos_floor_height = get_sector_floor_height(app, app->player.current_sector, app->player.pos);
 
 	if (!app->player.flying && app->player.elevation > pos_floor_height)
@@ -219,36 +220,46 @@ void	update_position(t_app *app)
 	//if player is in the air, apply gravity(depending on jetpack), keep jumping
 	if(app->player.flying)
 	{
-		if(app->player.jetpack)
-			app->player.velocity = ft_lerp(app->player.velocity, -GRAVITY * JETPACK_FALL, app->player.jump_timer);
+		if (app->player.jetpack)
+			app->player.elevation_velocity += GRAVITY * JETPACK_FALL * app->conf->delta_time;
 		else
-			app->player.velocity = ft_lerp(app->player.velocity, -GRAVITY, app->player.jump_timer);
-		if(app->player.jump_timer < JUMP_TIME)
-		{
-			app->player.jump_timer += app->conf->delta_time;
-			app->player.velocity += JUMP_SIZE;
-			if(app->player.jump_timer > JUMP_TIME)
-				app->player.jump_timer = JUMP_TIME;
-		}
-		if(app->player.jetpack_boost)
-			app->player.velocity += JETPACK;
-	}
-	
-	if (app->player.elevation < pos_floor_height)
-	{
-		app->player.flying = FALSE;
-		app->player.velocity = 0.f;
-		app->player.jump_timer = JUMP_TIME;
-	//	app->player.jetpack = FALSE;
-		app->player.elevation = pos_floor_height;
+			app->player.elevation_velocity += GRAVITY * app->conf->delta_time;
 	}
 
 	/* if(wall_traversal_recursive(app, (t_move){new, app->player.elevation}, app->player.current_sector) < 0)
 	{
 		app->player.move_vector = (t_vector2){0.f,0.f};
-		app->player.velocity = 0.f;
+		app->player.elevation_velocity = 0.f;
 		return ;
 	} */
+
+	if(ceil_collision(app))
+	{
+		app->player.elevation = get_sector_ceil_height(app, app->player.current_sector, app->player.pos) - PLAYER_HEIGHT;
+	}
+	else
+		app->player.elevation += app->player.elevation_velocity * app->conf->delta_time;
+
+	if (app->player.elevation < pos_floor_height)
+	{
+		ft_printf("stepping %f\n", app->player.elevation);
+		if (!app->player.jetpack)
+		{
+			app->player.flying = FALSE;
+			app->player.elevation_velocity = 0.0;
+		}
+		//app->player.elevation = ft_lerp(app->player.elevation, pos_floor_height, app->player.step_timer);
+		app->player.elevation = pos_floor_height;
+		app->player.step_timer += app->conf->delta_time;
+	}
+	else
+		app->player.step_timer = 0.0;
+
+	if (!limit_speed(app))
+		return ;
+
+	app->player.move_pos = ft_vector2_add(app->player.pos, ft_vec2_mult(app->player.move_vector, app->conf->delta_time));
+	new = app->player.move_pos;
 	if (wall_collisions(app, &new))
 		app->player.move_pos = new;
 	if (wall_collisions(app, &new))
@@ -257,15 +268,6 @@ void	update_position(t_app *app)
 		app->player.move_pos = new;
 	}
 	app->player.pos = app->player.move_pos;
-	if(!ceil_collision(app))
-	{
-		app->player.jump_timer = JUMP_TIME;
-		app->player.velocity = 0.f;
-		app->player.elevation = get_sector_ceil_height(app, app->player.current_sector, app->player.pos) - PLAYER_HEIGHT;
-	}
-	else
-		app->player.elevation += app->player.velocity * app->conf->delta_time;
-	app->player.jetpack_boost = FALSE;
 }
 
 /**
@@ -292,7 +294,6 @@ void	player_move(t_app *app, t_movement movement, double speed)
 		app->player.move_vector = ft_vector2_add(app->player.move_vector,
 				(t_vector2){-app->player.dir.x * speed,
 				-app->player.dir.y  * speed});
-		
 	if (movement == LEFTWARD || movement == RIGHTWARD)
 	{
 		perpendicular = ft_vector_perpendicular(app->player.dir);
@@ -305,19 +306,11 @@ void	player_move(t_app *app, t_movement movement, double speed)
 					(t_vector2){perpendicular.x * speed,
 					perpendicular.y * speed});
 	}
-	if (movement == UPWARD && !app->player.flying)
+	if ((movement == UPWARD || movement == DOWNWARD) && app->player.jetpack)
+		app->player.elevation += speed;
+	if (movement == UPWARD && !app->player.jetpack && !app->player.flying)
 	{
 		app->player.flying = TRUE;
-		app->player.jump_timer = 0.0;
+		app->player.elevation_velocity = speed;
 	}
-	if (movement == UPWARD && app->player.flying && app->player.jump_timer == JUMP_TIME)
-	{
-		//----DEBUG FEATURE
-		if (app->player.jetpack == TRUE)
-			app->player.jetpack_boost = TRUE;
-		//----
-		// app->player.jetpack = TRUE;
-	}
-	if (movement == DOWNWARD)
-		app->player.elevation -= speed;
 }
