@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/16 17:18:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/20 14:02:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@ void	player_control(t_app *app)
  */
 void	handle_movement(t_app *app)
 {
+	app->player.is_decelerating = TRUE;
 	if (app->conf->keystates & UP || app->conf->keystates & W)
 		player_move(app, FORWARD, MOVE_ACCEL * app->conf->delta_time);
 	if (app->conf->keystates & DOWN || app->conf->keystates & S)

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/16 17:17:26 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/20 14:05:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@
 # define POSITION_START_X 0.5
 # define POSITION_START_Y 0.5
 # define ROTATION_SPEED 1.8
-# define MOVEMENT_SPEED 1.0
-# define RUNNING_SPEED 2.0
+# define MOVEMENT_SPEED 6.0
+# define RUNNING_SPEED 10.0
 # define MOVE_RANGE 0.05f
-# define MOVE_ACCEL 0.125
-# define MOVE_DECEL 2.5
+# define MOVE_ACCEL 90.0
+# define MOVE_DECEL 5.0
 # define MOVE_MIN 0.0001
 # define GRAVITY 10.0
 # define JUMP_SIZE 2.0
@@ -83,6 +83,7 @@ typedef struct s_player
 	t_vector2		move_pos;
 	double			move_speed;
 	double			velocity;
+	t_bool			is_decelerating;
 	t_vector2		cam;
 	double			camera_length;
 	double			elevation;

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/16 17:18:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/20 14:06:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -179,20 +179,23 @@ static t_bool ceil_collision(t_app *app)
  * 
  * @param app 
  */
-static void	limit_speed(t_app *app)
+static t_bool	limit_speed(t_app *app)
 {
-	double	velocity;
+	double	speed;
 
-	velocity = ft_vector_length(app->player.move_vector);
-	//ft_printf("velocity: %f\n", velocity);
-	if (velocity < MOVE_MIN)
+	speed = ft_vector_length(app->player.move_vector);
+	if (speed < MOVE_MIN)
 	{
 		app->player.move_vector = (t_vector2){0.0, 0.0};
-		return ;
+		return (FALSE);
 	}
-	if (velocity > app->player.move_speed)
+	if (app->player.is_decelerating)
+		app->player.move_vector = ft_vec2_lerp(app->player.move_vector,
+			(t_vector2){0.f, 0.f}, MOVE_DECEL * app->conf->delta_time);
+	if (speed > app->player.move_speed)
 		app->player.move_vector = ft_vector_resize(app->player.move_vector,
 			app->player.move_speed);
+	return (TRUE);
 }
 
 /**
@@ -204,11 +207,13 @@ void	update_position(t_app *app)
 {
 	t_vector2 new;
 
-	limit_speed(app);
-	new = app->player.move_vector;
-	app->player.move_vector = ft_vec2_lerp(app->player.move_vector, (t_vector2){0.f,0.f}, MOVE_DECEL * app->conf->delta_time);
+	if (!limit_speed(app))
+		return ;
 
 	app->player.move_pos = ft_vector2_add(app->player.pos, ft_vec2_mult(app->player.move_vector, app->conf->delta_time));
+	new = app->player.move_pos;
+
+	//ft_printf("Frame movespeed: %.100f\n", ft_vector_length(ft_vector2_sub(app->player.move_pos, app->player.pos)));
 
 	double	pos_floor_height = get_sector_floor_height(app, app->player.current_sector, app->player.pos);
 
@@ -246,9 +251,6 @@ void	update_position(t_app *app)
 		app->player.elevation = pos_floor_height;
 	}
 
-	//check collissions
-	new = (t_vector2){app->player.pos.x + new.x, app->player.pos.y + new.y};
-
 	/* if(wall_traversal_recursive(app, (t_move){new, app->player.elevation}, app->player.current_sector) < 0)
 	{
 		app->player.move_vector = (t_vector2){0.f,0.f};
@@ -260,7 +262,7 @@ void	update_position(t_app *app)
 	if (has_collisions(app, &new))
 	{
 		app->player.pos = new;
-		app->player.move_vector = (t_vector2){0.f,0.f};
+		app->player.move_vector = (t_vector2){0.f, 0.f};
 	}
 	if(!ceil_collision(app))
 	{
@@ -283,10 +285,12 @@ void	update_position(t_app *app)
 void	player_move(t_app *app, t_movement movement, double speed)
 {
 	t_vector2	perpendicular;
+
 	if (!(movement == FORWARD || movement == BACKWARD
 			|| movement == LEFTWARD || movement == RIGHTWARD 
 			|| movement == UPWARD || movement == DOWNWARD))
 		return ;
+	app->player.is_decelerating = FALSE;
 	if (movement == FORWARD)
 		app->player.move_vector = ft_vector2_add(app->player.move_vector,
 				(t_vector2){app->player.dir.x * speed,
@@ -319,7 +323,7 @@ void	player_move(t_app *app, t_movement movement, double speed)
 		if (app->player.jetpack == TRUE)
 			app->player.jetpack_boost = TRUE;
 		//----
-	//	app->player.jetpack = TRUE;
+		// app->player.jetpack = TRUE;
 	}
 	if (movement == DOWNWARD)
 		app->player.elevation -= speed;
