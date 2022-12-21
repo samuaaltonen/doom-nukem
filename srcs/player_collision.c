@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:42:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/21 19:37:37 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/21 19:46:59 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,7 +129,7 @@ t_collision	circle_collision(t_app *app, int sector_id, int wall_id,
 		return (COLLISION_NONE);
 	if (portal_id != -1 && app->sectors[sector_id].wall_textures[wall_id]
 			!= PARTIALLY_TRANSPARENT_TEXTURE_ID
-		&& portal_can_enter(app, wall, sector_id, portal_id))
+		&& portal_can_enter(app, wall, app->player.current_sector, portal_id))
 			return (COLLISION_PORTAL);
 	collision_on_line = ft_closest_point(collision, wall);
 	if (ft_point_on_segment(wall, collision_on_line))
