@@ -14,14 +14,18 @@
 
 void	button_function(t_app *app, t_rect button, void (*f)(t_app *app))
 {
-	if (check_mouse(app, button) && app->event.button.clicks == 1
-		&& app->event.button.state == SDL_RELEASED
-		&& check_timer(&app->button_timer))
+	if (check_mouse(app, button))
 	{
-		f(app);
-		start_timer(&app->button_timer, 0.5);
+		if (app->conf->buttonstates & LEFT_MOUSE)
+			start_timer(&app->button_timer, 0.5);
+		else if (!(app->conf->buttonstates & LEFT_MOUSE)
+			&& !check_timer(&app->button_timer))
+			{
+				f(app);
+				start_timer(&app->button_timer, 0.0);
+			}
+			
 	}
-
 }
 
 void	start_game(t_app *app)
