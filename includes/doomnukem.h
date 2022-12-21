@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/21 19:37:57 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/21 20:06:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,8 +259,16 @@ void		shield(t_app *app);
 void		regen(t_app *app, int *value);
 void		damage(t_app *app, int dmg);
 
-t_collision	circle_collision(t_app *app, int sector_id, int wall_id, int portal_id);
-t_bool		portal_can_enter(t_app *app, t_line wall, int source_sector, int target_sector);
+/**
+ * Collisions
+ */
+t_bool		collision_check(t_app *app);
+t_bool		collision_sector(t_app *app, int sector_id, int *visited);
+t_collision	collision_wall(t_app *app, int sector_id, int wall_id,
+				int portal_id);
+t_bool		portal_can_enter(t_app *app, t_line wall, int source_sector,
+				int target_sector);
+void		portal_enter(t_app *app, int sector_id);
 
 /**
  * Sectors

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/21 19:50:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/21 19:53:40 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	render_mainmenu(t_app *app)
 
 void	render_game(t_app *app)
 {
-	//SDL_Delay(30);
+	//SDL_Delay(300);
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	update_enemy_states(app);
 	progress_animations(app);

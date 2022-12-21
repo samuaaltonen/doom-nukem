@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
+#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/12/15 17:34:30 by htahvana         ###   ########.fr        #
+#    Updated: 2022/12/21 20:04:49 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,6 +28,9 @@ FILES = main.c \
 		threads.c \
 		image.c \
 		player_collision.c \
+		player_collision_sector.c \
+		player_collision_wall.c \
+		player_collision_portal.c \
 		player_control.c \
 		player_effects.c \
 		player_init.c \
