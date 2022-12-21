@@ -6,168 +6,123 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/20 18:18:55 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/21 15:42:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
-/**
- * @brief Checks if player can move to target sector (if not too high elevation
- * difference with floor/ceiling). If moving to the sector is possible and
- * player position is located in the sector, changes player sector id.
- * 
- * @param app 
- * @param portal_id 
- * @return t_bool 
- */
-static t_bool	enter_portal(t_app *app, int portal_id, t_vector2 pos,
-	t_bool enter)
+static t_bool	portal_can_enter(t_app *app, int sector_id)
 {
 	double	target_floor;
 	double	target_ceil;
-
-	target_floor = get_sector_floor_height(app, portal_id, pos);
-	target_ceil = get_sector_ceil_height(app, portal_id, pos);
-	if (app->player.elevation + MAX_STEP < target_floor
-		|| target_ceil < app->player.elevation + PLAYER_HEIGHT)
-		return (FALSE);
-	if (!enter)
-		return (TRUE);
-	app->player.current_sector = portal_id;
-	interaction_check_portal(app, portal_id);
-	if (app->player.elevation != target_floor)
-		app->player.flying = TRUE;
-	ft_printf("{cyan}Entering to portal %d.{reset}\n", portal_id);
-	return (TRUE);
-}
-
-//circle collide all walls, pass only collided & ignored portals to recursive wall traversal
-static t_bool	wall_collisions(t_app *app, t_vector2 *collision)
-{
-	t_line	wall_line;
 	int		i;
-	int		j;
-	int		member_id;
-
-	i = -1;
-	while (++i < app->sectors[app->player.current_sector].corner_count)
-	{
-		wall_line = get_wall_line(app, app->player.current_sector, i);
-		if (!circle_collision(app, wall_line, collision))
-			continue ;
-		if (app->sectors[app->player.current_sector].wall_types[i] == -1
-			|| app->sectors[app->player.current_sector].wall_textures[i]
-				== PARTIALLY_TRANSPARENT_TEXTURE_ID)
-		{
-			ft_printf("{cyan}Collision with wall id %d.{reset}\n", i);
-			return (TRUE);
-		}
-		if (!enter_portal(app,
-			app->sectors[app->player.current_sector].wall_types[i], *collision,
-				ft_line_side(wall_line, app->player.pos)))
-			return (TRUE);
-	}
-	i = 0;
-	while (app->sectors[app->player.current_sector].member_sectors[i] >= 0)
-	{
-		member_id = app->sectors[app->player.current_sector].member_sectors[i];
-		j = -1;
-		while (++j < app->sectors[member_id].corner_count)
-		{
-			wall_line = get_wall_line(app, member_id, j);
-			if (!circle_collision(app, wall_line, collision))
-				continue ;
-			if (!enter_portal(app, member_id, *collision,
-					!ft_line_side(wall_line, app->player.pos)))
-				return (TRUE);
-		}
-		i++;
-	}
-	return (FALSE);
-}
-
-//a - r || vec aC || || vec p 1 c || * vec v || vec v ||
-/**
- * @brief Checks if players new position is on the otherside of any wall,
- * 	recurses into the new sector if it's a portal,
- * 	returns -1 if the player can't be in the new position
- * 
- * @param app 
- * @param new 
- * @param sector_id 
- * @return int 
- */
-/* static int	wall_traversal_recursive(t_app *app, t_move new, int sector_id)
-{
-	t_line	wall_line;
-	int		i;
-	int		member_id;
-	int		portal_id;
-	int		counter;
 
 	i = -1;
 	while (++i < app->sectors[sector_id].corner_count)
 	{
-		wall_line = get_wall_line(app, sector_id, i);
-		if (!ft_line_side(wall_line, new.pos))
-			continue ;
-		if (!ft_line_intersection_segment((t_line){app->player.pos, new.pos}, wall_line, NULL))
-			continue ;
-		portal_id = app->sectors[sector_id].wall_types[i];
-		if (portal_id < 0
-			|| (new.elevation + MAX_STEP < app->sectors[portal_id].floor_height
-				||	app->sectors[portal_id].ceil_height < new.elevation + PLAYER_HEIGHT))
-			return (-1);
-		else
-		{
-			if (app->sectors[sector_id].wall_textures[i] == PARTIALLY_TRANSPARENT_TEXTURE_ID)
-				return (-1);
-			portal_id = wall_traversal_recursive(app, new, portal_id);
-			if (portal_id < 0)
-				return (-1);
-			else
-			{
-				app->player.current_sector = portal_id;
-				interaction_check_portal(app, portal_id);
-				if (new.elevation != app->sectors[portal_id].floor_height)
-					app->player.flying = TRUE;
-				return (portal_id);
-			}
-		}
+		if (ft_line_side(get_wall_line(app, sector_id, i), app->player.move_pos))
+			return (FALSE);
 	}
+	target_floor = get_sector_floor_height(app, sector_id, app->player.move_pos);
+	target_ceil = get_sector_ceil_height(app, sector_id, app->player.move_pos);
+	if (app->player.elevation + MAX_STEP < target_floor
+		|| target_ceil < app->player.elevation + PLAYER_HEIGHT)
+		return (FALSE);
+	return (TRUE);
+}
 
-	//member sector walls
-	counter = 0;
-	while(app->sectors[sector_id].member_sectors[counter] >= 0)
+static void	portal_enter(t_app *app, int sector_id)
+{
+	double	target_floor;
+
+	target_floor = get_sector_floor_height(app, sector_id, app->player.move_pos);
+	app->player.current_sector = sector_id;
+	interaction_check_portal(app, sector_id);
+	if (app->player.elevation != target_floor)
+		app->player.flying = TRUE;
+	ft_printf("{cyan}Entering to portal %d.{reset}\n", sector_id);
+}
+
+static t_bool	has_been_visited(int sector_id, int *visited)
+{
+	int	i;
+
+	i = 0;
+	while (i < MAX_VISIBLE_SECTORS && visited[i] != -1)
 	{
-		i = -1;
-		member_id = app->sectors[sector_id].member_sectors[counter];
-		while (++i < app->sectors[member_id].corner_count)
-		{
-			if(ft_line_side(get_wall_line(app, member_id ,i), new.pos) != 0)
-				break;
-		}
-		if(i == app->sectors[member_id].corner_count)
-		{
-			portal_id = wall_traversal_recursive(app, new, member_id);
-			if (portal_id < 0
-				|| (new.elevation + MAX_STEP < get_sector_floor_height(app, portal_id, new.pos)
-					||	get_sector_ceil_height(app, portal_id, new.pos) < new.elevation + PLAYER_HEIGHT))
-				return (-1);
-			else
-			{
-				app->player.current_sector = portal_id;
-				interaction_check_portal(app, portal_id);
-				if(new.elevation != app->sectors[portal_id].floor_height)
-					app->player.flying = TRUE;
-				return(portal_id);
-			}
-		}
-		counter++;
+		if (visited[i] == sector_id)
+			return (TRUE);
+		i++;
 	}
-	return (sector_id);
-} */
+	if (i == MAX_VISIBLE_SECTORS)
+		return (TRUE);
+	visited[i] = sector_id;
+	return (FALSE);
+}
+
+static t_bool	sector_collisions(t_app *app, t_vector2 *collision,
+	int sector_id, int *visited)
+{
+	t_line		wall_line;
+	t_collision	collision_type;
+	int			i;
+	/* int			j;
+	int			member_id; */
+
+	if (has_been_visited(sector_id, visited))
+		return (TRUE);
+	i = -1;
+	while (++i < app->sectors[sector_id].corner_count)
+	{
+		wall_line = get_wall_line(app, sector_id, i);
+		collision_type = circle_collision(app, sector_id, i);
+		if (collision_type == COLLISION_NONE)
+			continue ;
+		if (collision_type == COLLISION_WALL)
+			return (FALSE);
+		//ft_printf("{green}Checking if can enter to %d{reset}\n", app->sectors[sector_id].wall_types[i]);
+		if (!portal_can_enter(app, app->sectors[sector_id].wall_types[i]))
+		{
+			ft_printf("{red}CANNOT ENTER PORTAL %d{reset}\n", app->sectors[sector_id].wall_types[i]);
+			return (FALSE);
+		}
+		if (ft_line_side(wall_line, app->player.move_pos))
+			portal_enter(app, app->sectors[sector_id].wall_types[i]);
+		//ft_printf("{green}Checking collisions in sector %d{reset}\n", app->sectors[sector_id].wall_types[i]);
+		if (!sector_collisions(app, collision, app->sectors[sector_id].wall_types[i], visited))
+		{
+			//ft_printf("{red}Collision in sector %d prevent entering the protal.\n", app->sectors[sector_id].wall_types[i]);
+			return (FALSE);
+		}
+	}
+	/* i = 0;
+	while (app->sectors[sector_id].member_sectors[i] >= 0)
+	{
+		member_id = app->sectors[sector_id].member_sectors[i];
+		j = -1;
+		while (++j < app->sectors[member_id].corner_count)
+		{
+			wall_line = get_wall_line(app, member_id, j);
+			if (!circle_collision(app, member_id, j, collision))
+				continue ;
+			if (!portal_can_enter(app, member_id, *collision))
+				return (FALSE);
+			if (!ft_line_side(wall_line, app->player.move_pos))
+				portal_enter(app, member_id, *collision);
+		}
+		i++;
+	} */
+	return (TRUE);
+}
+
+static t_bool	check_collisions(t_app *app, t_vector2 *collision)
+{
+	int	visited[MAX_VISIBLE_SECTORS];
+
+	visited[0] = -1;
+	return (sector_collisions(app, collision, app->player.current_sector, (int *)&visited));
+}
 
 static t_bool ceil_collision(t_app *app)
 {
@@ -217,32 +172,22 @@ void	update_position(t_app *app)
 	if (!app->player.flying && app->player.elevation > pos_floor_height)
 		app->player.elevation = pos_floor_height;
 
-	//if player is in the air, apply gravity(depending on jetpack), keep jumping
 	if(app->player.flying)
 	{
 		if (app->player.jetpack)
-			app->player.elevation_velocity += GRAVITY * JETPACK_FALL * app->conf->delta_time;
+			app->player.elevation_velocity = GRAVITY * JETPACK_FALL;
 		else
 			app->player.elevation_velocity += GRAVITY * app->conf->delta_time;
 	}
 
-	/* if(wall_traversal_recursive(app, (t_move){new, app->player.elevation}, app->player.current_sector) < 0)
-	{
-		app->player.move_vector = (t_vector2){0.f,0.f};
-		app->player.elevation_velocity = 0.f;
-		return ;
-	} */
-
-	if(ceil_collision(app))
-	{
+	if (ceil_collision(app))
 		app->player.elevation = get_sector_ceil_height(app, app->player.current_sector, app->player.pos) - PLAYER_HEIGHT;
-	}
 	else
 		app->player.elevation += app->player.elevation_velocity * app->conf->delta_time;
 
 	if (app->player.elevation < pos_floor_height)
 	{
-		ft_printf("stepping %f\n", app->player.elevation);
+		//ft_printf("stepping %f\n", app->player.elevation);
 		if (!app->player.jetpack)
 		{
 			app->player.flying = FALSE;
@@ -260,13 +205,13 @@ void	update_position(t_app *app)
 
 	app->player.move_pos = ft_vector2_add(app->player.pos, ft_vec2_mult(app->player.move_vector, app->conf->delta_time));
 	new = app->player.move_pos;
-	if (wall_collisions(app, &new))
+	if (!check_collisions(app, &new))
 		app->player.move_pos = new;
-	if (wall_collisions(app, &new))
+	/* if (!check_collisions(app, &new))
 	{
-		app->player.move_vector = (t_vector2){0.f,0.f};
+		app->player.move_vector = (t_vector2){0.f, 0.f};
 		app->player.move_pos = new;
-	}
+	} */
 	app->player.pos = app->player.move_pos;
 }
 

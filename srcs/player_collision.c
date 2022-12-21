@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:42:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/20 15:40:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/21 15:38:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,23 +108,27 @@ static t_bool	get_collision(t_app *app, t_line wall, t_vector2 *collision)
  * @param position 
  * @return t_bool 
  */
-t_bool	circle_collision(t_app *app, t_line wall, t_vector2 *position)
+t_collision	circle_collision(t_app *app, int sector_id, int wall_id)
 {
 	t_vector2	collision;
 	t_vector2	collision_on_line;
+	t_line		wall;
 
+	wall = get_wall_line(app, sector_id, wall_id);
 	if (!collision_possible(app, wall)
 		|| !get_collision(app, wall, &collision))
-		return (FALSE);
+		return (COLLISION_NONE);
+	if (app->sectors[sector_id].wall_types[wall_id] != -1
+		&& app->sectors[sector_id].wall_textures[wall_id]
+			!= PARTIALLY_TRANSPARENT_TEXTURE_ID)
+		return (COLLISION_PORTAL);
 	collision_on_line = ft_closest_point(collision, wall);
 	if (ft_point_on_segment(wall, collision_on_line))
 	{
-		//ft_printf("collision on wall x%f, y%f\n", collision.x, collision.y);
-		*position = collision;
-		return (TRUE);
+		app->player.move_pos = collision;
+		return (COLLISION_WALL);
 	}
 	ft_printf("collision on endpoint \n");
-		*position = collision;
-	/* *position = collision_on_endpoint(app, wall, collision_on_line); */
-	return (TRUE);
+		app->player.move_pos = collision;
+	return (COLLISION_WALL);
 }

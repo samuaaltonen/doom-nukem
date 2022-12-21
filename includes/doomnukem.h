@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/16 15:37:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/21 15:39:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -259,7 +259,7 @@ void		shield(t_app *app);
 void		regen(t_app *app, int *value);
 void		damage(t_app *app, int dmg);
 
-t_bool		circle_collision(t_app *app, t_line wall, t_vector2 *colpos);
+t_collision	circle_collision(t_app *app, int sector_id, int wall_id);
 
 /**
  * Sectors
