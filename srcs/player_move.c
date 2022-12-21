@@ -257,8 +257,9 @@ void	player_move(t_app *app, t_movement movement, double speed)
 	if (movement == UPWARD && app->player.flying && app->player.jump_timer == JUMP_TIME)
 	{
 		//----DEBUG FEATURE
-		if (app->player.jetpack == TRUE)
+		if (app->player.jetpack == TRUE && app->player.inventory.special_ammo > 0)
 			app->player.jetpack_boost = TRUE;
+		
 		//----
 	//	app->player.jetpack = TRUE;
 	}

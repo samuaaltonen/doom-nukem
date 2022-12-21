@@ -183,6 +183,7 @@ typedef struct s_app
 	t_timer			regen_timer;
 	t_timer			shoot_timer;
 	t_timer			item_timer;
+	t_timer			energy_timer;
 }	t_app;
 
 /**
@@ -260,6 +261,7 @@ void		heal(t_app *app);
 void		shield(t_app *app);
 void		regen(t_app *app, int *value);
 void		damage(t_app *app, int dmg);
+void		energy(t_app *app, int mod);
 
 t_bool		circle_collision(t_app *app, t_line wall, t_vector2 *colpos);
 

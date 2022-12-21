@@ -37,6 +37,12 @@ void	player_control(t_app *app)
 		app->conf->movement_speed = MOVEMENT_SPEED;
 	if (app->conf->keystates & C)
 		jetpack(app);
+	if (app->player.jetpack)
+		energy(app, -2);
+	else if (app->conf->keystates & SPACE && app->player.jetpack)
+		energy(app, -20);
+	else
+		energy(app, 1);
 }
 
 /**
@@ -102,7 +108,7 @@ void	jetpack(t_app *app)
 		if (check_timer(&app->item_timer) && app->player.jetpack)
 		{
 			app->player.jetpack = FALSE;
-			start_timer(&app->item_timer, 1);
+			start_timer(&app->item_timer, 4);
 		}
 			
 		else if (check_timer(&app->item_timer) && !app->player.jetpack)

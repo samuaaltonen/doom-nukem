@@ -34,6 +34,7 @@ void	start_game(t_app *app)
 	import_file(app, MAP_PATH);
 	//----DEBUG FEATURE
 	app->player.inventory.ammo = 20;
+	app->player.inventory.special_ammo = 200;
 	app->player.inventory.potion = 5;
 	app->player.inventory.antidote = 5;
 	app->player.weapons = 0;
