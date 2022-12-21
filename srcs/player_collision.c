@@ -6,15 +6,17 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:42:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/21 15:38:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/21 19:37:37 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * @brief Compares movement target position with wall endpoints and also to the
- * distance with closest point on wall.
+ * @brief Checks if collision is possible. Compares player position and movement
+ * position sides relative to wall and also if closest point on wall from
+ * movement pois is within wall segment or if movement position is close enough
+ * to wall endpoints.
  * 
  * @param app 
  * @param wall 
@@ -25,11 +27,17 @@ static t_bool	collision_possible(t_app *app, t_line wall)
 	t_vector2	intersection;
 
 	intersection = ft_closest_point(app->player.move_pos, wall);
-	return ((ft_point_distance(intersection, app->player.move_pos)
-			< COLLISION_OFFSET
-		&& ft_point_on_segment(wall, intersection))
-		|| ft_point_distance(app->player.move_pos, wall.a) < COLLISION_OFFSET
-		|| ft_point_distance(app->player.move_pos, wall.b) < COLLISION_OFFSET);
+	if (ft_point_on_segment(wall, intersection) 
+		&& ft_line_side(wall, app->player.move_pos)
+		!= ft_line_side(wall, app->player.pos))
+		return (TRUE);
+	if (ft_point_distance(intersection, app->player.move_pos)
+			< COLLISION_OFFSET && ft_point_on_segment(wall, intersection))
+		return (TRUE);
+	if (ft_point_distance(app->player.move_pos, wall.a) < COLLISION_OFFSET
+		|| ft_point_distance(app->player.move_pos, wall.b) < COLLISION_OFFSET)
+		return (TRUE);
+	return (FALSE);
 }
 
 /**
@@ -101,27 +109,28 @@ static t_bool	get_collision(t_app *app, t_line wall, t_vector2 *collision)
 
 /**
  * @brief Checks player collision with a wall. If there is collision, returns
- * TRUE and saves collision point to colpos.
+ * TRUE and saves collision point movement position.
  * 
  * @param app 
- * @param wall 
- * @param position 
- * @return t_bool 
+ * @param sector_id 
+ * @param wall_id 
+ * @param portal_id 
+ * @return t_collision 
  */
-t_collision	circle_collision(t_app *app, int sector_id, int wall_id)
+t_collision	circle_collision(t_app *app, int sector_id, int wall_id,
+	int portal_id)
 {
+	t_line		wall;
 	t_vector2	collision;
 	t_vector2	collision_on_line;
-	t_line		wall;
 
 	wall = get_wall_line(app, sector_id, wall_id);
-	if (!collision_possible(app, wall)
-		|| !get_collision(app, wall, &collision))
+	if (!collision_possible(app, wall) || !get_collision(app, wall, &collision))
 		return (COLLISION_NONE);
-	if (app->sectors[sector_id].wall_types[wall_id] != -1
-		&& app->sectors[sector_id].wall_textures[wall_id]
-			!= PARTIALLY_TRANSPARENT_TEXTURE_ID)
-		return (COLLISION_PORTAL);
+	if (portal_id != -1 && app->sectors[sector_id].wall_textures[wall_id]
+			!= PARTIALLY_TRANSPARENT_TEXTURE_ID
+		&& portal_can_enter(app, wall, sector_id, portal_id))
+			return (COLLISION_PORTAL);
 	collision_on_line = ft_closest_point(collision, wall);
 	if (ft_point_on_segment(wall, collision_on_line))
 	{
@@ -129,6 +138,6 @@ t_collision	circle_collision(t_app *app, int sector_id, int wall_id)
 		return (COLLISION_WALL);
 	}
 	ft_printf("collision on endpoint \n");
-		app->player.move_pos = collision;
+	app->player.move_pos = collision;
 	return (COLLISION_WALL);
 }
