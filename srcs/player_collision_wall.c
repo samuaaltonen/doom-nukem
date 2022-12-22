@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:42:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/21 20:11:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/22 17:01:06 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,27 @@ static t_bool	collision_possible(t_app *app, t_line wall)
 }
 
 /**
+ * @brief Calculates possible movement point based on preferred point and side.
+ * 
+ * @param wall 
+ * @param coord 
+ * @param side 
+ * @return t_vector2 
+ */
+t_vector2	get_possible_movement_point(t_line wall, t_vector2 coord, int side)
+{
+	t_vector2	cancel;
+	t_vector2	on_wall;
+
+	on_wall = ft_closest_point(coord, wall);
+	cancel = ft_vector_resize(ft_vector2_sub(coord, on_wall),
+			COLLISION_OFFSET + MOVE_MIN);
+	if (ft_line_side(wall, ft_vector2_add(on_wall, cancel)) == side)
+		return (ft_vector2_add(on_wall, cancel));
+	return (ft_vector2_sub(on_wall, cancel));
+}
+
+/**
  * @brief If there is a collision, calculates collision position on movement
  * line. Also checks if collision is on the other side of the wall (i.e. when
  * FPS is very low and movement speed high) and sets collision cancel direction
@@ -53,21 +74,13 @@ static t_bool	collision_possible(t_app *app, t_line wall)
  */
 static t_bool	get_collision(t_app *app, t_line wall, t_vector2 *collision)
 {
-	t_vector2	cancel;
 	t_vector2	line_intersection;
-	t_vector2	on_wall;
 
 	if (!ft_line_intersection((t_line){app->player.pos, app->player.move_pos},
 		wall, &line_intersection))
 		return (FALSE);
-	on_wall = ft_closest_point(app->player.move_pos, wall);
-	cancel = ft_vector_resize(ft_vector2_sub(app->player.move_pos, on_wall),
-			COLLISION_OFFSET + MOVE_MIN);
-	if (ft_line_side(wall, ft_vector2_add(on_wall, cancel))
-		== ft_line_side(wall, app->player.pos))
-		*collision = ft_vector2_add(on_wall, cancel);
-	else
-		*collision = ft_vector2_sub(on_wall, cancel);
+	*collision = get_possible_movement_point(wall, app->player.move_pos,
+		ft_line_side(wall, app->player.pos));
 	return (TRUE);
 }
 
@@ -81,7 +94,7 @@ static t_bool	get_collision(t_app *app, t_line wall, t_vector2 *collision)
  * @param portal_id 
  * @return t_collision 
  */
-t_collision	collision_wall(t_app *app, int sector_id, int wall_id,
+t_collision_type	collision_wall(t_app *app, int sector_id, int wall_id,
 	int portal_id)
 {
 	t_line		wall;
@@ -95,12 +108,23 @@ t_collision	collision_wall(t_app *app, int sector_id, int wall_id,
 		!= PARTIALLY_TRANSPARENT_TEXTURE_ID
 		&& portal_can_enter(app, wall, app->player.current_sector, portal_id))
 		return (COLLISION_PORTAL);
-	collision_on_line = ft_closest_point(collision, wall);
-	if (ft_point_on_segment(wall, collision_on_line))
+	if (app->player.total_collisions >= MAX_CONCURRENT_COLLISIONS - 1)
 	{
-		app->player.move_pos = collision;
+		app->player.move_pos = app->player.pos;
+		app->player.total_collisions = 0;
 		return (COLLISION_WALL);
 	}
-	app->player.move_pos = collision;
+	collision_on_line = ft_closest_point(collision, wall);
+	app->player.collisions[app->player.total_collisions] = (t_collision){wall,
+		collision};
+	app->player.total_collisions++;
+
+	if (ft_point_on_segment(wall, collision_on_line))
+	{
+		
+		//app->player.move_pos = collision;
+		return (COLLISION_WALL);
+	}
+	//app->player.move_pos = collision;
 	return (COLLISION_WALL);
 }

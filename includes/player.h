@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/21 15:34:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/22 16:15:24 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@
 # define HORIZON_LOWER_LIMIT -0.25
 # define PLAYER_HEIGHT 0.5
 # define COLLISION_OFFSET 0.25
+# define MAX_CONCURRENT_COLLISIONS 16
+# define MAX_COLLISION_POSITION_TRIES 32
 # define MAX_HP 200
 # define REGEN_TIME 5
 
@@ -52,11 +54,18 @@ typedef enum e_movement
 	DOWNWARD = 5
 }	t_movement;
 
-typedef enum e_collision
+typedef enum e_collision_type
 {
 	COLLISION_WALL,
 	COLLISION_PORTAL,
+	COLLISION_ERROR,
 	COLLISION_NONE
+}	t_collision_type;
+
+typedef struct s_collision
+{
+	t_line		wall;
+	t_vector2	preferred_movement;
 }	t_collision;
 
 typedef struct s_inventory
@@ -106,6 +115,8 @@ typedef struct s_player
 	t_weapon		equiped_weapon;
 	int				shield;
 	t_inventory		inventory;
+	t_collision		collisions[MAX_CONCURRENT_COLLISIONS];
+	int				total_collisions;
 }	t_player;
 
 typedef struct s_export_player
