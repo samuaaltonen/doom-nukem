@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:42:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/22 22:07:19 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/22 22:31:59 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,7 @@ t_collision_type	collision_wall(t_app *app, int sector_id, int wall_id,
 
 	wall = get_wall_line(app, sector_id, wall_id);
 	collision_type = collision_possible(app->player.pos, app->player.move_pos,
-		wall, sector_id == portal_id);
+			wall, sector_id == portal_id);
 	if (collision_type == COLLISION_NONE)
 		return (COLLISION_NONE);
 	if (portal_id != -1 && app->sectors[sector_id].wall_textures[wall_id]

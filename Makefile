@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/12/21 20:04:49 by saaltone         ###   ########.fr        #
+#    Updated: 2022/12/22 22:49:26 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -120,7 +120,6 @@ $(SDL2):
 all_2.24.2: $(LIBFT) $(LIBLINEARALGEBRA) 2.24.2 $(OBJS) $(DEPS)
 	$(CC) $(OBJS) -o $(NAME) $(SDL_CONF) $(FLAGS) $(HEADERS) $(LIBLINKS)
 
-
 2.24.2:
 	cd sdl/$(SDL_VNEW)/build && ../configure --prefix=$(PWD)/sdl/SDL2_build/ && make install
 
@@ -138,7 +137,7 @@ clean:
 	make clean -C ./liblinearalgebra
 	/bin/rm -rf $(BUILD_DIR)
 
-fclean: clean
+fclean: clean clean-sdl
 	make fclean -C ./libft
 	make fclean -C ./liblinearalgebra
 	/bin/rm -f $(NAME)

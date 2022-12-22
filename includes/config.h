@@ -6,14 +6,12 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/22 21:02:24 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/22 22:46:02 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CONFIG_H
 # define CONFIG_H
-
-# include "doomnukem.h"
 
 # define WIN_NAME "Doom Nukem"
 # define WIN_W 1280
@@ -56,15 +54,6 @@
 # define MAX_DECOR 10
 # define PARTIALLY_TRANSPARENT_TEXTURE_ID 0
 # define FULLY_TRANSPARENT_TEXTURE_ID 1
-# define DECOR_SIZE 1.0
-# define INTERACTION_ACTION_DISTANCE 1.5
-# define MAX_CONCURRENT_ANIMATIONS 16
-# define ANIMATION_DURATION_LIGHT 0.5 // seconds per light level
-# define ANIMATION_DURATION_HEIGHT 0.25 // seconds per meter
-# define ANIMATION_DURATION_TEXT 0.015625 // seconds per char
-# define ANIMATION_DURATION_TEXT_END 3.5 // seconds after full text displayed
-# define MAX_TEXT_LINES 16
-# define MAX_TEXT_LINE_LENGTH 1024
 
 /**
  * Struct for threads about their specific identifiers and locks for signaling.
