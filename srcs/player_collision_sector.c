@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 20:03:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/22 17:48:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/22 22:25:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ t_bool	collision_sector_portal(t_app *app, int sector_id, int portal_id,
 	if (has_been_visited(portal_id, visited, FALSE))
 	{
 		if (app->sectors[sector_id].parent_sector == portal_id
+			&& !inside_sector(app, sector_id, app->player.move_pos)
 			&& inside_sector(app, portal_id, app->player.move_pos))
 			portal_enter(app, portal_id);
 		return (TRUE);

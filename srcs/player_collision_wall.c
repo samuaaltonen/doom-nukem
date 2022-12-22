@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:42:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/22 21:49:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/22 22:07:19 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,31 +18,47 @@
  * movement pois is within wall segment or if movement position is close enough
  * to wall endpoints.
  * 
- * @param app 
  * @param start_pos 
  * @param end_pos 
  * @param wall 
- * @return t_bool 
+ * @param is_member 
+ * @return t_collision_type 
  */
-t_bool	collision_possible(t_vector2 start_pos, t_vector2 end_pos, t_line wall,
-	t_bool is_member)
+t_collision_type	collision_possible(t_vector2 start_pos, t_vector2 end_pos,
+	t_line wall, t_bool is_member)
 {
 	t_vector2	intersection;
 
 	if (is_member && !ft_line_side(wall, start_pos))
-		return (FALSE);
+		return (COLLISION_NONE);
 	intersection = ft_closest_point(end_pos, wall);
 	if (ft_point_on_segment(wall, intersection)
 		&& ft_line_side(wall, end_pos)
 		!= ft_line_side(wall, start_pos))
-		return (TRUE);
+		return (COLLISION_WALL);
 	if (ft_point_distance(intersection, end_pos)
 		< COLLISION_OFFSET && ft_point_on_segment(wall, intersection))
-		return (TRUE);
+		return (COLLISION_WALL);
 	if (ft_point_distance(end_pos, wall.a) < COLLISION_OFFSET
 		|| ft_point_distance(end_pos, wall.b) < COLLISION_OFFSET)
-		return (TRUE);
-	return (FALSE);
+		return (COLLISION_ENDPOINT);
+	return (COLLISION_NONE);
+}
+
+/**
+ * @brief Modifies wall by extending it to fit COLLISION_OFFSET at endpoints.
+ * 
+ * @param wall 
+ */
+void	collision_endpoint(t_line *wall)
+{
+	t_vector2	normalized;
+
+	normalized = ft_vector2_normalize(ft_vector2_sub(wall->b, wall->a));
+	wall->a.x -= normalized.x * COLLISION_OFFSET;
+	wall->a.y -= normalized.y * COLLISION_OFFSET;
+	wall->b.x += normalized.x * COLLISION_OFFSET;
+	wall->b.y += normalized.y * COLLISION_OFFSET;
 }
 
 /**
@@ -79,11 +95,13 @@ t_vector2	get_possible_movement_point(t_line wall, t_vector2 coord, int side)
 t_collision_type	collision_wall(t_app *app, int sector_id, int wall_id,
 	int portal_id)
 {
-	t_line		wall;
+	t_collision_type	collision_type;
+	t_line				wall;
 
 	wall = get_wall_line(app, sector_id, wall_id);
-	if (!collision_possible(app->player.pos, app->player.move_pos, wall,
-		sector_id == portal_id))
+	collision_type = collision_possible(app->player.pos, app->player.move_pos,
+		wall, sector_id == portal_id);
+	if (collision_type == COLLISION_NONE)
 		return (COLLISION_NONE);
 	if (portal_id != -1 && app->sectors[sector_id].wall_textures[wall_id]
 		!= PARTIALLY_TRANSPARENT_TEXTURE_ID
@@ -95,6 +113,8 @@ t_collision_type	collision_wall(t_app *app, int sector_id, int wall_id,
 		app->player.total_collisions = 0;
 		return (COLLISION_WALL);
 	}
+	if (collision_type == COLLISION_ENDPOINT)
+		collision_endpoint(&wall);
 	app->player.collisions[app->player.total_collisions] = wall;
 	app->player.total_collisions++;
 	return (COLLISION_WALL);
