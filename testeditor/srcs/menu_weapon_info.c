@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_weapon_info.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:32:37 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/19 16:12:59 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/22 23:53:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,18 +50,26 @@ static void	render_weapon_texts(t_app *app)
 
 	render_text(app, (t_rect){40, 102, 100, 15}, "DAMAGE");
 	statics = ft_itoa(app->player.weapons[app->player.selected_weapon].damage);
+	if (!statics)
+		return ;
 	render_text(app, (t_rect){220, 102, 100, 15}, statics);
 	free(statics);
 	render_text(app, (t_rect){40, 115, 100, 15}, "RANGE");
 	statics = ft_itoa(app->player.weapons[app->player.selected_weapon].range);
+	if (!statics)
+		return ;
 	render_text(app, (t_rect){220, 115, 100, 15}, statics);
 	free(statics);
 	render_text(app, (t_rect){40, 128, 100, 15}, "RPS");
 	statics = ft_itoa(app->player.weapons[app->player.selected_weapon].fire_rate);
+	if (!statics)
+		return ;
 	render_text(app, (t_rect){220, 128, 100, 15}, statics);
 	free(statics);
 	render_text(app, (t_rect){40, 141, 100, 15}, "MAGAZINE");
 	statics = ft_itoa(app->player.weapons[app->player.selected_weapon].magazine);
+	if (!statics)
+		return ;
 	render_text(app, (t_rect){120, 141, 100, 15}, statics);
 	free(statics);
 }

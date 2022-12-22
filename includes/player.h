@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/22 21:57:22 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/22 23:38:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,13 @@ typedef enum e_movement
 	DOWNWARD = 5
 }	t_movement;
 
-typedef enum e_collision_type
+typedef enum e_collision
 {
 	COLLISION_WALL,
 	COLLISION_PORTAL,
 	COLLISION_ENDPOINT,
 	COLLISION_NONE
-}	t_collision_type;
+}	t_collision;
 
 typedef struct s_inventory
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_inventory_info.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:09:50 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/19 16:20:08 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/22 23:53:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,31 +51,51 @@ static void	render_inventory_texts(t_app *app, int x, int y)
 	render_text(app, (t_rect){10, 288, 150, 20}, "INVENTORY");
 	change_font(app, 11, TEXT);
 	amount = ft_itoa(app->player.inventory.ammo);
+	if (!amount)
+		return ;
 	render_text(app, (t_rect){x, y + 1, 30, 20}, amount);
 	free(amount);
 	amount = ft_itoa(app->player.inventory.special_ammo);
+	if (!amount)
+		return ;
 	render_text(app, (t_rect){x + 42, y + 1, 30, 20}, amount);
 	free(amount);
 	amount = ft_itoa(app->player.inventory.potion);
+	if (!amount)
+		return ;
 	render_text(app, (t_rect){x + 84, y + 1, 30, 20}, amount);
 	free(amount);
 	amount = ft_itoa(app->player.inventory.antidote);
+	if (!amount)
+		return ;
 	render_text(app, (t_rect){x + 128, y + 1, 30, 20}, amount);
 	free(amount);
 	amount = ft_itoa(app->player.inventory.key);
+	if (!amount)
+		return ;
 	render_text(app, (t_rect){x + 170, y + 1, 30, 20}, amount);
 	free(amount);
 	amount = ft_itoa(app->player.inventory.jetpack);
+	if (!amount)
+		return ;
 	render_text(app, (t_rect){x, y + 44, 30, 20}, amount);
 	free(amount);
 	// render_text(app, (t_rect){x + 42, y + 44, 30, 20},
 	// 	ft_itoa(app->player.inventory.item1));
+	// 	if (!amount)
+	// 		return ;
 	// render_text(app, (t_rect){x + 84, y + 44, 30, 20},
 	// 	ft_itoa(app->player.inventory.item2));
+	// 	if (!amount)
+	// 		return ;
 	// render_text(app, (t_rect){x + 128, y + 44, 30, 20},
 	// 	ft_itoa(app->player.inventory.item3));
+	// 	if (!amount)
+	// 		return ;
 	// render_text(app, (t_rect){x + 170, y + 44, 30, 20},
 	// 	ft_itoa(app->player.inventory.item4));
+	// 	if (!amount)
+	// 		return ;
 	render_text(app, (t_rect){30, y + 90, 255, 50}, "LEFT CLICK ITEMS AND USE \
 ARROW KEYS TO CHANGE THE AMOUNT.");
 }

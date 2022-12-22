@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_sector_info.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:54:40 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/19 15:56:17 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/22 23:52:46 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,8 @@ static void	render_walls_info(t_app *app, t_point screen_pos)
 	toggle_active_color(app, app->light_edit, "LIGHT",
 		(t_rect){28, 365, 260, 15});
 	light = ft_itoa(app->active_sector->light);
+	if (!light)
+		return ;
 	render_text(app, (t_rect){235, 364, 100, 15}, light);
 	free(light);
 	if (!app->current_interaction)

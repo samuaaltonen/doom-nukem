@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/22 22:40:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/22 23:37:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ typedef struct s_audio
 	Uint32				sound_length;
 }	t_audio;
 
-
 enum e_enemy_states
 {
 	IDLE,
@@ -99,7 +98,6 @@ typedef struct s_enemy_def
 	double	range;
 	float	states[4][3];
 }	t_enemy_def;
-
 
 typedef struct s_enemy_state
 {
@@ -135,7 +133,7 @@ typedef struct s_color
 {
 	int	a;
 	int	r;
-	int g;
+	int	g;
 	int	b;
 }	t_color;
 
@@ -260,9 +258,9 @@ void		damage(t_app *app, int dmg);
 void		collisions_check(t_app *app);
 t_vector2	collisions_apply(t_app *app);
 t_bool		collision_sector(t_app *app, int sector_id, int *visited);
-t_collision_type	collision_wall(t_app *app, int sector_id, int wall_id,
+t_collision	collision_wall(t_app *app, int sector_id, int wall_id,
 				int portal_id);
-t_collision_type	collision_possible(t_vector2 start_pos, t_vector2 end_pos,
+t_bool		collision_possible(t_vector2 start_pos, t_vector2 end_pos,
 				t_line wall, t_bool is_member);
 t_vector2	get_possible_movement_point(t_line wall, t_vector2 coord, int side);
 t_bool		portal_can_enter(t_app *app, t_line wall, int source_sector,
@@ -329,7 +327,6 @@ void		render_textmodals(t_app *app);
  * Sky
  */
 int			get_sky_pixel(t_app *app, int x, int y);
-void		sector_sky_render(t_app *app, t_thread_data *thread);
 
 /**
  * Font

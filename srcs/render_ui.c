@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_ui.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/16 14:08:06 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/22 23:54:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	hud_weapon(t_app *app, t_rect rect)
 		i++;
 	}
 	ammo = ft_itoa(app->player.inventory.ammo);
+	if (!ammo)
+		return ;
 	change_font(app, 16, CYAN);
 	render_text(app, (t_rect){1136, 626, 64, 64}, ammo);
 	free(ammo);
@@ -71,6 +73,8 @@ void	hud_quickslot(t_app *app, t_rect rect, char *slot)
 	SDL_Surface *sprite;
 	char			*amount;
 
+	sprite = NULL;
+	amount = NULL;
 	if (slot[0] == 'Q')
 	{
 		sprite = app->assets.hp;
@@ -81,6 +85,8 @@ void	hud_quickslot(t_app *app, t_rect rect, char *slot)
 		sprite = app->assets.shield;
 		amount = ft_itoa(app->player.inventory.antidote);
 	}
+	if (!amount || !sprite)
+		return ;
 	render_text_prompt(app, rect, 1, slot);
 	rect.x += 8;
 	rect.y += 32;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_player_info.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:56:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/19 16:15:18 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/22 23:52:37 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,8 @@ void	player_edit_menu(t_app *app)
 	change_font(app, 15, TEXT);
 	render_text(app, (t_rect){10, 165, 50, 20}, "ARMOR");
 	status = ft_itoa(app->player.armor);
+	if (!status)
+		return ;
 	render_text(app, (t_rect){112, 165, 50, 20}, status);
 	free(status);
 	render_text(app, (t_rect){140, 165, 80, 20}, " / 200");
@@ -143,6 +145,8 @@ void	player_edit_menu(t_app *app)
 	change_font(app, 15, TEXT);
 	render_text(app, (t_rect){10, 225, 50, 20}, "HEALTH");
 	status = ft_itoa(app->player.health);
+	if (!status)
+		return ;
 	render_text(app, (t_rect){112, 225, 50, 20}, status);
 	free(status);
 	render_text(app, (t_rect){140, 225, 80, 20}, " / 200");

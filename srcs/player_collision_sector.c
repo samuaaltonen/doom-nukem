@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 20:03:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/22 22:25:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/22 23:38:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,10 +72,10 @@ static t_bool	has_been_visited(int sector_id, int *visited,
  */
 static void	member_collisions(t_app *app, int sector_id)
 {
-	t_collision_type	collision_type;
-	int					i;
-	int					j;
-	int					member_id;
+	t_collision	collision_type;
+	int			i;
+	int			j;
+	int			member_id;
 
 	i = -1;
 	while (++i < MAX_MEMBER_SECTORS
@@ -134,9 +134,9 @@ t_bool	collision_sector_portal(t_app *app, int sector_id, int portal_id,
  */
 t_bool	collision_sector(t_app *app, int sector_id, int *visited)
 {
-	t_collision_type	collision_type;
-	int					i;
-	int					portal_id;
+	t_collision	collision_type;
+	int			i;
+	int			portal_id;
 
 	if (has_been_visited(sector_id, visited, TRUE))
 		return (TRUE);

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/22 22:46:02 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/22 23:34:06 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct s_thread_data
 	pthread_mutex_t	lock;
 }	t_thread_data;
 
-typedef struct	s_level_header
+typedef struct s_level_header
 {
 	int	version;
 	int	sector_count;
