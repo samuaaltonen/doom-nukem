@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:42:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/22 17:51:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/22 21:49:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,13 @@
  * @param wall 
  * @return t_bool 
  */
-t_bool	collision_possible(t_vector2 start_pos, t_vector2 end_pos, t_line wall)
+t_bool	collision_possible(t_vector2 start_pos, t_vector2 end_pos, t_line wall,
+	t_bool is_member)
 {
 	t_vector2	intersection;
 
+	if (is_member && !ft_line_side(wall, start_pos))
+		return (FALSE);
 	intersection = ft_closest_point(end_pos, wall);
 	if (ft_point_on_segment(wall, intersection)
 		&& ft_line_side(wall, end_pos)
@@ -79,7 +82,8 @@ t_collision_type	collision_wall(t_app *app, int sector_id, int wall_id,
 	t_line		wall;
 
 	wall = get_wall_line(app, sector_id, wall_id);
-	if (!collision_possible(app->player.pos, app->player.move_pos, wall))
+	if (!collision_possible(app->player.pos, app->player.move_pos, wall,
+		sector_id == portal_id))
 		return (COLLISION_NONE);
 	if (portal_id != -1 && app->sectors[sector_id].wall_textures[wall_id]
 		!= PARTIALLY_TRANSPARENT_TEXTURE_ID

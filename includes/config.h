@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/22 15:19:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/22 21:02:24 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 # define WIN_NAME "Doom Nukem"
 # define WIN_W 1280
 # define WIN_H 720
-# define THREAD_COUNT 12
+# define THREAD_COUNT 6
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
 # define FOV 83
@@ -27,7 +27,7 @@
 # define TEX_OBJECT 128
 # define SKYBOX_W 1536
 # define SKYBOX_H 1088
-# define MOUSE_SENSITIVITY_HORIZONTAL 0.3
+# define MOUSE_SENSITIVITY_HORIZONTAL 0.2
 # define MOUSE_SENSITIVITY_VERTICAL 0.2
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 16

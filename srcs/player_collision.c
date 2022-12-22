@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 20:04:35 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/22 17:47:53 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/22 21:47:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ t_vector2	collisions_apply(t_app *app)
 		while (++i < app->player.total_collisions)
 		{
 			if (!collision_possible(app->player.pos, app->player.move_pos,
-					app->player.collisions[i]))
+					app->player.collisions[i], FALSE))
 				continue ;
 			app->player.move_pos = get_possible_movement_point(
 					app->player.collisions[i], app->player.move_pos,
