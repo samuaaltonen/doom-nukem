@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 20:03:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/22 16:01:57 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/22 17:48:07 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,9 +69,8 @@ static t_bool	has_been_visited(int sector_id, int *visited,
  * 
  * @param app 
  * @param sector_id 
- * @return t_bool 
  */
-static t_bool	member_collisions(t_app *app, int sector_id)
+static void	member_collisions(t_app *app, int sector_id)
 {
 	t_collision_type	collision_type;
 	int					i;
@@ -87,17 +86,11 @@ static t_bool	member_collisions(t_app *app, int sector_id)
 		while (++j < app->sectors[member_id].corner_count)
 		{
 			collision_type = collision_wall(app, member_id, j, member_id);
-			if (collision_type == COLLISION_NONE)
-				continue ;
-			if (collision_type == COLLISION_WALL)
-				return (FALSE);
-			if (!inside_sector(app, member_id, app->player.move_pos))
-				continue ;
-			portal_enter(app, member_id);
-			break ;
+			if (collision_type == COLLISION_PORTAL
+				&& inside_sector(app, member_id, app->player.move_pos))
+				portal_enter(app, member_id);
 		}
 	}
-	return (TRUE);
 }
 
 /**
@@ -146,19 +139,14 @@ t_bool	collision_sector(t_app *app, int sector_id, int *visited)
 
 	if (has_been_visited(sector_id, visited, TRUE))
 		return (TRUE);
-	if (!member_collisions(app, sector_id))
-		return (FALSE);
+	member_collisions(app, sector_id);
 	i = -1;
 	while (++i < app->sectors[sector_id].corner_count)
 	{
 		portal_id = app->sectors[sector_id].wall_types[i];
 		collision_type = collision_wall(app, sector_id, i, portal_id);
-		if (collision_type == COLLISION_NONE)
-			continue ;
-		if (collision_type == COLLISION_WALL)
-			return (FALSE);
-		if (!collision_sector_portal(app, sector_id, portal_id, visited))
-			return (FALSE);
+		if (collision_type == COLLISION_PORTAL)
+			collision_sector_portal(app, sector_id, portal_id, visited);
 	}
 	return (TRUE);
 }

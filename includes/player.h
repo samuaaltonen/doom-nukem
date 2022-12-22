@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/22 16:15:24 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/22 17:06:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,6 @@ typedef enum e_collision_type
 	COLLISION_NONE
 }	t_collision_type;
 
-typedef struct s_collision
-{
-	t_line		wall;
-	t_vector2	preferred_movement;
-}	t_collision;
-
 typedef struct s_inventory
 {
 	int			ammo;
@@ -115,7 +109,7 @@ typedef struct s_player
 	t_weapon		equiped_weapon;
 	int				shield;
 	t_inventory		inventory;
-	t_collision		collisions[MAX_CONCURRENT_COLLISIONS];
+	t_line			collisions[MAX_CONCURRENT_COLLISIONS];
 	int				total_collisions;
 }	t_player;
 

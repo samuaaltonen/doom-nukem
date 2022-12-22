@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/22 16:12:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/22 17:44:53 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	update_position(t_app *app)
 
 	app->player.move_pos = ft_vector2_add(app->player.pos, ft_vec2_mult(app->player.move_vector, app->conf->delta_time));
 	collisions_check(app);
-	collisions_apply(app);
+	app->player.pos = collisions_apply(app);
 }
 
 /**
