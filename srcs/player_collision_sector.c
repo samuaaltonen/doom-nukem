@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 20:03:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/22 23:38:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/23 00:08:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * @param coord 
  * @return t_bool 
  */
-static t_bool	inside_sector(t_app *app, int sector_id, t_vector2 coord)
+t_bool	inside_sector(t_app *app, int sector_id, t_vector2 coord)
 {
 	int	i;
 

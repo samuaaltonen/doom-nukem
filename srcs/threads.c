@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/08 15:21:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/23 00:24:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,8 @@ void	threads_work(t_thread_data *threads_data)
 			exit_error(MSG_ERROR_THREADS_SIGNAL);
 		if (threads_data[i].has_work)
 		{
-			SDL_Delay(1);
+			if (!USING_LINUX)
+				SDL_Delay(1);
 			i = -1;
 		}
 	}
