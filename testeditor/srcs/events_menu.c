@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:38:26 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/16 15:50:00 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/20 14:59:11 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ void	interaction_menu_events(t_app *app, int start_y, t_point screen_pos)
 	{
 		if (screen_pos.x > HELP_MENU_W)
 		{
-			app->current_interaction->target_sector = click_sector(app);
+			app->current_interaction->target_sector = find_child_sector(app);
+			if (!app->current_interaction->target_sector)
+				app->current_interaction->target_sector = click_sector(app);
 			if (!app->current_interaction->target_sector)
 				app->current_interaction->target_sector = app->active_sector;
 		}

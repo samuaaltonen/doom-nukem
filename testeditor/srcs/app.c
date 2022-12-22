@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/15 14:47:14 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/20 15:02:16 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	app_render(t_app *app)
 		render_sector(app, app->active);
 		render_point(app, app->active->point, 3, POINT);
 	}
+	if (app->interaction_menu && app->current_interaction)
+		render_target_sector_lines(app);
 	render_sector_points(app);
 	if (app->list_ongoing)
 	{

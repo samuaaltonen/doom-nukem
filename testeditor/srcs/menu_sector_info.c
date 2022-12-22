@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:54:40 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/16 15:40:18 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/19 15:56:17 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,17 @@
 */
 static void	render_ceiling_info(t_app *app)
 {
+	char	*height;
+
 	toggle_active_color(app, app->ceiling_edit, "CEILING",
 		(t_rect){114, 488, 200, 15});
 	if (app->ceiling_edit && !app->slope_edit)
 		toggle_active_color(app, 1, "HEIGHT", (t_rect){28, 562, 260, 15});
 	else
 		toggle_active_color(app, 0, "HEIGHT", (t_rect){28, 562, 260, 15});
-	render_text(app, (t_rect){215, 561, 100, 15},
-		ft_ftoa(app->active_sector->ceil_height, 4));
+	height = ft_ftoa(app->active_sector->ceil_height, 4);
+	render_text(app, (t_rect){215, 561, 100, 15}, height);
+	free(height);
 	if (app->ceiling_edit && app->active_sector->ceil_slope_wall
 		&& app->slope_edit)
 	{
@@ -36,11 +39,10 @@ static void	render_ceiling_info(t_app *app)
 		toggle_active_color(app, app->slope_edit, "SLOPE",
 			(t_rect){28, 577, 260, 15});
 	}
+	height = ft_ftoa(app->active_sector->ceil_slope_height, 4);
 	if (app->active_sector->ceil_slope_wall)
-	{
-		render_text(app, (t_rect){215, 576, 100, 15},
-			ft_ftoa(app->active_sector->ceil_slope_height, 4));
-	}
+		render_text(app, (t_rect){215, 576, 100, 15}, height);
+	free(height);
 }
 
 /**
@@ -48,14 +50,17 @@ static void	render_ceiling_info(t_app *app)
 */
 static void	render_floor_info(t_app *app)
 {
+	char	*height;
+
 	toggle_active_color(app, app->floor_edit, "FLOOR",
 		(t_rect){122, 390, 200, 15});
 	if (app->floor_edit && !app->slope_edit)
 		toggle_active_color(app, 1, "HEIGHT", (t_rect){28, 465, 260, 15});
 	else
 		toggle_active_color(app, 0, "HEIGHT", (t_rect){28, 465, 260, 15});
-	render_text(app, (t_rect){215, 464, 100, 15},
-		ft_ftoa(app->active_sector->floor_height, 4));
+	height = ft_ftoa(app->active_sector->floor_height, 4);
+	render_text(app, (t_rect){215, 464, 100, 15}, height);
+	free(height);
 	if (app->floor_edit && app->active_sector->floor_slope_wall
 		&& app->slope_edit)
 	{
@@ -67,11 +72,10 @@ static void	render_floor_info(t_app *app)
 		toggle_active_color(app, app->slope_edit, "SLOPE",
 			(t_rect){28, 480, 260, 15});
 	}
+	height = ft_ftoa(app->active_sector->floor_slope_height, 4);
 	if (app->active_sector->floor_slope_wall)
-	{
-		render_text(app, (t_rect){215, 479, 100, 15},
-			ft_ftoa(app->active_sector->floor_slope_height, 4));
-	}
+		render_text(app, (t_rect){215, 479, 100, 15}, height);
+	free(height);
 }
 
 /**
@@ -81,13 +85,15 @@ static void	render_floor_info(t_app *app)
 static void	render_walls_info(t_app *app, t_point screen_pos)
 {
 	int		id;
+	char	*light;
 
 	toggle_active_color(app, app->wall_edit, "WALL",
 		(t_rect){125, 292, 200, 15});
 	toggle_active_color(app, app->light_edit, "LIGHT",
 		(t_rect){28, 365, 260, 15});
-	render_text(app, (t_rect){235, 364, 100, 15},
-		ft_itoa(app->active_sector->light));
+	light = ft_itoa(app->active_sector->light);
+	render_text(app, (t_rect){235, 364, 100, 15}, light);
+	free(light);
 	if (!app->current_interaction)
 		id = find_sector_interaction(app, 0, 1);
 	else

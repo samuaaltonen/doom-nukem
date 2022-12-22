@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/08 17:20:04 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/21 15:27:47 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,46 @@ RIGHT. TO CREATE A MEMBER SECTOR, PRESS 'C' WHEN SECTOR IS SELECTED.");
 	render_text(app, (t_rect){20, y + 150, 260, 15}, "DIVIDE GRID ( Z / X )");
 	render_text(app, (t_rect){20, y + 165, 260, 15}, "MOVE ( WASD )");
 	render_text(app, (t_rect){20, y + 180, 250, 15}, "ZOOM ( SCROLL )");
+}
+
+/**
+ * Renders the buttons on the upper right corner.
+*/
+static void	render_button_menu(t_app *app, t_point screen_pos)
+{
+	int		index;
+	int		y;
+
+	index = -1;
+	y = 10;
+	while (++index < 4)
+	{
+		if (y == 40 && !app->active_sector)
+		{
+			y += 30;
+			continue ;
+		}
+		if (check_mouse(screen_pos, (t_rect){WIN_W - 160, y, 150, 20}))
+			color_surface(app->assets.ui_frame, ACTIVE_TEXT);
+		render_ui_frame(app, (t_rect){WIN_W - 160, y, 150, 25}, 1, BG_MENU);
+		color_surface(app->assets.ui_frame, TEXT);
+		y += 30;
+	}
+	if (app->active_sector)
+	{
+		toggle_active_color(app, app->list_creation, "CREATE MEMBER",
+			(t_rect){WIN_W - 135, 17, 150, 15});
+		toggle_active_color(app, app->object_new, "ADD OBJECT",
+			(t_rect){WIN_W - 120, 47, 150, 15});
+	}
+	else
+	{
+		toggle_active_color(app, app->list_creation, "CREATE SECTOR",
+			(t_rect){WIN_W - 135, 17, 150, 15});
+	}
+	toggle_active_color(app, 0, "SAVE", (t_rect){WIN_W - 100, 77, 150, 15});
+	toggle_active_color(app, app->imported, "OPEN",
+		(t_rect){WIN_W - 100, 108, 150, 15});
 }
 
 /**
@@ -56,6 +96,8 @@ static void	help_menu_texts(t_app *app)
 		object_edit_menu(app);
 	else
 		main_menu(app, 40);
+	color_surface(app->assets.ui_frame, TEXT);
+	render_button_menu(app, screen_pos);
 }
 
 /**

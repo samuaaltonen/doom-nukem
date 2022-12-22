@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:21:08 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/16 15:38:25 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/20 15:04:47 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,4 +127,21 @@ int	find_object_interaction(t_app *app, int start_id, t_bool direction)
 		index--;
 	}
 	return (-1);
+}
+
+/**
+ * Renders colored outlines for the interaction's target sector.
+*/
+void	render_target_sector_lines(t_app *app)
+{
+	t_vec2_lst	*tmp;
+
+	tmp = app->current_interaction->target_sector->wall_list;
+	while (tmp->next)
+	{
+		draw_list_lines(app, tmp, tmp->next, TEXT);
+		if (tmp->next == app->current_interaction->target_sector->wall_list)
+			break ;
+		tmp = tmp->next;
+	}
 }

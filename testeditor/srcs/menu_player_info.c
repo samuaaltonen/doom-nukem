@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:56:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/08 18:09:20 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/19 16:15:18 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,8 @@ static void	check_player_statusbars(t_app *app)
 */
 void	player_edit_menu(t_app *app)
 {
+	char	*status;
+
 	check_player_statusbars(app);
 	change_font(app, 15, TEXT);
 	render_text(app, (t_rect){10, 40, 50, 20}, "WEAPONS");
@@ -130,7 +132,9 @@ void	player_edit_menu(t_app *app)
 	render_weapons(app);
 	change_font(app, 15, TEXT);
 	render_text(app, (t_rect){10, 165, 50, 20}, "ARMOR");
-	render_text(app, (t_rect){112, 165, 50, 20}, ft_itoa(app->player.armor));
+	status = ft_itoa(app->player.armor);
+	render_text(app, (t_rect){112, 165, 50, 20}, status);
+	free(status);
 	render_text(app, (t_rect){140, 165, 80, 20}, " / 200");
 	change_font(app, 11, TEXT);
 	render_text(app, (t_rect){25, 187, 50, 20}, "<");
@@ -138,7 +142,9 @@ void	player_edit_menu(t_app *app)
 	render_statusbar(app, (t_point){39, 185}, app->player.armor, TEXT);
 	change_font(app, 15, TEXT);
 	render_text(app, (t_rect){10, 225, 50, 20}, "HEALTH");
-	render_text(app, (t_rect){112, 225, 50, 20}, ft_itoa(app->player.health));
+	status = ft_itoa(app->player.health);
+	render_text(app, (t_rect){112, 225, 50, 20}, status);
+	free(status);
 	render_text(app, (t_rect){140, 225, 80, 20}, " / 200");
 	change_font(app, 11, TEXT);
 	render_text(app, (t_rect){25, 247, 50, 20}, "<");

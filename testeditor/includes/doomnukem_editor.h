@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/16 15:27:51 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/20 15:05:35 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -592,6 +592,8 @@ int				find_object_interaction(t_app *app, int start_id, t_bool direction);
 int				find_sector_interaction(t_app *app, int start_id, t_bool direction);
 int				find_interaction(t_app *app);
 void			delete_interaction(t_app *app, int id);
+void			del_all_decor_interactions(t_app *app);
+void			render_target_sector_lines(t_app *app);
 
 
 void	fill_triangle(t_app *app, t_point a, t_point b, t_point c, int color);
