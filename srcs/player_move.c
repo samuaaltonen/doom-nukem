@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/23 00:22:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/23 00:55:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,25 +82,16 @@ void	update_elevation(t_app *app)
 		app->player.elevation_velocity = GRAVITY * JETPACK_FALL;
 	else if (app->player.flying)
 		app->player.elevation_velocity += GRAVITY * app->conf->delta_time;
+	if (app->player.elevation < floor_height)
+	{
+		if (!app->player.jetpack)
+			app->player.flying = FALSE;
+		app->player.elevation_velocity = (floor_height - app->player.elevation) * -GRAVITY;
+	}
 	if (ceil_height < app->player.elevation + PLAYER_HEIGHT)
 		app->player.elevation = ceil_height - PLAYER_HEIGHT;
 	else
 		app->player.elevation += app->player.elevation_velocity * app->conf->delta_time;
-
-	if (app->player.elevation < floor_height)
-	{
-		//ft_printf("stepping %f\n", app->player.elevation);
-		if (!app->player.jetpack)
-		{
-			app->player.flying = FALSE;
-			app->player.elevation_velocity = 0.0;
-		}
-		//app->player.elevation = ft_lerp(app->player.elevation, floor_height, app->player.step_timer);
-		app->player.elevation = floor_height;
-		app->player.step_timer += app->conf->delta_time;
-	}
-	else
-		app->player.step_timer = 0.0;
 }
 
 /**

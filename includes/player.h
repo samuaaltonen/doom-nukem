@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/22 23:38:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/23 00:32:24 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ typedef enum e_collision
 {
 	COLLISION_WALL,
 	COLLISION_PORTAL,
-	COLLISION_ENDPOINT,
 	COLLISION_NONE
 }	t_collision;
 
@@ -103,7 +102,6 @@ typedef struct s_player
 	t_bool			jetpack;
 	t_bool			jetpack_boost;
 	double			jump_timer;
-	double			step_timer;
 	int				hp;
 	int				weapons;
 	t_weapon		equiped_weapon;
