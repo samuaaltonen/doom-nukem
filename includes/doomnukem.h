@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/23 00:24:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/23 01:11:06 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -245,6 +245,7 @@ void		player_control(t_app *app);
 void		player_rotate(t_app *app, double angle);
 void		player_horizon(t_app *app, double change);
 void		player_move(t_app *app, t_movement movement, double speed);
+void		player_elevate(t_app *app, t_movement movement, double speed);
 void		update_position(t_app *app);
 void		player_shoot(t_app *app);
 void		player_reload(t_app *app);
@@ -270,7 +271,8 @@ t_vector2	get_possible_movement_point(t_line wall, t_vector2 coord, int side);
 t_bool		portal_can_enter(t_app *app, t_line wall, int source_sector,
 				int target_sector);
 void		portal_enter(t_app *app, int sector_id);
-t_bool		inside_sector(t_app *app, int sector_id, t_vector2 coord);
+t_bool		inside_sector(t_app *app, int sector_id, t_vector2 coord);\
+void		check_player_sector(t_app *app);
 
 /**
  * Sectors

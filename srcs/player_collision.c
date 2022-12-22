@@ -6,11 +6,39 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 20:04:35 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/22 23:33:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/23 01:06:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
+
+/**
+ * @brief Checks if player is actually inside a member sector and switches it
+ * there if that is the case (can happen when 2 or more member sectors are on
+ * top of each other and player is moving from one member sector to another).
+ * 
+ * @param app 
+ */
+void	check_player_sector(t_app *app)
+{
+	int	i;
+
+	if (app->sectors[app->player.current_sector].parent_sector != -1)
+		return ;
+	i = -1;
+	while (++i < MAX_MEMBER_SECTORS
+		&& app->sectors[app->player.current_sector].member_sectors[i] >= 0)
+	{
+		if (inside_sector(app,
+				app->sectors[app->player.current_sector].member_sectors[i],
+				app->player.pos))
+		{
+			portal_enter(app,
+				app->sectors[app->player.current_sector].member_sectors[i]);
+			return ;
+		}
+	}
+}
 
 /**
  * @brief Starts recursive collision check, which gathers all collisions into

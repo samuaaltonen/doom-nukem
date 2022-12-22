@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/22 18:04:06 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/23 01:05:15 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ void	handle_movement(t_app *app)
 	if (app->conf->keystates & RIGHT)
 		player_rotate(app, ROTATION_SPEED * app->conf->delta_time);
 	if (app->conf->keystates & SPACE && !app->player.jetpack)
-		player_move(app, UPWARD, JUMP_FORCE);
+		player_elevate(app, UPWARD, JUMP_FORCE);
 	if (app->conf->keystates & SPACE && app->player.jetpack)
-		player_move(app, UPWARD, JETPACK_ASCENT * app->conf->delta_time);
+		player_elevate(app, UPWARD, JETPACK_ASCENT * app->conf->delta_time);
 	if (app->conf->keystates & CTRL && app->player.jetpack)
-		player_move(app, DOWNWARD, JETPACK_DESCENT * app->conf->delta_time);
+		player_elevate(app, DOWNWARD, JETPACK_DESCENT * app->conf->delta_time);
 }
 
 void	player_shoot(t_app *app)
