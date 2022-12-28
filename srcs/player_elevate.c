@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 15:36:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 17:04:33 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,26 +24,28 @@ static void	update_elevation_velocity(t_app *app, double floor)
 {
 	if (app->player.jetpack)
 		app->player.elevation_velocity = GRAVITY * JETPACK_FALL;
-	else if (app->player.flying && app->player.elevation > floor)
+	else if (app->player.flying
+		&& app->player.elevation > floor + ELEVATION_EPSILON)
 		app->player.elevation_velocity += GRAVITY * app->conf->delta_time;
 	if (app->player.elevation < floor && app->player.elevation_velocity
 		< (floor - app->player.elevation) * -GRAVITY)
 	{
-		if (floor - app->player.elevation > ELEVATION_EPSILON
-			&& floor - app->player.elevation < ELEVATION_EPSILON
-			&& !app->player.jetpack)
-		{
+		if (app->player.elevation_velocity < FALL_DAMAGE_FORCE_THRESHOLD)
+			damage(app, -(int)app->player.elevation_velocity
+				* FALL_DAMAGE_MULTIPLIER);
+		if (!app->player.jetpack)
 			app->player.flying = FALSE;
-			app->player.elevation = floor;
-			app->player.elevation_velocity = 0.0;
-		}
-		else
-		{
-			if (!app->player.jetpack)
-				app->player.flying = FALSE;
-			app->player.elevation_velocity = (floor - app->player.elevation)
-				* -GRAVITY;
-		}
+		app->player.elevation_velocity = (floor - app->player.elevation)
+			* -GRAVITY;
+	}
+	if (!app->player.flying
+		&& floor - app->player.elevation > -ELEVATION_EPSILON
+		&& floor - app->player.elevation < ELEVATION_EPSILON
+		&& !app->player.jetpack)
+	{
+		app->player.flying = FALSE;
+		app->player.elevation = floor;
+		app->player.elevation_velocity = 0.0;
 	}
 }
 

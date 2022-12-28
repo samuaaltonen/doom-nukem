@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 15:34:25 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 16:04:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ static t_bool	limit_speed(t_app *app)
 {
 	double	speed;
 
-	if (app->player.elevation_velocity < GRAVITY)
-		app->player.elevation_velocity = GRAVITY;
 	speed = ft_vector_length(app->player.move_vector);
 	if (speed < MOVE_MIN)
 	{
