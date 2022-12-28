@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/23 01:05:28 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 04:07:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,20 +58,19 @@ void	update_elevation(t_app *app)
 		app->player.elevation = floor_height;
 	if (app->player.jetpack)
 		app->player.elevation_velocity = GRAVITY * JETPACK_FALL;
-	else if (app->player.flying)
+	else if (app->player.flying && app->player.elevation > floor_height)
 		app->player.elevation_velocity += GRAVITY * app->conf->delta_time;
-	if (app->player.elevation < floor_height)
-	{
-		if (!app->player.jetpack)
-			app->player.flying = FALSE;
+	if (app->player.elevation < floor_height && app->player.elevation_velocity
+		< (floor_height - app->player.elevation) * -GRAVITY)
 		app->player.elevation_velocity = (floor_height - app->player.elevation)
 			* -GRAVITY;
-	}
 	if (ceil_height < app->player.elevation + PLAYER_HEIGHT)
 		app->player.elevation = ceil_height - PLAYER_HEIGHT;
-	else
+	else if (fabs(app->player.elevation_velocity) > MOVE_MIN)
 		app->player.elevation += app->player.elevation_velocity
 			* app->conf->delta_time;
+	if (!app->player.jetpack && app->player.elevation < floor_height)
+		app->player.flying = FALSE;
 }
 
 /**
