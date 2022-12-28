@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/28 12:59:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 14:34:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ void	player_control(t_app *app)
 	if (app->conf->keystates & CTRL && !app->player.jetpack)
 		app->player.target_height = PLAYER_HEIGHT_CROUCHING;
 	else if (sector_vertical_space(app, app->player.sector, app->player.pos)
-		>= PLAYER_HEIGHT_STANDING)
+		>= PLAYER_HEIGHT_STANDING + COLLISION_CEIL)
 		app->player.target_height = PLAYER_HEIGHT_STANDING;
 	if (app->player.target_height != app->player.height)
 		app->player.height += (app->player.target_height - app->player.height) * PLAYER_HEIGHT_CHANGE_RATE * app->conf->delta_time;

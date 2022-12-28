@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:30:43 by saaltone          #+#    #+#             */
-/*   Updated: 2022/11/22 14:39:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 14:34:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /**
  * @brief Returns right side angle between 2 vectors. 90 degrees to the right
  * would return 90 degrees (PI / 2), while 90 degrees to the left would return
- * 270 degrees (Pi / 2 * 3).g
+ * 270 degrees (Pi / 2 * 3).
  * 
  * @param a 
  * @param b 
