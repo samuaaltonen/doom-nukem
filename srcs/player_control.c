@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/28 12:43:22 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 12:49:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,11 @@ void	player_control(t_app *app)
 		app->player.move_speed = MOVEMENT_SPEED;
 	if (app->conf->keystates & C)
 		jetpack(app);
+	if (app->conf->keystates & CTRL && !app->player.jetpack)
+		app->player.height = PLAYER_HEIGHT_CROUCHING;
+	else if (sector_vertical_space(app, app->player.sector, app->player.pos)
+		>= PLAYER_HEIGHT_STANDING)
+		app->player.height = PLAYER_HEIGHT_STANDING;
 }
 
 /**
@@ -65,10 +70,6 @@ void	handle_movement(t_app *app)
 		player_elevate(app, UPWARD, JETPACK_ASCENT * app->conf->delta_time);
 	if (app->conf->keystates & CTRL && app->player.jetpack)
 		player_elevate(app, DOWNWARD, JETPACK_DESCENT * app->conf->delta_time);
-	if (app->conf->keystates & CTRL && !app->player.jetpack)
-		app->player.height = PLAYER_HEIGHT_CROUCHING;
-	else
-		app->player.height = PLAYER_HEIGHT_STANDING;
 }
 
 void	player_shoot(t_app *app)
