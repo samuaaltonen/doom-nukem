@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:42:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/22 23:38:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 00:30:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,7 @@
 /**
  * @brief Checks if collision is possible. Compares player position and movement
  * position sides relative to wall and also if closest point on wall from
- * movement pois is within wall segment or if movement position is close enough
- * to wall endpoints.
+ * movement pois is within wall segment.
  * 
  * @param start_pos 
  * @param end_pos 
@@ -76,7 +75,7 @@ t_vector2	get_possible_movement_point(t_line wall, t_vector2 coord, int side)
 t_collision	collision_wall(t_app *app, int sector_id, int wall_id,
 	int portal_id)
 {
-	t_line				wall;
+	t_line	wall;
 
 	wall = get_wall_line(app, sector_id, wall_id);
 	if (!collision_possible(app->player.pos, app->player.move_pos,

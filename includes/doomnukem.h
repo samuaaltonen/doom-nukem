@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/23 01:11:06 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 03:08:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -271,7 +271,7 @@ t_vector2	get_possible_movement_point(t_line wall, t_vector2 coord, int side);
 t_bool		portal_can_enter(t_app *app, t_line wall, int source_sector,
 				int target_sector);
 void		portal_enter(t_app *app, int sector_id);
-t_bool		inside_sector(t_app *app, int sector_id, t_vector2 coord);\
+t_bool		inside_sector(t_app *app, int sector_id, t_vector2 coord);
 void		check_player_sector(t_app *app);
 
 /**

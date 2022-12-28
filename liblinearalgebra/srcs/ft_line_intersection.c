@@ -13,13 +13,18 @@
 #include "liblinearalgebra.h"
 
 /**
- * Calculates intersection point between 2 lines. If there is no intersection
- * returns 0, otherwise 1 and sets the intersection point to given vector2
- * pointer.
+ * @brief Calculates intersection point between 2 lines. If there is no
+ * intersection returns 0, otherwise 1 and sets the intersection point to given
+ * vector2 pointer.
  * 
  * See also:
  * https://en.wikipedia.org/wiki/Line%E2%80%93line_intersection
-*/
+ * 
+ * @param a 
+ * @param b 
+ * @param intersection 
+ * @return int 
+ */
 int	ft_line_intersection(t_line a, t_line b, t_vector2 *intersection)
 {
 	double	divider;

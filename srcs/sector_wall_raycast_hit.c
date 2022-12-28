@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:06:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/12 14:59:40 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 02:26:59 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 		+ relative * (PLAYER_HEIGHT + app->player.elevation
 			- hit->sector->ceil_height - ceil_slope);
 	hit->wall_start = (int)wall_start;
-	hit->wall_end = wall_start + hit->height;
+	hit->wall_end = (int)wall_start + hit->height;
 	hit->texture_step = TEX_SIZE / relative;
 	hit->wall_start_actual = wall_start;
 	if (ceil_slope)
@@ -165,19 +165,20 @@ t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 
 	ray_line.a = app->player.pos;
 	camera_x = 2 * x / (double) WIN_W - 1.0;
-	hit->ray = (t_vector2){
-		app->player.dir.x + app->player.cam.x * camera_x,
+	hit->ray = (t_vector2){app->player.dir.x + app->player.cam.x * camera_x,
 		app->player.dir.y + app->player.cam.y * camera_x};
 	ray_line.b.x = hit->ray.x + app->player.pos.x;
 	ray_line.b.y = hit->ray.y + app->player.pos.y;
-	if (!ft_line_intersection(wall, ray_line, &hit->position))
+	if (!ft_line_intersection(wall, ray_line, &hit->position)
+		|| !ft_point_on_segment(wall, hit->position))
 		return (FALSE);
+	hit->wall_angle = ft_vector_angle_right(hit->ray,
+			ft_vector2_sub(wall.b, wall.a));
 	hit->distance = ft_vector_length((t_vector2){
 			hit->position.x - app->player.pos.x,
 			hit->position.y - app->player.pos.y});
 	hit->texture_offset = ft_vector_length((t_vector2){
-			wall.a.x - hit->position.x,
-			wall.a.y - hit->position.y});
+			wall.a.x - hit->position.x, wall.a.y - hit->position.y});
 	hit->texture_offset -= floor(hit->texture_offset);
 	hit->distortion = cos(ft_vector_angle(hit->ray, app->player.dir));
 	hit->distance = hit->distortion * hit->distance;

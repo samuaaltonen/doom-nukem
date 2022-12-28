@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/13 15:27:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 03:10:02 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,14 @@ void	draw_floor(t_app *app, int x, t_rayhit *hit)
 	initialize_limits(x, &y, hit);
 	if (y.start == y.end || y.start > y.end)
 		return ;
-	hit->occlusion_bottom[x] = WIN_H - y.start;
 	initialize_elevation(app, hit, &elevation, &horizon_effect);
+	hit->occlusion_bottom[x] = WIN_H - y.start;
+	distance = elevation * WIN_H / ((double)(y.end - 1) - horizon_effect);
+	if (hit->wall->is_member && hit->wall->is_inside
+		&& !inside_sector(app, hit->wall->sector_id,
+			ft_vector2_sub(hit->position,
+				ft_vec2_mult(hit->ray, hit->distance - distance))))
+		return ;
 	while (y.start < y.end)
 	{
 		distance = elevation * WIN_H / ((double)y.start - horizon_effect);

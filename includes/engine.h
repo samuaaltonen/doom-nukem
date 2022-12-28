@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/13 15:31:41 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/28 02:57:53 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,12 +109,14 @@ typedef struct s_wall
 typedef struct s_rayhit
 {
 	t_sector	*sector;
+	t_wall		*wall;
 	int			wall_id;
 	t_vector2	ray;
 	int			texture;
 	t_vector2	position;
 	double		distance;
 	double		distortion;
+	double		wall_angle;
 	double		texture_offset;
 	double		texture_step;
 	int			height;
