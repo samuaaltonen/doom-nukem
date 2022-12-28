@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:06:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 04:20:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 12:42:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static void	set_parent_vertical_positions(t_app *app, t_rayhit *hit,
 	hit->parent_height = (int)(relative * (parent->ceil_height + ceil_slope
 				- parent->floor_height - floor_slope));
 	wall_start = WIN_H * app->player.horizon
-		+ relative * (PLAYER_HEIGHT + app->player.elevation
+		+ relative * (app->player.height + app->player.elevation
 			- parent->ceil_height - ceil_slope);
 	hit->parent_wall_start = (int)wall_start;
 	hit->parent_wall_end = hit->parent_wall_start + hit->parent_height;
@@ -132,7 +132,7 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 	hit->height = (int)(relative * (hit->sector->ceil_height + ceil_slope
 				- hit->sector->floor_height - floor_slope));
 	wall_start = WIN_H * app->player.horizon
-		+ relative * (PLAYER_HEIGHT + app->player.elevation
+		+ relative * (app->player.height + app->player.elevation
 			- hit->sector->ceil_height - ceil_slope);
 	hit->wall_start = (int)wall_start;
 	hit->wall_end = (int)wall_start + hit->height;

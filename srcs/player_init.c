@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 04:15:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 12:42:21 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	player_init(t_app *app)
 	app->player.horizon = 0.5;
 	app->player.sector = 0;
 	app->player.elevation_velocity = 0.0;
+	app->player.height = PLAYER_HEIGHT_STANDING;
 	init_camera_plane(app);
 	init_skybox_plane(app);
 }

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 19:55:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 04:16:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 12:41:19 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ t_bool	portal_can_enter(t_app *app, t_line wall, int source_sector,
 	if (app->player.elevation + MAX_STEP < target_floor
 		&& source_floor + MAX_STEP < target_floor)
 		return (FALSE);
-	if (target_ceil < app->player.elevation + PLAYER_HEIGHT
+	if (target_ceil < app->player.elevation + app->player.height
 		&& source_ceil - MAX_STEP > target_ceil)
 		return (FALSE);
 	return (TRUE);

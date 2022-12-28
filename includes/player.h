@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/28 04:15:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 12:42:37 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,8 @@
 # define MAX_ANGLE 45.0
 # define HORIZON_UPPER_LIMIT 1.25
 # define HORIZON_LOWER_LIMIT -0.25
-# define PLAYER_HEIGHT 0.5
+# define PLAYER_HEIGHT_STANDING 0.5
+# define PLAYER_HEIGHT_CROUCHING 0.25
 # define COLLISION_OFFSET 0.25
 # define MAX_CONCURRENT_COLLISIONS 16
 # define MAX_COLLISION_POSITION_TRIES 32
@@ -94,6 +95,7 @@ typedef struct s_player
 	t_bool			is_decelerating;
 	t_vector2		cam;
 	double			camera_length;
+	double			height;
 	double			elevation;
 	double			elevation_velocity;
 	double			horizon;

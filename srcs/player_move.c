@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 04:16:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 12:41:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,8 @@ void	update_elevation(t_app *app)
 		app->player.elevation_velocity = (floor - app->player.elevation)
 			* -GRAVITY;
 	}
-	if (ceil < app->player.elevation + PLAYER_HEIGHT)
-		app->player.elevation = ceil - PLAYER_HEIGHT;
+	if (ceil < app->player.elevation + app->player.height)
+		app->player.elevation = ceil - app->player.height;
 	else if (fabs(app->player.elevation_velocity) > MOVE_MIN)
 		app->player.elevation += app->player.elevation_velocity
 			* app->conf->delta_time;

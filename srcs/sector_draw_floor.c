@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 03:10:02 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 12:41:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,14 +67,14 @@ static void	initialize_elevation(t_app *app, t_rayhit *hit, double *elevation,
 	if (hit->sector->floor_slope_height != 0.0)
 	{
 		*elevation = hit->sector->floor_slope_magnitude * hit->distance
-			* hit->floor_horizon_angle + PLAYER_HEIGHT
+			* hit->floor_horizon_angle + app->player.height
 			+ app->player.elevation - hit->sector->floor_height
 			- hit->floor_slope_height;
 		*horizon_effect = WIN_H * app->player.horizon
 			- WIN_H * hit->floor_horizon;
 		return ;
 	}
-	*elevation = PLAYER_HEIGHT + app->player.elevation
+	*elevation = app->player.height + app->player.elevation
 		- hit->sector->floor_height;
 	*horizon_effect = WIN_H * app->player.horizon;
 }

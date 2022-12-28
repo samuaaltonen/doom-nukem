@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_object.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/16 13:38:19 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/28 12:41:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -219,11 +219,11 @@ static void	set_object(t_app *app, t_render_object *object, double *angle,
 
 		if(object->tex_size == TEX_PICKUP)
 			object->start.y = (int)(WIN_H * app->player.horizon + object->size.y
-				/ SMALL_SCALE * ((app->player.elevation + PLAYER_HEIGHT) 
+				/ SMALL_SCALE * ((app->player.elevation + app->player.height) 
 				- (original_obj->elevation + SMALL_SCALE / 2)));
 		else
 			object->start.y = (int)(WIN_H * app->player.horizon + object->size.y
-				 * ((app->player.elevation + PLAYER_HEIGHT) 
+				 * ((app->player.elevation + app->player.height) 
 				- (original_obj->elevation + 0.5)));
 		offset = object->size.y;
 		object->size.y = cos(*angle) * object->size.y;
