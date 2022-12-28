@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/16 17:23:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 16:58:48 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	define_enemies(t_app *app)
 {
 	app->enemy_def[0].state_count = 4;
 	app->enemy_def[0].range = 3.f;
+	app->enemy_def[0].speed = 2.f;
 	app->enemy_def[0].states[0][0] = 0.f;
 	app->enemy_def[0].states[0][1] = 1.f;
 	app->enemy_def[0].states[0][2] = 1.f;
@@ -86,6 +87,7 @@ void	define_enemies(t_app *app)
 
 	app->enemy_def[1].state_count = 4;
 	app->enemy_def[1].range = 1.f;
+	app->enemy_def[1].speed = 5.f;
 	app->enemy_def[1].states[0][0] = 0.f;
 	app->enemy_def[1].states[0][1] = 1.f;
 	app->enemy_def[1].states[0][2] = 1.f;
@@ -125,7 +127,6 @@ void	init_enemies(t_app *app)
 			app->enemies[enemy_count].pos = app->objects[i].position;
 			app->enemies[enemy_count].dead = FALSE;
 			app->enemies[enemy_count].agressive = FALSE;
-			app->enemies[enemy_count].dir = (t_vector2){0.f,0.f};
 			enemy_count++;
 		}
 	}

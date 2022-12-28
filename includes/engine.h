@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/28 04:20:04 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 16:52:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -185,6 +185,16 @@ typedef struct s_object
 	double			elevation;
 	int				sector;
 }	t_object;
+
+typedef struct s_gameobject
+{
+	int				type;
+	double			var;
+	t_vector2		position;
+	double			rot;
+	double			elevation;
+	int				sector;
+}	t_gameobject;
 
 /**
  * Struct that contains skybox drawing information. These values are updated

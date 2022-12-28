@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_object.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/28 12:41:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 16:43:00 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ double	get_radial_direction(t_vector2 *vector)
 	rad = atan2(vector->x, vector->y);
 	if (rad < 0)
 		rad = rad + 2 * M_PI;
-	rad = rad * (180 / M_PI);
 	return (rad);
 }
 
@@ -35,7 +34,7 @@ static void	object_frame(t_app *app, t_vector2 dir, t_render_object *object)
 	if(app->objects[object->id].type <= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES)
 	{
 		rad = get_radial_direction(&dir);
-		object->frame = ((int)(rad * SPRITE_ANGLES / 360) % SPRITE_ANGLES);
+			object->frame = ((int)((rad + app->objects[object->id].rot) / PI_PI * SPRITE_ANGLES) % SPRITE_ANGLES);
 	}
 
 }
@@ -213,7 +212,7 @@ static t_bool	init_temp_object(t_app *app, int i, t_render_object *object,
 }
 
 static void	set_object(t_app *app, t_render_object *object, double *angle,
-	t_object *original_obj)
+	t_gameobject *original_obj)
 {
 		double			offset;
 
@@ -265,7 +264,7 @@ static void	objects_visible(t_app *app)
 
 	}
 	i = -1;
-	while (++i < MAX_TEMP_OBJECTS)
+	while (++i < MAX_TEMP_OBJECTS) //temp objects
 	{
 		if(app->tmp_objects[i].type == 0)
 			break;
@@ -289,10 +288,6 @@ void	render_objects(t_app *app)
 		threads_created = TRUE;
 	}
 	objects_visible(app);
-/* 	for(int i = 0;i < 5;i++)
-	{
-		ft_printf("stack obj dist %f, pos x%f,y%f, size x%f,y%f\n",app->objectstack.objects[i].dist, app->objectstack.objects[i].start.x, app->objectstack.objects[i].start.y, app->objectstack.objects[i].size.x, app->objectstack.objects[i].size.y);
-	} */
 	threads_work((t_thread_data *)&threads_data);
 	
 }

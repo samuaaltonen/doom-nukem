@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 15:35:41 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 17:02:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ typedef struct s_enemy_def
 {
 	int		state_count;
 	double	range;
+	double	speed;
 	float	states[4][3];
 }	t_enemy_def;
 
@@ -169,9 +170,9 @@ typedef struct s_app
 	t_player		player;
 	t_sky			sky;
 	t_sector		*sectors;
-	t_object		objects[MAX_OBJECTS];
+	t_gameobject	objects[MAX_OBJECTS];
 	float			object_states[MAX_OBJECTS];
-	t_object		tmp_objects[MAX_TEMP_OBJECTS];
+	t_gameobject	tmp_objects[MAX_TEMP_OBJECTS];
 	t_enemy_state	enemies[MAX_OBJECTS];
 	t_enemy_def		enemy_def[MAX_ENEMY_TYPES];
 	t_interaction	interactions[MAX_INTERACTIONS];

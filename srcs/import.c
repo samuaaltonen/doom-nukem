@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/28 04:16:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 16:56:34 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,26 @@ static void relink_player(t_app *app, t_export_player *player)
 	app->player.elevation = sector_floor_height(app, app->player.sector, app->player.pos);
 }
 
+static t_bool import_objects(t_app *app, int fd)
+{
+	t_object	import;
+	int	i;
+
+	i = -1;
+	while(++i < MAX_OBJECTS)
+	{
+		if(read(fd,&import,sizeof(t_object)) == -1)
+			exit_error(MSG_ERROR_FILE_READ);
+		app->objects[i].elevation = import.elevation;
+		app->objects[i].position = import.position;
+		app->objects[i].sector = import.sector;
+		app->objects[i].type = import.type;
+		app->objects[i].var = import.var;
+		app->objects[i].rot = 0.f;
+	}
+	return (TRUE);
+}
+
 //open a file
 int	import_file(t_app *app, char *path)
 {
@@ -175,8 +195,7 @@ int	import_file(t_app *app, char *path)
 		counter++;
 	}
 	free(export);
-	if (read(fd, app->objects, sizeof(t_object) * MAX_OBJECTS) ==  -1)
-		exit_error("Object read error\n");
+	import_objects(app, fd);
 	if (read(fd, app->interactions, sizeof(t_interaction) * MAX_INTERACTIONS) == -1)
 		exit_error("Interaction read error\n");
 	relink_player(app, &player);
