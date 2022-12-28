@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 04:07:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 04:16:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,30 +47,30 @@ static t_bool	limit_speed(t_app *app)
  */
 void	update_elevation(t_app *app)
 {
-	double	floor_height;
-	double	ceil_height;
+	double	floor;
+	double	ceil;
 
-	floor_height = get_sector_floor_height(app, app->player.current_sector,
-			app->player.pos);
-	ceil_height = get_sector_ceil_height(app, app->player.current_sector,
-			app->player.pos);
-	if (!app->player.flying && app->player.elevation > floor_height)
-		app->player.elevation = floor_height;
+	floor = sector_floor_height(app, app->player.sector, app->player.pos);
+	ceil = sector_ceil_height(app, app->player.sector, app->player.pos);
+	if (!app->player.flying && app->player.elevation > floor)
+		app->player.elevation = floor;
 	if (app->player.jetpack)
 		app->player.elevation_velocity = GRAVITY * JETPACK_FALL;
-	else if (app->player.flying && app->player.elevation > floor_height)
+	else if (app->player.flying && app->player.elevation > floor)
 		app->player.elevation_velocity += GRAVITY * app->conf->delta_time;
-	if (app->player.elevation < floor_height && app->player.elevation_velocity
-		< (floor_height - app->player.elevation) * -GRAVITY)
-		app->player.elevation_velocity = (floor_height - app->player.elevation)
+	if (app->player.elevation < floor && app->player.elevation_velocity
+		< (floor - app->player.elevation) * -GRAVITY)
+	{
+		if (!app->player.jetpack)
+			app->player.flying = FALSE;
+		app->player.elevation_velocity = (floor - app->player.elevation)
 			* -GRAVITY;
-	if (ceil_height < app->player.elevation + PLAYER_HEIGHT)
-		app->player.elevation = ceil_height - PLAYER_HEIGHT;
+	}
+	if (ceil < app->player.elevation + PLAYER_HEIGHT)
+		app->player.elevation = ceil - PLAYER_HEIGHT;
 	else if (fabs(app->player.elevation_velocity) > MOVE_MIN)
 		app->player.elevation += app->player.elevation_velocity
 			* app->conf->delta_time;
-	if (!app->player.jetpack && app->player.elevation < floor_height)
-		app->player.flying = FALSE;
 }
 
 /**

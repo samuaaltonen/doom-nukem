@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:42:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 03:24:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 04:15:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_collision	collision_wall(t_app *app, int sector_id, int wall_id,
 		return (COLLISION_NONE);
 	if (portal_id != -1 && app->sectors[sector_id].wall_textures[wall_id]
 		!= PARTIALLY_TRANSPARENT_TEXTURE_ID
-		&& portal_can_enter(app, wall, app->player.current_sector, portal_id))
+		&& portal_can_enter(app, wall, app->player.sector, portal_id))
 		return (COLLISION_PORTAL);
 	if (app->player.total_collisions >= MAX_CONCURRENT_COLLISIONS - 1)
 	{

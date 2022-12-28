@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 20:04:35 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/23 01:06:42 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 04:15:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,18 +23,18 @@ void	check_player_sector(t_app *app)
 {
 	int	i;
 
-	if (app->sectors[app->player.current_sector].parent_sector != -1)
+	if (app->sectors[app->player.sector].parent_sector != -1)
 		return ;
 	i = -1;
 	while (++i < MAX_MEMBER_SECTORS
-		&& app->sectors[app->player.current_sector].member_sectors[i] >= 0)
+		&& app->sectors[app->player.sector].member_sectors[i] >= 0)
 	{
 		if (inside_sector(app,
-				app->sectors[app->player.current_sector].member_sectors[i],
+				app->sectors[app->player.sector].member_sectors[i],
 				app->player.pos))
 		{
 			portal_enter(app,
-				app->sectors[app->player.current_sector].member_sectors[i]);
+				app->sectors[app->player.sector].member_sectors[i]);
 			return ;
 		}
 	}
@@ -52,7 +52,7 @@ void	collisions_check(t_app *app)
 
 	app->player.total_collisions = 0;
 	visited[0] = -1;
-	collision_sector(app, app->player.current_sector, (int *)&visited);
+	collision_sector(app, app->player.sector, (int *)&visited);
 }
 
 /**

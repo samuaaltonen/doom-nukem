@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 03:08:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 04:17:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,8 +277,8 @@ void		check_player_sector(t_app *app);
 /**
  * Sectors
  */
-double		get_sector_floor_height(t_app *app, int sector_id, t_vector2 pos);
-double		get_sector_ceil_height(t_app *app, int sector_id, t_vector2 pos);
+double		sector_floor_height(t_app *app, int sector_id, t_vector2 pos);
+double		sector_ceil_height(t_app *app, int sector_id, t_vector2 pos);
 t_line		get_wall_line(t_app *app, int sector_id, int wall_id);
 void		sector_wallstack_build(t_app *app);
 void		sector_visible_walls(t_app *app, t_wallstack *wallstack, int index,

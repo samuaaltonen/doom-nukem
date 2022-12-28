@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/28 03:51:46 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 04:15:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ typedef struct s_player
 	double			elevation;
 	double			elevation_velocity;
 	double			horizon;
-	int				current_sector;
+	int				sector;
 	t_bool			flying;
 	t_bool			jetpack;
 	t_bool			jetpack_boost;

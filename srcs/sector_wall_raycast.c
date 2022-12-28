@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 03:06:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 04:19:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,8 @@ static void	raycast_portal(t_app *app, t_wall *wall, t_rayhit *hit, int x)
 		draw_portal_partial_parent(app, x, hit);
 		return ;
 	}
-	if (hit->wall_angle > M_PI + 0.01 && hit->wall_angle < M_PI * 2 - 0.01)
-	{
-		draw_ceiling(app, x, hit);
-		draw_floor(app, x, hit);
-	}
+	draw_ceiling(app, x, hit);
+	draw_floor(app, x, hit);
 	draw_portal_partial_hole(app, x, hit);
 }
 

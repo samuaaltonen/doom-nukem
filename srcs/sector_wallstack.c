@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:38:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/08 14:42:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 04:15:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,11 +80,11 @@ void	sector_wallstack_build(t_app *app)
 	int	i;
 
 	app->wallstack.visited[0] = -1;
-	if (app->sectors[app->player.current_sector].parent_sector == -1)
-		app->wallstack.interesting[0] = app->player.current_sector;
+	if (app->sectors[app->player.sector].parent_sector == -1)
+		app->wallstack.interesting[0] = app->player.sector;
 	else
 		app->wallstack.interesting[0]
-			= app->sectors[app->player.current_sector].parent_sector;
+			= app->sectors[app->player.sector].parent_sector;
 	app->wallstack.interesting_count = 1;
 	i = 0;
 	while (i < app->wallstack.interesting_count && i < MAX_VISIBLE_SECTORS - 1)
