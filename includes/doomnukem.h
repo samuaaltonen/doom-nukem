@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 12:49:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 15:35:41 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -247,6 +247,7 @@ void		player_horizon(t_app *app, double change);
 void		player_move(t_app *app, t_movement movement, double speed);
 void		player_elevate(t_app *app, t_movement movement, double speed);
 void		update_position(t_app *app);
+void		update_elevation(t_app *app);
 void		player_shoot(t_app *app);
 void		player_reload(t_app *app);
 void		jetpack(t_app *app);

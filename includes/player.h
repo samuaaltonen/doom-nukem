@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/28 14:32:53 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 15:31:19 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define JETPACK_FALL 0.01
 # define JETPACK_ASCENT 4.0
 # define JETPACK_DESCENT -4.0
+# define ELEVATION_EPSILON 0.01
 # define MAX_STEP 0.3
 # define MAX_ANGLE 45.0
 # define HORIZON_UPPER_LIMIT 1.25

@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/12/28 03:10:08 by saaltone         ###   ########.fr        #
+#    Updated: 2022/12/28 15:34:33 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ FILES = main.c \
 		player_effects.c \
 		player_init.c \
 		player_move.c \
+		player_elevate.c \
 		player_view.c \
 		events.c \
 		audio.c \

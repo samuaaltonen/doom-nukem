@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 14:32:59 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 15:34:25 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,40 +37,6 @@ static t_bool	limit_speed(t_app *app)
 		app->player.move_vector = ft_vector_resize(app->player.move_vector,
 				app->player.move_speed);
 	return (TRUE);
-}
-
-/**
- * @brief Updates player elevation based on gravity, sector floor/ceiling height
- * and jetpack or jumping.
- * 
- * @param app 
- */
-void	update_elevation(t_app *app)
-{
-	double	floor;
-	double	ceil;
-
-	floor = sector_floor_height(app, app->player.sector, app->player.pos);
-	ceil = sector_ceil_height(app, app->player.sector, app->player.pos);
-	if (!app->player.flying && app->player.elevation > floor)
-		app->player.elevation = floor;
-	if (app->player.jetpack)
-		app->player.elevation_velocity = GRAVITY * JETPACK_FALL;
-	else if (app->player.flying && app->player.elevation > floor)
-		app->player.elevation_velocity += GRAVITY * app->conf->delta_time;
-	if (app->player.elevation < floor && app->player.elevation_velocity
-		< (floor - app->player.elevation) * -GRAVITY)
-	{
-		if (!app->player.jetpack)
-			app->player.flying = FALSE;
-		app->player.elevation_velocity = (floor - app->player.elevation)
-			* -GRAVITY;
-	}
-	if (ceil < app->player.elevation + app->player.height + COLLISION_CEIL)
-		app->player.elevation = ceil - app->player.height - COLLISION_CEIL;
-	else if (fabs(app->player.elevation_velocity) > MOVE_MIN)
-		app->player.elevation += app->player.elevation_velocity
-			* app->conf->delta_time;
 }
 
 /**
@@ -121,24 +87,5 @@ void	player_move(t_app *app, t_movement movement, double speed)
 			app->player.move_vector = ft_vector2_add(app->player.move_vector,
 					(t_vector2){perpendicular.x * speed,
 					perpendicular.y * speed});
-	}
-}
-
-/**
- * @brief Updates player elevation/flying values based on elevation change
- * direction.
- * 
- * @param app 
- * @param movement 
- * @param speed 
- */
-void	player_elevate(t_app *app, t_movement movement, double speed)
-{
-	if ((movement == UPWARD || movement == DOWNWARD) && app->player.jetpack)
-		app->player.elevation += speed;
-	if (movement == UPWARD && !app->player.jetpack && !app->player.flying)
-	{
-		app->player.flying = TRUE;
-		app->player.elevation_velocity = speed;
 	}
 }
