@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 11:47:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/24 14:14:09 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/29 13:46:00 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,23 @@ t_sector_lst	*find_child_sector(t_app *app)
 		i++;
 	}
 	return (NULL);
+}
+
+/**
+ * Counts how many member sectors does the given sector have.
+*/
+int	get_member_sector_count(t_sector_lst *parent)
+{
+	int		index;
+
+	if (!parent)
+		return (-1);
+	index = 0;
+	while (index < MAX_MEMBER_SECTORS)
+	{
+		if (!parent->member_sectors[index])
+			break ;
+		index++;
+	}
+	return (index);
 }

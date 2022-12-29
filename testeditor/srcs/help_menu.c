@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/21 15:27:47 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/29 13:57:23 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,9 @@ static void	render_button_menu(t_app *app, t_point screen_pos)
 	y = 10;
 	while (++index < 4)
 	{
-		if (y == 40 && !app->active_sector)
+		if ((y == 10 && get_member_sector_count(app->active_sector) >= MAX_MEMBER_SECTORS)
+			|| (y == 10 && app->active_sector && app->active_sector->parent_sector)
+			|| (y == 40 && !app->active_sector))
 		{
 			y += 30;
 			continue ;
@@ -55,8 +57,12 @@ static void	render_button_menu(t_app *app, t_point screen_pos)
 	}
 	if (app->active_sector)
 	{
-		toggle_active_color(app, app->list_creation, "CREATE MEMBER",
-			(t_rect){WIN_W - 135, 17, 150, 15});
+		if (app->active_sector->parent_sector)
+			toggle_active_color(app, TRUE, "CANNOT ADD MEMBERS\n TO MEMBER SECTORS", (t_rect){WIN_W - 155, 10, 180, 40});
+		else if (get_member_sector_count(app->active_sector) < MAX_MEMBER_SECTORS)
+			toggle_active_color(app, app->list_creation, "CREATE MEMBER", (t_rect){WIN_W - 135, 17, 150, 15});
+		else
+			toggle_active_color(app, TRUE, "CANNOT ADD MORE MEMBERS TO SECTOR", (t_rect){WIN_W - 150, 10, 200, 40});
 		toggle_active_color(app, app->object_new, "ADD OBJECT",
 			(t_rect){WIN_W - 120, 47, 150, 15});
 	}

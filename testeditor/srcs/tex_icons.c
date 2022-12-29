@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:36:43 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/13 14:02:21 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/29 11:02:43 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ void	render_player_icons(t_app *app, SDL_Surface *asset,
 
 	index = 1;
 	start_x = point.x;
-	while (index < max)
+	while (index <= max)
 	{
 		set_icon_rect(&src, (t_point){TEX_SIZE * index, 0},
 			(t_point){SMALL_ICON, SMALL_ICON});

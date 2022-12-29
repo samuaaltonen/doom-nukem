@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:40:17 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/02 15:41:38 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/29 11:06:49 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	main(void)
 	t_app	*app;
 
 	if (!app_init(&app))
-		exit_error(NULL);
+		exit_error(MSG_ERROR_ALLOC);
 	app_prepare(app);
 	app_loop(app);
 	return (0);

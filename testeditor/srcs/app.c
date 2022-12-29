@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/20 15:02:16 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/29 15:07:48 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@
 int	app_init(t_app **app)
 {
 	*app = (t_app *)malloc(sizeof(t_app));
-	ft_bzero(*app, sizeof(t_app));
 	if (!(*app))
-		return (0);
-	return (1);
+		return (FALSE);
+	ft_bzero(*app, sizeof(t_app));
+	return (TRUE);
 }
 
 /**
@@ -50,7 +50,7 @@ void	app_prepare(t_app *app)
 	app->zoom_range = 5;
 	app->sectorcount = 0;
 	app->sectors = NULL;
-	app->player_edit = 1;
+	app->player_edit = TRUE;
 	app->player.sector = NULL;
 	app->player.health = 200;
 	app->player.armor = 100;
@@ -93,7 +93,7 @@ void	app_render(t_app *app)
 	render_player(app);
 	zoom_slider(app);
 	render_help_menu(app);
-	if(app->object_new)
+	if (app->object_new)
 		draw_object_icon(app,app->mouse_track, app->current_object->type);
 	SDL_UpdateWindowSurface(app->win);
 }

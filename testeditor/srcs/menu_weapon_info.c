@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_weapon_info.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:32:37 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/22 23:53:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/29 15:08:36 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	render_weapons(t_app *app)
 	int		index;
 
 	render_player_icons(app, app->assets.sprite,
-		(t_point){40, 60}, MAX_WEAPONS + 1);
+		(t_point){40, 60}, MAX_WEAPONS);
 	index = 0;
 	while (index < MAX_WEAPONS)
 	{

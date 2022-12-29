@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_inventory_info.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:09:50 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/22 23:53:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/29 11:02:39 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	render_inventory(t_app *app)
 	int		x;
 
 	render_player_icons(app, app->assets.sprite, (t_point){40, 310},
-		INVENTORY_SIZE + 1);
+		INVENTORY_SIZE);
 	index = 0;
 	y = 309;
 	x = 0;
