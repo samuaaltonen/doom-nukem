@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/29 14:37:44 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/29 15:35:42 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	rightside_menu_events(t_app *app, t_point screen_pos)
 			cancel_list_creation(app);
 	}
 	if (check_mouse(screen_pos, (t_rect){WIN_W - 150, 40, 150, 15})
-		&& app->active_sector)
+		&& app->active_sector && app->object_count < MAX_OBJECTS)
 		toggle_new_object(app, app->object_new);
 	if (check_mouse(screen_pos, (t_rect){WIN_W - 150, 70, 150, 15})
 		&& app->sectors)

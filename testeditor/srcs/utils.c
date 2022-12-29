@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:48:10 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/12 16:34:15 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/29 15:26:48 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	load_font(t_app *app)
 	if (!app->assets.font.font)
 		app->assets.font.font = SDL_LoadBMP(FONT_TX);
 	if (!app->assets.font.font)
-		exit_error("MSG_ERROR_FONT");
+		exit_error(MSG_ERROR_FONT);
 	change_font(app, 16, 0xFF000000);
 }
 
