@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:04:04 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/15 18:32:17 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/30 11:56:18 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,16 +49,14 @@ static void	render_object_texts(t_app *app)
 {
 	int	pickable;
 	int	movement;
-	int	type;
 
-	type = 1;
 	pickable = 0;
 	movement = 0;
-	if (type < 5 || type == 10 || type > 15)
+	if (app->current_object->type < 6)
 		pickable = 1;
-	if (type < 9 || type == 14 || type == 16)
+	if (app->current_object->type < 9)
 		movement = 1;
-	if (type == 12 || type < 16)
+	if (app->current_object->type == 9)
 		movement = 1;
 	change_font(app, 11, TEXT);
 	render_text(app, (t_rect){113, 120, 120, 15}, "MONSTER");

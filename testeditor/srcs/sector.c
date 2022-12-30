@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:36:45 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/09 16:23:41 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/30 13:57:02 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,29 +65,19 @@ t_sector_lst	*put_sector_lst(t_app *app, t_sector_lst *new)
 	return (new);
 }
 
-//WIP
-void	sector_delone(t_sector_lst **sector, void (*del)(void*, size_t))
+/**
+ * If player is inside the deleted sector, sets the sector to null and deletes
+ * all objects and portals within that sector.
+*/
+static void	prepare_del(t_app *app)
 {
-	int		i;
-	(void)del;
-
-	i = 0;
-	if ((*sector)->parent_sector)
+	if (app->active_sector == app->player.sector)
 	{
-		while ((*sector)->parent_sector->member_sectors[i] != *sector)
-			i++;
-		(*sector)->parent_sector->member_sectors[i] = NULL;
-		while (++i < MAX_MEMBER_SECTORS
-			&& (*sector)->parent_sector->member_sectors[i])
-		{
-			(*sector)->parent_sector->member_sectors[i - 1]
-				= (*sector)->parent_sector->member_sectors[i];
-			(*sector)->parent_sector->member_sectors[i] = NULL;
-		}
-		(*sector)->parent_sector = NULL;
+		app->player.sector = NULL;
+		app->player_edit = TRUE;
 	}
-	free(*sector);
-	*sector = NULL;
+	del_all_objects_in_sector(app);
+	del_sector_portals(app, get_sector_id(app, app->active_sector));
 }
 
 /**
@@ -109,13 +99,7 @@ t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop,
 		prev = head;
 		head = head->next;
 	}
-	if (app->active_sector == app->player.sector)
-	{
-		app->player.sector = NULL;
-		app->player_edit = TRUE;
-	}
-	del_all_objects_in_sector(app);
-	del_sector_portals(app, get_sector_id(app, app->active_sector));
+	prepare_del(app);
 	if (head == *pop)
 	{
 		if (prev)

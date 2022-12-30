@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/22 17:35:03 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/30 14:32:47 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,30 +47,7 @@ t_vec2_lst	*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point)
 		head = head->next;
 	}
 	return (selection);
-	//ft_printf(" opposite distance %f, \n", ft_vector_length(c) * ( sin(ft_vector_angle(line, c))));
-}
-
-//returns element out the link at the index
-t_vec2_lst	*ft_lstindex(t_vec2_lst *lst, size_t index)
-{
-	size_t		i;
-	t_vec2_lst	*temp;
-
-	i = 0;
-	temp = lst;
-	if (index == 0)
-		return (lst);
-	if (temp == NULL)
-		return (NULL);
-	while (i < index)
-	{
-		if (temp->next)
-			temp = temp->next;
-		else
-			return (NULL);
-		i++;
-	}
-	return (temp);
+	//ft_printf("opposite distance %f, \n", ft_vector_length(c) * ( sin(ft_vector_angle(line, c))));
 }
 
 t_sector_lst	*sector_by_index(t_app *app, int index)
@@ -80,7 +57,7 @@ t_sector_lst	*sector_by_index(t_app *app, int index)
 
 	i = 0;
 	head = app->sectors;
-	if(index == -1)
+	if (index == -1)
 		return (NULL);
 	while (head && i != index)
 	{
@@ -90,27 +67,22 @@ t_sector_lst	*sector_by_index(t_app *app, int index)
 	return (head);
 }
 
-size_t	ft_lstlen(t_sector_lst *lst)
-{
-	size_t	i;
-
-	i = 0;
-	while (lst)
-	{
-		i++;
-		lst = lst->next;
-	}
-	return (i);
-}
-
+/**
+ * Converts world coordinates to screen coordinates.
+*/
 t_point	world_to_screen(t_app *app, t_vector2 pos)
 {
-	return ((t_point){(pos.x - app->view_pos.x) * (app->surface->w) / (app->view_size.x - app->view_pos.x),
-			(pos.y - app->view_pos.y) * (app->surface->h) / (app->view_size.y - app->view_pos.y)});
+	return ((t_point){(pos.x - app->view_pos.x) * (app->surface->w)
+		/ (app->view_size.x - app->view_pos.x), (pos.y - app->view_pos.y)
+		* (app->surface->h) / (app->view_size.y - app->view_pos.y)});
 }
 
-t_vector2 screen_to_world(t_app *app, t_point pos)
+/**
+ * Converts screen coordinates to world coordinates.
+*/
+t_vector2	screen_to_world(t_app *app, t_point pos)
 {
-	return ((t_vector2){app->view_pos.x + (pos.x / (double)app->surface->w) * app->zoom_area.x,
-			app->view_pos.y + (pos.y / (double)app->surface->h) * app->zoom_area.y});
+	return ((t_vector2){app->view_pos.x + (pos.x / (double)app->surface->w)
+		* app->zoom_area.x, app->view_pos.y + (pos.y / (double)app->surface->h)
+		* app->zoom_area.y});
 }

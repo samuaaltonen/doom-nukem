@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_portal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 10:58:22 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/22 15:24:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/30 10:51:45 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ void	link_wall_to_sector(t_app *app)
 		app->portal_selection = FALSE;
 		app->active_last = NULL;
 	}
-	if (app->portal_selection && app->active_last && app->active && app->active->type != -1)
+	if (app->portal_selection && app->active_last && app->active
+		&& app->active->type != -1)
 	{
 		app->active_last->type = -1;
 		app->portal_selection = FALSE;

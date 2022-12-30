@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   triangle.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 15:52:24 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/13 14:01:17 by htahvana         ###   ########.fr       */
+/*   Updated: 2022/12/30 10:41:45 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,30 +14,30 @@
 
 static t_bool	sort_triangle(t_point *a, t_point *b, t_point *c)
 {
-	int	same;
+	int		same;
 
 	same = 0;
-	if(a->y == b->y)
+	if (a->y == b->y)
 		same++;
-	if(a->y == c->y)
+	if (a->y == c->y)
 		same++;
-	if(b->y == c->y)
+	if (b->y == c->y)
 		same++;
-	
-	if(same == 3)
+	if (same == 3)
 		return (FALSE);
 	if (a->y > b->y)
 		ft_point_swap(a, b);
-	if (a->y > c->y) 
+	if (a->y > c->y)
 		ft_point_swap(a, c);
 	if (b->y > c->y)
 		ft_point_swap(b, c);
 	return (TRUE);
 }
 
-static void	calculate_top(t_triangle triangle, t_point *pos, t_point *heights, t_point *hor)
+static void	calculate_top(t_triangle triangle, t_point *pos,
+								t_point *heights, t_point *hor)
 {
-	t_vector2 relative_heights;
+	t_vector2	relative_heights;
 
 	relative_heights.x = (double)(pos->y - triangle.a.y) / heights->x;
 	relative_heights.y = (double)(pos->y - triangle.a.y) / heights->y;
@@ -48,9 +48,10 @@ static void	calculate_top(t_triangle triangle, t_point *pos, t_point *heights, t
 	pos->x = hor->x - 1;
 }
 
-static void	calculate_bot(t_triangle triangle, t_point *pos, t_point *heights, t_point *hor)
+static void	calculate_bot(t_triangle triangle, t_point *pos,
+									t_point *heights, t_point *hor)
 {
-	t_vector2 relative_heights;
+	t_vector2	relative_heights;
 
 	relative_heights.x = (double)(pos->y - triangle.a.y) / heights->x;
 	relative_heights.y = (double)(pos->y - triangle.b.y) / heights->y;
@@ -74,20 +75,20 @@ static void	calculate_bot(t_triangle triangle, t_point *pos, t_point *heights, t
  * @param relative_heights is the long and short side of a triangle ratio
  * @param heights x is the total height, y is the segment height
  */
-void fill_triangle(t_app *app, t_point a, t_point b, t_point c, int color)
+void	fill_triangle(t_app *app, t_point a, t_point b, t_point c, int color)
 {
-	t_point pos;
-	t_point hor;
-	t_point heights;
+	t_point		pos;
+	t_point		hor;
+	t_point		heights;
 
-	if(sort_triangle(&a, &b, &c))
+	if (sort_triangle(&a, &b, &c))
 	{
 		heights.x = c.y - a.y;
 		heights.y = b.y - a.y + 1;
 		pos.y = a.y - 1;
 		while (++pos.y <= b.y)
 		{
-			calculate_top((t_triangle){a,b,c}, &pos, &heights, &hor);
+			calculate_top((t_triangle){a, b, c}, &pos, &heights, &hor);
 			while (++pos.x <= hor.y)
 				put_pixel_to_surface(app->surface, pos.x, pos.y, color);
 		}
@@ -95,7 +96,7 @@ void fill_triangle(t_app *app, t_point a, t_point b, t_point c, int color)
 		pos.y = b.y - 1;
 		while (++pos.y <= c.y)
 		{
-			calculate_bot((t_triangle){a,b,c}, &pos, &heights, &hor);
+			calculate_bot((t_triangle){a, b, c}, &pos, &heights, &hor);
 			while (++pos.x <= hor.y)
 				put_pixel_to_surface(app->surface, pos.x, pos.y, color);
 		}

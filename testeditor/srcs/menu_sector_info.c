@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_sector_info.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:54:40 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/22 23:52:46 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/30 11:50:04 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,20 +26,20 @@ static void	render_ceiling_info(t_app *app)
 	else
 		toggle_active_color(app, 0, "HEIGHT", (t_rect){28, 562, 260, 15});
 	height = ft_ftoa(app->active_sector->ceil_height, 4);
+	if (!height)
+		return ;
 	render_text(app, (t_rect){215, 561, 100, 15}, height);
 	free(height);
 	if (app->ceiling_edit && app->active_sector->ceil_slope_wall
 		&& app->slope_edit)
-	{
 		toggle_active_color(app, app->slope_edit, "SLOPE",
 			(t_rect){28, 577, 260, 15});
-	}
 	else
-	{
 		toggle_active_color(app, app->slope_edit, "SLOPE",
 			(t_rect){28, 577, 260, 15});
-	}
 	height = ft_ftoa(app->active_sector->ceil_slope_height, 4);
+	if (!height)
+		return ;
 	if (app->active_sector->ceil_slope_wall)
 		render_text(app, (t_rect){215, 576, 100, 15}, height);
 	free(height);
@@ -59,20 +59,20 @@ static void	render_floor_info(t_app *app)
 	else
 		toggle_active_color(app, 0, "HEIGHT", (t_rect){28, 465, 260, 15});
 	height = ft_ftoa(app->active_sector->floor_height, 4);
+	if (!height)
+		return ;
 	render_text(app, (t_rect){215, 464, 100, 15}, height);
 	free(height);
 	if (app->floor_edit && app->active_sector->floor_slope_wall
 		&& app->slope_edit)
-	{
 		toggle_active_color(app, app->slope_edit, "SLOPE",
 			(t_rect){28, 480, 260, 15});
-	}
 	else
-	{
 		toggle_active_color(app, app->slope_edit, "SLOPE",
 			(t_rect){28, 480, 260, 15});
-	}
 	height = ft_ftoa(app->active_sector->floor_slope_height, 4);
+	if (!height)
+		return ;
 	if (app->active_sector->floor_slope_wall)
 		render_text(app, (t_rect){215, 479, 100, 15}, height);
 	free(height);

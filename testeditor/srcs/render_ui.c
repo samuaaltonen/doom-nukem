@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   render_ui.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/16 12:40:55 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/30 10:59:37 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
-static void	ui_background(t_app *app,t_rect area, int size, int background);
-static void ui_topframe(t_app *app,t_rect area, int size);
-static void ui_midframe(t_app *app,t_rect area, int size);
-static void ui_bottomframe(t_app *app,t_rect area, int size);
+static void	ui_background(t_app *app, t_rect area, int size, int background);
+static void	ui_topframe(t_app *app, t_rect area, int size);
+static void	ui_midframe(t_app *app, t_rect area, int size);
+static void	ui_bottomframe(t_app *app, t_rect area, int size);
 
-void	render_ui_frame(t_app *app,t_rect area, int size, int background)
+void	render_ui_frame(t_app *app, t_rect area, int size, int background)
 {
 	if (background)
 		ui_background(app, area, size, background);
@@ -25,27 +25,25 @@ void	render_ui_frame(t_app *app,t_rect area, int size, int background)
 	ui_topframe(app, area, size);
 	ui_midframe(app, area, size);
 	ui_bottomframe(app, area, size);
-
 }
 
-static void	ui_background(t_app *app,t_rect area, int size, int background)
+static void	ui_background(t_app *app, t_rect area, int size, int background)
 {
-	int	x;
-	int	y;
-	int top;
-	int bottom;
+	int		x;
+	int		y;
+	int		top;
+	int		bottom;
 
-	x = area.x;
-	y = area.y;
+	x = area.x - 1;
+	y = area.y - 1;
 	top = 8 * size;
 	bottom = 0;
-	while (y < area.y + area.h)
+	while (++y < area.y + area.h)
 	{
-		while (x < area.x + area.w)
+		while (++x < area.x + area.w)
 		{
 			if (x < area.x + area.w - top)
 				put_pixel_to_surface(app->surface, x, y, background);
-			x++;
 		}
 		top--;
 		if (y >= area.y + area.h - 8 * size)
@@ -55,11 +53,10 @@ static void	ui_background(t_app *app,t_rect area, int size, int background)
 		}
 		else
 			x = area.x;
-		y++;
 	}
 }
 
-static void ui_topframe(t_app *app,t_rect area, int size)
+static void	ui_topframe(t_app *app, t_rect area, int size)
 {
 	t_rect	dst;
 	t_rect	src;
@@ -83,7 +80,7 @@ static void ui_topframe(t_app *app,t_rect area, int size)
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
 }
 
-static void ui_midframe(t_app *app,t_rect area, int size)
+static void	ui_midframe(t_app *app, t_rect area, int size)
 {
 	t_rect	dst;
 	t_rect	src;
@@ -99,7 +96,7 @@ static void ui_midframe(t_app *app,t_rect area, int size)
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
 }
 
-static void ui_bottomframe(t_app *app,t_rect area, int size)
+static void	ui_bottomframe(t_app *app, t_rect area, int size)
 {
 	t_rect	dst;
 	t_rect	src;

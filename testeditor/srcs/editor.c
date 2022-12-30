@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/19 11:27:22 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/30 10:54:30 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	sector_edit(t_app *app, SDL_Keycode key)
 			if (app->active->decor > MAX_DECOR)
 			{
 				app->active->decor = -1;
-				del_all_decor_interactions(app);	
+				del_all_decor_interactions(app);
 			}
 		}
 		if (app->decor_edit && app->active && !app->floor_edit

@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:32:25 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/19 15:45:22 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/30 11:45:38 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,8 @@ void	wall_edit_menu(t_app *app, t_point screen_pos)
 	render_icons(app, (t_point){25, 60}, app->active->tex, app->assets.sprite);
 	toggle_active_color(app, 1, "DECOR", (t_rect){122, 122, 200, 15});
 	render_up_and_down_arrows(app, (t_point){263, 160}, (t_point){10, 165}, 8);
-	render_icons(app, (t_point){25, 150}, app->active->decor, app->assets.sprite);
+	render_icons(app, (t_point){25, 150}, app->active->decor,
+		app->assets.sprite);
 	if (app->active->decor != -1)
 		render_wall_decor_options(app, screen_pos);
 	render_portal_status(app);

@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:00:45 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/07 14:15:17 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/30 11:15:17 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	check_player_position(t_app *app)
 	while (++id < MAX_MEMBER_SECTORS && app->player.sector->member_sectors[id])
 	{
 		if (inside_sector_check(app->player.sector->member_sectors[id],
-			&app->mouse_track))
+				&app->mouse_track))
 		{
 			app->player.sector = NULL;
 			app->player_edit = TRUE;

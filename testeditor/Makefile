@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/12/15 16:38:49 by saaltone         ###   ########.fr        #
+#    Updated: 2022/12/30 14:17:52 by ssulkuma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,8 @@ sector_members.c sector_portal.c tex_icons.c tools.c utils_sdl.c utils.c \
 menu_player_info.c menu_weapon_info.c  menu_inventory_info.c \
 menu_object_info.c menu_interaction_info.c render_ui.c interactions.c \
 objects.c events_menu.c help_menu_tools.c interaction_tools.c \
-menu_interaction_tools.c menu_wall_info.c triangle.c
+menu_interaction_tools.c menu_wall_info.c triangle.c list_tools.c \
+object_tools.c
 
 LIBFT = ../libft/libft.a
 LIBLINEARALGEBRA = ../liblinearalgebra/liblinearalgebra.a

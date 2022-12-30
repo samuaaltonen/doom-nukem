@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:53:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/07 13:59:53 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/30 14:35:33 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,4 +100,29 @@ t_bool	valid_sector(t_app *app)
 		tmp = tmp->next;
 	}
 	return (TRUE);
+}
+
+//WIP
+void	sector_delone(t_sector_lst **sector, void (*del)(void*, size_t))
+{
+	int		i;
+
+	(void)del;
+	i = 0;
+	if ((*sector)->parent_sector)
+	{
+		while ((*sector)->parent_sector->member_sectors[i] != *sector)
+			i++;
+		(*sector)->parent_sector->member_sectors[i] = NULL;
+		while (++i < MAX_MEMBER_SECTORS
+			&& (*sector)->parent_sector->member_sectors[i])
+		{
+			(*sector)->parent_sector->member_sectors[i - 1]
+				= (*sector)->parent_sector->member_sectors[i];
+			(*sector)->parent_sector->member_sectors[i] = NULL;
+		}
+		(*sector)->parent_sector = NULL;
+	}
+	free(*sector);
+	*sector = NULL;
 }

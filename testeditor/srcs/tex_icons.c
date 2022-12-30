@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:36:43 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/29 11:02:43 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/30 13:31:55 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,24 +63,22 @@ void	render_icons(t_app *app, t_point point, int id, SDL_Surface *asset)
 	int			index;
 	int			tex;
 
-	index = 0;
-	while (index < 5)
+	index = -1;
+	while (++index < 5)
 	{
 		size = get_icon_size(index, &point);
 		tex = TEX_SIZE * ((index + id - 2) % (find_max(app, asset)));
 		if (asset == app->assets.objects)
-			set_icon_rect(&src, (t_point){0, tex - TEX_SIZE}, (t_point){TEX_SIZE, TEX_SIZE});
+			set_icon_rect(&src, (t_point){0, tex - TEX_SIZE},
+				(t_point){TEX_SIZE, TEX_SIZE});
 		else
-			set_icon_rect(&src, (t_point){tex, 0}, (t_point){TEX_SIZE, TEX_SIZE});
+			set_icon_rect(&src, (t_point){tex, 0},
+				(t_point){TEX_SIZE, TEX_SIZE});
 		set_icon_rect(&icon, point, size);
 		blit_surface(asset, &src, app->surface, &icon);
 		point.x += (SMALL_ICON) + 10;
 		if (index == 2)
-		{
-			point.x += (SMALL_ICON);
-			point.y += 14;
-		}
-		index++;
+			point = (t_point){point.x + SMALL_ICON, point.y + 14};
 	}
 	render_ui_frame(app, (t_rect){108, point.y - 14, 66, 66}, 1, 0);
 }

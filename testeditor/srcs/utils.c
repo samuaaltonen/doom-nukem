@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:48:10 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/29 15:26:48 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/30 14:29:44 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ void	load_font(t_app *app)
 	change_font(app, 16, 0xFF000000);
 }
 
+/**
+ * Colors the given surface with the given color.
+*/
 void	color_surface(SDL_Surface *surface, int color)
 {
 	int		x;
@@ -47,8 +50,7 @@ void	color_surface(SDL_Surface *surface, int color)
 	{
 		while (x < surface->w)
 		{
-			pixel_pos = (y * surface->pitch)
-			+ (x * IMAGE_PIXEL_BYTES);
+			pixel_pos = (y * surface->pitch) + (x * IMAGE_PIXEL_BYTES);
 			pixel = surface->pixels + pixel_pos;
 			if ((*(int *)pixel & 0xFF000000) != 0x00000000)
 				put_pixel_to_surface(surface, x, y, color);
@@ -59,12 +61,15 @@ void	color_surface(SDL_Surface *surface, int color)
 	}
 }
 
+/**
+ * Checks if mouse position is inside the given rectangle.
+*/
 int	check_mouse(t_point screen_pos, t_rect rect)
 {
 	if (screen_pos.x >= rect.x
 		&& screen_pos.y >= rect.y
 		&& screen_pos.x <= (rect.x + rect.w)
 		&& screen_pos.y <= (rect.y + rect.h))
-		return (1);
-	return (0);
+		return (TRUE);
+	return (FALSE);
 }

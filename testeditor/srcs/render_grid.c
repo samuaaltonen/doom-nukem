@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 15:28:54 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/03 13:03:46 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/30 11:14:16 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	render_divider(t_app *app)
 
 /**
  * @brief renders a grid with the divider and color param
+ * -50 + ( 0  / 1000) * 100
  * 
  * @param app 
  * @param divider 
@@ -93,5 +94,4 @@ void	render_grid(t_app *app, double divider, int color)
 		prev.x = fmod(screen.x, divider);
 	}
 	render_center(app, color);
-	//-50 + ( 0  / 1000) * 100
 }

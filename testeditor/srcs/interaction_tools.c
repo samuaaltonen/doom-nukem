@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:21:08 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/20 15:04:47 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2022/12/30 12:17:09 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ int	find_decor_interaction(t_app *app, int start_id, t_bool direction)
 		while (index < app->interaction_count)
 		{
 			if (app->interactions[index].activation_wall == app->active
-			&& app->interactions[index].activation_sector == app->active_sector)
+				&& app->interactions[index].activation_sector
+				== app->active_sector)
 				return (index);
 			index++;
 		}
@@ -80,12 +81,11 @@ int	find_sector_interaction(t_app *app, int start_id, t_bool direction)
 		while (index < app->interaction_count)
 		{
 			if (app->interactions[index].activation_sector == app->active_sector
-			&& !app->interactions[index].activation_wall
-			&& !app->interactions[index].activation_object)
+				&& !app->interactions[index].activation_wall
+				&& !app->interactions[index].activation_object)
 				return (index);
 			index++;
 		}
-		return (-1);
 	}
 	while (index >= 0)
 	{
@@ -114,7 +114,8 @@ int	find_object_interaction(t_app *app, int start_id, t_bool direction)
 	{
 		while (index < app->interaction_count)
 		{
-			if (app->interactions[index].activation_object == app->current_object)
+			if (app->interactions[index].activation_object
+				== app->current_object)
 				return (index);
 			index++;
 		}
