@@ -6,11 +6,67 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:30:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/02 14:04:34 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:06:58 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
+
+static void	avoid_walls(t_app *app, t_enemy_state *enemy)
+{
+	t_vector2	colliders[4];
+	int	i;
+	t_line	wall_line;
+	int collider;
+	t_bool hit[4];
+	t_bool	collision;
+
+	hit[0] = FALSE;
+	hit[1] = FALSE;
+	hit[2] = FALSE;
+	hit[3] = FALSE;
+	collision = FALSE;
+	colliders[0] = (t_vector2){app->objects[enemy->id].position.x - 1.f, app->objects[enemy->id].position.y - 1.f};
+	colliders[1] = (t_vector2){app->objects[enemy->id].position.x + 1.f, app->objects[enemy->id].position.y - 1.f};
+	colliders[2] = (t_vector2){app->objects[enemy->id].position.x - 1.f, app->objects[enemy->id].position.y + 1.f};
+	colliders[3] = (t_vector2){app->objects[enemy->id].position.x + 1.f, app->objects[enemy->id].position.y + 1.f};
+	collider = -1;
+	while(++collider < 4)
+	{
+		i = -1;
+		while (++i < app->sectors[app->objects[enemy->id].sector].corner_count)
+		{
+			wall_line = get_wall_line(app, app->objects[enemy->id].sector, i);
+			if (ft_line_side(wall_line, colliders[collider]))
+			{
+				if(app->sectors[app->objects[enemy->id].sector].wall_types[i] == -1)
+				{
+					hit[collider] = TRUE;
+					collision = TRUE;
+					break;
+				}
+			}
+		}
+	}
+	collider = -1;
+	if(collision)
+	{
+		t_vector2 new = app->objects[enemy->id].position;
+		i = 0;
+		while(++collider < 4)
+		{
+			if(hit[collider])
+			{
+				new = ft_vector2_add(new, colliders[collider]);
+				ft_printf("hit %i", collider);
+			}
+		}
+		ft_printf("new pos x%f, y%f old pos x%f, y%f\n", new.x, new.y, app->objects[enemy->id].position.x,app->objects[enemy->id].position.y );
+
+		app->objects[enemy->id].rot = ft_vector_angle_right((t_vector2){0.f,1.f},ft_vector2_sub(new,app->objects[enemy->id].position));
+		enemy->dir = ft_vector2_normalize(ft_vector2_sub(app->objects[enemy->id].position, new));
+	}
+}
 
 static void check_enemy(t_app *app, t_enemy_state *state, int define)
 {
@@ -23,7 +79,7 @@ static void check_enemy(t_app *app, t_enemy_state *state, int define)
 	{
 		app->objects[state->id].rot = ft_vector_angle_right((t_vector2){0.f,1.f},ft_vector2_sub(app->objects[state->id].position, app->player.pos));
 		state->dir = ft_vector2_normalize(ft_vector2_sub(app->player.pos, app->objects[state->id].position));
-		if(dist < app->enemy_def[define].range)
+		if(dist + ft_abs(app->player.elevation - app->objects[state->id].elevation) < app->enemy_def[define].range)
 			state->next = ATTACK;
 		else
 			state->next = WALK;
@@ -54,6 +110,7 @@ static void enemy_states(t_app *app, t_enemy_state *state, int define)
 		}
 		if(!state->dead && state->state == WALK)
 		{
+			avoid_walls(app, state);
 			new = (t_move){ft_vector2_add(app->objects[state->id].position, ft_vec2_mult(state->dir, app->enemy_def[define].speed * app->conf->delta_time)), app->sectors[app->objects[state->id].sector].floor_height};
 			if (enemy_move_check(app, new, app->objects[state->id].sector,state) != -1)
 			{

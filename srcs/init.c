@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/28 16:58:48 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/02 14:28:10 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,19 +114,22 @@ void	define_enemies(t_app *app)
 
 void	init_enemies(t_app *app)
 {
-	int	i;
-	int	enemy_count;
+	int				i;
+	t_enemy_state	*enemy;
+	int				enemy_count;
 
-	enemy_count = 0;
+	enemy = &(app->enemies[0]);
 	i = -1;
+	enemy_count = 0;
 	while(++i < app->conf->header.object_count)
 	{
 		if(app->objects[i].type >= MONSTER1 && app->objects[i].type < MONSTER1 + MAX_ENEMY_TYPES)
 		{
-			app->enemies[enemy_count].id = i;
-			app->enemies[enemy_count].pos = app->objects[i].position;
-			app->enemies[enemy_count].dead = FALSE;
-			app->enemies[enemy_count].agressive = FALSE;
+			enemy->id = i;
+			enemy->pos = app->objects[i].position;
+			enemy->dead = FALSE;
+			enemy->agressive = FALSE;
+			enemy++;
 			enemy_count++;
 		}
 	}

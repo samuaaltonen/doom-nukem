@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/28 16:43:00 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/02 14:54:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -254,6 +254,8 @@ static void	objects_visible(t_app *app)
 	{
 		if(app->objects[i].type == 0)
 			break;
+		if(app->objects[i].type == -1)
+			continue;
 		object = &(app->objectstack.objects[app->objectstack.visible_count]);
 		if (!init_object(app, i,object,&angle))
 			continue;
