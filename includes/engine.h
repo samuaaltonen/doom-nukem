@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/28 16:52:41 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:45:49 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,12 @@ enum e_occlusion {
 };
 
 enum e_objects {
+	EMPTY,
+	ARMOR_PICKUP,
+	COIN_PICKUP,
+	HP_PICKUP,
+	JETPACK_PICKUP,
+	ANTIDOTE_PICKUP,
 	MONSTER1 = 9,
 	MONSTER2 = 10
 };

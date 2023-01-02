@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_status.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/22 23:58:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:20:13 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	render_game(t_app *app)
 	update_enemy_states(app);
 	progress_animations(app);
 	player_control(app);
+	object_collision(app);
 	render_sectors(app);
 	render_objects(app);
 	render_textmodals(app);

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/02 14:28:10 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/02 17:29:36 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,7 +121,7 @@ void	init_enemies(t_app *app)
 	enemy = &(app->enemies[0]);
 	i = -1;
 	enemy_count = 0;
-	while(++i < app->conf->header.object_count)
+	while(++i < MAX_OBJECTS)
 	{
 		if(app->objects[i].type >= MONSTER1 && app->objects[i].type < MONSTER1 + MAX_ENEMY_TYPES)
 		{
@@ -132,6 +132,8 @@ void	init_enemies(t_app *app)
 			enemy++;
 			enemy_count++;
 		}
+		else
+			enemy->id = -1;
 	}
 	ft_printf("%i enemy count \n", enemy_count);
 }

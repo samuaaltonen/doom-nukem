@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   button_function.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/16 14:02:15 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/02 16:55:49 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ void	start_game(t_app *app)
 {
 	player_init(app);
 	import_file(app, MAP_PATH);
+	init_enemies(app);
 	//----DEBUG FEATURE
 	app->player.inventory.ammo = 20;
 	app->player.inventory.potion = 5;
@@ -40,7 +41,6 @@ void	start_game(t_app *app)
 		app->player.equiped_weapon.ammo = app->player.inventory.ammo;
 	app->player.equiped_weapon.fire_rate = 0.2;
 	//----
-	init_enemies(app);
 	app->status = STATUS_GAME;
 }
 

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:30:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/02 16:06:58 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/02 17:32:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,13 +56,8 @@ static void	avoid_walls(t_app *app, t_enemy_state *enemy)
 		while(++collider < 4)
 		{
 			if(hit[collider])
-			{
 				new = ft_vector2_add(new, colliders[collider]);
-				ft_printf("hit %i", collider);
-			}
 		}
-		ft_printf("new pos x%f, y%f old pos x%f, y%f\n", new.x, new.y, app->objects[enemy->id].position.x,app->objects[enemy->id].position.y );
-
 		app->objects[enemy->id].rot = ft_vector_angle_right((t_vector2){0.f,1.f},ft_vector2_sub(new,app->objects[enemy->id].position));
 		enemy->dir = ft_vector2_normalize(ft_vector2_sub(app->objects[enemy->id].position, new));
 	}
@@ -126,8 +121,7 @@ void	update_enemy_states(t_app *app)
 
 	state = &(app->enemies[0]);
 	state--;
-
-	while (++state != NULL && state->id != 0)
+	while (++state != NULL && state->id != -1)
 	{
 		if (state->dead)
 			continue;
