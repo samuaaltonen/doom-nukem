@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 17:02:41 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/02 13:56:37 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -275,6 +275,7 @@ t_bool		portal_can_enter(t_app *app, t_line wall, int source_sector,
 void		portal_enter(t_app *app, int sector_id);
 t_bool		inside_sector(t_app *app, int sector_id, t_vector2 coord);
 void		check_player_sector(t_app *app);
+int			enemy_move_check(t_app *app, t_move new, int sector_id, t_enemy_state *enemy);
 
 /**
  * Sectors

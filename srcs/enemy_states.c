@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:30:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/28 16:57:13 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/02 14:04:34 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,9 @@ static void check_enemy(t_app *app, t_enemy_state *state, int define)
 
 static void enemy_states(t_app *app, t_enemy_state *state, int define)
 {
+
+	t_move new;
+
 		app->object_states[state->id] += (float)app->conf->delta_time * app->enemy_def[define].states[state->state][2];
 
 		if(state->state == DEATH && app->object_states[state->id] > app->enemy_def[define].states[state->state][1] - 1)
@@ -51,7 +54,12 @@ static void enemy_states(t_app *app, t_enemy_state *state, int define)
 		}
 		if(!state->dead && state->state == WALK)
 		{
-			app->objects[state->id].position = ft_vector2_add(app->objects[state->id].position, ft_vec2_mult(state->dir, app->enemy_def[define].speed * app->conf->delta_time));
+			new = (t_move){ft_vector2_add(app->objects[state->id].position, ft_vec2_mult(state->dir, app->enemy_def[define].speed * app->conf->delta_time)), app->sectors[app->objects[state->id].sector].floor_height};
+			if (enemy_move_check(app, new, app->objects[state->id].sector,state) != -1)
+			{
+				app->objects[state->id].position = new.pos;
+				app->objects[state->id].elevation = sector_floor_height(app, app->objects[state->id].sector, new.pos);
+			}
 		}
 }
 
