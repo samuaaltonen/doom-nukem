@@ -6,11 +6,47 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:52 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/25 15:27:42 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/02 14:04:02 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
+
+static void	snap_to_point(double *snap_pos, double *world_pos, double divider)
+{
+	double	tmp;
+
+	tmp = fabs(fmod(*world_pos, divider));
+	if (tmp < (divider / 2))
+	{
+		if (*world_pos < 0)
+			*snap_pos = *world_pos + tmp;
+		else
+			*snap_pos = *world_pos - tmp;
+	}
+	else
+	{
+		if (*world_pos < 0)
+			*snap_pos = *world_pos - (divider - tmp);
+		else
+			*snap_pos = *world_pos + (divider - tmp);
+	}
+}
+
+/**
+ * converts mouse_pos to world space and snaps to grid
+ */
+void	snap_to_nearest(t_app *app, t_point *mouse_pos, t_vector2 *snap_pos,
+																double divider)
+{
+	t_vector2	world_pos;
+
+	world_pos = screen_to_world(app, *mouse_pos);
+	snap_pos->x = world_pos.x;
+	snap_pos->y = world_pos.y;
+	snap_to_point(&snap_pos->x, &world_pos.x, divider);
+	snap_to_point(&snap_pos->y, &world_pos.y, divider);
+}
 
 /**
  * Tracks mouse position and saves the snapped location to t_app
@@ -38,32 +74,6 @@ int	events_mouse_track(t_app *app)
 	if (app->player_menu && check_mouse(current_pos, (t_rect){208, 60, 32, 32}))
 		app->player.selected_weapon = 4;
 	return (0);
-}
-
-/**
- * @brief Finds which point in active sector was clicked
- * 
- * @param app 
- * @return t_vec2_lst* 
- */
-t_vec2_lst	*find_clicked_vector(t_app *app)
-{
-	t_vec2_lst		*found;
-
-	if (app->active_sector)
-	{
-		found = app->active_sector->wall_list;
-		while (found)
-		{
-			if (app->mouse_track.x == found->point.x
-				&& app->mouse_track.y == found->point.y)
-				return (found);
-			if (found->next == app->active_sector->wall_list)
-				break ;
-			found = found->next;
-		}
-	}
-	return (NULL);
 }
 
 /**

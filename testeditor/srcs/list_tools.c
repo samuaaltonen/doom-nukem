@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 13:22:32 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/30 13:24:13 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/02 13:58:01 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,17 @@ t_vec2_lst	*ft_lstindex(t_vec2_lst *lst, size_t index)
 		i++;
 	}
 	return (temp);
+}
+
+/**
+ * Cancels the ungoing list creation and deletes the incomplete sector list.
+*/
+void	cancel_list_creation(t_app *app)
+{
+	del_vector_list(&(app->active));
+	app->active = NULL;
+	app->active_last = NULL;
+	app->active_sector = NULL;
+	app->list_ongoing = FALSE;
+	app->list_creation = FALSE;
 }
