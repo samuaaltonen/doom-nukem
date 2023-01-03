@@ -6,7 +6,7 @@
 #    By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/12/30 14:17:52 by ssulkuma         ###   ########.fr        #
+#    Updated: 2023/01/03 16:49:49 by ssulkuma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = doom-nukem-editor
 CC = gcc
 
 FILES = app.c help_menu.c editor.c editor_ui.c editor_menu.c \
-events_key.c events_mouse.c events.c export.c import.c player.c \
+events_keyup.c events_mouse.c events.c export.c import.c player.c \
 image.c main.c render.c render_extra.c render_text.c render_grid.c \
 linedraw.c linedraw_utils.c lists.c menu_sector_info.c sector.c sector_tools.c \
 sector_members.c sector_portal.c tex_icons.c tools.c utils_sdl.c utils.c \
@@ -23,7 +23,8 @@ menu_player_info.c menu_weapon_info.c  menu_inventory_info.c \
 menu_object_info.c menu_interaction_info.c render_ui.c interactions.c \
 objects.c events_menu.c help_menu_tools.c interaction_tools.c \
 menu_interaction_tools.c menu_wall_info.c triangle.c list_tools.c \
-object_tools.c
+object_tools.c interaction_checks.c events_activate_interaction.c \
+events_sector.c events_keydown.c
 
 LIBFT = ../libft/libft.a
 LIBLINEARALGEBRA = ../liblinearalgebra/liblinearalgebra.a
@@ -46,7 +47,7 @@ HEADERS = \
 	-I ../liblinearalgebra/includes \
 	-I ../sdl/SDL2-2.0.8/include
 	
-FLAGS = -MMD -Wall -Wextra -Werror -O3 -g -fsanitize=address
+FLAGS = -MMD -Wall -Wextra -Werror -O3 -g 
 
 LIBLINKS = -L ../libft -L ../liblinearalgebra -L/usr/local/lib \
 		-llinearalgebra -lft -lm

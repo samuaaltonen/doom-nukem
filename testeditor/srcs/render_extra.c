@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:55:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/30 11:13:20 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/02 14:40:45 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,25 @@ static void	sector_bounds(t_app *app, t_sector_lst *sector,
 	}
 }
 
+static void	color_active_sector(t_app *app, t_vec2_lst *a, t_vec2_lst *b,
+																int color)
+{
+	while (a->next != app->active_sector->wall_list
+		&& b->next != app->active_sector->wall_list)
+	{
+		if (a->next == b)
+			a = b->next;
+		else if (b->next == a)
+			b = a->next;
+		else
+			b = b->next;
+		fill_triangle(app, world_to_screen(app,
+				app->active_sector->wall_list->point),
+			world_to_screen(app, a->point),
+			world_to_screen(app, b->point), color);
+	}
+}
+
 /**
  * @brief Makes triangles for rendering from a sector
  * WIP atm only renders a rectangle bounding the sector
@@ -72,63 +91,6 @@ void	render_fill_active_sector(t_app *app)
 		a = app->active_sector->wall_list->next;
 		b = app->active_sector->wall_list->next;
 		sector_bounds(app, app->active_sector, &min, &max);
-		while (a->next != app->active_sector->wall_list
-			&& b->next != app->active_sector->wall_list)
-		{
-			if (a->next == b)
-				a = b->next;
-			else if (b->next == a)
-				b = a->next;
-			else
-				b = b->next;
-			fill_triangle(app, world_to_screen(app,
-					app->active_sector->wall_list->point),
-				world_to_screen(app, a->point),
-				world_to_screen(app, b->point), color);
-		}
+		color_active_sector(app, a, b, color);
 	}
-}
-
-int	interaction_sector_check(t_app *app, t_sector_lst *sector)
-{
-	int	i;
-
-	i = 0;
-	while (i < MAX_INTERACTIONS)
-	{	
-		if (!app->interactions[i].activation_wall
-			&& app->interactions[i].activation_sector == sector)
-			return (app->interactions[i].event_id);
-		i++;
-	}
-	return (0);
-}
-
-int	interaction_wall_check(t_app *app, t_vec2_lst *wall)
-{
-	int	i;
-
-	i = 0;
-	while (i < MAX_INTERACTIONS)
-	{	
-		if (app->interactions[i].activation_sector
-			&& app->interactions[i].activation_wall == wall)
-			return (app->interactions[i].event_id);
-		i++;
-	}
-	return (0);
-}
-
-int	interaction_object_check(t_app *app, int id)
-{
-	int	i;
-
-	i = 0;
-	while (i < MAX_INTERACTIONS)
-	{
-		if (app->interactions[i].activation_object == &app->objects[id])
-			return (app->interactions[i].event_id);
-		i++;
-	}
-	return (0);
 }

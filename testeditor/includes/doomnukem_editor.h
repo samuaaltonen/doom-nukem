@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/30 11:21:17 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/03 13:44:28 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -305,6 +305,7 @@ typedef struct s_app
 	SDL_Window			*win;
 	SDL_Surface			*surface;
 	double				divider;
+	double				aspect_ratio;
 	t_vector2			view_pos;
 	t_vector2			view_size;
 	t_vector2			zoom_area;
@@ -422,6 +423,10 @@ int				events_mouse_drag(t_app *app);
 void			player_menu_events(t_app *app, t_point	screen_pos);
 void			interaction_menu_events(t_app *app, int start_y, t_point screen_pos);
 void			activate_interaction_menu(t_app *app, t_point screen_pos);
+void			edit_up_key_changes(t_app *app, double increment);
+void			edit_down_key_changes(t_app *app, double increment);
+void			edit_left_key_changes(t_app *app, SDL_Keycode key);
+void			edit_right_key_changes(t_app *app, SDL_Keycode key);
 
 /**
  * Map Editor functions
