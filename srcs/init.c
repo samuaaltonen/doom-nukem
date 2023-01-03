@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/02 17:29:36 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/03 14:28:52 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,17 @@ void	init_enemies(t_app *app)
 			enemy->id = -1;
 	}
 	ft_printf("%i enemy count \n", enemy_count);
+}
+
+void	init_projectiles(t_app *app)
+{
+	int	i;
+
+	i = -1;
+
+	ft_bzero(app->projectiles, sizeof(t_projectile) * MAX_TEMP_OBJECTS);
+	while (++i < MAX_TEMP_OBJECTS)
+		app->projectiles[i].type = -1;
 }
 
 /**

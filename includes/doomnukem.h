@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/02 16:19:05 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/03 16:00:35 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,17 @@ typedef struct s_enemy_state
 	int			next;
 }	t_enemy_state;
 
+typedef struct s_projectile
+{
+	t_vector2	start;
+	double		start_z;
+	t_vector2	end;
+	double		end_z;
+	double		timer;
+	int			type;
+	int			sector;
+}	t_projectile;
+
 typedef struct s_render_object
 {
 	int			id;
@@ -172,7 +183,7 @@ typedef struct s_app
 	t_sector		*sectors;
 	t_gameobject	objects[MAX_OBJECTS];
 	float			object_states[MAX_OBJECTS];
-	t_gameobject	tmp_objects[MAX_TEMP_OBJECTS];
+	t_projectile	projectiles[MAX_TEMP_OBJECTS];
 	t_enemy_state	enemies[MAX_OBJECTS];
 	t_enemy_def		enemy_def[MAX_ENEMY_TYPES];
 	t_interaction	interactions[MAX_INTERACTIONS];

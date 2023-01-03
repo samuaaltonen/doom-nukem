@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/02 14:54:22 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/03 16:11:24 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,19 +183,19 @@ static t_bool	init_object(t_app *app, int i, t_render_object *object,
 	return (TRUE);
 }
 
-static t_bool	init_temp_object(t_app *app, int i, t_render_object *object,
+/* static t_bool	init_temp_object(t_app *app, int i, t_render_object *object,
 		double *angle)
 {
 	t_vector2	vector;
 	double		dist;
 	t_vector2	transform;
 
-	vector = ft_vector2_sub(app->tmp_objects[i].position, app->player.pos);
+	vector = ft_vector2_sub(app->projectiles[i].start, app->player.pos);
 	dist = ft_vector_length(vector);
 	if(dist > 15.f)
 		return (FALSE);
 	object->dist = dist * cos(ft_vector_angle(vector, app->player.dir));
-	*angle = atan(fabs(app->player.elevation - app->tmp_objects[i].elevation)
+	*angle = atan(fabs(app->player.elevation - app->projectiles[i].start_z)
 			/ dist);
 	if(*angle > 1.f || *angle < 0)
 		return (FALSE);
@@ -209,7 +209,7 @@ static t_bool	init_temp_object(t_app *app, int i, t_render_object *object,
 	object->size.y  = (WIN_H / transform.y);
 	object->start.x = (int)((WIN_W / 2) * (1.0f + (transform.x / transform.y)));
 	return (TRUE);
-}
+} */
 
 static void	set_object(t_app *app, t_render_object *object, double *angle,
 	t_gameobject *original_obj)
@@ -265,16 +265,16 @@ static void	objects_visible(t_app *app)
 		//ft_printf("id %i, object frame %i, object texsize %i, type %i, state %f, size x%f,y%f\n", object->id, object->frame, object->tex_size, app->objects[object->id].type, app->object_states[object->id] ,object->size.x, object->size.y);
 
 	}
-	i = -1;
+/* 	i = -1;
 	while (++i < MAX_TEMP_OBJECTS) //temp objects
 	{
-		if(app->tmp_objects[i].type == 0)
+		if(app->projectiles[i].type == 0)
 			break;
 		object = &(app->objectstack.objects[app->objectstack.visible_count]);
 		if (!init_temp_object(app, i,object,&angle))
 			continue;
-		set_object(app, object, &angle, &(app->tmp_objects[i]));
-	}
+		set_object(app, object, &angle, &(app->projectiles[i]));
+	} */
 }
 
 
