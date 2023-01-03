@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_wallstack_visible.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:49:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/12 15:08:07 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/03 15:07:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,25 +24,19 @@ static t_bool	has_visible_corner(t_app *app, t_line wall)
 {
 	t_line		left;
 	t_line		right;
-	t_line		view_camera;
 	t_vector2	intersection;
 
-	view_camera = (t_line){app->player.pos,
-		(t_vector2){app->player.pos.x + app->player.cam.x,
-		app->player.pos.y + app->player.cam.y}};
-	left = (t_line){app->player.pos,
-		(t_vector2){app->player.pos.x + app->player.dir.x - app->player.cam.x,
-		app->player.pos.y + app->player.dir.y - app->player.cam.y}};
-	right = (t_line){app->player.pos,
-		(t_vector2){app->player.pos.x + app->player.dir.x + app->player.cam.x,
-		app->player.pos.y + app->player.dir.y + app->player.cam.y}};
+	left = (t_line){app->player.pos, ft_vector2_add(app->player.pos,
+			ft_vec2_mult(ft_vector2_sub(app->player.dir, app->player.cam),
+				MAX_VIEW_DISTANCE))};
+	right = (t_line){app->player.pos, ft_vector2_add(app->player.pos,
+			ft_vec2_mult(ft_vector2_add(app->player.dir, app->player.cam),
+				MAX_VIEW_DISTANCE))};
 	if (ft_line_side(right, wall.a) && ft_line_side(right, wall.b)
 		&& !ft_line_side(left, wall.a) && !ft_line_side(left, wall.b))
 		return (TRUE);
-	if ((ft_line_intersection(left, wall, &intersection)
-			&& ft_line_side(view_camera, intersection))
-		|| (ft_line_intersection(right, wall, &intersection)
-			&& ft_line_side(view_camera, intersection)))
+	if (ft_line_intersection_segment(left, wall, &intersection)
+		|| ft_line_intersection_segment(right, wall, &intersection))
 		return (TRUE);
 	return (FALSE);
 }
