@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 12:22:28 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/04 15:34:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/04 18:12:07 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ t_bool	read_pixels(SDL_Surface *surface, int fd)
 	while (y < surface->h)
 	{
 		if (read(fd, surface->pixels + ((surface->h - y - 1) * surface->pitch),
-			surface->w * IMAGE_PIXEL_BYTES) != surface->w * IMAGE_PIXEL_BYTES)
+				surface->w * IMAGE_PIXEL_BYTES)
+			!= surface->w * IMAGE_PIXEL_BYTES)
 			return (FALSE);
 		y++;
 	}
@@ -64,7 +65,7 @@ t_bool	read_pixels(SDL_Surface *surface, int fd)
  * @param path 
  * @return SDL_Surface* 
  */
-SDL_Surface *bmp_to_surface(const char *path)
+SDL_Surface	*bmp_to_surface(const char *path)
 {
 	t_point		size;
 	int			fd;
@@ -78,7 +79,7 @@ SDL_Surface *bmp_to_surface(const char *path)
 		|| !check_header(&size, (unsigned char *)&header))
 		return (NULL);
 	surface = SDL_CreateRGBSurface(0, size.x, size.y,
-		IMAGE_PIXEL_BITS, 0, 0, 0, 0);
+			IMAGE_PIXEL_BITS, 0, 0, 0, 0);
 	if (!surface)
 		return (NULL);
 	if (read(fd, surface->pixels, *(t_uint32 *)&header[10] - 54) < 0)

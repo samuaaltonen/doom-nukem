@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:46:07 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 02:03:54 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:40:32 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,8 @@ void	sector_walls_prepare(t_app *app, t_wall *walls, int wall_count)
 			walls[i].end_x = walls[i].start_x;
 			walls[i].start_x = temp_x;
 		}
+		if (walls[i].is_portal && !walls[i].is_member)
+			walls[i].start_x++;
 		if (walls[i].start_x < -1)
 			walls[i].start_x = -1;
 		if (walls[i].end_x >= WIN_W)
