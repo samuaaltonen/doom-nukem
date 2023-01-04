@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/03 16:45:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/04 13:02:45 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@
  * Integer type definitions
  */
 typedef unsigned char	t_uint8;
+typedef unsigned short	t_uint16;
 typedef unsigned int	t_uint32;
 
 typedef struct s_audio
@@ -415,6 +416,7 @@ void		color_surface(SDL_Surface *surface, int color);
 int			blend_pixel(t_color base, t_color top);
 t_color		int_to_argb(int color);
 int			argb_to_int(t_color color);
+SDL_Surface *bmp_to_surface(const char *path);
 
 /**
  * utils

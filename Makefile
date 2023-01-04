@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/03 16:44:58 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/04 12:34:38 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -61,6 +61,7 @@ FILES = main.c \
 		utils.c \
 		utils_color.c \
 		utils_sdl.c \
+		utils_bmp.c \
 		interaction_check.c \
 		interaction_trigger.c \
 		animation_create.c \
