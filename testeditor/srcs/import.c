@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/19 13:58:02 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/03 16:48:57 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -291,5 +291,6 @@ int	import_file(t_app *app, char *path)
 	close(fd);
 	app->player.sector = sector_by_index(app,player.sector);
 	relink_sectors(app);
+	app->imported = TRUE;
 	return (0);
 }

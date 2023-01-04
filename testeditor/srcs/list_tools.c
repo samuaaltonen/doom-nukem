@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 13:22:32 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/30 13:24:13 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/04 14:41:53 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,4 +48,41 @@ t_vec2_lst	*ft_lstindex(t_vec2_lst *lst, size_t index)
 		i++;
 	}
 	return (temp);
+}
+
+/**
+ * Cancels the ungoing list creation and deletes the incomplete sector list.
+*/
+void	cancel_list_creation(t_app *app)
+{
+	del_vector_list(&(app->active));
+	app->active = NULL;
+	app->active_last = NULL;
+	app->active_sector = NULL;
+	app->list_ongoing = FALSE;
+	app->list_creation = FALSE;
+}
+
+/**
+ * @brief check if clicked point is already part of the same list
+ * 
+ * @param app 
+ * @return t_bool 
+ */
+t_bool	valid_point(t_app *app)
+{
+	t_vec2_lst	*tmp;
+
+	tmp = app->active;
+	while (tmp)
+	{
+		if (tmp->point.x == app->mouse_track.x
+			&& tmp->point.y == app->mouse_track.y)
+			return (FALSE);
+		if (tmp->next && ft_line_side((t_line)
+				{tmp->point, tmp->next->point}, app->mouse_track))
+			return (FALSE);
+		tmp = tmp->next;
+	}
+	return (TRUE);
 }

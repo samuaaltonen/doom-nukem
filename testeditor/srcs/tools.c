@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/30 14:32:47 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/02 13:26:17 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,32 @@ t_sector_lst	*sector_by_index(t_app *app, int index)
 		i++;
 	}
 	return (head);
+}
+
+/**
+ * @brief Finds which point in active sector was clicked
+ * 
+ * @param app 
+ * @return t_vec2_lst* 
+ */
+t_vec2_lst	*find_clicked_vector(t_app *app)
+{
+	t_vec2_lst		*found;
+
+	if (app->active_sector)
+	{
+		found = app->active_sector->wall_list;
+		while (found)
+		{
+			if (app->mouse_track.x == found->point.x
+				&& app->mouse_track.y == found->point.y)
+				return (found);
+			if (found->next == app->active_sector->wall_list)
+				break ;
+			found = found->next;
+		}
+	}
+	return (NULL);
 }
 
 /**

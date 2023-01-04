@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:38:26 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/20 14:59:11 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/03 16:41:35 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,162 +22,79 @@ void	player_menu_events(t_app *app, t_point	screen_pos)
 }
 
 /**
- * Mouse click events in the interaction menu. If click is outside menu, changes
- * interaction's targer sector to the one clicked (if click's outside sector,
- * targer sector is active sector). Clicking interaction menu changes the
- * event id accordingly. If wall/sector/object had an interaction before,
- * deletes the existing interaction.
+ * Changes mouse_down state to true when mouse button left is pressed down.
 */
-void	interaction_menu_events(t_app *app, int start_y, t_point screen_pos)
+int	events_mouse_drag(t_app *app)
 {
-	int		id;
-	int		i;
-
-	if (app->current_interaction)
-	{
-		if (screen_pos.x > HELP_MENU_W)
-		{
-			app->current_interaction->target_sector = find_child_sector(app);
-			if (!app->current_interaction->target_sector)
-				app->current_interaction->target_sector = click_sector(app);
-			if (!app->current_interaction->target_sector)
-				app->current_interaction->target_sector = app->active_sector;
-		}
-		if (check_mouse(screen_pos, (t_rect){90, start_y + 25, 113, 15}))
-		{
-			if (app->current_interaction->event_id)
-			{
-				i = find_interaction(app);
-				id = i;
-				while (id < MAX_INTERACTIONS && app->interactions[i].event_id != 0)
-				{
-					if (&(app->interactions[id]) == app->current_interaction)
-						delete_interaction(app, id);
-					id++;
-				}
-				app->current_interaction = NULL;
-				app->interaction_menu = FALSE;
-			}
-			else
-				app->current_interaction->event_id = 0;
-		}
-		if (check_mouse(screen_pos, (t_rect){100, start_y + 40, 93, 15}))
-			app->current_interaction->event_id = 1;
-		if (check_mouse(screen_pos, (t_rect){90, start_y + 55, 110, 15}))
-			app->current_interaction->event_id = 2;
-		if (check_mouse(screen_pos, (t_rect){50, start_y + 70, 183, 15}))
-			app->current_interaction->event_id = 3;
-		if (check_mouse(screen_pos, (t_rect){125, start_y + 85, 40, 15}))
-			app->current_interaction->event_id = 4;
-		if (check_mouse(screen_pos, (t_rect){110, start_y + 100, 70, 15}))
-			app->current_interaction->event_id = 5;
-		if (check_mouse(screen_pos, (t_rect){125, start_y + 115, 40, 15}))
-			app->current_interaction->event_id = 6;
-		if (check_mouse(screen_pos, (t_rect){102, start_y + 130, 82, 15}))
-			app->current_interaction->event_id = 7;
-		if (check_mouse(screen_pos, (t_rect){85, start_y + 260, 150, 15}))
-			link_interaction(app);
-	}
+	app->mouse_down = TRUE;
+	return (0);
 }
 
 /**
- * Mouse click event to activate interaction menu. Checks if click is within
- * the button and finds the right interaction from the array to make changes
- * to.
+ * Changes interaction's event id to 0 (no interaction). If wall/sector/object
+ * had an interaction before, deletes the existing interaction.
 */
-void	activate_interaction_menu(t_app *app, t_point screen_pos)
+static void	no_interaction_check(t_app *app)
 {
-	int		interaction_id;
+	int		id;
+	int		interaction;
 
-	if (check_mouse(screen_pos, (t_rect){25, 210, 15, 15}) && app->object_menu)
+	if (app->current_interaction->event_id)
 	{
-		if (!app->current_interaction)
-			app->current_interaction = &app->interactions[find_object_interaction(app, app->interaction_count, 0)];
-		interaction_id = find_object_interaction(app, find_interaction(app) - 1, 0);
-		if (interaction_id < 0)
-			return ;
-		app->current_interaction = &app->interactions[interaction_id];
-		return ;
-	}
-	if (check_mouse(screen_pos, (t_rect){255, 210, 15, 15}) && app->object_menu)
-	{
-		if (!app->current_interaction)
-			app->current_interaction = &app->interactions[find_object_interaction(app, 0, 1)];
-		interaction_id = find_object_interaction(app, find_interaction(app) + 1, 1);
-		if (interaction_id < 0)
-			return ;
-		app->current_interaction = &app->interactions[interaction_id];
-		return ;
-	}
-	if (check_mouse(screen_pos, (t_rect){25, 220, 15, 15}) && app->active)
-	{
-		if (!app->current_interaction)
-			app->current_interaction = &app->interactions[find_decor_interaction(app, app->interaction_count, 0)];
-		interaction_id = find_decor_interaction(app, find_interaction(app) - 1, 0);
-		if (interaction_id < 0)
-			return ;
-		app->current_interaction = &app->interactions[interaction_id];
-		return ;
-	}
-	if (check_mouse(screen_pos, (t_rect){255, 220, 15, 15}) && app->active)
-	{
-		if (!app->current_interaction)
-			app->current_interaction = &app->interactions[find_decor_interaction(app, 0, 1)];
-		interaction_id = find_decor_interaction(app, find_interaction(app) + 1, 1);
-		if (interaction_id < 0)
-			return ;
-		app->current_interaction = &app->interactions[interaction_id];
-		return ;
-	}
-	if (check_mouse(screen_pos, (t_rect){25, 600, 15, 15})
-		&& app->active_sector && !app->active)
-	{
-		if (!app->current_interaction)
-			app->current_interaction = &app->interactions[find_sector_interaction(app, app->interaction_count, 0)];
-		interaction_id = find_sector_interaction(app, find_interaction(app) - 1, 0);
-		if (interaction_id < 0)
-			return ;
-		app->current_interaction = &app->interactions[interaction_id];
-		return ;
-	}
-	if (check_mouse(screen_pos, (t_rect){255, 600, 15, 15})
-		&& app->active_sector && !app->active)
-	{
-		if (!app->current_interaction)
-			app->current_interaction = &app->interactions[find_sector_interaction(app, 0, 1)];
-		interaction_id = find_sector_interaction(app, find_interaction(app) + 1, 1);
-		if (interaction_id < 0)
-			return ;
-		app->current_interaction = &app->interactions[interaction_id];
-		return ;
-	}
-	if (!app->current_interaction && app->object_menu)
-		interaction_id = find_object_interaction(app, 0, 1);
-	else if (!app->current_interaction && app->active)
-		interaction_id = find_decor_interaction(app, 0, 1);
-	else if (!app->current_interaction && app->active_sector)
-		interaction_id = find_sector_interaction(app, 0, 1);
-	else
-		interaction_id = find_interaction(app);
-	if (interaction_id < 0)
+		interaction = find_interaction(app);
+		id = interaction;
+		while (id < MAX_INTERACTIONS
+			&& app->interactions[interaction].event_id != 0)
+		{
+			if (&(app->interactions[id]) == app->current_interaction)
+				delete_interaction(app, id);
+			id++;
+		}
 		app->current_interaction = NULL;
-	else
-		app->current_interaction = &app->interactions[interaction_id];
-	if ((check_mouse(screen_pos, (t_rect){42, 228, 190, 16}) && app->object_menu)
-		|| (check_mouse(screen_pos, (t_rect){42, 238, 190, 16}) && app->active)
-		|| (check_mouse(screen_pos, (t_rect){42, 618, 190, 16}) && app->active_sector))
-	{
-		if (!app->current_interaction)
-			link_interaction(app);
-		app->interaction_menu = TRUE;
-		
+		app->interaction_menu = FALSE;
 	}
-	if ((check_mouse(screen_pos, (t_rect){42, 248, 190, 16}) && app->object_menu)
-		|| (check_mouse(screen_pos, (t_rect){42, 258, 200, 20}) && app->active)
-		|| (check_mouse(screen_pos, (t_rect){42, 638, 190, 16}) && app->active_sector))
-	{
-		app->current_interaction = NULL;
+	else
+		app->current_interaction->event_id = 0;
+}
+
+/**
+ * Updates the target sector for the current interaction based on mouse click.
+*/
+static void	update_target_sector(t_app *app)
+{
+	app->current_interaction->target_sector = find_child_sector(app);
+	if (!app->current_interaction->target_sector)
+		app->current_interaction->target_sector = click_sector(app);
+	if (!app->current_interaction->target_sector)
+		app->current_interaction->target_sector = app->active_sector;
+}
+
+/**
+ * Mouse click events in the interaction menu. If click is outside menu, changes
+ * interaction's targer sector to the one clicked (if click's outside sector,
+ * targer sector is active sector). Clicking interaction menu changes the
+ * event id accordingly.
+*/
+void	interaction_menu_events(t_app *app, int start_y, t_point screen_pos)
+{
+	if (screen_pos.x > HELP_MENU_W)
+		update_target_sector(app);
+	if (check_mouse(screen_pos, (t_rect){90, start_y + 25, 113, 15}))
+		no_interaction_check(app);
+	if (check_mouse(screen_pos, (t_rect){100, start_y + 40, 93, 15}))
+		app->current_interaction->event_id = 1;
+	if (check_mouse(screen_pos, (t_rect){90, start_y + 55, 110, 15}))
+		app->current_interaction->event_id = 2;
+	if (check_mouse(screen_pos, (t_rect){50, start_y + 70, 183, 15}))
+		app->current_interaction->event_id = 3;
+	if (check_mouse(screen_pos, (t_rect){125, start_y + 85, 40, 15}))
+		app->current_interaction->event_id = 4;
+	if (check_mouse(screen_pos, (t_rect){110, start_y + 100, 70, 15}))
+		app->current_interaction->event_id = 5;
+	if (check_mouse(screen_pos, (t_rect){125, start_y + 115, 40, 15}))
+		app->current_interaction->event_id = 6;
+	if (check_mouse(screen_pos, (t_rect){102, start_y + 130, 82, 15}))
+		app->current_interaction->event_id = 7;
+	if (check_mouse(screen_pos, (t_rect){85, start_y + 260, 150, 15}))
 		link_interaction(app);
-		app->interaction_menu = TRUE;
-	}
 }

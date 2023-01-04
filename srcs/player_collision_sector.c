@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 20:03:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/23 01:06:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/03 16:45:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,6 +140,7 @@ t_bool	collision_sector(t_app *app, int sector_id, int *visited)
 
 	if (has_been_visited(sector_id, visited, TRUE))
 		return (TRUE);
+	collision_slope(app, sector_id);
 	member_collisions(app, sector_id);
 	i = -1;
 	while (++i < app->sectors[sector_id].corner_count)

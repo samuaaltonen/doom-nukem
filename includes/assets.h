@@ -6,13 +6,15 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/04 14:19:50 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:39:37 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ASSETS_H
 # define ASSETS_H
 
+# define MAX_BMP_WIDTH 32768
+# define MAX_BMP_HEIGHT 32768
 # define PANELS_PATH "assets/textures/spritesheet_full.bmp"
 # define SKYBOX_PATH "assets/images/skybox.bmp"
 # define FONT_PATH "assets/fonts/sci-fi_font.bmp"

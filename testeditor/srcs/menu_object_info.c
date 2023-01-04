@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:04:04 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/30 11:56:18 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/03 13:52:46 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,39 @@ static void	render_object_movement_type(t_app *app, int movement)
 }
 
 /**
+ * Based on the object type, displays the correct statics on the help menu
+ * sidebar.
+*/
+static void	render_object_type_statics(t_app *app)
+{
+	change_font(app, 11, TEXT);
+	if (app->current_object->type < 6)
+	{
+		render_text(app, (t_rect){102, 120, 120, 15}, "CONSUMABLE");
+		render_text(app, (t_rect){40, 140, 120, 15}, "HEALTH");
+		render_text(app, (t_rect){210, 140, 120, 15}, "0");
+		render_text(app, (t_rect){40, 155, 120, 15}, "DAMAGE");
+		render_text(app, (t_rect){210, 155, 120, 15}, "0");
+	}
+	if (app->current_object->type > 5 && app->current_object->type < 9)
+	{
+		render_text(app, (t_rect){120, 120, 120, 15}, "OBJECT");
+		render_text(app, (t_rect){40, 140, 120, 15}, "HEALTH");
+		render_text(app, (t_rect){210, 140, 120, 15}, "50");
+		render_text(app, (t_rect){40, 155, 120, 15}, "DAMAGE");
+		render_text(app, (t_rect){210, 155, 120, 15}, "0");
+	}
+	if (app->current_object->type == 9 || app->current_object->type == 10)
+	{
+		render_text(app, (t_rect){113, 120, 120, 15}, "MONSTER");
+		render_text(app, (t_rect){40, 140, 120, 15}, "HEALTH");
+		render_text(app, (t_rect){210, 140, 120, 15}, "100");
+		render_text(app, (t_rect){40, 155, 120, 15}, "DAMAGE");
+		render_text(app, (t_rect){210, 155, 120, 15}, "10");
+	}
+}
+
+/**
  * Renders object related texts on the help menu sidebar.
 */
 static void	render_object_texts(t_app *app)
@@ -57,13 +90,8 @@ static void	render_object_texts(t_app *app)
 	if (app->current_object->type < 9)
 		movement = 1;
 	if (app->current_object->type == 9)
-		movement = 1;
-	change_font(app, 11, TEXT);
-	render_text(app, (t_rect){113, 120, 120, 15}, "MONSTER");
-	render_text(app, (t_rect){40, 140, 120, 15}, "HEALTH");
-	render_text(app, (t_rect){210, 140, 120, 15}, "100");
-	render_text(app, (t_rect){40, 155, 120, 15}, "DAMAGE");
-	render_text(app, (t_rect){210, 155, 120, 15}, "10");
+		movement = 2;
+	render_object_type_statics(app);
 	if (pickable)
 	{
 		render_text(app, (t_rect){50, 170, 120, 15}, "UNPICKABLE");
@@ -74,7 +102,7 @@ static void	render_object_texts(t_app *app)
 	{
 		render_text(app, (t_rect){165, 170, 120, 15}, "PICKABLE");
 		change_font(app, 11, ACTIVE_TEXT);
-		render_text(app, (t_rect){40, 170, 120, 15}, "- UNPICKABLE -");
+		render_text(app, (t_rect){40, 170, 130, 15}, "- UNPICKABLE -");
 	}
 	render_object_movement_type(app, movement);
 }

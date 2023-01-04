@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/04 17:00:29 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:39:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@
  * Integer type definitions
  */
 typedef unsigned char	t_uint8;
+typedef unsigned short	t_uint16;
 typedef unsigned int	t_uint32;
 
 typedef struct s_audio
@@ -279,6 +280,7 @@ t_vector2	collisions_apply(t_app *app);
 t_bool		collision_sector(t_app *app, int sector_id, int *visited);
 t_collision	collision_wall(t_app *app, int sector_id, int wall_id,
 				int portal_id);
+void		collision_slope(t_app *app, int sector_id);
 t_bool		collision_possible(t_vector2 start_pos, t_vector2 end_pos,
 				t_line wall, t_bool is_member);
 t_vector2	get_possible_movement_point(t_line wall, t_vector2 coord, int side);
@@ -426,6 +428,7 @@ void		color_surface(SDL_Surface *surface, int color);
 int			blend_pixel(t_color base, t_color top);
 t_color		int_to_argb(int color);
 int			argb_to_int(t_color color);
+SDL_Surface *bmp_to_surface(const char *path);
 
 /**
  * utils

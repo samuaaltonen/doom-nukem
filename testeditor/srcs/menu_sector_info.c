@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:54:40 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/30 11:50:04 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/02 14:51:44 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 /**
  * Renders active sector's information regarding the ceiling.
 */
-static void	render_ceiling_info(t_app *app)
+static void	render_ceiling_info(t_app *app, char *height)
 {
-	char	*height;
-
 	toggle_active_color(app, app->ceiling_edit, "CEILING",
 		(t_rect){114, 488, 200, 15});
 	if (app->ceiling_edit && !app->slope_edit)
@@ -48,10 +46,8 @@ static void	render_ceiling_info(t_app *app)
 /**
  * Renders active sector's information regarding the floor.
 */
-static void	render_floor_info(t_app *app)
+static void	render_floor_info(t_app *app, char *height)
 {
-	char	*height;
-
 	toggle_active_color(app, app->floor_edit, "FLOOR",
 		(t_rect){122, 390, 200, 15});
 	if (app->floor_edit && !app->slope_edit)
@@ -131,6 +127,6 @@ PRESS 'L' TO REMOVE PORTAL.");
 	render_icons(app, (t_point){25, y + 478},
 		app->active_sector->ceil_tex, app->assets.sprite);
 	render_walls_info(app, screen_pos);
-	render_floor_info(app);
-	render_ceiling_info(app);
+	render_floor_info(app, NULL);
+	render_ceiling_info(app, NULL);
 }

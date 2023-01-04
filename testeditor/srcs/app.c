@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/29 15:07:48 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/02 15:16:27 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int	app_init(t_app **app)
  */
 void	app_prepare(t_app *app)
 {
-	double		aspect_ratio;
-
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0)
 		exit_error(MSG_ERROR_SDL_INIT);
 	app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_SHOWN);
@@ -41,17 +39,15 @@ void	app_prepare(t_app *app)
 	app->surface = SDL_GetWindowSurface(app->win);
 	if (!app->surface)
 		exit_error(MSG_ERROR_WINDOW_SURFACE);
-	aspect_ratio = ((double)app->surface->h / (double)app->surface->w) * -100;
+	app->aspect_ratio = ((double)app->surface->h / (double)app->surface->w)
+		* -100;
 	app->view_pos = (t_vector2){-50.0, 50.0};
-	app->zoom_area = (t_vector2){100.0, aspect_ratio};
+	app->zoom_area = (t_vector2){100.0, app->aspect_ratio};
 	app->view_size = (t_vector2){app->view_pos.x + app->zoom_area.x,
 		app->view_pos.y + app->zoom_area.y};
 	app->divider = 1.0f;
 	app->zoom_range = 5;
-	app->sectorcount = 0;
-	app->sectors = NULL;
 	app->player_edit = TRUE;
-	app->player.sector = NULL;
 	app->player.health = 200;
 	app->player.armor = 100;
 	app->movement_speed = 4;
@@ -61,19 +57,8 @@ void	app_prepare(t_app *app)
 	SDL_ShowCursor(SDL_ENABLE);
 }
 
-/**
- * Rendering function to be called in loop hook. Calls individual renderers and
- * draws resulting image(s) to the window.
- */
-void	app_render(t_app *app)
+static void	app_render_helper(t_app *app)
 {
-	flush_surface(app->surface);
-	handle_movement(app);
-	app->view_size.x = app->view_pos.x + app->zoom_area.x;
-	app->view_size.y = app->view_pos.y + app->zoom_area.y;
-	render_fill_active_sector(app);
-	render_divider(app);
-	render_sectors(app);
 	if (app->active)
 	{
 		render_sector(app, app->active);
@@ -89,12 +74,28 @@ void	app_render(t_app *app)
 		else
 			draw_line(app, &app->active_last->point, &app->mouse_track, LINE_B);
 	}
+}
+
+/**
+ * Rendering function to be called in loop hook. Calls individual renderers and
+ * draws resulting image(s) to the window.
+ */
+void	app_render(t_app *app)
+{
+	flush_surface(app->surface);
+	handle_movement(app);
+	app->view_size.x = app->view_pos.x + app->zoom_area.x;
+	app->view_size.y = app->view_pos.y + app->zoom_area.y;
+	render_fill_active_sector(app);
+	render_divider(app);
+	render_sectors(app);
+	app_render_helper(app);
 	render_objects(app);
 	render_player(app);
 	zoom_slider(app);
 	render_help_menu(app);
 	if (app->object_new)
-		draw_object_icon(app,app->mouse_track, app->current_object->type);
+		draw_object_icon(app, app->mouse_track, app->current_object->type);
 	SDL_UpdateWindowSurface(app->win);
 }
 

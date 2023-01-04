@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/29 15:35:42 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/02 14:03:24 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	active_sector_events(t_app *app)
 	if (app->player_edit)
 	{
 		app->player.position = app->mouse_track;
-		app->player.direction = (t_vector2){0.f,1.f};
+		app->player.direction = (t_vector2){0.f, 1.f};
 		app->player.sector = app->active_sector;
 		app->player_edit = FALSE;
 		check_player_position(app);
@@ -73,8 +73,8 @@ static void	rightside_menu_events(t_app *app, t_point screen_pos)
 {
 	if (check_mouse(screen_pos, (t_rect){WIN_W - 150, 10, 150, 15}))
 	{
-		if ((!app->active_sector) || (app->active_sector
-			&& get_member_sector_count(app->active_sector) < MAX_MEMBER_SECTORS)
+		if ((app->active_sector && get_member_sector_count(app->active_sector)
+				< MAX_MEMBER_SECTORS) || (!app->active_sector)
 			|| (app->active_sector && app->active_sector->parent_sector))
 			app->list_creation = ft_toggle(app->list_creation);
 		if (app->list_ongoing)
@@ -156,70 +156,4 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 			app->active_sector = NULL;
 	}
 	return (0);
-}
-
-/**
- * Changes mouse_down state to true when mouse button left is pressed down.
-*/
-int	events_mouse_drag(t_app *app)
-{
-	app->mouse_down = TRUE;
-	return (0);
-}
-
-/**
- * Cancels the ungoing list creation and deletes the incomplete sector list.
-*/
-void	cancel_list_creation(t_app *app)
-{
-	del_vector_list(&(app->active));
-	app->active = NULL;
-	app->active_last = NULL;
-	app->active_sector = NULL;
-	app->list_ongoing = FALSE;
-	app->list_creation = FALSE;
-}
-
-/**
- * converts mouse_pos to world space and snaps to grid
- */
-void	snap_to_nearest(t_app *app, t_point *mouse_pos, t_vector2 *snap_pos, double divider)
-{
-	t_vector2	world_pos;
-	double		tmp;
-
-	world_pos.x = app->view_pos.x + (mouse_pos->x / (double)app->surface->w) * app->zoom_area.x;
-	world_pos.y = app->view_pos.y + (mouse_pos->y / (double)app->surface->h) * app->zoom_area.y;
-	snap_pos->x = world_pos.x;
-	snap_pos->y = world_pos.y;
-	tmp = fabs(fmod(world_pos.x, divider));
-	if (tmp < (divider / 2))
-	{
-		if (world_pos.x < 0)
-			snap_pos->x = world_pos.x + tmp;
-		else
-			snap_pos->x = world_pos.x - tmp;
-	}
-	else
-	{
-		if (world_pos.x < 0)
-			snap_pos->x = world_pos.x - (divider - tmp);
-		else
-			snap_pos->x = world_pos.x + (divider - tmp);
-	}
-	tmp = fabs(fmod(world_pos.y, divider));
-	if (tmp < (divider / 2))
-	{
-		if (world_pos.y < 0)
-			snap_pos->y = world_pos.y + tmp;
-		else
-			snap_pos->y = world_pos.y - tmp;
-	}
-	else
-	{
-		if (world_pos.y < 0)
-			snap_pos->y = world_pos.y - (divider - tmp);
-		else
-			snap_pos->y = world_pos.y + (divider - tmp);
-	}
 }

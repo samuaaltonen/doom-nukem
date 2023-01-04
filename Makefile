@@ -6,7 +6,7 @@
 #    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/04 12:35:04 by htahvana         ###   ########.fr        #
+#    Updated: 2023/01/04 17:40:02 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,6 +30,7 @@ FILES = main.c \
 		player_collision.c \
 		player_collision_sector.c \
 		player_collision_wall.c \
+		player_collision_slope.c \
 		player_collision_portal.c \
 		player_control.c \
 		player_effects.c \
@@ -60,6 +61,7 @@ FILES = main.c \
 		utils.c \
 		utils_color.c \
 		utils_sdl.c \
+		utils_bmp.c \
 		interaction_check.c \
 		interaction_trigger.c \
 		animation_create.c \
