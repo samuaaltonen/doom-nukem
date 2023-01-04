@@ -6,74 +6,11 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 15:49:10 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/02 16:23:21 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/04 14:46:12 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
-
-/**
- * Handles sector changes for the up arrow keypress.
-*/
-void	edit_up_key_changes(t_app *app, double increment)
-{
-	if (app->ceiling_edit && !app->slope_edit)
-		app->active_sector->ceil_height += increment;
-	if (app->floor_edit && !app->slope_edit)
-		app->active_sector->floor_height += increment;
-	if (!app->decor_edit && app->active && !app->floor_edit
-		&& !app->ceiling_edit)
-	{
-		app->active->decor++;
-		if (app->active->decor > MAX_DECOR)
-		{
-			app->active->decor = -1;
-			del_all_decor_interactions(app);
-		}
-	}
-	if (app->decor_edit && app->active && !app->floor_edit
-		&& !app->ceiling_edit && app->active->decor != -1)
-		app->active->decor_offset.y += app->divider;
-	if (app->light_edit && app->active_sector->light < 8)
-		app->active_sector->light++;
-	if (app->slope_edit && app->ceiling_edit)
-		app->active_sector->ceil_slope_height += increment;
-	if (app->slope_edit && app->floor_edit)
-		app->active_sector->floor_slope_height += increment;
-	if (app->object_menu)
-		app->current_object->var += app->divider;
-}
-
-/**
- * Handles sector changes for the down arrow keypress.
-*/
-void	edit_down_key_changes(t_app *app, double increment)
-{
-	if (app->ceiling_edit && !app->slope_edit)
-		app->active_sector->ceil_height -= increment;
-	if (app->floor_edit && !app->slope_edit)
-		app->active_sector->floor_height -= increment;
-	if (!app->decor_edit && app->active && !app->floor_edit
-		&& !app->ceiling_edit)
-	{
-		app->active->decor--;
-		if (app->active->decor == -1)
-			del_all_decor_interactions(app);
-		if (app->active->decor < -1)
-			app->active->decor = MAX_DECOR;
-	}
-	if (app->decor_edit && app->active && !app->floor_edit
-		&& !app->ceiling_edit && app->active->decor != -1)
-		app->active->decor_offset.y -= app->divider;
-	if (app->light_edit && app->active_sector->light > -8)
-		app->active_sector->light--;
-	if (app->slope_edit && app->ceiling_edit)
-		app->active_sector->ceil_slope_height -= increment;
-	if (app->slope_edit && app->floor_edit)
-		app->active_sector->floor_slope_height -= increment;
-	if (app->object_menu)
-		app->current_object->var -= app->divider;
-}
 
 /**
  * Handles sector texture changes for the left arrow keypress.
