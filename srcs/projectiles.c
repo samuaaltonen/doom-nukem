@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:01:41 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/04 14:55:39 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/04 15:20:34 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static void	projectile_flight(t_app *app, t_move *new, t_projectile *projectile,
 		recursion_count = 0;
 	recursion_count++;
 
-	if(recursion_count < MAX_VISIBLE_SECTORS)
+	if(recursion_count > MAX_VISIBLE_SECTORS)
 		return ;
 
 //member sector walls
@@ -59,6 +59,7 @@ static void	projectile_flight(t_app *app, t_move *new, t_projectile *projectile,
 	i = -1;
 	while (++i < app->sectors[projectile->sector].corner_count)
 	{
+		projectile->end = new->pos;
 		wall_line = get_wall_line(app, projectile->sector, i);
 		if (!ft_line_side(wall_line, new->pos))
 			continue ;
