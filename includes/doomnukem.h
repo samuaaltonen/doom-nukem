@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/04 12:53:27 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:00:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,6 +101,7 @@ typedef struct s_enemy_def
 	int		state_count;
 	double	range;
 	double	speed;
+	double	attack_speed;
 	float	states[4][3];
 }	t_enemy_def;
 

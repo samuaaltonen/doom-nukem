@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/03 14:28:52 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:16:17 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,12 +72,13 @@ void	define_enemies(t_app *app)
 	app->enemy_def[0].state_count = 4;
 	app->enemy_def[0].range = 3.f;
 	app->enemy_def[0].speed = 2.f;
+	app->enemy_def[0].attack_speed = 2.f;
 	app->enemy_def[0].states[0][0] = 0.f;
 	app->enemy_def[0].states[0][1] = 1.f;
 	app->enemy_def[0].states[0][2] = 1.f;
 	app->enemy_def[0].states[1][0] = 1.f;
 	app->enemy_def[0].states[1][1] = 3.f;
-	app->enemy_def[0].states[1][2] = 5.f;
+	app->enemy_def[0].states[1][2] = 2.5f;
 	app->enemy_def[0].states[2][0] = 3.f;
 	app->enemy_def[0].states[2][1] = 5.f;
 	app->enemy_def[0].states[2][2] = 2.f;
@@ -88,6 +89,7 @@ void	define_enemies(t_app *app)
 	app->enemy_def[1].state_count = 4;
 	app->enemy_def[1].range = 1.f;
 	app->enemy_def[1].speed = 5.f;
+	app->enemy_def[1].attack_speed = 4.f;
 	app->enemy_def[1].states[0][0] = 0.f;
 	app->enemy_def[1].states[0][1] = 1.f;
 	app->enemy_def[1].states[0][2] = 1.f;

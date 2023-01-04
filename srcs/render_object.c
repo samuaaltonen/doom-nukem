@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/04 14:55:59 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:37:11 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,9 +45,7 @@ void	draw_object_pixel(t_app *app, t_render_object *object, t_point window, t_ve
 	int	object_type;
 
 	if(object->id >= MAX_OBJECTS)
-	{
 		object_type = app->projectiles[object->id - MAX_OBJECTS].type;
-	}
 	else
 		object_type = app->objects[object->id].type;
 	color = 0xFFFFFFFF;
@@ -65,9 +63,10 @@ void	draw_object_pixel(t_app *app, t_render_object *object, t_point window, t_ve
 			(int)(texture.y + (ft_abs((int)app->object_states[object->id]) * object->tex_size)));
 	else if(object_type > MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES)
 	{
+		//ft_printf("object_type %i\n", object_type - MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES - 1);
 		color = get_pixel_color(app->assets.sprites[PROJECTILE_SPRITE],
 			(int)texture.x,
-			(int)texture.y * (object_type - (MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES)));
+			(int)texture.y + (object_type - MAX_SMALL_OBJECTS - MAX_BIG_OBJECTS - MAX_ENEMY_TYPES - 1) * TEX_PICKUP);
 	}
 	if ((color & 0xFF000000) > 0)
 		//put_pixel_to_surface(app->surface, window.x, window.y,color);
@@ -255,7 +254,7 @@ static void	set_tmp_object(t_app *app, t_render_object *object, double *angle,
 		if(object->tex_size == TEX_PICKUP)
 			object->start.y = (int)(WIN_H * app->player.horizon + object->size.y
 				/ SMALL_SCALE * ((app->player.elevation + app->player.height) 
-				- (original_obj->start_z + SMALL_SCALE / 2)));
+				- (original_obj->start_z)));
 		else
 			object->start.y = (int)(WIN_H * app->player.horizon + object->size.y
 				 * ((app->player.elevation + app->player.height) 

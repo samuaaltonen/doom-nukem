@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:01:41 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/04 15:20:34 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/04 15:49:57 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,9 +79,9 @@ static void calc_end(t_app *app, t_projectile *projectile, t_vector3 target_dir)
 {
 	t_move new;
 
-	new.pos = ft_vector2_add(projectile->start, ft_vector_resize((t_vector2){target_dir.x,target_dir.y}, 10.f));
-	new.elevation = target_dir.z; //temp use of z directly maybe
-	new.elevation *= 10.f;
+	new.pos = ft_vector2_add(projectile->start, ft_vec2_mult((t_vector2){target_dir.x,target_dir.y}, 10.f));
+	new.elevation = target_dir.z * 10.f; //temp use of z directly maybe
+	projectile->end_z = target_dir.z;
 	projectile_flight(app, &new, projectile, TRUE);
 }
 
@@ -117,6 +117,7 @@ void	update_projectiles(t_app *app)
 		if(app->projectiles[i].type == -1)
 			continue;
 		app->projectiles[i].start = ft_vector2_add(app->projectiles[i].start,ft_vec2_mult(app->projectiles[i].end, app->conf->delta_time * 5.f));
+		app->projectiles[i].start_z += app->projectiles[i].end_z * app->conf->delta_time * 5.f;
 		if(app->projectiles[i].timer > 0)
 			app->projectiles[i].timer -= app->conf->delta_time;
 		else
