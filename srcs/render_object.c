@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/03 16:11:24 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/04 14:55:59 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,12 @@ void	draw_object_pixel(t_app *app, t_render_object *object, t_point window, t_ve
 	int	color;
 	int	object_type;
 
-	object_type = app->objects[object->id].type;
+	if(object->id >= MAX_OBJECTS)
+	{
+		object_type = app->projectiles[object->id - MAX_OBJECTS].type;
+	}
+	else
+		object_type = app->objects[object->id].type;
 	color = 0xFFFFFFFF;
 	if(object_type <= MAX_SMALL_OBJECTS)
 		color = get_pixel_color(app->assets.sprites[SMALL_SPRITE],
@@ -58,10 +63,12 @@ void	draw_object_pixel(t_app *app, t_render_object *object, t_point window, t_ve
 		color = get_pixel_color(app->assets.sprites[ENEMY_SPRITE + object_type - (MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + 1)],
 			(int)texture.x + ((SPRITE_ANGLES - object->frame - 1) * object->tex_size),
 			(int)(texture.y + (ft_abs((int)app->object_states[object->id]) * object->tex_size)));
-	else if(object_type <= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES + MAX_PROJECTILES)
+	else if(object_type > MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES)
+	{
 		color = get_pixel_color(app->assets.sprites[PROJECTILE_SPRITE],
-			(int)texture.x - ((object->frame) * object->tex_size) - object->tex_size,
+			(int)texture.x,
 			(int)texture.y * (object_type - (MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES)));
+	}
 	if ((color & 0xFF000000) > 0)
 		//put_pixel_to_surface(app->surface, window.x, window.y,color);
 		put_pixel_to_surface_check(app, window,color,object->dist);
@@ -183,7 +190,7 @@ static t_bool	init_object(t_app *app, int i, t_render_object *object,
 	return (TRUE);
 }
 
-/* static t_bool	init_temp_object(t_app *app, int i, t_render_object *object,
+static t_bool	init_temp_object(t_app *app, int i, t_render_object *object,
 		double *angle)
 {
 	t_vector2	vector;
@@ -192,7 +199,7 @@ static t_bool	init_object(t_app *app, int i, t_render_object *object,
 
 	vector = ft_vector2_sub(app->projectiles[i].start, app->player.pos);
 	dist = ft_vector_length(vector);
-	if(dist > 15.f)
+	if(dist > MAX_OBJECT_DISTANCE)
 		return (FALSE);
 	object->dist = dist * cos(ft_vector_angle(vector, app->player.dir));
 	*angle = atan(fabs(app->player.elevation - app->projectiles[i].start_z)
@@ -203,13 +210,13 @@ static t_bool	init_object(t_app *app, int i, t_render_object *object,
 	ft_matrix_inverse((t_matrix2){app->player.cam, app->player.dir}));
 	if(transform.y / dist < 0.75f)
 		return (FALSE);
-	object->id = i;
+	object->id = MAX_OBJECTS + i;
 	object->tex_size = TEX_PICKUP;
-	object->size.x  = (WIN_H / transform.y);
-	object->size.y  = (WIN_H / transform.y);
+	transform = (t_vector2){transform.x / SMALL_SCALE, transform.y / SMALL_SCALE};
+	object->size = (t_vector2){WIN_H / transform.y, WIN_H / transform.y};
 	object->start.x = (int)((WIN_W / 2) * (1.0f + (transform.x / transform.y)));
 	return (TRUE);
-} */
+}
 
 static void	set_object(t_app *app, t_render_object *object, double *angle,
 	t_gameobject *original_obj)
@@ -240,6 +247,34 @@ static void	set_object(t_app *app, t_render_object *object, double *angle,
 		app->objectstack.visible_count++;
 }
 
+static void	set_tmp_object(t_app *app, t_render_object *object, double *angle,
+	t_projectile *original_obj)
+{
+		double			offset;
+
+		if(object->tex_size == TEX_PICKUP)
+			object->start.y = (int)(WIN_H * app->player.horizon + object->size.y
+				/ SMALL_SCALE * ((app->player.elevation + app->player.height) 
+				- (original_obj->start_z + SMALL_SCALE / 2)));
+		else
+			object->start.y = (int)(WIN_H * app->player.horizon + object->size.y
+				 * ((app->player.elevation + app->player.height) 
+				- (original_obj->start_z + 0.5)));
+		offset = object->size.y;
+		object->size.y = cos(*angle) * object->size.y;
+		offset = (offset - object->size.y) / 2;
+		object->start.y += (int)offset;
+		object->end.x = object->start.x + object->size.x / 2;
+		object->end.y = object->start.y + object->size.y / 2;
+		object->start.x = object->start.x - object->size.x / 2;
+		object->start.y = object->start.y - object->size.y / 2;
+		object->step = (t_vector2){object->tex_size / (double)(object->size.x),
+				object->tex_size / (double)(object->size.y)};
+		object->frame = 0;
+		init_draw_area(object);
+		app->objectstack.visible_count++;
+}
+
 //list all visible objects
 static void	objects_visible(t_app *app)
 {
@@ -248,7 +283,6 @@ static void	objects_visible(t_app *app)
 	double			angle;
 
 	i = -1;
-	//ft_bzero(&app->objectstack,sizeof(t_objectstack));
 	app->objectstack.visible_count = 0;
 	while (++i < MAX_OBJECTS)
 	{
@@ -260,21 +294,17 @@ static void	objects_visible(t_app *app)
 		if (!init_object(app, i,object,&angle))
 			continue;
 		set_object(app, object, &angle, &(app->objects[i]));
-		/* if(app->objects[i].type > MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS && app->objects[i].type < MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES)
-			ft_printf("enemy value %i ",ENEMY_SPRITE + MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + 1 - app->objects[i].type); */
-		//ft_printf("id %i, object frame %i, object texsize %i, type %i, state %f, size x%f,y%f\n", object->id, object->frame, object->tex_size, app->objects[object->id].type, app->object_states[object->id] ,object->size.x, object->size.y);
-
 	}
-/* 	i = -1;
+	i = -1;
 	while (++i < MAX_TEMP_OBJECTS) //temp objects
 	{
-		if(app->projectiles[i].type == 0)
-			break;
+		if(app->projectiles[i].type == -1)
+			continue;
 		object = &(app->objectstack.objects[app->objectstack.visible_count]);
 		if (!init_temp_object(app, i,object,&angle))
 			continue;
-		set_object(app, object, &angle, &(app->projectiles[i]));
-	} */
+		set_tmp_object(app, object, &angle, &(app->projectiles[i]));
+	}
 }
 
 

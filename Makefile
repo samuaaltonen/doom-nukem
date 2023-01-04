@@ -6,7 +6,7 @@
 #    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/02 16:11:31 by htahvana         ###   ########.fr        #
+#    Updated: 2023/01/04 12:35:04 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,7 +69,8 @@ FILES = main.c \
 		render_object.c \
 		enemy_states.c \
 		enemy_move.c \
-		object_collision.c
+		object_collision.c \
+		projectiles.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a

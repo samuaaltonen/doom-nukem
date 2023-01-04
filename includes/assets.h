@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assets.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/15 13:38:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/04 14:19:50 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@
 # define OBJECT_PATH "assets/images/Objects_Big_sheet.bmp"
 # define MONSTER_1_PATH "assets/images/Monster1_full_sheet.bmp"
 # define MONSTER_2_PATH "assets/images/Monster2_full_sheet.bmp"
-# define SPRITE_PATH "assets/images/projectiles.bmp"
+# define SPRITE_PATH "assets/images/Objects_small_sheet.bmp"
 # define MAX_SPRITES 5
 # define MAP_PATH "./testeditor/test.test"//"./testmaps/slopes"
 

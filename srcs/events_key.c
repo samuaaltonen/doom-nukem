@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/16 15:37:54 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/04 14:16:50 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ int	events_keyup(int keycode, t_app *app)
 		app->enemies[1].next = ATTACK;
 		app->enemies[0].next = ATTACK;
 		ft_printf("Set to ATTACK\n");
+		fire(app,(t_vector3){app->player.dir.x, app->player.dir.y,-(app->player.horizon - 0.75f)},(t_vector3){app->player.pos.x, app->player.pos.y,app->player.elevation},(t_point){11,app->player.sector});
 	}
 		if (keycode == SDLK_8)
 	{

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:01:41 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/03 16:07:21 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/04 14:55:39 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,14 @@
 
 static void	projectile_flight(t_app *app, t_move *new, t_projectile *projectile, t_bool init)
 {
-	t_line	wall_line;
-	int		i;
-	int		member_id;
-	int		counter;
-	static	recursion_count;
+	t_line		wall_line;
+	int			i;
+	int			member_id;
+	int			counter;
+	static int	recursion_count;
 
+	(void)counter;
+	(void)member_id;
 	if(init)
 		recursion_count = 0;
 	recursion_count++;
@@ -78,7 +80,7 @@ static void calc_end(t_app *app, t_projectile *projectile, t_vector3 target_dir)
 
 	new.pos = ft_vector2_add(projectile->start, ft_vector_resize((t_vector2){target_dir.x,target_dir.y}, 10.f));
 	new.elevation = target_dir.z; //temp use of z directly maybe
-	
+	new.elevation *= 10.f;
 	projectile_flight(app, &new, projectile, TRUE);
 }
 
@@ -90,7 +92,7 @@ void	fire(t_app *app, t_vector3 target_dir, t_vector3 start_pos, t_point info)
 	i = -1;
 	while(++i < MAX_TEMP_OBJECTS)
 	{
-		if(app->projectiles[i].type = -1)
+		if(app->projectiles[i].type == -1)
 		{
 			app->projectiles[i].start = (t_vector2){start_pos.x, start_pos.y};
 			app->projectiles[i].start_z = start_pos.z;
@@ -99,6 +101,7 @@ void	fire(t_app *app, t_vector3 target_dir, t_vector3 start_pos, t_point info)
 			calc_end(app, &(app->projectiles[i]), target_dir);
 			app->projectiles[i].timer = ft_vector_length(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start)) / 5.f;
 			app->projectiles[i].end = ft_vector2_normalize(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start));
+			return;
 		}
 	}
 }
@@ -110,8 +113,9 @@ void	update_projectiles(t_app *app)
 	i = -1;
 	while (++i < MAX_TEMP_OBJECTS)
 	{
-		if(app->projectiles[i].type >= 0)
-			app->projectiles->start = ft_vector2_add(app->projectiles->start,ft_vec2_mult(app->projectiles[i].end, app->conf->delta_time * 5.f));
+		if(app->projectiles[i].type == -1)
+			continue;
+		app->projectiles[i].start = ft_vector2_add(app->projectiles[i].start,ft_vec2_mult(app->projectiles[i].end, app->conf->delta_time * 5.f));
 		if(app->projectiles[i].timer > 0)
 			app->projectiles[i].timer -= app->conf->delta_time;
 		else

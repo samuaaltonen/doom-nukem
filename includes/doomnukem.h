@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/03 16:00:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/04 12:53:27 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -444,5 +444,7 @@ void		render_objects(t_app *app);
 void		init_enemies(t_app *app);
 void		update_enemy_states(t_app *app);
 void		define_enemies(t_app *app);
+void		fire(t_app *app, t_vector3 target_dir, t_vector3 start_pos, t_point info);
+void		update_projectiles(t_app *app);
 
 #endif
