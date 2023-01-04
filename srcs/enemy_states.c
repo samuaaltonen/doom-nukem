@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:30:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/04 17:37:51 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/04 17:42:57 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ static void enemy_states(t_app *app, t_enemy_state *state, int define)
 {
 
 	t_move new;
-	t_vector2 attack_dir;
 
 		app->object_states[state->id] += (float)app->conf->delta_time * app->enemy_def[define].states[state->state][2];
 
@@ -95,8 +94,7 @@ static void enemy_states(t_app *app, t_enemy_state *state, int define)
 			state->dead = TRUE;
 		else if(state->state == ATTACK && state->next == ATTACK && app->enemy_def[define].attack_speed < app->object_states[state->id])
 		{
-			attack_dir = ft_vector2_normalize(ft_vector2_sub(app->player.pos,app->objects[state->id].position));
-			fire(app,(t_vector3){attack_dir.x,attack_dir.y,(app->player.elevation - app->objects[state->id].elevation) / ft_vector_length(ft_vector2_sub(app->player.pos,app->objects[state->id].position))},
+			fire(app,(t_vector3){state->dir.x,state->dir.y,(app->player.elevation - app->objects[state->id].elevation) / ft_vector_length(ft_vector2_sub(app->player.pos,app->objects[state->id].position))},
 					(t_vector3){app->objects[state->id].position.x, app->objects[state->id].position.y,
 					app->objects[state->id].elevation + 0.5f},(t_point){12,app->objects[state->id].sector});
 			state->next = IDLE;
