@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/04 12:53:50 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/05 19:00:11 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	render_game(t_app *app)
 	player_control(app);
 	object_collision(app);
 	render_sectors(app);
+	render_hand(app, WIN_W / 2 - 128, 500);
 	render_objects(app);
 	render_textmodals(app);
 	render_ui(app);

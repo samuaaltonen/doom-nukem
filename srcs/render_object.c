@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/04 17:37:11 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/05 19:02:56 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,8 +69,12 @@ void	draw_object_pixel(t_app *app, t_render_object *object, t_point window, t_ve
 			(int)texture.y + (object_type - MAX_SMALL_OBJECTS - MAX_BIG_OBJECTS - MAX_ENEMY_TYPES - 1) * TEX_PICKUP);
 	}
 	if ((color & 0xFF000000) > 0)
-		//put_pixel_to_surface(app->surface, window.x, window.y,color);
+	{
+	//put_pixel_to_surface(app->surface, window.x, window.y,color);
+		shade_color(color, app->sectors[app->objects[object->id].sector].light);
 		put_pixel_to_surface_check(app, window,color,object->dist);
+	}
+	
 }
 
 static void	init_draw_area(t_render_object *object)

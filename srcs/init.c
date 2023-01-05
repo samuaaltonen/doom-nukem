@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/05 14:27:21 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/05 18:37:55 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,9 @@ void	load_assets(t_app *app)
 	app->assets.meter = bmp_to_surface(METER_PATH);
 	app->assets.sprite = bmp_to_surface(PANELS_PATH);
 	app->assets.bg = bmp_to_surface(SKYBOX_PATH);
-
+	app->assets.weapon = bmp_to_surface(WEAPON_HD_PATH);
+	if(app->assets.weapon == NULL)
+		ft_printf("FAILREAD\n");
 	//temp 2d object array in 0, 2d object array in 1, 2d per enemy arrays from then on
 	app->assets.sprites[0] = bmp_to_surface(PICKUP_PATH);
 	app->assets.sprites[1] = bmp_to_surface(OBJECT_PATH);

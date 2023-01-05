@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/05 14:00:54 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/05 18:32:58 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # define MONSTER_1_PATH "assets/images/Monster1_full_sheet.bmp"
 # define MONSTER_2_PATH "assets/images/Monster2_full_sheet.bmp"
 # define SPRITE_PATH "assets/images/Projectiles.bmp"
+# define WEAPON_HD_PATH "assets/images/weapon_cannon4.bmp"
 # define MAX_SPRITES 5
 # define MAP_PATH "./testeditor/test.test"//"./testmaps/slopes"
 
@@ -77,6 +78,7 @@ typedef struct s_assets
 	SDL_Surface		*bullet;
 	SDL_Surface		*meter;
 	SDL_Surface		*sprite;
+	SDL_Surface		*weapon;
 	SDL_Surface		*bg;
 	SDL_Surface		*sprites[MAX_SPRITES];
 }	t_assets;
