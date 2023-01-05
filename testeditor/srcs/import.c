@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 16:51:18 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/05 19:19:00 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,12 +287,12 @@ int	import_file(t_app *app, char *path)
 	app->imported = TRUE;
 
 
-	unsigned char test[123] = {"AAAAAAAAAFAAAAAAAAAAB"};
+	unsigned char test[123] = {"AAAAAA"};
 	ft_printf("before compression size: %d, string: %s\n", ft_strlen((char*)&test), &test);
-	int compressed_size = compress_batch((unsigned char *)&test, 21);
+	int compressed_size = compress_batch((unsigned char *)&test, 6);
 	test[compressed_size] = 0;
 	ft_printf("compressed size: %d\n", compressed_size);
-	ft_printf("%c %c %hhd %c %c %c %hhd %c %c\n", test[0], test[1], test[2], test[3], test[4], test[5], test[6], test[7], test[8]);
+	ft_printf("%c %c %hhd %c %c %hhd %c %c\n", test[0], test[1], test[2], test[3], test[4], test[5], test[6], test[7], test[8]);
 
 	return (0);
 }

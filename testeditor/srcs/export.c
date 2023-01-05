@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 16:59:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/05 18:58:04 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,7 +208,7 @@ int	export_file(t_app *app, char *path)
 	export = (t_export_sector *)ft_memalloc(sizeof(t_export_sector));
 	if (!export)
 		exit_error(MSG_ERROR_ALLOC);
-	fd = open(path, O_WRONLY | O_CREAT, 0755);
+	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0755);
 	if (fd < 0)
 		exit_error("FILE OPEN ERROR TEMP!");
 	header.sector_count = ft_lstlen(app->sectors);

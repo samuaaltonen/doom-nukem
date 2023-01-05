@@ -6,38 +6,54 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 14:03:01 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/05 16:54:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/05 20:03:25 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
+void	set_compression_sequence(unsigned char *compressed,
+	int *compressed_bytes, int sequence_length, unsigned char byte)
+{
+	compressed[*compressed_bytes - sequence_length] = byte;
+	compressed[*compressed_bytes - sequence_length + 1] = byte;
+	*(t_uint8 *)&compressed[*compressed_bytes - sequence_length + 2]
+		= sequence_length;
+	*compressed_bytes -= sequence_length - 3;
+	sequence_length = 0;
+}
+
+/**
+ * @brief Finds byte sequences that are similar by 2 or more bytes. Counts those
+ * bytes and compresses that area to 3 bytes (2 of that byte and 1 for count in
+ * uint8)
+ * 
+ * @param buffer 
+ * @param length 
+ * @return int 
+ */
 int	compress_batch(unsigned char *buffer, int length)
 {
 	unsigned char	compressed[MAX_COMPRESSION_BATCH_SIZE];
 	unsigned char	byte;
 	int				i;
-	int				j;
+	int				compressed_bytes;
 	t_uint8			sequence_length;
 
 	sequence_length = 0;
 	i = 0;
-	j = 0;
+	compressed_bytes = 0;
 	while (i < length
-		&& i < MAX_UNCOMPRESSION_BATCH_SIZE && j < MAX_COMPRESSION_BATCH_SIZE)
+		&& i < MAX_UNCOMPRESSION_BATCH_SIZE
+		&& compressed_bytes < MAX_COMPRESSION_BATCH_SIZE)
 	{
 		if (!sequence_length)
 			byte = buffer[i];
-		if (buffer[i] == byte && i < length - 1 && sequence_length < 255)
+		if (buffer[i] == byte && sequence_length < 255)
 			sequence_length++;
 		else if (sequence_length >= 2)
-		{
-			compressed[j - sequence_length] = byte;
-			compressed[j - sequence_length + 1] = byte;
-			*(t_uint8 *)&compressed[j - sequence_length + 2] = sequence_length;
-			j -= sequence_length - 3;
-			sequence_length = 0;
-		}
+			set_compression_sequence((unsigned char*)&compressed,
+				&compressed_bytes, sequence_length, byte);
 		else
 		{
 			sequence_length = 1;
@@ -45,17 +61,18 @@ int	compress_batch(unsigned char *buffer, int length)
 		}
 		compressed[j] = buffer[i];
 		i++;
-		j++;
+		compressed_bytes++;
 	}
-	ft_memcpy(buffer, &compressed, (size_t)j);
-	return (j);
+	set_compression_sequence((unsigned char*)&compressed, &compressed_bytes,
+		sequence_length, byte);
+	ft_printf("seq len: %d\n", sequence_length);
+	ft_memcpy(buffer, &compressed, (size_t)compressed_bytes);
+	return (compressed_bytes);
 }
 
 /**
  * @brief Compresses file using RLE (Run Length Encoding) algorithm, which finds
- * byte sequences of similar bytes that are longer than 3 bytes and compresses
- * that sequence into uint8 (1 byte) + byte. Int contains information of how
- * many bytes were compressed in that sequence.
+ * byte sequences of similar bytes that are 2 bytes or longer.
  * 
  * @param source 
  * @param target 
