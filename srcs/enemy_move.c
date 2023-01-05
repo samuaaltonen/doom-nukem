@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 13:21:17 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/03 13:34:24 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:40:02 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,13 +65,11 @@ int	enemy_move_check(t_app *app, t_move new, int sector_id, t_enemy_state *enemy
 		if (!ft_line_intersection_segment((t_line){app->objects[enemy->id].position, new.pos}, wall_line, NULL))
 			continue ;
 		portal_id = app->sectors[sector_id].wall_types[i];
-		if (portal_id < 0
-			|| (new.elevation + MAX_STEP < app->sectors[portal_id].floor_height
-				||	app->sectors[portal_id].ceil_height < new.elevation + app->player.height))
+		if (portal_id < 0 || app->sectors[sector_id].wall_textures[i] == PARTIALLY_TRANSPARENT_TEXTURE_ID)
 			return (-1);
 		else
 		{
-			if (app->sectors[sector_id].wall_textures[i] == PARTIALLY_TRANSPARENT_TEXTURE_ID)
+			if(!portal_can_enter(app, ft_vec2_to_vec3(new.pos, new.elevation), 0.5f, wall_line, app->objects[enemy->id].sector, app->sectors[app->objects[enemy->id].sector].wall_types[i]))
 				return (-1);
 			portal_id = enemy_move_check(app, new, portal_id, enemy);
 			if (portal_id < 0)

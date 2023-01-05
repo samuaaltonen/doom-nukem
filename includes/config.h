@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/05 14:20:49 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/05 18:18:32 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,7 @@
 	< MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES = enemy
 	>= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES = projectiles
 */
+# define ENEMY_COLLISION 0.25f
 # define MAX_ENEMY_STATES 2
 # define MAX_OBJECTS 128
 # define MAX_TEMP_OBJECTS 64
