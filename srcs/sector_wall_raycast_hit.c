@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:06:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 12:42:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/05 12:14:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,7 @@ t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 	ray_line.b.x = hit->ray.x + app->player.pos.x;
 	ray_line.b.y = hit->ray.y + app->player.pos.y;
 	if (!ft_line_intersection(wall, ray_line, &hit->position)
-		|| !ft_point_on_segment(wall, hit->position))
+		|| (hit->wall->is_member && !ft_point_on_segment(wall, hit->position)))
 		return (FALSE);
 	hit->distance = ft_vector_length((t_vector2){
 			hit->position.x - app->player.pos.x,

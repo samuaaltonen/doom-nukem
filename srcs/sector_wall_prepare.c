@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:46:07 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/04 17:40:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/05 11:38:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ static int	translate_window_x(t_app *app, t_vector2 coord, double dotproduct)
 	else if (angle > PI_HALF)
 		return (WIN_W - 1);
 	else
-		return (WIN_W / 2 + WIN_W * tan(angle) / app->player.camera_length / 2);
+		return ((int)(WIN_W / 2.0
+			+ WIN_W * tan(angle) / app->player.camera_length / 2.0));
 }
 
 /**
@@ -96,8 +97,6 @@ void	sector_walls_prepare(t_app *app, t_wall *walls, int wall_count)
 			walls[i].end_x = walls[i].start_x;
 			walls[i].start_x = temp_x;
 		}
-		if (walls[i].is_portal && !walls[i].is_member)
-			walls[i].start_x++;
 		if (walls[i].start_x < -1)
 			walls[i].start_x = -1;
 		if (walls[i].end_x >= WIN_W)
