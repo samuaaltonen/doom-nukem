@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:01:41 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 14:30:12 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:30:02 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,16 @@ static void	projectile_flight(t_app *app, t_move *new, t_projectile *projectile,
 			continue ;
 		if (!ft_line_intersection_segment((t_line){projectile->start, new->pos}, wall_line, &(projectile->end)))
 			continue ;
-		projectile->sector = app->sectors[projectile->sector].wall_types[i];
-		if (projectile->sector < 0 || app->sectors[projectile->sector].wall_textures[i] == PARTIALLY_TRANSPARENT_TEXTURE_ID
-			|| (new->elevation < app->sectors[projectile->sector].floor_height
-				||	app->sectors[projectile->sector].ceil_height < new->elevation))
+		if (app->sectors[projectile->sector].wall_types[i] < 0 || app->sectors[projectile->sector].wall_textures[i] == PARTIALLY_TRANSPARENT_TEXTURE_ID)
 			return ;
+		double dist = ft_vector_length(ft_vector2_sub(projectile->end, projectile->start));
+		if(!portal_can_enter(app, ft_vec2_to_vec3(projectile->end, projectile->start_z + dist * projectile->end_z), 0.0f, wall_line, projectile->sector, app->sectors[projectile->sector].wall_types[i]))
+		{
+			ft_printf("portal fail\n");
+			return ;
+		}
+		projectile->end = new->pos;
+		projectile->sector = app->sectors[projectile->sector].wall_types[i];
 		projectile_flight(app, new, projectile, FALSE);
 		return ;
 	}
@@ -102,7 +107,7 @@ void	fire(t_app *app, t_vector3 target_dir, t_vector3 start_pos, t_point info)
 			app->projectiles[i].type = info.x;
 			app->projectiles[i].sector = info.y;
 			calc_end(app, &(app->projectiles[i]), target_dir);
-			app->projectiles[i].timer = ft_vector_length(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start)) / 5.f;
+			app->projectiles[i].timer = ft_vector_length(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start)) / app->conf->projectile_speed[app->projectiles[i].type - 11];
 			app->projectiles[i].end = ft_vector2_normalize(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start));
 			return;
 		}
@@ -118,9 +123,8 @@ void	update_projectiles(t_app *app)
 	{
 		if(app->projectiles[i].type == -1)
 			continue;
-			ft_printf("type %i\n", app->projectiles[i].type);
 		app->projectiles[i].start = ft_vector2_add(app->projectiles[i].start,ft_vec2_mult(app->projectiles[i].end, app->conf->delta_time * app->conf->projectile_speed[app->projectiles[i].type - 11]));
-		app->projectiles[i].start_z += app->projectiles[i].end_z * app->conf->delta_time * 5.f;
+		app->projectiles[i].start_z += app->projectiles[i].end_z * app->conf->delta_time * app->conf->projectile_speed[app->projectiles[i].type - 11];
 		if(app->projectiles[i].timer > 0)
 			app->projectiles[i].timer -= app->conf->delta_time;
 		else

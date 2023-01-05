@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/05 14:48:55 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/05 15:04:35 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,7 +284,7 @@ void		collision_slope(t_app *app, int sector_id);
 t_bool		collision_possible(t_vector2 start_pos, t_vector2 end_pos,
 				t_line wall, t_bool is_member);
 t_vector2	get_possible_movement_point(t_line wall, t_vector2 coord, int side);
-t_bool		portal_can_enter(t_app *app, t_line wall, int source_sector,
+t_bool		portal_can_enter(t_app *app, t_vector3 pos, double height, t_line wall, int source_sector,
 				int target_sector);
 void		portal_enter(t_app *app, int sector_id);
 t_bool		inside_sector(t_app *app, int sector_id, t_vector2 coord);
