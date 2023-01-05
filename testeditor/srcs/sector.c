@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:36:45 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 12:07:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:12:03 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ t_sector_lst	*put_sector_lst(t_app *app, t_sector_lst *new)
  * If player is inside the deleted sector, sets the sector to null and deletes
  * all objects and portals within that sector.
 */
-static void	prepare_del(t_app *app)
+static void	prepare_del(t_app *app, t_sector_lst **pop)
 {
 	if (app->active_sector == app->player.sector)
 	{
@@ -77,8 +77,7 @@ static void	prepare_del(t_app *app)
 		app->player_edit = TRUE;
 	}
 	del_all_objects_in_sector(app);
-	// del sector interactions
-	// del all sector wall decor interactions
+	del_all_sector_interactions(app, pop);
 	del_sector_portals(app, get_sector_id(app, app->active_sector));
 }
 
@@ -101,7 +100,7 @@ t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop,
 		prev = head;
 		head = head->next;
 	}
-	prepare_del(app);
+	prepare_del(app, pop);
 	if (head == *pop)
 	{
 		if (prev)

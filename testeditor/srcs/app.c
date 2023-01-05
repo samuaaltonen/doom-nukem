@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 13:22:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/05 18:31:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,6 +143,9 @@ void	app_loop(t_app *app)
 		// 	ft_printf("INDEX %i\n", index);
 		// 	ft_printf("TYPE %i SECTOR %i\n\n", app->objects[index].type, app->objects[index].sector);
 		// }
+		// for(int i = 0; i < MAX_INTERACTIONS; i++)
+		// 	ft_printf("read interactions id %i, activation sector%i, wall%i, object%i\n",app->interactions[i].event_id, app->interactions[i].activation_sector, app->interactions[i].activation_wall, app->interactions[i].activation_object);
+		// ft_printf("\n");
 		app_render(app);
 	}
 }

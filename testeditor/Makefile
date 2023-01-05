@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/05 14:51:54 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/05 18:34:56 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,9 @@ FILES = app.c \
 		render_grid.c \
 		render_text.c \
 		render_ui.c \
+		rle_compression.c \
 		sector.c \
+		sector_interactions.c \
 		sector_members.c \
 		sector_portal.c \
 		sector_tools.c \
@@ -65,8 +67,7 @@ FILES = app.c \
 		triangle.c \
 		utils.c \
 		utils_bmp.c \
-		utils_sdl.c \
-		rle_compression.c
+		utils_sdl.c
 
 LIBFT = ../libft/libft.a
 LIBLINEARALGEBRA = ../liblinearalgebra/liblinearalgebra.a
