@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:36:45 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/30 13:57:02 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/05 12:07:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,8 @@ static void	prepare_del(t_app *app)
 		app->player_edit = TRUE;
 	}
 	del_all_objects_in_sector(app);
+	// del sector interactions
+	// del all sector wall decor interactions
 	del_sector_portals(app, get_sector_id(app, app->active_sector));
 }
 

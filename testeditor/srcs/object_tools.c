@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 14:12:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/30 14:17:14 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/05 12:06:30 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	del_object(t_app *app, int id)
 	i = 0;
 	if (app->object_count > 0)
 	{
-		while (i < MAX_INTERACTIONS && app->interactions[i].event_id != 0)
+		while (i < MAX_INTERACTIONS)
 		{
 			if (app->interactions[i].activation_object == &(app->objects[id]))
 				delete_interaction(app, find_object_interaction(app, 0, 1));
