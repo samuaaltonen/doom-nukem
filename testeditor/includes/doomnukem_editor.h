@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/04 17:28:13 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/05 13:11:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,20 +20,6 @@
 # define SMALL_ICON 32
 # define ICON_SIZE 64
 # define OBJECT_SCREEN_SIZE 16
-# define MSG_ERROR "Error occured"
-# define MSG_ERROR_WINDOW "Could not open a window."
-# define MSG_ERROR_WINDOW_SURFACE "Could not get window surface."
-# define MSG_ERROR_SDL_INIT "Could not initialize SDL."
-# define MSG_ERROR_ALLOC "Could not allocate memory."
-# define MSG_ERROR_IMAGE_INIT "Image initialization failed."
-# define MSG_ERROR_THREADS "Could not create a thread."
-# define MSG_ERROR_THREADS_JOIN "Could not join threads."
-# define MSG_ERROR_TEXTURE_FILE_ACCESS "Could not open/close a texture file."
-# define MSG_ERROR_TEXTURE_LOAD_FAILED "Texture files are invalid."
-# define MSG_ERROR_FONT "Could not open font file."
-# define MSG_ERROR_MOUSE "Could not set mouse cursor relative to the window."
-# define MSG_ERROR_FILE_READ "Could not read from a file."
-# define MSG_ERROR_FILE_WRITE "Could not write to a file."
 # define THREAD_COUNT 2
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
@@ -56,11 +42,6 @@
 # define MAP_SPEED 0.85f
 # define HEIGHT_INC 0.125f
 # define FILE_VERSION 2;
-# define PANELS_PATH "../assets/textures/spritesheet_full.bmp"
-# define OBJECTS_PATH "../assets/images/Objects_icons.bmp"
-# define UI_FRAME_PATH "../assets/ui/ui_frame.bmp"
-# define FONT_FILE "../assets/legacy/SpaceMono-Regular.ttf"
-# define FONT_TX "../assets/fonts/sci-fi_font.bmp"
 # define FILE_PATH "./test.test"
 # include <fcntl.h>
 # include <stdio.h>
@@ -70,11 +51,17 @@
 # include <SDL.h>
 # include "libft.h"
 # include "liblinearalgebra.h"
+# include "error.h"
+# include "sectors.h"
+# include "player.h"
+# include "export.h"
 
 /**
  * Integer type definitions
  */
 typedef unsigned char	t_uint8;
+typedef unsigned short	t_uint16;
+typedef unsigned int	t_uint32;
 
 /**
  * Keystate enumeration.
@@ -112,16 +99,6 @@ enum e_colors {
 	INTERACTION = 0x5050FF
 };
 
-typedef struct s_vec2_lst
-{
-	t_vector2			point;
-	int					type;
-	int					tex;
-	int					decor;
-	t_vector2			decor_offset;
-	struct s_vec2_lst	*next;
-}	t_vec2_lst;
-
 typedef struct s_draw_line
 {
 	t_point	dif;
@@ -129,76 +106,6 @@ typedef struct s_draw_line
 	int		d;
 	int		err;
 }	t_draw_line;
-
-typedef struct s_weapon
-{
-	t_bool	enabled;
-	int		damage;
-	int		range;
-	int		fire_rate;
-	int		magazine;
-}	t_weapon;
-
-typedef struct s_inventory
-{
-	int			ammo;
-	int			special_ammo;
-	int			potion;
-	int			antidote;
-	int			key;
-	t_bool		jetpack;
-	// int			item1;
-	// int			item2;
-	// int			item3;
-	// int			item4;
-}	t_inventory;
-
-typedef struct s_sectorlist
-{
-	int					corner_count;
-	t_vec2_lst			*wall_list;
-	struct s_sectorlist	*member_sectors[MAX_MEMBER_SECTORS];
-	int					member_links[MAX_MEMBER_SECTORS];
-	struct s_sectorlist	*parent_sector;
-	int					light;
-	double				floor_height;
-	double				ceil_height;
-	int					floor_tex;
-	int					floor_tex_offset;
-	int					ceil_tex;
-	int					ceil_tex_offset;
-	t_vec2_lst			*floor_slope_wall;
-	t_vec2_lst			*floor_slope_opposite;
-	double				floor_slope_height;
-	t_vec2_lst			*ceil_slope_wall;
-	t_vec2_lst			*ceil_slope_opposite;
-	double				ceil_slope_height;
-	struct s_sectorlist	*next;
-}	t_sector_lst;
-
-typedef struct s_player
-{
-	t_vector2		position;
-	t_vector2		direction;
-	t_sector_lst	*sector;
-	int				health;
-	int				selected_weapon;
-	int				selected_armor;
-	t_weapon		weapons[MAX_WEAPONS];
-	int				armor;
-	t_inventory		inventory;
-}	t_player;
-
-typedef struct s_export_player
-{
-	t_vector2		position;
-	t_vector2		direction;
-	int				sector;
-	int				health;
-	int				weapons;
-	int				armor;
-	t_inventory		inventory;
-}	t_export_player;
 
 /**
  * @brief array of objects per entire level
@@ -211,15 +118,6 @@ typedef struct s_object
 	t_vector2		position;
 	t_sector_lst	*sector;
 }	t_object;
-
-typedef struct s_export_object
-{
-	int			type;
-	double		var;
-	t_vector2	pos;
-	double		elevation;
-	int			sector;
-}	t_export_object;
 
 /**
  * @brief Array of interactions for entire level
@@ -251,25 +149,6 @@ typedef struct s_interaction
 	t_object		*activation_object;
 	t_sector_lst	*target_sector;
 }	t_interaction;
-
-typedef struct	s_export_interaction
-{
-	int				event_id;
-	double 			variable;
-	double			editable;
-	int				activation_sector;
-	int				activation_wall;
-	int				activation_object;
-	int				target_sector;
-}	t_export_interaction;
-
-typedef struct	s_level_header
-{
-	int	version;
-	int	sector_count;
-	int	object_count;
-	int	interaction_count;
-}	t_level_header;
 
 /**
  * Struct for font.
@@ -347,31 +226,6 @@ typedef struct s_app
 
 }	t_app;
 
-typedef struct s_exportsector
-{
-	int				corner_count;
-	t_vector2		corners[MAX_SECTOR_CORNERS];
-	int				wall_types[MAX_SECTOR_CORNERS];
-	int				wall_textures[MAX_SECTOR_CORNERS];
-	int				member_sectors[MAX_MEMBER_SECTORS];
-	int				wall_decor[MAX_SECTOR_CORNERS];
-	t_vector2		decor_offset[MAX_SECTOR_CORNERS];
-	int				parent_sector;
-	int				light;
-	double			floor_height;
-	double			ceil_height;
-	int				floor_tex;
-	int				floor_tex_offset;
-	int				ceil_tex;
-	int				ceil_tex_offset;
-	double			floor_slope_height;
-	int				floor_slope_position;
-	int				floor_slope_opposite;
-	double			ceil_slope_height;
-	int				ceil_slope_position;
-	int				ceil_slope_opposite;
-}	t_exportsector;
-
 /**
  * Struct for integer coordinate rectangule.
  */
@@ -408,6 +262,7 @@ void			put_pixel_to_surface(SDL_Surface *surface, int x,
 					int y, int color);
 void			flush_surface(SDL_Surface *surface);
 int				get_pixel_color(SDL_Surface *surface, int x, int y);
+SDL_Surface		*bmp_to_surface(const char *path);;
 
 /**
  * Events
