@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 19:19:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/06 00:19:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -287,12 +287,21 @@ int	import_file(t_app *app, char *path)
 	app->imported = TRUE;
 
 
-	unsigned char test[123] = {"AAAAAA"};
+	/* unsigned char test[123] = {"AAAAABBAAAAAAAAAGGGGAGAGAGA"};
 	ft_printf("before compression size: %d, string: %s\n", ft_strlen((char*)&test), &test);
-	int compressed_size = compress_batch((unsigned char *)&test, 6);
+	int compressed_size = compress_batch((unsigned char *)&test, 27);
 	test[compressed_size] = 0;
 	ft_printf("compressed size: %d\n", compressed_size);
-	ft_printf("%c %c %hhd %c %c %hhd %c %c\n", test[0], test[1], test[2], test[3], test[4], test[5], test[6], test[7], test[8]);
+	ft_printf("%c %c %c %c %c %c %c %c %c %c %c %c %s \n", test[0], test[1], test[2] + '0', test[3], test[4], test[5] + '0', test[6], test[7], test[8] + '0', test[9], test[10], test[11] + '0', &test[12]); */
+	/* rle_compress("testuncompressed", "testcompressed");
 
+	unsigned char 	*data;
+	int				length;
+
+	data = NULL;
+	rle_uncompress("testcompressed", &data, &length);
+	data[length] = 0;
+	ft_printf("uncompressed data: %s, length: %d\n", data, length);
+	free(data); */
 	return (0);
 }

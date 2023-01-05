@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/05 18:34:56 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/05 22:11:58 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -56,7 +56,8 @@ FILES = app.c \
 		render_grid.c \
 		render_text.c \
 		render_ui.c \
-		rle_compression.c \
+		rle_compress.c \
+		rle_uncompress.c \
 		sector.c \
 		sector_interactions.c \
 		sector_members.c \
