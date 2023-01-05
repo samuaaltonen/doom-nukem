@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interaction_tools.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:21:08 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/05 11:53:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/05 13:15:38 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ int	find_decor_interaction(t_app *app, int start_id, t_bool direction)
 {
 	int		index;
 
-	if (start_id < 0 && start_id > app->interaction_count)
+	if (start_id < 0 && start_id >= MAX_INTERACTIONS)
 		return (-1);
 	index = start_id;
 	if (direction == 1)
 	{
-		while (index < app->interaction_count)
+		while (index < MAX_INTERACTIONS)
 		{
 			if (app->interactions[index].activation_wall == app->active
 				&& app->interactions[index].activation_sector
@@ -73,7 +73,7 @@ int	find_sector_interaction(t_app *app, int start_id, t_bool direction)
 {
 	int		index;
 
-	if (start_id < 0 && start_id > app->interaction_count)
+	if (start_id < 0 && start_id >= MAX_INTERACTIONS)
 		return (-1);
 	index = start_id;
 	if (direction == 1)
@@ -107,7 +107,7 @@ int	find_object_interaction(t_app *app, int start_id, t_bool direction)
 {
 	int		index;
 
-	if (start_id < 0 && start_id > app->interaction_count)
+	if (start_id < 0 && start_id >= MAX_INTERACTIONS)
 		return (-1);
 	index = start_id;
 	if (direction == 1)

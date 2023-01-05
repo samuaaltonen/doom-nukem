@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/04 17:28:13 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/05 13:40:29 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -476,6 +476,7 @@ void			del_sector_portals(t_app *app, int deleted);
 t_bool			valid_sector(t_app *app);
 int				get_member_sector_count(t_sector_lst *parent);
 int				del_sector_list(t_sector_lst **sector);
+int				del_all_sector_interactions(t_app *app, t_sector_lst **sector);
 
 /**
  * Point/Wall/Wall_list Functions

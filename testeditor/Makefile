@@ -6,7 +6,7 @@
 #    By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/04 16:38:49 by ssulkuma         ###   ########.fr        #
+#    Updated: 2023/01/05 13:41:45 by ssulkuma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ objects.c events_menu.c menu_tools.c interaction_tools.c \
 menu_interaction_explanations.c menu_wall_info.c triangle.c list_tools.c \
 object_tools.c interaction_checks.c events_activate_interaction.c \
 events_sector.c events_keydown.c menu_interaction_explanations_extra.c \
-events_inventory.c
+events_inventory.c sector_interactions.c
 
 LIBFT = ../libft/libft.a
 LIBLINEARALGEBRA = ../liblinearalgebra/liblinearalgebra.a
