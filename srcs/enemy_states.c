@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:30:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 14:17:23 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:54:21 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,14 @@ static void	avoid_walls(t_app *app, t_enemy_state *enemy)
 
 static void check_enemy(t_app *app, t_enemy_state *state, int define)
 {
-	double	dist;
 
-	dist = ft_vector_length(ft_vector2_sub(app->player.pos, app->objects[state->id].position));
-	if(dist < 3.f)
+	if(!state->agressive && in_range(app,app->objects[state->id].position, 3.f))
 		state->agressive = TRUE;
-	if(dist < 10.f && state->agressive)
+	else if(state->agressive && in_range(app,app->objects[state->id].position,10.f))
 	{
 		app->objects[state->id].rot = ft_vector_angle_right((t_vector2){0.f,1.f},ft_vector2_sub(app->objects[state->id].position, app->player.pos));
 		state->dir = ft_vector2_normalize(ft_vector2_sub(app->player.pos, app->objects[state->id].position));
-		if(dist + ft_abs(app->player.elevation - app->objects[state->id].elevation) < app->enemy_def[define].range)
+		if(in_range(app, app->objects[state->id].position, app->enemy_def[define].range) && ft_abs(app->player.elevation - app->objects[state->id].elevation < app->enemy_def[define].range))
 			state->next = ATTACK;
 		else
 			state->next = WALK;
@@ -111,7 +109,7 @@ static void enemy_states(t_app *app, t_enemy_state *state, int define)
 			if(state->next != ATTACK)
 				state->next = IDLE;
 		}
-		if(!state->dead && state->state == WALK)
+		if(state->state == WALK)
 		{
 			avoid_walls(app, state);
 			new = (t_move){ft_vector2_add(app->objects[state->id].position, ft_vec2_mult(state->dir, app->enemy_def[define].speed * app->conf->delta_time)), app->sectors[app->objects[state->id].sector].floor_height};

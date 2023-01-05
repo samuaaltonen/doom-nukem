@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/04 17:39:53 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:27:21 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,15 @@ void	sdl_init(t_app *app)
 
 void	define_enemies(t_app *app)
 {
+	app->conf->projectile_speed[0] = 5.f;
+	app->conf->projectile_speed[1] = 5.f;
+	app->conf->projectile_speed[2] = 8.f;
+	app->conf->projectile_speed[3] = 8.f;
+	app->conf->projectile_speed[4] = 8.f;
+	app->conf->projectile_speed[5] = 8.f;
+	app->conf->projectile_speed[6] = 10.f;
+	app->conf->projectile_speed[7] = 10.f;
+
 	app->enemy_def[0].state_count = 4;
 	app->enemy_def[0].range = 3.f;
 	app->enemy_def[0].speed = 2.f;

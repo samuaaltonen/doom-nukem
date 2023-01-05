@@ -6,13 +6,13 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:17:11 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/02 16:49:36 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:48:38 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
-static t_bool in_range(t_app *app, t_vector2 obj_pos, int epsilon)
+t_bool in_range(t_app *app, t_vector2 obj_pos, double epsilon)
 {
 
 	if (app->player.pos.x > obj_pos.x - epsilon

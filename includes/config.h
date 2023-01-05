@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/04 14:42:40 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:20:49 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define MAX_SMALL_OBJECTS 5
 # define MAX_BIG_OBJECTS 3
 # define MAX_ENEMY_TYPES 2
-# define MAX_PROJECTILES 3
+# define MAX_PROJECTILES 8
 # define MAX_OBJECT_DISTANCE 128.0
 /* object type defines for now
 	< MAX_SMALL_OBJECTS = small objects
@@ -95,6 +95,7 @@ typedef struct s_conf
 	t_level_header	header;
 	int				keystates;
 	int				buttonstates;
+	double			projectile_speed[MAX_PROJECTILES];
 	int				mouse_active;
 }	t_conf;
 

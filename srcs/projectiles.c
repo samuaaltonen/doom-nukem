@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:01:41 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/04 17:46:43 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:30:12 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,7 +118,8 @@ void	update_projectiles(t_app *app)
 	{
 		if(app->projectiles[i].type == -1)
 			continue;
-		app->projectiles[i].start = ft_vector2_add(app->projectiles[i].start,ft_vec2_mult(app->projectiles[i].end, app->conf->delta_time * 5.f));
+			ft_printf("type %i\n", app->projectiles[i].type);
+		app->projectiles[i].start = ft_vector2_add(app->projectiles[i].start,ft_vec2_mult(app->projectiles[i].end, app->conf->delta_time * app->conf->projectile_speed[app->projectiles[i].type - 11]));
 		app->projectiles[i].start_z += app->projectiles[i].end_z * app->conf->delta_time * 5.f;
 		if(app->projectiles[i].timer > 0)
 			app->projectiles[i].timer -= app->conf->delta_time;
