@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/02 16:45:49 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/05 13:25:30 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ typedef struct s_sector
 	int				stack_index;
 }	t_sector;
 
-typedef struct s_exportsector
+typedef struct s_export_sector
 {
 	int				corner_count;
 	t_vector2		corners[MAX_SECTOR_CORNERS];
@@ -88,7 +88,7 @@ typedef struct s_exportsector
 	double			ceil_slope_height;
 	int				ceil_slope_position;
 	int				ceil_slope_opposite;
-}	t_exportsector;
+}	t_export_sector;
 
 /**
  * Wall struct. Contains information of what sector it belongs to and which wall

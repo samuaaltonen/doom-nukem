@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/02 15:16:27 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/05 13:22:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	app_loop(t_app *app)
 	{
 		while (SDL_PollEvent(&event))
 			dispatch_event(app, &event);
-		ft_printf("x=%f, y=%f modes:c%i,o%i,p%i,r%i,f%i,s%i,n%i,i%p,object_menu%i,player%i\n", app->mouse_track.x, app->mouse_track.y, app->list_creation, app->list_ongoing, app->portal_selection, app->ceiling_edit, app->floor_edit, app->slope_edit, app->object_new, app->current_interaction, app->object_menu, app->player_edit);
+		/* ft_printf("x=%f, y=%f modes:c%i,o%i,p%i,r%i,f%i,s%i,n%i,i%p,object_menu%i,player%i\n", app->mouse_track.x, app->mouse_track.y, app->list_creation, app->list_ongoing, app->portal_selection, app->ceiling_edit, app->floor_edit, app->slope_edit, app->object_new, app->current_interaction, app->object_menu, app->player_edit);
 		if (app->active_sector)
 		{
 			if (app->object_menu)
@@ -131,7 +131,7 @@ void	app_loop(t_app *app)
 			ft_printf("\n");
 		}
 		if (app->active)
-			ft_printf("selected point x:%f, y:%f, tex:%i, type:%i, decor:%i, decor offset: %f,%f\n", app->active->point.x, app->active->point.y, app->active->tex, app->active->type, app->active->decor, app->active->decor_offset.x, app->active->decor_offset.y);
+			ft_printf("selected point x:%f, y:%f, tex:%i, type:%i, decor:%i, decor offset: %f,%f\n", app->active->point.x, app->active->point.y, app->active->tex, app->active->type, app->active->decor, app->active->decor_offset.x, app->active->decor_offset.y); */
 		// for (int index = 0; index < 10; index++)
 		// {
 		// 	ft_printf("INDEX %i\n", index);

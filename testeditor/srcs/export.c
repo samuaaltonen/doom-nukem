@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/12 14:58:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/05 13:51:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
-static void	list_to_export(t_exportsector *export, t_vec2_lst *list, int count)
+static void	list_to_export(t_export_sector *export, t_vec2_lst *list, int count)
 {
 	int			i;
 	t_vec2_lst	*tmp;
@@ -32,7 +32,7 @@ static void	list_to_export(t_exportsector *export, t_vec2_lst *list, int count)
 	}
 }
 
-static void	member_export(t_app *app, t_exportsector *export,
+static void	member_export(t_app *app, t_export_sector *export,
 											t_sector_lst *sector)
 {
 	int		i;
@@ -74,7 +74,7 @@ int	get_line_id(t_vec2_lst *list, t_vec2_lst *wall)
  * @param sector 
  * @param export 
  */
-void	write_sector(t_app *app, t_sector_lst *sector, t_exportsector *export)
+void	write_sector(t_app *app, t_sector_lst *sector, t_export_sector *export)
 {
 	export->corner_count = sector->corner_count;
 	list_to_export(export, sector->wall_list, export->corner_count);
@@ -94,6 +94,7 @@ void	write_sector(t_app *app, t_sector_lst *sector, t_exportsector *export)
 	export->ceil_slope_opposite = get_line_id(sector->wall_list, sector->ceil_slope_opposite);
 	export->ceil_slope_position = get_line_id(sector->wall_list, sector->ceil_slope_wall);
 }
+
 static int as_bits(t_app *app, t_weapon weapons[MAX_WEAPONS])
 {
 	int	inventory;
@@ -169,6 +170,22 @@ static void write_interactions(t_app *app, t_export_interaction *interactions)
 	}
 }
 
+void	export_surface(t_level_header *header, int index, int fd,
+	const char *path)
+{
+	SDL_Surface	*surface;
+
+	surface = bmp_to_surface(path);
+	if (!surface)
+		exit_error(MSG_ERROR_IMAGE_LOAD);
+	header->asset_info[index].width = surface->w;
+	header->asset_info[index].height = surface->h;
+	header->asset_info[index].size = surface->w * surface->h
+		* IMAGE_PIXEL_BYTES;
+	if (write(fd, surface->pixels, header->asset_info[index].size) == -1)
+		exit_error(MSG_ERROR_FILE_WRITE);
+}
+
 /**
  * @brief Opens or creates a file at path, writes map data to it
  * 
@@ -180,18 +197,15 @@ int	export_file(t_app *app, char *path)
 {
 	int						fd;
 	t_sector_lst			*tmp;
-	t_exportsector			*export;
+	t_export_sector			*export;
 	int						counter;
 	t_export_player			player;
 	t_export_object			objects[MAX_OBJECTS];
 	t_export_interaction	interactions[MAX_INTERACTIONS];
 	t_level_header			header;
 
-	//app->interaction_count = 2;
-	/* for (int i = 0; i < 2; i++)
-		delete_interaction(app, 0); */
 	counter = 0;
-	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
+	export = (t_export_sector *)ft_memalloc(sizeof(t_export_sector));
 	if (!export)
 		exit_error(MSG_ERROR_ALLOC);
 	fd = open(path, O_WRONLY | O_CREAT, 0755);
@@ -203,18 +217,18 @@ int	export_file(t_app *app, char *path)
 	header.version = FILE_VERSION;
 	if (write(fd, &header, sizeof(t_level_header)) == -1)
 		exit_error(MSG_ERROR_FILE_WRITE);
-	write_player(app, &player);
- 	if (write(fd, &player, sizeof(t_export_player)) == -1)
-		exit_error("Player Write Error\n");
 	tmp = app->sectors;
 	while (counter++ < header.sector_count)
 	{
 		write_sector(app, tmp, export);
 		ft_printf("exported sector corners %i\n", export->corner_count);
-		if (write(fd, export, sizeof(t_exportsector)) == -1)
+		if (write(fd, export, sizeof(t_export_sector)) == -1)
 			exit_error(MSG_ERROR_FILE_WRITE);
 		tmp = tmp->next;
 	}
+	write_player(app, &player);
+ 	if (write(fd, &player, sizeof(t_export_player)) == -1)
+		exit_error("Player Write Error\n");
 	write_objects(app, (t_export_object *)&objects);
  	if (write(fd, objects, sizeof(t_export_object) * MAX_OBJECTS) == -1)
 		exit_error("object write error\n");
@@ -225,6 +239,24 @@ int	export_file(t_app *app, char *path)
 	if (write(fd, interactions, sizeof(t_export_interaction) * MAX_INTERACTIONS) == -1)
 		exit_error("interaction write error\n");
 	free(export);
+	export_surface(&header, EXPORT_PANELS, fd, PANELS_PATH);
+	export_surface(&header, EXPORT_SKYBOX, fd, SKYBOX_PATH);
+	export_surface(&header, EXPORT_FONT, fd, FONT_PATH);
+	export_surface(&header, EXPORT_UI_FRAME, fd, UI_FRAME_PATH);
+	export_surface(&header, EXPORT_TITLESCREEN, fd, TITLESCREEN_PATH);
+	export_surface(&header, EXPORT_CROSSHAIR, fd, CROSSHAIR_PATH);
+	export_surface(&header, EXPORT_POINTER, fd, POINTER_PATH);
+	export_surface(&header, EXPORT_SHIELD, fd, SHIELD_PATH);
+	export_surface(&header, EXPORT_HP, fd, HP_PATH);
+	export_surface(&header, EXPORT_PISTOL, fd, PISTOL_PATH);
+	export_surface(&header, EXPORT_BULLET, fd, BULLET_PATH);
+	export_surface(&header, EXPORT_METER, fd, METER_PATH);
+	export_surface(&header, EXPORT_PICKUP, fd, PICKUP_PATH);
+	export_surface(&header, EXPORT_OBJECT, fd, OBJECT_PATH);
+	export_surface(&header, EXPORT_OBJECT_ICON, fd, OBJECT_ICON_PATH);
+	export_surface(&header, EXPORT_MONSTER_1, fd, MONSTER_1_PATH);
+	export_surface(&header, EXPORT_MONSTER_2, fd, MONSTER_2_PATH);
+	export_surface(&header, EXPORT_SPRITE, fd, SPRITE_PATH);
 	close(fd);
 	return (0);
 }

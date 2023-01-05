@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
+#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/04 17:40:02 by htahvana         ###   ########.fr        #
+#    Updated: 2023/01/05 12:22:01 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,64 +15,65 @@ NAME = doom-nukem
 CC = gcc
 PWD= $(shell pwd)
 
-FILES = main.c \
-		init.c \
-		render_status.c \
-		render_ui.c \
-		render_text.c \
+FILES = animation_create.c \
+		animation_progress.c \
+		app.c \
+		audio.c \
 		button_function.c \
-		error.c app.c \
+		enemy_move.c \
+		enemy_states.c \
+		error.c \
+		events.c \
 		events_key.c \
 		events_mouse.c \
 		events_window.c \
-		threads.c \
 		image.c \
+		import.c \
+		init.c \
+		init_texts.c \
+		interaction_check.c \
+		interaction_trigger.c \
+		main.c \
+		object_collision.c \
 		player_collision.c \
-		player_collision_sector.c \
-		player_collision_wall.c \
-		player_collision_slope.c \
 		player_collision_portal.c \
+		player_collision_sector.c \
+		player_collision_slope.c \
+		player_collision_wall.c \
 		player_control.c \
 		player_effects.c \
+		player_elevate.c \
 		player_init.c \
 		player_move.c \
-		player_elevate.c \
 		player_view.c \
-		events.c \
-		audio.c \
-		time.c \
+		projectiles.c
+		render_object.c \
+		render_status.c \
+		render_text.c \
+		render_ui.c \
 		sector_draw_ceiling.c \
 		sector_draw_floor.c \
-		sector_draw_wall.c \
-		sector_draw_wall_decor.c \
 		sector_draw_partial.c \
 		sector_draw_sky.c \
+		sector_draw_wall.c \
+		sector_draw_wall_decor.c \
+		sector_elevation.c \
 		sector_render.c \
+		sector_wall_line.c \
+		sector_wall_prepare.c \
+		sector_wall_raycast.c \
+		sector_wall_raycast_decor.c \
+		sector_wall_raycast_hit.c \
 		sector_wallstack.c \
 		sector_wallstack_order.c \
 		sector_wallstack_visible.c \
-		sector_wall_raycast.c \
-		sector_wall_raycast_hit.c \
-		sector_wall_raycast_decor.c \
-		sector_wall_prepare.c \
-		sector_wall_line.c \
-		sector_elevation.c \
-		import.c \
+		textmodal.c \
+		threads.c \
+		time.c \
 		utils.c \
+		utils_bmp.c \
 		utils_color.c \
 		utils_sdl.c \
-		utils_bmp.c \
-		interaction_check.c \
-		interaction_trigger.c \
-		animation_create.c \
-		animation_progress.c \
-		init_texts.c \
-		textmodal.c \
-		render_object.c \
-		enemy_states.c \
-		enemy_move.c \
-		object_collision.c \
-		projectiles.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a
