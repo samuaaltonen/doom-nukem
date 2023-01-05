@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 13:25:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/05 17:06:57 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,6 +173,7 @@ int	import_file(t_app *app, char *path)
 	int						counter = 0;
 	t_sector				*sectors;
 	t_export_player			player;
+	t_level_header			header;
 
 	fd = open(path, O_RDONLY, 0755);
 	if(fd < 0)
@@ -180,26 +181,26 @@ int	import_file(t_app *app, char *path)
 	export = (t_export_sector *)ft_memalloc(sizeof(t_export_sector));
 	if (!export)
 		exit_error(MSG_ERROR_ALLOC);
-	if (read(fd, &app->conf->header,(sizeof(t_level_header))) == -1)
+	if (read(fd, &header,(sizeof(t_level_header))) == -1)
 		exit_error(MSG_ERROR_FILE_READ);
-	if (read(fd, &player, sizeof(t_export_player)) == -1)
-		exit_error("player read error\n");
-	import_player(app, &player);
-	sectors = (t_sector *)ft_memalloc(sizeof(t_sector) * app->conf->header.sector_count); 
+	sectors = (t_sector *)ft_memalloc(sizeof(t_sector) * header.sector_count); 
 	app->sectors = sectors;
-	while(counter < app->conf->header.sector_count)
+	while(counter < header.sector_count)
 	{
 		if (read(fd, export,sizeof(t_export_sector)) == -1)
 			exit_error(MSG_ERROR_FILE_READ);
-		read_sector(app, export, counter, app->conf->header.sector_count);
+		read_sector(app, export, counter, header.sector_count);
 		counter++;
 	}
 	free(export);
+	if (read(fd, &player, sizeof(t_export_player)) == -1)
+		exit_error("player read error\n");
+	import_player(app, &player);
 	import_objects(app, fd);
 	if (read(fd, app->interactions, sizeof(t_interaction) * MAX_INTERACTIONS) == -1)
 		exit_error("Interaction read error\n");
 	relink_player(app, &player);
-	ft_printf("sector_count=%i\n",app->conf->header.sector_count);
+	ft_printf("sector_count=%i\n",header.sector_count);
 	close(fd);
 	return (0);
 }

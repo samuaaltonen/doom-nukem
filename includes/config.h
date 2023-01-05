@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/04 14:42:40 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/05 17:05:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,14 +68,6 @@ typedef struct s_thread_data
 	pthread_mutex_t	lock;
 }	t_thread_data;
 
-typedef struct s_level_header
-{
-	int	version;
-	int	sector_count;
-	int	object_count;
-	int	interaction_count;
-}	t_level_header;
-
 /**
  * Struct for configuration variables of the application.
  */
@@ -92,7 +84,6 @@ typedef struct s_conf
 	char			fps_info[20];
 	double			delta_time;
 	int				fov;
-	t_level_header	header;
 	int				keystates;
 	int				buttonstates;
 	int				mouse_active;

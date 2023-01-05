@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/05 13:25:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/05 17:05:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,22 @@ enum e_objects {
 	MONSTER1 = 9,
 	MONSTER2 = 10
 };
+
+typedef struct	s_export_asset
+{
+	int	size;
+	int	width;
+	int	height;
+}	t_export_asset;
+
+typedef struct	s_level_header
+{
+	int				version;
+	int				sector_count;
+	int				object_count;
+	int				interaction_count;
+	t_export_asset	asset_info[MAX_ASSET_COUNT];
+}	t_level_header;
 
 /**
  * Sectors

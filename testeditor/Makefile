@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/05 12:22:52 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/05 14:51:54 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,7 +47,7 @@ FILES = app.c \
 		menu_sector_info.c \
 		menu_tools.c \
 		menu_wall_info.c \
-		menu_weapon_info.c  \
+		menu_weapon_info.c \
 		object_tools.c \
 		objects.c \
 		player.c \
@@ -65,7 +65,8 @@ FILES = app.c \
 		triangle.c \
 		utils.c \
 		utils_bmp.c \
-		utils_sdl.c
+		utils_sdl.c \
+		rle_compression.c
 
 LIBFT = ../libft/libft.a
 LIBLINEARALGEBRA = ../liblinearalgebra/liblinearalgebra.a

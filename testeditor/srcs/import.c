@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 13:38:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/05 16:51:18 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -277,19 +277,22 @@ int	import_file(t_app *app, char *path)
 	if (read(fd,&objects, sizeof(t_export_object) * MAX_OBJECTS) ==  -1)
 		exit_error("Object read error\n");
 	read_objects(app, (t_export_object *)&objects);
-	for(int i = 0; i < MAX_OBJECTS;i++)
-		ft_printf("object id %i, type %i\n", i, app->objects[i].type);
 	if (read(fd, &interactions, sizeof(t_export_interaction) * MAX_INTERACTIONS) == -1)
 		exit_error("Interaction read error\n");
 	read_interactions(app, (t_export_interaction *)&interactions);
-	for(int i = 0; i < MAX_INTERACTIONS;i++)
-		ft_printf("read interactions id %i, activation sector%i, wall%i, object%i\n",interactions[i].event_id, interactions[i].activation_sector, interactions[i].activation_wall, interactions[i].activation_object);
-	for(int i = 0; i < MAX_INTERACTIONS;i++)
-		ft_printf("pointer interactions id %i, activation sector%p, wall%p, object%p\n",app->interactions[i].event_id, app->interactions[i].activation_sector, app->interactions[i].activation_wall, app->interactions[i].activation_object);
 	free(export);
 	close(fd);
 	app->player.sector = sector_by_index(app,player.sector);
 	relink_sectors(app);
 	app->imported = TRUE;
+
+
+	unsigned char test[123] = {"AAAAAAAAAFAAAAAAAAAAB"};
+	ft_printf("before compression size: %d, string: %s\n", ft_strlen((char*)&test), &test);
+	int compressed_size = compress_batch((unsigned char *)&test, 21);
+	test[compressed_size] = 0;
+	ft_printf("compressed size: %d\n", compressed_size);
+	ft_printf("%c %c %hhd %c %c %c %hhd %c %c\n", test[0], test[1], test[2], test[3], test[4], test[5], test[6], test[7], test[8]);
+
 	return (0);
 }

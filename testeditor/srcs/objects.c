@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objects.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:53:42 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/30 14:18:27 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:55:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,6 @@ void	render_objects(t_app *app)
 	int	i;
 
 	i = 0;
-	if (app->object_count > 0)
-		ft_printf("object count %i, latest pos x%f,y%f\n", app->object_count, app->objects[app->object_count - 1].position.x, app->objects[app->object_count - 1].position.y);
 	while (i < app->object_count)
 	{
 		if (app->objects[i].type == 0)

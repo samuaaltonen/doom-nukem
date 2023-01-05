@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/05 12:22:01 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/05 14:52:10 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -46,7 +46,7 @@ FILES = animation_create.c \
 		player_init.c \
 		player_move.c \
 		player_view.c \
-		projectiles.c
+		projectiles.c \
 		render_object.c \
 		render_status.c \
 		render_text.c \
