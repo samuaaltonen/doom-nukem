@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:30:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/04 17:42:57 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/05 14:17:23 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@ static void	avoid_walls(t_app *app, t_enemy_state *enemy)
 	int	i;
 	t_line	wall_line;
 	int collider;
-	t_bool hit[4];
-	t_bool	collision;
+	t_bool hit[5];
 
+	//ft_bzero(&hit,sizeof(int) * 5);
 	hit[0] = FALSE;
 	hit[1] = FALSE;
 	hit[2] = FALSE;
 	hit[3] = FALSE;
-	collision = FALSE;
+	hit[4] = FALSE;
 	colliders[0] = (t_vector2){app->objects[enemy->id].position.x - 1.f, app->objects[enemy->id].position.y - 1.f};
 	colliders[1] = (t_vector2){app->objects[enemy->id].position.x + 1.f, app->objects[enemy->id].position.y - 1.f};
 	colliders[2] = (t_vector2){app->objects[enemy->id].position.x - 1.f, app->objects[enemy->id].position.y + 1.f};
@@ -42,14 +42,14 @@ static void	avoid_walls(t_app *app, t_enemy_state *enemy)
 				if(app->sectors[app->objects[enemy->id].sector].wall_types[i] == -1)
 				{
 					hit[collider] = TRUE;
-					collision = TRUE;
+					hit[4] = TRUE;
 					break;
 				}
 			}
 		}
 	}
 	collider = -1;
-	if(collision)
+	if(hit[4])
 	{
 		t_vector2 new = app->objects[enemy->id].position;
 		i = 0;
@@ -96,7 +96,7 @@ static void enemy_states(t_app *app, t_enemy_state *state, int define)
 		{
 			fire(app,(t_vector3){state->dir.x,state->dir.y,(app->player.elevation - app->objects[state->id].elevation) / ft_vector_length(ft_vector2_sub(app->player.pos,app->objects[state->id].position))},
 					(t_vector3){app->objects[state->id].position.x, app->objects[state->id].position.y,
-					app->objects[state->id].elevation + 0.5f},(t_point){12,app->objects[state->id].sector});
+					app->objects[state->id].elevation + 0.5f},(t_point){11,app->objects[state->id].sector});
 			state->next = IDLE;
 		}
 		else if(app->object_states[state->id] > app->enemy_def[define].states[state->state][1]
