@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 12:22:28 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/06 15:58:24 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/06 16:15:25 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,11 @@ static t_bool	skip_offset(int fd, int offset_length)
 	if (!offset_data)
 		return (FALSE);
 	if (read(fd, offset_data, offset_length) < 0)
+	{
+		free(offset_data);
 		return (FALSE);
+	}
+	free(offset_data);
 	return (TRUE);
 }
 
