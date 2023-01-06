@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/06 14:12:57 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/06 15:19:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,15 +126,6 @@ typedef struct	s_export_interaction
 	int				target_sector;
 }	t_export_interaction;
 
-typedef struct	s_legacy_level_header
-{
-	int	version;
-	int	sector_count;
-	int	object_count;
-	int	interaction_count;
-	int	asset_sizes[MAX_ASSET_COUNT];
-}	t_legacy_level_header;
-
 typedef struct	s_export_asset
 {
 	int	size;
@@ -151,9 +142,14 @@ typedef struct	s_level_header
 	t_export_asset	asset_info[MAX_ASSET_COUNT];
 }	t_level_header;
 
-void	rle_compress(const char *source, char *target);
-void	rle_uncompress_data(const char *source, unsigned char **data,
-			int *length);
-void	rle_uncompress(const char *source);
+/**
+ * RLE compression
+ */
+void			expand_data(unsigned char **data, int *length, int *allocated);
+unsigned char	*read_source(const char *source, int *source_length);
+void			rle_uncompress_data(const char *source, unsigned char **data,
+					int *length);
+void			rle_compress(const char *source);
+void			rle_uncompress(const char *source);
 
 #endif

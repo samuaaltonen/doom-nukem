@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/06 13:04:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/06 15:17:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ static void	member_export(t_app *app, t_export_sector *export,
 	{
 		export->member_sectors[i] = get_sector_id(app,
 				sector->member_sectors[i]);
-		ft_printf("%i\n", export->member_sectors[i]);
 		i++;
 	}
 	while (i < MAX_MEMBER_SECTORS)
@@ -139,10 +138,8 @@ static void write_objects(t_app *app, t_export_object *objects)
 			temp.elevation = 0.f;
 		temp.sector = get_sector_id(app, app->objects[i].sector);
 		temp.type = app->objects[i].type;
-		if (temp.type != 0)
-				ft_printf("object exported %i\n", i);
 		temp.var = app->objects[i].var;
-		(objects[i]) = temp;
+		objects[i] = temp;
 		i++;
 	}
 }
@@ -196,21 +193,26 @@ void	export_surface(t_level_header *header, int index, int fd,
 int	export_file(t_app *app, char *path)
 {
 	int						fd;
+	int						counter;
 	t_sector_lst			*tmp;
 	t_export_sector			*export;
-	int						counter;
 	t_export_player			player;
 	t_export_object			objects[MAX_OBJECTS];
 	t_export_interaction	interactions[MAX_INTERACTIONS];
 	t_level_header			header;
 
+	ft_bzero(&export, sizeof(export));
+	ft_bzero(&player, sizeof(player));
+	ft_bzero(&objects, sizeof(objects));
+	ft_bzero(&interactions, sizeof(interactions));
+	ft_bzero(&header, sizeof(header));
 	counter = 0;
 	export = (t_export_sector *)ft_memalloc(sizeof(t_export_sector));
 	if (!export)
 		exit_error(MSG_ERROR_ALLOC);
 	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0755);
 	if (fd < 0)
-		exit_error("FILE OPEN ERROR TEMP!");
+		exit_error(MSG_ERROR_FILE_OPEN);
 	header.sector_count = ft_lstlen(app->sectors);
 	header.interaction_count = app->interaction_count;
 	header.object_count = app->object_count;
@@ -221,25 +223,21 @@ int	export_file(t_app *app, char *path)
 	while (counter++ < header.sector_count)
 	{
 		write_sector(app, tmp, export);
-		ft_printf("exported sector corners %i\n", export->corner_count);
 		if (write(fd, export, sizeof(t_export_sector)) == -1)
 			exit_error(MSG_ERROR_FILE_WRITE);
 		tmp = tmp->next;
 	}
 	write_player(app, &player);
  	if (write(fd, &player, sizeof(t_export_player)) == -1)
-		exit_error("Player Write Error\n");
+		exit_error(MSG_ERROR_FILE_WRITE);
 	write_objects(app, (t_export_object *)&objects);
  	if (write(fd, objects, sizeof(t_export_object) * MAX_OBJECTS) == -1)
-		exit_error("object write error\n");
+		exit_error(MSG_ERROR_FILE_WRITE);
 	write_interactions(app, (t_export_interaction *)&interactions);
-	ft_printf("Total interactions: %d\n", app->interaction_count);
-	for(int i = 0; i < MAX_INTERACTIONS; i++)
-		ft_printf("read interactions id %i, activation sector%i, wall%i, object%i\n",interactions[i].event_id, interactions[i].activation_sector, interactions[i].activation_wall, interactions[i].activation_object);
 	if (write(fd, interactions, sizeof(t_export_interaction) * MAX_INTERACTIONS) == -1)
-		exit_error("interaction write error\n");
+		exit_error(MSG_ERROR_FILE_WRITE);
 	free(export);
-	export_surface(&header, EXPORT_PANELS, fd, PANELS_PATH);
+	/* export_surface(&header, EXPORT_PANELS, fd, PANELS_PATH);
 	export_surface(&header, EXPORT_SKYBOX, fd, SKYBOX_PATH);
 	export_surface(&header, EXPORT_FONT, fd, FONT_PATH);
 	export_surface(&header, EXPORT_UI_FRAME, fd, UI_FRAME_PATH);
@@ -257,8 +255,7 @@ int	export_file(t_app *app, char *path)
 	export_surface(&header, EXPORT_MONSTER_1, fd, MONSTER_1_PATH);
 	export_surface(&header, EXPORT_MONSTER_2, fd, MONSTER_2_PATH);
 	export_surface(&header, EXPORT_SPRITE, fd, SPRITE_PATH);
-	/* rle_compress(path, "compressed");
-	rle_uncompress("compressed"); */
+	rle_compress(path); */
 	close(fd);
 	return (0);
 }

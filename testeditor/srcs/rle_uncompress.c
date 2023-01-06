@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 22:11:34 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/06 14:12:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/06 15:07:37 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @param source_data 
  * @param index 
  */
-void	write_sequence(unsigned char **data, int *length,
+static void	write_sequence(unsigned char **data, int *length,
 	unsigned char *source_data, int *index)
 {
 	t_uint8	i;
@@ -37,67 +37,6 @@ void	write_sequence(unsigned char **data, int *length,
 }
 
 /**
- * @brief Expands data pointer allocation.
- * 
- * @param data 
- * @param length 
- * @param allocated 
- */
-void	expand_data(unsigned char **data, int *length, int *allocated)
-{
-	int				new_size;
-	unsigned char	*expanded;
-
-	new_size = 2 * *allocated;
-	if (new_size < *allocated + MAX_UNCOMPRESSION_BATCH_SIZE)
-		new_size = *allocated + MAX_UNCOMPRESSION_BATCH_SIZE;
-	expanded = (unsigned char *)malloc(new_size);
-	if (!expanded)
-		exit_error(MSG_ERROR_ALLOC);
-	ft_memcpy(expanded, *data, *length);
-	if (*data)
-		free(*data);
-	*data = expanded;
-	*allocated = new_size;
-}
-
-/**
- * @brief Reads source file into dynamically allocated pointer.
- * 
- * @param source 
- * @param source_length 
- * @return unsigned char* 
- */
-unsigned char	*read_source(const char *source, int *source_length)
-{
-	unsigned char	*source_data;
-	int				source_fd;
-	int				allocated;
-	int				read_bytes;
-
-	source_fd = open(source, O_RDONLY);
-	if (source_fd < 0)
-		exit_error(MSG_ERROR_FILE_OPEN);
-	allocated = 0;
-	read_bytes = 1;
-	source_data = NULL;
-	*source_length = 0;
-	while (read_bytes > 0)
-	{
-		while (allocated <= *source_length + MAX_UNCOMPRESSION_BATCH_SIZE)
-			expand_data(&source_data, source_length, &allocated);
-		read_bytes = read(source_fd, source_data + *source_length,
-				MAX_UNCOMPRESSION_BATCH_SIZE);
-		if (read_bytes < 0)
-			exit_error(MSG_ERROR_FILE_READ);
-		*source_length += read_bytes;
-	}
-	if (close(source_fd) < 0)
-		exit_error(NULL);
-	return (source_data);
-}
-
-/**
  * @brief Checks for RLE sequence (consist of 2 byte sequence with 1 byte length
  * identifier).
  * 
@@ -107,7 +46,7 @@ unsigned char	*read_source(const char *source, int *source_length)
  * @param source_data 
  * @return t_bool 
  */
-t_bool	found_sequence(int index, int source_length, int length,
+static t_bool	found_sequence(int index, int source_length, int length,
 	unsigned char *source_data)
 {
 	return (index < source_length - 2
