@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 18:58:04 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/06 13:04:33 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,7 +239,7 @@ int	export_file(t_app *app, char *path)
 	if (write(fd, interactions, sizeof(t_export_interaction) * MAX_INTERACTIONS) == -1)
 		exit_error("interaction write error\n");
 	free(export);
-	/* export_surface(&header, EXPORT_PANELS, fd, PANELS_PATH);
+	export_surface(&header, EXPORT_PANELS, fd, PANELS_PATH);
 	export_surface(&header, EXPORT_SKYBOX, fd, SKYBOX_PATH);
 	export_surface(&header, EXPORT_FONT, fd, FONT_PATH);
 	export_surface(&header, EXPORT_UI_FRAME, fd, UI_FRAME_PATH);
@@ -257,7 +257,8 @@ int	export_file(t_app *app, char *path)
 	export_surface(&header, EXPORT_MONSTER_1, fd, MONSTER_1_PATH);
 	export_surface(&header, EXPORT_MONSTER_2, fd, MONSTER_2_PATH);
 	export_surface(&header, EXPORT_SPRITE, fd, SPRITE_PATH);
-	rle_compress(path, "compressed"); */
+	/* rle_compress(path, "compressed");
+	rle_uncompress("compressed"); */
 	close(fd);
 	return (0);
 }

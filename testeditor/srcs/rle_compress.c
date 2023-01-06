@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 14:03:01 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/05 22:53:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/06 12:52:04 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	compress_batch(unsigned char *buffer, int length)
 			sequence_length++;
 		else if (sequence_length >= 2)
 		{
-			set_compression_sequence((unsigned char*)&compressed,
+			set_compression_sequence((unsigned char *)&compressed,
 				&compressed_bytes, &sequence_length, byte);
 			sequence_length = 1;
 			byte = buffer[i];
@@ -69,8 +69,8 @@ int	compress_batch(unsigned char *buffer, int length)
 		compressed_bytes++;
 	}
 	if (sequence_length >= 2)
-		set_compression_sequence((unsigned char*)&compressed, &compressed_bytes,
-			&sequence_length, byte);
+		set_compression_sequence((unsigned char *)&compressed,
+			&compressed_bytes, &sequence_length, byte);
 	ft_memcpy(buffer, &compressed, (size_t)compressed_bytes);
 	return (compressed_bytes);
 }

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/06 00:19:17 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/06 12:58:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,7 +87,6 @@ void	read_sector(t_sector_lst *sector, t_export_sector *export)
 		sector->ceil_slope_wall = ft_lstindex(sector->wall_list, export->ceil_slope_position);
 	sector->parent_sector = NULL;
 	sector->next = NULL;
-	ft_printf("0th %i, 1st %i, 2nd %i, 3rd %i\n", sector->member_links[0], sector->member_links[1], sector->member_links[2], sector->member_links[3]);
 }
 
 /**
@@ -293,15 +292,9 @@ int	import_file(t_app *app, char *path)
 	test[compressed_size] = 0;
 	ft_printf("compressed size: %d\n", compressed_size);
 	ft_printf("%c %c %c %c %c %c %c %c %c %c %c %c %s \n", test[0], test[1], test[2] + '0', test[3], test[4], test[5] + '0', test[6], test[7], test[8] + '0', test[9], test[10], test[11] + '0', &test[12]); */
-	/* rle_compress("testuncompressed", "testcompressed");
+	rle_compress("testuncompressed", "testcompressed");
 
-	unsigned char 	*data;
-	int				length;
 
-	data = NULL;
-	rle_uncompress("testcompressed", &data, &length);
-	data[length] = 0;
-	ft_printf("uncompressed data: %s, length: %d\n", data, length);
-	free(data); */
+	rle_uncompress("testcompressed");
 	return (0);
 }
