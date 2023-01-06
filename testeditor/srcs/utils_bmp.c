@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 12:22:28 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/05 12:23:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/06 15:57:22 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * @param header 
  * @return t_bool 
  */
-t_bool	check_header(t_point *size, unsigned char *header)
+static t_bool	check_header(t_point *size, unsigned char *header)
 {
 	size->x = *(t_uint32 *)&header[18];
 	size->y = *(t_uint32 *)&header[22];
@@ -42,7 +42,7 @@ t_bool	check_header(t_point *size, unsigned char *header)
  * @param fd 
  * @return t_bool 
  */
-t_bool	read_pixels(SDL_Surface *surface, int fd)
+static t_bool	read_pixels(SDL_Surface *surface, int fd)
 {
 	int	y;
 
@@ -55,6 +55,29 @@ t_bool	read_pixels(SDL_Surface *surface, int fd)
 			return (FALSE);
 		y++;
 	}
+	return (TRUE);
+}
+
+/**
+ * @brief Skips offset after header.
+ * 
+ * @param fd 
+ * @param offset_length 
+ * @return t_bool 
+ */
+static t_bool	skip_offset(int fd, int offset_length)
+{
+	unsigned char	*offset_data;
+
+	if (!offset_length)
+		return (TRUE);
+	if (offset_length < 0 || offset_length > MAX_BMP_OFFSET)
+		return (FALSE);
+	offset_data = (unsigned char *)malloc(offset_length);
+	if (!offset_data)
+		return (FALSE);
+	if (read(fd, offset_data, offset_length) < 0)
+		return (FALSE);
 	return (TRUE);
 }
 
@@ -78,11 +101,11 @@ SDL_Surface	*bmp_to_surface(const char *path)
 		|| header[0] != 'B' || header[1] != 'M'
 		|| !check_header(&size, (unsigned char *)&header))
 		return (NULL);
+	if (!skip_offset(fd, *(t_uint32 *)&header[10] - 54))
+		return (NULL);
 	surface = SDL_CreateRGBSurface(0, size.x, size.y,
 			IMAGE_PIXEL_BITS, 0, 0, 0, 0);
 	if (!surface)
-		return (NULL);
-	if (read(fd, surface->pixels, *(t_uint32 *)&header[10] - 54) < 0)
 		return (NULL);
 	if (!read_pixels(surface, fd))
 	{

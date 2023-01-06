@@ -6,13 +6,13 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/05 17:03:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/06 15:57:45 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ASSETS_H
 # define ASSETS_H
-
+# define MAX_BMP_OFFSET 32768
 # define MAX_BMP_WIDTH 32768
 # define MAX_BMP_HEIGHT 32768
 # define MAX_ASSET_COUNT 32
