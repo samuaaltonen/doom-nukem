@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/06 15:57:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/06 16:03:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@
 # define MAX_BMP_WIDTH 32768
 # define MAX_BMP_HEIGHT 32768
 # define MAX_ASSET_COUNT 32
-# define MAX_UNCOMPRESSION_BATCH_SIZE	4096
-# define MAX_COMPRESSION_BATCH_SIZE		6144
+# define MAX_UNCOMPRESS_BATCH	4096
+# define MAX_COMPRESS_BATCH		6144
 # define PANELS_PATH		"assets/textures/spritesheet_full.bmp"
 # define SKYBOX_PATH		"assets/images/skybox.bmp"
 # define FONT_PATH			"assets/fonts/sci-fi_font.bmp"

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 14:57:35 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/06 14:58:59 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/06 16:03:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,8 +25,8 @@ void	expand_data(unsigned char **data, int *length, int *allocated)
 	unsigned char	*expanded;
 
 	new_size = 2 * *allocated;
-	if (new_size < *allocated + MAX_UNCOMPRESSION_BATCH_SIZE)
-		new_size = *allocated + MAX_UNCOMPRESSION_BATCH_SIZE;
+	if (new_size < *allocated + MAX_UNCOMPRESS_BATCH)
+		new_size = *allocated + MAX_UNCOMPRESS_BATCH;
 	expanded = (unsigned char *)malloc(new_size);
 	if (!expanded)
 		exit_error(MSG_ERROR_ALLOC);
@@ -60,10 +60,10 @@ unsigned char	*read_source(const char *source, int *source_length)
 	*source_length = 0;
 	while (read_bytes > 0)
 	{
-		while (allocated <= *source_length + MAX_UNCOMPRESSION_BATCH_SIZE)
+		while (allocated <= *source_length + MAX_UNCOMPRESS_BATCH)
 			expand_data(&source_data, source_length, &allocated);
 		read_bytes = read(source_fd, source_data + *source_length,
-				MAX_UNCOMPRESSION_BATCH_SIZE);
+				MAX_UNCOMPRESS_BATCH);
 		if (read_bytes < 0)
 			exit_error(MSG_ERROR_FILE_READ);
 		*source_length += read_bytes;

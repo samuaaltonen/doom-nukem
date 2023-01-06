@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 22:11:34 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/06 15:07:37 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/06 16:04:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,8 +51,7 @@ static t_bool	found_sequence(int index, int source_length, int length,
 {
 	return (index < source_length - 2
 		&& source_data[index] == source_data[index + 1]
-		&& length % MAX_UNCOMPRESSION_BATCH_SIZE + 2
-		<= MAX_UNCOMPRESSION_BATCH_SIZE);
+		&& length % MAX_UNCOMPRESS_BATCH + 2 <= MAX_UNCOMPRESS_BATCH);
 }
 
 /**
@@ -114,13 +113,13 @@ void	rle_uncompress(const char *source)
 	i = 0;
 	while (i < length)
 	{
-		if (i + MAX_UNCOMPRESSION_BATCH_SIZE < length)
-			read_length = MAX_UNCOMPRESSION_BATCH_SIZE;
+		if (i + MAX_UNCOMPRESS_BATCH < length)
+			read_length = MAX_UNCOMPRESS_BATCH;
 		else
 			read_length = length - i;
 		if (write(fd, data + i, read_length) == -1)
 			exit_error(MSG_ERROR_FILE_WRITE);
-		i += MAX_UNCOMPRESSION_BATCH_SIZE;
+		i += MAX_UNCOMPRESS_BATCH;
 	}
 	free(data);
 }

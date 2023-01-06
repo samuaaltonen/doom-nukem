@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/06 15:17:44 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/06 15:30:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,7 +237,7 @@ int	export_file(t_app *app, char *path)
 	if (write(fd, interactions, sizeof(t_export_interaction) * MAX_INTERACTIONS) == -1)
 		exit_error(MSG_ERROR_FILE_WRITE);
 	free(export);
-	/* export_surface(&header, EXPORT_PANELS, fd, PANELS_PATH);
+	export_surface(&header, EXPORT_PANELS, fd, PANELS_PATH);
 	export_surface(&header, EXPORT_SKYBOX, fd, SKYBOX_PATH);
 	export_surface(&header, EXPORT_FONT, fd, FONT_PATH);
 	export_surface(&header, EXPORT_UI_FRAME, fd, UI_FRAME_PATH);
@@ -255,7 +255,7 @@ int	export_file(t_app *app, char *path)
 	export_surface(&header, EXPORT_MONSTER_1, fd, MONSTER_1_PATH);
 	export_surface(&header, EXPORT_MONSTER_2, fd, MONSTER_2_PATH);
 	export_surface(&header, EXPORT_SPRITE, fd, SPRITE_PATH);
-	rle_compress(path); */
+	/* rle_compress(path); */
 	close(fd);
 	return (0);
 }
