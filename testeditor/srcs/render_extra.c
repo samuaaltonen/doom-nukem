@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:55:36 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/09 16:47:50 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/09 18:03:39 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	sort_point_array(t_vector2 *array, int *count)
 	i = -1;
 	while (++i < *count)
 	{
-		if(array[i].y <= array[0].y && array[i].x >= array[0].x)
+		if(array[i].y < array[0].y || (array[i].y == array[0].y && array[i].x >= array[0].x))
 			ft_vec2_swap(&(array[0]), &(array[i]));
 	}
 	i = 0;
@@ -93,6 +93,8 @@ static void	sort_point_array(t_vector2 *array, int *count)
 				ft_double_swap(&(angles[k]), &(angles[k + 1]));
 				ft_vec2_swap(&(array[k]), &(array[k + 1]));
 			}
+			else if(angles[k] == 0.f && angles[k] == angles[k + 1] && array[k].x < array[k + 1].x)
+				ft_vec2_swap(&(array[k]), &(array[k + 1]));
 		}	
 	}
 }
@@ -136,7 +138,7 @@ static void	add_point(t_vector2 point, t_vector2 *array, int *count)
 		{
 			line = get_window_line(app, i);
 			if(ft_line_intersection_segment(line ,wall_line, &point))
-				add_point(point, array, count);
+				add_point(ft_vector2_add(point,(t_vector2){i * 0.001f, i * 0.001f}), array, count);
 		}
 		if(point_on_screen(app, tmp->point))
 			add_point(tmp->point, array, count);
@@ -170,10 +172,6 @@ static void	color_sector(t_app *app, t_sector_lst *sector, int color)
 			world_to_screen(app, render_points[i]),
 			world_to_screen(app, render_points[i + 1]), color);
 	}
-			fill_triangle(app, world_to_screen(app,
-				render_points[0]),
-			world_to_screen(app, render_points[i]),
-			world_to_screen(app, render_points[0]), color);
 }
 
 /**
