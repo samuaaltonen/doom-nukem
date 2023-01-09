@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:06:37 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/06 16:26:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/05 17:08:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,17 +59,16 @@ void	interaction_check(t_app *app)
 {
 	int	i;
 
-	i = 0;
-	while (i < MAX_INTERACTIONS)
+	i = -1;
+	while (++i < MAX_INTERACTIONS)
 	{
 		if (app->interactions[i].event_id == EVENT_NONE)
-			break ;
+			continue ;
 		if (app->interactions[i].activation_wall != -1
 			&& is_near_activation_decor(app,
 				app->interactions[i].activation_sector,
 				app->interactions[i].activation_wall))
 			interaction_trigger(app, i);
-		i++;
 	}
 }
 
@@ -84,14 +83,13 @@ void	interaction_check_portal(t_app *app, int sector_id)
 {
 	int	i;
 
-	i = 0;
-	while (i < MAX_INTERACTIONS)
+	i = -1;
+	while (++i < MAX_INTERACTIONS)
 	{
 		if (app->interactions[i].event_id == EVENT_NONE)
-			break ;
+			continue ;
 		if (app->interactions[i].activation_sector == sector_id
 			&& app->interactions[i].activation_wall == -1)
 			interaction_trigger(app, i);
-		i++;
 	}
 }

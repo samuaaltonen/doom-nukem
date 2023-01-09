@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interactions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/30 12:12:50 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/05 11:59:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,10 +62,26 @@ void	interaction_edit(t_app *app, SDL_Keycode keycode)
 
 void	link_interaction(t_app *app)
 {
+	int	i;
+
 	if (app->current_interaction == NULL
 		&& app->interaction_count < MAX_INTERACTIONS)
 	{
-		app->current_interaction = &app->interactions[app->interaction_count];
+		i = 0;
+		while (i < MAX_INTERACTIONS)
+		{
+			if (!app->interactions[i].event_id)
+			{
+				app->current_interaction = &app->interactions[i];
+				break ;
+			}
+			i++;
+		}
+		if (!app->current_interaction)
+		{
+			app->interaction_menu = FALSE;
+			return ;
+		}
 		if (!new_interaction(app))
 			app->current_interaction = NULL;
 	}
@@ -74,30 +90,19 @@ void	link_interaction(t_app *app)
 		app->current_interaction = NULL;
 		app->interaction_menu = FALSE;
 		if (app->interactions[app->interaction_count].event_id != 0)
-		{
-			ft_printf("{cyan}Linking interaction.{reset}\n");
 			app->interaction_count++;
-		}
-		else
-			ft_printf("{red}Interaction event is 0.{reset}\n");
 	}
 }
 
 void	delete_interaction(t_app *app, int id)
 {
-	if (app->interaction_count > 0 && id > -1)
-	{
-		while (id < app->interaction_count)
-		{
-			app->interactions[id] = app->interactions[id + 1];
-			id++;
-		}
-		app->interactions[id].event_id = 0;
-		app->interactions[id].variable = 0;
-		app->interactions[id].target_sector = NULL;
-		app->interactions[id].activation_sector = NULL;
-		app->interactions[id].activation_wall = NULL;
-		app->interactions[id].activation_object = NULL;
-		app->interaction_count--;
-	}
+	if (id < 0 || id >= MAX_INTERACTIONS)
+		return ;
+	app->interaction_count--;
+	app->interactions[id].event_id = 0;
+	app->interactions[id].variable = 0;
+	app->interactions[id].target_sector = NULL;
+	app->interactions[id].activation_sector = NULL;
+	app->interactions[id].activation_wall = NULL;
+	app->interactions[id].activation_object = NULL;
 }

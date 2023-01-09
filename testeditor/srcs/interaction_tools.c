@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:21:08 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/30 12:17:09 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/05 13:15:38 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	find_interaction(t_app *app)
 	int		index;
 
 	index = 0;
-	while (index <= app->interaction_count)
+	while (index < MAX_INTERACTIONS)
 	{
 		if (&(app->interactions[index]) == app->current_interaction)
 			return (index);
@@ -39,12 +39,12 @@ int	find_decor_interaction(t_app *app, int start_id, t_bool direction)
 {
 	int		index;
 
-	if (start_id < 0 && start_id > app->interaction_count)
+	if (start_id < 0 && start_id >= MAX_INTERACTIONS)
 		return (-1);
 	index = start_id;
 	if (direction == 1)
 	{
-		while (index < app->interaction_count)
+		while (index < MAX_INTERACTIONS)
 		{
 			if (app->interactions[index].activation_wall == app->active
 				&& app->interactions[index].activation_sector
@@ -54,7 +54,7 @@ int	find_decor_interaction(t_app *app, int start_id, t_bool direction)
 		}
 		return (-1);
 	}
-	while (index >= 0)
+	while (index >= 0 && index < MAX_INTERACTIONS)
 	{
 		if (app->interactions[index].activation_wall == app->active
 			&& app->interactions[index].activation_sector == app->active_sector)
@@ -73,12 +73,12 @@ int	find_sector_interaction(t_app *app, int start_id, t_bool direction)
 {
 	int		index;
 
-	if (start_id < 0 && start_id > app->interaction_count)
+	if (start_id < 0 && start_id >= MAX_INTERACTIONS)
 		return (-1);
 	index = start_id;
 	if (direction == 1)
 	{
-		while (index < app->interaction_count)
+		while (index < MAX_INTERACTIONS)
 		{
 			if (app->interactions[index].activation_sector == app->active_sector
 				&& !app->interactions[index].activation_wall
@@ -87,7 +87,7 @@ int	find_sector_interaction(t_app *app, int start_id, t_bool direction)
 			index++;
 		}
 	}
-	while (index >= 0)
+	while (index >= 0 && index < MAX_INTERACTIONS)
 	{
 		if (app->interactions[index].activation_sector == app->active_sector
 			&& !app->interactions[index].activation_wall
@@ -107,12 +107,12 @@ int	find_object_interaction(t_app *app, int start_id, t_bool direction)
 {
 	int		index;
 
-	if (start_id < 0 && start_id > app->interaction_count)
+	if (start_id < 0 && start_id >= MAX_INTERACTIONS)
 		return (-1);
 	index = start_id;
 	if (direction == 1)
 	{
-		while (index < app->interaction_count)
+		while (index < MAX_INTERACTIONS)
 		{
 			if (app->interactions[index].activation_object
 				== app->current_object)
@@ -121,7 +121,7 @@ int	find_object_interaction(t_app *app, int start_id, t_bool direction)
 		}
 		return (-1);
 	}
-	while (index >= 0)
+	while (index >= 0 && index < MAX_INTERACTIONS)
 	{
 		if (app->interactions[index].activation_object == app->current_object)
 			return (index);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:48:10 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/30 14:29:44 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/05 13:04:33 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 */
 void	load_assets(t_app *app)
 {
-	app->assets.sprite = SDL_LoadBMP(PANELS_PATH);
-	app->assets.objects = SDL_LoadBMP(OBJECTS_PATH);
-	app->assets.ui_frame = SDL_LoadBMP(UI_FRAME_PATH);
+	app->assets.sprite = bmp_to_surface(PANELS_PATH);
+	app->assets.objects = bmp_to_surface(OBJECT_ICON_PATH);
+	app->assets.ui_frame = bmp_to_surface(UI_FRAME_PATH);
 }
 
 /**
@@ -28,7 +28,7 @@ void	load_assets(t_app *app)
 void	load_font(t_app *app)
 {
 	if (!app->assets.font.font)
-		app->assets.font.font = SDL_LoadBMP(FONT_TX);
+		app->assets.font.font = bmp_to_surface(FONT_PATH);
 	if (!app->assets.font.font)
 		exit_error(MSG_ERROR_FONT);
 	change_font(app, 16, 0xFF000000);

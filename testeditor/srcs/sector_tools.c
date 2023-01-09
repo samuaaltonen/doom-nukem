@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:53:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/30 14:35:33 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/05 11:18:47 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ void	sector_delone(t_sector_lst **sector, void (*del)(void*, size_t))
 		}
 		(*sector)->parent_sector = NULL;
 	}
+	del_vector_list(&((*sector)->wall_list));
 	free(*sector);
 	*sector = NULL;
 }

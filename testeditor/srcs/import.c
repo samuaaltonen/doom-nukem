@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/03 16:48:57 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/06 00:19:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @param list 
  * @param count 
  */
-static void	export_to_list(t_exportsector *export, t_vec2_lst **list, int count)
+static void	export_to_list(t_export_sector *export, t_vec2_lst **list, int count)
 {
 	int			i;
 	t_vec2_lst	*tmp;
@@ -58,7 +58,7 @@ static void	export_to_list(t_exportsector *export, t_vec2_lst **list, int count)
  * @param sector 
  * @param export 
  */
-void	read_sector(t_sector_lst *sector, t_exportsector *export)
+void	read_sector(t_sector_lst *sector, t_export_sector *export)
 {
 	sector->corner_count = export->corner_count;
 	sector->wall_list = NULL;
@@ -96,7 +96,7 @@ void	read_sector(t_sector_lst *sector, t_exportsector *export)
  * @param export 
  * @return t_sector_lst* 
  */
-t_sector_lst	*read_sector_list(t_exportsector *export)
+t_sector_lst	*read_sector_list(t_export_sector *export)
 {
 	t_sector_lst	*new;
 
@@ -245,14 +245,13 @@ static void	read_interactions(t_app *app, t_export_interaction *export)
 int	import_file(t_app *app, char *path)
 {
 	int				fd;
-	t_exportsector	*export;
+	t_export_sector	*export;
 	t_sector_lst	*new;
 	int				counter;
 	t_export_player	player;
 	t_export_object	objects[MAX_OBJECTS];
 	t_export_interaction	interactions[MAX_INTERACTIONS];
 	t_level_header			header;
-
 
 	counter = 0;
 	fd = open(path, O_RDONLY, 0755);
@@ -262,35 +261,47 @@ int	import_file(t_app *app, char *path)
 		exit_error(MSG_ERROR_FILE_READ);
 	app->interaction_count = header.interaction_count;
 	app->object_count = header.object_count;
-	if (read(fd, &player, sizeof(t_export_player)) == -1)
-			exit_error("player read error\n");
-	read_player(app, &player);
-	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
+	export = (t_export_sector *)ft_memalloc(sizeof(t_export_sector));
 	if (!export)
 		exit_error(MSG_ERROR_ALLOC);
 	while (counter++ < header.sector_count)
 	{
-		if (read(fd, export, sizeof(t_exportsector)) == -1)
+		if (read(fd, export, sizeof(t_export_sector)) == -1)
 			exit_error(MSG_ERROR_FILE_READ);
 		new = read_sector_list(export);
 		put_sector_lst(app, new);
 	}
+	if (read(fd, &player, sizeof(t_export_player)) == -1)
+			exit_error("player read error\n");
+	read_player(app, &player);
 	if (read(fd,&objects, sizeof(t_export_object) * MAX_OBJECTS) ==  -1)
 		exit_error("Object read error\n");
 	read_objects(app, (t_export_object *)&objects);
-	for(int i = 0; i < MAX_OBJECTS;i++)
-		ft_printf("object id %i, type %i\n", i, app->objects[i].type);
 	if (read(fd, &interactions, sizeof(t_export_interaction) * MAX_INTERACTIONS) == -1)
 		exit_error("Interaction read error\n");
 	read_interactions(app, (t_export_interaction *)&interactions);
-	for(int i = 0; i < MAX_INTERACTIONS;i++)
-		ft_printf("read interactions id %i, activation sector%i, wall%i, object%i\n",interactions[i].event_id, interactions[i].activation_sector, interactions[i].activation_wall, interactions[i].activation_object);
-	for(int i = 0; i < MAX_INTERACTIONS;i++)
-		ft_printf("pointer interactions id %i, activation sector%p, wall%p, object%p\n",app->interactions[i].event_id, app->interactions[i].activation_sector, app->interactions[i].activation_wall, app->interactions[i].activation_object);
 	free(export);
 	close(fd);
 	app->player.sector = sector_by_index(app,player.sector);
 	relink_sectors(app);
 	app->imported = TRUE;
+
+
+	/* unsigned char test[123] = {"AAAAABBAAAAAAAAAGGGGAGAGAGA"};
+	ft_printf("before compression size: %d, string: %s\n", ft_strlen((char*)&test), &test);
+	int compressed_size = compress_batch((unsigned char *)&test, 27);
+	test[compressed_size] = 0;
+	ft_printf("compressed size: %d\n", compressed_size);
+	ft_printf("%c %c %c %c %c %c %c %c %c %c %c %c %s \n", test[0], test[1], test[2] + '0', test[3], test[4], test[5] + '0', test[6], test[7], test[8] + '0', test[9], test[10], test[11] + '0', &test[12]); */
+	/* rle_compress("testuncompressed", "testcompressed");
+
+	unsigned char 	*data;
+	int				length;
+
+	data = NULL;
+	rle_uncompress("testcompressed", &data, &length);
+	data[length] = 0;
+	ft_printf("uncompressed data: %s, length: %d\n", data, length);
+	free(data); */
 	return (0);
 }

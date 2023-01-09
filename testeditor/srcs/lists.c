@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lists.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:42:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/01 15:22:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/05 11:19:27 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,8 @@ int	del_vector_list(t_vec2_lst **list)
 		next = current->next;
 		free(current);
 		current = next;
+		if (current == *list)
+			break ;
 	}
 	*list = NULL;
 	return (0);

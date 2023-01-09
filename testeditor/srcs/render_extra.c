@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:55:36 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/09 16:43:33 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:47:50 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,6 @@ static void	sort_point_array(t_vector2 *array, int *count)
 			}
 		}	
 	}
-	for(int i = 0; i < *count; i++)
-	ft_printf("angle %i: %f\n",i,angles[i]);
 }
 
 
@@ -138,10 +136,7 @@ static void	add_point(t_vector2 point, t_vector2 *array, int *count)
 		{
 			line = get_window_line(app, i);
 			if(ft_line_intersection_segment(line ,wall_line, &point))
-			{
 				add_point(point, array, count);
-				ft_printf("intersection point added\n");
-			}
 		}
 		if(point_on_screen(app, tmp->point))
 			add_point(tmp->point, array, count);
@@ -167,15 +162,9 @@ static void	color_sector(t_app *app, t_sector_lst *sector, int color)
 
 	point_count = 0;
 	make_point_array(app, (t_vector2 *)&render_points,sector,&point_count);
-
-	ft_printf("viewpos x%f, y%f, viewsize, x%f, y%f, zoom area x%f, y%f, point count %i: ",app->view_pos.x, app->view_pos.y,app->view_size.x, app->view_size.y, app->zoom_area.x, app->zoom_area.y, point_count);
-	for(int i = 0; i < point_count; i++)
-		ft_printf("x%f,y%f ; ", render_points[i].x, render_points[i].y);
-
 	i = -1;
 	while (++i < point_count - 1)
 	{
-
 		fill_triangle(app, world_to_screen(app,
 				render_points[0]),
 			world_to_screen(app, render_points[i]),

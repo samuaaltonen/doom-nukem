@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   help_menu.c                                        :+:      :+:    :+:   */
+/*   menu.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/29 16:05:52 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/05 22:16:30 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,9 @@ static void	render_button_menu(t_app *app, t_point screen_pos)
 	while (++index < 4)
 	{
 		if ((get_member_sector_count(app->active_sector) >= MAX_MEMBER_SECTORS
-				&& y == 10) || (y == 10 && app->active_sector->parent_sector
-				&& app->active_sector) || (y == 40 && !app->active_sector)
+				&& y == 10) || (y == 10 && app->active_sector
+				&& app->active_sector->parent_sector)
+			|| (y == 40 && !app->active_sector)
 			|| (y == 40 && app->object_count >= MAX_OBJECTS))
 		{
 			y += 30;

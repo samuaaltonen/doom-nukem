@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:37:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/15 13:25:39 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/05 13:18:40 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
-
-/**
- * Initializes image.
- */
-SDL_Surface	*init_image(int width, int height)
-{
-	SDL_Surface	*surface;
-
-	surface = SDL_CreateRGBSurfaceWithFormat(0, width, height,
-			IMAGE_PIXEL_BITS, SDL_PIXELFORMAT_ARGB8888);
-	if (!surface)
-		exit_error(MSG_ERROR_IMAGE_INIT);
-	return (surface);
-}
 
 /**
  * Changes color of a specific pixel in image.

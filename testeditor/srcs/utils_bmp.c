@@ -6,11 +6,11 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 12:22:28 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/04 18:12:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/05 12:23:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doomnukem.h"
+#include "doomnukem_editor.h"
 
 /**
  * @brief Checks BMP header data. Checks that image size is reasonable and there

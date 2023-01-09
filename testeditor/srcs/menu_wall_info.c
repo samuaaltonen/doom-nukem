@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_wall_info.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:32:25 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/30 11:45:38 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/05 12:04:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,14 +87,11 @@ void	del_all_decor_interactions(t_app *app)
 	int		id;
 
 	id = 0;
-	while (id <= app->interaction_count)
+	while (id < MAX_INTERACTIONS)
 	{
 		if (app->interactions[id].activation_wall == app->active
 			&& app->interactions[id].activation_sector == app->active_sector)
-		{
 			delete_interaction(app, id);
-			continue ;
-		}
 		id++;
 	}
 	app->current_interaction = NULL;
