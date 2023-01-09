@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:55:36 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/09 16:21:53 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:43:33 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	sort_point_array(t_vector2 *array, int *count)
 	i = -1;
 	while (++i < *count)
 	{
-		if(array[i].y <= array[0].y)
+		if(array[i].y <= array[0].y && array[i].x >= array[0].x)
 			ft_vec2_swap(&(array[0]), &(array[i]));
 	}
 	i = 0;
@@ -154,18 +154,16 @@ static void	add_point(t_vector2 point, t_vector2 *array, int *count)
 	{
 		line = get_window_line(app, i);
 		if(inside_sector_check(sector, &(line.a)))
-			add_point(point, array, count);
+			add_point(line.a, array, count);
 	}
 	sort_point_array(array, count);
 }
 
 static void	color_sector(t_app *app, t_sector_lst *sector, int color)
 {
-
-	t_vec2_lst	*a;
-	t_vec2_lst	*b;
 	t_vector2	render_points[MAX_SECTOR_CORNERS + 4];
 	int			point_count;
+	int			i;
 
 	point_count = 0;
 	make_point_array(app, (t_vector2 *)&render_points,sector,&point_count);
@@ -174,22 +172,19 @@ static void	color_sector(t_app *app, t_sector_lst *sector, int color)
 	for(int i = 0; i < point_count; i++)
 		ft_printf("x%f,y%f ; ", render_points[i].x, render_points[i].y);
 
-	a = sector->wall_list->next;
-	b = sector->wall_list->next;
-	while (a->next != sector->wall_list
-		&& b->next != sector->wall_list)
+	i = -1;
+	while (++i < point_count - 1)
 	{
-		if (a->next == b)
-			a = b->next;
-		else if (b->next == a)
-			b = a->next;
-		else
-			b = b->next;
+
 		fill_triangle(app, world_to_screen(app,
-				sector->wall_list->point),
-			world_to_screen(app, a->point),
-			world_to_screen(app, b->point), color);
+				render_points[0]),
+			world_to_screen(app, render_points[i]),
+			world_to_screen(app, render_points[i + 1]), color);
 	}
+			fill_triangle(app, world_to_screen(app,
+				render_points[0]),
+			world_to_screen(app, render_points[i]),
+			world_to_screen(app, render_points[0]), color);
 }
 
 /**
