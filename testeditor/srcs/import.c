@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/06 16:11:57 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:22:15 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -243,46 +243,49 @@ static void	read_interactions(t_app *app, t_export_interaction *export)
  */
 int	import_file(t_app *app, char *path)
 {
-	int				fd;
-	t_export_sector	*export;
-	t_sector_lst	*new;
-	int				counter;
-	t_export_player	player;
-	t_export_object	objects[MAX_OBJECTS];
+	t_export_sector			*export;
+	t_sector_lst			*new;
+	int						counter;
+	t_export_player			player;
+	t_export_object			objects[MAX_OBJECTS];
 	t_export_interaction	interactions[MAX_INTERACTIONS];
 	t_level_header			header;
 
-	counter = 0;
-	fd = open(path, O_RDONLY, 0755);
-	if (fd < 0)
-		exit_error("FILE OPEN ERROR TEMP!");
-	if (read(fd, &header, (sizeof(t_level_header))) == -1)
-		exit_error(MSG_ERROR_FILE_READ);
+	unsigned char	*data;
+	int				length;
+	int				imported;
+
+	data = NULL;
+	rle_uncompress_data(path, &data, &length);
+	ft_memcpy(&header, data, sizeof(t_level_header));
+	imported = sizeof(t_level_header);
 	app->interaction_count = header.interaction_count;
 	app->object_count = header.object_count;
 	export = (t_export_sector *)ft_memalloc(sizeof(t_export_sector));
 	if (!export)
 		exit_error(MSG_ERROR_ALLOC);
+	counter = 0;
 	while (counter++ < header.sector_count)
 	{
-		if (read(fd, export, sizeof(t_export_sector)) == -1)
-			exit_error(MSG_ERROR_FILE_READ);
+		ft_memcpy(export, data + imported, sizeof(t_export_sector));
+		imported += sizeof(t_export_sector);
 		new = read_sector_list(export);
 		put_sector_lst(app, new);
 	}
-	if (read(fd, &player, sizeof(t_export_player)) == -1)
-			exit_error("player read error\n");
+	ft_memcpy(&player, data + imported, sizeof(t_export_player));
+	imported += sizeof(t_export_player);
 	read_player(app, &player);
-	if (read(fd,&objects, sizeof(t_export_object) * MAX_OBJECTS) ==  -1)
-		exit_error("Object read error\n");
+	ft_memcpy(&objects, data + imported, sizeof(t_export_object) * MAX_OBJECTS);
+	imported += sizeof(t_export_object) * MAX_OBJECTS;
 	read_objects(app, (t_export_object *)&objects);
-	if (read(fd, &interactions, sizeof(t_export_interaction) * MAX_INTERACTIONS) == -1)
-		exit_error("Interaction read error\n");
+	ft_memcpy(&interactions, data + imported, sizeof(t_export_interaction) * MAX_INTERACTIONS);
+	imported += sizeof(t_export_interaction) * MAX_INTERACTIONS;
 	read_interactions(app, (t_export_interaction *)&interactions);
-	free(export);
-	close(fd);
 	app->player.sector = sector_by_index(app,player.sector);
 	relink_sectors(app);
 	app->imported = TRUE;
+
+	free(export);
+	free(data);
 	return (0);
 }

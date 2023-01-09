@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/09 13:35:27 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:21:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,14 +186,14 @@ void	export_surface(t_level_header *header, int index, int fd,
 void	export_textfile(t_level_header *header, int index, int fd,
 	const char *path)
 {
-	unsigned char	*buffer[MAX_TEXT_LINES * MAX_TEXT_LINE_LENGTH];
+	unsigned char	buffer[MAX_TEXT_LINES * MAX_TEXT_LINE_LENGTH];
 	int				length;
 	int				texts_fd;
 
 	texts_fd = open(path, O_RDONLY);
 	if (texts_fd < 0)
 		exit_error(MSG_ERROR_FILE_OPEN);
-	length = read(fd, &buffer, MAX_TEXT_LINES * MAX_TEXT_LINE_LENGTH);
+	length = read(texts_fd, &buffer, MAX_TEXT_LINES * MAX_TEXT_LINE_LENGTH);
 	if (length < 0)
 		exit_error(MSG_ERROR_FILE_READ);
 	header->asset_info[index].size = length;
@@ -206,15 +206,26 @@ void	export_wav(t_level_header *header, int index, int fd,
 {
 	unsigned char	*buffer;
 	int				length;
+	int				write_length;
+	int				i;
 
 	buffer = NULL;
 	length = 0;
-	if (!read_source(path, &length))
+	buffer = read_source(path, &length);
+	if (!buffer)
 		exit_error(MSG_ERROR_FILE_READ);
 	header->asset_info[index].size = length;
-	ft_printf("source %s, len %d\n", path, length);
-	if (write(fd, &buffer, length) == -1)
-		exit_error(MSG_ERROR_FILE_WRITE);
+	i = 0;
+	while (i < length)
+	{
+		if (i + MAX_UNCOMPRESS_BATCH < length)
+			write_length = MAX_UNCOMPRESS_BATCH;
+		else
+			write_length = length - i;
+		if (write(fd, buffer + i, write_length) == -1)
+			exit_error(MSG_ERROR_FILE_WRITE);
+		i += MAX_UNCOMPRESS_BATCH;
+	}
 	free(buffer);
 }
 
@@ -296,7 +307,7 @@ int	export_file(t_app *app, char *path)
 	export_wav(&header, EXPORT_SOUND_RELOAD, fd, SOUND_RELOAD_PATH);
 	export_wav(&header, EXPORT_SOUND_BUMP, fd, SOUND_BUMP_PATH);
 	export_textfile(&header, EXPORT_TEXTS, fd, TEXTS_PATH);
-	/* rle_compress(path); */
+	rle_compress(path);
 	close(fd);
 	return (0);
 }
