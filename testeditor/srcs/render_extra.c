@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_extra.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:55:36 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/02 14:40:45 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:21:53 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,136 @@ static void	sector_bounds(t_app *app, t_sector_lst *sector,
 	}
 }
 
-static void	color_active_sector(t_app *app, t_vec2_lst *a, t_vec2_lst *b,
-																int color)
+
+static t_line	get_window_line(t_app *app, int side_id)
 {
-	while (a->next != app->active_sector->wall_list
-		&& b->next != app->active_sector->wall_list)
+	if (side_id == 0)
+		return ((t_line){app->view_pos,
+		ft_vector2_add(app->view_pos,(t_vector2){app->zoom_area.x, 0})});
+	if (side_id == 1)
+		return ((t_line){ft_vector2_add(app->view_pos,
+				(t_vector2){app->zoom_area.x, 0}),ft_vector2_add(app->view_pos,
+				(t_vector2){app->zoom_area.x, app->zoom_area.y})});
+	if (side_id == 2)
+		return ((t_line){ft_vector2_add(app->view_pos, (t_vector2){
+				app->zoom_area.x, app->zoom_area.y}), ft_vector2_add(
+				app->view_pos,(t_vector2){0, app->zoom_area.y})});
+	return ((t_line){ft_vector2_add(app->view_pos,
+			(t_vector2){0,app->zoom_area.y}),app->view_pos,});
+}
+
+static void	sort_point_array(t_vector2 *array, int *count)
+{
+	double		angles[MAX_SECTOR_CORNERS + 4];
+	int			i;
+	int			k;
+
+	i = -1;
+	while (++i < *count)
+	{
+		if(array[i].y <= array[0].y)
+			ft_vec2_swap(&(array[0]), &(array[i]));
+	}
+	i = 0;
+	angles[0] = 0.f;
+	while (++i < *count)
+		angles[i] = ft_vector_angle((t_vector2){-1.f,0.f},ft_vector2_sub(array[i],array[0]));
+	i = -1;
+	while (++i < *count - 1)
+	{
+		k = -1;
+		while (++k < *count - i - 1)
+		{
+			if(angles[k] > angles[k + 1])
+			{
+				ft_double_swap(&(angles[k]), &(angles[k + 1]));
+				ft_vec2_swap(&(array[k]), &(array[k + 1]));
+			}
+		}	
+	}
+	for(int i = 0; i < *count; i++)
+	ft_printf("angle %i: %f\n",i,angles[i]);
+}
+
+
+static t_bool	point_on_screen(t_app *app, t_vector2 point)
+{
+	int	i;
+
+	i = -1;
+	while (++i < 4)
+	{
+		if(ft_line_side(get_window_line(app,i), point))
+			return (FALSE);
+	}
+	return (TRUE);
+}
+
+static void	add_point(t_vector2 point, t_vector2 *array, int *count)
+{
+	array[*count] = point;
+	(*count)++;
+}
+
+ void	make_point_array(t_app *app, t_vector2 *array, t_sector_lst *sector, int *count)
+{
+	int i;
+
+	t_line		wall_line;
+	t_vec2_lst	*tmp;
+	t_vector2	point;
+	t_line		line;
+
+	tmp = sector->wall_list;
+	while(tmp)
+	{
+		wall_line.a = tmp->point;
+		wall_line.b = tmp->next->point;
+		i = -1;
+		while(++i < 4)
+		{
+			line = get_window_line(app, i);
+			if(ft_line_intersection_segment(line ,wall_line, &point))
+			{
+				add_point(point, array, count);
+				ft_printf("intersection point added\n");
+			}
+		}
+		if(point_on_screen(app, tmp->point))
+			add_point(tmp->point, array, count);
+		tmp = tmp->next;
+		if(tmp == sector->wall_list)
+			break;
+	}
+	i = -1;
+	while (++i < 4)
+	{
+		line = get_window_line(app, i);
+		if(inside_sector_check(sector, &(line.a)))
+			add_point(point, array, count);
+	}
+	sort_point_array(array, count);
+}
+
+static void	color_sector(t_app *app, t_sector_lst *sector, int color)
+{
+
+	t_vec2_lst	*a;
+	t_vec2_lst	*b;
+	t_vector2	render_points[MAX_SECTOR_CORNERS + 4];
+	int			point_count;
+
+	point_count = 0;
+	make_point_array(app, (t_vector2 *)&render_points,sector,&point_count);
+
+	ft_printf("viewpos x%f, y%f, viewsize, x%f, y%f, zoom area x%f, y%f, point count %i: ",app->view_pos.x, app->view_pos.y,app->view_size.x, app->view_size.y, app->zoom_area.x, app->zoom_area.y, point_count);
+	for(int i = 0; i < point_count; i++)
+		ft_printf("x%f,y%f ; ", render_points[i].x, render_points[i].y);
+
+	a = sector->wall_list->next;
+	b = sector->wall_list->next;
+	while (a->next != sector->wall_list
+		&& b->next != sector->wall_list)
 	{
 		if (a->next == b)
 			a = b->next;
@@ -61,7 +186,7 @@ static void	color_active_sector(t_app *app, t_vec2_lst *a, t_vec2_lst *b,
 		else
 			b = b->next;
 		fill_triangle(app, world_to_screen(app,
-				app->active_sector->wall_list->point),
+				sector->wall_list->point),
 			world_to_screen(app, a->point),
 			world_to_screen(app, b->point), color);
 	}
@@ -75,8 +200,6 @@ static void	color_active_sector(t_app *app, t_vec2_lst *a, t_vec2_lst *b,
  */
 void	render_fill_active_sector(t_app *app)
 {
-	t_vec2_lst	*a;
-	t_vec2_lst	*b;
 	t_point		min;
 	t_point		max;
 	int			color;
@@ -88,9 +211,7 @@ void	render_fill_active_sector(t_app *app)
 	max = (t_point){0, 0};
 	if (app->active_sector)
 	{
-		a = app->active_sector->wall_list->next;
-		b = app->active_sector->wall_list->next;
 		sector_bounds(app, app->active_sector, &min, &max);
-		color_active_sector(app, a, b, color);
+		color_sector(app,app->active_sector, color);
 	}
 }

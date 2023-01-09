@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:46:18 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/05 15:11:50 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/09 14:57:33 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,5 +94,7 @@ int			ft_cmp_vec2(t_vector2 a, t_vector2 b);
 void		ft_point_swap(t_point *a, t_point *b);
 void		ft_swap(int *a, int *b);
 t_vector3	ft_vec2_to_vec3(t_vector2 vector, double z);
+void		ft_double_swap(double *a, double *b);
+void		ft_vec2_swap(t_vector2 *a, t_vector2 *b);
 
 #endif
