@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 16:47:58 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/22 22:45:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/09 13:30:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 # define ANIMATION_DURATION_TEXT 0.015625 // seconds per char
 # define ANIMATION_DURATION_TEXT_END 3.5 // seconds after full text displayed
 # define MAX_TEXT_LINES 16
-# define MAX_TEXT_LINE_LENGTH 1024
+# define MAX_TEXT_LINE_LENGTH 512
 
 /**
  * Event type enumeration.

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   audio.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:35:37 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/17 14:58:53 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/09 15:05:56 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	play_music(t_app *app)
 		SDL_QueueAudio(app->audio.device_id, app->audio.music,
 			app->audio.music_length);
 		SDL_PauseAudioDevice(app->audio.device_id, 0);
-	}	
+	}
 }
 
 void	play_sound(t_app *app, char *file)
@@ -47,7 +47,7 @@ void	play_sound(t_app *app, char *file)
 	size = SDL_GetQueuedAudioSize(app->audio.device_id);
 	ptr = app->audio.music + app->audio.music_length - size;
 	SDL_ClearQueuedAudio(app->audio.device_id);
-	SDL_MixAudioFormat(ptr, app->audio.sound, AUDIO_S16SYS,
+	SDL_MixAudioFormat(ptr, app->audio.sound, app->audio.wav_spec.format,
 		app->audio.sound_length, SDL_MIX_MAXVOLUME);
 	SDL_QueueAudio(app->audio.device_id, ptr, size);
 	SDL_PauseAudioDevice(app->audio.device_id, 0);

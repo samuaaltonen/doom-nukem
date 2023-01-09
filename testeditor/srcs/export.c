@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/09 13:05:56 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/09 13:35:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,8 +146,8 @@ static void write_objects(t_app *app, t_export_object *objects)
 
 static void write_interactions(t_app *app, t_export_interaction *interactions)
 {
-	t_export_interaction temp;
-	int	i;
+	t_export_interaction	temp;
+	int						i;
 
 	i = 0;
 	while (i < MAX_INTERACTIONS)
@@ -187,8 +187,8 @@ void	export_textfile(t_level_header *header, int index, int fd,
 	const char *path)
 {
 	unsigned char	*buffer[MAX_TEXT_LINES * MAX_TEXT_LINE_LENGTH];
-	int	length;
-	int	texts_fd;
+	int				length;
+	int				texts_fd;
 
 	texts_fd = open(path, O_RDONLY);
 	if (texts_fd < 0)
@@ -199,6 +199,23 @@ void	export_textfile(t_level_header *header, int index, int fd,
 	header->asset_info[index].size = length;
 	if (write(fd, &buffer, length) == -1)
 		exit_error(MSG_ERROR_FILE_WRITE);
+}
+
+void	export_wav(t_level_header *header, int index, int fd,
+	const char *path)
+{
+	unsigned char	*buffer;
+	int				length;
+
+	buffer = NULL;
+	length = 0;
+	if (!read_source(path, &length))
+		exit_error(MSG_ERROR_FILE_READ);
+	header->asset_info[index].size = length;
+	ft_printf("source %s, len %d\n", path, length);
+	if (write(fd, &buffer, length) == -1)
+		exit_error(MSG_ERROR_FILE_WRITE);
+	free(buffer);
 }
 
 /**
@@ -273,6 +290,11 @@ int	export_file(t_app *app, char *path)
 	export_surface(&header, EXPORT_MONSTER_1, fd, MONSTER_1_PATH);
 	export_surface(&header, EXPORT_MONSTER_2, fd, MONSTER_2_PATH);
 	export_surface(&header, EXPORT_SPRITE, fd, SPRITE_PATH);
+	export_wav(&header, EXPORT_MUSIC, fd, MUSIC_PATH);
+	export_wav(&header, EXPORT_SOUND_LASER, fd, SOUND_LASER_PATH);
+	export_wav(&header, EXPORT_SOUND_SHOT, fd, SOUND_SHOT_PATH);
+	export_wav(&header, EXPORT_SOUND_RELOAD, fd, SOUND_RELOAD_PATH);
+	export_wav(&header, EXPORT_SOUND_BUMP, fd, SOUND_BUMP_PATH);
 	export_textfile(&header, EXPORT_TEXTS, fd, TEXTS_PATH);
 	/* rle_compress(path); */
 	close(fd);

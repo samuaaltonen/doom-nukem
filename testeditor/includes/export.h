@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/09 13:01:40 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/09 13:30:22 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 # define SOUND_BUMP_PATH	"../assets/sounds/bump.wav"
 # define TEXTS_PATH			"../assets/texts/texts.txt"
 # define MAX_TEXT_LINES 16
-# define MAX_TEXT_LINE_LENGTH 1024
+# define MAX_TEXT_LINE_LENGTH 512
 
 enum e_export_assets
 {
