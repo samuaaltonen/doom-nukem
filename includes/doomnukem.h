@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/05 18:53:21 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/05 19:31:05 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -431,6 +431,8 @@ int			blend_pixel(t_color base, t_color top);
 t_color		int_to_argb(int color);
 int			argb_to_int(t_color color);
 SDL_Surface *bmp_to_surface(const char *path);
+void		fill_fog(t_app *app);
+int			shade_depth(int color, float shade);
 
 /**
  * utils

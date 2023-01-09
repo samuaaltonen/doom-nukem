@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 19:02:56 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/09 12:58:28 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	draw_object_pixel(t_app *app, t_render_object *object, t_point window, t_ve
 	{
 	//put_pixel_to_surface(app->surface, window.x, window.y,color);
 		shade_color(color, app->sectors[app->objects[object->id].sector].light);
-		put_pixel_to_surface_check(app, window,color,object->dist);
+		put_pixel_to_surface_check(app, window,shade_depth(color, object->dist),object->dist);
 	}
 	
 }
@@ -178,7 +178,6 @@ static t_bool	init_object(t_app *app, int i, t_render_object *object,
 			/ dist);
 	if(*angle > 1.f || *angle < 0)
 		return (FALSE);
-
 	transform = ft_vector_multiply_matrix(vector,
 	ft_matrix_inverse((t_matrix2){app->player.cam, app->player.dir}));
 	if(transform.y / dist < 0.75f)
