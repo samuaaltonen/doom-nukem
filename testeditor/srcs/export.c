@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/06 15:30:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/09 13:05:56 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,6 +183,24 @@ void	export_surface(t_level_header *header, int index, int fd,
 		exit_error(MSG_ERROR_FILE_WRITE);
 }
 
+void	export_textfile(t_level_header *header, int index, int fd,
+	const char *path)
+{
+	unsigned char	*buffer[MAX_TEXT_LINES * MAX_TEXT_LINE_LENGTH];
+	int	length;
+	int	texts_fd;
+
+	texts_fd = open(path, O_RDONLY);
+	if (texts_fd < 0)
+		exit_error(MSG_ERROR_FILE_OPEN);
+	length = read(fd, &buffer, MAX_TEXT_LINES * MAX_TEXT_LINE_LENGTH);
+	if (length < 0)
+		exit_error(MSG_ERROR_FILE_READ);
+	header->asset_info[index].size = length;
+	if (write(fd, &buffer, length) == -1)
+		exit_error(MSG_ERROR_FILE_WRITE);
+}
+
 /**
  * @brief Opens or creates a file at path, writes map data to it
  * 
@@ -210,7 +228,7 @@ int	export_file(t_app *app, char *path)
 	export = (t_export_sector *)ft_memalloc(sizeof(t_export_sector));
 	if (!export)
 		exit_error(MSG_ERROR_ALLOC);
-	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0755);
+	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
 		exit_error(MSG_ERROR_FILE_OPEN);
 	header.sector_count = ft_lstlen(app->sectors);
@@ -255,6 +273,7 @@ int	export_file(t_app *app, char *path)
 	export_surface(&header, EXPORT_MONSTER_1, fd, MONSTER_1_PATH);
 	export_surface(&header, EXPORT_MONSTER_2, fd, MONSTER_2_PATH);
 	export_surface(&header, EXPORT_SPRITE, fd, SPRITE_PATH);
+	export_textfile(&header, EXPORT_TEXTS, fd, TEXTS_PATH);
 	/* rle_compress(path); */
 	close(fd);
 	return (0);
