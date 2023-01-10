@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/10 18:07:51 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 19:02:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,9 +136,10 @@ void	init_enemies(t_app *app)
 	enemy = &(app->enemies[0]);
 	i = -1;
 	enemy_count = 0;
-	while(++i < MAX_OBJECTS)
+	while (++i < MAX_OBJECTS)
 	{
-		if(app->objects[i].type >= MONSTER1 && app->objects[i].type < MONSTER1 + MAX_ENEMY_TYPES)
+		if (app->objects[i].type >= MONSTER1
+			&& app->objects[i].type < MONSTER1 + MAX_ENEMY_TYPES)
 		{
 			enemy->id = i;
 			enemy->pos = app->objects[i].position;
@@ -150,7 +151,6 @@ void	init_enemies(t_app *app)
 		else
 			enemy->id = -1;
 	}
-	ft_printf("%i enemy count \n", enemy_count);
 }
 
 void	init_projectiles(t_app *app)
@@ -169,27 +169,6 @@ void	init_projectiles(t_app *app)
  */
 void	load_assets(t_app *app)
 {
-	app->assets.ui_frame = bmp_to_surface(UI_FRAME_PATH);
-	app->assets.title_screen_image = bmp_to_surface(TITLESCREEN_PATH);
-	app->assets.crosshair = bmp_to_surface(CROSSHAIR_PATH);
-	app->assets.pointer = bmp_to_surface(POINTER_PATH);
-	app->assets.shield = bmp_to_surface(SHIELD_PATH);
-	app->assets.hp = bmp_to_surface(HP_PATH);
-	app->assets.pistol = bmp_to_surface(PISTOL_PATH);
-	app->assets.bullet = bmp_to_surface(BULLET_PATH);
-	app->assets.meter = bmp_to_surface(METER_PATH);
-	app->assets.sprite = bmp_to_surface(PANELS_PATH);
-	app->assets.bg = bmp_to_surface(SKYBOX_PATH);
-	app->assets.weapon = bmp_to_surface(WEAPON_HD_PATH);
-	if(app->assets.weapon == NULL)
-		ft_printf("FAILREAD\n");
-	//temp 2d object array in 0, 2d object array in 1, 2d per enemy arrays from then on
-	app->assets.sprites[0] = bmp_to_surface(PICKUP_PATH);
-	app->assets.sprites[1] = bmp_to_surface(OBJECT_PATH);
-	app->assets.sprites[2] = bmp_to_surface(SPRITE_PATH);
-	app->assets.sprites[3] = bmp_to_surface(MONSTER_1_PATH);
-	app->assets.sprites[4] = bmp_to_surface(MONSTER_2_PATH);
-
 	load_font(app);
 	load_texts(app);
 	load_music(app, MUSIC_PATH);

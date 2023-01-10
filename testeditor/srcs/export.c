@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/10 17:37:37 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 18:45:20 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,12 +295,15 @@ int	export_file(t_app *app, char *path)
 	export_surface(&header, EXPORT_PISTOL, fd, PISTOL_PATH);
 	export_surface(&header, EXPORT_BULLET, fd, BULLET_PATH);
 	export_surface(&header, EXPORT_METER, fd, METER_PATH);
+	export_surface(&header, EXPORT_OBJECT_ICON, fd, OBJECT_ICON_PATH);
+	export_surface(&header, EXPORT_WEAPON_HD, fd, WEAPON_HD_PATH);
+
 	export_surface(&header, EXPORT_PICKUP, fd, PICKUP_PATH);
 	export_surface(&header, EXPORT_OBJECT, fd, OBJECT_PATH);
-	export_surface(&header, EXPORT_OBJECT_ICON, fd, OBJECT_ICON_PATH);
+	export_surface(&header, EXPORT_SPRITE, fd, SPRITE_PATH);
 	export_surface(&header, EXPORT_MONSTER_1, fd, MONSTER_1_PATH);
 	export_surface(&header, EXPORT_MONSTER_2, fd, MONSTER_2_PATH);
-	export_surface(&header, EXPORT_SPRITE, fd, SPRITE_PATH);
+
 	export_wav(&header, EXPORT_MUSIC, fd, MUSIC_PATH);
 	export_wav(&header, EXPORT_SOUND_LASER, fd, SOUND_LASER_PATH);
 	export_wav(&header, EXPORT_SOUND_SHOT, fd, SOUND_SHOT_PATH);

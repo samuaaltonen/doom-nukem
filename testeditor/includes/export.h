@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/09 13:30:22 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 18:41:24 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@
 # define OBJECT_ICON_PATH	"../assets/images/Objects_icons.bmp"
 # define MONSTER_1_PATH		"../assets/images/Monster1_full_sheet.bmp"
 # define MONSTER_2_PATH		"../assets/images/Monster2_full_sheet.bmp"
-# define SPRITE_PATH		"../assets/images/Objects_small_sheet.bmp"
+# define SPRITE_PATH		"../assets/images/Projectiles.bmp"
+# define WEAPON_HD_PATH		"../assets/images/weapon_cannon4.bmp"
 # define MUSIC_PATH			"../assets/sounds/title_music.wav"
 # define SOUND_LASER_PATH	"../assets/sounds/laser.wav"
 # define SOUND_SHOT_PATH	"../assets/sounds/pistol_shot.wav"
@@ -59,9 +60,10 @@ enum e_export_assets
 	EXPORT_PISTOL,
 	EXPORT_BULLET,
 	EXPORT_METER,
+	EXPORT_OBJECT_ICON,
+	EXPORT_WEAPON_HD,
 	EXPORT_PICKUP,
 	EXPORT_OBJECT,
-	EXPORT_OBJECT_ICON,
 	EXPORT_MONSTER_1,
 	EXPORT_MONSTER_2,
 	EXPORT_SPRITE,

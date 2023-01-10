@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:51:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/10 17:20:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 18:57:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,22 +99,7 @@ void	*async_load(void *data)
 
 	thread = (t_thread_data *)data;
 	app = (t_app *)thread->app;
-	while (TRUE)
-	{
-		import_level(app, thread, MAP_PATH);
-		if (pthread_mutex_lock(&thread->lock))
-			exit_error(NULL);
-		SDL_Delay(1);
-		app->import_progress += 0.01;
-		if (app->import_progress >= 1.0)
-		{
-			if (pthread_mutex_unlock(&thread->lock))
-				exit_error(MSG_ERROR_THREADS_SIGNAL);
-			pthread_exit(NULL);
-		}
-		if (pthread_mutex_unlock(&thread->lock))
-			exit_error(MSG_ERROR_THREADS_SIGNAL);
-	}
+	import_level(app, thread, MAP_PATH);
 	pthread_exit(NULL);
 }
 

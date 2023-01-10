@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/10 18:06:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 18:59:41 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 # define DEFAULT_AUDIO_FORMAT		AUDIO_S16LSB
 # define DEFAULT_AUDIO_FREQUENCEY	24000
 # define DEFAULT_AUDIO_SAMPLES		4096
-# define PROGRESS_BAR_FRAME_COLOR	0xffc900a1
-# define PROGRESS_BAR_COLOR			0xff00c921
+# define PROGRESS_BAR_FRAME_COLOR	0xff0099f2
+# define PROGRESS_BAR_COLOR			0xff00def2
 # define PANELS_PATH		"assets/textures/spritesheet_full.bmp"
 # define SKYBOX_PATH		"assets/images/skybox.bmp"
 # define FONT_PATH			"assets/fonts/sci-fi_font.bmp"
@@ -65,9 +65,10 @@ enum e_export_assets
 	EXPORT_PISTOL,
 	EXPORT_BULLET,
 	EXPORT_METER,
+	EXPORT_OBJECT_ICON,
+	EXPORT_WEAPON_HD,
 	EXPORT_PICKUP,
 	EXPORT_OBJECT,
-	EXPORT_OBJECT_ICON,
 	EXPORT_MONSTER_1,
 	EXPORT_MONSTER_2,
 	EXPORT_SPRITE,
@@ -83,7 +84,8 @@ enum e_spritesheet {
 	SMALL_SPRITE,
 	BIG_SPRITE,
 	PROJECTILE_SPRITE,
-	ENEMY_SPRITE
+	ENEMY_SPRITE_1,
+	ENEMY_SPRITE_2,
 };
 /**
  * Struct for font. 

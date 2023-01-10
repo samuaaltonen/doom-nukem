@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/10 17:42:19 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 19:02:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,13 +135,8 @@ static void import_player(t_app *app, t_export_player *player)
 	app->player.hp = player->health;
 	app->player.weapons = player->weapons;
 	app->player.shield = player->armor;
-	ft_memcpy(&app->player.inventory, &player->inventory, sizeof(t_inventory));
-}
-
-static void relink_player(t_app *app, t_export_player *player)
-{
-	(void)player;
 	app->player.elevation = sector_floor_height(app, app->player.sector, app->player.pos);
+	ft_memcpy(&app->player.inventory, &player->inventory, sizeof(t_inventory));
 }
 
 static t_bool import_objects(t_app *app, unsigned char *data, int *imported)
@@ -223,7 +218,6 @@ static void	update_progress(t_app *app, t_thread_data *thread, double progress)
 	if (pthread_mutex_lock(&thread->lock))
 		exit_error(NULL);
 	app->import_progress = progress;
-	ft_printf("%f\n", app->import_progress);
 	if (pthread_mutex_unlock(&thread->lock))
 		exit_error(MSG_ERROR_THREADS_SIGNAL);
 }
@@ -260,12 +254,13 @@ void	import_level(t_app *app, t_thread_data *thread, char *path)
 	ft_memcpy(&player, data + imported, sizeof(t_export_player));
 	imported += sizeof(t_export_player);
 	update_progress(app, thread, (double) imported / (double) length);
+
 	import_player(app, &player);
 	import_objects(app, data, &imported);
+
 	ft_memcpy(app->interactions, data + imported, sizeof(t_interaction) * MAX_INTERACTIONS);
 	imported += sizeof(t_interaction) * MAX_INTERACTIONS;
 	update_progress(app, thread, (double) imported / (double) length);
-	relink_player(app, &player);
 
 	app->assets.sprite = import_surface(header.asset_info[EXPORT_PANELS], data, &imported);
 	update_progress(app, thread, (double) imported / (double) length);
@@ -291,17 +286,23 @@ void	import_level(t_app *app, t_thread_data *thread, char *path)
 	update_progress(app, thread, (double) imported / (double) length);
 	app->assets.meter = import_surface(header.asset_info[EXPORT_METER], data, &imported);
 	update_progress(app, thread, (double) imported / (double) length);
-	app->assets.sprites[0] = import_surface(header.asset_info[EXPORT_PICKUP], data, &imported);
+
+	SDL_Surface *temp = import_surface(header.asset_info[EXPORT_OBJECT_ICON], data, &imported);
 	update_progress(app, thread, (double) imported / (double) length);
-	app->assets.sprites[1] = import_surface(header.asset_info[EXPORT_OBJECT], data, &imported);
+	SDL_FreeSurface(temp);
+
+	app->assets.weapon = import_surface(header.asset_info[EXPORT_WEAPON_HD], data, &imported);
 	update_progress(app, thread, (double) imported / (double) length);
-	import_surface(header.asset_info[EXPORT_OBJECT_ICON], data, &imported);
+
+	app->assets.sprites[SMALL_SPRITE] = import_surface(header.asset_info[EXPORT_PICKUP], data, &imported);
 	update_progress(app, thread, (double) imported / (double) length);
-	app->assets.sprites[3] = import_surface(header.asset_info[EXPORT_MONSTER_1], data, &imported);
+	app->assets.sprites[BIG_SPRITE] = import_surface(header.asset_info[EXPORT_OBJECT], data, &imported);
 	update_progress(app, thread, (double) imported / (double) length);
-	app->assets.sprites[4] = import_surface(header.asset_info[EXPORT_MONSTER_2], data, &imported);
+	app->assets.sprites[PROJECTILE_SPRITE] = import_surface(header.asset_info[EXPORT_SPRITE], data, &imported);
 	update_progress(app, thread, (double) imported / (double) length);
-	app->assets.sprites[2] = import_surface(header.asset_info[EXPORT_SPRITE], data, &imported);
+	app->assets.sprites[ENEMY_SPRITE_1] = import_surface(header.asset_info[EXPORT_MONSTER_1], data, &imported);
+	update_progress(app, thread, (double) imported / (double) length);
+	app->assets.sprites[ENEMY_SPRITE_2] = import_surface(header.asset_info[EXPORT_MONSTER_2], data, &imported);
 	update_progress(app, thread, (double) imported / (double) length);
 
 	/* import_wav(app, header.asset_info[EXPORT_MUSIC], data, &imported);

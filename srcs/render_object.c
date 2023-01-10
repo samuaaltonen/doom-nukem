@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/10 18:07:28 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 19:00:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_vector2		render_big(t_app *app, t_render_object *object, t_vector2 tex, int *s
 
 t_vector2		render_enemy(t_app *app, t_render_object *object, t_vector2 tex, int *sprite_id)
 {
-	*sprite_id = ENEMY_SPRITE + app->objects[object->id].type - (MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + 1);
+	*sprite_id = ENEMY_SPRITE_1 + app->objects[object->id].type - (MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + 1);
 	tex.x += ((SPRITE_ANGLES - object->frame - 1) * object->tex_size),
 	tex.y += (ft_abs((int)app->object_states[object->id]) * object->tex_size);
 	return (tex);

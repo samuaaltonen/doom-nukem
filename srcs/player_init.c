@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 12:42:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 18:37:21 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,8 @@ void	init_skybox_plane(t_app *app)
  */
 void	player_init(t_app *app)
 {
-	app->player.pos = (t_vector2){POSITION_START_X, POSITION_START_Y};
 	app->player.dir = (t_vector2){DIRECTION_START_X, DIRECTION_START_Y};
-	app->player.elevation = 0.0;
 	app->player.horizon = 0.5;
-	app->player.sector = 0;
 	app->player.elevation_velocity = 0.0;
 	app->player.height = PLAYER_HEIGHT_STANDING;
 	init_camera_plane(app);
