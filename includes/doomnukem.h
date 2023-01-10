@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/10 16:37:30 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/10 17:57:21 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ typedef struct s_render_object
 	int			id;
 	int			tex_size;
 	int			frame;
+	int			light;
 	double		dist;
 	t_point		start;
 	t_point		draw_start;

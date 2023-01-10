@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/10 16:59:43 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/10 17:58:51 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	draw_object_pixel(t_app *app, t_render_object *object, t_point window, int 
 {
 	if ((color & 0xFF000000) > 0)
 	{
-		put_pixel_to_surface_check(app, window,shade_depth(shade_color(color, app->sectors[app->objects[object->id].sector].light), object->dist),object->dist);
+		put_pixel_to_surface_check(app, window,shade_depth(shade_color(color, object->light), object->dist),object->dist);
 	}
 }
 
@@ -65,7 +65,7 @@ t_vector2		render_small(t_app *app, t_render_object *object, t_vector2 tex, int 
 	*sprite_id = SMALL_SPRITE;
 	tex.x += ((SPRITE_ANGLES - object->frame - 1) * object->tex_size),
 	tex.y += (app->objects[object->id].type - 1) * object->tex_size;
-	return ((t_vector2){tex.x, tex.y});
+	return (tex);
 }
 
 t_vector2		render_big(t_app *app, t_render_object *object, t_vector2 tex, int *sprite_id)
@@ -73,7 +73,7 @@ t_vector2		render_big(t_app *app, t_render_object *object, t_vector2 tex, int *s
 	*sprite_id = BIG_SPRITE;
 	tex.x += ((SPRITE_ANGLES - object->frame - 1) * object->tex_size),
 	tex.y += (app->objects[object->id].type - MAX_SMALL_OBJECTS - 1) * object->tex_size;
-	return ((t_vector2){tex.x, tex.y});
+	return (tex);
 }
 
 t_vector2		render_enemy(t_app *app, t_render_object *object, t_vector2 tex, int *sprite_id)
@@ -81,14 +81,15 @@ t_vector2		render_enemy(t_app *app, t_render_object *object, t_vector2 tex, int 
 	*sprite_id = ENEMY_SPRITE + app->objects[object->id].type - (MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + 1);
 	tex.x += ((SPRITE_ANGLES - object->frame - 1) * object->tex_size),
 	tex.y += (ft_abs((int)app->object_states[object->id]) * object->tex_size);
-	return ((t_vector2){tex.x, tex.y});
+	return (tex);
 }
 
 t_vector2		render_projectile(t_app *app, t_render_object *object, t_vector2 tex, int *sprite_id)
 {
 	*sprite_id = PROJECTILE_SPRITE;
-	tex.y += (app->objects[object->id].type - MAX_SMALL_OBJECTS - MAX_BIG_OBJECTS - MAX_ENEMY_TYPES - 1) * TEX_PICKUP;
-	return ((t_vector2){tex.x, tex.y});
+	tex.x += 0.f;
+	tex.y += (app->projectiles[object->id - MAX_OBJECTS].type - MAX_SMALL_OBJECTS - MAX_BIG_OBJECTS - MAX_ENEMY_TYPES - 1) * TEX_PICKUP;
+	return (tex);
 }
 
 void	object_render(t_app *app, t_render_object *object, t_thread_data *thread, t_vector2 (*f)(t_app *, t_render_object *, t_vector2, int *))
@@ -254,6 +255,7 @@ static void	set_object(t_app *app, t_render_object *object, double *angle,
 		object->end.y = object->start.y + object->size.y / 2;
 		object->start.x = object->start.x - object->size.x / 2;
 		object->start.y = object->start.y - object->size.y / 2;
+		object->light = app->sectors[original_obj->sector].light;
 		object->step = (t_vector2){object->tex_size / (double)(object->size.x),
 				object->tex_size / (double)(object->size.y)};
 		object_frame(app,
@@ -283,6 +285,7 @@ static void	set_tmp_object(t_app *app, t_render_object *object, double *angle,
 		object->end.y = object->start.y + object->size.y / 2;
 		object->start.x = object->start.x - object->size.x / 2;
 		object->start.y = object->start.y - object->size.y / 2;
+		object->light = app->sectors[original_obj->sector].light;
 		object->step = (t_vector2){object->tex_size / (double)(object->size.x),
 				object->tex_size / (double)(object->size.y)};
 		object->frame = 0;
