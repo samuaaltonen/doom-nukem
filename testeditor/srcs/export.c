@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/09 16:21:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 17:37:37 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -307,7 +307,13 @@ int	export_file(t_app *app, char *path)
 	export_wav(&header, EXPORT_SOUND_RELOAD, fd, SOUND_RELOAD_PATH);
 	export_wav(&header, EXPORT_SOUND_BUMP, fd, SOUND_BUMP_PATH);
 	export_textfile(&header, EXPORT_TEXTS, fd, TEXTS_PATH);
-	rle_compress(path);
 	close(fd);
+	fd = open(path, O_WRONLY, 0644);
+	if (fd < 0)
+		exit_error(MSG_ERROR_FILE_OPEN);
+	if (write(fd, &header, sizeof(t_level_header)) == -1)
+		exit_error(MSG_ERROR_FILE_WRITE);
+	close(fd);
+	rle_compress(path);
 	return (0);
 }

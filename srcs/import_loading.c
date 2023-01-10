@@ -6,14 +6,11 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:51:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/10 15:52:18 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 17:20:33 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
-
-# define	PROGRESS_BAR_FRAME_COLOR	0xffc900a1
-# define	PROGRESS_BAR_COLOR			0xff00c921
 
 /**
  * @brief Draws progress bar based on progress value.
@@ -56,19 +53,28 @@ static void	draw_progress_bar_frame(t_app *app)
 	x = WIN_W / 10;
 	while (x < WIN_W - WIN_W / 10)
 	{
-		put_pixel_to_surface(app->surface, x, WIN_H / 10 * 8, PROGRESS_BAR_FRAME_COLOR);
-		put_pixel_to_surface(app->surface, x, WIN_H / 10 * 9, PROGRESS_BAR_FRAME_COLOR);
+		put_pixel_to_surface(app->surface, x, WIN_H / 10 * 8,
+			PROGRESS_BAR_FRAME_COLOR);
+		put_pixel_to_surface(app->surface, x, WIN_H / 10 * 9,
+			PROGRESS_BAR_FRAME_COLOR);
 		x++;
 	}
 	y = WIN_H / 10 * 8;
 	while (y < WIN_H / 10 * 9)
 	{
-		put_pixel_to_surface(app->surface, WIN_W / 10, y, PROGRESS_BAR_FRAME_COLOR);
-		put_pixel_to_surface(app->surface, WIN_W - WIN_W / 10, y, PROGRESS_BAR_FRAME_COLOR);
+		put_pixel_to_surface(app->surface, WIN_W / 10, y,
+			PROGRESS_BAR_FRAME_COLOR);
+		put_pixel_to_surface(app->surface, WIN_W - WIN_W / 10, y,
+			PROGRESS_BAR_FRAME_COLOR);
 		y++;
 	}
 }
 
+/**
+ * @brief Renders loading screen.
+ * 
+ * @param app 
+ */
 static void	render_loading(t_app *app)
 {
 	while (SDL_PollEvent(&app->event))
@@ -76,11 +82,17 @@ static void	render_loading(t_app *app)
 	ft_bzero(app->surface->pixels, app->surface->h * app->surface->pitch);
 	draw_progress_bar_frame(app);
 	draw_progress_bar(app);
-	ft_printf("Progress: %f\n", app->import_progress);
 	SDL_UpdateWindowSurface(app->win);
 }
 
-void	*async_import(void *data)
+/**
+ * @brief Asynchronous function to be used in parallel to the main thread for
+ * importing data from level file.
+ * 
+ * @param data 
+ * @return void* 
+ */
+void	*async_load(void *data)
 {
 	t_app			*app;
 	t_thread_data	*thread;
@@ -89,16 +101,29 @@ void	*async_import(void *data)
 	app = (t_app *)thread->app;
 	while (TRUE)
 	{
-		SDL_Delay(10);
+		import_level(app, thread, MAP_PATH);
 		if (pthread_mutex_lock(&thread->lock))
 			exit_error(NULL);
-		thread->id++;
+		SDL_Delay(1);
+		app->import_progress += 0.01;
+		if (app->import_progress >= 1.0)
+		{
+			if (pthread_mutex_unlock(&thread->lock))
+				exit_error(MSG_ERROR_THREADS_SIGNAL);
+			pthread_exit(NULL);
+		}
 		if (pthread_mutex_unlock(&thread->lock))
 			exit_error(MSG_ERROR_THREADS_SIGNAL);
 	}
 	pthread_exit(NULL);
 }
 
+/**
+ * @brief Creates thread for data importing and monitors/renders its progress
+ * with loading screen.
+ * 
+ * @param app 
+ */
 void	app_load(t_app *app)
 {
 	t_thread_data	thread;
@@ -109,7 +134,7 @@ void	app_load(t_app *app)
 	thread.has_work = TRUE;
 	if (pthread_cond_init(&thread.cond, NULL)
 		|| pthread_mutex_init(&thread.lock, NULL)
-		|| pthread_create(&thread.thread, NULL, async_import, (void *)(&thread)))
+		|| pthread_create(&thread.thread, NULL, async_load, (void *)(&thread)))
 		exit_error(MSG_ERROR_THREADS);
 	while (TRUE)
 	{
@@ -121,11 +146,10 @@ void	app_load(t_app *app)
 				exit_error(MSG_ERROR_THREADS_SIGNAL);
 			break ;
 		}
+		render_loading(app);
 		if (pthread_mutex_unlock(&thread.lock))
 			exit_error(MSG_ERROR_THREADS_SIGNAL);
-		render_loading(app);
-		if (!USING_LINUX)
-			SDL_Delay(1);
+		SDL_Delay(1);
 	}
 	render_loading(app);
 }

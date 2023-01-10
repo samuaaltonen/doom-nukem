@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/09 17:49:18 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 16:32:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,8 @@
 # define DEFAULT_AUDIO_FORMAT		AUDIO_S16LSB
 # define DEFAULT_AUDIO_FREQUENCEY	24000
 # define DEFAULT_AUDIO_SAMPLES		4096
+# define PROGRESS_BAR_FRAME_COLOR	0xffc900a1
+# define PROGRESS_BAR_COLOR			0xff00c921
 # define PANELS_PATH		"assets/textures/spritesheet_full.bmp"
 # define SKYBOX_PATH		"assets/images/skybox.bmp"
 # define FONT_PATH			"assets/fonts/sci-fi_font.bmp"
@@ -47,6 +49,34 @@
 # define TEXTS_PATH			"assets/texts/texts.txt"
 # define MAP_PATH			"./testeditor/test.test"
 # define MAX_SPRITES 5
+
+enum e_export_assets
+{
+	EXPORT_PANELS,
+	EXPORT_SKYBOX,
+	EXPORT_FONT,
+	EXPORT_UI_FRAME,
+	EXPORT_TITLESCREEN,
+	EXPORT_CROSSHAIR,
+	EXPORT_POINTER,
+	EXPORT_SHIELD,
+	EXPORT_HP,
+	EXPORT_PISTOL,
+	EXPORT_BULLET,
+	EXPORT_METER,
+	EXPORT_PICKUP,
+	EXPORT_OBJECT,
+	EXPORT_OBJECT_ICON,
+	EXPORT_MONSTER_1,
+	EXPORT_MONSTER_2,
+	EXPORT_SPRITE,
+	EXPORT_MUSIC,
+	EXPORT_SOUND_LASER,
+	EXPORT_SOUND_SHOT,
+	EXPORT_SOUND_RELOAD,
+	EXPORT_SOUND_BUMP,
+	EXPORT_TEXTS
+};
 
 enum e_spritesheet {
 	SMALL_SPRITE,
