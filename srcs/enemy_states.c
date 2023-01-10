@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:30:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 18:22:08 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/10 13:52:58 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,13 +72,13 @@ static void	avoid_walls(t_app *app, t_enemy_state *enemy)
 static void check_enemy(t_app *app, t_enemy_state *state, int define)
 {
 
-	if(!state->agressive && in_range(app,app->objects[state->id].position, 3.f))
+	if(!state->agressive && in_range(app->player.pos, app->objects[state->id].position, 3.f) && in_range_height(app->player.elevation, app->objects[state->id].elevation, 3.f))
 		state->agressive = TRUE;
-	else if(state->agressive && in_range(app,app->objects[state->id].position,10.f))
+	else if(state->agressive && (in_range(app->player.pos, app->objects[state->id].position,10.f) || in_range_height(app->player.elevation, app->objects[state->id].elevation, 7.f)))
 	{
 		app->objects[state->id].rot = ft_vector_angle_right((t_vector2){0.f,1.f},ft_vector2_sub(app->objects[state->id].position, app->player.pos));
 		state->dir = ft_vector2_normalize(ft_vector2_sub(app->player.pos, app->objects[state->id].position));
-		if(in_range(app, app->objects[state->id].position, app->enemy_def[define].range) && ft_abs(app->player.elevation - app->objects[state->id].elevation < app->enemy_def[define].range))
+		if(in_range(app->player.pos, app->objects[state->id].position, app->enemy_def[define].range) && in_range_height(app->player.elevation, app->objects[state->id].elevation, app->enemy_def[define].range))
 			state->next = ATTACK;
 		else
 			state->next = WALK;

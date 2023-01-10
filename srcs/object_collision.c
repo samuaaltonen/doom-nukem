@@ -6,19 +6,28 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:17:11 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 14:48:38 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/10 13:42:12 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
-t_bool in_range(t_app *app, t_vector2 obj_pos, double epsilon)
+
+t_bool	in_range_height(double pos, double obj, double epsilon)
+{
+	if (pos > obj - epsilon
+		&& pos < pos + epsilon)
+		return (TRUE);
+	return (FALSE);
+}
+
+t_bool	in_range(t_vector2 pos, t_vector2 obj, double epsilon)
 {
 
-	if (app->player.pos.x > obj_pos.x - epsilon
-		&& app->player.pos.x < obj_pos.x + epsilon 
-		&& app->player.pos.y > obj_pos.y - epsilon
-		&& app->player.pos.y < obj_pos.y + epsilon)
+	if (pos.x > obj.x - epsilon
+		&& pos.x < obj.x + epsilon 
+		&& pos.y > obj.y - epsilon
+		&& pos.y < obj.y + epsilon)
 		return (TRUE);
 	return (FALSE);
 }
@@ -35,7 +44,7 @@ static void	object_hit(t_app *app, t_gameobject *obj)
 
 static int	per_object_collision(t_app *app, t_gameobject *obj)
 {
-	if (in_range(app, obj->position, 2))
+	if (in_range(app->player.pos, obj->position, 2))
 	{
 		if (ft_point_distance(app->player.pos, obj->position) + app->player.elevation - obj->elevation < 0.5f)
 			object_hit(app, obj);
