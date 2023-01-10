@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:51:24 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/08 15:17:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:54:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ locking/unlocking a mutex."
 # define MSG_ERROR_TEXTURE_LOAD_FAILED "Texture files are invalid."
 # define MSG_ERROR_FONT "Could not open font file."
 # define MSG_ERROR_MOUSE "Could not set mouse cursor relative to the window."
+# define MSG_ERROR_FILE_OPEN "Could not open a file."
 # define MSG_ERROR_FILE_READ "Could not read from a file."
 
 #endif

@@ -6,13 +6,79 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:51:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/10 13:23:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:52:18 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
-# define	IMPORT_WORK_LOAD 123
+# define	PROGRESS_BAR_FRAME_COLOR	0xffc900a1
+# define	PROGRESS_BAR_COLOR			0xff00c921
+
+/**
+ * @brief Draws progress bar based on progress value.
+ * 
+ * @param app 
+ * @param progress 
+ */
+static void	draw_progress_bar(t_app *app)
+{
+	int	progress_x;
+	int	x;
+	int	y;
+
+	x = WIN_W / 10 + 5;
+	progress_x = (int)(app->import_progress * (WIN_W - WIN_W / 5)) + x - 10;
+	while (x < progress_x)
+	{
+		y = WIN_H / 10 * 8 + 5;
+		while (y < WIN_H / 10 * 9 - 5)
+		{
+			put_pixel_to_surface(app->surface, x, y, PROGRESS_BAR_FRAME_COLOR);
+			y++;
+		}
+		x++;
+	}
+}
+
+/**
+ * @brief Draws progress bar frame.
+ * 
+ * @param app 
+ */
+static void	draw_progress_bar_frame(t_app *app)
+{
+	int	x;
+	int	y;
+
+	while (SDL_PollEvent(&app->event))
+		dispatch_event(app, &app->event);
+	x = WIN_W / 10;
+	while (x < WIN_W - WIN_W / 10)
+	{
+		put_pixel_to_surface(app->surface, x, WIN_H / 10 * 8, PROGRESS_BAR_FRAME_COLOR);
+		put_pixel_to_surface(app->surface, x, WIN_H / 10 * 9, PROGRESS_BAR_FRAME_COLOR);
+		x++;
+	}
+	y = WIN_H / 10 * 8;
+	while (y < WIN_H / 10 * 9)
+	{
+		put_pixel_to_surface(app->surface, WIN_W / 10, y, PROGRESS_BAR_FRAME_COLOR);
+		put_pixel_to_surface(app->surface, WIN_W - WIN_W / 10, y, PROGRESS_BAR_FRAME_COLOR);
+		y++;
+	}
+}
+
+static void	render_loading(t_app *app)
+{
+	while (SDL_PollEvent(&app->event))
+		dispatch_event(app, &app->event);
+	ft_bzero(app->surface->pixels, app->surface->h * app->surface->pitch);
+	draw_progress_bar_frame(app);
+	draw_progress_bar(app);
+	ft_printf("Progress: %f\n", app->import_progress);
+	SDL_UpdateWindowSurface(app->win);
+}
 
 void	*async_import(void *data)
 {
@@ -23,59 +89,43 @@ void	*async_import(void *data)
 	app = (t_app *)thread->app;
 	while (TRUE)
 	{
+		SDL_Delay(10);
 		if (pthread_mutex_lock(&thread->lock))
 			exit_error(NULL);
-		while (!thread->has_work)
-			if (pthread_cond_wait(&thread->cond, &thread->lock))
-				exit_error(NULL);
 		thread->id++;
-		SDL_Delay(10);
-		if (thread->id >= IMPORT_WORK_LOAD)
-			thread->has_work = FALSE;
 		if (pthread_mutex_unlock(&thread->lock))
-			exit_error(NULL);
+			exit_error(MSG_ERROR_THREADS_SIGNAL);
 	}
 	pthread_exit(NULL);
 }
 
 void	app_load(t_app *app)
 {
-	t_thread_data	thread_data;
+	t_thread_data	thread;
 
-	thread_data.app = app;
-	thread_data.id = 0;
-	thread_data.has_work = TRUE;
-	if (pthread_cond_init(&thread_data.cond, NULL)
-		|| pthread_mutex_init(&thread_data.lock, NULL)
-		|| pthread_create(&thread_data.thread, NULL, async_import,
-				(void *)(&thread_data))
-		|| pthread_cond_signal(&thread_data.cond)
-		|| pthread_mutex_unlock(&thread_data.lock))
+	ft_bzero(app->surface->pixels, app->surface->h * app->surface->pitch);
+	thread.app = app;
+	thread.id = 0;
+	thread.has_work = TRUE;
+	if (pthread_cond_init(&thread.cond, NULL)
+		|| pthread_mutex_init(&thread.lock, NULL)
+		|| pthread_create(&thread.thread, NULL, async_import, (void *)(&thread)))
 		exit_error(MSG_ERROR_THREADS);
 	while (TRUE)
 	{
-		if (pthread_mutex_lock(&thread_data.lock))
+		if (pthread_mutex_lock(&thread.lock))
 			exit_error(MSG_ERROR_THREADS_SIGNAL);
-		if (!thread_data.has_work)
+		if (app->import_progress >= 1.0)
 		{
-			if (pthread_mutex_unlock(&thread_data.lock))
+			if (pthread_mutex_unlock(&thread.lock))
 				exit_error(MSG_ERROR_THREADS_SIGNAL);
 			break ;
 		}
-		ft_printf("progress %d\n", thread_data.id);
-		if (pthread_mutex_unlock(&thread_data.lock))
+		if (pthread_mutex_unlock(&thread.lock))
 			exit_error(MSG_ERROR_THREADS_SIGNAL);
+		render_loading(app);
+		if (!USING_LINUX)
+			SDL_Delay(1);
 	}
-	ft_printf("thread done %d\n", thread_data.id);
-}
-
-void	render_loading(t_app *app, int progress)
-{
-	while (TRUE)
-	{
-		while (SDL_PollEvent(&app->event))
-			dispatch_event(app, &app->event);
-		if (!app->conf->toggle_loop)
-			render_frame(app);
-	}
+	render_loading(app);
 }

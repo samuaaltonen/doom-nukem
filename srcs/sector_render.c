@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 04:15:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:50:57 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	render_sectors(t_app *app)
 	ft_bzero(app->occlusion_bottom, WIN_W * sizeof(int));
 	sector_wallstack_build(app);
 	threads_work((t_thread_data *)&threads_data);
-	app->depthmap_fill_switch = !app->depthmap_fill_switch;
 }
 
 /**

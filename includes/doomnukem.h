@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/10 13:26:56 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:54:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,6 +170,7 @@ typedef struct s_app
 	SDL_Window		*win;
 	SDL_Surface		*surface;
 	SDL_Event		event;
+	double			import_progress;
 	t_uint8			status;
 	t_assets		assets;
 	t_audio			audio;
@@ -177,7 +178,6 @@ typedef struct s_app
 	int				occlusion_top[WIN_W];
 	int				occlusion_bottom[WIN_W];
 	float			depthmap[WIN_H / 2][WIN_W];
-	t_bool			depthmap_fill_switch;
 	t_wallstack		wallstack;
 	t_objectstack	objectstack;
 	t_player		player;
@@ -209,14 +209,18 @@ void		load_assets(t_app *app);
 void		load_texts(t_app *app);
 
 /**
+ * Data import
+ */
+void			expand_data(unsigned char **data, int *length, int *allocated);
+unsigned char	*read_source(const char *source, int *source_length);
+void			rle_uncompress_data(const char *source, unsigned char **data,
+					int *length);
+void			import_level(t_app *app, char *path);
+
+/**
  * error.c
  */
 void		exit_error(char *message);
-
-/**
- * Configuration
- */
-void		init_thread_info(t_app *app);
 
 /**
  * Application
@@ -437,11 +441,6 @@ SDL_Surface *bmp_to_surface(const char *path);
  */
 void		map_coordinates(t_rect *src, t_rect *dst, t_point *point);
 void		clamp_int(int *number, int min, int max);
-
-/**
- * maps 
- */
-int			import_file(t_app *app, char *path);
 
 /**
  * objects

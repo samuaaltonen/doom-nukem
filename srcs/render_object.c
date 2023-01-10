@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_object.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/04 17:37:11 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:51:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,8 +107,7 @@ void	object_render(t_app *app, t_render_object *object, t_thread_data *thread)
 		texture_pixel.y = (object->draw_start.y - object->start.y) * object->step.y;
 		while (++y <  object->end.y)
 		{
-			//if(y % 2 == !app->depthmap_fill_switch)
-				draw_object_pixel(app, object, (t_point){x, y}, texture_pixel);
+			draw_object_pixel(app, object, (t_point){x, y}, texture_pixel);
 			texture_pixel.y += object->step.y;
 		}
 		texture_pixel.x +=object->step.x;

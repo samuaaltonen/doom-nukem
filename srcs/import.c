@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 17:06:57 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 15:53:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,16 +145,16 @@ static void relink_player(t_app *app, t_export_player *player)
 	app->player.elevation = sector_floor_height(app, app->player.sector, app->player.pos);
 }
 
-static t_bool import_objects(t_app *app, int fd)
+static t_bool import_objects(t_app *app, unsigned char *data, int *imported)
 {
 	t_object	import;
-	int	i;
+	int			i;
 
 	i = -1;
 	while(++i < MAX_OBJECTS)
 	{
-		if(read(fd,&import,sizeof(t_object)) == -1)
-			exit_error(MSG_ERROR_FILE_READ);
+		ft_memcpy(&import, data + *imported, sizeof(t_object));
+		*imported += sizeof(t_interaction) * MAX_INTERACTIONS;
 		app->objects[i].elevation = import.elevation;
 		app->objects[i].position = import.position;
 		app->objects[i].sector = import.sector;
@@ -166,7 +166,7 @@ static t_bool import_objects(t_app *app, int fd)
 }
 
 //open a file
-int	import_file(t_app *app, char *path)
+/* int	import_file(t_app *app, char *path)
 {
 	int						fd;
 	t_export_sector			*export;
@@ -203,4 +203,43 @@ int	import_file(t_app *app, char *path)
 	ft_printf("sector_count=%i\n",header.sector_count);
 	close(fd);
 	return (0);
+} */
+
+void	import_level(t_app *app, char *path)
+{
+	t_export_sector			*export;
+	int						counter = 0;
+	t_sector				*sectors;
+	t_export_player			player;
+	t_level_header			header;
+
+	unsigned char	*data;
+	int				length;
+	int				imported;
+
+	data = NULL;
+	rle_uncompress_data(path, &data, &length);
+	ft_memcpy(&header, data, sizeof(t_level_header));
+	imported = sizeof(t_level_header);
+	export = (t_export_sector *)ft_memalloc(sizeof(t_export_sector));
+	if (!export)
+		exit_error(MSG_ERROR_ALLOC);
+	sectors = (t_sector *)ft_memalloc(sizeof(t_sector) * header.sector_count); 
+	app->sectors = sectors;
+	while(counter < header.sector_count)
+	{
+		ft_memcpy(export, data + imported, sizeof(t_export_sector));
+		imported += sizeof(t_export_sector);
+		read_sector(app, export, counter, header.sector_count);
+		counter++;
+	}
+	free(export);
+	ft_memcpy(&player, data + imported, sizeof(t_export_player));
+	imported += sizeof(t_export_player);
+	import_player(app, &player);
+	import_objects(app, data, &imported);
+	ft_memcpy(app->interactions, data + imported, sizeof(t_interaction) * MAX_INTERACTIONS);
+	imported += sizeof(t_interaction) * MAX_INTERACTIONS;
+	relink_player(app, &player);
+	ft_printf("sector_count=%i\n",header.sector_count);
 }
