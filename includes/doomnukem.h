@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/10 16:06:57 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 18:09:45 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,6 +133,7 @@ typedef struct s_render_object
 	int			id;
 	int			tex_size;
 	int			frame;
+	int			light;
 	double		dist;
 	t_point		start;
 	t_point		draw_start;
@@ -291,13 +292,15 @@ void		collision_slope(t_app *app, int sector_id);
 t_bool		collision_possible(t_vector2 start_pos, t_vector2 end_pos,
 				t_line wall, t_bool is_member);
 t_vector2	get_possible_movement_point(t_line wall, t_vector2 coord, int side);
-t_bool		portal_can_enter(t_app *app, t_line wall, int source_sector,
+t_bool		portal_can_enter(t_app *app, t_vector3 pos, double height, t_line wall, int source_sector,
 				int target_sector);
 void		portal_enter(t_app *app, int sector_id);
 t_bool		inside_sector(t_app *app, int sector_id, t_vector2 coord);
 void		check_player_sector(t_app *app);
 int			enemy_move_check(t_app *app, t_move new, int sector_id, t_enemy_state *enemy);
 void		object_collision(t_app *app);
+t_bool		in_range(t_vector2 pos, t_vector2 obj, double epsilon);
+t_bool		in_range_height(double pos, double obj, double epsilon);
 
 /**
  * Sectors
@@ -407,6 +410,7 @@ void		render_game(t_app *app);
 void		render_pausemenu(t_app *app);
 void		render_options(t_app *app);
 void		render_gameover(t_app *app);
+void		render_hand(t_app *app, int x, int y);
 
 /*
 * AUDIO.C
@@ -436,6 +440,7 @@ int			blend_pixel(t_color base, t_color top);
 t_color		int_to_argb(int color);
 int			argb_to_int(t_color color);
 SDL_Surface *bmp_to_surface(const char *path);
+int			shade_depth(int color, float shade);
 
 /**
  * utils

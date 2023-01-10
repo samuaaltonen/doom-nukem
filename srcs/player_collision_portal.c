@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_collision_portal.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 19:55:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/05 17:07:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/09 16:49:18 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * @param target_sector 
  * @return t_bool 
  */
-t_bool	portal_can_enter(t_app *app, t_line wall, int source_sector,
+t_bool	portal_can_enter(t_app *app, t_vector3 pos, double height, t_line wall, int source_sector,
 	int target_sector)
 {
 	t_vector2	check_pos;
@@ -31,15 +31,15 @@ t_bool	portal_can_enter(t_app *app, t_line wall, int source_sector,
 	double		target_floor;
 	double		target_ceil;
 
-	check_pos = ft_closest_point(app->player.move_pos, wall);
+	check_pos = ft_closest_point((t_vector2){pos.x, pos.y}, wall);
 	source_floor = sector_floor_height(app, source_sector, check_pos);
 	source_ceil = sector_ceil_height(app, source_sector, check_pos);
 	target_floor = sector_floor_height(app, target_sector, check_pos);
 	target_ceil = sector_ceil_height(app, target_sector, check_pos);
-	if (app->player.elevation + MAX_STEP < target_floor
+	if (pos.z + MAX_STEP < target_floor
 		&& source_floor + MAX_STEP < target_floor)
 		return (FALSE);
-	if (target_ceil < app->player.elevation + app->player.height
+	if (target_ceil < pos.z + height
 		+ COLLISION_CEIL && source_ceil - MAX_STEP > target_ceil)
 		return (FALSE);
 	return (TRUE);

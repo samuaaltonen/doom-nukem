@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/09 17:49:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 18:07:51 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,15 @@ void	sdl_init(t_app *app)
 
 void	define_enemies(t_app *app)
 {
+	app->conf->projectile_speed[0] = 5.f;
+	app->conf->projectile_speed[1] = 5.f;
+	app->conf->projectile_speed[2] = 8.f;
+	app->conf->projectile_speed[3] = 8.f;
+	app->conf->projectile_speed[4] = 8.f;
+	app->conf->projectile_speed[5] = 8.f;
+	app->conf->projectile_speed[6] = 10.f;
+	app->conf->projectile_speed[7] = 10.f;
+
 	app->enemy_def[0].state_count = 4;
 	app->enemy_def[0].range = 3.f;
 	app->enemy_def[0].speed = 2.f;
@@ -171,7 +180,9 @@ void	load_assets(t_app *app)
 	app->assets.meter = bmp_to_surface(METER_PATH);
 	app->assets.sprite = bmp_to_surface(PANELS_PATH);
 	app->assets.bg = bmp_to_surface(SKYBOX_PATH);
-
+	app->assets.weapon = bmp_to_surface(WEAPON_HD_PATH);
+	if(app->assets.weapon == NULL)
+		ft_printf("FAILREAD\n");
 	//temp 2d object array in 0, 2d object array in 1, 2d per enemy arrays from then on
 	app->assets.sprites[0] = bmp_to_surface(PICKUP_PATH);
 	app->assets.sprites[1] = bmp_to_surface(OBJECT_PATH);

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/10 15:59:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 18:06:53 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,9 @@ void	render_game(t_app *app)
 	player_control(app);
 	object_collision(app);
 	render_sectors(app);
+	render_hand(app, WIN_W / 2 - 128, 500);
 	render_objects(app);
+	//fill_fog(app);
 	render_textmodals(app);
 	render_ui(app);
 

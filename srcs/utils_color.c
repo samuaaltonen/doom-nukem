@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:49:04 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/08 15:49:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/05 19:37:06 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,33 @@ int	shade_color(int color, int shade)
 	r += (r * shade) >> 3;
 	g += (g * shade) >> 3;
 	b += (b * shade) >> 3;
+	if (r > 0xFF0000)
+		r = 0xFF0000;
+	if (g > 0x00FF00)
+		g = 0x00FF00;
+	if (b > 0x0000FF)
+		b = 0x0000FF;
+	return ((r & 0xFF0000) | (g & 0x00FF00) | (b & 0x0000FF));
+}
+
+int	shade_depth(int color, float shade)
+{
+	int	r;
+	int	g;
+	int	b;
+
+	if (!shade)
+		return (color);
+	if (shade >= 20.f)
+		return (0x000000);
+	if (shade <= 0.f)
+		return (0xFFFFFF);
+	r = color & 0xFF0000;
+	g = color & 0x00FF00;
+	b = color & 0x0000FF;
+	r -= (int)((r * shade) / 20.f);
+	g -= (int)((g * shade) / 20.f);
+	b -= (int)((b * shade) / 20.f);
 	if (r > 0xFF0000)
 		r = 0xFF0000;
 	if (g > 0x00FF00)

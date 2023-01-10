@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/06 14:58:39 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/10 18:09:16 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,7 @@ FILES = app.c \
 		menu_interaction_explanations.c \
 		menu_interaction_explanations_extra.c \
 		menu_interaction_info.c \
+		menu_interaction_link_info.c \
 		menu_inventory_info.c \
 		menu_object_info.c \
 		menu_player_info.c \

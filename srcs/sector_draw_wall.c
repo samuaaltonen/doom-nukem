@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_draw_wall.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/23 01:12:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/09 12:53:36 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	draw_wall_pixel(t_app *app, t_rayhit *hit, t_point coord, int color)
 {
 	if ((color & 0xFF000000) > 0)
 		put_pixel_to_surface(app->surface, coord.x, coord.y,
-			shade_color(color, hit->light));
+			shade_depth(shade_color(color, hit->light),(float)hit->distance));
 	else if (app->occlusion_top[coord.x] < coord.y
 		&& app->occlusion_bottom[coord.x] < WIN_H - coord.y)
 		put_pixel_to_surface(app->surface, coord.x, coord.y,

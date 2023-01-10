@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/10 16:32:54 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 18:06:45 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,8 @@
 # define OBJECT_PATH		"assets/images/Objects_Big_sheet.bmp"
 # define MONSTER_1_PATH		"assets/images/Monster1_full_sheet.bmp"
 # define MONSTER_2_PATH		"assets/images/Monster2_full_sheet.bmp"
-# define SPRITE_PATH		"assets/images/Objects_small_sheet.bmp"
+# define SPRITE_PATH		"assets/images/Projectiles.bmp"
+# define WEAPON_HD_PATH		"assets/images/weapon_cannon4.bmp"
 # define MUSIC_PATH			"assets/sounds/title_music.wav"
 # define SOUND_LASER_PATH	"assets/sounds/laser.wav"
 # define SOUND_SHOT_PATH	"assets/sounds/pistol_shot.wav"
@@ -114,6 +115,7 @@ typedef struct s_assets
 	SDL_Surface		*bullet;
 	SDL_Surface		*meter;
 	SDL_Surface		*sprite;
+	SDL_Surface		*weapon;
 	SDL_Surface		*bg;
 	SDL_Surface		*sprites[MAX_SPRITES];
 }	t_assets;

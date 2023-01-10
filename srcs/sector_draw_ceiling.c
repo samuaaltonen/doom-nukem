@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_draw_ceiling.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:17:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 12:41:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/09 12:55:03 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ static void	draw_ceiling_pixel(t_app *app, t_rayhit *hit, t_point coord,
 	}
 	if ((color & 0xFF000000) > 0)
 		put_pixel_to_surface(app->surface, coord.x, coord.y,
-			shade_color(color, hit->light));
+				shade_depth(shade_color(color, hit->light),(float)distance));
 	else
 		put_pixel_to_surface(app->surface, coord.x, coord.y,
 			get_sky_pixel(app, coord.x, coord.y));

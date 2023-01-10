@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/05 17:05:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 16:40:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@
 # define MAX_SMALL_OBJECTS 5
 # define MAX_BIG_OBJECTS 3
 # define MAX_ENEMY_TYPES 2
-# define MAX_PROJECTILES 3
+# define MAX_PROJECTILES 8
 # define MAX_OBJECT_DISTANCE 128.0
 /* object type defines for now
 	< MAX_SMALL_OBJECTS = small objects
@@ -46,6 +46,7 @@
 	< MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES = enemy
 	>= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES = projectiles
 */
+# define ENEMY_COLLISION 0.25f
 # define MAX_ENEMY_STATES 2
 # define MAX_OBJECTS 128
 # define MAX_TEMP_OBJECTS 64
@@ -86,6 +87,7 @@ typedef struct s_conf
 	int				fov;
 	int				keystates;
 	int				buttonstates;
+	double			projectile_speed[MAX_PROJECTILES];
 	int				mouse_active;
 }	t_conf;
 

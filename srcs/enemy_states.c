@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:30:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/04 17:42:57 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/10 13:52:58 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,19 @@ static void	avoid_walls(t_app *app, t_enemy_state *enemy)
 	int	i;
 	t_line	wall_line;
 	int collider;
-	t_bool hit[4];
-	t_bool	collision;
+	t_bool hit[5];
 
+	//ft_bzero(&hit,sizeof(int) * 5);
 	hit[0] = FALSE;
 	hit[1] = FALSE;
 	hit[2] = FALSE;
 	hit[3] = FALSE;
-	collision = FALSE;
-	colliders[0] = (t_vector2){app->objects[enemy->id].position.x - 1.f, app->objects[enemy->id].position.y - 1.f};
-	colliders[1] = (t_vector2){app->objects[enemy->id].position.x + 1.f, app->objects[enemy->id].position.y - 1.f};
-	colliders[2] = (t_vector2){app->objects[enemy->id].position.x - 1.f, app->objects[enemy->id].position.y + 1.f};
-	colliders[3] = (t_vector2){app->objects[enemy->id].position.x + 1.f, app->objects[enemy->id].position.y + 1.f};
+	hit[4] = FALSE;
+	colliders[0] = (t_vector2){app->objects[enemy->id].position.x - ENEMY_COLLISION + 0.01f, app->objects[enemy->id].position.y - ENEMY_COLLISION};
+	colliders[1] = (t_vector2){app->objects[enemy->id].position.x + ENEMY_COLLISION, app->objects[enemy->id].position.y - ENEMY_COLLISION};
+	colliders[2] = (t_vector2){app->objects[enemy->id].position.x - ENEMY_COLLISION + 0.01f, app->objects[enemy->id].position.y + ENEMY_COLLISION};
+	colliders[3] = (t_vector2){app->objects[enemy->id].position.x + ENEMY_COLLISION, app->objects[enemy->id].position.y + ENEMY_COLLISION};
+	//ft_printf("enemy sector %i\n", app->objects[enemy->id].sector);
 	collider = -1;
 	while(++collider < 4)
 	{
@@ -39,42 +40,45 @@ static void	avoid_walls(t_app *app, t_enemy_state *enemy)
 			wall_line = get_wall_line(app, app->objects[enemy->id].sector, i);
 			if (ft_line_side(wall_line, colliders[collider]))
 			{
-				if(app->sectors[app->objects[enemy->id].sector].wall_types[i] == -1)
+				if (ft_point_on_segment(wall_line, ft_closest_point(colliders[collider], wall_line)) && app->sectors[app->objects[enemy->id].sector].wall_types[i] == -1)
 				{
 					hit[collider] = TRUE;
-					collision = TRUE;
-					break;
+					hit[4] = TRUE;
 				}
 			}
 		}
 	}
 	collider = -1;
-	if(collision)
+	int temp = 0;
+	if(hit[4])
 	{
 		t_vector2 new = app->objects[enemy->id].position;
 		i = 0;
 		while(++collider < 4)
 		{
 			if(hit[collider])
-				new = ft_vector2_add(new, colliders[collider]);
+			{
+				new = ft_vector2_add(new, ft_vector2_sub(colliders[collider], app->objects[enemy->id].position));
+				temp++;
+			}
 		}
-		app->objects[enemy->id].rot = ft_vector_angle_right((t_vector2){0.f,1.f},ft_vector2_sub(new,app->objects[enemy->id].position));
 		enemy->dir = ft_vector2_normalize(ft_vector2_sub(app->objects[enemy->id].position, new));
+		app->objects[enemy->id].rot = ft_vector_angle_right((t_vector2){0.f,-1.f}, enemy->dir);
+		ft_printf("hit %i dir x%f, y%f new dir %f, %f, angle %f\n", temp, enemy->dir.x, enemy->dir.y, new.x, new.y, ft_vector_angle_right((t_vector2){0.f,1.f}, enemy->dir));
+
 	}
 }
 
 static void check_enemy(t_app *app, t_enemy_state *state, int define)
 {
-	double	dist;
 
-	dist = ft_vector_length(ft_vector2_sub(app->player.pos, app->objects[state->id].position));
-	if(dist < 3.f)
+	if(!state->agressive && in_range(app->player.pos, app->objects[state->id].position, 3.f) && in_range_height(app->player.elevation, app->objects[state->id].elevation, 3.f))
 		state->agressive = TRUE;
-	if(dist < 10.f && state->agressive)
+	else if(state->agressive && (in_range(app->player.pos, app->objects[state->id].position,10.f) || in_range_height(app->player.elevation, app->objects[state->id].elevation, 7.f)))
 	{
 		app->objects[state->id].rot = ft_vector_angle_right((t_vector2){0.f,1.f},ft_vector2_sub(app->objects[state->id].position, app->player.pos));
 		state->dir = ft_vector2_normalize(ft_vector2_sub(app->player.pos, app->objects[state->id].position));
-		if(dist + ft_abs(app->player.elevation - app->objects[state->id].elevation) < app->enemy_def[define].range)
+		if(in_range(app->player.pos, app->objects[state->id].position, app->enemy_def[define].range) && in_range_height(app->player.elevation, app->objects[state->id].elevation, app->enemy_def[define].range))
 			state->next = ATTACK;
 		else
 			state->next = WALK;
@@ -96,7 +100,7 @@ static void enemy_states(t_app *app, t_enemy_state *state, int define)
 		{
 			fire(app,(t_vector3){state->dir.x,state->dir.y,(app->player.elevation - app->objects[state->id].elevation) / ft_vector_length(ft_vector2_sub(app->player.pos,app->objects[state->id].position))},
 					(t_vector3){app->objects[state->id].position.x, app->objects[state->id].position.y,
-					app->objects[state->id].elevation + 0.5f},(t_point){12,app->objects[state->id].sector});
+					app->objects[state->id].elevation + 0.5f},(t_point){11,app->objects[state->id].sector});
 			state->next = IDLE;
 		}
 		else if(app->object_states[state->id] > app->enemy_def[define].states[state->state][1]
@@ -111,7 +115,7 @@ static void enemy_states(t_app *app, t_enemy_state *state, int define)
 			if(state->next != ATTACK)
 				state->next = IDLE;
 		}
-		if(!state->dead && state->state == WALK)
+		if(state->state == WALK)
 		{
 			avoid_walls(app, state);
 			new = (t_move){ft_vector2_add(app->objects[state->id].position, ft_vec2_mult(state->dir, app->enemy_def[define].speed * app->conf->delta_time)), app->sectors[app->objects[state->id].sector].floor_height};

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_vector_angle_right.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:30:43 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 14:34:35 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/05 17:59:19 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ double	ft_vector_angle_right(t_vector2 a, t_vector2 b)
 
 	ratio = ft_vector_dotproduct(a, b)
 		/ (ft_vector_length(a) * ft_vector_length(b));
-	if (ratio <= -1.0 || ratio >= 1.0)
+	if (ratio < -1.0 || ratio >= 1.0)
 		return (0.0);
 	if (ft_vector_crossproduct(a, b) < 0.0)
 		return (2 * M_PI - acos(ratio));
