@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/04 17:39:41 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/10 13:26:56 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -221,6 +221,7 @@ void		init_thread_info(t_app *app);
 /**
  * Application
  */
+void		app_load(t_app *app);
 void		render_frame(t_app *app);
 void		app_loop(t_app *app);
 void		render_game(t_app *app);
@@ -241,6 +242,7 @@ int			events_mouse_wheel(int wheel_dir, t_app *app);
 int			events_window_destroy(void);
 int			events_window_other(int windowevent, t_app *app);
 int			dispatch_event(t_app *app, SDL_Event *event);
+int			dispatch_event_minimal(t_app *app, SDL_Event *event);
 void		handle_movement(t_app *app);
 
 /**

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/09 15:06:10 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/09 17:49:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ void	sdl_init(t_app *app)
 	app->surface = SDL_GetWindowSurface(app->win);
 	if (!app->surface)
 		exit_error(MSG_ERROR_WINDOW_SURFACE);
-	load_music(app, MUSIC_PATH);
+	app->audio.wav_spec.channels = DEFAULT_AUDIO_CHANNELS;
+	app->audio.wav_spec.format = DEFAULT_AUDIO_FORMAT;
+	app->audio.wav_spec.freq = DEFAULT_AUDIO_FREQUENCEY;
+	app->audio.wav_spec.samples = DEFAULT_AUDIO_SAMPLES;
 	app->audio.device_id = SDL_OpenAudioDevice(NULL, 0, &app->audio.wav_spec,
 		NULL, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
 	if (!app->audio.device_id)
@@ -178,6 +181,7 @@ void	load_assets(t_app *app)
 
 	load_font(app);
 	load_texts(app);
+	load_music(app, MUSIC_PATH);
 }
 
 /**

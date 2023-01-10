@@ -6,18 +6,22 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/06 16:03:54 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/09 17:49:18 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ASSETS_H
 # define ASSETS_H
-# define MAX_BMP_OFFSET 32768
-# define MAX_BMP_WIDTH 32768
-# define MAX_BMP_HEIGHT 32768
-# define MAX_ASSET_COUNT 32
-# define MAX_UNCOMPRESS_BATCH	4096
-# define MAX_COMPRESS_BATCH		6144
+# define MAX_BMP_OFFSET				32768
+# define MAX_BMP_WIDTH				32768
+# define MAX_BMP_HEIGHT				32768
+# define MAX_ASSET_COUNT			32
+# define MAX_UNCOMPRESS_BATCH		4096
+# define MAX_COMPRESS_BATCH			6144
+# define DEFAULT_AUDIO_CHANNELS		1
+# define DEFAULT_AUDIO_FORMAT		AUDIO_S16LSB
+# define DEFAULT_AUDIO_FREQUENCEY	24000
+# define DEFAULT_AUDIO_SAMPLES		4096
 # define PANELS_PATH		"assets/textures/spritesheet_full.bmp"
 # define SKYBOX_PATH		"assets/images/skybox.bmp"
 # define FONT_PATH			"assets/fonts/sci-fi_font.bmp"
