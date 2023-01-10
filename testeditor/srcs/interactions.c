@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interactions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 11:59:28 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 17:24:56 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,20 @@ void	interaction_edit(t_app *app, SDL_Keycode keycode)
 			app->current_interaction->variable += app->divider;
 		else if (keycode == SDLK_DOWN)
 			app->current_interaction->variable -= app->divider;
-		else if (keycode == SDLK_LEFT && app->current_interaction->event_id > 0)
-			app->current_interaction->event_id--;
-		else if (keycode == SDLK_RIGHT
-			&& app->current_interaction->event_id < 7)
-			app->current_interaction->event_id++;
+		else if (keycode == SDLK_LEFT && app->link_interaction
+			&& app->current_interaction->editable > 0)
+		{
+			app->current_interaction->editable--;
+			while (app->interactions[(int)app->current_interaction->editable].event_id == 0 && app->current_interaction->editable > 1)
+				app->current_interaction->editable--;
+		}
+		else if (keycode == SDLK_RIGHT && app->link_interaction
+			&& app->current_interaction->editable < MAX_INTERACTIONS)
+		{
+			app->current_interaction->editable++;
+			while (app->interactions[(int)app->current_interaction->editable].event_id == 0 && app->current_interaction->editable < MAX_INTERACTIONS)
+				app->current_interaction->editable++;
+		}
 		if (app->var_edit)
 		{
 			if (keycode == SDLK_UP)
@@ -89,6 +98,7 @@ void	link_interaction(t_app *app)
 	{
 		app->current_interaction = NULL;
 		app->interaction_menu = FALSE;
+		app->link_interaction = FALSE;
 		if (app->interactions[app->interaction_count].event_id != 0)
 			app->interaction_count++;
 	}

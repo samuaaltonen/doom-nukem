@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/09 16:49:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/10 17:37:28 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,7 @@ typedef struct s_app
 	t_bool				object_new;
 	t_bool				object_menu;
 	t_bool				interaction_menu;
+	t_bool				link_interaction;
 	t_bool				decor_edit;
 	t_interaction		*current_interaction;
 	t_object			*current_object;
@@ -458,6 +459,7 @@ int				find_interaction(t_app *app);
 void			delete_interaction(t_app *app, int id);
 void			del_all_decor_interactions(t_app *app);
 void			render_target_sector_lines(t_app *app);
+void			render_link_interaction_info(t_app *app, int start_y, t_point mouse);
 
 
 void	fill_triangle(t_app *app, t_point a, t_point b, t_point c, int color);
