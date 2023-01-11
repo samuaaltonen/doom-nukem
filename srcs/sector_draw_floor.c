@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_draw_floor.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/09 12:54:29 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:44:16 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ static int	get_position_color(t_app *app, t_vector2 pos, int texture)
 	y = (TEX_SIZE - (int)(pos.y * (double) TEX_SIZE)) % TEX_SIZE;
 	if (y < 0)
 		y += TEX_SIZE;
-	return (get_pixel_color(app->assets.sprite, texture * TEX_SIZE + x, y));
+	return (get_pixel_color(app->assets.panels, texture * TEX_SIZE + x, y));
 }
 
 /**

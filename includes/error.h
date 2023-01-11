@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:51:24 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/11 14:25:59 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 14:42:20 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,9 @@ locking/unlocking a mutex."
 sectors."
 # define MSG_ERROR_IMPORT_PLAYER "Level file is invalid. Could not import \
 player."
+# define MSG_ERROR_IMPORT_OBJECT "Level file is invalid. Could not import \
+objects."
+# define MSG_ERROR_IMPORT_INTERACTION "Level file is invalid. Could not import \
+interactions."
 
 #endif

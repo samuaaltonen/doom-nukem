@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 14:19:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:18:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,8 +218,12 @@ void			rle_uncompress_data(const char *source, unsigned char **data,
 					int *length);
 void			*async_load(void *data);
 void			import_level(t_app *app, t_thread_data *thread, char *path);
-int				import_sectors(t_app *app, t_level_header header,
-					unsigned char *data, int available);
+void			import_update_progress(t_app *app, t_thread_data *thread,
+					t_import_info *info);
+void			import_sectors(t_app *app, t_thread_data *thread,
+					t_import_info *info);
+void			import_assets(t_app *app, t_thread_data *thread,
+					t_import_info *info);
 
 /**
  * error.c

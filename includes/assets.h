@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/10 18:59:41 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:43:45 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,8 @@ typedef struct s_assets
 	SDL_Surface		*pistol;
 	SDL_Surface		*bullet;
 	SDL_Surface		*meter;
-	SDL_Surface		*sprite;
+	SDL_Surface		*object_icon;
+	SDL_Surface		*panels;
 	SDL_Surface		*weapon;
 	SDL_Surface		*bg;
 	SDL_Surface		*sprites[MAX_SPRITES];

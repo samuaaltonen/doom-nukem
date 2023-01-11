@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:06:54 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 14:32:28 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:18:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,27 +150,26 @@ static void read_sector(t_app *app, t_export_sector *export, int sectorid)
  * @param available 
  * @return int 
  */
-int	import_sectors(t_app *app, t_level_header header, unsigned char *data,
-	int available)
+void	import_sectors(t_app *app, t_thread_data *thread, t_import_info *info)
 {
 	t_export_sector	export;
-	int				imported;
 	int				counter;
 
-	if (sizeof(t_sector) * header.sector_count >= (size_t)available)
+	if (sizeof(t_sector) * info->header.sector_count
+		>= (size_t)(info->length - info->imported))
 		exit_error(MSG_ERROR_IMPORT_SECTOR);
 	app->sectors = (t_sector *)ft_memalloc(sizeof(t_sector)
-		* header.sector_count);
+		* info->header.sector_count);
 	if (!app->sectors)
 		exit_error(MSG_ERROR_ALLOC);
-	imported = 0;
 	counter = 0;
-	while (counter < header.sector_count)
+	while (counter < info->header.sector_count)
 	{
-		ft_memcpy(&export, data + imported, sizeof(t_export_sector));
-		imported += (int)sizeof(t_export_sector);
+		ft_memcpy(&export, info->data + info->imported,
+			sizeof(t_export_sector));
+		info->imported += (int)sizeof(t_export_sector);
 		read_sector(app, &export, counter);
 		counter++;
 	}
-	return (imported);
+	import_update_progress(app, thread, info);
 }

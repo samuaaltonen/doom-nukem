@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/05 17:05:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:17:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,14 @@ typedef struct	s_level_header
 	int				interaction_count;
 	t_export_asset	asset_info[MAX_ASSET_COUNT];
 }	t_level_header;
+
+typedef struct s_import_info
+{
+	t_level_header	header;
+	unsigned char	*data;
+	int				length;
+	int				imported;
+}	t_import_info;
 
 /**
  * Sectors

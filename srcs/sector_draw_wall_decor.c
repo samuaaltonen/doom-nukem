@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/06 16:53:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:44:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	draw_wall_decor(t_app *app, int x, t_rayhit *hit)
 		tex_y += hit->texture_step;
 		if (tex_y >= (double) TEX_SIZE)
 			tex_y = fmod(tex_y, (double) TEX_SIZE);
-		color = get_pixel_color(app->assets.sprite, tex_x, (int) tex_y);
+		color = get_pixel_color(app->assets.panels, tex_x, (int) tex_y);
 		if ((color & 0xFF000000) > 0)
 			put_pixel_to_surface(app->surface, x, y.start,
 				shade_color(color, hit->light));

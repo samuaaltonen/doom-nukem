@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_draw_wall.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/09 12:53:36 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:44:24 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion_type)
 			draw_wall_pixel(app, hit, (t_point){x, y.start}, 0);
 		else
 			draw_wall_pixel(app, hit, (t_point){x, y.start},
-				get_pixel_color(app->assets.sprite, tex_x, (int) tex_y));
+				get_pixel_color(app->assets.panels, tex_x, (int) tex_y));
 		tex_y += hit->texture_step;
 		y.start++;
 	}
