@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:36:17 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 19:53:06 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 20:29:02 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,7 +119,7 @@ void	import_sectors(t_app *app, t_import_info *info)
 	int				i;
 
 	if (sizeof(t_export_sector) * info->header.sector_count
-		>= (size_t)(info->length - info->imported))
+		> (size_t)(info->length - info->imported))
 		exit_error(MSG_ERROR_IMPORT_SECTOR);
 	i = 0;
 	while (i < info->header.sector_count)

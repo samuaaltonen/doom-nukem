@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:07:56 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 20:19:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 20:41:37 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @param weapons 
  * @return int 
  */
-static int as_bits(t_app *app)
+static int	as_bits(t_app *app)
 {
 	int	inventory;
 	int	i;
@@ -48,11 +48,11 @@ void	export_player(t_app *app, int fd)
 	ft_bzero(&export, sizeof(t_export_player));
 	export.position = app->player.position;
 	export.direction = app->player.direction;
-	export.sector = get_sector_id(app,app->player.sector);
+	export.sector = get_sector_id(app, app->player.sector);
 	export.health = app->player.health;
 	export.weapons = as_bits(app);
 	export.armor = app->player.armor;
 	export.inventory = app->player.inventory;
- 	if (write(fd, &export, sizeof(t_export_player)) == -1)
+	if (write(fd, &export, sizeof(t_export_player)) == -1)
 		exit_error(MSG_ERROR_FILE_WRITE);
 }

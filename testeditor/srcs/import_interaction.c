@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:30:17 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 19:52:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 20:28:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ void	import_interactions(t_app *app, t_import_info *info)
 	t_export_interaction	interactions[MAX_INTERACTIONS];
 
 	if (sizeof(t_export_interaction) * MAX_INTERACTIONS
-		>= (size_t)(info->length - info->imported))
+		> (size_t)(info->length - info->imported))
 		exit_error(MSG_ERROR_IMPORT_INTERACTION);
 	ft_memcpy(&interactions, info->data + info->imported,
 		sizeof(t_export_interaction) * MAX_INTERACTIONS);

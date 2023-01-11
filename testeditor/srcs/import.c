@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/11 19:51:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 20:37:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	import_player(t_app *app, t_import_info *info)
 {
 	t_export_player	player;
 
-	if (sizeof(t_export_player) >= (size_t)(info->length - info->imported))
+	if (sizeof(t_export_player) > (size_t)(info->length - info->imported))
 		exit_error(MSG_ERROR_IMPORT_PLAYER);
 	ft_memcpy(&player, info->data + info->imported, sizeof(t_export_player));
 	info->imported += (int) sizeof(t_export_player);
@@ -74,7 +74,7 @@ void	import_objects(t_app *app, t_import_info *info)
 	int				i;
 
 	if (sizeof(t_export_object) * MAX_OBJECTS
-		>= (size_t)(info->length - info->imported))
+		> (size_t)(info->length - info->imported))
 		exit_error(MSG_ERROR_IMPORT_OBJECT);
 	ft_memcpy(&objects, info->data + info->imported,
 		sizeof(t_export_object) * MAX_OBJECTS);
@@ -137,7 +137,7 @@ int	import_file(t_app *app, char *path)
 	info.data = NULL;
 	rle_uncompress_data(path, &info.data, &info.length);
 	if (!info.data
-		|| sizeof(t_level_header) >= (size_t)(info.length))
+		|| sizeof(t_level_header) > (size_t)(info.length))
 		exit_error(MSG_ERROR_IMPORT);
 	ft_memcpy(&info.header, info.data, sizeof(t_level_header));
 	info.imported = sizeof(t_level_header);
