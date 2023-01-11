@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 18:40:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:53:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -218,7 +218,6 @@ void		sdl_init(t_app *app);
 void		app_init(t_app **app);
 int			config_init(t_app *app);
 void		load_assets(t_app *app);
-void		load_texts(t_app *app);
 
 /**
  * Data import
@@ -234,6 +233,12 @@ void			import_update_progress(t_app *app, t_thread_data *thread,
 void			import_sectors(t_app *app, t_thread_data *thread,
 					t_import_info *info);
 void			import_assets(t_app *app, t_thread_data *thread,
+					t_import_info *info);
+void			import_surfaces(t_app *app, t_thread_data *thread,
+					t_import_info *info);
+void			import_wavs(t_app *app, t_thread_data *thread,
+					t_import_info *info);
+void			import_texts(t_app *app, t_thread_data *thread,
 					t_import_info *info);
 
 /**

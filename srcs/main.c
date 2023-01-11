@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:21:47 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/10 18:54:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:55:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,6 @@ int	main(void)
 	if (!config_init(app))
 		exit_error(NULL);
 	app_load(app);
-	load_assets(app);
 	define_enemies(app);
 	app_loop(app);
 	return (0);

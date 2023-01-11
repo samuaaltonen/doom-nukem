@@ -1,36 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init_texts.c                                       :+:      :+:    :+:   */
+/*   import_assets_text.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/12/05 17:57:03 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/08 15:52:56 by saaltone         ###   ########.fr       */
+/*   Created: 2023/01/11 18:47:29 by saaltone          #+#    #+#             */
+/*   Updated: 2023/01/11 18:52:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * @brief Loads text strings into text string array.
+ * @brief Imports text data.
  * 
  * @param app 
+ * @param thread 
+ * @param info 
  */
-void	load_texts(t_app *app)
+void	import_texts(t_app *app, t_thread_data *thread, t_import_info *info)
 {
-	int		fd;
-	char	buffer[MAX_TEXT_LINES * MAX_TEXT_LINE_LENGTH + 1];
-	ssize_t	count;
-	int		i;
+	t_export_asset	asset_info;
+	char			buffer[MAX_TEXT_LINES * MAX_TEXT_LINE_LENGTH + 1];
+	int				i;
 
-	fd = open(TEXTS_PATH, O_RDONLY, 0755);
-	if (fd < 0)
-		exit_error(MSG_ERROR_FILE_READ);
-	count = read(fd, &buffer, MAX_TEXT_LINES * MAX_TEXT_LINE_LENGTH);
-	if (count == -1)
-		exit_error(MSG_ERROR_FILE_READ);
-	buffer[count] = 0;
+	asset_info = info->header.asset_info[EXPORT_TEXTS];
+	if (asset_info.size > info->length - info->imported)
+		exit_error(MSG_ERROR_IMPORT_TEXT);
+	ft_memcpy(&buffer, info->data + info->imported,
+		asset_info.size);
 	app->texts = ft_strsplit((char *)buffer, '\n');
 	i = 0;
 	while (app->texts[i])
@@ -38,4 +37,5 @@ void	load_texts(t_app *app)
 		app->text_lengths[i] = ft_strlen(app->texts[i]);
 		i++;
 	}
+	import_update_progress(app, thread, info);
 }

@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/11 14:39:53 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/11 18:53:12 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,7 +30,6 @@ FILES = animation_create.c \
 		image.c \
 		import.c \
 		init.c \
-		init_texts.c \
 		interaction_check.c \
 		interaction_trigger.c \
 		main.c \
@@ -79,7 +78,10 @@ FILES = animation_create.c \
 		rle_uncompress.c \
 		render_hand.c \
 		import_sector.c \
-		import_assets.c
+		import_assets.c \
+		import_assets_surface.c \
+		import_assets_wav.c \
+		import_assets_text.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a

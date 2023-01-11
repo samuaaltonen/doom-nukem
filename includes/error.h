@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:51:24 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/11 18:43:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:50:30 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,5 +48,7 @@ interactions."
 image assets."
 # define MSG_ERROR_IMPORT_AUDIO "Level file is invalid. Could not import \
 audio assets."
+# define MSG_ERROR_IMPORT_TEXT "Level file is invalid. Could not import \
+text data."
 
 #endif

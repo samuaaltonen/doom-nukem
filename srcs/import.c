@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/11 17:53:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:45:06 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,13 @@ void	import_update_progress(t_app *app, t_thread_data *thread,
 		exit_error(MSG_ERROR_THREADS_SIGNAL);
 }
 
+/**
+ * @brief Imports all data from level file.
+ * 
+ * @param app 
+ * @param thread 
+ * @param path 
+ */
 void	import_level(t_app *app, t_thread_data *thread, char *path)
 {
 	t_import_info		info;
@@ -125,12 +132,6 @@ void	import_level(t_app *app, t_thread_data *thread, char *path)
 	import_objects(app, thread, &info);
 	import_interactions(app, thread, &info);
 	import_assets(app, thread, &info);
-	/* import_wav(app, info.header.asset_info[EXPORT_MUSIC], data, &imported);
-	import_wav(app, info.header.asset_info[EXPORT_SOUND_LASER], data, &imported);
-	import_wav(app, info.header.asset_info[EXPORT_SOUND_SHOT], data, &imported);
-	import_wav(app, info.header.asset_info[EXPORT_SOUND_RELOAD], data, &imported);
-	import_wav(app, info.header.asset_info[EXPORT_SOUND_BUMP], data, &imported);
-	import_text(app, info.header.asset_info[EXPORT_TEXTS], data, &imported); */
 	info.imported = info.length;
 	import_update_progress(app, thread, &info);
 	free(info.data);
