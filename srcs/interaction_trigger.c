@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:06:52 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 14:04:54 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:42:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,8 @@ static void	interaction_trigger_text(t_app *app, t_interaction *interaction,
  */
 void	interaction_trigger(t_app *app, int interaction_index)
 {
-	static const char	*sound_paths[] = {SOUND_LASER_PATH, SOUND_SHOT_PATH,
-		SOUND_BUMP_PATH};
+	static const int	sound_types[] = {AUDIO_LASER, AUDIO_SHOT, AUDIO_RELOAD,
+		AUDIO_BUMP};
 	t_interaction		*interaction;
 	double				variable;
 
@@ -129,7 +129,7 @@ void	interaction_trigger(t_app *app, int interaction_index)
 	if (interaction->event_id == EVENT_TRIGGER_SOUND
 		&& (int)variable >= 0 && (int)variable < 3)
 	{
-		play_sound(app, (char *)sound_paths[(int)variable]);
+		play_sound(app, sound_types[(int)variable]);
 		if ((int)interaction->editable >= 0
 			&& app->interactions[(int)interaction->editable].event_id
 			!= EVENT_TRIGGER_SOUND)

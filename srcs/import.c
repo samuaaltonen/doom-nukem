@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/11 17:41:46 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:53:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * @param available 
  * @return int 
  */
-static void import_player(t_app *app, t_thread_data *thread,
+static void	import_player(t_app *app, t_thread_data *thread,
 	t_import_info *info)
 {
 	t_export_player		player;
@@ -34,9 +34,9 @@ static void import_player(t_app *app, t_thread_data *thread,
 	app->player.weapons = player.weapons;
 	app->player.shield = player.armor;
 	app->player.elevation = sector_floor_height(app, app->player.sector,
-		app->player.pos);
+			app->player.pos);
 	ft_memcpy(&app->player.inventory, &player.inventory, sizeof(t_inventory));
-	info->imported += (int)sizeof(t_export_player);
+	info->imported += (int) sizeof(t_export_player);
 	import_update_progress(app, thread, info);
 }
 
@@ -48,7 +48,7 @@ static void import_player(t_app *app, t_thread_data *thread,
  * @param available 
  * @return int 
  */
-static void import_objects(t_app *app, t_thread_data *thread,
+static void	import_objects(t_app *app, t_thread_data *thread,
 	t_import_info *info)
 {
 	t_object	import;
@@ -58,7 +58,7 @@ static void import_objects(t_app *app, t_thread_data *thread,
 		>= (size_t)(info->length - info->imported))
 		exit_error(MSG_ERROR_IMPORT_OBJECT);
 	i = -1;
-	while(++i < MAX_OBJECTS)
+	while (++i < MAX_OBJECTS)
 	{
 		ft_memcpy(&import, info->data + info->imported, sizeof(t_object));
 		info->imported += sizeof(t_object);
@@ -88,7 +88,7 @@ static void	import_interactions(t_app *app, t_thread_data *thread,
 		exit_error(MSG_ERROR_IMPORT_INTERACTION);
 	ft_memcpy(app->interactions, info->data + info->imported,
 		sizeof(t_interaction) * MAX_INTERACTIONS);
-	info->imported += (int)sizeof(t_interaction) * MAX_INTERACTIONS;
+	info->imported += (int) sizeof(t_interaction) * MAX_INTERACTIONS;
 	import_update_progress(app, thread, info);
 }
 

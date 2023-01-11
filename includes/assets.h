@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/11 17:43:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:46:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ enum e_export_assets
 	EXPORT_PISTOL,
 	EXPORT_BULLET,
 	EXPORT_METER,
-	EXPORT_OBJECT_ICON,
+	EXPORT_ICON,
 	EXPORT_WEAPON_HD,
 	EXPORT_PICKUP,
 	EXPORT_OBJECT,

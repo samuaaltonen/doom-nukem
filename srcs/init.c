@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/11 17:29:46 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:22:41 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,7 +190,6 @@ void	load_assets(t_app *app)
 	
 	load_font(app);
 	load_texts(app);
-	load_music(app, MUSIC_PATH);
 }
 
 /**
@@ -198,9 +197,6 @@ void	load_assets(t_app *app)
  */
 void	load_font(t_app *app)
 {
-	if (!app->assets.font.font)
-		app->assets.font.font = bmp_to_surface(FONT_PATH);
-	if (!app->assets.font.font)
-		exit_error("Could not load font");
-	change_font(app, 16, 0xFF000000);
+	if (app->assets.font.font)
+		change_font(app, 16, 0xFF000000);
 }

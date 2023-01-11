@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:51:24 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/11 14:42:20 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:43:01 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define MSG_ERROR_WINDOW_SURFACE "Could not get window surface."
 # define MSG_ERROR_SDL_INIT "Could not initialize SDL."
 # define MSG_ERROR_ALLOC "Could not allocate memory."
+# define MSG_ERROR_LOAD_WAV "Could not load wav data."
 # define MSG_ERROR_IMAGE_INIT "Image initialization failed."
 # define MSG_ERROR_AUDIO_DEVICE "Could not use audio device. Please check \
 audio driver. When PulseAudio/Alsa is used (linux), check that \
@@ -30,7 +31,6 @@ sdl)"
 locking/unlocking a mutex."
 # define MSG_ERROR_TEXTURE_FILE_ACCESS "Could not open/close a texture file."
 # define MSG_ERROR_TEXTURE_LOAD_FAILED "Texture files are invalid."
-# define MSG_ERROR_FONT "Could not open font file."
 # define MSG_ERROR_MOUSE "Could not set mouse cursor relative to the window."
 # define MSG_ERROR_FILE_OPEN "Could not open a file."
 # define MSG_ERROR_FILE_READ "Could not read from a file."
@@ -44,5 +44,9 @@ player."
 objects."
 # define MSG_ERROR_IMPORT_INTERACTION "Level file is invalid. Could not import \
 interactions."
+# define MSG_ERROR_IMPORT_SURFACE "Level file is invalid. Could not import \
+image assets."
+# define MSG_ERROR_IMPORT_AUDIO "Level file is invalid. Could not import \
+audio assets."
 
 #endif

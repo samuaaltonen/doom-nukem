@@ -6,22 +6,11 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:35:37 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/09 15:05:56 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:40:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
-
-void	load_music(t_app *app, char *file)
-{
-	if (app->audio.music)
-	{
-		SDL_FreeWAV(app->audio.music);
-		app->audio.music = NULL;
-	}
-	SDL_LoadWAV(file,
-		&app->audio.wav_spec, &app->audio.music, &app->audio.music_length);
-}
 
 void	play_music(t_app *app)
 {
@@ -33,15 +22,17 @@ void	play_music(t_app *app)
 	}
 }
 
-void	play_sound(t_app *app, char *file)
+void	play_sound(t_app *app, int audio_type)
 {
-	Uint32	size;
-	Uint8	*ptr;
+	t_uint32	size;
+	t_uint8		*ptr;
 
 	if (!app->audio.music)
 		return ;
-	SDL_LoadWAV(file,
-		&app->audio.wav_spec, &app->audio.sound, &app->audio.sound_length);
+	if (!SDL_LoadWAV_RW(SDL_RWFromConstMem(app->audio.data[audio_type],
+		app->audio.data_lengths[audio_type]), 1,
+		&app->audio.wav_spec, &app->audio.sound, &app->audio.sound_length))
+		exit_error(MSG_ERROR_LOAD_WAV);
 	if (!app->audio.sound)
 		exit_error(MSG_ERROR);
 	size = SDL_GetQueuedAudioSize(app->audio.device_id);

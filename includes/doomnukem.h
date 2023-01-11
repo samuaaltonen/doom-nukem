@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 17:18:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:40:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,11 +70,22 @@ typedef struct s_audio
 	SDL_AudioDeviceID	device_id;
 	SDL_AudioSpec		wav_spec;
 	SDL_AudioSpec		sound_spec;
-	Uint8				*music;
-	Uint32				music_length;
-	Uint8				*sound;
-	Uint32				sound_length;
+	t_uint8				*music;
+	t_uint32			music_length;
+	t_uint8				*sound;
+	t_uint32			sound_length;
+	t_uint8				*data[5];
+	t_uint32			data_lengths[5];
 }	t_audio;
+
+enum e_audio_tracks
+{
+	AUDIO_MUSIC,
+	AUDIO_LASER,
+	AUDIO_SHOT,
+	AUDIO_RELOAD,
+	AUDIO_BUMP
+};
 
 enum e_enemy_states
 {
@@ -421,9 +432,8 @@ void		render_hand(t_app *app, int x, int y);
 /*
 * AUDIO.C
 */
-void		load_music(t_app *app, char *file);
 void		play_music(t_app *app);
-void		play_sound(t_app *app, char *file);
+void		play_sound(t_app *app, int audio_type);
 void		pause_audio(t_app *app);
 void		unpause_audio(t_app *app);
 void		stop_audio(t_app *app);

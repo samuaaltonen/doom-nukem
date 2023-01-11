@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/10 18:45:20 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:34:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -295,7 +295,7 @@ int	export_file(t_app *app, char *path)
 	export_surface(&header, EXPORT_PISTOL, fd, PISTOL_PATH);
 	export_surface(&header, EXPORT_BULLET, fd, BULLET_PATH);
 	export_surface(&header, EXPORT_METER, fd, METER_PATH);
-	export_surface(&header, EXPORT_OBJECT_ICON, fd, OBJECT_ICON_PATH);
+	export_surface(&header, EXPORT_ICON, fd, OBJECT_ICON_PATH);
 	export_surface(&header, EXPORT_WEAPON_HD, fd, WEAPON_HD_PATH);
 
 	export_surface(&header, EXPORT_PICKUP, fd, PICKUP_PATH);

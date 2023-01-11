@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:51:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/10 18:57:44 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 17:51:53 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,6 @@ void	app_load(t_app *app)
 	ft_bzero(app->surface->pixels, app->surface->h * app->surface->pitch);
 	thread.app = app;
 	thread.id = 0;
-	thread.has_work = TRUE;
 	if (pthread_cond_init(&thread.cond, NULL)
 		|| pthread_mutex_init(&thread.lock, NULL)
 		|| pthread_create(&thread.thread, NULL, async_load, (void *)(&thread)))

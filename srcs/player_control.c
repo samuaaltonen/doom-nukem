@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_control.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/05 14:18:40 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:42:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ void	player_shoot(t_app *app)
 	if (check_timer(&app->shoot_timer) && app->player.equiped_weapon.ammo > 0)
 	{
 		fire(app,(t_vector3){app->player.dir.x, app->player.dir.y,(app->player.horizon - 0.5f)},(t_vector3){app->player.pos.x, app->player.pos.y,app->player.elevation + app->player.height / 2},(t_point){18,app->player.sector});
-		play_sound(app, SOUND_SHOT_PATH);
+		play_sound(app, AUDIO_SHOT);
 		app->player.equiped_weapon.ammo--;
 		app->player.inventory.ammo--;
 		start_timer(&app->shoot_timer, app->player.equiped_weapon.fire_rate);
@@ -93,7 +93,7 @@ void	player_reload(t_app *app)
 	if (check_timer(&app->shoot_timer) && app->player.inventory.ammo
 		&& app->player.equiped_weapon.ammo < app->player.equiped_weapon.magazine)
 	{
-		play_sound(app, SOUND_RELOAD_PATH);
+		play_sound(app, AUDIO_RELOAD);
 		if (app->player.equiped_weapon.magazine <= app->player.inventory.ammo)
 			app->player.equiped_weapon.ammo = app->player.equiped_weapon.magazine;
 		else
