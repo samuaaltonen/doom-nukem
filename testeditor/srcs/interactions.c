@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/10 17:24:56 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/11 14:37:07 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,37 +34,35 @@ static t_bool	new_interaction(t_app *app)
 	if (app->active_sector->parent_sector)
 		app->current_interaction->target_sector
 			= app->active_sector->parent_sector;
+	app->current_interaction->editable = -1;
 	return (TRUE);
 }
 
 void	interaction_edit(t_app *app, SDL_Keycode keycode)
 {
+	int	id;
+
 	if (app->current_interaction)
 	{
+		id = (int)app->current_interaction->editable;
 		if (keycode == SDLK_UP)
 			app->current_interaction->variable += app->divider;
 		else if (keycode == SDLK_DOWN)
 			app->current_interaction->variable -= app->divider;
-		else if (keycode == SDLK_LEFT && app->link_interaction
-			&& app->current_interaction->editable > 0)
+		else if (keycode == SDLK_LEFT && app->current_interaction->editable > 0)
 		{
 			app->current_interaction->editable--;
-			while (app->interactions[(int)app->current_interaction->editable].event_id == 0 && app->current_interaction->editable > 1)
+			while (app->interactions[id].event_id == 0
+				&& app->current_interaction->editable > 1)
 				app->current_interaction->editable--;
 		}
-		else if (keycode == SDLK_RIGHT && app->link_interaction
-			&& app->current_interaction->editable < MAX_INTERACTIONS)
+		else if (keycode == SDLK_RIGHT
+			&& get_current_interaction_count(app, id) < app->interaction_count)
 		{
 			app->current_interaction->editable++;
-			while (app->interactions[(int)app->current_interaction->editable].event_id == 0 && app->current_interaction->editable < MAX_INTERACTIONS)
+			while (app->interactions[id].event_id == 0
+				&& app->current_interaction->editable < MAX_INTERACTIONS)
 				app->current_interaction->editable++;
-		}
-		if (app->var_edit)
-		{
-			if (keycode == SDLK_UP)
-				app->current_interaction->editable += app->divider;
-			else if (keycode == SDLK_DOWN)
-				app->current_interaction->editable -= app->divider;
 		}
 	}
 }
@@ -98,7 +96,6 @@ void	link_interaction(t_app *app)
 	{
 		app->current_interaction = NULL;
 		app->interaction_menu = FALSE;
-		app->link_interaction = FALSE;
 		if (app->interactions[app->interaction_count].event_id != 0)
 			app->interaction_count++;
 	}

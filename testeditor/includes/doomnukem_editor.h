@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/10 17:37:28 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/11 14:02:06 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,8 @@ enum e_colors {
 	LINE_B = 0xFF4444,
 	UI_FRAME = 0xFF00FFFF,
 	POINT = 0xFF00FF,
-	INTERACTION = 0x5050FF
+	INTERACTION = 0x5050FF,
+	LINK = 0xF987C5
 };
 
 typedef struct s_draw_line
@@ -208,7 +209,6 @@ typedef struct s_app
 	t_bool				object_new;
 	t_bool				object_menu;
 	t_bool				interaction_menu;
-	t_bool				link_interaction;
 	t_bool				decor_edit;
 	t_interaction		*current_interaction;
 	t_object			*current_object;
@@ -460,6 +460,8 @@ void			delete_interaction(t_app *app, int id);
 void			del_all_decor_interactions(t_app *app);
 void			render_target_sector_lines(t_app *app);
 void			render_link_interaction_info(t_app *app, int start_y, t_point mouse);
+void			render_interaction_link_lines(t_app *app);
+int				get_current_interaction_count(t_app *app, int interaction);
 
 
 void	fill_triangle(t_app *app, t_point a, t_point b, t_point c, int color);
