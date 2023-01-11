@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:38:26 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/10 17:25:25 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/11 13:51:13 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,14 +95,12 @@ void	interaction_menu_events(t_app *app, int start_y, t_point screen_pos)
 		app->current_interaction->event_id = 6;
 	if (check_mouse(screen_pos, (t_rect){102, start_y + 130, 82, 15}))
 		app->current_interaction->event_id = 7;
-	if (check_mouse(screen_pos, (t_rect){204, start_y + 255, 60, 15}))
-		app->link_interaction = TRUE;
+	if (check_mouse(screen_pos, (t_rect){204, start_y + 255, 60, 15})
+		&& app->current_interaction->editable == -1)
+			app->current_interaction->editable = 0;
 	if (check_mouse(screen_pos, (t_rect){187, start_y + 273, 73, 16})
-		&& app->link_interaction)
-	{
+		&& app->current_interaction->editable > -1)
 		app->current_interaction->editable = -1;
-		app->link_interaction = FALSE;
-	}
 	if (check_mouse(screen_pos, (t_rect){85, start_y + 300, 150, 15}))
 		link_interaction(app);
 }

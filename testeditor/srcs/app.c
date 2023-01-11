@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 18:31:26 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 13:49:16 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,9 @@ static void	app_render_helper(t_app *app)
 	}
 	if (app->interaction_menu && app->current_interaction)
 		render_target_sector_lines(app);
+	if (app->interaction_menu && app->current_interaction
+		&& app->current_interaction->editable > -1)
+		render_interaction_link_lines(app);
 	render_sector_points(app);
 	if (app->list_ongoing)
 	{
