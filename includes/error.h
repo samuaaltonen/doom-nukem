@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:51:24 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/10 15:54:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 14:25:59 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,11 @@ locking/unlocking a mutex."
 # define MSG_ERROR_MOUSE "Could not set mouse cursor relative to the window."
 # define MSG_ERROR_FILE_OPEN "Could not open a file."
 # define MSG_ERROR_FILE_READ "Could not read from a file."
+
+# define MSG_ERROR_IMPORT "Level file is invalid."
+# define MSG_ERROR_IMPORT_SECTOR "Level file is invalid. Could not import \
+sectors."
+# define MSG_ERROR_IMPORT_PLAYER "Level file is invalid. Could not import \
+player."
 
 #endif
