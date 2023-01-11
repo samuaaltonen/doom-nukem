@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:06:52 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/08 15:52:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 14:04:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,12 @@
  * @param variable 
  * @return t_animation 
  */
-static t_animation	get_light_animation(t_sector *sector, double variable)
+static t_animation	get_light_animation(t_interaction *interaction,
+	t_sector *sector, double variable)
 {
 	return ((t_animation){0.0, ANIMATION_DURATION_LIGHT,
 		(variable - sector->light) / ANIMATION_DURATION_LIGHT,
-		&sector->light, variable});
+		&sector->light, variable, (int)interaction->editable});
 }
 
 /**
@@ -34,8 +35,8 @@ static t_animation	get_light_animation(t_sector *sector, double variable)
  * @param target 
  * @return t_animation 
  */
-static t_animation	get_height_animation(double original, double variable,
-	double *target)
+static t_animation	get_height_animation(t_interaction *interaction,
+	double original, double variable, double *target)
 {
 	t_animation	animation;
 
@@ -48,6 +49,10 @@ static t_animation	get_height_animation(double original, double variable,
 		animation.increment = -1.0 / ANIMATION_DURATION_HEIGHT;
 	else
 		animation.increment = 1.0 / ANIMATION_DURATION_HEIGHT;
+	if (interaction->editable >= 0.0)
+		animation.trigger_after = (int)interaction->editable;
+	else
+		animation.trigger_after = -1;
 	return (animation);
 }
 
@@ -66,22 +71,42 @@ static void	interaction_trigger_sector(t_app *app, t_interaction *interaction,
 
 	sector = &app->sectors[interaction->target_sector];
 	if (interaction->event_id == EVENT_CHANGE_LIGHT
-		&& animation_create(app, get_light_animation(sector, variable)))
+		&& animation_create(app, get_light_animation(interaction, sector,
+				variable)))
 		interaction->variable = sector->light;
 	if (interaction->event_id == EVENT_CHANGE_FLOOR_AND_CEIL_HEIGHT
-		&& animation_create(app, get_height_animation(sector->floor_height,
-				variable, &sector->floor_height))
-		&& animation_create(app, get_height_animation(sector->floor_height,
-				variable, &sector->ceil_height)))
+		&& animation_create(app, get_height_animation(interaction,
+				sector->floor_height, variable, &sector->floor_height))
+		&& animation_create(app, get_height_animation(interaction,
+				sector->floor_height, variable, &sector->ceil_height)))
 		interaction->variable = sector->floor_height;
 	if (interaction->event_id == EVENT_CHANGE_FLOOR_HEIGHT
-		&& animation_create(app, get_height_animation(sector->floor_height,
-				variable, &sector->floor_height)))
+		&& animation_create(app, get_height_animation(interaction,
+				sector->floor_height, variable, &sector->floor_height)))
 		interaction->variable = sector->floor_height;
 	if (interaction->event_id == EVENT_CHANGE_CEIL_HEIGHT
-		&& animation_create(app, get_height_animation(sector->ceil_height,
-				variable, &sector->ceil_height)))
+		&& animation_create(app, get_height_animation(interaction,
+				sector->ceil_height, variable, &sector->ceil_height)))
 		interaction->variable = sector->ceil_height;
+}
+
+/**
+ * @brief Triggers textmodal interaction.
+ * 
+ * @param app 
+ * @param interaction 
+ * @param variable 
+ */
+static void	interaction_trigger_text(t_app *app, t_interaction *interaction,
+	double variable)
+{
+	app->textmodal.text = (int)variable;
+	if (app->textmodal.text < 0 || app->textmodal.text >= MAX_TEXT_LINES
+		|| app->text_lengths[app->textmodal.text] == 0)
+		return ;
+	app->textmodal.duration = (double)app->text_lengths[app->textmodal.text]
+		* ANIMATION_DURATION_TEXT + ANIMATION_DURATION_TEXT_END;
+	app->textmodal.trigger_after = (int)interaction->editable;
 }
 
 /**
@@ -100,17 +125,17 @@ void	interaction_trigger(t_app *app, int interaction_index)
 	interaction = &app->interactions[interaction_index];
 	variable = interaction->variable;
 	if (interaction->event_id == EVENT_DISPLAY_TEXT && !app->textmodal.duration)
-	{
-		app->textmodal.text = (int)variable;
-		if (app->textmodal.text < 0 || app->textmodal.text >= MAX_TEXT_LINES
-			|| app->text_lengths[app->textmodal.text] == 0)
-			return ;
-		app->textmodal.duration = (double)app->text_lengths[app->textmodal.text]
-			* ANIMATION_DURATION_TEXT + ANIMATION_DURATION_TEXT_END;
-	}
+		interaction_trigger_text(app, interaction, variable);
 	if (interaction->event_id == EVENT_TRIGGER_SOUND
 		&& (int)variable >= 0 && (int)variable < 3)
+	{
 		play_sound(app, (char *)sound_paths[(int)variable]);
+		if ((int)interaction->editable >= 0
+			&& app->interactions[(int)interaction->editable].event_id
+			!= EVENT_TRIGGER_SOUND)
+			interaction_trigger(app,
+				app->animations[(int)interaction->editable].trigger_after);
+	}
 	/* if (interaction->event_id == EVENT_END_LEVEL)
 		app->status = STATUS_END_LEVEL; */
 	if (interaction->target_sector == -1)

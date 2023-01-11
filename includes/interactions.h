@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 16:47:58 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/09 13:30:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 13:54:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ typedef struct s_animation
 	double	increment;
 	double	*target;
 	double	final_value;
+	int		trigger_after;
 }	t_animation;
 
 /**
@@ -74,6 +75,7 @@ typedef struct s_textmodal
 	double	progress;
 	double	duration;
 	int		text;
+	int		trigger_after;
 }	t_textmodal;
 
 #endif

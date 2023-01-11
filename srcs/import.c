@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/10 19:02:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/10 19:08:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,8 @@ static void import_player(t_app *app, t_export_player *player)
 	app->player.hp = player->health;
 	app->player.weapons = player->weapons;
 	app->player.shield = player->armor;
-	app->player.elevation = sector_floor_height(app, app->player.sector, app->player.pos);
+	app->player.elevation = sector_floor_height(app, app->player.sector,
+		app->player.pos);
 	ft_memcpy(&app->player.inventory, &player->inventory, sizeof(t_inventory));
 }
 
@@ -158,46 +159,6 @@ static t_bool import_objects(t_app *app, unsigned char *data, int *imported)
 	}
 	return (TRUE);
 }
-
-//open a file
-/* int	import_file(t_app *app, char *path)
-{
-	int						fd;
-	t_export_sector			*export;
-	int						counter = 0;
-	t_sector				*sectors;
-	t_export_player			player;
-	t_level_header			header;
-
-	fd = open(path, O_RDONLY, 0755);
-	if(fd < 0)
-		exit_error("FILE OPEN ERROR TEMP!");
-	export = (t_export_sector *)ft_memalloc(sizeof(t_export_sector));
-	if (!export)
-		exit_error(MSG_ERROR_ALLOC);
-	if (read(fd, &header,(sizeof(t_level_header))) == -1)
-		exit_error(MSG_ERROR_FILE_READ);
-	sectors = (t_sector *)ft_memalloc(sizeof(t_sector) * header.sector_count); 
-	app->sectors = sectors;
-	while(counter < header.sector_count)
-	{
-		if (read(fd, export,sizeof(t_export_sector)) == -1)
-			exit_error(MSG_ERROR_FILE_READ);
-		read_sector(app, export, counter, header.sector_count);
-		counter++;
-	}
-	free(export);
-	if (read(fd, &player, sizeof(t_export_player)) == -1)
-		exit_error("player read error\n");
-	import_player(app, &player);
-	import_objects(app, fd);
-	if (read(fd, app->interactions, sizeof(t_interaction) * MAX_INTERACTIONS) == -1)
-		exit_error("Interaction read error\n");
-	relink_player(app, &player);
-	ft_printf("sector_count=%i\n",header.sector_count);
-	close(fd);
-	return (0);
-} */
 
 SDL_Surface	*import_surface(t_export_asset info, unsigned char *data,
 	int *imported)
