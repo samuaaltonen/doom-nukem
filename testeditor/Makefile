@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/11 19:41:51 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/11 20:12:14 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,12 @@ FILES = app.c \
 		utils_bmp.c \
 		utils_sdl.c \
 		import_interaction.c \
-		import_sector.c
+		import_sector.c \
+		export_assets_surface.c \
+		export_assets_wav.c \
+		export_assets_text.c \
+		export_player.c \
+		export_sector.c
 
 LIBFT = ../libft/libft.a
 LIBLINEARALGEBRA = ../liblinearalgebra/liblinearalgebra.a

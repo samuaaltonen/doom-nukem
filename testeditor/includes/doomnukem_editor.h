@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 19:42:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 20:17:22 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -376,8 +376,13 @@ void			import_sectors(t_app *app, t_import_info *info);
 /**
  * Export
  */
+int				get_wall_id(t_vec2_lst *list, t_vec2_lst *wall);
 int				export_file(t_app *app, char *path);
-int				get_line_id(t_vec2_lst *list, t_vec2_lst *wall);
+void			export_sectors(t_app *app, t_level_header header, int fd);
+void			export_player(t_app *app, int fd);
+void			export_surfaces(t_level_header *header, int fd);
+void			export_wavs(t_level_header *header, int fd);
+void			export_texts(t_level_header *header, int fd);
 
 /**
  * Font
