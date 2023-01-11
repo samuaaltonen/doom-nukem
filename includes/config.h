@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/10 16:40:29 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:59:53 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@
 # define MAX_ENEMY_TYPES 2
 # define MAX_PROJECTILES 8
 # define MAX_OBJECT_DISTANCE 128.0
+# define MAX_FOG_DISTANCE 40.0
 /* object type defines for now
 	< MAX_SMALL_OBJECTS = small objects
 	< MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS = big objects

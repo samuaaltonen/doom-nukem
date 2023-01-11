@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/11 18:55:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:57:33 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,13 +162,4 @@ void	init_projectiles(t_app *app)
 	ft_bzero(app->projectiles, sizeof(t_projectile) * MAX_TEMP_OBJECTS);
 	while (++i < MAX_TEMP_OBJECTS)
 		app->projectiles[i].type = -1;
-}
-
-/**
- * Loads the font or resets it
- */
-void	load_font(t_app *app)
-{
-	if (app->assets.font.font)
-		change_font(app, 16, 0xFF000000);
 }

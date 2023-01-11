@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/10 18:06:53 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:57:46 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	render_titlescreen(t_app *app)
 	render_text(app, (t_rect){490, 210, 320, 800}, "AWAKE");
 	change_font(app, 32, WHITE);
 	render_text(app, (t_rect){504, WIN_H - 170, 800, 800}, "PRESS SPACE");
-	load_font(app);
 }
 
 void	render_mainmenu(t_app *app)
@@ -137,6 +136,5 @@ void	render_gameover(t_app *app)
 	render_text(app, (t_rect){WIN_W / 2 - 116, 210, 320, 800}, "GAME OVER");
 	change_font(app, 32, WHITE);
 	render_text(app, (t_rect){504, WIN_H - 170, 800, 800}, "You suck at this!");
-	load_font(app);
 	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
 }

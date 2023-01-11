@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/22 23:54:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:57:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -240,7 +240,6 @@ t_rect	render_button(t_app *app, t_rect area, int size, char *text)
 	}
 	render_ui_frame(app, area, size, 0);
 	render_text(app, text_pos, text);
-	load_font(app);
 	color_surface(app->assets.ui_frame, CYAN);
 	return (area);
 }

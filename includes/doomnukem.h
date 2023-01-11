@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 18:53:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 18:57:40 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -389,7 +389,6 @@ int			get_sky_pixel(t_app *app, int x, int y);
 /**
  * Font
  */
-void		load_font(t_app *app);
 void		change_font(t_app *app, int size, int color);
 void		render_text(t_app *app, t_rect frame, char *text);
 
