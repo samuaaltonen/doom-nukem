@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 14:36:50 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/11 14:33:56 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/11 15:07:43 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ INTERACTION TO ANOTHER EXISTING ONE BY PRESSING 'LINK'");
 }
 
 /**
- * 
+ * Returns the index of interactions.
 */
 int	get_current_interaction_count(t_app *app, int interaction)
 {
