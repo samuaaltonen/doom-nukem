@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/02 13:26:17 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:28:32 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,13 @@ t_sector_lst	*sector_by_index(t_app *app, int index)
 	head = app->sectors;
 	if (index == -1)
 		return (NULL);
-	while (head && i != index)
+	while (head && i != index && i < MAX_SEARCH_COUNT)
 	{
 		head = head->next;
 		i++;
 	}
+	if (i == MAX_SEARCH_COUNT)
+		exit_error(MSG_ERROR_LEVEL_DATA);
 	return (head);
 }
 

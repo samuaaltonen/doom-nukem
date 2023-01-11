@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 17:46:13 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:11:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,15 @@
 # define TEXTS_PATH			"../assets/texts/texts.txt"
 # define MAX_TEXT_LINES 16
 # define MAX_TEXT_LINE_LENGTH 512
+# define MSG_ERROR_IMPORT "Level file is invalid."
+# define MSG_ERROR_IMPORT_SECTOR "Level file is invalid. Could not import \
+sectors."
+# define MSG_ERROR_IMPORT_PLAYER "Level file is invalid. Could not import \
+player."
+# define MSG_ERROR_IMPORT_OBJECT "Level file is invalid. Could not import \
+objects."
+# define MSG_ERROR_IMPORT_INTERACTION "Level file is invalid. Could not import \
+interactions."
 
 enum e_export_assets
 {
@@ -146,6 +155,14 @@ typedef struct	s_level_header
 	int				interaction_count;
 	t_export_asset	asset_info[MAX_ASSET_COUNT];
 }	t_level_header;
+
+typedef struct s_import_info
+{
+	t_level_header	header;
+	unsigned char	*data;
+	int				length;
+	int				imported;
+}	t_import_info;
 
 /**
  * RLE compression

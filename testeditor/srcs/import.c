@@ -6,113 +6,98 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/09 16:22:15 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:51:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * @brief creates a pointer list from saved point data
+ * @brief Checks weapon data by bits.
  * 
+ * @param app 
  * @param export 
- * @param list 
- * @param count 
+ * @param weapons 
  */
-static void	export_to_list(t_export_sector *export, t_vec2_lst **list, int count)
+static void	from_bits(t_app *app, int export, t_weapon *weapons)
 {
-	int			i;
-	t_vec2_lst	*tmp;
-	t_vector2	point;
+	int	i;
 
-	if (!export)
-		return ;
-	point.x = export->corners[0].x;
-	point.y = export->corners[0].y;
-	tmp = new_vector_list(&point);
-	*list = tmp;
-	tmp->tex = export->wall_textures[0];
-	tmp->type = export->wall_types[0];
-	tmp->decor = export->wall_decor[0];
-	tmp->decor_offset = export->decor_offset[0];
-	i = 1;
-	while (i < count)
+	i = 0;
+	while (i < MAX_WEAPONS)
 	{
-		point.x = export->corners[i].x;
-		point.y = export->corners[i].y;
-		tmp->next = new_vector_list(&point);
-		put_to_vector_list(list, tmp->next);
-		tmp->next->tex = export->wall_textures[i];
-		tmp->next->type = export->wall_types[i];
-		tmp->next->decor = export->wall_decor[i];
-		tmp->next->decor_offset = export->decor_offset[i];
-		tmp = tmp->next;
+		if (export & 1)
+		{	
+			weapons[i].enabled = TRUE;
+			app->player.selected_weapon = i;
+		}
+		export >>= 1;
 		i++;
 	}
-	tmp->next = *list;
 }
 
 /**
- * @brief reads values from exported sector and writes them into sector
+ * @brief Imports player.
  * 
- * @param sector 
- * @param export 
+ * @param app 
+ * @param info 
  */
-void	read_sector(t_sector_lst *sector, t_export_sector *export)
+void	import_player(t_app *app, t_import_info *info)
 {
-	sector->corner_count = export->corner_count;
-	sector->wall_list = NULL;
-	export_to_list(export, &sector->wall_list, export->corner_count);
-	ft_memcpy(sector->member_links, export->member_sectors, MAX_MEMBER_SECTORS * sizeof(int));
-	sector->light = export->light;
-	sector->floor_height = export->floor_height;
-	sector->ceil_height = export->ceil_height;
-	sector->floor_tex = export->floor_tex;
-	sector->floor_tex_offset = export->floor_tex_offset;
-	sector->ceil_tex = export->ceil_tex;
-	sector->ceil_tex_offset = export->ceil_tex_offset;
-	sector->floor_slope_height = export->floor_slope_height;
-	sector->floor_slope_opposite = 0;
-	sector->floor_slope_wall = 0;
-	sector->ceil_slope_opposite = 0;
-	sector->ceil_slope_wall = 0;
-	if (export->floor_slope_opposite != -1)
-		sector->floor_slope_opposite = ft_lstindex(sector->wall_list, export->floor_slope_opposite);
-	if (export->floor_slope_position != -1)
-		sector->floor_slope_wall = ft_lstindex(sector->wall_list, export->floor_slope_position);
-	sector->ceil_slope_height = export->ceil_slope_height;
-	if (export->ceil_slope_opposite != -1)
-		sector->ceil_slope_opposite = ft_lstindex(sector->wall_list, export->ceil_slope_opposite);
-	if (export->ceil_slope_position != -1)
-		sector->ceil_slope_wall = ft_lstindex(sector->wall_list, export->ceil_slope_position);
-	sector->parent_sector = NULL;
-	sector->next = NULL;
+	t_export_player	player;
+
+	if (sizeof(t_export_player) >= (size_t)(info->length - info->imported))
+		exit_error(MSG_ERROR_IMPORT_PLAYER);
+	ft_memcpy(&player, info->data + info->imported, sizeof(t_export_player));
+	info->imported += (int) sizeof(t_export_player);
+	app->player_edit = FALSE;
+	app->player_menu = FALSE;
+	app->player.position = player.position;
+	app->player.direction = player.direction;
+	app->player.sector = sector_by_index(app, player.sector);
+	app->player.health = player.health;
+	from_bits(app, player.weapons, app->player.weapons);
+	app->player.inventory = player.inventory;
+	app->player.sector = sector_by_index(app, player.sector);
 }
 
 /**
- * @brief reads exported sector data, allocates and returns a new sector
+ * @brief Imports objects.
  * 
- * @param export 
- * @return t_sector_lst* 
+ * @param app 
+ * @param info 
  */
-t_sector_lst	*read_sector_list(t_export_sector *export)
+void	import_objects(t_app *app, t_import_info *info)
 {
-	t_sector_lst	*new;
+	t_export_object	objects[MAX_OBJECTS];
+	t_object		temp;
+	int				i;
 
-	new = (t_sector_lst *)malloc(sizeof(t_sector_lst));
-	if (!new)
-		return (NULL);
-	read_sector(new, export);
-	return (new);
+	if (sizeof(t_export_object) * MAX_OBJECTS
+		>= (size_t)(info->length - info->imported))
+		exit_error(MSG_ERROR_IMPORT_OBJECT);
+	ft_memcpy(&objects, info->data + info->imported,
+		sizeof(t_export_object) * MAX_OBJECTS);
+	info->imported += (int) sizeof(t_export_object) * MAX_OBJECTS;
+	i = 0;
+	while (i < MAX_OBJECTS)
+	{
+		temp.position = objects[i].pos;
+		temp.sector = sector_by_index(app, objects[i].sector);
+		temp.type = objects[i].type;
+		temp.var = objects[i].var;
+		(app->objects[i]) = temp;
+		i++;
+	}
 }
 
 /**
- * @brief relinks the pointer references of sectors
- * 	using integer values in saved file
+ * @brief Relinks the pointer references of sectors using integer values in
+ * saved file.
  * 
  * @param app 
  */
-void	relink_sectors(t_app *app)
+static void	relink_sectors(t_app *app)
 {
 	int				i;
 	t_sector_lst	*head;
@@ -137,102 +122,6 @@ void	relink_sectors(t_app *app)
 	}
 }
 
-static void from_bits(t_app *app, int export, t_weapon *weapons)
-{
-	int	i;
-
-	i = 0;
-	while (i < MAX_WEAPONS)
-	{
-		if (export & 1)
-		{	
-			weapons[i].enabled = TRUE;
-			app->player.selected_weapon = i;
-		}
-		export >>= 1;
-		i++;
-	}
-}
-
-static void read_player(t_app *app, t_export_player *player)
-{
-	app->player_edit = FALSE;
-	app->player_menu = FALSE;
-	app->player.position = player->position;
-	app->player.direction = player->direction;
-	app->player.sector = sector_by_index(app, player->sector);
-	app->player.health = player->health;
-	from_bits(app, player->weapons, app->player.weapons);
-	// int	i;
-	// i = 0;
-	// while (i < MAX_ARMOR)
-	// {
-	// 	if (app->player.armor[i].defence == player->armor)
-	// 		app->player.selected_armor = i;
-	// 	i++;
-	// }
-	app->player.inventory = player->inventory;
-}
-
-static void	read_objects(t_app *app, t_export_object *export)
-{
-	t_object	temp;
-	int			i;
-
-	i = 0;
-	while (i < MAX_OBJECTS)
-	{
-		temp.position = export[i].pos;
-		temp.sector =  sector_by_index(app, export[i].sector);
-		temp.type = export[i].type;
-		temp.var = export[i].var;
-		(app->objects[i]) = temp;
-		i++;
-	}
-}
-
-static t_vec2_lst *line_by_index(t_sector_lst *sector, int index)
-{
-	int	i;
-	t_vec2_lst *head;
-
-	i = 0;
-	if (!sector || index == -1)
-		return (NULL);
-	head = sector->wall_list;
-	while (i < MAX_SECTOR_CORNERS)
-	{
-		if(i == index)
-			return (head);
-		head = head->next;
-		i++;
-	}
-	return (NULL);
-}
-
-static void	read_interactions(t_app *app, t_export_interaction *export)
-{
-	t_interaction	temp;
-	int				i;
-
-	i = 0;
-	while (i < MAX_INTERACTIONS)
-	{
-		temp.event_id = export[i].event_id;
-		temp.variable = export[i].variable;
-		temp.editable = export[i].editable;
-		temp.activation_sector = sector_by_index(app, export[i].activation_sector);
-		temp.activation_wall = line_by_index(temp.activation_sector, export[i].activation_wall);
-		if(export[i].activation_object == -1)
-			temp.activation_object = NULL;
-		else
-			temp.activation_object = &(app->objects[export[i].activation_object]);
-		temp.target_sector = sector_by_index(app, export[i].target_sector);
-		app->interactions[i] = temp;
-		i++;
-	}
-}
-
 /**
  * @brief Opens a file from the given path
  * 	reads all sector data into the sector list
@@ -243,49 +132,23 @@ static void	read_interactions(t_app *app, t_export_interaction *export)
  */
 int	import_file(t_app *app, char *path)
 {
-	t_export_sector			*export;
-	t_sector_lst			*new;
-	int						counter;
-	t_export_player			player;
-	t_export_object			objects[MAX_OBJECTS];
-	t_export_interaction	interactions[MAX_INTERACTIONS];
-	t_level_header			header;
+	t_import_info	info;
 
-	unsigned char	*data;
-	int				length;
-	int				imported;
-
-	data = NULL;
-	rle_uncompress_data(path, &data, &length);
-	ft_memcpy(&header, data, sizeof(t_level_header));
-	imported = sizeof(t_level_header);
-	app->interaction_count = header.interaction_count;
-	app->object_count = header.object_count;
-	export = (t_export_sector *)ft_memalloc(sizeof(t_export_sector));
-	if (!export)
-		exit_error(MSG_ERROR_ALLOC);
-	counter = 0;
-	while (counter++ < header.sector_count)
-	{
-		ft_memcpy(export, data + imported, sizeof(t_export_sector));
-		imported += sizeof(t_export_sector);
-		new = read_sector_list(export);
-		put_sector_lst(app, new);
-	}
-	ft_memcpy(&player, data + imported, sizeof(t_export_player));
-	imported += sizeof(t_export_player);
-	read_player(app, &player);
-	ft_memcpy(&objects, data + imported, sizeof(t_export_object) * MAX_OBJECTS);
-	imported += sizeof(t_export_object) * MAX_OBJECTS;
-	read_objects(app, (t_export_object *)&objects);
-	ft_memcpy(&interactions, data + imported, sizeof(t_export_interaction) * MAX_INTERACTIONS);
-	imported += sizeof(t_export_interaction) * MAX_INTERACTIONS;
-	read_interactions(app, (t_export_interaction *)&interactions);
-	app->player.sector = sector_by_index(app,player.sector);
+	info.data = NULL;
+	rle_uncompress_data(path, &info.data, &info.length);
+	if (!info.data
+		|| sizeof(t_level_header) >= (size_t)(info.length))
+		exit_error(MSG_ERROR_IMPORT);
+	ft_memcpy(&info.header, info.data, sizeof(t_level_header));
+	info.imported = sizeof(t_level_header);
+	app->interaction_count = info.header.interaction_count;
+	app->object_count = info.header.object_count;
+	import_sectors(app, &info);
+	import_player(app, &info);
+	import_objects(app, &info);
+	import_interactions(app, &info);
 	relink_sectors(app);
 	app->imported = TRUE;
-
-	free(export);
-	free(data);
+	free(info.data);
 	return (0);
 }

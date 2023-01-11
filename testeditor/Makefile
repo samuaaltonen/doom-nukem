@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/10 18:09:16 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/11 19:41:51 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,9 @@ FILES = app.c \
 		triangle.c \
 		utils.c \
 		utils_bmp.c \
-		utils_sdl.c
+		utils_sdl.c \
+		import_interaction.c \
+		import_sector.c
 
 LIBFT = ../libft/libft.a
 LIBLINEARALGEBRA = ../liblinearalgebra/liblinearalgebra.a

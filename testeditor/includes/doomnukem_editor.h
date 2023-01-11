@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/10 17:37:28 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:42:07 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@
 # define RADIAN_IN_DEG 57.29578f
 # define MAP_SPEED 0.85f
 # define HEIGHT_INC 0.125f
-# define FILE_VERSION 2;
+# define FILE_VERSION 3
+# define MAX_SEARCH_COUNT 100000
 # define FILE_PATH "./test.test"
 # include <fcntl.h>
 # include <stdio.h>
@@ -369,7 +370,8 @@ t_vec2_lst		*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point);
  * Import
  */
 int				import_file(t_app *app, char *path);
-void			relink_member_sectors(t_app *app);
+void			import_interactions(t_app *app, t_import_info *info);
+void			import_sectors(t_app *app, t_import_info *info);
 
 /**
  * Export

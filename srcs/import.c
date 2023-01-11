@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/11 18:45:06 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:10:40 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,8 @@ void	import_level(t_app *app, t_thread_data *thread, char *path)
 
 	info.data = NULL;
 	rle_uncompress_data(path, &info.data, &info.length);
-	if (!info.data)
+	if (!info.data
+		|| sizeof(t_level_header) >= (size_t)(info.length))
 		exit_error(MSG_ERROR_IMPORT);
 	ft_memcpy(&info.header, info.data, sizeof(t_level_header));
 	info.imported = sizeof(t_level_header);
