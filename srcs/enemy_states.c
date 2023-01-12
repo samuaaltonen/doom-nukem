@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:30:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/10 13:52:58 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:48:28 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,18 @@ static void check_enemy(t_app *app, t_enemy_state *state, int define)
 		state->agressive = FALSE;
 }
 
+static void	enemy_attack(t_app *app, t_enemy_state *state, int define)
+{
+	if(define == 0)
+		fire(app,(t_vector3){state->dir.x,state->dir.y,(app->player.elevation - app->objects[state->id].elevation) / ft_vector_length(ft_vector2_sub(app->player.pos,app->objects[state->id].position))},
+				(t_vector3){app->objects[state->id].position.x, app->objects[state->id].position.y,
+				app->objects[state->id].elevation + 0.5f},(t_point){11,app->objects[state->id].sector});
+	if(define == 1)
+		melee(app,(t_vector3){state->dir.x,state->dir.y,(app->player.elevation - app->objects[state->id].elevation) / ft_vector_length(ft_vector2_sub(app->player.pos,app->objects[state->id].position))},
+				(t_vector3){app->objects[state->id].position.x, app->objects[state->id].position.y,
+				app->objects[state->id].elevation + 0.5f},(t_point){11,app->objects[state->id].sector});
+}
+
 static void enemy_states(t_app *app, t_enemy_state *state, int define)
 {
 
@@ -98,9 +110,7 @@ static void enemy_states(t_app *app, t_enemy_state *state, int define)
 			state->dead = TRUE;
 		else if(state->state == ATTACK && state->next == ATTACK && app->enemy_def[define].attack_speed < app->object_states[state->id])
 		{
-			fire(app,(t_vector3){state->dir.x,state->dir.y,(app->player.elevation - app->objects[state->id].elevation) / ft_vector_length(ft_vector2_sub(app->player.pos,app->objects[state->id].position))},
-					(t_vector3){app->objects[state->id].position.x, app->objects[state->id].position.y,
-					app->objects[state->id].elevation + 0.5f},(t_point){11,app->objects[state->id].sector});
+			enemy_attack(app, state, define);
 			state->next = IDLE;
 		}
 		else if(app->object_states[state->id] > app->enemy_def[define].states[state->state][1]
