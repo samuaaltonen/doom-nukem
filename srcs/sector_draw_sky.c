@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 14:53:03 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/06 16:58:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:02:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	get_sky_pixel(t_app *app, int x, int y)
 		texture_pos.x = fmod(texture_pos.x, (double)SKYBOX_W);
 	if (texture_pos.y < 0.0)
 		texture_pos.y += app->sky.size.y * app->sky.pixel_step.y;
-	return (get_pixel_color(app->assets.bg,
+	return (get_pixel_color(app->assets.skybox,
 			(int)texture_pos.x,
 			(int)texture_pos.y));
 }

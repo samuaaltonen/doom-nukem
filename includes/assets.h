@@ -6,12 +6,55 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 16:09:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:41:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef ASSETS_H
 # define ASSETS_H
+# define IMAGE_PIXEL_BYTES			4
+# define IMAGE_PIXEL_BITS			32
+# define TEX_SIZE					128
+# define TEX_PICKUP					44
+# define TEX_OBJECT					128
+# define SKYBOX_W					1536
+# define SKYBOX_H					1088
+# define FONT_W						416
+# define FONT_H						64
+# define UI_FRAME_W					30
+# define UI_FRAME_H					30
+# define TITLE_SCREEN_W				1280
+# define TITLE_SCREEN_H				720
+# define CROSSHAIR_W				16
+# define CROSSHAIR_H				16
+# define POINTER_W					22
+# define POINTER_H					22
+# define SHIELD_W					32
+# define SHIELD_H					32
+# define HEALTH_W					32
+# define HEALTH_H					32
+# define PISTOL_W					64
+# define PISTOL_H					64
+# define BULLET_W					4
+# define BULLET_H					10
+# define METER_W					16
+# define METER_H					32
+# define OBJECT_ICON_W				128
+# define OBJECT_ICON_H				1408
+# define WEAPON_W					256
+# define WEAPON_H					256
+# define OBJECT_SMALL_W				3960
+# define OBJECT_SMALL_H				264
+# define OBJECT_BIG_W				11520
+# define OBJECT_BIG_H				384
+# define PROJECTILE_W				44
+# define PROJECTILE_H				352
+# define ENEMY_1_W					11520
+# define ENEMY_1_H					1024
+# define ENEMY_2_W					11520
+# define ENEMY_2_H					1536
+# define MAX_TEX_COUNT				75
+# define MAX_DECOR_COUNT			10
 # define MAX_BMP_OFFSET				32768
 # define MAX_BMP_WIDTH				32768
 # define MAX_BMP_HEIGHT				32768
@@ -95,7 +138,7 @@ typedef struct s_assets
 	SDL_Surface		*object_icon;
 	SDL_Surface		*panels;
 	SDL_Surface		*weapon;
-	SDL_Surface		*bg;
+	SDL_Surface		*skybox;
 	SDL_Surface		*sprites[MAX_SPRITES];
 }	t_assets;
 

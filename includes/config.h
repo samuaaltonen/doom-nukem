@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 16:19:10 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:09:01 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,14 +17,7 @@
 # define WIN_W 1280
 # define WIN_H 720
 # define THREAD_COUNT 6
-# define IMAGE_PIXEL_BYTES 4
-# define IMAGE_PIXEL_BITS 32
 # define FOV 83
-# define TEX_SIZE 128
-# define TEX_PICKUP 44
-# define TEX_OBJECT 128
-# define SKYBOX_W 1536
-# define SKYBOX_H 1088
 # define MOUSE_SENSITIVITY_HORIZONTAL 0.2
 # define MOUSE_SENSITIVITY_VERTICAL 0.2
 # define MAX_SECTOR_COUNT 4096
@@ -54,8 +47,6 @@
 # define MAX_TEMP_OBJECTS 64
 # define MAX_INTERACTIONS 64
 # define MAX_UNIQUE_INTERACTIONS 7
-# define MAX_TEX_COUNT 73
-# define MAX_DECOR_COUNT 10
 # define PARTIALLY_TRANSPARENT_TEXTURE_ID 0
 # define FULLY_TRANSPARENT_TEXTURE_ID 1
 

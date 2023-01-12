@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:45:28 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 18:45:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:10:24 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ static SDL_Surface	*import_surface(t_app *app, t_thread_data *thread,
 	SDL_Surface		*surface;
 
 	asset_info = import_info->header.asset_info[asset_type];
-	if (asset_info.size > import_info->length - import_info->imported)
+	if (asset_info.size > import_info->length - import_info->imported
+		|| asset_info.width >= MAX_BMP_WIDTH
+		|| asset_info.height >= MAX_BMP_HEIGHT
+		|| asset_info.size != asset_info.width * asset_info.height
+		* IMAGE_PIXEL_BYTES)
 		exit_error(MSG_ERROR_IMPORT_SURFACE);
 	surface = SDL_CreateRGBSurface(0, asset_info.width, asset_info.height,
 			IMAGE_PIXEL_BITS, 0, 0, 0, 0);
@@ -50,7 +54,7 @@ static SDL_Surface	*import_surface(t_app *app, t_thread_data *thread,
 void	import_surfaces(t_app *app, t_thread_data *thread, t_import_info *info)
 {
 	app->assets.panels = import_surface(app, thread, EXPORT_PANELS, info);
-	app->assets.bg = import_surface(app, thread, EXPORT_SKYBOX, info);
+	app->assets.skybox = import_surface(app, thread, EXPORT_SKYBOX, info);
 	app->assets.font.font = import_surface(app, thread, EXPORT_FONT, info);
 	app->assets.ui_frame = import_surface(app, thread, EXPORT_UI_FRAME, info);
 	app->assets.title_screen_image = import_surface(app, thread,

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:06:54 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 15:27:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:49:51 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void	import_sectors(t_app *app, t_thread_data *thread, t_import_info *info)
 
 	if (info->header.sector_count > MAX_SECTOR_COUNT
 		|| sizeof(t_sector) * (size_t)info->header.sector_count
-			>= (size_t)(info->length - info->imported))
+		>= (size_t)(info->length - info->imported))
 		exit_error(MSG_ERROR_IMPORT_SECTOR);
 	app->sectors = (t_sector *)ft_memalloc(sizeof(t_sector)
 			* info->header.sector_count);

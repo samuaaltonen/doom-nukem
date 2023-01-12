@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 16:24:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:17:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
 # define SKYBOX_PATH		"../assets/images/skybox.bmp"
 # define FONT_PATH			"../assets/fonts/sci-fi_font.bmp"
 # define UI_FRAME_PATH		"../assets/ui/ui_frame.bmp"
-# define TITLESCREEN_PATH	"../assets/images/awakened3.bmp"
+# define TITLESCREEN_PATH	"../assets/images/title_screen.bmp"
 # define CROSSHAIR_PATH		"../assets/ui/crosshair.bmp"
 # define POINTER_PATH		"../assets/ui/mouse_pointer.bmp"
 # define SHIELD_PATH		"../assets/ui/shield.bmp"
