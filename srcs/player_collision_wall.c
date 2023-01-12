@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_collision_wall.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:42:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/05 15:16:59 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:20:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,9 @@ t_collision	collision_wall(t_app *app, int sector_id, int wall_id,
 		return (COLLISION_NONE);
 	if (portal_id != -1 && app->sectors[sector_id].wall_textures[wall_id]
 		!= PARTIALLY_TRANSPARENT_TEXTURE_ID
-		&& portal_can_enter(app, ft_vec2_to_vec3(app->player.move_pos, app->player.elevation), app->player.height, wall, app->player.sector, portal_id))
+		&& portal_can_enter(app,
+			ft_vec2_to_vec3(app->player.move_pos, app->player.elevation),
+			app->player.height, wall, app->player.sector, portal_id))
 		return (COLLISION_PORTAL);
 	if (app->player.total_collisions >= MAX_CONCURRENT_COLLISIONS - 1)
 	{

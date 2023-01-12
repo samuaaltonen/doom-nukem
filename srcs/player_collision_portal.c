@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_collision_portal.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 19:55:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/09 16:49:18 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:21:24 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
  * @param target_sector 
  * @return t_bool 
  */
-t_bool	portal_can_enter(t_app *app, t_vector3 pos, double height, t_line wall, int source_sector,
-	int target_sector)
+t_bool	portal_can_enter(t_app *app, t_vector3 pos, double height, t_line wall,
+	int source_sector, int target_sector)
 {
 	t_vector2	check_pos;
 	double		source_floor;

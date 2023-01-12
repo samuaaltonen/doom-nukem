@@ -6,14 +6,14 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 16:28:47 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/03 17:02:56 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:19:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * @brief Checks slop collision to prevent the player entering into slope that
+ * @brief Checks slope collision to prevent the player entering into slope that
  * cannot fit the player vertically.
  * 
  * @param app 

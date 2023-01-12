@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 15:44:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:18:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@ static void	import_player(t_app *app, t_thread_data *thread,
 	app->player.hp = player.health;
 	app->player.weapons = player.weapons;
 	app->player.shield = player.armor;
+	if (player.sector < 0 || player.sector >= app->sector_count)
+		exit_error(MSG_ERROR_VALIDATION_PLAYER);
 	app->player.elevation = sector_floor_height(app, app->player.sector,
 			app->player.pos);
 	ft_memcpy(&app->player.inventory, &player.inventory, sizeof(t_inventory));
