@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 16:47:58 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 13:54:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:26:30 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct s_interaction
 	int				activation_wall;
 	int				activation_object;
 	int				target_sector;
+	t_bool			requires_key;
 }	t_interaction;
 
 /**

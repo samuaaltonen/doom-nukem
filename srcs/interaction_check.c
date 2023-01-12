@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:06:37 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/05 17:08:14 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:34:21 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,24 @@ static t_bool	is_near_activation_decor(t_app *app, int sector_id, int wall_id)
 }
 
 /**
+ * @brief Checks if interaction requires key and if so, uses one from player
+ * inventory.
+ * 
+ * @param app 
+ * @param interaction 
+ * @return t_bool 
+ */
+static t_bool	check_key_requirement(t_app *app, t_interaction *interaction)
+{
+	if (!interaction->requires_key)
+		return (TRUE);
+	if (app->player.inventory.key <= 0)
+		return (FALSE);
+	app->player.inventory.key--;
+	return (TRUE);
+}
+
+/**
  * @brief Loops through interaction array and checks if any interactivable
  * events could be triggered.
  * 
@@ -67,7 +85,8 @@ void	interaction_check(t_app *app)
 		if (app->interactions[i].activation_wall != -1
 			&& is_near_activation_decor(app,
 				app->interactions[i].activation_sector,
-				app->interactions[i].activation_wall))
+				app->interactions[i].activation_wall)
+			&& check_key_requirement(app, &app->interactions[i]))
 			interaction_trigger(app, i);
 	}
 }
@@ -89,7 +108,8 @@ void	interaction_check_portal(t_app *app, int sector_id)
 		if (app->interactions[i].event_id == EVENT_NONE)
 			continue ;
 		if (app->interactions[i].activation_sector == sector_id
-			&& app->interactions[i].activation_wall == -1)
+			&& app->interactions[i].activation_wall == -1
+			&& check_key_requirement(app, &app->interactions[i]))
 			interaction_trigger(app, i);
 	}
 }

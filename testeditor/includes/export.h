@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 19:11:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:24:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,6 +138,7 @@ typedef struct	s_export_interaction
 	int				activation_wall;
 	int				activation_object;
 	int				target_sector;
+	t_bool			requires_key;
 }	t_export_interaction;
 
 typedef struct	s_export_asset

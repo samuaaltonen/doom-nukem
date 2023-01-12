@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:06:52 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 18:42:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:31:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ static void	interaction_trigger_sector(t_app *app, t_interaction *interaction,
 {
 	t_sector	*sector;
 
+	if (interaction->target_sector == -1)
+		return ;
 	sector = &app->sectors[interaction->target_sector];
 	if (interaction->event_id == EVENT_CHANGE_LIGHT
 		&& animation_create(app, get_light_animation(interaction, sector,
@@ -138,7 +140,5 @@ void	interaction_trigger(t_app *app, int interaction_index)
 	}
 	/* if (interaction->event_id == EVENT_END_LEVEL)
 		app->status = STATUS_END_LEVEL; */
-	if (interaction->target_sector == -1)
-		return ;
 	interaction_trigger_sector(app, interaction, variable);
 }

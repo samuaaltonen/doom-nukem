@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 16:19:10 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:25:07 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,7 @@ typedef struct s_interaction
 	t_vec2_lst		*activation_wall;
 	t_object		*activation_object;
 	t_sector_lst	*target_sector;
+	t_bool			requires_key;
 }	t_interaction;
 
 /**
