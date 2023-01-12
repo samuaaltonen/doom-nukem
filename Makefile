@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/12 16:46:26 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/12 18:06:57 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -84,7 +84,8 @@ FILES = animation_create.c \
 		import_assets_text.c \
 		level_validation.c \
 		level_validation_sector.c \
-		level_validation_assets.c
+		level_validation_assets.c \
+		level_validation_interaction.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a
