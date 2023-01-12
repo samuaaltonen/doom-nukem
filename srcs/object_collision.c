@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:17:11 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/10 13:42:12 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:57:01 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 t_bool	in_range_height(double pos, double obj, double epsilon)
 {
 	if (pos > obj - epsilon
-		&& pos < pos + epsilon)
+		&& pos < obj + epsilon)
 		return (TRUE);
 	return (FALSE);
 }
@@ -42,12 +42,45 @@ static void	object_hit(t_app *app, t_gameobject *obj)
 		obj->type = -1;
 }
 
-static int	per_object_collision(t_app *app, t_gameobject *obj)
+static int	per_object_collision(t_app *app, t_vector2 pos, double elev, t_gameobject *obj)
 {
-	if (in_range(app->player.pos, obj->position, 2))
+	if (in_range(pos, obj->position, 0.5f) && in_range_height(elev, obj->elevation, PICKUP_RANGE))
 	{
-		if (ft_point_distance(app->player.pos, obj->position) + app->player.elevation - obj->elevation < 0.5f)
 			object_hit(app, obj);
+	}
+	return (0);
+}
+
+static t_bool	line_collision(t_app *app, t_projectile *projectile, t_gameobject *obj)
+{
+	t_vector2	point;
+	t_vector2	backwards;
+	t_line		collision_line;
+
+	backwards = ft_vector2_sub(projectile->start,
+		ft_vec2_mult(projectile->end, -app->conf->delta_time));
+	collision_line = (t_line){projectile->start, backwards};
+	point = ft_closest_point(obj->position,collision_line);
+	if (ft_point_on_segment(collision_line, point) && in_range(point, obj->position, PROJECTILE_COLLISION_X))
+	{
+		return (TRUE);
+	}
+	return (FALSE);
+}
+
+static int	projectile_obj_collision(t_app *app, t_projectile *projectile, t_gameobject *obj)
+{
+	(void)app;
+
+
+	if(projectile->type > 12)
+	{
+		if((in_range(projectile->start, obj->position, PROJECTILE_COLLISION_X) || line_collision(app, projectile, obj))
+				&& in_range_height(projectile->start_z, obj->elevation + 0.5f, PROJECTILE_COLLISION_Y))
+		{
+			projectile->type = -1;
+			app->projectiles_active--;
+		}
 	}
 	return (0);
 }
@@ -55,12 +88,30 @@ static int	per_object_collision(t_app *app, t_gameobject *obj)
 void	object_collision(t_app *app)
 {
 	t_gameobject	*obj;
+	t_projectile	*projectile;
+	int				i;
 
 	obj = &(app->objects[0]);
 	while (obj->type != 0)
 	{
 		if(obj->type != -1)
-			per_object_collision(app, obj);
+		{
+			per_object_collision(app, app->player.pos, app->player.elevation, obj);
+			if(obj->type > MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS)
+			{
+				projectile = &(app->projectiles[0]);
+				i = app->projectiles_active;
+				while (i > 0)
+				{
+					if(projectile->type != -1)
+					{
+						projectile_obj_collision(app, projectile, obj);
+						i--;
+					}
+					projectile++;
+				}
+			}
+		}
 		obj++;
 	}
 }

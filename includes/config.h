@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/11 18:59:53 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:58:49 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@
 	>= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES = projectiles
 */
 # define ENEMY_COLLISION 0.25f
+# define PROJECTILE_COLLISION_X 0.25f
+# define PROJECTILE_COLLISION_Y 0.5f
+# define PICKUP_RANGE 0.5f
 # define MAX_ENEMY_STATES 2
 # define MAX_OBJECTS 128
 # define MAX_TEMP_OBJECTS 64

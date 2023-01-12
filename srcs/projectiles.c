@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:01:41 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 16:30:02 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:45:37 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,7 @@ void	fire(t_app *app, t_vector3 target_dir, t_vector3 start_pos, t_point info)
 			calc_end(app, &(app->projectiles[i]), target_dir);
 			app->projectiles[i].timer = ft_vector_length(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start)) / app->conf->projectile_speed[app->projectiles[i].type - 11];
 			app->projectiles[i].end = ft_vector2_normalize(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start));
+			app->projectiles_active++;
 			return;
 		}
 	}
@@ -128,6 +129,9 @@ void	update_projectiles(t_app *app)
 		if(app->projectiles[i].timer > 0)
 			app->projectiles[i].timer -= app->conf->delta_time;
 		else
+		{
 			app->projectiles[i].type = -1; //event to explode
+			app->projectiles_active--;
+		}
 	}
 }

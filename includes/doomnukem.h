@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 11:37:29 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:01:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -198,6 +198,7 @@ typedef struct s_app
 	t_gameobject		objects[MAX_OBJECTS];
 	float				object_states[MAX_OBJECTS];
 	t_projectile		projectiles[MAX_TEMP_OBJECTS];
+	int					projectiles_active;
 	t_enemy_state		enemies[MAX_OBJECTS];
 	t_enemy_def			enemy_def[MAX_ENEMY_TYPES];
 	t_interaction		interactions[MAX_INTERACTIONS];
@@ -482,5 +483,6 @@ void			define_enemies(t_app *app);
 void			fire(t_app *app, t_vector3 target_dir, t_vector3 start_pos,
 					t_point info);
 void			update_projectiles(t_app *app);
+void			init_projectiles(t_app *app);
 
 #endif
