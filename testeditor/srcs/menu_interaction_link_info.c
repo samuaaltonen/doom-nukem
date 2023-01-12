@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_interaction_link_info.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 14:36:50 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/11 15:07:43 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:18:02 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

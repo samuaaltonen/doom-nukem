@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:30:17 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 20:28:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:32:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,12 @@ static void	read_interactions(t_app *app, t_export_interaction *interactions)
 	t_interaction	temp;
 	int				i;
 
-	i = 0;
-	while (i < MAX_INTERACTIONS)
+	i = -1;
+	while (++i < MAX_INTERACTIONS)
 	{
 		temp.event_id = interactions[i].event_id;
+		if (temp.event_id)
+			app->interaction_count++;
 		temp.variable = interactions[i].variable;
 		temp.editable = interactions[i].editable;
 		temp.activation_sector = sector_by_index(app,
@@ -67,7 +69,6 @@ static void	read_interactions(t_app *app, t_export_interaction *interactions)
 		temp.target_sector = sector_by_index(app,
 				interactions[i].target_sector);
 		app->interactions[i] = temp;
-		i++;
 	}
 }
 

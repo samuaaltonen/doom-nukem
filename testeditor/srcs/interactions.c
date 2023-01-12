@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interactions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/11 16:04:26 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:32:15 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,28 +48,27 @@ void	interaction_edit(t_app *app, SDL_Keycode keycode)
 {
 	int	id;
 
-	if (app->current_interaction)
+	if (!app->current_interaction)
+		return ;
+	id = (int)app->current_interaction->editable;
+	if (keycode == SDLK_UP)
+		app->current_interaction->variable += app->divider;
+	else if (keycode == SDLK_DOWN)
+		app->current_interaction->variable -= app->divider;
+	else if (keycode == SDLK_LEFT && app->current_interaction->editable > 0.0)
 	{
-		id = (int)app->current_interaction->editable;
-		if (keycode == SDLK_UP)
-			app->current_interaction->variable += app->divider;
-		else if (keycode == SDLK_DOWN)
-			app->current_interaction->variable -= app->divider;
-		else if (keycode == SDLK_LEFT && app->current_interaction->editable > 0)
-		{
-			app->current_interaction->editable--;
-			while (app->interactions[id].event_id == 0
-				&& app->current_interaction->editable > 1)
-				app->current_interaction->editable--;
-		}
-		else if (keycode == SDLK_RIGHT
-			&& get_current_interaction_count(app, id) < app->interaction_count)
-		{
-			app->current_interaction->editable++;
-			while (app->interactions[id].event_id == 0
-				&& app->current_interaction->editable < MAX_INTERACTIONS)
-				app->current_interaction->editable++;
-		}
+		app->current_interaction->editable -= 1.0;
+		while (app->interactions[id].event_id == 0
+			&& app->current_interaction->editable > 1.0)
+			app->current_interaction->editable -= 1.0;
+	}
+	else if (keycode == SDLK_RIGHT
+		&& get_current_interaction_count(app, id) < app->interaction_count)
+	{
+		id++;
+		while (app->interactions[id].event_id == 0 && id < MAX_INTERACTIONS)
+			id++;
+		app->current_interaction->editable = (double)id;
 	}
 }
 

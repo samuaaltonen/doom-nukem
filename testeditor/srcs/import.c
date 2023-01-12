@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/11 20:37:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:32:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ int	import_file(t_app *app, char *path)
 		exit_error(MSG_ERROR_IMPORT);
 	ft_memcpy(&info.header, info.data, sizeof(t_level_header));
 	info.imported = sizeof(t_level_header);
-	app->interaction_count = info.header.interaction_count;
+	app->interaction_count = 0;
 	app->object_count = info.header.object_count;
 	import_sectors(app, &info);
 	import_player(app, &info);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/11 13:49:16 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/12 14:31:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	app_render_helper(t_app *app)
 	if (app->interaction_menu && app->current_interaction)
 		render_target_sector_lines(app);
 	if (app->interaction_menu && app->current_interaction
-		&& app->current_interaction->editable > -1)
+		&& app->current_interaction->editable > -1.0)
 		render_interaction_link_lines(app);
 	render_sector_points(app);
 	if (app->list_ongoing)
@@ -114,41 +114,6 @@ void	app_loop(t_app *app)
 	{
 		while (SDL_PollEvent(&event))
 			dispatch_event(app, &event);
-		/* ft_printf("x=%f, y=%f modes:c%i,o%i,p%i,r%i,f%i,s%i,n%i,i%p,object_menu%i,player%i\n", app->mouse_track.x, app->mouse_track.y, app->list_creation, app->list_ongoing, app->portal_selection, app->ceiling_edit, app->floor_edit, app->slope_edit, app->object_new, app->current_interaction, app->object_menu, app->player_edit);
-		if (app->active_sector)
-		{
-			if (app->object_menu)
-				ft_printf("selected object id:%i, type:%i, var:%f ",get_object_id(app, app->current_object), app->current_object->type, app->current_object->var);
-			if (app->current_interaction)
-				ft_printf("current interaction event_id:%i, variable: %f, targer: %i ", app->current_interaction->event_id, app->current_interaction->variable, app->current_interaction->target_sector);
-			ft_printf("inside = %i, floor: h:%f,tex:%i,o:%i, ceil: h:%f,tex:%i,o:%i, light:%i\n has members: ", app->active_sector, app->active_sector->floor_height, app->active_sector->floor_tex, app->active_sector->floor_tex_offset, app->active_sector->ceil_height, app->active_sector->ceil_tex, app->active_sector->ceil_tex_offset, app->active_sector->light);
-			for (int i = 0; i < 4 && app->active_sector->member_sectors[i]; ++i)
-				ft_printf("%i ", get_sector_id(app, app->active_sector->member_sectors[i]));
-			ft_printf("\n");
-			if (app->active_sector->parent_sector)
-				ft_printf("parent id %i, ", app->active_sector->parent_sector);
-			if (app->active_sector->ceil_slope_wall)
-				ft_printf("ceiling slopes from %i to %i, height %f, ", app->active_sector->ceil_slope_wall, app->active_sector->ceil_slope_opposite, app->active_sector->ceil_slope_height);
-			if (app->active_sector->floor_slope_wall)
-				ft_printf("floor slopes from %i to %i, height %f", app->active_sector->floor_slope_wall, app->active_sector->floor_slope_opposite, app->active_sector->floor_slope_height);
-			ft_printf("\n");
-		}
-		if (app->active)
-			ft_printf("selected point x:%f, y:%f, tex:%i, type:%i, decor:%i, decor offset: %f,%f\n", app->active->point.x, app->active->point.y, app->active->tex, app->active->type, app->active->decor, app->active->decor_offset.x, app->active->decor_offset.y); */
-		// for (int index = 0; index < 10; index++)
-		// {
-		// 	ft_printf("INDEX %i\n", index);
-		// 	ft_printf("ID %i VARIABLE %f TARGET %i SECTOR %i WALL %i OBJECT %i\n\n", app->interactions[index].event_id, app->interactions[index].variable, app->interactions[index].target_sector, app->interactions[index].activation_sector, app->interactions[index].activation_wall, app->interactions[index].activation_object);
-		// }
-		// for (int index = 0; index < 10; index++)
-		// {
-		// 	ft_printf("COUNT %i\n", app->object_count);
-		// 	ft_printf("INDEX %i\n", index);
-		// 	ft_printf("TYPE %i SECTOR %i\n\n", app->objects[index].type, app->objects[index].sector);
-		// }
-		// for(int i = 0; i < MAX_INTERACTIONS; i++)
-		// 	ft_printf("read interactions id %i, activation sector%i, wall%i, object%i\n",app->interactions[i].event_id, app->interactions[i].activation_sector, app->interactions[i].activation_wall, app->interactions[i].activation_object);
-		// ft_printf("\n");
 		app_render(app);
 	}
 }
