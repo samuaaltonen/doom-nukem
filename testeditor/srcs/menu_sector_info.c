@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:54:40 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/02 14:51:44 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:56:33 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	render_ceiling_info(t_app *app, char *height)
 		toggle_active_color(app, app->slope_edit, "SLOPE",
 			(t_rect){28, 577, 260, 15});
 	else
-		toggle_active_color(app, app->slope_edit, "SLOPE",
+		toggle_active_color(app, 0, "SLOPE",
 			(t_rect){28, 577, 260, 15});
 	height = ft_ftoa(app->active_sector->ceil_slope_height, 4);
 	if (!height)
@@ -64,7 +64,7 @@ static void	render_floor_info(t_app *app, char *height)
 		toggle_active_color(app, app->slope_edit, "SLOPE",
 			(t_rect){28, 480, 260, 15});
 	else
-		toggle_active_color(app, app->slope_edit, "SLOPE",
+		toggle_active_color(app, 0, "SLOPE",
 			(t_rect){28, 480, 260, 15});
 	height = ft_ftoa(app->active_sector->floor_slope_height, 4);
 	if (!height)
@@ -115,8 +115,7 @@ HEIGHT ( UP / DOWN )");
 PORTAL, PRESS 'L', SELECT SECTOR TO LINK PORTAL TO, PRESS 'L' AGAIN. DOUBLE \
 PRESS 'L' TO REMOVE PORTAL.");
 	render_text(app, (t_rect){20, y + 195, 260, 15}, "CREATE OBJECT ( N )");
-	render_text(app, (t_rect){20, y + 215, 260, 15}, "CREATE SLOPE ( Y / H )");
-	render_text(app, (t_rect){20, y + 230, 260, 15}, "DELETE SECTOR ( DEL )");
+	render_text(app, (t_rect){20, y + 215, 260, 15}, "DELETE SECTOR ( DEL )");
 	render_arrows(app, (t_point){12, y + 290}, (t_point){265, y + 290});
 	render_icons(app, (t_point){25, y + 280},
 		app->active_sector->wall_list->tex, app->assets.sprite);
