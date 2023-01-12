@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 14:31:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:00:08 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ static void	app_render_helper(t_app *app)
 	if (app->interaction_menu && app->current_interaction)
 		render_target_sector_lines(app);
 	if (app->interaction_menu && app->current_interaction
-		&& app->current_interaction->editable > -1.0)
+		&& app->current_interaction->interaction_link > -1)
 		render_interaction_link_lines(app);
 	render_sector_points(app);
 	if (app->list_ongoing)

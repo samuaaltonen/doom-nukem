@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:06:52 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 16:31:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:01:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_animation	get_light_animation(t_interaction *interaction,
 {
 	return ((t_animation){0.0, ANIMATION_DURATION_LIGHT,
 		(variable - sector->light) / ANIMATION_DURATION_LIGHT,
-		&sector->light, variable, (int)interaction->editable});
+		&sector->light, variable, interaction->interaction_link});
 }
 
 /**
@@ -49,8 +49,8 @@ static t_animation	get_height_animation(t_interaction *interaction,
 		animation.increment = -1.0 / ANIMATION_DURATION_HEIGHT;
 	else
 		animation.increment = 1.0 / ANIMATION_DURATION_HEIGHT;
-	if (interaction->editable >= 0.0)
-		animation.trigger_after = (int)interaction->editable;
+	if (interaction->interaction_link >= 0)
+		animation.trigger_after = interaction->interaction_link;
 	else
 		animation.trigger_after = -1;
 	return (animation);
@@ -108,7 +108,7 @@ static void	interaction_trigger_text(t_app *app, t_interaction *interaction,
 		return ;
 	app->textmodal.duration = (double)app->text_lengths[app->textmodal.text]
 		* ANIMATION_DURATION_TEXT + ANIMATION_DURATION_TEXT_END;
-	app->textmodal.trigger_after = (int)interaction->editable;
+	app->textmodal.trigger_after = interaction->interaction_link;
 }
 
 /**
@@ -132,11 +132,11 @@ void	interaction_trigger(t_app *app, int interaction_index)
 		&& (int)variable >= 0 && (int)variable < 3)
 	{
 		play_sound(app, sound_types[(int)variable]);
-		if ((int)interaction->editable >= 0
-			&& app->interactions[(int)interaction->editable].event_id
+		if (interaction->interaction_link >= 0
+			&& app->interactions[interaction->interaction_link].event_id
 			!= EVENT_TRIGGER_SOUND)
 			interaction_trigger(app,
-				app->animations[(int)interaction->editable].trigger_after);
+				app->animations[interaction->interaction_link].trigger_after);
 	}
 	/* if (interaction->event_id == EVENT_END_LEVEL)
 		app->status = STATUS_END_LEVEL; */

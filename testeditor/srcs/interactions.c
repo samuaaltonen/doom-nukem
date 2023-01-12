@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 14:32:15 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:02:59 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ static t_bool	new_interaction(t_app *app)
 	if (app->active_sector->parent_sector)
 		app->current_interaction->target_sector
 			= app->active_sector->parent_sector;
-	app->current_interaction->editable = -1;
+	app->current_interaction->interaction_link = -1;
 	return (TRUE);
 }
 
 /**
- * Key events to change the interaction variable and editable.
+ * Key events to change the interaction variable and interaction link.
 */
 void	interaction_edit(t_app *app, SDL_Keycode keycode)
 {
@@ -50,17 +50,17 @@ void	interaction_edit(t_app *app, SDL_Keycode keycode)
 
 	if (!app->current_interaction)
 		return ;
-	id = (int)app->current_interaction->editable;
+	id = app->current_interaction->interaction_link;
 	if (keycode == SDLK_UP)
 		app->current_interaction->variable += app->divider;
 	else if (keycode == SDLK_DOWN)
 		app->current_interaction->variable -= app->divider;
-	else if (keycode == SDLK_LEFT && app->current_interaction->editable > 0.0)
+	else if (keycode == SDLK_LEFT && app->current_interaction->interaction_link > 0)
 	{
-		app->current_interaction->editable -= 1.0;
+		app->current_interaction->interaction_link -= 1;
 		while (app->interactions[id].event_id == 0
-			&& app->current_interaction->editable > 1.0)
-			app->current_interaction->editable -= 1.0;
+			&& app->current_interaction->interaction_link > -1)
+			app->current_interaction->interaction_link -= 1;
 	}
 	else if (keycode == SDLK_RIGHT
 		&& get_current_interaction_count(app, id) < app->interaction_count)
@@ -68,7 +68,7 @@ void	interaction_edit(t_app *app, SDL_Keycode keycode)
 		id++;
 		while (app->interactions[id].event_id == 0 && id < MAX_INTERACTIONS)
 			id++;
-		app->current_interaction->editable = (double)id;
+		app->current_interaction->interaction_link = id;
 	}
 }
 
@@ -130,7 +130,7 @@ void	delete_interaction(t_app *app, int id)
 	app->interaction_count--;
 	app->interactions[id].event_id = 0;
 	app->interactions[id].variable = 0;
-	app->interactions[id].editable = -1;
+	app->interactions[id].interaction_link = -1;
 	app->interactions[id].target_sector = NULL;
 	app->interactions[id].activation_sector = NULL;
 	app->interactions[id].activation_wall = NULL;
@@ -138,8 +138,8 @@ void	delete_interaction(t_app *app, int id)
 	i = 0;
 	while (i < MAX_INTERACTIONS)
 	{
-		if ((int)app->interactions[i].editable == id)
-			app->interactions[i].editable = -1;
+		if (app->interactions[i].interaction_link == id)
+			app->interactions[i].interaction_link = -1;
 		i++;
 	}
 }

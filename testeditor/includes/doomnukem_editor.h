@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 16:59:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:59:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,7 +145,7 @@ typedef struct s_interaction
 {
 	int				event_id;
 	double 			variable;
-	double			editable;
+	int				interaction_link;
 	t_sector_lst	*activation_sector;
 	t_vec2_lst		*activation_wall;
 	t_object		*activation_object;

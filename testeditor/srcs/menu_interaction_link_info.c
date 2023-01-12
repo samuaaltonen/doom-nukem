@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 14:36:50 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/12 14:18:02 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:03:30 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ static void	render_current_link_info(t_app *app, int start_y, t_point mouse)
 	render_arrows(app, (t_point){185, start_y + 253},
 		(t_point){260, start_y + 253});
 	statics = ft_itoa(get_current_interaction_count(app,
-				(int)app->current_interaction->editable));
+				app->current_interaction->interaction_link));
 	if (!statics)
 		return ;
 	render_text(app, (t_rect){200, start_y + 255, 100, 20}, statics);
@@ -53,7 +53,7 @@ static void	render_current_link_info(t_app *app, int start_y, t_point mouse)
 		return ;
 	render_text(app, (t_rect){235, start_y + 255, 100, 20}, statics);
 	free(statics);
-	display_link_event(app, (int)app->current_interaction->editable, start_y);
+	display_link_event(app, app->current_interaction->interaction_link, start_y);
 	render_ui_frame(app, (t_rect){187, start_y + 273, 73, 16}, 1, 0);
 	render_interaction_button(app, (t_rect){201, start_y + 275, 70, 15},
 		mouse, "REMOVE");
@@ -66,7 +66,7 @@ void	render_link_interaction_info(t_app *app, int start_y, t_point mouse)
 {
 	if (app->interaction_count > 0 && app->current_interaction)
 	{
-		if (app->current_interaction->editable == -1)
+		if (app->current_interaction->interaction_link == -1)
 		{
 			render_text(app, (t_rect){20, start_y + 245, 170, 40}, "LINK \
 INTERACTION TO ANOTHER EXISTING ONE BY PRESSING 'LINK'");
@@ -109,7 +109,7 @@ void	render_interaction_link_lines(t_app *app)
 	t_vec2_lst	*tmp;
 	int			id;
 
-	id = (int)app->current_interaction->editable;
+	id = app->current_interaction->interaction_link;
 	if (app->interactions[id].activation_object)
 		render_point(app, app->interactions[id].activation_object->position,
 			10, LINK);

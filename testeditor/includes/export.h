@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 17:17:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:59:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ typedef struct	s_export_interaction
 {
 	int				event_id;
 	double 			variable;
-	double			editable;
+	int				interaction_link;
 	int				activation_sector;
 	int				activation_wall;
 	int				activation_object;

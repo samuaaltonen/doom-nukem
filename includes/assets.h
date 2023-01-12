@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 17:41:44 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:49:02 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,7 @@
 # define MAX_BMP_OFFSET				32768
 # define MAX_BMP_WIDTH				32768
 # define MAX_BMP_HEIGHT				32768
+# define MAX_WAV_SIZE				67108864
 # define MAX_ASSET_COUNT			32
 # define MAX_UNCOMPRESS_BATCH		4096
 # define MAX_COMPRESS_BATCH			6144

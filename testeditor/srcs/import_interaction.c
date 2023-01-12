@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:30:17 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 14:32:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:59:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static void	read_interactions(t_app *app, t_export_interaction *interactions)
 		if (temp.event_id)
 			app->interaction_count++;
 		temp.variable = interactions[i].variable;
-		temp.editable = interactions[i].editable;
+		temp.interaction_link = interactions[i].interaction_link;
 		temp.activation_sector = sector_by_index(app,
 				interactions[i].activation_sector);
 		temp.activation_wall = line_by_index(temp.activation_sector,

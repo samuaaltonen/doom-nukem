@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 16:50:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:53:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -248,6 +248,7 @@ void			import_texts(t_app *app, t_thread_data *thread,
 void			level_validation(t_app *app);
 void			level_validation_sectors(t_app *app);
 void			level_validation_assets(t_app *app);
+void			level_validation_interactions(t_app *app);
 
 /**
  * error.c

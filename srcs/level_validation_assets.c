@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:46:11 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 17:47:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:52:16 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,5 +79,5 @@ void	level_validation_assets(t_app *app)
 		|| app->assets.skybox->h != SKYBOX_H
 		|| validate_ui_elements(app)
 		|| validate_sprites(app))
-		exit_error(MSG_ERROR_VALIDATION_ASSETS_IMAGE);
+		exit_error(MSG_ERROR_VALIDATION_ASSETS);
 }

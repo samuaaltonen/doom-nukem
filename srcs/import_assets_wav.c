@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:46:21 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 18:46:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:49:25 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@ static t_uint8	*import_wav(t_app *app, t_thread_data *thread,
 	t_uint8			*audio_data;
 
 	asset_info = import_info->header.asset_info[asset_type];
-	if (asset_info.size > import_info->length - import_info->imported)
+	if (asset_info.size > import_info->length - import_info->imported
+		|| asset_info.size > MAX_WAV_SIZE)
 		exit_error(MSG_ERROR_IMPORT_AUDIO);
 	audio_data = (t_uint8 *)malloc(asset_info.size);
 	if (!audio_data)

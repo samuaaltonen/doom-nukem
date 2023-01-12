@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:30:42 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 16:25:54 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:03:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static void	write_interactions(t_app *app, t_export_interaction *interactions)
 		temp.target_sector = get_sector_id(app,
 				app->interactions[i].target_sector);
 		temp.variable = app->interactions[i].variable;
-		temp.editable = app->interactions[i].editable;
+		temp.interaction_link = app->interactions[i].interaction_link;
 		temp.requires_key = app->interactions[i].requires_key;
 		interactions[i] = temp;
 	}
