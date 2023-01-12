@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 17:09:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:44:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,9 @@
 	>= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES = projectiles
 */
 # define ENEMY_COLLISION 0.25f
+# define PROJECTILE_COLLISION_X 0.25f
+# define PROJECTILE_COLLISION_Y 0.5f
+# define PICKUP_RANGE 0.5f
 # define MAX_ENEMY_STATES 2
 # define MAX_OBJECTS 128
 # define MAX_TEMP_OBJECTS 64
@@ -81,7 +84,6 @@ typedef struct s_conf
 	int				fov;
 	int				keystates;
 	int				buttonstates;
-	double			projectile_speed[MAX_PROJECTILES];
 	int				mouse_active;
 }	t_conf;
 

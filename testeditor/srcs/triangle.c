@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 15:52:24 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/30 10:41:45 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:52:38 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,28 +75,28 @@ static void	calculate_bot(t_triangle triangle, t_point *pos,
  * @param relative_heights is the long and short side of a triangle ratio
  * @param heights x is the total height, y is the segment height
  */
-void	fill_triangle(t_app *app, t_point a, t_point b, t_point c, int color)
+void	fill_triangle(t_app *app, t_triangle triangle, int color)
 {
 	t_point		pos;
 	t_point		hor;
 	t_point		heights;
 
-	if (sort_triangle(&a, &b, &c))
+	if (sort_triangle(&triangle.a, &triangle.b, &triangle.c))
 	{
-		heights.x = c.y - a.y;
-		heights.y = b.y - a.y + 1;
-		pos.y = a.y - 1;
-		while (++pos.y <= b.y)
+		heights.x = triangle.c.y - triangle.a.y;
+		heights.y = triangle.b.y - triangle.a.y + 1;
+		pos.y = triangle.a.y - 1;
+		while (++pos.y <= triangle.b.y)
 		{
-			calculate_top((t_triangle){a, b, c}, &pos, &heights, &hor);
+			calculate_top(triangle, &pos, &heights, &hor);
 			while (++pos.x <= hor.y)
 				put_pixel_to_surface(app->surface, pos.x, pos.y, color);
 		}
-		heights.y = c.y - b.y + 1;
-		pos.y = b.y - 1;
-		while (++pos.y <= c.y)
+		heights.y = triangle.c.y - triangle.b.y + 1;
+		pos.y = triangle.b.y - 1;
+		while (++pos.y <= triangle.c.y)
 		{
-			calculate_bot((t_triangle){a, b, c}, &pos, &heights, &hor);
+			calculate_bot(triangle, &pos, &heights, &hor);
 			while (++pos.x <= hor.y)
 				put_pixel_to_surface(app->surface, pos.x, pos.y, color);
 		}

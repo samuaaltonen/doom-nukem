@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/28 17:03:55 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 11:43:50 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,22 +69,22 @@ typedef enum e_collision
 
 typedef struct s_inventory
 {
-	int			ammo;
-	int			special_ammo;
-	int			potion;
-	int			antidote;
-	int			key;
-	t_bool		jetpack;
+	int				ammo;
+	int				special_ammo;
+	int				potion;
+	int				antidote;
+	int				key;
+	t_bool			jetpack;
 }	t_inventory;
 
 typedef struct s_weapon
 {
-	t_bool	enabled;
-	int		damage;
-	int		range;
-	double	fire_rate;
-	int		magazine;
-	int		ammo;
+	t_bool			enabled;
+	int				damage;
+	int				range;
+	double			fire_rate;
+	int				magazine;
+	int				ammo;
 }	t_weapon;
 
 /**
@@ -132,8 +132,8 @@ typedef struct s_export_player
 
 typedef struct s_move
 {
-	t_vector2	pos;
-	double		elevation;
+	t_vector2		pos;
+	double			elevation;
 }	t_move;
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:01:41 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 16:30:02 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:27:10 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,11 +104,54 @@ void	fire(t_app *app, t_vector3 target_dir, t_vector3 start_pos, t_point info)
 		{
 			app->projectiles[i].start = (t_vector2){start_pos.x, start_pos.y};
 			app->projectiles[i].start_z = start_pos.z;
-			app->projectiles[i].type = info.x;
+			app->projectiles[i].type = info.x;				
 			app->projectiles[i].sector = info.y;
 			calc_end(app, &(app->projectiles[i]), target_dir);
-			app->projectiles[i].timer = ft_vector_length(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start)) / app->conf->projectile_speed[app->projectiles[i].type - 11];
+			app->projectiles[i].timer = ft_vector_length(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start)) / app->projectile_def[app->projectiles[i].type - 11].speed;
 			app->projectiles[i].end = ft_vector2_normalize(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start));
+			if(app->projectiles[i].type == 15)
+			{
+				app->projectiles[i].timer = 0.25f;
+				app->projectiles[i].end = (t_vector2){0.f,0.f};
+				app->projectiles[i].end_z = 0.f;
+			}
+			app->projectiles_active++;
+			return;
+		}
+	}
+}
+
+void	kill_projectile(t_app *app, t_projectile *projectile)
+{
+			//event to explode creates a new melee attack type explosion
+			if(projectile->type == 18)
+				melee(app,(t_vector3){0.f,0.f,0.f}, ft_vec2_to_vec3(ft_vector2_sub(projectile->start, ft_vec2_mult(projectile->end, 0.25f)), projectile->start_z - projectile->end_z * 0.25f),(t_point){12,projectile->sector});
+			projectile->type = -1;
+			app->projectiles_active--;
+}
+
+void	melee(t_app *app, t_vector3 target_dir, t_vector3 start_pos, t_point info)
+{
+	int	i;
+
+	i = -1;
+	while(++i < MAX_TEMP_OBJECTS)
+	{
+		if(app->projectiles[i].type == -1)
+		{
+			app->projectiles[i].start = (t_vector2){start_pos.x, start_pos.y};
+			app->projectiles[i].start_z = start_pos.z;
+			app->projectiles[i].type = info.x;				
+			app->projectiles[i].sector = info.y;
+			calc_end(app, &(app->projectiles[i]), target_dir);
+			app->projectiles[i].timer = ft_vector_length(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start)) / app->projectile_def[app->projectiles[i].type - 11].speed;
+			app->projectiles[i].end = ft_vector2_normalize(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start));
+			app->projectiles[i].timer = 0.25f;
+			if(!(app->projectiles[i].type == 0))
+				app->projectiles[i].start = ft_vector2_add(app->projectiles[i].start, ft_vec2_mult(app->projectiles[i].end, 0.5f));
+			app->projectiles[i].end = (t_vector2){0.f,0.f};
+			app->projectiles[i].end_z = 0.f;
+			app->projectiles_active++;
 			return;
 		}
 	}
@@ -123,11 +166,11 @@ void	update_projectiles(t_app *app)
 	{
 		if(app->projectiles[i].type == -1)
 			continue;
-		app->projectiles[i].start = ft_vector2_add(app->projectiles[i].start,ft_vec2_mult(app->projectiles[i].end, app->conf->delta_time * app->conf->projectile_speed[app->projectiles[i].type - 11]));
-		app->projectiles[i].start_z += app->projectiles[i].end_z * app->conf->delta_time * app->conf->projectile_speed[app->projectiles[i].type - 11];
+		app->projectiles[i].start = ft_vector2_add(app->projectiles[i].start,ft_vec2_mult(app->projectiles[i].end, app->conf->delta_time * app->projectile_def[app->projectiles[i].type - 11].speed));
+		app->projectiles[i].start_z += app->projectiles[i].end_z * app->conf->delta_time * app->projectile_def[app->projectiles[i].type - 11].speed;
 		if(app->projectiles[i].timer > 0)
 			app->projectiles[i].timer -= app->conf->delta_time;
 		else
-			app->projectiles[i].type = -1; //event to explode
+			kill_projectile(app, &(app->projectiles[i]));
 	}
 }

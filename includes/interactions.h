@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 16:47:58 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 18:01:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:42:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ typedef struct s_interaction
  */
 typedef struct s_animation
 {
-	double	progress;
-	double	duration;
-	double	increment;
-	double	*target;
-	double	final_value;
-	int		trigger_after;
+	double			progress;
+	double			duration;
+	double			increment;
+	double			*target;
+	double			final_value;
+	int				trigger_after;
 }	t_animation;
 
 /**
@@ -73,10 +73,10 @@ typedef struct s_animation
  */
 typedef struct s_textmodal
 {
-	double	progress;
-	double	duration;
-	int		text;
-	int		trigger_after;
+	double			progress;
+	double			duration;
+	int				text;
+	int				trigger_after;
 }	t_textmodal;
 
 #endif

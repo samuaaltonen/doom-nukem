@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/11 17:17:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 11:40:37 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,14 @@ enum e_objects {
 	MONSTER2 = 10
 };
 
-typedef struct	s_export_asset
+typedef struct s_export_asset
 {
-	int	size;
-	int	width;
-	int	height;
+	int				size;
+	int				width;
+	int				height;
 }	t_export_asset;
 
-typedef struct	s_level_header
+typedef struct s_level_header
 {
 	int				version;
 	int				sector_count;
@@ -138,46 +138,46 @@ typedef struct s_wall
 */
 typedef struct s_rayhit
 {
-	t_sector	*sector;
-	t_wall		*wall;
-	int			wall_id;
-	t_vector2	ray;
-	int			texture;
-	t_vector2	position;
-	double		distance;
-	double		distortion;
-	double		texture_offset;
-	double		texture_step;
-	int			height;
-	int			light;
+	t_sector		*sector;
+	t_wall			*wall;
+	int				wall_id;
+	t_vector2		ray;
+	int				texture;
+	t_vector2		position;
+	double			distance;
+	double			distortion;
+	double			texture_offset;
+	double			texture_step;
+	int				height;
+	int				light;
 
-	double		wall_start_actual;
-	int			wall_start;
-	int			wall_end;
-	int			wall_type;
+	double			wall_start_actual;
+	int				wall_start;
+	int				wall_end;
+	int				wall_type;
 
-	double		parent_wall_start_actual;
-	int			parent_wall_start;
-	int			parent_wall_end;
-	int			parent_height;
+	double			parent_wall_start_actual;
+	int				parent_wall_start;
+	int				parent_wall_end;
+	int				parent_height;
 
-	double		floor_horizon;
-	double		floor_horizon_angle;
-	double		floor_slope_height;
+	double			floor_horizon;
+	double			floor_horizon_angle;
+	double			floor_slope_height;
 
-	double		ceil_horizon;
-	double		ceil_horizon_angle;
-	double		ceil_slope_height;
+	double			ceil_horizon;
+	double			ceil_horizon_angle;
+	double			ceil_slope_height;
 
-	int			*occlusion_top;
-	int			*occlusion_bottom;
+	int				*occlusion_top;
+	int				*occlusion_bottom;
 
-	t_bool		has_decor;
-	int			decor_texture;
-	int			decor_start;
-	double		decor_start_actual;
-	int			decor_end;
-	double		decor_texture_offset;
+	t_bool			has_decor;
+	int				decor_texture;
+	int				decor_start;
+	double			decor_start_actual;
+	int				decor_end;
+	double			decor_texture_offset;
 }	t_rayhit;
 
 /**
@@ -186,10 +186,10 @@ typedef struct s_rayhit
  */
 typedef struct s_raycast_info
 {
-	t_wall	*wall;
-	t_limit	limit;
-	int		*occlusion_top;
-	int		*occlusion_bottom;
+	t_wall			*wall;
+	t_limit			limit;
+	int				*occlusion_top;
+	int				*occlusion_bottom;
 }	t_raycast_info;
 
 /**
@@ -198,13 +198,13 @@ typedef struct s_raycast_info
  */
 typedef struct s_wallstack
 {
-	t_wall	walls[MAX_VISIBLE_SECTORS] \
-			[(MAX_MEMBER_SECTORS + 1) * MAX_SECTOR_CORNERS + 1];
-	int		wall_count[MAX_VISIBLE_SECTORS + 1];
-	int		visited[MAX_VISIBLE_SECTORS];
-	int		visited_count;
-	int		interesting[MAX_VISIBLE_SECTORS];
-	int		interesting_count;
+	t_wall			walls[MAX_VISIBLE_SECTORS] \
+						[(MAX_MEMBER_SECTORS + 1) * MAX_SECTOR_CORNERS + 1];
+	int				wall_count[MAX_VISIBLE_SECTORS + 1];
+	int				visited[MAX_VISIBLE_SECTORS];
+	int				visited_count;
+	int				interesting[MAX_VISIBLE_SECTORS];
+	int				interesting_count;
 }	t_wallstack;
 
 typedef struct s_object
@@ -232,9 +232,9 @@ typedef struct s_gameobject
  */
 typedef struct s_sky
 {
-	t_point		start;
-	t_point		size;
-	t_vector2	pixel_step;
+	t_point			start;
+	t_point			size;
+	t_vector2		pixel_step;
 }	t_sky;
 
 #endif

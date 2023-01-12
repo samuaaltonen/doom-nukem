@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 15:59:10 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/04 15:59:41 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/12 12:59:51 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,6 @@ static void	decrease_item_amount(t_app *app)
 		app->player.inventory.key--;
 	if (app->selected[5] && app->player.inventory.jetpack > 0)
 		app->player.inventory.jetpack--;
-	// if (app->selected[6] && app->player.inventory.item1 > 0)
-	// 	app->player.inventory.item1--;
-	// if (app->selected[7] && app->player.inventory.item2 > 0)
-	// 	app->player.inventory.item2--;
-	// if (app->selected[8] && app->player.inventory.item3 > 0)
-	// 	app->player.inventory.item3--;
-	// if (app->selected[9] && app->player.inventory.item4 > 0)
-	// 	app->player.inventory.item4--;
 }
 
 /**
@@ -56,14 +48,6 @@ static void	increase_item_amount(t_app *app)
 		app->player.inventory.key++;
 	if (app->selected[5] && app->player.inventory.jetpack < 1)
 		app->player.inventory.jetpack++;
-	// if (app->selected[6] && app->player.inventory.item1 < MAX_ITEM_CAPACITY)
-	// 	app->player.inventory.item1++;
-	// if (app->selected[7] && app->player.inventory.item2 < MAX_ITEM_CAPACITY)
-	// 	app->player.inventory.item2++;
-	// if (app->selected[8] && app->player.inventory.item3 < MAX_ITEM_CAPACITY)
-	// 	app->player.inventory.item3++;
-	// if (app->selected[9] && app->player.inventory.item4 < MAX_ITEM_CAPACITY)
-	// 	app->player.inventory.item4++;
 }
 
 /**

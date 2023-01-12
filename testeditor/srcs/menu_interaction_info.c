@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:45:38 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/10 15:35:46 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:17:12 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,12 +127,11 @@ void	interaction_edit_menu(t_app *app, int start_y, t_point screen_pos)
 	}
 	render_interaction_menu(app, screen_pos, start_y);
 	change_font(app, 11, TEXT);
-	if (app->current_interaction)
-	{
-		render_interaction_explanations(app, start_y);
-		render_ui_frame(app, (t_rect){60, start_y + 297, 170, 16}, 1, 0);
-		render_link_interaction_info(app, start_y, screen_pos);
-		render_interaction_button(app, (t_rect){85, start_y + 300, 150, 15},
-			screen_pos, "SAVE INTERACTION");
-	}
+	if (!app->current_interaction)
+		return ;
+	render_interaction_explanations(app, start_y);
+	render_ui_frame(app, (t_rect){60, start_y + 297, 170, 16}, 1, 0);
+	render_link_interaction_info(app, start_y, screen_pos);
+	render_interaction_button(app, (t_rect){85, start_y + 300, 150, 15},
+		screen_pos, "SAVE INTERACTION");
 }

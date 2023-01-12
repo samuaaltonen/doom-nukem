@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_status.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/11 18:57:46 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:36:36 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ void	render_game(t_app *app)
 	progress_animations(app);
 	player_control(app);
 	object_collision(app);
+	projectile_player_collision(app);
 	render_sectors(app);
 	render_hand(app, WIN_W / 2 - 128, 500);
 	render_objects(app);

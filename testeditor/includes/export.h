@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 17:59:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:41:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,14 +122,14 @@ typedef struct s_export_player
 
 typedef struct s_export_object
 {
-	int			type;
-	double		var;
-	t_vector2	pos;
-	double		elevation;
-	int			sector;
+	int				type;
+	double			var;
+	t_vector2		pos;
+	double			elevation;
+	int				sector;
 }	t_export_object;
 
-typedef struct	s_export_interaction
+typedef struct s_export_interaction
 {
 	int				event_id;
 	double 			variable;
@@ -141,14 +141,14 @@ typedef struct	s_export_interaction
 	t_bool			requires_key;
 }	t_export_interaction;
 
-typedef struct	s_export_asset
+typedef struct s_export_asset
 {
-	int	size;
-	int	width;
-	int	height;
+	int				size;
+	int				width;
+	int				height;
 }	t_export_asset;
 
-typedef struct	s_level_header
+typedef struct s_level_header
 {
 	int				version;
 	int				sector_count;

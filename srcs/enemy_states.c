@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:30:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 15:38:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:44:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,20 @@ static void	avoid_walls(t_app *app, t_enemy_state *enemy)
 	}
 }
 
+static void	enemy_attack_check(t_app *app, t_enemy_state *state, int define)
+{
+	if(state->agressive && state->state == WALK
+			&& in_range(app->player.pos, app->objects[state->id].position, app->enemy_def[define].range)
+			&& in_range_height(app->player.elevation, app->objects[state->id].elevation, app->enemy_def[define].range))
+	{
+		app->objects[state->id].rot = ft_vector_angle_left((t_vector2){0.f,1.f},ft_vector2_sub(app->objects[state->id].position, app->player.pos));
+		state->dir = ft_vector2_normalize(ft_vector2_sub(app->player.pos, app->objects[state->id].position));
+		state->state = ATTACK;
+		app->object_states[state->id] = app->enemy_def[define].states[state->state][0];
+		state->next = ATTACK;
+	}
+}
+
 static void check_enemy(t_app *app, t_enemy_state *state, int define)
 {
 
@@ -87,6 +101,18 @@ static void check_enemy(t_app *app, t_enemy_state *state, int define)
 		state->agressive = FALSE;
 }
 
+static void	enemy_attack(t_app *app, t_enemy_state *state, int define)
+{
+	if(define == 0)
+		fire(app,(t_vector3){state->dir.x,state->dir.y,(app->player.elevation - app->objects[state->id].elevation) / ft_vector_length(ft_vector2_sub(app->player.pos,app->objects[state->id].position))},
+				(t_vector3){app->objects[state->id].position.x, app->objects[state->id].position.y,
+				app->objects[state->id].elevation + 0.5f},(t_point){11,app->objects[state->id].sector});
+	if(define == 1)
+		melee(app,(t_vector3){state->dir.x,state->dir.y,(app->player.elevation - app->objects[state->id].elevation) / ft_vector_length(ft_vector2_sub(app->player.pos,app->objects[state->id].position))},
+				(t_vector3){app->objects[state->id].position.x, app->objects[state->id].position.y,
+				app->objects[state->id].elevation + 0.5f},(t_point){11,app->objects[state->id].sector});
+}
+
 static void enemy_states(t_app *app, t_enemy_state *state, int define)
 {
 
@@ -94,13 +120,13 @@ static void enemy_states(t_app *app, t_enemy_state *state, int define)
 
 		app->object_states[state->id] += (float)app->conf->delta_time * app->enemy_def[define].states[state->state][2];
 
+		if(state->state == WALK && define == 1)
+			enemy_attack_check(app, state, define);
 		if(state->state == DEATH && app->object_states[state->id] > app->enemy_def[define].states[state->state][1] - 1)
 			state->dead = TRUE;
 		else if(state->state == ATTACK && state->next == ATTACK && app->enemy_def[define].attack_speed < app->object_states[state->id])
 		{
-			fire(app,(t_vector3){state->dir.x,state->dir.y,(app->player.elevation - app->objects[state->id].elevation) / ft_vector_length(ft_vector2_sub(app->player.pos,app->objects[state->id].position))},
-					(t_vector3){app->objects[state->id].position.x, app->objects[state->id].position.y,
-					app->objects[state->id].elevation + 0.5f},(t_point){11,app->objects[state->id].sector});
+			enemy_attack(app, state, define);
 			state->next = IDLE;
 		}
 		else if(app->object_states[state->id] > app->enemy_def[define].states[state->state][1]

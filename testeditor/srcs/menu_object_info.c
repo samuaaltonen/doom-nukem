@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:04:04 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/03 13:52:46 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:02:32 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,4 +154,5 @@ void	object_edit_menu(t_app *app)
 	else
 		id = find_object_interaction(app, find_interaction(app), 1);
 	render_current_interaction_status(app, screen_pos, 210, id);
+	render_text(app, (t_rect){70, 260, 260, 15}, "DELETE OBJECT ( DEL )");
 }

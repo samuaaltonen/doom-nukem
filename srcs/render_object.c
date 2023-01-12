@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_object.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/10 19:00:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:17:08 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,7 @@ void	draw_object_pixel(t_app *app, t_render_object *object, t_point window, int 
 {
 	if ((color & 0xFF000000) > 0)
 	{
+		//put_pixel_to_surface(app->surface, window.x, window.y, shade_depth(shade_color(color, object->light), object->dist));
 		put_pixel_to_surface_check(app, window,shade_depth(shade_color(color, object->light), object->dist),object->dist);
 	}
 }

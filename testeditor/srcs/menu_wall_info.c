@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_wall_info.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:32:25 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/05 12:04:14 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:53:41 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,16 @@ void	wall_edit_menu(t_app *app, t_point screen_pos)
 	if (app->active->decor != -1)
 		render_wall_decor_options(app, screen_pos);
 	render_portal_status(app);
+	render_text(app, (t_rect){25, 505, 260, 15}, "CREATE / CHANGE FLOOR SLOPE\
+ ( H )");
+	render_text(app, (t_rect){25, 520, 260, 15}, "CREATE / CHANGE CEILING SLOPE\
+ ( Y )");
+	if (app->active_sector->floor_slope_wall == app->active)
+		toggle_active_color(app, TRUE, "FLOOR SLOPE STARTS FROM THIS WALL.",
+			(t_rect){25, 540, 260, 30});
+	if (app->active_sector->ceil_slope_wall == app->active)
+		toggle_active_color(app, TRUE, "CEILING SLOPE STARTS FROM THIS WALL.",
+			(t_rect){25, 570, 260, 30});
 }
 
 /**
