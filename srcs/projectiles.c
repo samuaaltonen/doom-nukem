@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:01:41 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 17:46:23 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:55:17 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,15 @@ void	fire(t_app *app, t_vector3 target_dir, t_vector3 start_pos, t_point info)
 	}
 }
 
+void	kill_projectile(t_app *app, t_projectile *projectile)
+{
+			//event to explode creates a new melee attack type explosion
+			if(projectile->type == 18)
+				melee(app,(t_vector3){0.f,0.f,0.f}, ft_vec2_to_vec3(ft_vector2_sub(projectile->start, ft_vec2_mult(projectile->end, 0.25f)), projectile->start_z - projectile->end_z * 0.25f),(t_point){12,projectile->sector});
+			projectile->type = -1;
+			app->projectiles_active--;
+}
+
 void	melee(t_app *app, t_vector3 target_dir, t_vector3 start_pos, t_point info)
 {
 	int	i;
@@ -162,12 +171,6 @@ void	update_projectiles(t_app *app)
 		if(app->projectiles[i].timer > 0)
 			app->projectiles[i].timer -= app->conf->delta_time;
 		else
-		{
-			//event to explode creates a new melee attack type explosion
-			if(app->projectiles[i].type == 18)
-				melee(app,(t_vector3){0.f,0.f,0.f}, ft_vec2_to_vec3(ft_vector2_sub(app->projectiles[i].start, ft_vec2_mult(app->projectiles[i].end, 0.25f)), app->projectiles[i].start_z - app->projectiles[i].end_z * 0.25f),(t_point){12,app->projectiles[i].sector});
-			app->projectiles[i].type = -1;
-			app->projectiles_active--;
-		}
+			kill_projectile(app, &(app->projectiles[i]));
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 17:44:23 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:53:16 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -494,5 +494,6 @@ void			melee(t_app *app, t_vector3 target_dir, t_vector3 start_pos,
 void			update_projectiles(t_app *app);
 void			init_projectiles(t_app *app);
 void			projectile_player_collision(t_app *app);
+void			kill_projectile(t_app *app, t_projectile *projectile);
 
 #endif

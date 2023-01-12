@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:17:11 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 17:47:28 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:55:32 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,10 +77,7 @@ static int	projectile_obj_collision(t_app *app, t_projectile *projectile, t_game
 	{
 		if((in_range(projectile->start, obj->position, PROJECTILE_COLLISION_X) || line_collision(app, projectile, obj))
 				&& in_range_height(projectile->start_z, obj->elevation + 0.5f, PROJECTILE_COLLISION_Y))
-		{
-			projectile->type = -1;
-			app->projectiles_active--;
-		}
+			kill_projectile(app,projectile);
 	}
 	return (0);
 }
@@ -103,8 +100,7 @@ void	projectile_player_collision(t_app *app)
 				{
 					//player take hit
 					damage(app, app->projectile_def[projectile->type - 11].damage);
-					projectile->type = -1;
-					app->projectiles_active--;
+					kill_projectile(app, projectile);
 				}
 			}
 			i--;
