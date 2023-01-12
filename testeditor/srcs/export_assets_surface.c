@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:57:52 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 20:00:20 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:22:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	export_surface(t_level_header *header, int index, int fd,
 		* IMAGE_PIXEL_BYTES;
 	if (write(fd, surface->pixels, header->asset_info[index].size) == -1)
 		exit_error(MSG_ERROR_FILE_WRITE);
+	SDL_FreeSurface(surface);
 }
 
 /**

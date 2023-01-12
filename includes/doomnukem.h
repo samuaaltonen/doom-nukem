@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 18:57:40 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:46:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -195,6 +195,7 @@ typedef struct s_app
 	t_player		player;
 	t_sky			sky;
 	t_sector		*sectors;
+	int				sector_count;
 	t_gameobject	objects[MAX_OBJECTS];
 	float			object_states[MAX_OBJECTS];
 	t_projectile	projectiles[MAX_TEMP_OBJECTS];
@@ -242,6 +243,12 @@ void			import_texts(t_app *app, t_thread_data *thread,
 					t_import_info *info);
 
 /**
+ * Data validation
+ */
+void			level_validation(t_app *app);
+void			level_validation_sectors(t_app *app);
+
+/**
  * error.c
  */
 void		exit_error(char *message);
@@ -249,7 +256,7 @@ void		exit_error(char *message);
 /**
  * Application
  */
-void		app_load(t_app *app);
+void		load_data(t_app *app);
 void		render_frame(t_app *app);
 void		app_loop(t_app *app);
 void		render_game(t_app *app);
@@ -330,6 +337,7 @@ t_bool		in_range_height(double pos, double obj, double epsilon);
 double		sector_floor_height(t_app *app, int sector_id, t_vector2 pos);
 double		sector_ceil_height(t_app *app, int sector_id, t_vector2 pos);
 double		sector_vertical_space(t_app *app, int sector_id, t_vector2 pos);
+t_vector2	get_wall_vector(t_app *app, int sector_id, int wall_id);
 t_line		get_wall_line(t_app *app, int sector_id, int wall_id);
 void		sector_wallstack_build(t_app *app);
 void		sector_visible_walls(t_app *app, t_wallstack *wallstack, int index,

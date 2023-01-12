@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:51:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 17:51:53 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:41:06 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,7 @@ void	*async_load(void *data)
  * 
  * @param app 
  */
-void	app_load(t_app *app)
+void	load_data(t_app *app)
 {
 	t_thread_data	thread;
 

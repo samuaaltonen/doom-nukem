@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:51:24 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/11 18:50:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:16:16 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,5 +50,7 @@ image assets."
 audio assets."
 # define MSG_ERROR_IMPORT_TEXT "Level file is invalid. Could not import \
 text data."
+
+# define MSG_ERROR_VALIDATION_SECTOR "Level file has invalid sector data."
 
 #endif

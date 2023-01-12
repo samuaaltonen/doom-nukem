@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
+#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 10:36:08 by saaltone          #+#    #+#              #
-#    Updated: 2023/01/05 15:12:05 by htahvana         ###   ########.fr        #
+#    Updated: 2023/01/12 15:38:03 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,7 +29,7 @@ FILES=ft_vector_length.c \
 	ft_line_point.c \
 	ft_line_side.c \
 	ft_vector_angle.c \
-	ft_vector_angle_right.c \
+	ft_vector_angle_left.c \
 	ft_vector_sub.c \
 	ft_vector_add.c \
 	ft_closest_point.c \

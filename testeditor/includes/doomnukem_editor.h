@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 20:44:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:13:18 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,7 +215,7 @@ typedef struct s_app
 	t_object			*current_object;
 	t_bool				imported;
 	t_bool				mouse_down;
-	int					sectorcount;
+	int					sector_count;
 	int					movement_speed;
 	int					event_id;
 	t_assets			assets;

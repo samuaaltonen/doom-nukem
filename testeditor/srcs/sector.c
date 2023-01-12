@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:36:45 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 14:12:03 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:13:16 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ t_sector_lst	*put_sector_lst(t_app *app, t_sector_lst *new)
 	}
 	else
 		app->sectors = new;
-	app->sectorcount++;
+	app->sector_count++;
 	return (new);
 }
 
@@ -110,7 +110,7 @@ t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop,
 		sector_delone(pop, del);
 		app->active_sector = NULL;
 		app->active = NULL;
-		app->sectorcount--;
+		app->sector_count--;
 	}
 	return (*pop);
 }
@@ -133,7 +133,7 @@ t_bool	complete_sector(t_app *app)
 	app->list_creation = FALSE;
 	new->parent_sector = app->active_sector;
 	add_member_sector(new->parent_sector, new);
-	change_walls_tex(new->wall_list, app->sectorcount);
+	change_walls_tex(new->wall_list, app->sector_count);
 	change_walls_type(app, new);
 	return (0);
 }

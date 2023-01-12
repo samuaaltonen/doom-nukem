@@ -6,12 +6,13 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 13:00:44 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/05 13:02:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:28:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef SECTORS_H
 # define SECTORS_H
+# define MAX_SECTOR_COUNT 4096
 
 typedef struct s_vec2_lst
 {

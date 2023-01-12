@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/11 19:10:40 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:44:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void	import_level(t_app *app, t_thread_data *thread, char *path)
 	import_objects(app, thread, &info);
 	import_interactions(app, thread, &info);
 	import_assets(app, thread, &info);
+	free(info.data);
 	info.imported = info.length;
 	import_update_progress(app, thread, &info);
-	free(info.data);
 }

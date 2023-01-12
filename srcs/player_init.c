@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/10 18:37:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:38:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	init_skybox_plane(t_app *app)
 	app->sky.size.x = WIN_W * 2;
 	app->sky.pixel_step.x = SKYBOX_W / (double)app->sky.size.x;
 	app->sky.pixel_step.y = SKYBOX_H / (double)app->sky.size.y;
-	app->sky.start.x = app->sky.size.x * ft_vector_angle_right(app->player.dir,
+	app->sky.start.x = app->sky.size.x * ft_vector_angle_left(app->player.dir,
 			(t_vector2){1.0, 0.0}) / M_PI;
 	app->sky.start.y = WIN_H * app->player.horizon - app->sky.size.y / 2;
 }

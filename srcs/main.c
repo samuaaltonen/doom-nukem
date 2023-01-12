@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:21:47 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 18:55:35 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:46:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	main(void)
 	sdl_init(app);
 	if (!config_init(app))
 		exit_error(NULL);
-	app_load(app);
+	load_data(app);
+	level_validation(app);
 	define_enemies(app);
 	app_loop(app);
 	return (0);
