@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 19:44:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:46:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,7 @@ typedef struct	s_projectile_def
 typedef struct s_enemy_state
 {
 	int					id;
+	double				hp;
 	t_vector2			pos;
 	t_vector2			dir;
 	t_bool				dead;
@@ -509,5 +510,6 @@ void			update_projectiles(t_app *app);
 void			init_projectiles(t_app *app);
 void			projectile_player_collision(t_app *app);
 void			kill_projectile(t_app *app, t_projectile *projectile);
+void			bullet_enemy_collisions(t_app *app);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:30:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 19:44:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:46:41 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,8 +64,6 @@ static void	avoid_walls(t_app *app, t_enemy_state *enemy)
 		}
 		enemy->dir = ft_vector2_normalize(ft_vector2_sub(app->objects[enemy->id].position, new));
 		app->objects[enemy->id].rot = ft_vector_angle_left((t_vector2){0.f,-1.f}, enemy->dir);
-		ft_printf("hit %i dir x%f, y%f new dir %f, %f, angle %f\n", temp, enemy->dir.x, enemy->dir.y, new.x, new.y, ft_vector_angle_left((t_vector2){0.f,1.f}, enemy->dir));
-
 	}
 }
 

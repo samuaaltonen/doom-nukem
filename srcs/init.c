@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 18:22:44 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:32:48 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	sdl_init(t_app *app)
 	SDL_ShowCursor(SDL_DISABLE);
 }
 
-void	define_enemies(t_app *app)
+void	define_projectiles(t_app *app)
 {
 	app->projectile_def[0].speed = 5.f;
 	app->projectile_def[0].damage = 25.f;
@@ -97,7 +97,10 @@ void	define_enemies(t_app *app)
 	app->projectile_def[7].speed = 10.f;
 	app->projectile_def[7].damage = 25.f;
 	app->projectile_def[7].size = (t_vector2){0.5f,0.5f};
+}
 
+void	define_enemy_0(t_app *app)
+{
 	app->enemy_def[0].state_count = 4;
 	app->enemy_def[0].range = 3.f;
 	app->enemy_def[0].speed = 2.f;
@@ -114,7 +117,10 @@ void	define_enemies(t_app *app)
 	app->enemy_def[0].states[3][0] = 5.f;
 	app->enemy_def[0].states[3][1] = 8.f;
 	app->enemy_def[0].states[3][2] = 5.f;
+}
 
+void	define_enemy_1(t_app *app)
+{
 	app->enemy_def[1].state_count = 4;
 	app->enemy_def[1].range = 1.f;
 	app->enemy_def[1].speed = 5.f;
@@ -131,7 +137,13 @@ void	define_enemies(t_app *app)
 	app->enemy_def[1].states[3][0] = 9.f;
 	app->enemy_def[1].states[3][1] = 12.f;
 	app->enemy_def[1].states[3][2] = 5.f;
-
+}
+void	define_enemies(t_app *app)
+{
+	define_projectiles(app);
+	define_enemy_0(app);
+	define_enemy_1(app);
+}
 /* 	app->enemy_def[2].state_count = 3;
 	app->enemy_def[2].states[0][0] = 0;
 	app->enemy_def[2].states[0][1] = 1;
@@ -141,7 +153,6 @@ void	define_enemies(t_app *app)
 	app->enemy_def[2].states[2][1] = 2;
 	app->enemy_def[2].states[3][0] = 0;
 	app->enemy_def[2].states[3][1] = 0; */
-}
 
 void	init_enemies(t_app *app)
 {
@@ -158,6 +169,7 @@ void	init_enemies(t_app *app)
 			&& app->objects[i].type < MONSTER1 + MAX_ENEMY_TYPES)
 		{
 			enemy->id = i;
+			enemy->hp = 50.f;
 			enemy->pos = app->objects[i].position;
 			enemy->dead = FALSE;
 			enemy->agressive = FALSE;
