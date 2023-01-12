@@ -6,23 +6,34 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 20:04:35 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 04:15:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:54:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * @brief Checks if player is actually inside a member sector and switches it
+ * @brief Checks if player is actually inside its sector. If not, move back to
+ * previous location.
+ *
+ * Also checks if player is actually inside a member sector and switches it
  * there if that is the case (can happen when 2 or more member sectors are on
  * top of each other and player is moving from one member sector to another).
  * 
  * @param app 
+ * @param old_sector 
+ * @param old_position 
  */
-void	check_player_sector(t_app *app)
+void	check_player_sector(t_app *app, int old_sector, t_vector2 old_position)
 {
 	int	i;
 
+	if (!inside_sector(app, app->player.sector, app->player.pos))
+	{
+		app->player.pos = old_position;
+		app->player.sector = old_sector;
+		return ;
+	}
 	if (app->sectors[app->player.sector].parent_sector != -1)
 		return ;
 	i = -1;

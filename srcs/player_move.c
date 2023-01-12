@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 16:04:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:55:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,14 +44,19 @@ static t_bool	limit_speed(t_app *app)
  */
 void	update_position(t_app *app)
 {
+	int			old_sector;
+	t_vector2	old_position;
+
 	update_elevation(app);
 	if (!limit_speed(app))
 		return ;
+	old_sector = app->player.sector;
+	old_position = app->player.pos;
 	app->player.move_pos = ft_vector2_add(app->player.pos,
 			ft_vec2_mult(app->player.move_vector, app->conf->delta_time));
 	collisions_check(app);
 	app->player.pos = collisions_apply(app);
-	check_player_sector(app);
+	check_player_sector(app, old_sector, old_position);
 }
 
 /**

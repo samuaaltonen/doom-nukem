@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 18:27:25 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:51:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -329,7 +329,7 @@ t_bool		portal_can_enter(t_app *app, t_vector3 pos, double height, t_line wall, 
 				int target_sector);
 void		portal_enter(t_app *app, int sector_id);
 t_bool		inside_sector(t_app *app, int sector_id, t_vector2 coord);
-void		check_player_sector(t_app *app);
+void		check_player_sector(t_app *app, int old_sector, t_vector2 old_position);
 int			enemy_move_check(t_app *app, t_move new, int sector_id, t_enemy_state *enemy);
 void		object_collision(t_app *app);
 t_bool		in_range(t_vector2 pos, t_vector2 obj, double epsilon);
