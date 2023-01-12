@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:51:24 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 18:17:53 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:28:22 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,5 +56,6 @@ text data."
 # define MSG_ERROR_VALIDATION_INTERACTION "Level file has invalid interaction \
 data."
 # define MSG_ERROR_VALIDATION_PLAYER "Level file has invalid player data."
+# define MSG_ERROR_VALIDATION_OBJECT "Level file has invalid object data."
 
 #endif

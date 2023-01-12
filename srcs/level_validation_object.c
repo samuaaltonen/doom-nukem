@@ -1,27 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   level_validation.c                                 :+:      :+:    :+:   */
+/*   level_validation_object.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/12 14:45:06 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 18:29:54 by saaltone         ###   ########.fr       */
+/*   Created: 2023/01/12 18:26:41 by saaltone          #+#    #+#             */
+/*   Updated: 2023/01/12 18:32:46 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * @brief Performs validation checks level data.
+ * @brief Checks if level object data is valid.
  * 
  * @param app 
  */
-void	level_validation(t_app *app)
+void	level_validation_objects(t_app *app)
 {
-	level_validation_sectors(app);
-	level_validation_assets(app);
-	level_validation_interactions(app);
-	level_validation_player(app);
-	level_validation_objects(app);
+	int	i;
+
+	i = -1;
+	while (++i < MAX_OBJECTS)
+	{
+		if (app->objects[i].sector < 0
+			|| app->objects[i].sector >= app->sector_count)
+			exit_error(MSG_ERROR_VALIDATION_OBJECT);
+	}
 }
