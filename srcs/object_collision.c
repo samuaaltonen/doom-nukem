@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:17:11 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 17:55:32 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:21:11 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	projectile_player_collision(t_app *app)
 		{
 			if(projectile->type < 15)
 			{
-				if(in_range( app->player.pos, projectile->start, PROJECTILE_COLLISION_X) && in_range_height(app->player.elevation + app->player.height, projectile->start_z, PROJECTILE_COLLISION_Y))
+				if(in_range( app->player.pos, projectile->start, app->projectile_def[projectile->type - 11].size.x) && in_range_height(app->player.elevation + app->player.height, projectile->start_z, app->projectile_def[projectile->type - 11].size.y))
 				{
 					//player take hit
 					damage(app, app->projectile_def[projectile->type - 11].damage);

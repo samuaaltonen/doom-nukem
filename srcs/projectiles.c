@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:01:41 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 17:55:17 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:27:10 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void	melee(t_app *app, t_vector3 target_dir, t_vector3 start_pos, t_point info)
 			app->projectiles[i].end = ft_vector2_normalize(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start));
 			app->projectiles[i].timer = 0.25f;
 			if(!(app->projectiles[i].type == 0))
-				app->projectiles[i].start = ft_vector2_add(app->projectiles[i].start, app->projectiles[i].end);
+				app->projectiles[i].start = ft_vector2_add(app->projectiles[i].start, ft_vec2_mult(app->projectiles[i].end, 0.5f));
 			app->projectiles[i].end = (t_vector2){0.f,0.f};
 			app->projectiles[i].end_z = 0.f;
 			app->projectiles_active++;

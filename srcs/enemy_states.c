@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:30:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 16:48:28 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:17:39 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,20 @@ static void	avoid_walls(t_app *app, t_enemy_state *enemy)
 	}
 }
 
+static void	enemy_attack_check(t_app *app, t_enemy_state *state, int define)
+{
+	if(state->agressive && state->state == WALK
+			&& in_range(app->player.pos, app->objects[state->id].position, app->enemy_def[define].range)
+			&& in_range_height(app->player.elevation, app->objects[state->id].elevation, app->enemy_def[define].range))
+	{
+		app->objects[state->id].rot = ft_vector_angle_right((t_vector2){0.f,1.f},ft_vector2_sub(app->objects[state->id].position, app->player.pos));
+		state->dir = ft_vector2_normalize(ft_vector2_sub(app->player.pos, app->objects[state->id].position));
+		state->state = ATTACK;
+		app->object_states[state->id] = app->enemy_def[define].states[state->state][0];
+		state->next = ATTACK;
+	}
+}
+
 static void check_enemy(t_app *app, t_enemy_state *state, int define)
 {
 
@@ -106,6 +120,8 @@ static void enemy_states(t_app *app, t_enemy_state *state, int define)
 
 		app->object_states[state->id] += (float)app->conf->delta_time * app->enemy_def[define].states[state->state][2];
 
+		if(state->state == WALK && define == 1)
+			enemy_attack_check(app, state, define);
 		if(state->state == DEATH && app->object_states[state->id] > app->enemy_def[define].states[state->state][1] - 1)
 			state->dead = TRUE;
 		else if(state->state == ATTACK && state->next == ATTACK && app->enemy_def[define].attack_speed < app->object_states[state->id])

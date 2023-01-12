@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 17:53:16 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:19:48 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ enum e_enemy_states
  * 
  * if object doesn't have death, it won't have walk either and so on
  * state count implies if it has just idle(0) or idle and attack(1) and so on
- * states[4][2] 4 states, state sheet start and animation frame duration 
+ * states[4][3] 4 states, state sheet start and animation frame duration 
  */
 typedef struct s_enemy_def
 {
@@ -121,6 +121,7 @@ typedef struct	s_projectile_def
 {
 	double	speed;
 	double	damage;
+	t_vector2	size;
 }	t_projectile_def;
 
 typedef struct s_enemy_state

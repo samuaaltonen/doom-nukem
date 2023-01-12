@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 17:43:30 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/12 18:22:44 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,20 +75,28 @@ void	define_enemies(t_app *app)
 {
 	app->projectile_def[0].speed = 5.f;
 	app->projectile_def[0].damage = 25.f;
+	app->projectile_def[0].size = (t_vector2){0.5f,0.5f};
 	app->projectile_def[1].speed = 5.f;
 	app->projectile_def[1].damage = 25.f;
+	app->projectile_def[1].size = (t_vector2){0.5f,0.5f};
 	app->projectile_def[2].speed = 8.f;
 	app->projectile_def[2].damage = 25.f;
+	app->projectile_def[2].size = (t_vector2){0.5f,0.5f};
 	app->projectile_def[3].speed = 8.f;
 	app->projectile_def[3].damage = 25.f;
+	app->projectile_def[3].size = (t_vector2){0.5f,0.5f};
 	app->projectile_def[4].speed = 8.f;
 	app->projectile_def[4].damage = 25.f;
+	app->projectile_def[4].size = (t_vector2){0.5f,0.5f};
 	app->projectile_def[5].speed = 8.f;
 	app->projectile_def[5].damage = 25.f;
+	app->projectile_def[5].size = (t_vector2){0.5f,0.5f};
 	app->projectile_def[6].speed = 10.f;
 	app->projectile_def[6].damage = 25.f;
+	app->projectile_def[6].size = (t_vector2){0.5f,0.5f};
 	app->projectile_def[7].speed = 10.f;
 	app->projectile_def[7].damage = 25.f;
+	app->projectile_def[7].size = (t_vector2){0.5f,0.5f};
 
 	app->enemy_def[0].state_count = 4;
 	app->enemy_def[0].range = 3.f;
