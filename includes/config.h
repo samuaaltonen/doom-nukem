@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 15:08:28 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:19:10 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@
 # define MAX_TEMP_OBJECTS 64
 # define MAX_INTERACTIONS 64
 # define MAX_UNIQUE_INTERACTIONS 7
-# define MAX_DECOR 10
+# define MAX_TEX_COUNT 73
+# define MAX_DECOR_COUNT 10
 # define PARTIALLY_TRANSPARENT_TEXTURE_ID 0
 # define FULLY_TRANSPARENT_TEXTURE_ID 1
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tex_icons.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:36:43 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/30 13:31:55 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:19:10 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	find_max(t_app *app, SDL_Surface *asset)
 	if (asset == app->assets.objects)
 		return (MAX_UNIQUE_OBJECTS);
 	// if (asset == app->assets.decor)
-	// 	return (MAX_DECOR);
+	// 	return (MAX_DECOR_COUNT);
 	return (0);
 }
 

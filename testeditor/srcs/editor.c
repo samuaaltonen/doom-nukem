@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editor.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/04 14:50:13 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:19:10 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	edit_up_key_changes(t_app *app, double increment)
 		&& !app->ceiling_edit)
 	{
 		app->active->decor++;
-		if (app->active->decor > MAX_DECOR)
+		if (app->active->decor > MAX_DECOR_COUNT)
 		{
 			app->active->decor = -1;
 			del_all_decor_interactions(app);
@@ -60,7 +60,7 @@ static void	edit_down_key_changes(t_app *app, double increment)
 		if (app->active->decor == -1)
 			del_all_decor_interactions(app);
 		if (app->active->decor < -1)
-			app->active->decor = MAX_DECOR;
+			app->active->decor = MAX_DECOR_COUNT;
 	}
 	if (app->decor_edit && app->active && !app->floor_edit
 		&& !app->ceiling_edit && app->active->decor != -1)

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/11 18:56:35 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:09:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,30 +24,6 @@
 # define DEFAULT_AUDIO_SAMPLES		4096
 # define PROGRESS_BAR_FRAME_COLOR	0xff0099f2
 # define PROGRESS_BAR_COLOR			0xff00def2
-# define PANELS_PATH		"assets/textures/spritesheet_full.bmp"
-# define SKYBOX_PATH		"assets/images/skybox.bmp"
-# define FONT_PATH			"assets/fonts/sci-fi_font.bmp"
-# define UI_FRAME_PATH		"assets/ui/ui_frame.bmp"
-# define TITLESCREEN_PATH	"assets/images/awakened3.bmp"
-# define CROSSHAIR_PATH		"assets/ui/crosshair.bmp"
-# define POINTER_PATH		"assets/ui/mouse_pointer.bmp"
-# define SHIELD_PATH		"assets/ui/shield.bmp"
-# define HP_PATH			"assets/ui/hp.bmp"
-# define PISTOL_PATH		"assets/textures/pistol.bmp"
-# define BULLET_PATH		"assets/textures/bullet.bmp"
-# define METER_PATH			"assets/ui/meter.bmp"
-# define PICKUP_PATH		"assets/images/Objects_small_sheet.bmp"
-# define OBJECT_PATH		"assets/images/Objects_Big_sheet.bmp"
-# define MONSTER_1_PATH		"assets/images/Monster1_full_sheet.bmp"
-# define MONSTER_2_PATH		"assets/images/Monster2_full_sheet.bmp"
-# define SPRITE_PATH		"assets/images/Projectiles.bmp"
-# define WEAPON_HD_PATH		"assets/images/weapon_cannon4.bmp"
-# define MUSIC_PATH			"assets/sounds/title_music.wav"
-# define SOUND_LASER_PATH	"assets/sounds/laser.wav"
-# define SOUND_SHOT_PATH	"assets/sounds/pistol_shot.wav"
-# define SOUND_RELOAD_PATH	"assets/sounds/pistol_reload.wav"
-# define SOUND_BUMP_PATH	"assets/sounds/bump.wav"
-# define TEXTS_PATH			"assets/texts/texts.txt"
 # define MAP_PATH			"./testeditor/test.test"
 # define MAX_SPRITES 5
 

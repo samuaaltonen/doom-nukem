@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 15:13:18 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 16:19:10 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define MAX_UNIQUE_OBJECTS 64
 # define MAX_INTERACTIONS 64
 # define MAX_UNIQUE_INTERACTIONS 7
-# define MAX_DECOR 10
+# define MAX_DECOR_COUNT 10
 # define MAX_AMMO 999
 # define MAX_ITEM_CAPACITY 99
 # define MAX_OBJECTS 128
