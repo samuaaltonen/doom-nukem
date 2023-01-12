@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:35:37 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/11 18:40:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:11:22 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ void	play_music(t_app *app)
 {
 	if (SDL_GetQueuedAudioSize(app->audio.device_id) == 0 && app->audio.music)
 	{
+		SDL_FreeWAV(app->audio.music);
+		if (!SDL_LoadWAV_RW(SDL_RWFromConstMem(app->audio.data[AUDIO_MUSIC],
+				app->audio.data_lengths[AUDIO_MUSIC]), 1,
+			&app->audio.wav_spec, &app->audio.music, &app->audio.music_length))
+			exit_error(MSG_ERROR_LOAD_WAV);
 		SDL_QueueAudio(app->audio.device_id, app->audio.music,
 			app->audio.music_length);
 		SDL_PauseAudioDevice(app->audio.device_id, 0);
