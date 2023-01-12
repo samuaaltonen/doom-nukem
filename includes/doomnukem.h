@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 16:38:42 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:44:23 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,6 +117,12 @@ typedef struct s_enemy_def
 	float				states[4][3];
 }	t_enemy_def;
 
+typedef struct	s_projectile_def
+{
+	double	speed;
+	double	damage;
+}	t_projectile_def;
+
 typedef struct s_enemy_state
 {
 	int					id;
@@ -201,6 +207,7 @@ typedef struct s_app
 	int					projectiles_active;
 	t_enemy_state		enemies[MAX_OBJECTS];
 	t_enemy_def			enemy_def[MAX_ENEMY_TYPES];
+	t_projectile_def	projectile_def[MAX_PROJECTILES];
 	t_interaction		interactions[MAX_INTERACTIONS];
 	t_animation			animations[MAX_CONCURRENT_ANIMATIONS];
 	int					animation_count;
@@ -486,5 +493,6 @@ void			melee(t_app *app, t_vector3 target_dir, t_vector3 start_pos,
 					t_point info);
 void			update_projectiles(t_app *app);
 void			init_projectiles(t_app *app);
+void			projectile_player_collision(t_app *app);
 
 #endif

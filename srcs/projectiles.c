@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:01:41 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 17:18:24 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:46:23 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	fire(t_app *app, t_vector3 target_dir, t_vector3 start_pos, t_point info)
 			app->projectiles[i].type = info.x;				
 			app->projectiles[i].sector = info.y;
 			calc_end(app, &(app->projectiles[i]), target_dir);
-			app->projectiles[i].timer = ft_vector_length(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start)) / app->conf->projectile_speed[app->projectiles[i].type - 11];
+			app->projectiles[i].timer = ft_vector_length(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start)) / app->projectile_def[app->projectiles[i].type - 11].speed;
 			app->projectiles[i].end = ft_vector2_normalize(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start));
 			if(app->projectiles[i].type == 15)
 			{
@@ -135,7 +135,7 @@ void	melee(t_app *app, t_vector3 target_dir, t_vector3 start_pos, t_point info)
 			app->projectiles[i].type = info.x;				
 			app->projectiles[i].sector = info.y;
 			calc_end(app, &(app->projectiles[i]), target_dir);
-			app->projectiles[i].timer = ft_vector_length(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start)) / app->conf->projectile_speed[app->projectiles[i].type - 11];
+			app->projectiles[i].timer = ft_vector_length(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start)) / app->projectile_def[app->projectiles[i].type - 11].speed;
 			app->projectiles[i].end = ft_vector2_normalize(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start));
 			app->projectiles[i].timer = 0.25f;
 			if(!(app->projectiles[i].type == 0))
@@ -157,8 +157,8 @@ void	update_projectiles(t_app *app)
 	{
 		if(app->projectiles[i].type == -1)
 			continue;
-		app->projectiles[i].start = ft_vector2_add(app->projectiles[i].start,ft_vec2_mult(app->projectiles[i].end, app->conf->delta_time * app->conf->projectile_speed[app->projectiles[i].type - 11]));
-		app->projectiles[i].start_z += app->projectiles[i].end_z * app->conf->delta_time * app->conf->projectile_speed[app->projectiles[i].type - 11];
+		app->projectiles[i].start = ft_vector2_add(app->projectiles[i].start,ft_vec2_mult(app->projectiles[i].end, app->conf->delta_time * app->projectile_def[app->projectiles[i].type - 11].speed));
+		app->projectiles[i].start_z += app->projectiles[i].end_z * app->conf->delta_time * app->projectile_def[app->projectiles[i].type - 11].speed;
 		if(app->projectiles[i].timer > 0)
 			app->projectiles[i].timer -= app->conf->delta_time;
 		else

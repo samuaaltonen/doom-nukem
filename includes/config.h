@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 15:58:49 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:44:54 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,6 @@ typedef struct s_conf
 	int				fov;
 	int				keystates;
 	int				buttonstates;
-	double			projectile_speed[MAX_PROJECTILES];
 	int				mouse_active;
 }	t_conf;
 

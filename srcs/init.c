@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/11 18:57:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 17:43:30 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,14 +73,22 @@ void	sdl_init(t_app *app)
 
 void	define_enemies(t_app *app)
 {
-	app->conf->projectile_speed[0] = 5.f;
-	app->conf->projectile_speed[1] = 5.f;
-	app->conf->projectile_speed[2] = 8.f;
-	app->conf->projectile_speed[3] = 8.f;
-	app->conf->projectile_speed[4] = 8.f;
-	app->conf->projectile_speed[5] = 8.f;
-	app->conf->projectile_speed[6] = 10.f;
-	app->conf->projectile_speed[7] = 10.f;
+	app->projectile_def[0].speed = 5.f;
+	app->projectile_def[0].damage = 25.f;
+	app->projectile_def[1].speed = 5.f;
+	app->projectile_def[1].damage = 25.f;
+	app->projectile_def[2].speed = 8.f;
+	app->projectile_def[2].damage = 25.f;
+	app->projectile_def[3].speed = 8.f;
+	app->projectile_def[3].damage = 25.f;
+	app->projectile_def[4].speed = 8.f;
+	app->projectile_def[4].damage = 25.f;
+	app->projectile_def[5].speed = 8.f;
+	app->projectile_def[5].damage = 25.f;
+	app->projectile_def[6].speed = 10.f;
+	app->projectile_def[6].damage = 25.f;
+	app->projectile_def[7].speed = 10.f;
+	app->projectile_def[7].damage = 25.f;
 
 	app->enemy_def[0].state_count = 4;
 	app->enemy_def[0].range = 3.f;
