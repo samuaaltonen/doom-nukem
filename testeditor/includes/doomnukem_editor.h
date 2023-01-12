@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 11:17:00 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:50:56 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -488,8 +488,7 @@ void			render_link_interaction_info(t_app *app, int start_y,
 void			render_interaction_link_lines(t_app *app);
 int				get_current_interaction_count(t_app *app, int interaction);
 
-void			fill_triangle(t_app *app, t_point a, t_point b, t_point c,
-					int color);
+void			fill_triangle(t_app *app, t_triangle triangle, int color);
 void			draw_point_line(t_app *app, t_point a, t_point b, int color);
 
 #endif

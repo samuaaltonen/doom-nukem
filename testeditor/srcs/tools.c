@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/11 19:28:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:46:08 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ t_vec2_lst	*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point)
 		head = head->next;
 	}
 	return (selection);
-	//ft_printf("opposite distance %f, \n", ft_vector_length(c) * ( sin(ft_vector_angle(line, c))));
 }
 
 t_sector_lst	*sector_by_index(t_app *app, int index)

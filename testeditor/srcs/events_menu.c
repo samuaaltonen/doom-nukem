@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:38:26 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/11 13:51:13 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/12 13:14:34 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,13 +60,16 @@ static void	no_interaction_check(t_app *app)
 /**
  * Updates the target sector for the current interaction based on mouse click.
 */
-static void	update_target_sector(t_app *app)
+static void	update_target_sector(t_app *app, t_point screen_pos)
 {
-	app->current_interaction->target_sector = find_child_sector(app);
-	if (!app->current_interaction->target_sector)
-		app->current_interaction->target_sector = click_sector(app);
-	if (!app->current_interaction->target_sector)
-		app->current_interaction->target_sector = app->active_sector;
+	if (screen_pos.x > HELP_MENU_W)
+	{
+		app->current_interaction->target_sector = find_child_sector(app);
+		if (!app->current_interaction->target_sector)
+			app->current_interaction->target_sector = click_sector(app);
+		if (!app->current_interaction->target_sector)
+			app->current_interaction->target_sector = app->active_sector;
+	}
 }
 
 /**
@@ -77,8 +80,7 @@ static void	update_target_sector(t_app *app)
 */
 void	interaction_menu_events(t_app *app, int start_y, t_point screen_pos)
 {
-	if (screen_pos.x > HELP_MENU_W)
-		update_target_sector(app);
+	update_target_sector(app, screen_pos);
 	if (check_mouse(screen_pos, (t_rect){90, start_y + 25, 113, 15}))
 		no_interaction_check(app);
 	if (check_mouse(screen_pos, (t_rect){100, start_y + 40, 93, 15}))
