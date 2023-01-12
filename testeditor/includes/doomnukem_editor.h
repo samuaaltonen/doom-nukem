@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 20:44:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 11:17:00 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,10 @@ enum e_colors {
 
 typedef struct s_draw_line
 {
-	t_point	dif;
-	t_point	pos;
-	int		d;
-	int		err;
+	t_point			dif;
+	t_point			pos;
+	int				d;
+	int				err;
 }	t_draw_line;
 
 /**
@@ -135,16 +135,20 @@ typedef struct s_object
  * 7 activate end level
  * 0 no events, array delimited by 0
  * 
- * if activation_sector is NULL/-1, activator will be the activator_id in the object array
- * if activation_sector is set & activation_object is -1, the sector itself is the activator
- * if active_sector is set & activation_object is set, the activator is the decor on the wall_id declared by activation_object in active sector
- * if the activator is in the object array & the type of the object is an enemy, it only triggers when the enemy dies
+ * If activation_sector is NULL/-1, activator will be the activator_id in the
+ * object array.
+ * If activation_sector is set & activation_object is -1, the sector itself
+ * is the activator.
+ * If active_sector is set & activation_object is set, the activator is the
+ * decor on the wall_id declared by activation_object in active sector.
+ * If the activator is in the object array & the type of the object is an enemy,
+ * it only triggers when the enemy dies.
  * target_sector & target_id will be the same in saves
  */
 typedef struct s_interaction
 {
 	int				event_id;
-	double 			variable;
+	double			variable;
 	double			editable;
 	t_sector_lst	*activation_sector;
 	t_vec2_lst		*activation_wall;
@@ -157,8 +161,8 @@ typedef struct s_interaction
  */
 typedef struct s_font
 {
-	SDL_Surface	*font;
-	int			size;
+	SDL_Surface		*font;
+	int				size;
 }	t_font;
 
 /**
@@ -180,52 +184,51 @@ typedef struct s_assets
  */
 typedef struct s_app
 {
-	int					keystates;
-	int					toggle_help;
-	int					zoom_range;
-	SDL_Window			*win;
-	SDL_Surface			*surface;
-	double				divider;
-	double				aspect_ratio;
-	t_vector2			view_pos;
-	t_vector2			view_size;
-	t_vector2			zoom_area;
-	t_vector2			mouse_click;
-	t_vector2			mouse_track;
-	t_sector_lst		*sectors;
-	t_sector_lst		*active_sector;
-	t_vec2_lst			*active;
-	t_vec2_lst			*active_last;
-	t_bool				list_creation;
-	t_bool				list_ongoing;
-	t_bool				portal_selection;
-	t_bool				var_edit;
-	t_bool				wall_edit;
-	t_bool				ceiling_edit;
-	t_bool				floor_edit;
-	t_bool				light_edit;
-	t_bool				slope_edit;
-	t_bool				player_edit;
-	t_bool				player_menu;
-	t_bool				object_new;
-	t_bool				object_menu;
-	t_bool				interaction_menu;
-	t_bool				decor_edit;
-	t_interaction		*current_interaction;
-	t_object			*current_object;
-	t_bool				imported;
-	t_bool				mouse_down;
-	int					sectorcount;
-	int					movement_speed;
-	int					event_id;
-	t_assets			assets;
-	t_player			player;
-	t_object			objects[MAX_OBJECTS];
-	int					object_count;
-	t_interaction		interactions[MAX_INTERACTIONS];
-	int					interaction_count;
-	int					selected[INVENTORY_SIZE];
-
+	int				keystates;
+	int				toggle_help;
+	int				zoom_range;
+	SDL_Window		*win;
+	SDL_Surface		*surface;
+	double			divider;
+	double			aspect_ratio;
+	t_vector2		view_pos;
+	t_vector2		view_size;
+	t_vector2		zoom_area;
+	t_vector2		mouse_click;
+	t_vector2		mouse_track;
+	t_sector_lst	*sectors;
+	t_sector_lst	*active_sector;
+	t_vec2_lst		*active;
+	t_vec2_lst		*active_last;
+	t_bool			list_creation;
+	t_bool			list_ongoing;
+	t_bool			portal_selection;
+	t_bool			var_edit;
+	t_bool			wall_edit;
+	t_bool			ceiling_edit;
+	t_bool			floor_edit;
+	t_bool			light_edit;
+	t_bool			slope_edit;
+	t_bool			player_edit;
+	t_bool			player_menu;
+	t_bool			object_new;
+	t_bool			object_menu;
+	t_bool			interaction_menu;
+	t_bool			decor_edit;
+	t_interaction	*current_interaction;
+	t_object		*current_object;
+	t_bool			imported;
+	t_bool			mouse_down;
+	int				sectorcount;
+	int				movement_speed;
+	int				event_id;
+	t_assets		assets;
+	t_player		player;
+	t_object		objects[MAX_OBJECTS];
+	int				object_count;
+	t_interaction	interactions[MAX_INTERACTIONS];
+	int				interaction_count;
+	int				selected[INVENTORY_SIZE];
 }	t_app;
 
 /**
@@ -264,7 +267,7 @@ void			put_pixel_to_surface(SDL_Surface *surface, int x,
 					int y, int color);
 void			flush_surface(SDL_Surface *surface);
 int				get_pixel_color(SDL_Surface *surface, int x, int y);
-SDL_Surface		*bmp_to_surface(const char *path);;
+SDL_Surface		*bmp_to_surface(const char *path);
 
 /**
  * Events
@@ -278,7 +281,8 @@ int				events_window_other(int windowevent, t_app *app);
 int				dispatch_event(t_app *app, SDL_Event *event);
 int				events_mouse_drag(t_app *app);
 void			player_menu_events(t_app *app, t_point	screen_pos);
-void			interaction_menu_events(t_app *app, int start_y, t_point screen_pos);
+void			interaction_menu_events(t_app *app, int start_y,
+					t_point screen_pos);
 void			activate_interaction_menu(t_app *app, t_point screen_pos);
 void			edit_left_key_changes(t_app *app, SDL_Keycode key);
 void			edit_right_key_changes(t_app *app, SDL_Keycode key);
@@ -407,19 +411,27 @@ void			render_help_menu(t_app *app);
 void			set_icon_rect(t_rect *rect, t_point point, t_point size);
 void			load_assets(t_app *app);
 void			render_texture_icons(t_app *app);
-void			render_player_icons(t_app *app, SDL_Surface *asset, t_point point, int max);
-void			render_statusbar(t_app *app, t_point point, int statusbar, int color);
+void			render_player_icons(t_app *app, SDL_Surface *asset,
+					t_point point, int max);
+void			render_statusbar(t_app *app, t_point point, int statusbar,
+					int color);
 void			render_arrows(t_app *app, t_point left, t_point right);
-void			render_up_and_down_arrows(t_app *app, t_point up, t_point down, int size);
-void			render_ui_frame(t_app *app,t_rect area, int size, int background);
+void			render_up_and_down_arrows(t_app *app, t_point up, t_point down,
+					int size);
+void			render_ui_frame(t_app *app, t_rect area, int size,
+					int background);
 void			color_surface(SDL_Surface *surface, int color);
 void			change_item_amount(t_app *app, SDL_Keycode key);
 void			render_weapons(t_app *app);
 void			render_object_statics(t_app *app);
-void			render_icons(t_app *app, t_point point, int id, SDL_Surface *asset);
-void			interaction_edit_menu(t_app *app, int start_y, t_point screen_pos);
-void			render_interaction_button(t_app *app, t_rect button, t_point mouse, char *text);
-void			render_current_interaction_status(t_app *app, t_point screen_pos, int y, int id);
+void			render_icons(t_app *app, t_point point, int id,
+					SDL_Surface *asset);
+void			interaction_edit_menu(t_app *app, int start_y,
+					t_point screen_pos);
+void			render_interaction_button(t_app *app, t_rect button,
+					t_point mouse, char *text);
+void			render_current_interaction_status(t_app *app,
+					t_point screen_pos, int y, int id);
 void			render_inventory(t_app *app);
 void			select_inventory(t_app *app, t_point screen_pos);
 void			select_weapons(t_app *app, t_point screen_pos);
@@ -461,20 +473,23 @@ void			interaction_edit(t_app *app, SDL_Keycode keycode);
 int				interaction_sector_check(t_app *app, t_sector_lst *sector);
 int				interaction_wall_check(t_app *app, t_vec2_lst *wall);
 int				interaction_object_check(t_app *app, int id);
-int				find_decor_interaction(t_app *app, int start_id, t_bool direction);
-int				find_object_interaction(t_app *app, int start_id, t_bool direction);
-int				find_sector_interaction(t_app *app, int start_id, t_bool direction);
+int				find_decor_interaction(t_app *app, int start_id,
+					t_bool direction);
+int				find_object_interaction(t_app *app, int start_id,
+					t_bool direction);
+int				find_sector_interaction(t_app *app, int start_id,
+					t_bool direction);
 int				find_interaction(t_app *app);
 void			delete_interaction(t_app *app, int id);
 void			del_all_decor_interactions(t_app *app);
 void			render_target_sector_lines(t_app *app);
-void			render_link_interaction_info(t_app *app, int start_y, t_point mouse);
+void			render_link_interaction_info(t_app *app, int start_y,
+					t_point mouse);
 void			render_interaction_link_lines(t_app *app);
 int				get_current_interaction_count(t_app *app, int interaction);
 
-
-void	fill_triangle(t_app *app, t_point a, t_point b, t_point c, int color);
-void	draw_point_line(t_app *app, t_point a, t_point b, int color);
-
+void			fill_triangle(t_app *app, t_point a, t_point b, t_point c,
+					int color);
+void			draw_point_line(t_app *app, t_point a, t_point b, int color);
 
 #endif

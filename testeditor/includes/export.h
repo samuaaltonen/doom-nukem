@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 19:11:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 11:19:40 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,17 +122,17 @@ typedef struct s_export_player
 
 typedef struct s_export_object
 {
-	int			type;
-	double		var;
-	t_vector2	pos;
-	double		elevation;
-	int			sector;
+	int				type;
+	double			var;
+	t_vector2		pos;
+	double			elevation;
+	int				sector;
 }	t_export_object;
 
-typedef struct	s_export_interaction
+typedef struct s_export_interaction
 {
 	int				event_id;
-	double 			variable;
+	double			variable;
 	double			editable;
 	int				activation_sector;
 	int				activation_wall;
@@ -140,14 +140,14 @@ typedef struct	s_export_interaction
 	int				target_sector;
 }	t_export_interaction;
 
-typedef struct	s_export_asset
+typedef struct s_export_asset
 {
-	int	size;
-	int	width;
-	int	height;
+	int				size;
+	int				width;
+	int				height;
 }	t_export_asset;
 
-typedef struct	s_level_header
+typedef struct s_level_header
 {
 	int				version;
 	int				sector_count;
