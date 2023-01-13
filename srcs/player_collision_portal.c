@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_collision_portal.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 19:55:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 18:21:24 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/13 18:27:20 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,35 @@ t_bool	portal_can_enter(t_app *app, t_vector3 pos, double height, t_line wall,
 		return (FALSE);
 	if (target_ceil < pos.z + height
 		+ COLLISION_CEIL && source_ceil - MAX_STEP > target_ceil)
+		return (FALSE);
+	return (TRUE);
+}
+
+t_bool	portal_can_enter_(t_app *app, t_vector3 pos, double height, t_line wall,
+	int source_sector, int target_sector)
+{
+	t_vector2	check_pos;
+	double		source_floor;
+	double		source_ceil;
+	double		target_floor;
+	double		target_ceil;
+
+	check_pos = ft_closest_point((t_vector2){pos.x, pos.y}, wall);
+	source_floor = sector_floor_height(app, source_sector, check_pos);
+	source_ceil = sector_ceil_height(app, source_sector, check_pos);
+	target_floor = sector_floor_height(app, target_sector, check_pos);
+	target_ceil = sector_ceil_height(app, target_sector, check_pos);
+	if (pos.z < target_floor
+		&& source_floor < target_floor)
+		return (FALSE);
+	if (target_ceil < pos.z + height
+		+ COLLISION_CEIL && source_ceil > target_ceil)
+		return (FALSE);
+	if (pos.z < source_floor
+		&& target_floor < source_floor)
+		return (FALSE);
+	if (source_ceil < pos.z + height
+		+ COLLISION_CEIL && target_ceil > source_ceil)
 		return (FALSE);
 	return (TRUE);
 }
