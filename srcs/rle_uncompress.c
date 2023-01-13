@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 22:11:34 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/10 15:54:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/13 17:10:59 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,7 @@ void	rle_uncompress_data(const char *source, unsigned char **data,
 	int				allocated;
 
 	source_data = read_source(source, &source_length);
+	ft_printf("source read\n");
 	allocated = 0;
 	*length = 0;
 	i = 0;
@@ -89,5 +90,7 @@ void	rle_uncompress_data(const char *source, unsigned char **data,
 		*length += 1;
 		i++;
 	}
+	ft_printf("source expanded\n");
 	free(source_data);
+	ft_printf("free source data\n");
 }

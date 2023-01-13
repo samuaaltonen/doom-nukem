@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 19:44:17 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/13 18:39:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define MOUSE_SENSITIVITY_HORIZONTAL 0.2
 # define MOUSE_SENSITIVITY_VERTICAL 0.2
 # define MAX_SECTOR_COUNT 4096
+# define MIN_SECTOR_CORNERS 3
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 16
 # define MAX_VISIBLE_SECTORS 64
