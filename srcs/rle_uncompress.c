@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 22:11:34 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/13 17:10:59 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/13 19:13:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,16 +62,18 @@ static t_bool	found_sequence(int index, int source_length, int length,
  * @param data 
  * @param length 
  */
-void	rle_uncompress_data(const char *source, unsigned char **data,
-	int *length)
+void	rle_uncompress_data(t_import_info *info, const char *source,
+	unsigned char **data, int *length)
 {
 	unsigned char	*source_data;
 	int				source_length;
 	int				i;
 	int				allocated;
 
+	(void)info;
+	ft_printf("Reading source\n");
 	source_data = read_source(source, &source_length);
-	ft_printf("source read\n");
+	ft_printf("Uncompressing source\n");
 	allocated = 0;
 	*length = 0;
 	i = 0;
@@ -89,8 +91,8 @@ void	rle_uncompress_data(const char *source, unsigned char **data,
 		(*data)[*length] = source_data[i];
 		*length += 1;
 		i++;
+		uncompression_update_progress(&info);
 	}
-	ft_printf("source expanded\n");
+	ft_printf("Compressing ready\n");
 	free(source_data);
-	ft_printf("free source data\n");
 }

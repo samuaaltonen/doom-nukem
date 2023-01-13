@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:47:29 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 16:52:55 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/13 18:53:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @param thread 
  * @param info 
  */
-void	import_texts(t_app *app, t_thread_data *thread, t_import_info *info)
+void	import_texts(t_app *app, t_import_info *info)
 {
 	t_export_asset	asset_info;
 	char			buffer[MAX_TEXT_LINES * MAX_TEXT_LINE_LENGTH + 1];
@@ -40,5 +40,5 @@ void	import_texts(t_app *app, t_thread_data *thread, t_import_info *info)
 		app->text_lengths[i] = ft_strlen(app->texts[i]);
 		i++;
 	}
-	import_update_progress(app, thread, info);
+	import_update_progress(info);
 }

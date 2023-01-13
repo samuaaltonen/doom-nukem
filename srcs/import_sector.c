@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:06:54 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/13 18:40:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/13 18:55:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,7 +139,7 @@ static void	read_sector(t_app *app, t_export_sector *export, int sectorid)
  * @param available 
  * @return int 
  */
-void	import_sectors(t_app *app, t_thread_data *thread, t_import_info *info)
+void	import_sectors(t_app *app, t_import_info *info)
 {
 	t_export_sector	export;
 	int				i;
@@ -165,5 +165,5 @@ void	import_sectors(t_app *app, t_thread_data *thread, t_import_info *info)
 			exit_error(MSG_ERROR_IMPORT_SECTOR);
 		read_sector(app, &export, i);
 	}
-	import_update_progress(app, thread, info);
+	import_update_progress(info);
 }

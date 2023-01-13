@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/13 17:20:44 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/13 19:12:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,7 @@
  * @param available 
  * @return int 
  */
-static void	import_player(t_app *app, t_thread_data *thread,
-	t_import_info *info)
+static void	import_player(t_app *app, t_import_info *info)
 {
 	t_export_player		player;
 
@@ -39,7 +38,7 @@ static void	import_player(t_app *app, t_thread_data *thread,
 			app->player.pos);
 	ft_memcpy(&app->player.inventory, &player.inventory, sizeof(t_inventory));
 	info->imported += (int) sizeof(t_export_player);
-	import_update_progress(app, thread, info);
+	import_update_progress(info);
 }
 
 /**
@@ -50,8 +49,7 @@ static void	import_player(t_app *app, t_thread_data *thread,
  * @param available 
  * @return int 
  */
-static void	import_objects(t_app *app, t_thread_data *thread,
-	t_import_info *info)
+static void	import_objects(t_app *app, t_import_info *info)
 {
 	t_object	import;
 	int			i;
@@ -71,7 +69,7 @@ static void	import_objects(t_app *app, t_thread_data *thread,
 		app->objects[i].var = import.var;
 		app->objects[i].rot = 0.f;
 	}
-	import_update_progress(app, thread, info);
+	import_update_progress(info);
 }
 
 /**
@@ -82,8 +80,7 @@ static void	import_objects(t_app *app, t_thread_data *thread,
  * @param available 
  * @return int 
  */
-static void	import_interactions(t_app *app, t_thread_data *thread,
-	t_import_info *info)
+static void	import_interactions(t_app *app, t_import_info *info)
 {
 	if (sizeof(t_interaction) * MAX_INTERACTIONS
 		>= (size_t)(info->length - info->imported))
@@ -91,7 +88,7 @@ static void	import_interactions(t_app *app, t_thread_data *thread,
 	ft_memcpy(app->interactions, info->data + info->imported,
 		sizeof(t_interaction) * MAX_INTERACTIONS);
 	info->imported += (int) sizeof(t_interaction) * MAX_INTERACTIONS;
-	import_update_progress(app, thread, info);
+	import_update_progress(info);
 }
 
 /**
@@ -101,13 +98,31 @@ static void	import_interactions(t_app *app, t_thread_data *thread,
  * @param thread 
  * @param progress 
  */
-void	import_update_progress(t_app *app, t_thread_data *thread,
-	t_import_info *info)
+void	import_update_progress(t_import_info *info)
 {
-	if (pthread_mutex_lock(&thread->lock))
+	if (pthread_mutex_lock(&info->thread->lock))
 		exit_error(NULL);
-	app->import_progress = (double) info->imported / (double) info->length;
-	if (pthread_mutex_unlock(&thread->lock))
+	((t_app *)info->thread->app)->import_progress
+		= (double) info->imported / (double) info->length;
+	if (pthread_mutex_unlock(&info->thread->lock))
+		exit_error(MSG_ERROR_THREADS_SIGNAL);
+}
+
+
+/**
+ * @brief Updates progress for the main thread.
+ * 
+ * @param app 
+ * @param thread 
+ * @param progress 
+ */
+void	uncompression_update_progress(t_import_info *info)
+{
+	if (pthread_mutex_lock(&info->thread->lock))
+		exit_error(NULL);
+	((t_app *)info->thread->app)->import_progress
+		= (double) info->imported / (double) info->length;
+	if (pthread_mutex_unlock(&info->thread->lock))
 		exit_error(MSG_ERROR_THREADS_SIGNAL);
 }
 
@@ -123,19 +138,20 @@ void	import_level(t_app *app, t_thread_data *thread, char *path)
 	t_import_info		info;
 
 	info.data = NULL;
-	rle_uncompress_data(path, &info.data, &info.length);
+	info.thread = thread;
+	rle_uncompress_data(&info, path, &info.data, &info.length);
 	if (!info.data
 		|| sizeof(t_level_header) >= (size_t)(info.length))
 		exit_error(MSG_ERROR_IMPORT);
 	ft_memcpy(&info.header, info.data, sizeof(t_level_header));
 	info.imported = sizeof(t_level_header);
-	import_update_progress(app, thread, &info);
-	import_sectors(app, thread, &info);
-	import_player(app, thread, &info);
-	import_objects(app, thread, &info);
-	import_interactions(app, thread, &info);
-	import_assets(app, thread, &info);
+	import_update_progress(&info);
+	import_sectors(app, &info);
+	import_player(app, &info);
+	import_objects(app, &info);
+	import_interactions(app, &info);
+	import_assets(app, &info);
 	free(info.data);
 	info.imported = info.length;
-	import_update_progress(app, thread, &info);
+	import_update_progress(&info);
 }
