@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/13 17:19:57 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/13 18:51:34 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,8 @@ void	draw_object_pixel(t_app *app, t_render_object *object, t_point window, int 
 {
 	if ((color & 0xFF000000) > 0)
 	{
-		put_pixel_to_surface(app->surface, window.x, window.y, shade_depth(shade_color(color, object->light), object->dist));
-		//put_pixel_to_surface_check(app, window,shade_depth(shade_color(color, object->light), object->dist),object->dist);
+		//put_pixel_to_surface(app->surface, window.x, window.y, shade_depth(shade_color(color, object->light), object->dist));
+		put_pixel_to_surface_check(app, window,shade_depth(shade_color(color, object->light), object->dist),object->dist);
 	}
 }
 
@@ -141,7 +141,6 @@ void	objects_render(t_app *app, t_thread_data *thread)
 			object_render(app, &(app->objectstack.objects[i]), thread, render_enemy);
 		else if(object_type > MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES)
 			object_render(app, &(app->objectstack.objects[i]), thread, render_projectile);
-		//object_render(app, &(app->objectstack.objects[i]), thread);
 		i++;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:01:41 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/13 18:38:50 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/13 19:25:28 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,33 @@ static int	floor_collision(t_app *app, t_projectile *projectile)
 	end_z = projectile->start_z + dist * projectile->end_z;
 	if(heights.y > end_z)
 	{
+		if (ft_line_intersection_segment((t_line){(t_vector2){0.f, projectile->start_z}, (t_vector2){dist, end_z}},
+						(t_line){(t_vector2){0.f, heights.x},(t_vector2){dist, heights.y}}, &intersection))
+		{
+			projectile->end = ft_vector2_add(projectile->start,ft_vector_resize(ft_vector2_sub(projectile->end, projectile->start),intersection.x));
+			return (1);
+		}
+	}
+	return (0);
+}
+
+static int	ceil_collision(t_app *app, t_projectile *projectile)
+{
+	t_vector2 point;
+	t_vector2 end;
+	t_vector2 heights;
+	t_vector2 intersection;
+	double		end_z;
+	double		dist;
+
+	point = projectile->start;
+	heights.x = sector_ceil_height(app,projectile->sector, point);
+	end = projectile->end;
+	heights.y = sector_ceil_height(app, projectile->sector, end);
+	dist = ft_point_distance(projectile->start, projectile->end);
+	end_z = projectile->start_z + dist * projectile->end_z;
+	if(heights.y < end_z)
+	{
 		if (ft_line_intersection((t_line){(t_vector2){0.f, projectile->start_z}, (t_vector2){dist, end_z}},
 						(t_line){(t_vector2){0.f, heights.x},(t_vector2){dist, heights.y}}, &intersection))
 		{
@@ -40,6 +67,12 @@ static int	floor_collision(t_app *app, t_projectile *projectile)
 	return (0);
 }
 
+static t_bool sector_height_collision(t_app *app, t_projectile *projectile)
+{
+	if(ceil_collision(app, projectile) || floor_collision(app, projectile))
+		return (TRUE);
+	return (FALSE);
+}
 
 t_bool	projectile_member_check(t_app *app, t_projectile *projectile)
 {
@@ -58,9 +91,9 @@ t_bool	projectile_member_check(t_app *app, t_projectile *projectile)
 		if(ft_line_intersection_segment((t_line){projectile->start, projectile->end}, wall_line, &(intersection)))
 		{
 			double dist = ft_vector_length(ft_vector2_sub(intersection, projectile->start));
-			projectile->start_z = projectile->start_z + dist * projectile->end_z;
-			if(portal_can_enter_(app, ft_vec2_to_vec3(intersection, projectile->start_z), 0.0f, wall_line, projectile->sector, app->sectors[projectile->sector].parent_sector))
+			if(portal_can_enter_(app, ft_vec2_to_vec3(intersection, projectile->start_z + dist * projectile->end_z), 0.0f, wall_line, projectile->sector, app->sectors[projectile->sector].parent_sector))
 			{
+				projectile->start_z = projectile->start_z + dist * projectile->end_z;
 				projectile->start = intersection;
 				projectile->sector = app->sectors[projectile->sector].parent_sector;
 				return (TRUE);
@@ -68,13 +101,12 @@ t_bool	projectile_member_check(t_app *app, t_projectile *projectile)
 			else
 			{
 				projectile->end = intersection;
-				//floor_collision(app, projectile);
+				sector_height_collision(app, projectile);
 				return (FALSE);
 			}
 		}
 	}
-	ft_printf("untested!!!!!\n");
-	if(floor_collision(app, projectile))
+	if(sector_height_collision(app, projectile))
 		return (FALSE);
 	return (FALSE);
 
@@ -104,9 +136,6 @@ static void	projectile_flight(t_app *app, t_move *new, t_projectile *projectile,
 
 	if(recursion_count > MAX_VISIBLE_SECTORS)
 		return ;
-	/* if(app->sectors[projectile->sector].parent_sector != -1)
-		projectile->sector = app->sectors[projectile->sector].parent_sector; */
-
 //member sector walls
 	if(app->sectors[projectile->sector].parent_sector == -1)
 	{
@@ -124,32 +153,21 @@ static void	projectile_flight(t_app *app, t_move *new, t_projectile *projectile,
 					projectile->start_z = projectile->start_z + dist * projectile->end_z;
 					if(!portal_can_enter_(app, ft_vec2_to_vec3(projectile->end, projectile->start_z), 0.0f, wall_line, projectile->sector, member_id))
 					{
-						ft_printf("stopping before member sector\n");
 						projectile->start_z = new->elevation;
-						floor_collision(app, projectile);
+						sector_height_collision(app, projectile);
 						return ;
 					}
-					ft_printf("entering member sector\n");
 					projectile->start = projectile->end;
 					projectile->end = new->pos;
 					projectile->sector = member_id;
 					if(projectile_member_check(app, projectile))
-					{
-						ft_printf("went through member sector;\n");
 						projectile_flight(app, new, projectile, FALSE);
-						return ;
-					}
-					else
-					{
-						ft_printf("stopped inside member sector\n");
-						return ;
-					}
+					return ;
 				}
 			}
 			counter++;
 		}
 	}
-	//projectile->start_z + dist * projectile->end_z
 
 	i = -1;
 	while (++i < app->sectors[projectile->sector].corner_count)
@@ -160,13 +178,13 @@ static void	projectile_flight(t_app *app, t_move *new, t_projectile *projectile,
 			continue ;
 		if (!ft_line_intersection_segment((t_line){projectile->start, new->pos}, wall_line, &(projectile->end)))
 			continue ;
-		if(floor_collision(app, projectile))
+		if(sector_height_collision(app, projectile))
 			return ;
 		if (app->sectors[projectile->sector].wall_types[i] < 0 || app->sectors[projectile->sector].wall_textures[i] == PARTIALLY_TRANSPARENT_TEXTURE_ID)
 			return ;
 		double dist = ft_vector_length(ft_vector2_sub(projectile->end, projectile->start));
 		projectile->start_z = projectile->start_z + dist * projectile->end_z;
-		if(!portal_can_enter(app, ft_vec2_to_vec3(projectile->end, projectile->start_z), 0.0f, wall_line, projectile->sector, app->sectors[projectile->sector].wall_types[i]))
+		if(!portal_can_enter_(app, ft_vec2_to_vec3(projectile->end, projectile->start_z), 0.0f, wall_line, projectile->sector, app->sectors[projectile->sector].wall_types[i]))
 			return ;
 		projectile->start = projectile->end;
 		projectile->end = new->pos;
@@ -174,8 +192,7 @@ static void	projectile_flight(t_app *app, t_move *new, t_projectile *projectile,
 		projectile_flight(app, new, projectile, FALSE);
 		return ;
 	}
-		ft_printf("hit nothing\n");
-		if(floor_collision(app, projectile))
+		if(sector_height_collision(app, projectile))
 			return ;
 }
 
@@ -195,7 +212,7 @@ static void calc_end(t_app *app, t_projectile *projectile, t_vector3 target_dir)
 	start = projectile->start;
 	start_z = projectile->start_z;
 	new.pos = ft_vector2_add(projectile->start, ft_vec2_mult((t_vector2){target_dir.x,target_dir.y}, 25.f));
-	new.elevation = start_z; //temp use of z directly maybe
+	new.elevation = start_z;
 	projectile->end_z = target_dir.z;
 	projectile_flight(app, &new, projectile, TRUE);
 	projectile->start = start;
@@ -251,7 +268,7 @@ void	kill_projectile(t_app *app, t_projectile *projectile)
 {
 			//event to explode creates a new melee attack type explosion
 			if(projectile->type == 18)
-				melee(app,(t_vector3){0.f,0.f,0.f}, ft_vec2_to_vec3(ft_vector2_sub(projectile->start, ft_vec2_mult(projectile->end, 0.0f)), projectile->start_z - projectile->end_z * 0.0f),(t_point){12,projectile->sector});
+				melee(app,(t_vector3){0.f,0.f,0.f}, ft_vec2_to_vec3(ft_vector2_sub(projectile->start, ft_vec2_mult(projectile->end, 0.15f)), projectile->start_z - projectile->end_z * 0.15f),(t_point){12,projectile->sector});
 			projectile->type = -1;
 			app->projectiles_active--;
 }
@@ -280,7 +297,7 @@ void	melee(t_app *app, t_vector3 target_dir, t_vector3 start_pos, t_point info)
 			calc_end(app, &(app->projectiles[i]), target_dir);
 			app->projectiles[i].timer = ft_vector_length(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start)) / app->projectile_def[app->projectiles[i].type - 11].speed;
 			app->projectiles[i].end = ft_vector2_normalize(ft_vector2_sub(app->projectiles[i].end, app->projectiles[i].start));
-			app->projectiles[i].timer = 15.f;
+			app->projectiles[i].timer = 0.25f;
 			if(!(app->projectiles[i].type == 0))
 				app->projectiles[i].start = ft_vector2_add(app->projectiles[i].start, ft_vec2_mult(app->projectiles[i].end, 0.5f));
 			app->projectiles[i].end = (t_vector2){0.f,0.f};

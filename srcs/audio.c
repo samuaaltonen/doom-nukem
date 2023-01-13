@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   audio.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:35:37 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 19:11:22 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/13 19:00:59 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ void	play_sound(t_app *app, int audio_type)
 	size = SDL_GetQueuedAudioSize(app->audio.device_id);
 	ptr = app->audio.music + app->audio.music_length - size;
 	SDL_ClearQueuedAudio(app->audio.device_id);
+	//add nullchecks for mixaudioformat maybe
 	SDL_MixAudioFormat(ptr, app->audio.sound, app->audio.wav_spec.format,
 		app->audio.sound_length, SDL_MIX_MAXVOLUME);
 	SDL_QueueAudio(app->audio.device_id, ptr, size);
