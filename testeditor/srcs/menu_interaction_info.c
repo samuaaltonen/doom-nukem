@@ -6,16 +6,20 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:45:38 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/13 11:32:22 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:39:43 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Renders the menu texts for the interaction menu.
+ * @brief Renders the menu texts for the interaction menu.
+ * 
+ * @param app
+ * @param start_y
+ * @param mouse
 */
-static void	render_interaction_menu(t_app *app, t_point mouse, int start_y)
+static void	render_interaction_menu(t_app *app, int start_y, t_point mouse)
 {
 	if (app->current_interaction)
 	{
@@ -45,7 +49,10 @@ static void	render_interaction_menu(t_app *app, t_point mouse, int start_y)
 }
 
 /**
- * Renders the key requirement UI on the help menu side bar.
+ * @brief Renders the key requirement UI on the help menu side bar.
+ * 
+ * @param app
+ * @param start_y
 */
 static void	render_key_option(t_app *app, int start_y)
 {
@@ -60,9 +67,14 @@ static void	render_key_option(t_app *app, int start_y)
 }
 
 /**
- * Renders the interaction menu on the help menu sidebar. Draws the menu grid.
+ * @brief Renders the interaction menu on the help menu sidebar. Draws the menu
+ * grid.
+ * 
+ * @param app
+ * @param start_y
+ * @param mouse
 */
-void	interaction_edit_menu(t_app *app, int start_y, t_point screen_pos)
+void	interaction_edit_menu(t_app *app, int start_y, t_point mouse)
 {
 	int		x;
 	int		y;
@@ -80,13 +92,13 @@ void	interaction_edit_menu(t_app *app, int start_y, t_point screen_pos)
 				put_pixel_to_surface(app->surface, x, y, TEXT);
 		}
 	}
-	render_interaction_menu(app, screen_pos, start_y);
+	render_interaction_menu(app, start_y, mouse);
 	render_key_option(app, start_y);
 	if (!app->current_interaction)
 		return ;
 	render_interaction_explanations(app, start_y);
 	render_ui_frame(app, (t_rect){60, start_y + 327, 170, 16}, 1, 0);
-	render_link_interaction_info(app, start_y, screen_pos);
+	render_link_interaction_info(app, start_y, mouse);
 	render_interaction_button(app, (t_rect){85, start_y + 330, 150, 15},
-		screen_pos, "SAVE INTERACTION");
+		mouse, "SAVE INTERACTION");
 }

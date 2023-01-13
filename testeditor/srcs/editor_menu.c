@@ -6,27 +6,18 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 16:33:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/03 11:39:04 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/13 13:44:04 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * @brief Changes the selected wall texture to given id
+ * @brief Changes all wall types of the selected sector to it's parent,
+ * linking them together.
  * 
- * @param app 
- * @param wall 
- * @param wall_id 
- */
-void	change_selected_wall_tex(t_app *app, t_vec2_lst *wall, int wall_id)
-{
-	wall->tex = wall_id;
-	(void)app;
-}
-
-/**
- * Changes all wall types of the selected sector to it's parent linking them
+ * @param app
+ * @param sector
  */
 void	change_walls_type(t_app *app, t_sector_lst *sector)
 {
@@ -45,7 +36,7 @@ void	change_walls_type(t_app *app, t_sector_lst *sector)
 }
 
 /**
- * @brief changes all walls in the given list to wall_tex param
+ * @brief Changes all walls in the given list to wall_tex param.
  * 
  * @param walls 
  * @param wall_tex 

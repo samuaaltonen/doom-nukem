@@ -3,17 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:37:41 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 13:18:40 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:44:18 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Changes color of a specific pixel in image.
+ * @brief Changes color of a specific pixel in image.
+ * 
+ * @param surface
+ * @param x
+ * @param y
+ * @param color
  */
 void	put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color)
 {
@@ -29,7 +34,9 @@ void	put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color)
 }
 
 /**
- * Flushes image (sets all pixels to black)
+ * @brief Flushes image (sets all pixels to black).
+ * 
+ * @param surface
  */
 void	flush_surface(SDL_Surface *surface)
 {

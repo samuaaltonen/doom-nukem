@@ -6,14 +6,17 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:54:40 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/12 15:56:33 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:58:08 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Renders active sector's information regarding the ceiling.
+ * @brief Renders active sector's information regarding the ceiling.
+ * 
+ * @param app
+ * @param height
 */
 static void	render_ceiling_info(t_app *app, char *height)
 {
@@ -44,7 +47,10 @@ static void	render_ceiling_info(t_app *app, char *height)
 }
 
 /**
- * Renders active sector's information regarding the floor.
+ * @brief Renders active sector's information regarding the floor.
+ * 
+ * @param app
+ * @param height
 */
 static void	render_floor_info(t_app *app, char *height)
 {
@@ -75,10 +81,13 @@ static void	render_floor_info(t_app *app, char *height)
 }
 
 /**
- * Renders active sector's information regarding all the walls, light of the
- * sector and the sector interaction menu option.
+ * @brief Renders active sector's information regarding all the walls, light of
+ * the sector and the sector interaction menu option.
+ * 
+ * @param app
+ * @param mouse
 */
-static void	render_walls_info(t_app *app, t_point screen_pos)
+static void	render_walls_info(t_app *app, t_point mouse)
 {
 	int		id;
 	char	*light;
@@ -96,14 +105,18 @@ static void	render_walls_info(t_app *app, t_point screen_pos)
 		id = find_sector_interaction(app, 0, 1);
 	else
 		id = find_interaction(app);
-	render_current_interaction_status(app, screen_pos, 600, id);
+	render_current_interaction_status(app, mouse, 600, id);
 }
 
 /**
- * Renders the sector specific information on the help menu sidebar when
+ * @brief Renders the sector specific information on the help menu sidebar when
  * there's an active sector, but no other edit mode is on.
+ * 
+ * @param app
+ * @param mouse
+ * @param y
 */
-void	sector_edit_menu(t_app *app, t_point screen_pos, int y)
+void	sector_edit_menu(t_app *app, t_point mouse, int y)
 {
 	render_text(app, (t_rect){20, y, 260, 100}, "TOGGLE ALL WALLS ( V )\nTOG\
 GLE FLOOR ( F )\nTOGGLE CEILING ( R )\nTOGGLE LIGHT ( T )\nTOGGLE SLOPE ( U )");
@@ -125,7 +138,7 @@ PRESS 'L' TO REMOVE PORTAL.");
 	render_arrows(app, (t_point){12, y + 486}, (t_point){265, y + 486});
 	render_icons(app, (t_point){25, y + 478},
 		app->active_sector->ceil_tex, app->assets.sprite);
-	render_walls_info(app, screen_pos);
+	render_walls_info(app, mouse);
 	render_floor_info(app, NULL);
 	render_ceiling_info(app, NULL);
 }

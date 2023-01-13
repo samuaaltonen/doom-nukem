@@ -3,17 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 18:00:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/13 13:40:38 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Initializes application struct.
+ * @brief Initializes application struct.
+ * 
+ * @param app
+ * @return int
  */
 int	app_init(t_app **app)
 {
@@ -25,9 +28,11 @@ int	app_init(t_app **app)
 }
 
 /**
- * Prepares the application to be rendered:
+ * @brief Prepares the application to be rendered:
  * Creates window, loads assets, adds event hooks and sets
  * initial player position / direction.
+ * 
+ * @param app
  */
 void	app_prepare(t_app *app)
 {
@@ -57,6 +62,12 @@ void	app_prepare(t_app *app)
 	SDL_ShowCursor(SDL_ENABLE);
 }
 
+/**
+ * @brief Renders the optional lines and points based on if something has been
+ * clicked active, or a certain menu is turned on.
+ * 
+ * @param app
+*/
 static void	app_render_helper(t_app *app)
 {
 	if (app->active)
@@ -80,8 +91,10 @@ static void	app_render_helper(t_app *app)
 }
 
 /**
- * Rendering function to be called in loop hook. Calls individual renderers and
- * draws resulting image(s) to the window.
+ * @brief Rendering function to be called in loop hook. Calls individual
+ * renderers and draws resulting image(s) to the window.
+ * 
+ * @param app
  */
 void	app_render(t_app *app)
 {
@@ -103,8 +116,10 @@ void	app_render(t_app *app)
 }
 
 /**
- * Main game loop. Polls SDL event queue until it is empty and then 
+ * @brief Main game loop. Polls SDL event queue until it is empty and then 
  * proceeds to next frame.
+ * 
+ * @param app
  */
 void	app_loop(t_app *app)
 {

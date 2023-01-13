@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 19:42:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:09:41 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ typedef struct s_object
 typedef struct s_interaction
 {
 	int				event_id;
-	double 			variable;
+	double			variable;
 	int				interaction_link;
 	t_sector_lst	*activation_sector;
 	t_vec2_lst		*activation_wall;
@@ -273,8 +273,8 @@ SDL_Surface		*bmp_to_surface(const char *path);
 /**
  * Events
  */
-int				events_keyup(int keycode, t_app *app);
-int				events_keydown(int keycode, t_app *app);
+int				events_keyup(t_app *app, int keycode);
+int				events_keydown(t_app *app, int keycode);
 int				events_mouse_track(t_app *app);
 int				events_mouse_click(t_app *app, SDL_Event *event);
 int				events_window_destroy(void);
@@ -285,8 +285,8 @@ void			player_menu_events(t_app *app, t_point	screen_pos);
 void			interaction_menu_events(t_app *app, int start_y,
 					t_point screen_pos);
 void			activate_interaction_menu(t_app *app, t_point screen_pos);
-void			edit_left_key_changes(t_app *app, SDL_Keycode key);
-void			edit_right_key_changes(t_app *app, SDL_Keycode key);
+void			edit_left_key_changes(t_app *app, SDL_Keycode keycode);
+void			edit_right_key_changes(t_app *app, SDL_Keycode keycode);
 
 /**
  * Map Editor functions
@@ -328,7 +328,7 @@ size_t			ft_lstlen(t_sector_lst *lst);
 t_sector_lst	*sector_by_index(t_app *app, int index);
 int				inside_sector_check(t_sector_lst *sector, t_vector2 *mouse);
 t_sector_lst	*click_sector(t_app *app);
-void			sector_edit(t_app *app, SDL_Keycode key);
+void			sector_edit(t_app *app, SDL_Keycode keycode);
 t_sector_lst	*find_parent_sector(t_app *app, t_sector_lst *sector);
 t_sector_lst	*find_child_sector(t_app *app);
 int				get_sector_id(t_app *app, t_sector_lst *sector);
@@ -365,8 +365,6 @@ void			activate_slope(t_app *app, SDL_Keycode keycode);
  * Edit Functions
  */
 void			change_walls_tex(t_vec2_lst *walls, int wall_tex);
-void			change_selected_wall_tex(t_app *app, t_vec2_lst *wall,
-					int wall_id);
 void			link_wall_to_sector(t_app *app);
 void			change_walls_type(t_app *app, t_sector_lst *sector);
 t_vec2_lst		*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point);

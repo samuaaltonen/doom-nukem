@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   menu_interaction_tools.c                           :+:      :+:    :+:   */
+/*   menu_interaction_explanations_extra.c              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:22:38 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/04 15:33:42 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:35:59 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Explanation texts and statics for end level interaction.
+ * @brief Explanation texts and statics for end level interaction.
+ * 
+ * @param app
+ * @param start_y
+ * @param statics
 */
 void	end_level_explanation(t_app *app, int start_y, char *statics)
 {
@@ -30,7 +34,11 @@ void	end_level_explanation(t_app *app, int start_y, char *statics)
 }
 
 /**
- * Explanation texts and statics for sound interaction.
+ * @brief Explanation texts and statics for sound interaction.
+ * 
+ * @param app
+ * @param start_y
+ * @param statics
 */
 void	sound_explanation(t_app *app, int start_y, char *statics)
 {
@@ -47,7 +55,11 @@ void	sound_explanation(t_app *app, int start_y, char *statics)
 }
 
 /**
- * Explanation texts and statics for text popup interaction.
+ * @brief Explanation texts and statics for text popup interaction.
+ * 
+ * @param app
+ * @param start_y
+ * @param statics
 */
 void	text_popup_explanation(t_app *app, int start_y, char *statics)
 {

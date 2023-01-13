@@ -6,14 +6,18 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 15:32:28 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/04 15:35:05 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:37:05 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Explanation texts and statics for light level change interaction.
+ * @brief Explanation texts and statics for light level change interaction.
+ * 
+ * @param app
+ * @param start_y
+ * @param statics
 */
 static void	light_explanation(t_app *app, int start_y, char *statics)
 {
@@ -34,8 +38,12 @@ static void	light_explanation(t_app *app, int start_y, char *statics)
 }
 
 /**
- * Explanation texts and statics for floor and ceiling height change
+ * @brief Explanation texts and statics for floor and ceiling height change
  * interaction.
+ * 
+ * @param app
+ * @param start_y
+ * @param statics
 */
 static void	floor_and_ceiling_height_explanation(t_app *app, int start_y,
 																char *statics)
@@ -63,7 +71,11 @@ HEIGHT.");
 }
 
 /**
- * Explanation texts and statics for ceiling height change interaction.
+ * @brief Explanation texts and statics for ceiling height change interaction.
+ * 
+ * @param app
+ * @param start_y
+ * @param statics
 */
 static void	ceiling_height_explanation(t_app *app, int start_y, char *statics)
 {
@@ -84,7 +96,11 @@ static void	ceiling_height_explanation(t_app *app, int start_y, char *statics)
 }
 
 /**
- * Explanation texts and statics for floor height change interaction.
+ * @brief Explanation texts and statics for floor height change interaction.
+ * 
+ * @param app
+ * @param start_y
+ * @param statics
 */
 static void	floor_height_explanation(t_app *app, int start_y, char *statics)
 {
@@ -105,8 +121,11 @@ static void	floor_height_explanation(t_app *app, int start_y, char *statics)
 }
 
 /**
- * For each specific interaction event, renders explanation text what it
+ * @brief For each specific interaction event, renders explanation text what it
  * changes and the variable value it changes to.
+ * 
+ * @param app
+ * @param start_y
 */
 void	render_interaction_explanations(t_app *app, int start_y)
 {

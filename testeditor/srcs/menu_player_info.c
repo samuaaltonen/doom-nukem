@@ -6,14 +6,19 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/11 14:56:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/04 16:13:40 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:55:43 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
-* Renders a statusbar on the help menu sidebar.
+ * @brief Renders a statusbar on the help menu sidebar.
+ * 
+ * @param app
+ * @param point
+ * @param statusbar
+ * @param color
 */
 void	render_statusbar(t_app *app, t_point point, int statusbar, int color)
 {
@@ -38,7 +43,9 @@ void	render_statusbar(t_app *app, t_point point, int statusbar, int color)
 }
 
 /**
- * Checks that the player's health and armor is between 1 - 200.
+ * @brief Checks that the player's health and armor is between 1 - 200.
+ * 
+ * @param app
 */
 static void	check_player_statusbars(t_app *app)
 {
@@ -52,6 +59,11 @@ static void	check_player_statusbars(t_app *app)
 		app->player.health = 200;
 }
 
+/**
+ * @brief Renders the statics that go with the health and armor statusbars.
+ * 
+ * @param app
+*/
 static void	player_statusbars(t_app *app)
 {
 	char	*status;
@@ -77,7 +89,9 @@ static void	player_statusbars(t_app *app)
 }
 
 /**
- * Renders player specific information on the help menu sidebar.
+ * @brief Renders player specific information on the help menu sidebar.
+ * 
+ * @param app
 */
 void	player_edit_menu(t_app *app)
 {
