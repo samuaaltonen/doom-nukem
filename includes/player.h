@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 11:43:50 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:00:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@
 # define MOVE_RANGE 0.05
 # define MOVE_ACCEL 90.0
 # define MOVE_DECEL 5.0
-# define MOVE_MIN 0.0001
+# define MOVE_MIN 0.001
 # define GRAVITY -20.0
-# define FALL_DAMAGE_FORCE_THRESHOLD -10.0
+# define FALL_DAMAGE_FORCE_THRESHOLD -20.0
 # define FALL_DAMAGE_MULTIPLIER 3.0
 # define JUMP_FORCE 5.0
 # define JETPACK 1.0

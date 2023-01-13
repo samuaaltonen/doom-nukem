@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 14:32:42 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:19:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,11 +54,14 @@ void	import_player(t_app *app, t_import_info *info)
 	app->player_menu = FALSE;
 	app->player.position = player.position;
 	app->player.direction = player.direction;
+	if (player.sector < 0 || player.sector >= app->sector_count)
+		exit_error(MSG_ERROR_IMPORT_PLAYER);
 	app->player.sector = sector_by_index(app, player.sector);
+	if (!app->player.sector)
+		exit_error(MSG_ERROR_IMPORT_PLAYER);
 	app->player.health = player.health;
 	from_bits(app, player.weapons, app->player.weapons);
 	app->player.inventory = player.inventory;
-	app->player.sector = sector_by_index(app, player.sector);
 }
 
 /**
@@ -79,15 +82,19 @@ void	import_objects(t_app *app, t_import_info *info)
 	ft_memcpy(&objects, info->data + info->imported,
 		sizeof(t_export_object) * MAX_OBJECTS);
 	info->imported += (int) sizeof(t_export_object) * MAX_OBJECTS;
-	i = 0;
-	while (i < MAX_OBJECTS)
+	i = -1;
+	while (++i < MAX_OBJECTS)
 	{
 		temp.position = objects[i].pos;
+		if (objects[i].sector < 0 || objects[i].sector >= app->sector_count)
+			exit_error(MSG_ERROR_IMPORT_OBJECT);
 		temp.sector = sector_by_index(app, objects[i].sector);
 		temp.type = objects[i].type;
+		if (!temp.sector || temp.type < 0 || temp.type > MAX_SMALL_OBJECTS
+			+ MAX_BIG_OBJECTS + MAX_ENEMY_TYPES)
+			exit_error(MSG_ERROR_IMPORT_OBJECT);
 		temp.var = objects[i].var;
 		(app->objects[i]) = temp;
-		i++;
 	}
 }
 
@@ -112,6 +119,8 @@ static void	relink_sectors(t_app *app)
 			{
 				head->member_sectors[i] = sector_by_index(app,
 						head->member_links[i]);
+				if (!head->member_sectors[i] || head->member_sectors[i] == head)
+					exit_error(MSG_ERROR_IMPORT_SECTOR);
 				head->member_sectors[i]->parent_sector = head;
 			}
 			else

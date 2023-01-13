@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/11 20:30:34 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/13 15:23:16 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -79,7 +79,8 @@ FILES = app.c \
 		export_player.c \
 		export_sector.c \
 		export_object.c \
-		export_interaction.c
+		export_interaction.c \
+		level_validation_sector.c \
 
 LIBFT = ../libft/libft.a
 LIBLINEARALGEBRA = ../liblinearalgebra/liblinearalgebra.a

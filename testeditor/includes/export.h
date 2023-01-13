@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 19:41:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:47:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,9 @@
 # define TEXTS_PATH			"../assets/texts/texts.txt"
 # define MAX_TEXT_LINES 16
 # define MAX_TEXT_LINE_LENGTH 512
+# define MAX_SMALL_OBJECTS 5
+# define MAX_BIG_OBJECTS 3
+# define MAX_ENEMY_TYPES 2
 # define MSG_ERROR_IMPORT "Level file is invalid."
 # define MSG_ERROR_IMPORT_SECTOR "Level file is invalid. Could not import \
 sectors."

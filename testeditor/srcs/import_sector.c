@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:36:17 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 15:28:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:26:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ void	import_sectors(t_app *app, t_import_info *info)
 	{
 		ft_memcpy(&export, info->data + info->imported,
 			sizeof(t_export_sector));
+		level_validation_sector(app, &export);
 		info->imported += (int) sizeof(t_export_sector);
 		put_sector_lst(app, read_sector_list(&export));
 		i++;
