@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_menu.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:38:26 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/12 19:41:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/13 11:56:53 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,8 @@ static void	update_target_sector(t_app *app, t_point screen_pos)
 	}
 }
 
-/**
- * Mouse click events in the interaction menu. If click is outside menu, changes
- * interaction's targer sector to the one clicked (if click's outside sector,
- * targer sector is active sector). Clicking interaction menu changes the
- * event id accordingly.
-*/
-void	interaction_menu_events(t_app *app, int start_y, t_point screen_pos)
+static void	update_event_id(t_app *app, int start_y, t_point screen_pos)
 {
-	update_target_sector(app, screen_pos);
 	if (check_mouse(screen_pos, (t_rect){90, start_y + 25, 113, 15}))
 		no_interaction_check(app);
 	if (check_mouse(screen_pos, (t_rect){100, start_y + 40, 93, 15}))
@@ -97,12 +90,28 @@ void	interaction_menu_events(t_app *app, int start_y, t_point screen_pos)
 		app->current_interaction->event_id = 6;
 	if (check_mouse(screen_pos, (t_rect){102, start_y + 130, 82, 15}))
 		app->current_interaction->event_id = 7;
+}
+
+/**
+ * Mouse click events in the interaction menu. If click is outside menu, changes
+ * interaction's targer sector to the one clicked (if click's outside sector,
+ * targer sector is active sector). Clicking interaction menu changes the
+ * event id accordingly.
+*/
+void	interaction_menu_events(t_app *app, int start_y, t_point screen_pos)
+{
+	update_target_sector(app, screen_pos);
+	update_event_id(app, start_y, screen_pos);
+	if (check_mouse(screen_pos, (t_rect){158, start_y + 300, 40, 20}))
+		app->current_interaction->requires_key = FALSE;
+	if (check_mouse(screen_pos, (t_rect){213, start_y + 300, 40, 20}))
+		app->current_interaction->requires_key = TRUE;
 	if (check_mouse(screen_pos, (t_rect){204, start_y + 255, 60, 15})
 		&& app->current_interaction->interaction_link == -1)
 			app->current_interaction->interaction_link = 0;
 	if (check_mouse(screen_pos, (t_rect){187, start_y + 273, 73, 16})
 		&& app->current_interaction->interaction_link > -1)
 		app->current_interaction->interaction_link = -1;
-	if (check_mouse(screen_pos, (t_rect){85, start_y + 300, 150, 15}))
+	if (check_mouse(screen_pos, (t_rect){85, start_y + 330, 150, 15}))
 		link_interaction(app);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interactions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 18:02:59 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/13 12:00:22 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,7 @@ void	delete_interaction(t_app *app, int id)
 	app->interactions[id].activation_sector = NULL;
 	app->interactions[id].activation_wall = NULL;
 	app->interactions[id].activation_object = NULL;
+	app->interactions[id].requires_key = FALSE;
 	i = 0;
 	while (i < MAX_INTERACTIONS)
 	{

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/11 20:30:34 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/13 11:14:52 by ssulkuma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ FILES = app.c \
 		menu_interaction_explanations_extra.c \
 		menu_interaction_info.c \
 		menu_interaction_link_info.c \
+		menu_interaction_tools.c \
 		menu_inventory_info.c \
 		menu_object_info.c \
 		menu_player_info.c \
