@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:35:37 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 19:11:22 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 16:29:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,11 @@ void	play_sound(t_app *app, int audio_type)
 	if (!app->audio.sound)
 		exit_error(MSG_ERROR);
 	size = SDL_GetQueuedAudioSize(app->audio.device_id);
+	if (size <= app->audio.sound_length)
+	{
+		SDL_FreeWAV(app->audio.sound);
+		return ;
+	}
 	ptr = app->audio.music + app->audio.music_length - size;
 	SDL_ClearQueuedAudio(app->audio.device_id);
 	SDL_MixAudioFormat(ptr, app->audio.sound, app->audio.wav_spec.format,
