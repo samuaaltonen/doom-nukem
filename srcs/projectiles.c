@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 14:01:41 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 18:58:06 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 19:04:00 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ t_bool projectile_member_check(t_app *app, t_projectile *projectile)
 	while (++i < app->sectors[projectile->sector].corner_count)
 	{
 		wall_line = get_wall_line(app, projectile->sector, i);
-		if(ft_line_side(wall_line, projectile->start))
+		if (ft_line_side(wall_line, projectile->start))
 			continue;
-		if(ft_line_intersection_segment((t_line){projectile->start, projectile->end}, wall_line, &(intersection)))
+		if (ft_line_intersection_segment((t_line){projectile->start, projectile->end}, wall_line, &(intersection)))
 		{
 			tmp = ft_vector_length(ft_vector2_sub(intersection, projectile->start));
 			tmp = projectile->start_z + tmp * projectile->end_z;
@@ -89,7 +89,7 @@ static void	check_member_walls(t_app *app, t_projectile *projectile, int member_
 	t_line		wall_line;
 	double		dist;
 	int			i;
-	t_vector2	intersection;
+	t_vector2	collision;
 
 	i = -1;
 	while (++i < app->sectors[member_id].corner_count)
@@ -97,12 +97,12 @@ static void	check_member_walls(t_app *app, t_projectile *projectile, int member_
 		wall_line = get_wall_line(app, member_id, i);
 		if (ft_line_side(wall_line, projectile->end))
 			continue;
-		if(ft_line_intersection_segment((t_line){projectile->start, projectile->end}, wall_line, &(intersection)))
+		if(ft_line_intersection_segment((t_line){projectile->start, projectile->end}, wall_line, &(collision)))
 		{
-			dist = ft_vector_length(ft_vector2_sub(intersection, projectile->start));
-			if(!portal_can_enter_(app, ft_vec2_to_vec3(intersection, projectile->start_z + dist * projectile->end_z), 0.0f, wall_line, projectile->sector, member_id))
+			dist = ft_vector_length(ft_vector2_sub(collision, projectile->start));
+			if(!portal_can_enter_(app, ft_vec2_to_vec3(collision, projectile->start_z + dist * projectile->end_z), 0.0f, wall_line, projectile->sector, member_id))
 			{
-				projectile->end = intersection;
+				projectile->end = collision;
 				break;
 			}
 			else
@@ -123,27 +123,27 @@ static t_bool	check_main_walls(t_app *app, t_projectile *projectile, int id)
 {
 	t_line		wall_line;
 	double		dist;
-	t_vector2	intersection;
+	t_vector2	collision;
 
 	wall_line = get_wall_line(app, projectile->sector, id);
 		if (!ft_line_side(wall_line, projectile->end))
 			return (TRUE);
-		if (!ft_line_intersection_segment((t_line){projectile->start, projectile->end}, wall_line, &(intersection)))
+		if (!ft_line_intersection_segment((t_line){projectile->start,
+				projectile->end}, wall_line, &(collision)))
 			return (TRUE);
-		dist = ft_vector_length(ft_vector2_sub(intersection, projectile->start));
+		dist = ft_vector_length(ft_vector2_sub(collision, projectile->start));
 		dist = projectile->start_z + dist * projectile->end_z;
-		if(!portal_can_enter_(app, ft_vec2_to_vec3(intersection, dist), 0.0f, wall_line, projectile->sector, app->sectors[projectile->sector].wall_types[id]))
+		if(!portal_can_enter_(app, ft_vec2_to_vec3(collision, dist), 0.0f, wall_line, projectile->sector, app->sectors[projectile->sector].wall_types[id]))
 		{
-			projectile->end = intersection;
+			projectile->end = collision;
 			sector_height_collision(app, projectile);
-			return (FALSE);
 		}
 		else
 		{
 			projectile->sector = app->sectors[projectile->sector].wall_types[id];
 			projectile_test(app, projectile, FALSE);
-			return (FALSE);
 		}
+		return (FALSE);
 }
 
 /**
