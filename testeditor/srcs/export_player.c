@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:07:56 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 20:41:37 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:09:06 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	as_bits(t_app *app)
  * @param app 
  * @param fd 
  */
-void	export_player(t_app *app, int fd)
+void	export_player(t_app *app, int fd, t_import_info *info)
 {
 	t_export_player	export;
 
@@ -55,4 +55,6 @@ void	export_player(t_app *app, int fd)
 	export.inventory = app->player.inventory;
 	if (write(fd, &export, sizeof(t_export_player)) == -1)
 		exit_error(MSG_ERROR_FILE_WRITE);
+	info->imported = 2;
+	export_update_progress(info);
 }

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 19:27:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:44:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -376,11 +376,16 @@ t_vec2_lst		*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point);
 /**
  * Import
  */
+void			render_loading(t_app *app);
 void			uncompression_update_progress(t_import_info *info);
+void			import_set_complete(t_import_info *info);
 void			import_file(t_app *app);
 int				import_level(t_app *app, t_thread_data *thread, char *path);
-void			import_interactions(t_app *app, t_import_info *info);
 void			import_sectors(t_app *app, t_import_info *info);
+void			import_player(t_app *app, t_import_info *info);
+void			import_objects(t_app *app, t_import_info *info);
+void			import_interactions(t_app *app, t_import_info *info);
+void			relink_sectors(t_app *app);
 
 /**
  * Data validation
@@ -392,15 +397,18 @@ void			level_validation_sector(t_app *app, t_export_sector *sector);
  */
 void			compression_update_progress(t_import_info *info);
 void			export_update_progress(t_import_info *info);
+void			export_set_complete(t_import_info *info);
 int				get_wall_id(t_vec2_lst *list, t_vec2_lst *wall);
-int				export_file(t_app *app, char *path);
-void			export_sectors(t_app *app, t_level_header header, int fd);
-void			export_player(t_app *app, int fd);
-void			export_objects(t_app *app, int fd);
-void			export_interactions(t_app *app, int fd);
-void			export_surfaces(t_level_header *header, int fd);
-void			export_wavs(t_level_header *header, int fd);
-void			export_texts(t_level_header *header, int fd);
+void			export_file(t_app *app);
+int				export_level(t_app *app, t_thread_data *thread, char *path);
+void			export_sectors(t_app *app, t_level_header header, int fd,
+					t_import_info *info);
+void			export_player(t_app *app, int fd, t_import_info *info);
+void			export_objects(t_app *app, int fd, t_import_info *info);
+void			export_interactions(t_app *app, int fd, t_import_info *info);
+void			export_surfaces(t_import_info *info, int fd);
+void			export_wavs(t_import_info *info, int fd);
+void			export_texts(t_import_info *info, int fd);
 
 /**
  * RLE compression
@@ -409,7 +417,7 @@ void			expand_data(t_uint8 **data, int *length, int *allocated);
 t_uint8			*read_source(const char *source, int *source_length);
 void			rle_uncompress_data(t_import_info *info, const char *source,
 					t_uint8 **data, int *length);
-void			rle_compress(const char *source);
+void			rle_compress(t_import_info *info, const char *source);
 
 /**
  * Font

@@ -1,87 +1,57 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   import_loading.c                                   :+:      :+:    :+:   */
+/*   import_async.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:51:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 19:26:16 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:35:33 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * @brief Draws progress bar based on progress value.
+ * @brief Updates progress for the main thread.
  * 
  * @param app 
+ * @param thread 
  * @param progress 
  */
-static void	draw_progress_bar(t_app *app)
+void	import_set_complete(t_import_info *info)
 {
-	int	progress_x;
-	int	x;
-	int	y;
-
-	x = WIN_W / 10 + 5;
-	progress_x = (int)(app->import_progress * (WIN_W - WIN_W / 5)) + x - 10;
-	while (x < progress_x && x < WIN_W - WIN_W / 10)
-	{
-		y = WIN_H / 10 * 8 + 5;
-		while (y < WIN_H / 10 * 9 - 5)
-		{
-			put_pixel_to_surface(app->surface, x, y, PROGRESS_BAR_COLOR);
-			y++;
-		}
-		x++;
-	}
+	if (pthread_mutex_lock(&info->thread->lock))
+		exit_error(MSG_ERROR_THREADS_MUTEX);
+	((t_app *)info->thread->app)->import_progress = -1.0;
+	if (pthread_mutex_unlock(&info->thread->lock))
+		exit_error(MSG_ERROR_THREADS_MUTEX);
 }
 
 /**
- * @brief Draws progress bar frame.
+ * @brief Updates progress for the main thread.
  * 
  * @param app 
+ * @param thread 
+ * @param progress 
  */
-static void	draw_progress_bar_frame(t_app *app)
+void	uncompression_update_progress(t_import_info *info)
 {
-	int	x;
-	int	y;
+	static int	last_update;
 
-	x = WIN_W / 10;
-	while (x < WIN_W - WIN_W / 10)
+	if (info->uncompressed - last_update > MIN_UNCOMPRESS_UPDATE
+		|| info->uncompressed == info->compressed_length)
 	{
-		put_pixel_to_surface(app->surface, x, WIN_H / 10 * 8,
-			PROGRESS_BAR_FRAME_COLOR);
-		put_pixel_to_surface(app->surface, x, WIN_H / 10 * 9,
-			PROGRESS_BAR_FRAME_COLOR);
-		x++;
+		if (pthread_mutex_lock(&info->thread->lock))
+			exit_error(MSG_ERROR_THREADS_MUTEX);
+		if (info->uncompressed > 0)
+			((t_app *)info->thread->app)->import_progress
+				= (double) (info->uncompressed - 1)
+					/ (double) info->compressed_length;
+		if (pthread_mutex_unlock(&info->thread->lock))
+			exit_error(MSG_ERROR_THREADS_MUTEX);
+		last_update = info->uncompressed;
 	}
-	y = WIN_H / 10 * 8;
-	while (y < WIN_H / 10 * 9)
-	{
-		put_pixel_to_surface(app->surface, WIN_W / 10, y,
-			PROGRESS_BAR_FRAME_COLOR);
-		put_pixel_to_surface(app->surface, WIN_W - WIN_W / 10, y,
-			PROGRESS_BAR_FRAME_COLOR);
-		y++;
-	}
-}
-
-/**
- * @brief Renders loading screen.
- * 
- * @param app 
- */
-static void	render_loading(t_app *app)
-{
-	SDL_Event	event;
-
-	while (SDL_PollEvent(&event))
-		dispatch_event_minimal(&event);
-	draw_progress_bar_frame(app);
-	draw_progress_bar(app);
-	SDL_UpdateWindowSurface(app->win);
 }
 
 /**
@@ -113,6 +83,7 @@ void	import_file(t_app *app)
 	t_thread_data	thread;
 
 	thread.app = app;
+	app->import_progress = 0.0;
 	if (pthread_mutex_init(&thread.lock, NULL)
 		|| pthread_create(&thread.thread, NULL, async_load, (void *)(&thread)))
 		exit_error(MSG_ERROR_THREADS);
@@ -120,7 +91,7 @@ void	import_file(t_app *app)
 	{
 		if (pthread_mutex_lock(&thread.lock))
 			exit_error(MSG_ERROR_THREADS_MUTEX);
-		if (app->import_progress >= 1.0)
+		if (app->import_progress == -1.0)
 		{
 			if (pthread_mutex_unlock(&thread.lock))
 				exit_error(MSG_ERROR_THREADS_MUTEX);

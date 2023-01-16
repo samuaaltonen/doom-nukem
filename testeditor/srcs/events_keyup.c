@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 18:59:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 19:44:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ int	events_keyup(int keycode, t_app *app)
 	handle_wasd_keys(keycode, app);
 	edit_mode_keys(keycode, app);
 	if (keycode == SDLK_m)
-		export_file(app, FILE_PATH);
+		export_file(app);
 	if (keycode == SDLK_o && !app->imported && !app->sectors)
 		import_file(app);
 	if (keycode == SDLK_i)

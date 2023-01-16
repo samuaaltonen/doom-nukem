@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 19:19:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:18:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,9 @@ enum e_export_assets
 	EXPORT_WEAPON_HD,
 	EXPORT_PICKUP,
 	EXPORT_OBJECT,
+	EXPORT_SPRITE,
 	EXPORT_MONSTER_1,
 	EXPORT_MONSTER_2,
-	EXPORT_SPRITE,
 	EXPORT_MUSIC,
 	EXPORT_SOUND_LASER,
 	EXPORT_SOUND_SHOT,

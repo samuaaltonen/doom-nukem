@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:30:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 18:36:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:09:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param app 
  * @param fd 
  */
-void	export_objects(t_app *app, int fd)
+void	export_objects(t_app *app, int fd, t_import_info *info)
 {
 	t_export_object	objects[MAX_OBJECTS];
 	t_export_object	temp;
@@ -42,4 +42,6 @@ void	export_objects(t_app *app, int fd)
 	}
 	if (write(fd, objects, sizeof(t_export_object) * MAX_OBJECTS) == -1)
 		exit_error(MSG_ERROR_FILE_WRITE);
+	info->imported = 3;
+	export_update_progress(info);
 }

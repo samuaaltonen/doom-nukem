@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/16 14:55:55 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/16 19:37:32 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -72,7 +72,7 @@ FILES = animation_create.c \
 		utils.c \
 		utils_color.c \
 		utils_sdl.c \
-		import_loading.c \
+		import_async.c \
 		rle_utils.c \
 		rle_uncompress.c \
 		render_hand.c \

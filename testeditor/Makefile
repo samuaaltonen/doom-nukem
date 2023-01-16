@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/16 19:08:56 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/16 19:47:36 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -76,7 +76,9 @@ FILES = app.c \
 		utils_sdl.c \
 		import_interaction.c \
 		import_sector.c \
-		import_loading.c \
+		import_async.c \
+		import_player.c \
+		import_object.c \
 		export_assets_surface.c \
 		export_assets_wav.c \
 		export_assets_text.c \
@@ -84,7 +86,9 @@ FILES = app.c \
 		export_sector.c \
 		export_object.c \
 		export_interaction.c \
+		export_async.c \
 		level_validation_sector.c \
+		loading_screen.c
 
 LIBFT = ../libft/libft.a
 LIBLINEARALGEBRA = ../liblinearalgebra/liblinearalgebra.a

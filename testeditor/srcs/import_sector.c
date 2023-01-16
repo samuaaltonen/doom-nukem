@@ -6,11 +6,44 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:36:17 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/13 15:26:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 19:32:51 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
+
+/**
+ * @brief Relinks the pointer references of sectors using integer values in
+ * saved file.
+ * 
+ * @param app 
+ */
+void	relink_sectors(t_app *app)
+{
+	int				i;
+	t_sector_lst	*head;
+
+	head = app->sectors;
+	while (head)
+	{
+		i = 0;
+		while (i < MAX_MEMBER_SECTORS)
+		{
+			if (head->member_links[i] != -1)
+			{
+				head->member_sectors[i] = sector_by_index(app,
+						head->member_links[i]);
+				if (!head->member_sectors[i] || head->member_sectors[i] == head)
+					exit_error(MSG_ERROR_IMPORT_SECTOR);
+				head->member_sectors[i]->parent_sector = head;
+			}
+			else
+				head->member_sectors[i] = NULL;
+			i++;
+		}
+		head = head->next;
+	}
+}
 
 /**
  * @brief Creates a pointer list from saved point data.
@@ -54,7 +87,7 @@ static void	export_to_list(t_export_sector *export, t_vec2_lst **list,
  * @param sector 
  * @param export 
  */
-void	read_sector(t_sector_lst *sector, t_export_sector *export)
+static void	read_sector(t_sector_lst *sector, t_export_sector *export)
 {
 	sector->light = export->light;
 	sector->floor_height = export->floor_height;
@@ -89,7 +122,7 @@ void	read_sector(t_sector_lst *sector, t_export_sector *export)
  * @param export 
  * @return t_sector_lst* 
  */
-t_sector_lst	*read_sector_list(t_export_sector *export)
+static t_sector_lst	*read_sector_list(t_export_sector *export)
 {
 	t_sector_lst	*new;
 

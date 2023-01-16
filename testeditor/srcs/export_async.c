@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   import.c                                           :+:      :+:    :+:   */
+/*   export_async.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 20:37:31 by saaltone         ###   ########.fr       */
+/*   Created: 2023/01/16 19:44:12 by saaltone          #+#    #+#             */
+/*   Updated: 2023/01/16 21:34:08 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doomnukem.h"
+#include "doomnukem_editor.h"
 
 /**
  * @brief Updates progress for the main thread.
@@ -19,7 +19,7 @@
  * @param thread 
  * @param progress 
  */
-static void	import_set_complete(t_import_info *info)
+void	export_set_complete(t_import_info *info)
 {
 	if (pthread_mutex_lock(&info->thread->lock))
 		exit_error(MSG_ERROR_THREADS_MUTEX);
@@ -35,7 +35,7 @@ static void	import_set_complete(t_import_info *info)
  * @param thread 
  * @param progress 
  */
-void	import_update_progress(t_import_info *info)
+void	export_update_progress(t_import_info *info)
 {
 	if (pthread_mutex_lock(&info->thread->lock))
 		exit_error(MSG_ERROR_THREADS_MUTEX);
@@ -43,7 +43,7 @@ void	import_update_progress(t_import_info *info)
 		((t_app *)info->thread->app)->import_progress = 1.0;
 	else
 		((t_app *)info->thread->app)->import_progress
-			= 0.5 + (double) info->imported / (double) info->length * 0.5;
+			= (double) info->imported / (double) info->length;
 	if (pthread_mutex_unlock(&info->thread->lock))
 		exit_error(MSG_ERROR_THREADS_MUTEX);
 }
@@ -55,7 +55,7 @@ void	import_update_progress(t_import_info *info)
  * @param thread 
  * @param progress 
  */
-void	uncompression_update_progress(t_import_info *info)
+void	compression_update_progress(t_import_info *info)
 {
 	static int	last_update;
 
@@ -65,8 +65,8 @@ void	uncompression_update_progress(t_import_info *info)
 		if (pthread_mutex_lock(&info->thread->lock))
 			exit_error(MSG_ERROR_THREADS_MUTEX);
 		((t_app *)info->thread->app)->import_progress
-			= (double) info->uncompressed / (double) info->compressed_length
-			* 0.5;
+			= 0.5 + (double) info->uncompressed
+				/ (double) info->compressed_length * 0.5;
 		if (pthread_mutex_unlock(&info->thread->lock))
 			exit_error(MSG_ERROR_THREADS_MUTEX);
 		last_update = info->uncompressed;
@@ -74,30 +74,52 @@ void	uncompression_update_progress(t_import_info *info)
 }
 
 /**
- * @brief Imports all data from level file.
+ * @brief Asynchronous function to be used in parallel to the main thread for
+ * importing data from level file.
+ * 
+ * @param data 
+ * @return void* 
+ */
+void	*async_save(void *data)
+{
+	t_app			*app;
+	t_thread_data	*thread;
+
+	thread = (t_thread_data *)data;
+	app = (t_app *)thread->app;
+	export_level(app, thread, FILE_PATH);
+	pthread_exit(NULL);
+}
+
+/**
+ * @brief Creates thread for data importing and monitors/renders its progress
+ * with loading screen.
  * 
  * @param app 
- * @param thread 
- * @param path 
  */
-void	import_level(t_app *app, t_thread_data *thread, char *path)
+void	export_file(t_app *app)
 {
-	t_import_info		info;
+	t_thread_data	thread;
 
-	info.data = NULL;
-	info.thread = thread;
-	rle_uncompress_data(&info, path, &info.data, &info.length);
-	if (!info.data
-		|| sizeof(t_level_header) >= (size_t)(info.length))
-		exit_error(MSG_ERROR_IMPORT);
-	ft_memcpy(&info.header, info.data, sizeof(t_level_header));
-	info.imported = sizeof(t_level_header);
-	import_update_progress(&info);
-	import_sectors(app, &info);
-	import_player(app, &info);
-	import_objects(app, &info);
-	import_interactions(app, &info);
-	import_assets(app, &info);
-	free(info.data);
-	import_set_complete(&info);
+	thread.app = app;
+	app->import_progress = 0.0;
+	if (pthread_mutex_init(&thread.lock, NULL)
+		|| pthread_create(&thread.thread, NULL, async_save, (void *)(&thread)))
+		exit_error(MSG_ERROR_THREADS);
+	while (TRUE)
+	{
+		if (pthread_mutex_lock(&thread.lock))
+			exit_error(MSG_ERROR_THREADS_MUTEX);
+		if (app->import_progress == -1.0)
+		{
+			if (pthread_mutex_unlock(&thread.lock))
+				exit_error(MSG_ERROR_THREADS_MUTEX);
+			break ;
+		}
+		render_loading(app);
+		if (pthread_mutex_unlock(&thread.lock))
+			exit_error(MSG_ERROR_THREADS_MUTEX);
+		SDL_Delay(1);
+	}
+	render_loading(app);
 }
