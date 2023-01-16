@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:57:52 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 21:32:53 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:46:41 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,18 @@
  * @param index 
  * @param current_batch 
  */
-static void	calculate_progress(t_import_info *info, int index,
+void	calculate_progress_assets(t_import_info *info, int index,
 	int current_batch)
 {
 	double	starting_progress;
 	double	current_progress;
 
-	starting_progress = 4.0 + (double) index / (double) (EXPORT_SOUND_BUMP + 1)
-		* 495.0;
-	current_progress = (double) current_batch
-		/ (double) info->header.asset_info[index].size
-		/ (double) (EXPORT_SOUND_BUMP + 1) * 495.0;
+	starting_progress = 4.0 + 500.0 * (double)index
+		/ (double)(EXPORT_SOUND_BUMP + 1);
+	current_progress = 500.0 * (double)current_batch
+		/ (double)info->header.asset_info[index].size
+		/ (double)(EXPORT_SOUND_BUMP + 1);
 	info->imported = (int)(starting_progress + current_progress);
-	//ft_printf("%d\n", info->imported);
 	export_update_progress(info);
 }
 
@@ -58,7 +57,7 @@ void	write_surface_pixels(t_import_info *info, int fd, t_uint8 *pixels,
 			write_length = info->header.asset_info[index].size - i;
 		if (write(fd, pixels + i, write_length) == -1)
 			exit_error(MSG_ERROR_FILE_WRITE);
-		calculate_progress(info, index, i);
+		calculate_progress_assets(info, index, i);
 		i += MAX_UNCOMPRESS_BATCH;
 	}
 }

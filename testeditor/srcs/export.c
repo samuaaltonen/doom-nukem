@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 20:48:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:43:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,13 +55,13 @@ void	update_header(t_level_header *header, char *path)
 }
 
 /**
- * @brief Opens or creates a file at path, writes map data to it.
+ * @brief Exports all data to level file.
  * 
  * @param app 
+ * @param thread 
  * @param path 
- * @return int 
  */
-int	export_level(t_app *app, t_thread_data *thread, char *path)
+void	export_level(t_app *app, t_thread_data *thread, char *path)
 {
 	t_import_info	info;
 	int				fd;
@@ -88,5 +88,4 @@ int	export_level(t_app *app, t_thread_data *thread, char *path)
 	update_header(&info.header, path);
 	rle_compress(&info, path);
 	export_set_complete(&info);
-	return (0);
 }

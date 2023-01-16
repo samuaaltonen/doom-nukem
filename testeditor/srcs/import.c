@@ -6,21 +6,20 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 20:02:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:43:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * @brief Opens a file from the given path
- * 	reads all sector data into the sector list
+ * @brief Imports all data from level file.
  * 
  * @param app 
+ * @param thread 
  * @param path 
- * @return int 
  */
-int	import_level(t_app *app, t_thread_data *thread, char *path)
+void	import_level(t_app *app, t_thread_data *thread, char *path)
 {
 	t_import_info	info;
 
@@ -42,5 +41,4 @@ int	import_level(t_app *app, t_thread_data *thread, char *path)
 	app->imported = TRUE;
 	free(info.data);
 	import_set_complete(&info);
-	return (0);
 }

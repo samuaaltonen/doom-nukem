@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:44:12 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 21:34:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:47:02 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	export_update_progress(t_import_info *info)
 		((t_app *)info->thread->app)->import_progress = 1.0;
 	else
 		((t_app *)info->thread->app)->import_progress
-			= (double) info->imported / (double) info->length;
+			= (double)info->imported / (double)info->length;
 	if (pthread_mutex_unlock(&info->thread->lock))
 		exit_error(MSG_ERROR_THREADS_MUTEX);
 }
@@ -65,8 +65,8 @@ void	compression_update_progress(t_import_info *info)
 		if (pthread_mutex_lock(&info->thread->lock))
 			exit_error(MSG_ERROR_THREADS_MUTEX);
 		((t_app *)info->thread->app)->import_progress
-			= 0.5 + (double) info->uncompressed
-				/ (double) info->compressed_length * 0.5;
+			= 0.5 + (double)info->uncompressed
+			/ (double)info->compressed_length * 0.5;
 		if (pthread_mutex_unlock(&info->thread->lock))
 			exit_error(MSG_ERROR_THREADS_MUTEX);
 		last_update = info->uncompressed;

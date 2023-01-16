@@ -6,33 +6,11 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:00:47 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 21:34:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:44:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
-
-/**
- * @brief Calculates and updates wav exporting progress.
- * 
- * @param info 
- * @param index 
- * @param current_batch 
- */
-static void	calculate_progress(t_import_info *info, int index,
-	int current_batch)
-{
-	double	starting_progress;
-	double	current_progress;
-
-	starting_progress = 4.0 + (double) index / (double) (EXPORT_SOUND_BUMP + 1)
-		* 495.0;
-	current_progress = (double) current_batch
-		/ (double) info->header.asset_info[index].size
-		/ (double) (EXPORT_SOUND_BUMP + 1) * 495.0;
-	info->imported = (int)(starting_progress + current_progress);
-	export_update_progress(info);
-}
 
 /**
  * @brief Exports wav audio data.
@@ -64,7 +42,7 @@ void	export_wav(t_import_info *info, int index, int fd, const char *path)
 			write_length = length - i;
 		if (write(fd, buffer + i, write_length) == -1)
 			exit_error(MSG_ERROR_FILE_WRITE);
-		calculate_progress(info, index, i);
+		calculate_progress_assets(info, index, i);
 		i += MAX_UNCOMPRESS_BATCH;
 	}
 	free(buffer);

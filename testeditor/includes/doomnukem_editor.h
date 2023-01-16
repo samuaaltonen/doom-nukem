@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 20:44:17 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:45:08 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ typedef struct s_object
 typedef struct s_interaction
 {
 	int				event_id;
-	double 			variable;
+	double			variable;
 	int				interaction_link;
 	t_sector_lst	*activation_sector;
 	t_vec2_lst		*activation_wall;
@@ -380,7 +380,7 @@ void			render_loading(t_app *app);
 void			uncompression_update_progress(t_import_info *info);
 void			import_set_complete(t_import_info *info);
 void			import_file(t_app *app);
-int				import_level(t_app *app, t_thread_data *thread, char *path);
+void			import_level(t_app *app, t_thread_data *thread, char *path);
 void			import_sectors(t_app *app, t_import_info *info);
 void			import_player(t_app *app, t_import_info *info);
 void			import_objects(t_app *app, t_import_info *info);
@@ -399,8 +399,10 @@ void			compression_update_progress(t_import_info *info);
 void			export_update_progress(t_import_info *info);
 void			export_set_complete(t_import_info *info);
 int				get_wall_id(t_vec2_lst *list, t_vec2_lst *wall);
+void			calculate_progress_assets(t_import_info *info, int index,
+					int current_batch);
 void			export_file(t_app *app);
-int				export_level(t_app *app, t_thread_data *thread, char *path);
+void			export_level(t_app *app, t_thread_data *thread, char *path);
 void			export_sectors(t_app *app, t_level_header header, int fd,
 					t_import_info *info);
 void			export_player(t_app *app, int fd, t_import_info *info);
