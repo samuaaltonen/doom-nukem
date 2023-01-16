@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 18:57:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 19:19:32 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -181,15 +181,5 @@ typedef struct s_import_info
 	int				compressed_length;
 	int				uncompressed;
 }	t_import_info;
-
-/**
- * RLE compression
- */
-void			expand_data(unsigned char **data, int *length, int *allocated);
-unsigned char	*read_source(const char *source, int *source_length);
-void			rle_uncompress_data(const char *source, unsigned char **data,
-					int *length);
-void			rle_compress(const char *source);
-void			rle_uncompress(const char *source);
 
 #endif

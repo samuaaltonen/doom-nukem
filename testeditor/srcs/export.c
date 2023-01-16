@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/13 17:04:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 19:22:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,51 @@ void	update_header(t_level_header *header, char *path)
 	if (write(fd, header, sizeof(t_level_header)) == -1)
 		exit_error(MSG_ERROR_FILE_WRITE);
 	close(fd);
+}
+
+/**
+ * @brief Updates progress for the main thread.
+ * 
+ * @param app 
+ * @param thread 
+ * @param progress 
+ */
+void	export_update_progress(t_import_info *info)
+{
+	if (pthread_mutex_lock(&info->thread->lock))
+		exit_error(MSG_ERROR_THREADS_MUTEX);
+	if (info->imported == info->length)
+		((t_app *)info->thread->app)->import_progress = 1.0;
+	else
+		((t_app *)info->thread->app)->import_progress
+			= 0.5 + (double) info->imported / (double) info->length * 0.5;
+	if (pthread_mutex_unlock(&info->thread->lock))
+		exit_error(MSG_ERROR_THREADS_MUTEX);
+}
+
+/**
+ * @brief Updates progress for the main thread.
+ * 
+ * @param app 
+ * @param thread 
+ * @param progress 
+ */
+void	compression_update_progress(t_import_info *info)
+{
+	static int	last_update;
+
+	if (info->uncompressed - last_update > MIN_UNCOMPRESS_UPDATE
+		|| info->uncompressed == info->compressed_length)
+	{
+		if (pthread_mutex_lock(&info->thread->lock))
+			exit_error(MSG_ERROR_THREADS_MUTEX);
+		((t_app *)info->thread->app)->import_progress
+			= (double) info->uncompressed / (double) info->compressed_length
+			* 0.5;
+		if (pthread_mutex_unlock(&info->thread->lock))
+			exit_error(MSG_ERROR_THREADS_MUTEX);
+		last_update = info->uncompressed;
+	}
 }
 
 /**
