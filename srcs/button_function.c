@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 15:59:55 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 19:06:04 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	start_game(t_app *app)
 	player_init(app);
 	//import_file(app, MAP_PATH);
 	init_enemies(app);
-	init_projectiles(app);
+	init_bullets(app);
 	//----DEBUG FEATURE
 	app->player.inventory.ammo = 20;
 	app->player.inventory.potion = 5;

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/12 18:28:39 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/16 20:27:41 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ FILES = animation_create.c \
 		player_init.c \
 		player_move.c \
 		player_view.c \
-		projectiles.c \
+		bullets.c \
 		render_object.c \
 		render_status.c \
 		render_text.c \
@@ -87,7 +87,9 @@ FILES = animation_create.c \
 		level_validation_assets.c \
 		level_validation_interaction.c \
 		level_validation_player.c \
-		level_validation_object.c
+		level_validation_object.c \
+		bullet_collisions.c \
+		bullet_wall_collisions.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a

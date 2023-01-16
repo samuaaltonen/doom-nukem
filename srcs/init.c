@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 19:32:48 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 19:06:04 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,32 +71,32 @@ void	sdl_init(t_app *app)
 	SDL_ShowCursor(SDL_DISABLE);
 }
 
-void	define_projectiles(t_app *app)
+void	define_bullets(t_app *app)
 {
-	app->projectile_def[0].speed = 5.f;
-	app->projectile_def[0].damage = 25.f;
-	app->projectile_def[0].size = (t_vector2){0.5f,0.5f};
-	app->projectile_def[1].speed = 5.f;
-	app->projectile_def[1].damage = 25.f;
-	app->projectile_def[1].size = (t_vector2){0.5f,0.5f};
-	app->projectile_def[2].speed = 8.f;
-	app->projectile_def[2].damage = 25.f;
-	app->projectile_def[2].size = (t_vector2){0.5f,0.5f};
-	app->projectile_def[3].speed = 8.f;
-	app->projectile_def[3].damage = 25.f;
-	app->projectile_def[3].size = (t_vector2){0.5f,0.5f};
-	app->projectile_def[4].speed = 8.f;
-	app->projectile_def[4].damage = 25.f;
-	app->projectile_def[4].size = (t_vector2){0.5f,0.5f};
-	app->projectile_def[5].speed = 8.f;
-	app->projectile_def[5].damage = 25.f;
-	app->projectile_def[5].size = (t_vector2){0.5f,0.5f};
-	app->projectile_def[6].speed = 10.f;
-	app->projectile_def[6].damage = 25.f;
-	app->projectile_def[6].size = (t_vector2){0.5f,0.5f};
-	app->projectile_def[7].speed = 10.f;
-	app->projectile_def[7].damage = 25.f;
-	app->projectile_def[7].size = (t_vector2){0.5f,0.5f};
+	app->bullet_def[0].speed = 5.f;
+	app->bullet_def[0].damage = 25.f;
+	app->bullet_def[0].size = (t_vector2){0.5f,0.5f};
+	app->bullet_def[1].speed = 5.f;
+	app->bullet_def[1].damage = 25.f;
+	app->bullet_def[1].size = (t_vector2){0.5f,0.5f};
+	app->bullet_def[2].speed = 8.f;
+	app->bullet_def[2].damage = 25.f;
+	app->bullet_def[2].size = (t_vector2){0.5f,0.5f};
+	app->bullet_def[3].speed = 8.f;
+	app->bullet_def[3].damage = 25.f;
+	app->bullet_def[3].size = (t_vector2){0.5f,0.5f};
+	app->bullet_def[4].speed = 8.f;
+	app->bullet_def[4].damage = 25.f;
+	app->bullet_def[4].size = (t_vector2){0.5f,0.5f};
+	app->bullet_def[5].speed = 8.f;
+	app->bullet_def[5].damage = 25.f;
+	app->bullet_def[5].size = (t_vector2){0.5f,0.5f};
+	app->bullet_def[6].speed = 10.f;
+	app->bullet_def[6].damage = 25.f;
+	app->bullet_def[6].size = (t_vector2){0.5f,0.5f};
+	app->bullet_def[7].speed = 10.f;
+	app->bullet_def[7].damage = 25.f;
+	app->bullet_def[7].size = (t_vector2){0.5f,0.5f};
 }
 
 void	define_enemy_0(t_app *app)
@@ -140,7 +140,7 @@ void	define_enemy_1(t_app *app)
 }
 void	define_enemies(t_app *app)
 {
-	define_projectiles(app);
+	define_bullets(app);
 	define_enemy_0(app);
 	define_enemy_1(app);
 }
@@ -181,13 +181,13 @@ void	init_enemies(t_app *app)
 	}
 }
 
-void	init_projectiles(t_app *app)
+void	init_bullets(t_app *app)
 {
 	int	i;
 
 	i = -1;
 
-	ft_bzero(app->projectiles, sizeof(t_projectile) * MAX_TEMP_OBJECTS);
+	ft_bzero(app->bullets, sizeof(t_bullet) * MAX_TEMP_OBJECTS);
 	while (++i < MAX_TEMP_OBJECTS)
-		app->projectiles[i].type = -1;
+		app->bullets[i].type = -1;
 }

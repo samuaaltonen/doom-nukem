@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:17:11 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 19:44:51 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 19:06:04 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,17 @@ static int	per_object_collision(t_app *app, t_vector2 pos, double elev, t_gameob
 	return (0);
 }
 
-static t_bool	line_collision(t_app *app, t_projectile *projectile, t_enemy_state *enemy)
+static t_bool	line_collision(t_app *app, t_bullet *bullet, t_enemy_state *enemy)
 {
 	t_vector2	point;
 	t_vector2	backwards;
 	t_line		collision_line;
 
-	backwards = ft_vector2_sub(projectile->start,
-		ft_vec2_mult(projectile->end, -app->conf->delta_time));
-	collision_line = (t_line){projectile->start, backwards};
+	backwards = ft_vector2_sub(bullet->start,
+		ft_vec2_mult(bullet->end, -app->conf->delta_time));
+	collision_line = (t_line){bullet->start, backwards};
 	point = ft_closest_point(app->objects[enemy->id].position,collision_line);
-	if (ft_point_on_segment(collision_line, point) && in_range(point, app->objects[enemy->id].position, app->projectile_def[projectile->type - 11].size.x))
+	if (ft_point_on_segment(collision_line, point) && in_range(point, app->objects[enemy->id].position, app->bullet_def[bullet->type - 11].size.x))
 	{
 		return (TRUE);
 	}
@@ -81,42 +81,42 @@ static void	damage_enemy(t_app *app, int damage, t_enemy_state *enemy)
 	}
 }
 
-static int	projectile_enemy_collision(t_app *app, t_projectile *projectile, t_enemy_state *enemy)
+static int	bullet_enemy_collision(t_app *app, t_bullet *bullet, t_enemy_state *enemy)
 {
-	if(projectile->type > 12)
+	if(bullet->type > 12)
 	{
-		if(!enemy->dead && (in_range(projectile->start, app->objects[enemy->id].position, app->projectile_def[projectile->type - 11].size.x) || line_collision(app, projectile, enemy))
-				&& in_range_height(projectile->start_z, app->objects[enemy->id].elevation + 0.5f, app->projectile_def[projectile->type - 11].size.y))
+		if(!enemy->dead && (in_range(bullet->start, app->objects[enemy->id].position, app->bullet_def[bullet->type - 11].size.x) || line_collision(app, bullet, enemy))
+				&& in_range_height(bullet->start_z, app->objects[enemy->id].elevation + 0.5f, app->bullet_def[bullet->type - 11].size.y))
 		{
-			damage_enemy(app, app->projectile_def[projectile->type - 11].damage, enemy);
-			kill_projectile(app,projectile);
+			damage_enemy(app, app->bullet_def[bullet->type - 11].damage, enemy);
+			kill_bullet(app,bullet);
 		}
 	}
 	return (0);
 }
 
-void	projectile_player_collision(t_app *app)
+void	bullet_player_collision(t_app *app)
 {
-	t_projectile	*projectile;
+	t_bullet	*bullet;
 	int				i;
 
-	projectile = &(app->projectiles[0]);
-	i = app->projectiles_active;
+	bullet = &(app->bullets[0]);
+	i = app->bullets_active;
 	while (i > 0)
 	{
-		if(projectile->type != -1)
+		if(bullet->type != -1)
 		{
-			if(projectile->type < 15)
+			if(bullet->type < 15)
 			{
-				if(in_range( app->player.pos, projectile->start, app->projectile_def[projectile->type - 11].size.x) && in_range_height(app->player.elevation + app->player.height, projectile->start_z, app->projectile_def[projectile->type - 11].size.y))
+				if(in_range( app->player.pos, bullet->start, app->bullet_def[bullet->type - 11].size.x) && in_range_height(app->player.elevation + app->player.height, bullet->start_z, app->bullet_def[bullet->type - 11].size.y))
 				{
-					damage(app, app->projectile_def[projectile->type - 11].damage);
-					kill_projectile(app, projectile);
+					damage(app, app->bullet_def[bullet->type - 11].damage);
+					kill_bullet(app, bullet);
 				}
 			}
 			i--;
 		}
-		projectile++;
+		bullet++;
 	}
 }
 
@@ -137,7 +137,7 @@ void	object_collision(t_app *app)
 
 void	bullet_enemy_collisions(t_app *app)
 {
-	t_projectile	*projectile;
+	t_bullet	*bullet;
 	t_enemy_state	*enemy;
 	int				i;
 
@@ -146,16 +146,16 @@ void	bullet_enemy_collisions(t_app *app)
 	{
 		if(in_range(app->objects[enemy->id].position,app->player.pos, 25.f))
 		{
-			projectile = &(app->projectiles[0]);
-			i = app->projectiles_active;
+			bullet = &(app->bullets[0]);
+			i = app->bullets_active;
 			while (i > 0)
 			{
-				if(projectile->type != -1)
+				if(bullet->type != -1)
 				{
-					projectile_enemy_collision(app, projectile, enemy);
+					bullet_enemy_collision(app, bullet, enemy);
 					i--;
 				}
-				projectile++;
+				bullet++;
 			}
 		}
 		enemy++;

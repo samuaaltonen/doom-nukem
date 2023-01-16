@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/13 18:51:34 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 19:06:04 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,11 +85,11 @@ t_vector2		render_enemy(t_app *app, t_render_object *object, t_vector2 tex, int 
 	return (tex);
 }
 
-t_vector2		render_projectile(t_app *app, t_render_object *object, t_vector2 tex, int *sprite_id)
+t_vector2		render_bullet(t_app *app, t_render_object *object, t_vector2 tex, int *sprite_id)
 {
 	*sprite_id = PROJECTILE_SPRITE;
 	tex.x += 0.f;
-	tex.y += (app->projectiles[object->id - MAX_OBJECTS].type - MAX_SMALL_OBJECTS - MAX_BIG_OBJECTS - MAX_ENEMY_TYPES - 1) * TEX_PICKUP;
+	tex.y += (app->bullets[object->id - MAX_OBJECTS].type - MAX_SMALL_OBJECTS - MAX_BIG_OBJECTS - MAX_ENEMY_TYPES - 1) * TEX_PICKUP;
 	return (tex);
 }
 
@@ -132,7 +132,7 @@ void	objects_render(t_app *app, t_thread_data *thread)
 	{
 		object_type = app->objects[ app->objectstack.objects[i].id].type;
 		if(app->objectstack.objects[i].id >= MAX_OBJECTS)
-			object_type = app->projectiles[app->objectstack.objects[i].id - MAX_OBJECTS].type;
+			object_type = app->bullets[app->objectstack.objects[i].id - MAX_OBJECTS].type;
 		if(object_type <= MAX_SMALL_OBJECTS)
 			object_render(app, &(app->objectstack.objects[i]), thread, render_small);
 		else if(object_type <= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS)
@@ -140,7 +140,7 @@ void	objects_render(t_app *app, t_thread_data *thread)
 		else if(object_type <= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES)
 			object_render(app, &(app->objectstack.objects[i]), thread, render_enemy);
 		else if(object_type > MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES)
-			object_render(app, &(app->objectstack.objects[i]), thread, render_projectile);
+			object_render(app, &(app->objectstack.objects[i]), thread, render_bullet);
 		i++;
 	}
 }
@@ -213,12 +213,12 @@ static t_bool	init_temp_object(t_app *app, int i, t_render_object *object,
 	double		dist;
 	t_vector2	transform;
 
-	vector = ft_vector2_sub(app->projectiles[i].start, app->player.pos);
+	vector = ft_vector2_sub(app->bullets[i].start, app->player.pos);
 	dist = ft_vector_length(vector);
 	if(dist > MAX_OBJECT_DISTANCE)
 		return (FALSE);
 	object->dist = dist * cos(ft_vector_angle(vector, app->player.dir));
-	*angle = atan(fabs(app->player.elevation - app->projectiles[i].start_z)
+	*angle = atan(fabs(app->player.elevation - app->bullets[i].start_z)
 			/ dist);
 	if(*angle > 1.f || *angle < 0)
 		return (FALSE);
@@ -265,7 +265,7 @@ static void	set_object(t_app *app, t_render_object *object, double *angle,
 }
 
 static void	set_tmp_object(t_app *app, t_render_object *object, double *angle,
-	t_projectile *original_obj)
+	t_bullet *original_obj)
 {
 		double			offset;
 
@@ -316,12 +316,12 @@ static void	objects_visible(t_app *app)
 	i = -1;
 	while (++i < MAX_TEMP_OBJECTS) //temp objects
 	{
-		if(app->projectiles[i].type == -1)
+		if(app->bullets[i].type == -1)
 			continue;
 		object = &(app->objectstack.objects[app->objectstack.visible_count]);
 		if (!init_temp_object(app, i,object,&angle))
 			continue;
-		set_tmp_object(app, object, &angle, &(app->projectiles[i]));
+		set_tmp_object(app, object, &angle, &(app->bullets[i]));
 	}
 }
 

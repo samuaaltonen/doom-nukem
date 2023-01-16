@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 19:33:21 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 19:06:04 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,12 +60,12 @@ void	render_game(t_app *app)
 {
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	update_enemy_states(app);
-	update_projectiles(app);
+	update_bullets(app);
 	progress_animations(app);
 	player_control(app);
 	object_collision(app);
 	bullet_enemy_collisions(app);
-	projectile_player_collision(app);
+	bullet_player_collision(app);
 	render_sectors(app);
 	render_hand(app, WIN_W / 2 - 128, 500);
 	render_objects(app);

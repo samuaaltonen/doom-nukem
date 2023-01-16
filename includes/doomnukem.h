@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 18:58:19 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:28:30 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,12 +117,12 @@ typedef struct s_enemy_def
 	float				states[4][3];
 }	t_enemy_def;
 
-typedef struct	s_projectile_def
+typedef struct	s_bullet_def
 {
 	double	speed;
 	double	damage;
 	t_vector2	size;
-}	t_projectile_def;
+}	t_bullet_def;
 
 typedef struct s_enemy_state
 {
@@ -136,7 +136,7 @@ typedef struct s_enemy_state
 	int					next;
 }	t_enemy_state;
 
-typedef struct s_projectile
+typedef struct s_bullet
 {
 	t_vector2			start;
 	double				start_z;
@@ -145,7 +145,7 @@ typedef struct s_projectile
 	double				timer;
 	int					type;
 	int					sector;
-}	t_projectile;
+}	t_bullet;
 
 typedef struct s_render_object
 {
@@ -206,11 +206,11 @@ typedef struct s_app
 	int					sector_count;
 	t_gameobject		objects[MAX_OBJECTS];
 	float				object_states[MAX_OBJECTS];
-	t_projectile		projectiles[MAX_TEMP_OBJECTS];
-	int					projectiles_active;
+	t_bullet		bullets[MAX_TEMP_OBJECTS];
+	int					bullets_active;
 	t_enemy_state		enemies[MAX_OBJECTS];
 	t_enemy_def			enemy_def[MAX_ENEMY_TYPES];
-	t_projectile_def	projectile_def[MAX_PROJECTILES];
+	t_bullet_def	bullet_def[MAX_PROJECTILES];
 	t_interaction		interactions[MAX_INTERACTIONS];
 	t_animation			animations[MAX_CONCURRENT_ANIMATIONS];
 	int					animation_count;
@@ -348,6 +348,7 @@ int				enemy_move_check(t_app *app, t_move new, int sector_id,
 void			object_collision(t_app *app);
 t_bool			in_range(t_vector2 pos, t_vector2 obj, double epsilon);
 t_bool			in_range_height(double pos, double obj, double epsilon);
+void			sector_height_collision(t_app *app, t_bullet *bullet);
 
 /**
  * Sectors
@@ -508,11 +509,12 @@ void			fire(t_app *app, t_vector3 target_dir, t_vector3 start_pos,
 					t_point info);
 void			melee(t_app *app, t_vector3 target_dir, t_vector3 start_pos,
 					t_point info);
-void			update_projectiles(t_app *app);
-void			init_projectiles(t_app *app);
-void			projectile_player_collision(t_app *app);
-void			kill_projectile(t_app *app, t_projectile *projectile);
+void			update_bullets(t_app *app);
+void			init_bullets(t_app *app);
+void			bullet_player_collision(t_app *app);
+void			kill_bullet(t_app *app, t_bullet *bullet);
 void			bullet_enemy_collisions(t_app *app);
-void			projectile_test(t_app *app, t_projectile *projectile, t_bool init);
+void			calc_end(t_app *app, t_bullet *bullet, t_vector3 target_dir);
+void			bullet_test(t_app *app, t_bullet *bullet, t_bool init);
 
 #endif
