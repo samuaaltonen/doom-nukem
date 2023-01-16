@@ -6,15 +6,17 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:00:45 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/30 11:15:17 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/16 13:13:42 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Checks if the player position is being placed outside sectors or
+ * @brief Checks if the player position is being placed outside sectors or
  * inside member sectors. Disallows placing if position not valid.
+ * 
+ * @param app
 */
 void	check_player_position(t_app *app)
 {
@@ -46,8 +48,10 @@ void	check_player_position(t_app *app)
 }
 
 /**
- * Renders a square to player position. If player edit mode is on
+ * @brief Renders a square to player position. If player edit mode is on
  * the position follows the mouse, otherwise it's the last clicked position.
+ * 
+ * @param app
 */
 void	render_player(t_app *app)
 {

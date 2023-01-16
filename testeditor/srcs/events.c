@@ -6,12 +6,19 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:52 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 19:08:37 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:54:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
+/**
+ * @brief Calculates the closest point to snap to.
+ * 
+ * @param snap_pos
+ * @param world_pos
+ * @param divider
+*/
 static void	snap_to_point(double *snap_pos, double *world_pos, double divider)
 {
 	double	tmp;
@@ -34,14 +41,20 @@ static void	snap_to_point(double *snap_pos, double *world_pos, double divider)
 }
 
 /**
- * converts mouse_pos to world space and snaps to grid
+ * @brief Converts mouse position to world space and snaps it to the closest
+ * grid position.
+ * 
+ * @param app
+ * @param mouse
+ * @param snap_pos
+ * @param divider
  */
-void	snap_to_nearest(t_app *app, t_point *mouse_pos, t_vector2 *snap_pos,
+void	snap_to_nearest(t_app *app, t_point *mouse, t_vector2 *snap_pos,
 																double divider)
 {
 	t_vector2	world_pos;
 
-	world_pos = screen_to_world(app, *mouse_pos);
+	world_pos = screen_to_world(app, *mouse);
 	snap_pos->x = world_pos.x;
 	snap_pos->y = world_pos.y;
 	snap_to_point(&snap_pos->x, &world_pos.x, divider);

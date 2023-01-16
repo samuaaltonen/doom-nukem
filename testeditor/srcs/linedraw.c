@@ -3,17 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   linedraw.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:01:44 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/06 16:59:10 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:28:29 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
-static void	check_if_low_or_high(t_point *pixel_a, t_point *pixel_b,
-										t_app *app, int color)
+/**
+ * @brief
+ * 
+ * @param app
+ * @param pixel_a
+ * @param pixel_b
+ * @param color
+*/
+static void	check_if_low_or_high(t_app *app, t_point *pixel_a, t_point *pixel_b,
+																	int color)
 {
 	if (abs(pixel_b->y - pixel_a->y) < abs(pixel_b->x - pixel_a->x))
 	{
@@ -32,7 +40,7 @@ static void	check_if_low_or_high(t_point *pixel_a, t_point *pixel_b,
 }
 
 /**
- * @brief Draw line between two vector points
+ * @brief Draws a line between two vector points.
  * 
  * @param app 
  * @param a 
@@ -48,18 +56,11 @@ void	draw_line(t_app *app, t_vector2 *a, t_vector2 *b, int color)
 	pixel_b = world_to_screen(app, *b);
 	if (!check_borders(app, &pixel_a, &pixel_b))
 		return ;
-	check_if_low_or_high(&pixel_a, &pixel_b, app, color);
-}
-
-void	draw_point_line(t_app *app, t_point a, t_point b, int color)
-{
-	if (!check_borders(app, &a, &b))
-		return ;
-	check_if_low_or_high(&a, &b, app, color);
+	check_if_low_or_high(app, &pixel_a, &pixel_b, color);
 }
 
 /**
- * @brief Draw line between two given wall list points
+ * @brief Draws a line between two given wall list points.
  * 
  * @param app 
  * @param a 
@@ -75,5 +76,5 @@ void	draw_list_lines(t_app *app, t_vec2_lst *a, t_vec2_lst *b, int color)
 	pixel_b = world_to_screen(app, b->point);
 	if (!check_borders(app, &pixel_a, &pixel_b))
 		return ;
-	check_if_low_or_high(&pixel_a, &pixel_b, app, color);
+	check_if_low_or_high(app, &pixel_a, &pixel_b, color);
 }

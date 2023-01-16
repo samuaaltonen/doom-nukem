@@ -3,35 +3,41 @@
 /*                                                        :::      ::::::::   */
 /*   menu.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/05 22:16:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 13:10:24 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * The main help menu texts, shown when no specific edit mode is on.
+ * @brief The main help menu texts, shown when no specific edit mode is on.
+ * 
+ * @param app
+ * @param start_y
 */
-static void	main_menu(t_app *app, int y)
+static void	main_menu(t_app *app, int start_y)
 {
 	if (!app->imported && !app->sectors)
-		render_text(app, (t_rect){20, y, 260, 15}, "OPEN FILE ( O )");
-	render_text(app, (t_rect){20, y + 15, 260, 15}, "SAVE FILE ( M )");
+		render_text(app, (t_rect){20, start_y, 260, 15}, "OPEN FILE ( O )");
+	render_text(app, (t_rect){20, start_y + 15, 260, 15}, "SAVE FILE ( M )");
 	toggle_active_color(app, app->list_creation, "CREATE SECTOR ( C )",
-		(t_rect){20, y + 35, 260, 15});
-	render_text(app, (t_rect){20, y + 55, 260, 100}, "LEFT CLICK MOUSE TO \
-SELECT SECTOR. RIGHT CLICK TO UNSELECT. LEFT CLICK CORNER TO SELECT WALL ON \
-RIGHT. TO CREATE A MEMBER SECTOR, PRESS 'C' WHEN SECTOR IS SELECTED.");
-	render_text(app, (t_rect){20, y + 150, 260, 15}, "DIVIDE GRID ( Z / X )");
-	render_text(app, (t_rect){20, y + 165, 260, 15}, "MOVE ( WASD )");
-	render_text(app, (t_rect){20, y + 180, 250, 15}, "ZOOM ( SCROLL )");
+		(t_rect){20, start_y + 35, 260, 15});
+	render_text(app, (t_rect){20, start_y + 55, 260, 100}, "LEFT CLICK MOUSE TO\
+ SELECT SECTOR. RIGHT CLICK TO UNSELECT. LEFT CLICK CORNER TO SELECT WALL ON\
+ RIGHT. TO CREATE A MEMBER SECTOR, PRESS 'C' WHEN SECTOR IS SELECTED.");
+	render_text(app, (t_rect){20, start_y + 150, 260, 15}, "DIVIDE GRID\
+ ( Z / X )");
+	render_text(app, (t_rect){20, start_y + 165, 260, 15}, "MOVE ( WASD )");
+	render_text(app, (t_rect){20, start_y + 180, 250, 15}, "ZOOM ( SCROLL )");
 }
 
 /**
- * Renders the texts for the buttons on the upper right corner.
+ * @brief Renders the texts for the buttons on the upper right corner.
+ * 
+ * @param app
 */
 static void	render_button_menu_texts(t_app *app)
 {
@@ -63,9 +69,12 @@ SECTORS", (t_rect){WIN_W - 155, 10, 180, 40});
 }
 
 /**
- * Renders the buttons on the upper right corner.
+ * @brief Renders the buttons on the upper right corner.
+ * 
+ * @param app
+ * @param mouse
 */
-static void	render_button_menu(t_app *app, t_point screen_pos)
+static void	render_button_menu(t_app *app, t_point mouse)
 {
 	int		index;
 	int		y;
@@ -83,7 +92,7 @@ static void	render_button_menu(t_app *app, t_point screen_pos)
 			y += 30;
 			continue ;
 		}
-		if (check_mouse(screen_pos, (t_rect){WIN_W - 160, y, 150, 20}))
+		if (check_mouse(mouse, (t_rect){WIN_W - 160, y, 150, 20}))
 			color_surface(app->assets.ui_frame, ACTIVE_TEXT);
 		render_ui_frame(app, (t_rect){WIN_W - 160, y, 150, 25}, 1, BG_MENU);
 		color_surface(app->assets.ui_frame, TEXT);
@@ -93,25 +102,27 @@ static void	render_button_menu(t_app *app, t_point screen_pos)
 }
 
 /**
- * Renders the correct menu texts on the help menu sidebar depending what
+ * @brief Renders the correct menu texts on the help menu sidebar depending what
  * editing mode is on.
+ * 
+ * @param app
 */
 static void	help_menu_texts(t_app *app)
 {
-	t_point	screen_pos;
+	t_point	mouse;
 
-	SDL_GetMouseState(&screen_pos.x, &screen_pos.y);
+	SDL_GetMouseState(&mouse.x, &mouse.y);
 	change_font(app, 20, TEXT);
 	render_text(app, (t_rect){10, 10, 260, 20}, "LEVEL EDITOR");
 	change_font(app, 11, TEXT);
 	if (app->active_sector && !app->active && !app->object_menu
 		&& !app->interaction_menu)
-		sector_edit_menu(app, screen_pos, 40);
+		sector_edit_menu(app, mouse, 40);
 	else if (app->active && !app->interaction_menu && !app->object_menu
 		&& !app->list_creation)
-		wall_edit_menu(app, screen_pos);
+		wall_edit_menu(app, mouse);
 	else if (app->interaction_menu)
-		interaction_edit_menu(app, 40, screen_pos);
+		interaction_edit_menu(app, 40, mouse);
 	else if (app->player_menu)
 		player_edit_menu(app);
 	else if (app->object_menu)
@@ -119,11 +130,13 @@ static void	help_menu_texts(t_app *app)
 	else
 		main_menu(app, 40);
 	color_surface(app->assets.ui_frame, TEXT);
-	render_button_menu(app, screen_pos);
+	render_button_menu(app, mouse);
 }
 
 /**
- * Renders the help menu sidebar to the left of the screen.
+ * @brief Renders the help menu sidebar to the left of the screen.
+ * 
+ * @param app
 */
 void	render_help_menu(t_app *app)
 {

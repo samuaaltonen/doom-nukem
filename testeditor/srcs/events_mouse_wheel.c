@@ -6,18 +6,18 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:07:58 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 19:08:19 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:53:22 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * @brief Mouse scroll zoom.
+ * @brief Zoom event for mouse scroll.
  * 
- * @param app 
- * @param event 
- * @return int 
+ * @param app
+ * @param event
+ * @return int
  */
 int	events_mouse_wheel(t_app *app, SDL_Event *event)
 {

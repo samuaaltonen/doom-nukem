@@ -3,15 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   object_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 14:12:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/09 12:57:40 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 11:15:12 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
+/**
+ * @brief Returns the index of the object given from the objects array.
+ * Upon error, returns -1.
+ * 
+ * @param app
+ * @param object
+ * @return int
+*/
 int	get_object_id(t_app *app, t_object *object)
 {
 	int	i;
@@ -26,6 +34,12 @@ int	get_object_id(t_app *app, t_object *object)
 	return (-1);
 }
 
+/**
+ * @brief Keydown event to change current object type.
+ * 
+ * @param app
+ * @param keycode
+*/
 void	change_object_id(t_app *app, int keycode)
 {
 	if (keycode == SDLK_LEFT && app->current_object->type > 1)
@@ -34,6 +48,12 @@ void	change_object_id(t_app *app, int keycode)
 		app->current_object->type++;
 }
 
+/**
+ * @brief Checks if object is valid.
+ * 
+ * @param app
+ * @return t_bool
+*/
 t_bool	valid_object(t_app *app)
 {
 	int	i;
@@ -53,7 +73,10 @@ t_bool	valid_object(t_app *app)
 }
 
 /**
- * Deletes an object and all the interaction it has.
+ * @brief Deletes an object and all the interaction it has.
+ * 
+ * @param app
+ * @param id
 */
 void	del_object(t_app *app, int id)
 {
@@ -83,7 +106,9 @@ void	del_object(t_app *app, int id)
 }
 
 /**
- * Deletes all objects in the active sector.
+ * @brief Deletes all objects in the active sector.
+ * 
+ * @param app
 */
 void	del_all_objects_in_sector(t_app *app)
 {

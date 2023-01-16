@@ -3,17 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   interactions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 18:02:59 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:01:14 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Creates a new interaction on either the sector, wall decor or object.
+ * @brief Creates a new interaction on either the sector, wall decor or object.
+ * 
+ * @param app
+ * @return t_bool
 */
 static t_bool	new_interaction(t_app *app)
 {
@@ -42,7 +45,10 @@ static t_bool	new_interaction(t_app *app)
 }
 
 /**
- * Key events to change the interaction variable and interaction link.
+ * @brief Key events to change the interaction variable and interaction link.
+ * 
+ * @param app
+ * @param keycode
 */
 void	interaction_edit(t_app *app, SDL_Keycode keycode)
 {
@@ -55,7 +61,8 @@ void	interaction_edit(t_app *app, SDL_Keycode keycode)
 		app->current_interaction->variable += app->divider;
 	else if (keycode == SDLK_DOWN)
 		app->current_interaction->variable -= app->divider;
-	else if (keycode == SDLK_LEFT && app->current_interaction->interaction_link > 0)
+	else if (keycode == SDLK_LEFT
+		&& app->current_interaction->interaction_link > 0)
 	{
 		app->current_interaction->interaction_link -= 1;
 		while (app->interactions[id].event_id == 0
@@ -73,8 +80,10 @@ void	interaction_edit(t_app *app, SDL_Keycode keycode)
 }
 
 /**
- * Finds the next free spot in the interaction array and creates a new
+ * @brief Finds the next free spot in the interaction array and creates a new
  * interaction to that index.
+ * 
+ * @param app
 */
 static void	no_current_interaction(t_app *app)
 {
@@ -100,8 +109,10 @@ static void	no_current_interaction(t_app *app)
 }
 
 /**
- * If there's no current interaction, creates a new one. If there is a current
- * interaction, saves it to the next free spot in the interaction array.
+ * @brief If there's no current interaction, creates a new one. If there is a
+ * current interaction, saves it to the next free spot in the interaction array.
+ * 
+ * @param app
 */
 void	link_interaction(t_app *app)
 {
@@ -118,8 +129,11 @@ void	link_interaction(t_app *app)
 }
 
 /**
- * Deletes the interaction on the index you give it and removes the links to
- * that interaction as well.
+ * @brief Deletes the interaction on the index you give it and removes the links
+ * to that interaction as well.
+ * 
+ * @param app
+ * @param id
 */
 void	delete_interaction(t_app *app, int id)
 {
@@ -135,6 +149,7 @@ void	delete_interaction(t_app *app, int id)
 	app->interactions[id].activation_sector = NULL;
 	app->interactions[id].activation_wall = NULL;
 	app->interactions[id].activation_object = NULL;
+	app->interactions[id].requires_key = FALSE;
 	i = 0;
 	while (i < MAX_INTERACTIONS)
 	{

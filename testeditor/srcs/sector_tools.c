@@ -6,14 +6,14 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:53:18 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 11:18:47 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/16 13:59:32 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * @brief Get the sector id of the sector parameter
+ * @brief Get the sector id of the sector parameter.
  * 
  * @param app 
  * @param sector 
@@ -37,7 +37,11 @@ int	get_sector_id(t_app *app, t_sector_lst *sector)
 }
 
 /**
- * returns the clicked sector, by checking if 
+ * @brief Checks that the mouse click is inside a sector and returns the
+ * clicked sector.
+ * 
+ * @param app
+ * @return t_sector_lst*
  */
 t_sector_lst	*click_sector(t_app *app)
 {
@@ -60,8 +64,12 @@ t_sector_lst	*click_sector(t_app *app)
 }
 
 /**
- * Returns true if the click is inside a convex sector, checking the point
- * side to all walls.
+ * @brief Returns true if the click is inside a convex sector, checking the 
+ * point side to all walls.
+ * 
+ * @param sector
+ * @param mouse
+ * @return int
  */
 int	inside_sector_check(t_sector_lst *sector, t_vector2 *mouse)
 {
@@ -71,18 +79,21 @@ int	inside_sector_check(t_sector_lst *sector, t_vector2 *mouse)
 	while (tmp)
 	{
 		if (ft_line_side((t_line){tmp->point, tmp->next->point}, (*mouse)))
-			return (0);
+			return (FALSE);
 		tmp = tmp->next;
 		if (tmp == sector->wall_list)
 			break ;
 	}
-	return (1);
+	return (TRUE);
 }
 
 /**
- * Checks if the sector is valid and can be completed. Returns 1 if sector is
- * valid and 0 if sector is invalid. If invalid, cancels list creation and
- * deletes the drawn lines.
+ * @brief Checks if the sector is valid and can be completed. Returns true if 
+ * sector is valid and false if sector is invalid. If invalid, cancels list
+ * creation and deletes the drawn lines.
+ * 
+ * @param app
+ * @return t_bool
 */
 t_bool	valid_sector(t_app *app)
 {
@@ -102,12 +113,16 @@ t_bool	valid_sector(t_app *app)
 	return (TRUE);
 }
 
-//WIP
-void	sector_delone(t_sector_lst **sector, void (*del)(void*, size_t))
+/**
+ * @brief Deletes the given sector. If sector is a member sector, deletes it
+ * and moves the member sectors in the array one step backwards.
+ * 
+ * @param sector
+*/
+void	sector_delone(t_sector_lst **sector)
 {
 	int		i;
 
-	(void)del;
 	i = 0;
 	if ((*sector)->parent_sector)
 	{

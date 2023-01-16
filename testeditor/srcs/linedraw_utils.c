@@ -6,25 +6,41 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:08:45 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/03 13:09:58 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:09:33 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
+/**
+ * @brief Checks that point a and b won't go beyond surface borders.
+ * 
+ * @param app
+ * @param a
+ * @param b
+ * @return int
+*/
 int	check_borders(t_app *app, t_point *a, t_point *b)
 {
 	if (a->x > app->surface->w && b->x > app->surface->w)
-		return (0);
+		return (FALSE);
 	if (a->x < 0 && b->x < 0)
-		return (0);
+		return (FALSE);
 	if (a->y > app->surface->h && b->y > app->surface->h)
-		return (0);
+		return (FALSE);
 	if (a->y < 0 && b->y < 0)
-		return (0);
-	return (1);
+		return (FALSE);
+	return (TRUE);
 }
 
+/**
+ * @brief Calculates the difference between point a and b and sets starting
+ * point to the line.
+ * 
+ * @param a
+ * @param b
+ * @param line
+*/
 static void	line_init(t_point *a, t_point *b, t_draw_line *line)
 {
 	line->dif.x = b->x - a->x;
@@ -34,6 +50,14 @@ static void	line_init(t_point *a, t_point *b, t_draw_line *line)
 	line->d = 1;
 }
 
+/**
+ * @brief 
+ * 
+ * @param app
+ * @param a
+ * @param b
+ * @param color
+*/
 void	linedraw_low(t_app *app, t_point *a, t_point *b, int color)
 {
 	t_draw_line	line;
@@ -60,6 +84,14 @@ void	linedraw_low(t_app *app, t_point *a, t_point *b, int color)
 	put_pixel_to_surface(app->surface, line.pos.x, line.pos.y, color);
 }
 
+/**
+ * @brief 
+ * 
+ * @param app
+ * @param a
+ * @param b
+ * @param color
+*/
 void	linedraw_high(t_app *app, t_point *a, t_point *b, int color)
 {
 	t_draw_line	line;

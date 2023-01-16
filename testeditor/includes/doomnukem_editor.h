@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 21:45:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:58:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -274,8 +274,8 @@ SDL_Surface		*bmp_to_surface(const char *path);
  * Events
  */
 int				dispatch_event_minimal(SDL_Event *event);
-int				events_keyup(int keycode, t_app *app);
-int				events_keydown(int keycode, t_app *app);
+int				events_keyup(t_app *app, int keycode);
+int				events_keydown(t_app *app, int keycode);
 int				events_mouse_wheel(t_app *app, SDL_Event *event);
 int				events_mouse_track(t_app *app);
 int				events_mouse_click(t_app *app, SDL_Event *event);
@@ -283,12 +283,12 @@ int				events_window_destroy(void);
 int				events_window_other(int windowevent, t_app *app);
 int				dispatch_event(t_app *app, SDL_Event *event);
 int				events_mouse_drag(t_app *app);
-void			player_menu_events(t_app *app, t_point	screen_pos);
+void			player_menu_events(t_app *app, t_point	mouse);
 void			interaction_menu_events(t_app *app, int start_y,
-					t_point screen_pos);
-void			activate_interaction_menu(t_app *app, t_point screen_pos);
-void			edit_left_key_changes(t_app *app, SDL_Keycode key);
-void			edit_right_key_changes(t_app *app, SDL_Keycode key);
+					t_point mouse);
+void			activate_interaction_menu(t_app *app, t_point mouse);
+void			edit_left_key_changes(t_app *app, SDL_Keycode keycode);
+void			edit_right_key_changes(t_app *app, SDL_Keycode keycode);
 
 /**
  * Map Editor functions
@@ -322,16 +322,13 @@ void			draw_circle(t_app *app, t_point pos, int rad, int color);
 t_sector_lst	*new_sector_list(t_vec2_lst *wall_list);
 t_sector_lst	*put_sector_lst(t_app *app, t_sector_lst *new);
 t_bool			complete_sector(t_app *app);
-t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop,
-					void (*del)(void *, size_t));
-void			sector_delone(t_sector_lst **sector,
-					void (*del)(void*, size_t));
+t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop);
+void			sector_delone(t_sector_lst **sector);
 size_t			ft_lstlen(t_sector_lst *lst);
 t_sector_lst	*sector_by_index(t_app *app, int index);
 int				inside_sector_check(t_sector_lst *sector, t_vector2 *mouse);
 t_sector_lst	*click_sector(t_app *app);
-void			sector_edit(t_app *app, SDL_Keycode key);
-t_sector_lst	*find_parent_sector(t_app *app, t_sector_lst *sector);
+void			sector_edit(t_app *app, SDL_Keycode keycode);
 t_sector_lst	*find_child_sector(t_app *app);
 int				get_sector_id(t_app *app, t_sector_lst *sector);
 void			cancel_list_creation(t_app *app);
@@ -339,7 +336,6 @@ void			add_member_sector(t_sector_lst *parent, t_sector_lst *child);
 void			del_sector_portals(t_app *app, int deleted);
 t_bool			valid_sector(t_app *app);
 int				get_member_sector_count(t_sector_lst *parent);
-int				del_sector_list(t_sector_lst **sector);
 int				del_all_sector_interactions(t_app *app, t_sector_lst **sector);
 
 /**
@@ -351,7 +347,6 @@ int				del_vector_list(t_vec2_lst **list);
 t_bool			valid_point(t_app *app);
 t_vec2_lst		*ft_lstindex(t_vec2_lst *lst, size_t index);
 t_vec2_lst		*find_clicked_vector(t_app *app);
-void			reverse_vector_list(t_vec2_lst **head);
 
 /**
  * UI functions
@@ -367,8 +362,6 @@ void			activate_slope(t_app *app, SDL_Keycode keycode);
  * Edit Functions
  */
 void			change_walls_tex(t_vec2_lst *walls, int wall_tex);
-void			change_selected_wall_tex(t_app *app, t_vec2_lst *wall,
-					int wall_id);
 void			link_wall_to_sector(t_app *app);
 void			change_walls_type(t_app *app, t_sector_lst *sector);
 t_vec2_lst		*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point);
@@ -441,7 +434,6 @@ void			blit_surface(SDL_Surface *src, t_rect *src_rect,
 void			render_help_menu(t_app *app);
 void			set_icon_rect(t_rect *rect, t_point point, t_point size);
 void			load_assets(t_app *app);
-void			render_texture_icons(t_app *app);
 void			render_player_icons(t_app *app, SDL_Surface *asset,
 					t_point point, int max);
 void			render_statusbar(t_app *app, t_point point, int statusbar,
@@ -458,31 +450,29 @@ void			render_object_statics(t_app *app);
 void			render_icons(t_app *app, t_point point, int id,
 					SDL_Surface *asset);
 void			interaction_edit_menu(t_app *app, int start_y,
-					t_point screen_pos);
+					t_point mouse);
 void			render_interaction_button(t_app *app, t_rect button,
 					t_point mouse, char *text);
 void			render_current_interaction_status(t_app *app,
-					t_point screen_pos, int y, int id);
+					t_point mouse, int y, int id);
 void			render_inventory(t_app *app);
-void			select_inventory(t_app *app, t_point screen_pos);
-void			select_weapons(t_app *app, t_point screen_pos);
+void			select_inventory(t_app *app, t_point mouse);
+void			select_weapons(t_app *app, t_point mouse);
 void			object_edit_menu(t_app *app);
 void			player_edit_menu(t_app *app);
-void			wall_edit_menu(t_app *app, t_point screen_pos);
-void			sector_edit_menu(t_app *app, t_point screen_pos, int y);
+void			wall_edit_menu(t_app *app, t_point mouse);
+void			sector_edit_menu(t_app *app, t_point mouse, int y);
 void			render_interaction_explanations(t_app *app, int start_y);
 void			text_popup_explanation(t_app *app, int start_y, char *statics);
 void			sound_explanation(t_app *app, int start_y, char *statics);
 void			end_level_explanation(t_app *app, int start_y, char *statics);
 int				check_mouse(t_point screen_pos, t_rect rect);
-int				check_selected_inventory(t_app *app);
 
 /**
  * Player
 */
 void			render_player(t_app *app);
 void			weapons_init(t_app *app);
-void			inventory_init(t_app *app);
 void			check_player_position(t_app *app);
 
 /**
@@ -520,6 +510,5 @@ void			render_interaction_link_lines(t_app *app);
 int				get_current_interaction_count(t_app *app, int interaction);
 
 void			fill_triangle(t_app *app, t_triangle triangle, int color);
-void			draw_point_line(t_app *app, t_point a, t_point b, int color);
 
 #endif

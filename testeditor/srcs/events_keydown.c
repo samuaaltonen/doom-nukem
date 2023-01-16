@@ -6,16 +6,19 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 16:43:51 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/03 16:46:17 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:08:08 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Events for arrow keys.
+ * @brief Events for arrow keys.
+ * 
+ * @param app
+ * @param keycode
  */
-static void	handle_arrow_keys(int keycode, t_app *app)
+static void	handle_arrow_keys(t_app *app, int keycode)
 {
 	if (app->current_interaction && app->interaction_menu)
 	{
@@ -33,11 +36,15 @@ static void	handle_arrow_keys(int keycode, t_app *app)
 }
 
 /**
- * Handles events for key presses (keydown).
+ * @brief Handles events for key presses (keydown).
+ * 
+ * @param app
+ * @param keycode
+ * @return int
  */
-int	events_keydown(int keycode, t_app *app)
+int	events_keydown(t_app *app, int keycode)
 {
-	handle_arrow_keys(keycode, app);
+	handle_arrow_keys(app, keycode);
 	if (keycode == SDLK_w)
 		app->keystates |= FORWARD_W_DOWN;
 	if (keycode == SDLK_s)

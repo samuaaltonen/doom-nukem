@@ -6,76 +6,20 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/22 14:45:38 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/12 13:17:12 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:39:43 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Displays the name of the interaction and edit interaction button.
+ * @brief Renders the menu texts for the interaction menu.
+ * 
+ * @param app
+ * @param start_y
+ * @param mouse
 */
-static void	has_interaction(t_app *app, t_point screen_pos, int y, int id)
-{
-	if (app->interactions[id].event_id == 1)
-		render_text(app, (t_rect){100, y, 200, 20}, "FLOOR HEIGHT");
-	if (app->interactions[id].event_id == 2)
-		render_text(app, (t_rect){90, y, 200, 20}, "CEILING HEIGHT");
-	if (app->interactions[id].event_id == 3)
-		render_text(app, (t_rect){50, y, 220, 20}, "FLOOR AND CEILING HEIGHT");
-	if (app->interactions[id].event_id == 4)
-		render_text(app, (t_rect){125, y, 200, 20}, "LIGHT");
-	if (app->interactions[id].event_id == 5)
-		render_text(app, (t_rect){105, y, 200, 20}, "TEXT POP-UP");
-	if (app->interactions[id].event_id == 6)
-		render_text(app, (t_rect){125, y, 200, 20}, "SOUND");
-	if (app->interactions[id].event_id == 7)
-		render_text(app, (t_rect){102, y, 200, 20}, "END LEVEL");
-	render_ui_frame(app, (t_rect){47, y + 18, 190, 16}, 1, 0);
-	render_interaction_button(app, (t_rect){80, y + 20, 200, 20},
-		screen_pos, "EDIT INTERACTION");
-	render_ui_frame(app, (t_rect){47, y + 43, 190, 16}, 1, 0);
-	render_interaction_button(app, (t_rect){80, y + 45, 200, 20},
-		screen_pos, "ADD INTERACTION");
-	render_arrows(app, (t_point){25, y}, (t_point){255, y});
-}
-
-/**
- * Displays the interaction on the selected object/wall/sector and button
- * to the interaction menu.
-*/
-void	render_current_interaction_status(t_app *app, t_point screen_pos,
-																int y, int id)
-{
-	if (id > -1 && app->interactions[id].event_id != 0)
-		has_interaction(app, screen_pos, y, id);
-	else
-	{
-		render_text(app, (t_rect){80, y, 200, 20}, "NO INTERACTIONS");
-		render_ui_frame(app, (t_rect){42, y + 18, 190, 16}, 1, 0);
-		render_interaction_button(app, (t_rect){80, y + 20, 200, 20},
-			screen_pos, "ADD INTERACTION");
-	}
-}
-
-/**
- * Renders interaction menu buttons, toggling the color of them.
-*/
-void	render_interaction_button(t_app *app, t_rect button,
-									t_point mouse, char *text)
-{
-	if (mouse.x > button.x && mouse.x < button.x + button.w
-		&& mouse.y > button.y && mouse.y < button.y + button.h)
-		change_font(app, 11, ACTIVE_TEXT);
-	render_text(app, (t_rect){button.x, button.y, button.x + button.w,
-		button.y + button.h}, text);
-	change_font(app, 11, TEXT);
-}
-
-/**
- * Renders the menu texts for the interaction menu.
-*/
-static void	render_interaction_menu(t_app *app, t_point mouse, int start_y)
+static void	render_interaction_menu(t_app *app, int start_y, t_point mouse)
 {
 	if (app->current_interaction)
 	{
@@ -105,9 +49,32 @@ static void	render_interaction_menu(t_app *app, t_point mouse, int start_y)
 }
 
 /**
- * Renders the interaction menu on the help menu sidebar. Draws the menu grid.
+ * @brief Renders the key requirement UI on the help menu side bar.
+ * 
+ * @param app
+ * @param start_y
 */
-void	interaction_edit_menu(t_app *app, int start_y, t_point screen_pos)
+static void	render_key_option(t_app *app, int start_y)
+{
+	change_font(app, 11, TEXT);
+	render_text(app, (t_rect){20, start_y + 305, 120, 20}, "REQUIRES KEY");
+	render_text(app, (t_rect){170, start_y + 305, 30, 20}, "NO");
+	render_text(app, (t_rect){220, start_y + 305, 30, 20}, "YES");
+	if (!app->current_interaction->requires_key)
+		render_ui_frame(app, (t_rect){158, start_y + 300, 40, 20}, 1, 0);
+	else
+		render_ui_frame(app, (t_rect){213, start_y + 300, 40, 20}, 1, 0);
+}
+
+/**
+ * @brief Renders the interaction menu on the help menu sidebar. Draws the menu
+ * grid.
+ * 
+ * @param app
+ * @param start_y
+ * @param mouse
+*/
+void	interaction_edit_menu(t_app *app, int start_y, t_point mouse)
 {
 	int		x;
 	int		y;
@@ -125,13 +92,13 @@ void	interaction_edit_menu(t_app *app, int start_y, t_point screen_pos)
 				put_pixel_to_surface(app->surface, x, y, TEXT);
 		}
 	}
-	render_interaction_menu(app, screen_pos, start_y);
-	change_font(app, 11, TEXT);
+	render_interaction_menu(app, start_y, mouse);
+	render_key_option(app, start_y);
 	if (!app->current_interaction)
 		return ;
 	render_interaction_explanations(app, start_y);
-	render_ui_frame(app, (t_rect){60, start_y + 297, 170, 16}, 1, 0);
-	render_link_interaction_info(app, start_y, screen_pos);
-	render_interaction_button(app, (t_rect){85, start_y + 300, 150, 15},
-		screen_pos, "SAVE INTERACTION");
+	render_ui_frame(app, (t_rect){60, start_y + 327, 170, 16}, 1, 0);
+	render_link_interaction_info(app, start_y, mouse);
+	render_interaction_button(app, (t_rect){85, start_y + 330, 150, 15},
+		mouse, "SAVE INTERACTION");
 }

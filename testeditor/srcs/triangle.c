@@ -6,12 +6,20 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 15:52:24 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 13:52:38 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/16 15:22:08 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
+/**
+ * @brief 
+ * 
+ * @param a
+ * @param b
+ * @param c
+ * @return t_bool
+*/
 static t_bool	sort_triangle(t_point *a, t_point *b, t_point *c)
 {
 	int		same;
@@ -34,6 +42,14 @@ static t_bool	sort_triangle(t_point *a, t_point *b, t_point *c)
 	return (TRUE);
 }
 
+/**
+ * @brief Calcultes triangle top.
+ * 
+ * @param triangle
+ * @param pos
+ * @param heights
+ * @param hor
+*/
 static void	calculate_top(t_triangle triangle, t_point *pos,
 								t_point *heights, t_point *hor)
 {
@@ -48,6 +64,14 @@ static void	calculate_top(t_triangle triangle, t_point *pos,
 	pos->x = hor->x - 1;
 }
 
+/**
+ * @brief Calculates triangle bottom.
+ * 
+ * @param triangle
+ * @param pos
+ * @param heights
+ * @param hor
+*/
 static void	calculate_bot(t_triangle triangle, t_point *pos,
 									t_point *heights, t_point *hor)
 {
@@ -64,11 +88,11 @@ static void	calculate_bot(t_triangle triangle, t_point *pos,
 
 /**
  * @brief sorts the points by Y height, one side of the triangle is
- *  to the full height of the triange (total_height),
- *  the other is to the point in between (segment_height)
- *  calculates the relative height to both points
- *  calculates the horizontal x coordinates using the relative heights,
- *   at the current y coordinate
+ * to the full height of the triange (total_height),
+ * the other is to the point in between (segment_height)
+ * calculates the relative height to both points
+ * calculates the horizontal x coordinates using the relative heights,
+ * at the current y coordinate
  * 
  *  do it for the upper and lower part of the triangle
  * 

@@ -3,17 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   menu_interaction_link_info.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 14:36:50 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/12 18:03:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:08:03 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Displays the event type for the linked interaction.
+ * @brief Displays the event type for the linked interaction.
+ * 
+ * @param app
+ * @param id
+ * @param start_y
 */
 static void	display_link_event(t_app *app, int id, int start_y)
 {
@@ -35,6 +39,13 @@ CEILING HEIGHT");
 		render_text(app, (t_rect){25, start_y + 255, 160, 20}, "END LEVEL");
 }
 
+/**
+ * @brief Renders the current interaction's link info.
+ * 
+ * @param app
+ * @param start_y
+ * @param mouse
+*/
 static void	render_current_link_info(t_app *app, int start_y, t_point mouse)
 {
 	char	*statics;
@@ -53,14 +64,19 @@ static void	render_current_link_info(t_app *app, int start_y, t_point mouse)
 		return ;
 	render_text(app, (t_rect){235, start_y + 255, 100, 20}, statics);
 	free(statics);
-	display_link_event(app, app->current_interaction->interaction_link, start_y);
+	display_link_event(app, app->current_interaction->interaction_link,
+		start_y);
 	render_ui_frame(app, (t_rect){187, start_y + 273, 73, 16}, 1, 0);
 	render_interaction_button(app, (t_rect){201, start_y + 275, 70, 15},
 		mouse, "REMOVE");
 }
 
 /**
- * Renders the information regarding the linked interactions.
+ * @brief Renders the information regarding the linked interactions.
+ * 
+ * @param app
+ * @param start_y
+ * @param mouse
 */
 void	render_link_interaction_info(t_app *app, int start_y, t_point mouse)
 {
@@ -80,7 +96,11 @@ INTERACTION TO ANOTHER EXISTING ONE BY PRESSING 'LINK'");
 }
 
 /**
- * Returns the index of interactions.
+ * @brief Returns the index of interactions.
+ * 
+ * @param app
+ * @param interaction
+ * @return int
 */
 int	get_current_interaction_count(t_app *app, int interaction)
 {
@@ -101,8 +121,10 @@ int	get_current_interaction_count(t_app *app, int interaction)
 }
 
 /**
- * Renders colored lines on the sector/wall/object interaction the current
- * interaction is linking to.
+ * @brief Renders colored lines on the sector/wall/object interaction the
+ * current interaction is linking to.
+ * 
+ * @param app
 */
 void	render_interaction_link_lines(t_app *app)
 {

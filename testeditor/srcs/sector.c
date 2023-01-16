@@ -3,17 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   sector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:36:45 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 15:13:16 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:43:34 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Creates a new linked list to save sectors.
+ * @brief Creates a new linked list to save sectors.
+ * 
+ * @param wall_list
+ * @return t_sector_lst*
  */
 t_sector_lst	*new_sector_list(t_vec2_lst *wall_list)
 {
@@ -40,7 +43,7 @@ t_sector_lst	*new_sector_list(t_vec2_lst *wall_list)
 
 /**
  * @brief Puts new sector into the app->sectors list
- * 	and returns the newly added sector
+ * 	and returns the newly added sector.
  * 
  * @param app 
  * @param new 
@@ -66,8 +69,12 @@ t_sector_lst	*put_sector_lst(t_app *app, t_sector_lst *new)
 }
 
 /**
- * If player is inside the deleted sector, sets the sector to null and deletes
- * all objects and portals within that sector.
+ * @brief Prepares the sector deletion by deleting all objects, interactions
+ * and portals in that sector. If player is within the deleted sector, sets
+ * the player sector to NULL and turns player edit on.
+ * 
+ * @param app
+ * @param pop
 */
 static void	prepare_del(t_app *app, t_sector_lst **pop)
 {
@@ -82,11 +89,14 @@ static void	prepare_del(t_app *app, t_sector_lst **pop)
 }
 
 /**
- * Pop out the selected sector from the sector list if the sector has no 
+ * @brief Pop out the selected sector from the sector list if the sector has no 
  * members, runs del on it and returns the popped sector.
+ * 
+ * @param app
+ * @param pop
+ * @return t_sector_lst*
  */
-t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop,
-									void (*del)(void *, size_t))
+t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop)
 {
 	t_sector_lst	*prev;
 	t_sector_lst	*head;
@@ -107,7 +117,7 @@ t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop,
 			prev->next = (*pop)->next;
 		if (head == app->sectors)
 			app->sectors = (*pop)->next;
-		sector_delone(pop, del);
+		sector_delone(pop);
 		app->active_sector = NULL;
 		app->active = NULL;
 		app->sector_count--;
@@ -116,7 +126,7 @@ t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop,
 }
 
 /**
- * @brief Completes an ongoing sector
+ * @brief Completes an ongoing sector.
  * 
  * @param app 
  * @return t_bool 
