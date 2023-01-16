@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/13 16:09:41 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:03:17 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -281,10 +281,10 @@ int				events_window_destroy(void);
 int				events_window_other(int windowevent, t_app *app);
 int				dispatch_event(t_app *app, SDL_Event *event);
 int				events_mouse_drag(t_app *app);
-void			player_menu_events(t_app *app, t_point	screen_pos);
+void			player_menu_events(t_app *app, t_point	mouse);
 void			interaction_menu_events(t_app *app, int start_y,
-					t_point screen_pos);
-void			activate_interaction_menu(t_app *app, t_point screen_pos);
+					t_point mouse);
+void			activate_interaction_menu(t_app *app, t_point mouse);
 void			edit_left_key_changes(t_app *app, SDL_Keycode keycode);
 void			edit_right_key_changes(t_app *app, SDL_Keycode keycode);
 
@@ -320,10 +320,8 @@ void			draw_circle(t_app *app, t_point pos, int rad, int color);
 t_sector_lst	*new_sector_list(t_vec2_lst *wall_list);
 t_sector_lst	*put_sector_lst(t_app *app, t_sector_lst *new);
 t_bool			complete_sector(t_app *app);
-t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop,
-					void (*del)(void *, size_t));
-void			sector_delone(t_sector_lst **sector,
-					void (*del)(void*, size_t));
+t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop);
+void			sector_delone(t_sector_lst **sector);
 size_t			ft_lstlen(t_sector_lst *lst);
 t_sector_lst	*sector_by_index(t_app *app, int index);
 int				inside_sector_check(t_sector_lst *sector, t_vector2 *mouse);
@@ -426,18 +424,18 @@ void			render_object_statics(t_app *app);
 void			render_icons(t_app *app, t_point point, int id,
 					SDL_Surface *asset);
 void			interaction_edit_menu(t_app *app, int start_y,
-					t_point screen_pos);
+					t_point mouse);
 void			render_interaction_button(t_app *app, t_rect button,
 					t_point mouse, char *text);
 void			render_current_interaction_status(t_app *app,
-					t_point screen_pos, int y, int id);
+					t_point mouse, int y, int id);
 void			render_inventory(t_app *app);
-void			select_inventory(t_app *app, t_point screen_pos);
-void			select_weapons(t_app *app, t_point screen_pos);
+void			select_inventory(t_app *app, t_point mouse);
+void			select_weapons(t_app *app, t_point mouse);
 void			object_edit_menu(t_app *app);
 void			player_edit_menu(t_app *app);
-void			wall_edit_menu(t_app *app, t_point screen_pos);
-void			sector_edit_menu(t_app *app, t_point screen_pos, int y);
+void			wall_edit_menu(t_app *app, t_point mouse);
+void			sector_edit_menu(t_app *app, t_point mouse, int y);
 void			render_interaction_explanations(t_app *app, int start_y);
 void			text_popup_explanation(t_app *app, int start_y, char *statics);
 void			sound_explanation(t_app *app, int start_y, char *statics);

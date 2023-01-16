@@ -6,20 +6,22 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 13:46:08 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/16 15:14:26 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
-//check if list is convex, line_side from every point to every other point
-
 /**
- * Finds and returns the wall in the sector that is furthest from the 
- * parallel line to selected point
+ * @brief Finds and returns the wall in the sector that is furthest from the 
+ * parallel line to selected point.
  * 
  * ft_vector_length(c) * (sin(ft_vector_angle(line, c))
  * c = vector to iterated point
+ * 
+ * @param sector
+ * @param point
+ * @return t_vec2_lst*
  */
 t_vec2_lst	*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point)
 {
@@ -49,6 +51,13 @@ t_vec2_lst	*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point)
 	return (selection);
 }
 
+/**
+ * @brief Returns the sector by index given.
+ * 
+ * @param app
+ * @param index
+ * @return t_sector_lst*
+*/
 t_sector_lst	*sector_by_index(t_app *app, int index)
 {
 	t_sector_lst	*head;
@@ -69,7 +78,7 @@ t_sector_lst	*sector_by_index(t_app *app, int index)
 }
 
 /**
- * @brief Finds which point in active sector was clicked
+ * @brief Finds which point in active sector was clicked.
  * 
  * @param app 
  * @return t_vec2_lst* 
@@ -95,7 +104,11 @@ t_vec2_lst	*find_clicked_vector(t_app *app)
 }
 
 /**
- * Converts world coordinates to screen coordinates.
+ * @brief Converts world coordinates to screen coordinates.
+ * 
+ * @param app
+ * @param pos
+ * @return t_point
 */
 t_point	world_to_screen(t_app *app, t_vector2 pos)
 {
@@ -105,7 +118,11 @@ t_point	world_to_screen(t_app *app, t_vector2 pos)
 }
 
 /**
- * Converts screen coordinates to world coordinates.
+ * @brief Converts screen coordinates to world coordinates.
+ * 
+ * @param app
+ * @param pos
+ * @return t_vector2
 */
 t_vector2	screen_to_world(t_app *app, t_point pos)
 {

@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/13 14:11:01 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:04:25 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ int	events_keyup(t_app *app, int keycode)
 	if (keycode == SDLK_l)
 		link_wall_to_sector(app);
 	if (keycode == SDLK_DELETE && !app->current_object)
-		sector_pop(app, &(app->active_sector), NULL);
+		sector_pop(app, &(app->active_sector));
 	if (keycode == SDLK_DELETE && app->current_object)
 		del_object(app, get_object_id(app, app->current_object));
 	if (keycode == SDLK_y || keycode == SDLK_h)

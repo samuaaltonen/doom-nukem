@@ -6,14 +6,18 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:38:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/15 13:05:51 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/16 15:26:14 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Returns pixel color at given position.
+ * @brief Returns pixel color at given position.
+ * 
+ * @param surface
+ * @param x
+ * @param y
  */
 int	get_pixel_color(SDL_Surface *surface, int x, int y)
 {
@@ -28,7 +32,11 @@ int	get_pixel_color(SDL_Surface *surface, int x, int y)
 }
 
 /**
- * Gets map coordinates.
+ * @brief Gets map coordinates.
+ * 
+ * @param src
+ * @param dst
+ * @param point
 */
 static void	map_coordinates(t_rect *src, t_rect *dst, t_point *point)
 {
@@ -37,9 +45,14 @@ static void	map_coordinates(t_rect *src, t_rect *dst, t_point *point)
 }
 
 /**
- * Blits a source rectangle from a source surface into a destination
+ * @brief Blits a source rectangle from a source surface into a destination
  * rectangle from the destination surface. Scales the source to fit
  * the destination.
+ * 
+ * @param src
+ * @param src_rect
+ * @param dst
+ * @param dst_rect
  */
 void	blit_surface(SDL_Surface *src, t_rect *src_rect,
 	SDL_Surface *dst, t_rect *dst_rect)
@@ -72,24 +85,33 @@ void	blit_surface(SDL_Surface *src, t_rect *src_rect,
 }
 
 /**
- * Checks for errors before blitting the surfaces
+ * @brief Checks for errors before blitting the surfaces.
+ * 
+ * @param src
+ * @param src_rect
+ * @param dst
+ * @param dst_rect
+ * @return int
  */
 int	check_blit(SDL_Surface *src, t_rect *src_rect,
 	SDL_Surface *dst, t_rect *dst_rect)
 {
 	if (src == NULL || dst == NULL)
-		return (0);
+		return (FALSE);
 	if (src_rect == NULL || dst_rect == NULL)
-		return (0);
+		return (FALSE);
 	if (dst_rect->x + dst_rect->w > dst->w
 		|| dst_rect->y + dst_rect->h > dst->h)
-		return (0);
-	return (1);
+		return (FALSE);
+	return (TRUE);
 }
 
 /**
- * Sets the given rectangle parameters to the size
+ * @brief Sets the given rectangle parameters to the size
  * of the given surface.
+ * 
+ * @param surface
+ * @param rect
  */
 void	rect_from_surface(SDL_Surface *surface, t_rect *rect)
 {

@@ -6,14 +6,18 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 15:28:54 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/30 11:14:16 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/16 13:17:55 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Renders a single line on the x-axis.
+ * @brief Renders a single line on the x-axis.
+ * 
+ * @param app
+ * @param y
+ * @param color
 */
 static void	render_row(t_app *app, int y, int color)
 {
@@ -25,7 +29,11 @@ static void	render_row(t_app *app, int y, int color)
 }
 
 /**
- * Renders a single line on the y-axis.
+ * @brief Renders a single line on the y-axis.
+ * 
+ * @param app
+ * @param x
+ * @param color
 */
 static void	render_col(t_app *app, int x, int color)
 {
@@ -37,7 +45,10 @@ static void	render_col(t_app *app, int x, int color)
 }
 
 /**
- * Renders the center lines.
+ * @brief Renders the center lines.
+ * 
+ * @param app
+ * @param color
 */
 void	render_center(t_app *app, int color)
 {
@@ -53,6 +64,11 @@ void	render_center(t_app *app, int color)
 	render_col(app, point.x + 1, color);
 }
 
+/**
+ * @brief Renders the divider lines.
+ * 
+ * @param app
+*/
 void	render_divider(t_app *app)
 {
 	render_grid(app, app->divider, BG_DARK);
@@ -60,8 +76,7 @@ void	render_divider(t_app *app)
 }
 
 /**
- * @brief renders a grid with the divider and color param
- * -50 + ( 0  / 1000) * 100
+ * @brief Renders a grid with the divider and color param.
  * 
  * @param app 
  * @param divider 

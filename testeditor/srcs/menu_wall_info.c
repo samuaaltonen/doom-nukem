@@ -6,17 +6,20 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:32:25 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/12 15:53:41 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/16 10:44:08 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * When a decor is selected on the wall, displays interaction options for it
- * and placement offset options.
+ * @brief When a decor is selected on the wall, displays interaction options
+ * for it and placement offset options.
+ * 
+ * @param app
+ * @param mouse
 */
-static void	render_wall_decor_options(t_app *app, t_point screen_pos)
+static void	render_wall_decor_options(t_app *app, t_point mouse)
 {
 	int		id;
 	char	*offset;
@@ -25,21 +28,27 @@ static void	render_wall_decor_options(t_app *app, t_point screen_pos)
 		id = find_decor_interaction(app, 0, 1);
 	else
 		id = find_interaction(app);
-	render_current_interaction_status(app, screen_pos, 220, id);
+	render_current_interaction_status(app, mouse, 220, id);
 	toggle_active_color(app, app->decor_edit, "DECOR OFFSET ( G )",
 		(t_rect){25, 290, 200, 20});
 	render_text(app, (t_rect){25, 305, 260, 100}, "ACTIVATE DECOR OFFSET \
 WITH 'G' AND USE ARROW KEYS TO CHANGE. \n \n  X\n  Y");
 	offset = ft_ftoa(app->active->decor_offset.x, 4);
+	if (!offset)
+		return ;
 	render_text(app, (t_rect){60, 342, 50, 15}, offset);
 	free(offset);
 	offset = ft_ftoa(app->active->decor_offset.y, 4);
+	if (!offset)
+		return ;
 	render_text(app, (t_rect){60, 357, 50, 15}, offset);
 	free(offset);
 }
 
 /**
- * Renders the wall's portal related information. 
+ * @brief Renders the wall's portal related information. 
+ * 
+ * @param app
 */
 static void	render_portal_status(t_app *app)
 {
@@ -62,10 +71,13 @@ static void	render_portal_status(t_app *app)
 }
 
 /**
- * Renders wall specific information on the help menu sidebar when active
+ * @brief Renders wall specific information on the help menu sidebar when active
  * wall is selected.
+ * 
+ * @param app
+ * @param mouse
 */
-void	wall_edit_menu(t_app *app, t_point screen_pos)
+void	wall_edit_menu(t_app *app, t_point mouse)
 {
 	toggle_active_color(app, 1, "WALL", (t_rect){125, 32, 200, 15});
 	render_arrows(app, (t_point){12, 70}, (t_point){265, 70});
@@ -75,7 +87,7 @@ void	wall_edit_menu(t_app *app, t_point screen_pos)
 	render_icons(app, (t_point){25, 150}, app->active->decor,
 		app->assets.sprite);
 	if (app->active->decor != -1)
-		render_wall_decor_options(app, screen_pos);
+		render_wall_decor_options(app, mouse);
 	render_portal_status(app);
 	render_text(app, (t_rect){25, 505, 260, 15}, "CREATE / CHANGE FLOOR SLOPE\
  ( H )");
@@ -90,7 +102,9 @@ void	wall_edit_menu(t_app *app, t_point screen_pos)
 }
 
 /**
- * Deletes all existing decor interactions for a specific wall decor.
+ * @brief Deletes all existing decor interactions for a specific wall decor.
+ * 
+ * @param app
 */
 void	del_all_decor_interactions(t_app *app)
 {

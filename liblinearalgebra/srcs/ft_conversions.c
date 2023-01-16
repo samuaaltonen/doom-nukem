@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_conversions.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 15:10:43 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 15:11:30 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 15:31:47 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
