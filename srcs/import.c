@@ -6,90 +6,11 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/13 19:12:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 15:01:11 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
-
-/**
- * @brief Imports player data.
- * 
- * @param app 
- * @param data 
- * @param available 
- * @return int 
- */
-static void	import_player(t_app *app, t_import_info *info)
-{
-	t_export_player		player;
-
-	if (sizeof(t_export_player) >= (size_t)(info->length - info->imported))
-		exit_error(MSG_ERROR_IMPORT_PLAYER);
-	ft_memcpy(&player, info->data + info->imported, sizeof(t_export_player));
-	app->player.sector = player.sector;
-	app->player.pos = player.position;
-	app->player.hp = player.health;
-	app->player.weapons = player.weapons;
-	app->player.shield = player.armor;
-	if (player.sector < 0 || player.sector >= app->sector_count)
-		exit_error(MSG_ERROR_VALIDATION_PLAYER);
-	app->player.elevation = sector_floor_height(app, app->player.sector,
-			app->player.pos);
-	ft_memcpy(&app->player.inventory, &player.inventory, sizeof(t_inventory));
-	info->imported += (int) sizeof(t_export_player);
-	import_update_progress(info);
-}
-
-/**
- * @brief Imports object data.
- * 
- * @param app 
- * @param data 
- * @param available 
- * @return int 
- */
-static void	import_objects(t_app *app, t_import_info *info)
-{
-	t_object	import;
-	int			i;
-
-	if (sizeof(t_object) * MAX_OBJECTS
-		>= (size_t)(info->length - info->imported))
-		exit_error(MSG_ERROR_IMPORT_OBJECT);
-	i = -1;
-	while (++i < MAX_OBJECTS)
-	{
-		ft_memcpy(&import, info->data + info->imported, sizeof(t_object));
-		info->imported += sizeof(t_object);
-		app->objects[i].elevation = import.elevation;
-		app->objects[i].position = import.position;
-		app->objects[i].sector = import.sector;
-		app->objects[i].type = import.type;
-		app->objects[i].var = import.var;
-		app->objects[i].rot = 0.f;
-	}
-	import_update_progress(info);
-}
-
-/**
- * @brief Imports interaction data.
- * 
- * @param app 
- * @param data 
- * @param available 
- * @return int 
- */
-static void	import_interactions(t_app *app, t_import_info *info)
-{
-	if (sizeof(t_interaction) * MAX_INTERACTIONS
-		>= (size_t)(info->length - info->imported))
-		exit_error(MSG_ERROR_IMPORT_INTERACTION);
-	ft_memcpy(app->interactions, info->data + info->imported,
-		sizeof(t_interaction) * MAX_INTERACTIONS);
-	info->imported += (int) sizeof(t_interaction) * MAX_INTERACTIONS;
-	import_update_progress(info);
-}
 
 /**
  * @brief Updates progress for the main thread.
@@ -102,12 +23,14 @@ void	import_update_progress(t_import_info *info)
 {
 	if (pthread_mutex_lock(&info->thread->lock))
 		exit_error(NULL);
-	((t_app *)info->thread->app)->import_progress
-		= (double) info->imported / (double) info->length;
+	if (info->imported == info->length)
+		((t_app *)info->thread->app)->import_progress = 1.0;
+	else
+		((t_app *)info->thread->app)->import_progress
+			= 0.5 + (double) info->imported / (double) info->length * 0.5;
 	if (pthread_mutex_unlock(&info->thread->lock))
 		exit_error(MSG_ERROR_THREADS_SIGNAL);
 }
-
 
 /**
  * @brief Updates progress for the main thread.
@@ -118,12 +41,20 @@ void	import_update_progress(t_import_info *info)
  */
 void	uncompression_update_progress(t_import_info *info)
 {
-	if (pthread_mutex_lock(&info->thread->lock))
-		exit_error(NULL);
-	((t_app *)info->thread->app)->import_progress
-		= (double) info->imported / (double) info->length;
-	if (pthread_mutex_unlock(&info->thread->lock))
-		exit_error(MSG_ERROR_THREADS_SIGNAL);
+	static int	last_update;
+
+	if (info->uncompressed - last_update > MIN_UNCOMPRESS_UPDATE
+		|| info->uncompressed == info->compressed_length)
+	{
+		if (pthread_mutex_lock(&info->thread->lock))
+			exit_error(NULL);
+		((t_app *)info->thread->app)->import_progress
+			= (double) info->uncompressed / (double) info->compressed_length
+			* 0.5;
+		if (pthread_mutex_unlock(&info->thread->lock))
+			exit_error(MSG_ERROR_THREADS_SIGNAL);
+		last_update = info->uncompressed;
+	}
 }
 
 /**

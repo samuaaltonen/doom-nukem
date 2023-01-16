@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:47:29 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/13 18:53:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 13:42:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	import_texts(t_app *app, t_import_info *info)
 	char			buffer[MAX_TEXT_LINES * MAX_TEXT_LINE_LENGTH + 1];
 	int				i;
 
+	ft_bzero(&buffer, MAX_TEXT_LINES * MAX_TEXT_LINE_LENGTH + 1);
 	asset_info = info->header.asset_info[EXPORT_TEXTS];
 	if (asset_info.size > info->length - info->imported
 		|| asset_info.size > MAX_TEXT_LINES * MAX_TEXT_LINE_LENGTH)

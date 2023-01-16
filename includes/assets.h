@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 17:49:02 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:29:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@
 # define MAX_ASSET_COUNT			32
 # define MAX_UNCOMPRESS_BATCH		4096
 # define MAX_COMPRESS_BATCH			6144
+# define MIN_UNCOMPRESS_UPDATE		256
 # define DEFAULT_AUDIO_CHANNELS		1
 # define DEFAULT_AUDIO_FORMAT		AUDIO_S16LSB
 # define DEFAULT_AUDIO_FREQUENCEY	24000

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/13 18:49:14 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:42:22 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ typedef struct s_import_info
 	unsigned char	*data;
 	int				length;
 	int				imported;
+	int				compressed_length;
+	int				uncompressed;
 }	t_import_info;
 
 /**

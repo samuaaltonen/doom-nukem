@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 14:57:35 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/10 15:53:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 15:02:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,15 @@
  * @param length 
  * @param allocated 
  */
-void	expand_data(unsigned char **data, int *length, int *allocated)
+void	expand_data(t_uint8 **data, int *length, int *allocated)
 {
-	int				new_size;
-	unsigned char	*expanded;
+	int		new_size;
+	t_uint8	*expanded;
 
 	new_size = 2 * *allocated;
 	if (new_size < *allocated + MAX_UNCOMPRESS_BATCH)
 		new_size = *allocated + MAX_UNCOMPRESS_BATCH;
-	expanded = (unsigned char *)malloc(new_size);
+	expanded = (t_uint8 *)malloc(new_size);
 	if (!expanded)
 		exit_error(MSG_ERROR_ALLOC);
 	ft_memcpy(expanded, *data, *length);
@@ -42,14 +42,14 @@ void	expand_data(unsigned char **data, int *length, int *allocated)
  * 
  * @param source 
  * @param source_length 
- * @return unsigned char* 
+ * @return t_uint8* 
  */
-unsigned char	*read_source(const char *source, int *source_length)
+t_uint8	*read_source(const char *source, int *source_length)
 {
-	unsigned char	*source_data;
-	int				source_fd;
-	int				allocated;
-	int				read_bytes;
+	t_uint8	*source_data;
+	int		source_fd;
+	int		allocated;
+	int		read_bytes;
 
 	source_fd = open(source, O_RDONLY);
 	if (source_fd < 0)

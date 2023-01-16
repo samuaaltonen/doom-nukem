@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 22:11:34 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/13 19:13:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 15:02:04 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
  * @param source_data 
  * @param index 
  */
-static void	write_sequence(unsigned char **data, int *length,
-	unsigned char *source_data, int *index)
+static void	write_sequence(t_uint8 **data, int *length, t_uint8 *source_data,
+	int *index)
 {
 	t_uint8	i;
 
@@ -47,11 +47,34 @@ static void	write_sequence(unsigned char **data, int *length,
  * @return t_bool 
  */
 static t_bool	found_sequence(int index, int source_length, int length,
-	unsigned char *source_data)
+	t_uint8 *source_data)
 {
 	return (index < source_length - 2
 		&& source_data[index] == source_data[index + 1]
 		&& length % MAX_UNCOMPRESS_BATCH + 2 <= MAX_UNCOMPRESS_BATCH);
+}
+
+/**
+ * @brief Initializes variables needed for uncompression and reads source data
+ * into source data pointer.
+ * 
+ * @param source 
+ * @param source_length 
+ * @param allocated 
+ * @param length 
+ * @return t_uint8* 
+ */
+static t_uint8	*init_uncompression(const char *source, int *source_length,
+	int *allocated, int *length)
+{
+	t_uint8	*source_data;
+
+	*allocated = 0;
+	*length = 0;
+	source_data = read_source(source, source_length);
+	if (!source_data)
+		exit_error(MSG_ERROR_FILE_READ);
+	return (source_data);
 }
 
 /**
@@ -63,23 +86,20 @@ static t_bool	found_sequence(int index, int source_length, int length,
  * @param length 
  */
 void	rle_uncompress_data(t_import_info *info, const char *source,
-	unsigned char **data, int *length)
+	t_uint8 **data, int *length)
 {
-	unsigned char	*source_data;
-	int				source_length;
-	int				i;
-	int				allocated;
+	t_uint8	*source_data;
+	int		i;
+	int		allocated;
 
-	(void)info;
-	ft_printf("Reading source\n");
-	source_data = read_source(source, &source_length);
-	ft_printf("Uncompressing source\n");
-	allocated = 0;
-	*length = 0;
+	source_data = init_uncompression(source, &info->compressed_length,
+			&allocated, length);
 	i = 0;
-	while (i < source_length)
+	while (i < info->compressed_length)
 	{
-		if (found_sequence(i, source_length, *length, source_data))
+		info->uncompressed = i;
+		uncompression_update_progress(info);
+		if (found_sequence(i, info->compressed_length, *length, source_data))
 		{
 			while (allocated <= *length + source_data[i + 2])
 				expand_data(data, length, &allocated);
@@ -91,8 +111,6 @@ void	rle_uncompress_data(t_import_info *info, const char *source,
 		(*data)[*length] = source_data[i];
 		*length += 1;
 		i++;
-		uncompression_update_progress(&info);
 	}
-	ft_printf("Compressing ready\n");
 	free(source_data);
 }

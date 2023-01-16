@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/13 19:13:19 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:56:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,9 @@ void			import_level(t_app *app, t_thread_data *thread, char *path);
 void			import_update_progress(t_import_info *info);
 void			uncompression_update_progress(t_import_info *info);
 void			import_sectors(t_app *app, t_import_info *info);
+void			import_player(t_app *app, t_import_info *info);
+void			import_objects(t_app *app, t_import_info *info);
+void			import_interactions(t_app *app, t_import_info *info);
 void			import_assets(t_app *app, t_import_info *info);
 void			import_surfaces(t_app *app, t_import_info *info);
 void			import_wavs(t_app *app, t_import_info *info);
@@ -481,7 +484,6 @@ void			color_surface(SDL_Surface *surface, int color);
 int				blend_pixel(t_color base, t_color top);
 t_color			int_to_argb(int color);
 int				argb_to_int(t_color color);
-SDL_Surface		*bmp_to_surface(const char *path);
 int				shade_depth(int color, float shade);
 
 /**

@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/12 18:28:39 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/16 14:55:55 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -70,7 +70,6 @@ FILES = animation_create.c \
 		threads.c \
 		time.c \
 		utils.c \
-		utils_bmp.c \
 		utils_color.c \
 		utils_sdl.c \
 		import_loading.c \
@@ -78,6 +77,9 @@ FILES = animation_create.c \
 		rle_uncompress.c \
 		render_hand.c \
 		import_sector.c \
+		import_player.c \
+		import_object.c \
+		import_interaction.c \
 		import_assets.c \
 		import_assets_surface.c \
 		import_assets_wav.c \

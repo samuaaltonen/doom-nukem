@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:51:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 15:41:06 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:37:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ static void	draw_progress_bar(t_app *app)
 
 	x = WIN_W / 10 + 5;
 	progress_x = (int)(app->import_progress * (WIN_W - WIN_W / 5)) + x - 10;
-	while (x < progress_x)
+	while (x < progress_x && x < WIN_W - WIN_W / 10)
 	{
 		y = WIN_H / 10 * 8 + 5;
 		while (y < WIN_H / 10 * 9 - 5)
 		{
-			put_pixel_to_surface(app->surface, x, y, PROGRESS_BAR_FRAME_COLOR);
+			put_pixel_to_surface(app->surface, x, y, PROGRESS_BAR_COLOR);
 			y++;
 		}
 		x++;
@@ -49,7 +49,7 @@ static void	draw_progress_bar_frame(t_app *app)
 	int	y;
 
 	while (SDL_PollEvent(&app->event))
-		dispatch_event(app, &app->event);
+		dispatch_event_minimal(app, &app->event);
 	x = WIN_W / 10;
 	while (x < WIN_W - WIN_W / 10)
 	{
