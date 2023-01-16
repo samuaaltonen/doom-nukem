@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 20:28:30 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 22:03:09 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -502,6 +502,10 @@ void			clamp_int(int *number, int min, int max);
  * objects
  */
 void			render_objects(t_app *app);
+void			object_render(t_app *app, t_render_object *object,
+	t_thread_data *thread, t_vector2 (*f)(
+		t_app *, t_render_object *, t_vector2, int *));
+void			objects_render(t_app *app, t_thread_data *thread);
 void			init_enemies(t_app *app);
 void			update_enemy_states(t_app *app);
 void			define_enemies(t_app *app);
@@ -516,5 +520,15 @@ void			kill_bullet(t_app *app, t_bullet *bullet);
 void			bullet_enemy_collisions(t_app *app);
 void			calc_end(t_app *app, t_bullet *bullet, t_vector3 target_dir);
 void			bullet_test(t_app *app, t_bullet *bullet, t_bool init);
+void			objects_visible(t_app *app);
+void			object_frame(t_app *app, t_vector2 dir, t_render_object *object);
+void			init_draw_area(t_render_object *object);
+int				object_tex_size(t_app *app, int id);
+void			draw_object_pixel(t_app *app, t_render_object *object, 
+		t_point window, int color);
+void			avoid_walls(t_app *app, t_enemy_state *enemy);
+void			turn_enemy(t_app *app, t_enemy_state *state);
+void			enemy_attack(t_app *app, t_enemy_state *state, int define);
+void			enemy_states(t_app *app, t_enemy_state *state, int define);
 
 #endif

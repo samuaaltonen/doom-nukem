@@ -6,7 +6,7 @@
 #    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/16 20:27:41 by htahvana         ###   ########.fr        #
+#    Updated: 2023/01/16 22:30:37 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -89,7 +89,14 @@ FILES = animation_create.c \
 		level_validation_player.c \
 		level_validation_object.c \
 		bullet_collisions.c \
-		bullet_wall_collisions.c
+		bullet_wall_collisions.c \
+		object_render_init.c \
+		object_render_utils.c \
+		object_render_work.c \
+		object_multithreading.c \
+		bullet_object_collisions.c \
+		enemy_utils.c \
+		enemy_avoidance.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a
