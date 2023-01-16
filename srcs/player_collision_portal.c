@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 19:55:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/13 18:27:20 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 17:55:09 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,23 +53,22 @@ t_bool	portal_can_enter_(t_app *app, t_vector3 pos, double height, t_line wall,
 	double		source_ceil;
 	double		target_floor;
 	double		target_ceil;
+	(void)height;
 
+	if (target_sector == -1)
+		return (FALSE);
 	check_pos = ft_closest_point((t_vector2){pos.x, pos.y}, wall);
 	source_floor = sector_floor_height(app, source_sector, check_pos);
 	source_ceil = sector_ceil_height(app, source_sector, check_pos);
 	target_floor = sector_floor_height(app, target_sector, check_pos);
 	target_ceil = sector_ceil_height(app, target_sector, check_pos);
-	if (pos.z < target_floor
-		&& source_floor < target_floor)
+	if (pos.z < target_floor)
 		return (FALSE);
-	if (target_ceil < pos.z + height
-		+ COLLISION_CEIL && source_ceil > target_ceil)
+	if (target_ceil < pos.z)
 		return (FALSE);
-	if (pos.z < source_floor
-		&& target_floor < source_floor)
+	if (pos.z < source_floor)
 		return (FALSE);
-	if (source_ceil < pos.z + height
-		+ COLLISION_CEIL && target_ceil > source_ceil)
+	if (source_ceil < pos.z)
 		return (FALSE);
 	return (TRUE);
 }
