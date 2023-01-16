@@ -6,11 +6,11 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:51:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 19:01:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 19:11:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "doomnukem.h"
+#include "doomnukem_editor.h"
 
 /**
  * @brief Draws progress bar based on progress value.
@@ -75,8 +75,10 @@ static void	draw_progress_bar_frame(t_app *app)
  */
 static void	render_loading(t_app *app)
 {
-	while (SDL_PollEvent(&app->event))
-		dispatch_event_minimal(app, &app->event);
+	SDL_Event	event;
+
+	while (SDL_PollEvent(&event))
+		dispatch_event_minimal(&event);
 	ft_bzero(app->surface->pixels, app->surface->h * app->surface->pitch);
 	draw_progress_bar_frame(app);
 	draw_progress_bar(app);
@@ -97,7 +99,7 @@ void	*async_load(void *data)
 
 	thread = (t_thread_data *)data;
 	app = (t_app *)thread->app;
-	import_level(app, thread, MAP_PATH);
+	import_level(app, thread, FILE_PATH);
 	pthread_exit(NULL);
 }
 
@@ -107,13 +109,11 @@ void	*async_load(void *data)
  * 
  * @param app 
  */
-void	load_data(t_app *app)
+void	import_file(t_app *app)
 {
 	t_thread_data	thread;
 
-	ft_bzero(app->surface->pixels, app->surface->h * app->surface->pitch);
 	thread.app = app;
-	thread.id = 0;
 	if (pthread_mutex_init(&thread.lock, NULL)
 		|| pthread_create(&thread.thread, NULL, async_load, (void *)(&thread)))
 		exit_error(MSG_ERROR_THREADS);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_mouse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/02 14:03:24 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:59:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ static void	rightside_menu_events(t_app *app, t_point screen_pos)
 	if (check_mouse(screen_pos, (t_rect){WIN_W - 150, 108, 150, 15})
 		&& !app->imported && !app->sectors)
 	{
-		import_file(app, FILE_PATH);
+		import_file(app);
 		app->imported = TRUE;
 	}
 }

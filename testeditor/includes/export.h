@@ -6,18 +6,21 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/13 15:47:55 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:57:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPORT_H
 # define EXPORT_H
-# define MAX_BMP_OFFSET			32768
-# define MAX_BMP_WIDTH			32768
-# define MAX_BMP_HEIGHT			32768
-# define MAX_ASSET_COUNT		32
-# define MAX_UNCOMPRESS_BATCH	4096
-# define MAX_COMPRESS_BATCH		6144
+# define MAX_BMP_OFFSET				32768
+# define MAX_BMP_WIDTH				32768
+# define MAX_BMP_HEIGHT				32768
+# define MAX_ASSET_COUNT			32
+# define MIN_UNCOMPRESS_UPDATE		256
+# define MAX_UNCOMPRESS_BATCH		4096
+# define MAX_COMPRESS_BATCH			6144
+# define PROGRESS_BAR_FRAME_COLOR	0xff0099f2
+# define PROGRESS_BAR_COLOR			0xff00def2
 # define PANELS_PATH		"../assets/textures/spritesheet_full.bmp"
 # define SKYBOX_PATH		"../assets/images/skybox.bmp"
 # define FONT_PATH			"../assets/fonts/sci-fi_font.bmp"
@@ -49,6 +52,7 @@
 # define MAX_BIG_OBJECTS 3
 # define MAX_ENEMY_TYPES 2
 # define MSG_ERROR_IMPORT "Level file is invalid."
+# define MSG_ERROR_THREADS_MUTEX "Error with locking/unlocking a mutex."
 # define MSG_ERROR_IMPORT_SECTOR "Level file is invalid. Could not import \
 sectors."
 # define MSG_ERROR_IMPORT_PLAYER "Level file is invalid. Could not import \
@@ -86,6 +90,13 @@ enum e_export_assets
 	EXPORT_SOUND_BUMP,
 	EXPORT_TEXTS
 };
+
+typedef struct s_thread_data
+{
+	void			*app;
+	pthread_t		thread;
+	pthread_mutex_t	lock;
+}	t_thread_data;
 
 typedef struct s_export_sector
 {
@@ -162,10 +173,13 @@ typedef struct s_level_header
 
 typedef struct s_import_info
 {
+	t_thread_data	*thread;
 	t_level_header	header;
 	unsigned char	*data;
 	int				length;
 	int				imported;
+	int				compressed_length;
+	int				uncompressed;
 }	t_import_info;
 
 /**

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/13 15:23:41 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 19:11:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -230,6 +230,7 @@ typedef struct s_app
 	t_interaction	interactions[MAX_INTERACTIONS];
 	int				interaction_count;
 	int				selected[INVENTORY_SIZE];
+	double			import_progress;
 }	t_app;
 
 /**
@@ -263,7 +264,6 @@ void			app_loop(t_app *app);
 /**
  * Images
  */
-SDL_Surface		*init_image(int x, int y);
 void			put_pixel_to_surface(SDL_Surface *surface, int x,
 					int y, int color);
 void			flush_surface(SDL_Surface *surface);
@@ -273,8 +273,10 @@ SDL_Surface		*bmp_to_surface(const char *path);
 /**
  * Events
  */
+int				dispatch_event_minimal(SDL_Event *event);
 int				events_keyup(int keycode, t_app *app);
 int				events_keydown(int keycode, t_app *app);
+int				events_mouse_wheel(t_app *app, SDL_Event *event);
 int				events_mouse_track(t_app *app);
 int				events_mouse_click(t_app *app, SDL_Event *event);
 int				events_window_destroy(void);
@@ -374,7 +376,8 @@ t_vec2_lst		*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point);
 /**
  * Import
  */
-int				import_file(t_app *app, char *path);
+void			import_file(t_app *app);
+int				import_level(t_app *app, t_thread_data *thread, char *path);
 void			import_interactions(t_app *app, t_import_info *info);
 void			import_sectors(t_app *app, t_import_info *info);
 

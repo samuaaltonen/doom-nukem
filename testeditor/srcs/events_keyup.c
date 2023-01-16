@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   events_key.c                                       :+:      :+:    :+:   */
+/*   events_keyup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/03 16:49:13 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:59:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	events_keyup(int keycode, t_app *app)
 	if (keycode == SDLK_m)
 		export_file(app, FILE_PATH);
 	if (keycode == SDLK_o && !app->imported && !app->sectors)
-		import_file(app, FILE_PATH);
+		import_file(app);
 	if (keycode == SDLK_i)
 		link_interaction(app);
 	if (keycode == SDLK_l)

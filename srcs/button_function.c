@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   button_function.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 15:59:55 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:58:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	button_function(t_app *app, t_rect button, void (*f)(t_app *app))
 void	start_game(t_app *app)
 {
 	player_init(app);
-	//import_file(app, MAP_PATH);
 	init_enemies(app);
 	init_projectiles(app);
 	//----DEBUG FEATURE

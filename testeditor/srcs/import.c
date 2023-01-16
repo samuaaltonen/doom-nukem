@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/13 16:19:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:56:45 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,51 @@ static void	relink_sectors(t_app *app)
 }
 
 /**
+ * @brief Updates progress for the main thread.
+ * 
+ * @param app 
+ * @param thread 
+ * @param progress 
+ */
+void	import_update_progress(t_import_info *info)
+{
+	if (pthread_mutex_lock(&info->thread->lock))
+		exit_error(MSG_ERROR_THREADS_MUTEX);
+	if (info->imported == info->length)
+		((t_app *)info->thread->app)->import_progress = 1.0;
+	else
+		((t_app *)info->thread->app)->import_progress
+			= 0.5 + (double) info->imported / (double) info->length * 0.5;
+	if (pthread_mutex_unlock(&info->thread->lock))
+		exit_error(MSG_ERROR_THREADS_MUTEX);
+}
+
+/**
+ * @brief Updates progress for the main thread.
+ * 
+ * @param app 
+ * @param thread 
+ * @param progress 
+ */
+void	uncompression_update_progress(t_import_info *info)
+{
+	static int	last_update;
+
+	if (info->uncompressed - last_update > MIN_UNCOMPRESS_UPDATE
+		|| info->uncompressed == info->compressed_length)
+	{
+		if (pthread_mutex_lock(&info->thread->lock))
+			exit_error(MSG_ERROR_THREADS_MUTEX);
+		((t_app *)info->thread->app)->import_progress
+			= (double) info->uncompressed / (double) info->compressed_length
+			* 0.5;
+		if (pthread_mutex_unlock(&info->thread->lock))
+			exit_error(MSG_ERROR_THREADS_MUTEX);
+		last_update = info->uncompressed;
+	}
+}
+
+/**
  * @brief Opens a file from the given path
  * 	reads all sector data into the sector list
  * 
@@ -139,11 +184,12 @@ static void	relink_sectors(t_app *app)
  * @param path 
  * @return int 
  */
-int	import_file(t_app *app, char *path)
+int	import_level(t_app *app, t_thread_data *thread, char *path)
 {
 	t_import_info	info;
 
 	info.data = NULL;
+	info.thread = thread;
 	rle_uncompress_data(path, &info.data, &info.length);
 	if (!info.data
 		|| sizeof(t_level_header) > (size_t)(info.length))
@@ -159,5 +205,7 @@ int	import_file(t_app *app, char *path)
 	relink_sectors(app);
 	app->imported = TRUE;
 	free(info.data);
+	info.imported = info.length;
+	import_update_progress(&info);
 	return (0);
 }
