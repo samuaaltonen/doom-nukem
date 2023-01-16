@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/13 15:00:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 22:30:46 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 # define COLLISION_OFFSET 0.25
 # define COLLISION_CEIL 0.125
 # define MAX_CONCURRENT_COLLISIONS 16
-# define MAX_COLLISION_POSITION_TRIES 32
+# define MAX_COLLISION_POSITION_TRIES 320
 # define MAX_HP 200
 # define REGEN_TIME 5
 

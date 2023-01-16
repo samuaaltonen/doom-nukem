@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:33:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 20:40:57 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 22:26:33 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,15 @@ static void	draw_progress_bar_frame(t_app *app)
  * 
  * @param app 
  */
-void	render_loading(t_app *app)
+void	render_loading(t_app *app, t_bool dispatch_events)
 {
 	SDL_Event	event;
 
 	while (SDL_PollEvent(&event))
-		dispatch_event_minimal(&event);
+	{
+		if (dispatch_events)
+			dispatch_event_minimal(&event);
+	}
 	draw_progress_bar_frame(app);
 	draw_progress_bar(app);
 	SDL_UpdateWindowSurface(app->win);

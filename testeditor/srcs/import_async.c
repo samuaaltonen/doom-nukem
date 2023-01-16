@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:51:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 21:47:46 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 22:26:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,10 +97,10 @@ void	import_file(t_app *app)
 				exit_error(MSG_ERROR_THREADS_MUTEX);
 			break ;
 		}
-		render_loading(app);
+		render_loading(app, TRUE);
 		if (pthread_mutex_unlock(&thread.lock))
 			exit_error(MSG_ERROR_THREADS_MUTEX);
 		SDL_Delay(1);
 	}
-	render_loading(app);
+	render_loading(app, TRUE);
 }

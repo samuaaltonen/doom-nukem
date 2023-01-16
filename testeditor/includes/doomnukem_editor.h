@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 21:58:14 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 22:26:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -369,7 +369,7 @@ t_vec2_lst		*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point);
 /**
  * Import
  */
-void			render_loading(t_app *app);
+void			render_loading(t_app *app, t_bool dispatch_events);
 void			uncompression_update_progress(t_import_info *info);
 void			import_set_complete(t_import_info *info);
 void			import_file(t_app *app);

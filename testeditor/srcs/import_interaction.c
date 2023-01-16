@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:30:17 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/13 16:19:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 22:47:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ static void	read_interactions(t_app *app, t_export_interaction *interactions)
 				= &(app->objects[interactions[i].activation_object]);
 		temp.target_sector = sector_by_index(app,
 				interactions[i].target_sector);
+		temp.requires_key = interactions[i].requires_key;
 		app->interactions[i] = temp;
 	}
 }
