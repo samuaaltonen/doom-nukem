@@ -24,9 +24,9 @@ t_vector2	get_wall_vector(t_app *app, int sector_id, int wall_id)
 {
 	if (app->sectors[sector_id].corner_count == wall_id + 1)
 		return (ft_vector2_sub(app->sectors[sector_id].corners[0],
-			app->sectors[sector_id].corners[wall_id]));
+				app->sectors[sector_id].corners[wall_id]));
 	return (ft_vector2_sub(app->sectors[sector_id].corners[wall_id + 1],
-		app->sectors[sector_id].corners[wall_id]));
+			app->sectors[sector_id].corners[wall_id]));
 }
 
 /**

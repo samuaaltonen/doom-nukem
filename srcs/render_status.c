@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_status.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 19:33:21 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:25:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

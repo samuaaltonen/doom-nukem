@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/13 18:39:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:25:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 # define WIN_NAME "Doom Nukem"
 # define WIN_W 1280
 # define WIN_H 720
-# define THREAD_COUNT 6
+# define THREAD_COUNT 5
 # define FOV 83
 # define MOUSE_SENSITIVITY_HORIZONTAL 0.2
 # define MOUSE_SENSITIVITY_VERTICAL 0.2

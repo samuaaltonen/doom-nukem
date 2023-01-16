@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/10 15:50:57 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:29:19 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,16 @@ void	*sector_render_thread(void *data)
 		if (pthread_mutex_lock(&thread->lock))
 			exit_error(NULL);
 		while (!thread->has_work)
+		{
 			if (pthread_cond_wait(&thread->cond, &thread->lock))
 				exit_error(NULL);
+		}
+		if (pthread_mutex_unlock(&thread->lock))
+			exit_error(NULL);
 		sector_stack_render(app, thread,
 			app->sectors[app->player.sector].stack_index, (t_limit){
 			0, WIN_W - 1});
-		thread->has_work = FALSE;
-		if (pthread_mutex_unlock(&thread->lock))
-			exit_error(NULL);
+		thread_set_done(thread);
 	}
 	pthread_exit(NULL);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_object.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 19:41:20 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:29:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,12 +158,14 @@ void	*object_render_thread(void *data)
 		if (pthread_mutex_lock(&thread->lock))
 			exit_error(NULL);
 		while (!thread->has_work)
+		{
 			if (pthread_cond_wait(&thread->cond, &thread->lock))
 				exit_error(NULL);
-		objects_render(app, thread);
-		thread->has_work = FALSE;
+		}
 		if (pthread_mutex_unlock(&thread->lock))
 			exit_error(NULL);
+		objects_render(app, thread);
+		thread_set_done(thread);
 	}
 	pthread_exit(NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:51:24 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 18:28:22 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:27:08 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ sdl)"
 # define MSG_ERROR_THREADS "Could not create a thread."
 # define MSG_ERROR_THREADS_SIGNAL "Error with waking up a thread or \
 locking/unlocking a mutex."
+# define MSG_ERROR_THREADS_MUTEX "Error with locking/unlocking a mutex."
 # define MSG_ERROR_TEXTURE_FILE_ACCESS "Could not open/close a texture file."
 # define MSG_ERROR_TEXTURE_LOAD_FAILED "Texture files are invalid."
 # define MSG_ERROR_MOUSE "Could not set mouse cursor relative to the window."

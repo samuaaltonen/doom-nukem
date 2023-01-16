@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 14:56:13 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:29:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -297,6 +297,8 @@ void			handle_movement(t_app *app);
 void			threads_init(t_app *app, t_thread_data *threads_data);
 void			threads_create(t_thread_data *threads_data,
 					void *(*renderer)(void *));
+void			thread_set_done(t_thread_data *thread);
+t_bool			thread_check_done(t_thread_data *thread);
 void			threads_work(t_thread_data *threads_data);
 
 /**
