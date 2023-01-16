@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/13 18:22:40 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:58:19 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -513,5 +513,6 @@ void			init_projectiles(t_app *app);
 void			projectile_player_collision(t_app *app);
 void			kill_projectile(t_app *app, t_projectile *projectile);
 void			bullet_enemy_collisions(t_app *app);
+void			projectile_test(t_app *app, t_projectile *projectile, t_bool init);
 
 #endif
