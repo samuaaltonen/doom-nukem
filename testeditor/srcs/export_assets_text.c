@@ -6,21 +6,19 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:02:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 20:03:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:04:16 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * @brief Exports textfile.
+ * @brief Exports texts.
  * 
- * @param header 
- * @param index 
+ * @param info 
  * @param fd 
- * @param path 
  */
-void	export_texts(t_level_header *header, int fd)
+void	export_texts(t_import_info *info, int fd)
 {
 	unsigned char	buffer[MAX_TEXT_LINES * MAX_TEXT_LINE_LENGTH];
 	int				length;
@@ -32,7 +30,9 @@ void	export_texts(t_level_header *header, int fd)
 	length = read(texts_fd, &buffer, MAX_TEXT_LINES * MAX_TEXT_LINE_LENGTH);
 	if (length < 0)
 		exit_error(MSG_ERROR_FILE_READ);
-	header->asset_info[EXPORT_TEXTS].size = length;
+	info->header.asset_info[EXPORT_TEXTS].size = length;
 	if (write(fd, &buffer, length) == -1)
 		exit_error(MSG_ERROR_FILE_WRITE);
+	info->imported = 500;
+	export_update_progress(info);
 }

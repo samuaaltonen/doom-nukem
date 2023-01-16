@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/16 19:06:04 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 22:34:25 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	button_function(t_app *app, t_rect button, void (*f)(t_app *app))
 void	start_game(t_app *app)
 {
 	player_init(app);
-	//import_file(app, MAP_PATH);
 	init_enemies(app);
 	init_bullets(app);
 	//----DEBUG FEATURE

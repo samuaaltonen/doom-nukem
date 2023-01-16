@@ -6,17 +6,20 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:09:50 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/12 13:44:36 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:49:45 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Toggles the selection button on the inventory, checking that
+ * @brief Toggles the selection button on the inventory, checking that
  * mouse is inside button rectangle.
+ * 
+ * @param app
+ * @param mouse
 */
-void	select_inventory(t_app *app, t_point screen_pos)
+void	select_inventory(t_app *app, t_point mouse)
 {
 	int		index;
 	int		x;
@@ -32,7 +35,7 @@ void	select_inventory(t_app *app, t_point screen_pos)
 			y += 41;
 			x = 0;
 		}
-		if (check_mouse(screen_pos, (t_rect){(SMALL_ICON) * (x + 1)
+		if (check_mouse(mouse, (t_rect){(SMALL_ICON) * (x + 1)
 				+ (10 * (x + 1)) - 3, y, 35, 35}))
 			app->selected[index] = ft_toggle(app->selected[index]);
 		index++;
@@ -41,7 +44,11 @@ void	select_inventory(t_app *app, t_point screen_pos)
 }
 
 /**
- * Renders the item amount over the inventory icon matching it.
+ * @brief Renders the item amount over the inventory icon matching it.
+ * 
+ * @param app
+ * @param position
+ * @param item
 */
 static void	render_inventory_capacity(t_app *app, t_rect position, int item)
 {
@@ -55,7 +62,12 @@ static void	render_inventory_capacity(t_app *app, t_rect position, int item)
 }
 
 /**
- * Renders inventory related texts and item capacity on the help menu sidebar.
+ * @brief Renders inventory related texts and item capacity on the help menu
+ * sidebar.
+ * 
+ * @param app
+ * @param x
+ * @param y
 */
 static void	render_inventory_texts(t_app *app, int x, int y)
 {
@@ -79,8 +91,10 @@ ARROW KEYS TO CHANGE THE AMOUNT.");
 }
 
 /**
- * Renders the start inventory icons and selection frame to the help menu
+ * @brief Renders the start inventory icons and selection frame to the help menu
  * sidebar.
+ * 
+ * @param app
 */
 void	render_inventory(t_app *app)
 {

@@ -3,17 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   tex_icons.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:36:43 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/12 16:19:10 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 15:29:18 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Sets correct coordinate points and size for the icon rectangles.
+ * @brief Sets correct coordinate points and size for the icon rectangles.
+ * 
+ * @param rect
+ * @param point
+ * @param size
 */
 void	set_icon_rect(t_rect *rect, t_point point, t_point size)
 {
@@ -24,7 +28,11 @@ void	set_icon_rect(t_rect *rect, t_point point, t_point size)
 }
 
 /**
- * Gets the max amount of the asset based on what asset it is.
+ * @brief Gets the max amount of the asset based on what asset it is.
+ * 
+ * @param app
+ * @param asset
+ * @return int
 */
 static int	find_max(t_app *app, SDL_Surface *asset)
 {
@@ -32,13 +40,17 @@ static int	find_max(t_app *app, SDL_Surface *asset)
 		return (MAX_TEX_COUNT);
 	if (asset == app->assets.objects)
 		return (MAX_UNIQUE_OBJECTS);
-	// if (asset == app->assets.decor)
-	// 	return (MAX_DECOR_COUNT);
-	return (0);
+	exit_error("Error: Could not display menu icons.");
+	return (FALSE);
 }
 
 /**
- * Defines size of icon to either 32x32 or 64x64 if the icon is the middle one.
+ * @brief Defines size of icon to either 32x32 or 64x64 if the icon is
+ * the middle one.
+ * 
+ * @param index
+ * @param point
+ * @return t_point
 */
 static t_point	get_icon_size(int index, t_point *point)
 {
@@ -52,8 +64,13 @@ static t_point	get_icon_size(int index, t_point *point)
 }
 
 /**
- * Renders five icons on the help menu sidebar, where the icon in the middle
- * is bigger than the two on the left and right.
+ * @brief Renders five icons on the help menu sidebar, where the icon in
+ * the middle is bigger than the two on the left and right.
+ * 
+ * @param app
+ * @param point
+ * @param id
+ * @param asset
 */
 void	render_icons(t_app *app, t_point point, int id, SDL_Surface *asset)
 {
@@ -84,7 +101,12 @@ void	render_icons(t_app *app, t_point point, int id, SDL_Surface *asset)
 }
 
 /**
-* Renders same sized player menu icons on the help menu sidebar.
+ * @brief Renders same sized player menu icons on the help menu sidebar.
+ * 
+ * @param app
+ * @param asset
+ * @param point
+ * @param max
 */
 void	render_player_icons(t_app *app, SDL_Surface *asset,
 										t_point point, int max)

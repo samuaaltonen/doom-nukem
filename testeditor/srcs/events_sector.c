@@ -6,14 +6,16 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 15:49:10 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/04 14:46:12 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:29:39 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Handles sector texture changes for the left arrow keypress.
+ * @brief Handles sector texture changes for the left arrow keypress.
+ * 
+ * @param app
 */
 static void	edit_left_key_tex_changes(t_app *app)
 {
@@ -38,9 +40,12 @@ static void	edit_left_key_tex_changes(t_app *app)
 }
 
 /**
- * Handles sector changes for the left arrow keypress.
+ * @brief Handles sector changes for the left arrow keypress.
+ * 
+ * @param app
+ * @param keycode
 */
-void	edit_left_key_changes(t_app *app, SDL_Keycode key)
+void	edit_left_key_changes(t_app *app, SDL_Keycode keycode)
 {
 	edit_left_key_tex_changes(app);
 	if (app->decor_edit && app->active && !app->floor_edit
@@ -53,7 +58,7 @@ void	edit_left_key_changes(t_app *app, SDL_Keycode key)
 			app->active->tex = MAX_TEX_COUNT - 1;
 	}
 	if (app->player_menu)
-		change_item_amount(app, key);
+		change_item_amount(app, keycode);
 	if (app->object_menu || app->object_new)
 	{
 		app->current_object->type--;
@@ -63,7 +68,9 @@ void	edit_left_key_changes(t_app *app, SDL_Keycode key)
 }
 
 /**
- * Handles sector texture changes for the right arrow keypress.
+ * @brief Handles sector texture changes for the right arrow keypress.
+ * 
+ * @param app
 */
 static void	edit_right_key_tex_changes(t_app *app)
 {
@@ -88,9 +95,12 @@ static void	edit_right_key_tex_changes(t_app *app)
 }
 
 /**
- * Handles sector changes for the right arrow keypress.
+ * @brief Handles sector changes for the right arrow keypress.
+ * 
+ * @param app
+ * @param keycode
 */
-void	edit_right_key_changes(t_app *app, SDL_Keycode key)
+void	edit_right_key_changes(t_app *app, SDL_Keycode keycode)
 {
 	edit_right_key_tex_changes(app);
 	if (app->decor_edit && app->active && !app->floor_edit
@@ -103,7 +113,7 @@ void	edit_right_key_changes(t_app *app, SDL_Keycode key)
 			app->active->tex = 0;
 	}
 	if (app->player_menu)
-		change_item_amount(app, key);
+		change_item_amount(app, keycode);
 	if (app->object_menu || app->object_new)
 	{
 		app->current_object->type++;

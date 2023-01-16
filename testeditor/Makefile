@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+         #
+#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/13 11:14:52 by ssulkuma         ###   ########.fr        #
+#    Updated: 2023/01/16 21:56:34 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,12 +19,15 @@ FILES = app.c \
 		editor_menu.c \
 		editor_ui.c \
 		events.c \
+		events_dispatch.c \
 		events_activate_interaction.c \
 		events_inventory.c \
 		events_keydown.c \
 		events_keyup.c \
 		events_menu.c \
 		events_mouse.c \
+		events_mouse_track.c \
+		events_mouse_wheel.c \
 		events_sector.c \
 		export.c \
 		image.c \
@@ -74,13 +77,19 @@ FILES = app.c \
 		utils_sdl.c \
 		import_interaction.c \
 		import_sector.c \
+		import_async.c \
+		import_player.c \
+		import_object.c \
 		export_assets_surface.c \
 		export_assets_wav.c \
 		export_assets_text.c \
 		export_player.c \
 		export_sector.c \
 		export_object.c \
-		export_interaction.c
+		export_interaction.c \
+		export_async.c \
+		level_validation_sector.c \
+		loading_screen.c
 
 LIBFT = ../libft/libft.a
 LIBLINEARALGEBRA = ../liblinearalgebra/liblinearalgebra.a

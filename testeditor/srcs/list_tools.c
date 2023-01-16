@@ -6,12 +6,18 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 13:22:32 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/04 14:41:53 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:27:46 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
+/**
+ * @brief Calculates how many nodes does the given list have.
+ * 
+ * @param lst
+ * @return size_t
+*/
 size_t	ft_lstlen(t_sector_lst *lst)
 {
 	size_t	i;
@@ -26,7 +32,11 @@ size_t	ft_lstlen(t_sector_lst *lst)
 }
 
 /**
- * Returns element out the link at the index.
+ * @brief Returns element out the link at the index.
+ * 
+ * @param lst
+ * @param index
+ * @return t_vec2_lst
 */
 t_vec2_lst	*ft_lstindex(t_vec2_lst *lst, size_t index)
 {
@@ -51,7 +61,10 @@ t_vec2_lst	*ft_lstindex(t_vec2_lst *lst, size_t index)
 }
 
 /**
- * Cancels the ungoing list creation and deletes the incomplete sector list.
+ * @brief Cancels the ungoing list creation and deletes the incomplete
+ * sectorlist.
+ * 
+ * @param app
 */
 void	cancel_list_creation(t_app *app)
 {
@@ -64,7 +77,7 @@ void	cancel_list_creation(t_app *app)
 }
 
 /**
- * @brief check if clicked point is already part of the same list
+ * @brief Check if clicked point is already part of the same list.
  * 
  * @param app 
  * @return t_bool 

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/16 20:41:23 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 22:33:26 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,12 @@
 # define WIN_NAME "Doom Nukem"
 # define WIN_W 1280
 # define WIN_H 720
-# define THREAD_COUNT 6
+# define THREAD_COUNT 5
 # define FOV 83
 # define MOUSE_SENSITIVITY_HORIZONTAL 0.2
 # define MOUSE_SENSITIVITY_VERTICAL 0.2
 # define MAX_SECTOR_COUNT 4096
+# define MIN_SECTOR_CORNERS 3
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 16
 # define MAX_VISIBLE_SECTORS 64

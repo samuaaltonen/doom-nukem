@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/12 11:40:37 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:42:22 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,13 @@ typedef struct s_level_header
 
 typedef struct s_import_info
 {
+	t_thread_data	*thread;
 	t_level_header	header;
 	unsigned char	*data;
 	int				length;
 	int				imported;
+	int				compressed_length;
+	int				uncompressed;
 }	t_import_info;
 
 /**

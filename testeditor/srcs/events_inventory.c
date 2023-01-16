@@ -6,14 +6,16 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 15:59:10 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/12 12:59:51 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:04:23 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Decreases the item amount of the inventory if the item is selected.
+ * @brief Decreases the item amount of the inventory if the item is selected.
+ * 
+ * @param app
 */
 static void	decrease_item_amount(t_app *app)
 {
@@ -32,7 +34,9 @@ static void	decrease_item_amount(t_app *app)
 }
 
 /**
- * Increases the item amount of the inventory if the item is selected.
+ * @brief Increases the item amount of the inventory if the item is selected.
+ * 
+ * @param app
 */
 static void	increase_item_amount(t_app *app)
 {
@@ -51,13 +55,16 @@ static void	increase_item_amount(t_app *app)
 }
 
 /**
- * Event function to change item amount in inventory using the left and
+ * @brief Event function to change item amount in inventory using the left and
  * right arrowkeys.
+ * 
+ * @param app
+ * @param keycode
 */
-void	change_item_amount(t_app *app, SDL_Keycode key)
+void	change_item_amount(t_app *app, SDL_Keycode keycode)
 {
-	if (key == SDLK_LEFT)
+	if (keycode == SDLK_LEFT)
 		decrease_item_amount(app);
-	if (key == SDLK_RIGHT)
+	if (keycode == SDLK_RIGHT)
 		increase_item_amount(app);
 }

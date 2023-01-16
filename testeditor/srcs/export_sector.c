@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:11:57 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 20:23:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:03:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ void	write_sector(t_app *app, t_sector_lst *sector, t_export_sector *export)
  * @param header 
  * @param fd 
  */
-void	export_sectors(t_app *app, t_level_header header, int fd)
+void	export_sectors(t_app *app, t_level_header header, int fd,
+	t_import_info *info)
 {
 	int				i;
 	t_sector_lst	*tmp;
@@ -121,4 +122,7 @@ void	export_sectors(t_app *app, t_level_header header, int fd)
 		tmp = tmp->next;
 		i++;
 	}
+	info->length = 1000;
+	info->imported = 1;
+	export_update_progress(info);
 }

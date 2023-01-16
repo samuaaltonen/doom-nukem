@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/23 00:24:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 18:29:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,38 @@ void	threads_create(t_thread_data *threads_data, void *(*renderer)(void *))
 }
 
 /**
+ * @brief Sets thread as done.
+ * 
+ * @param thread 
+ */
+void	thread_set_done(t_thread_data *thread)
+{
+	if (pthread_mutex_lock(&thread->lock))
+		exit_error(MSG_ERROR_THREADS_MUTEX);
+	thread->has_work = FALSE;
+	if (pthread_mutex_unlock(&thread->lock))
+		exit_error(MSG_ERROR_THREADS_MUTEX);
+}
+
+/**
+ * @brief Checks if thread is done working.
+ * 
+ * @param thread 
+ * @return t_bool 
+ */
+t_bool	thread_check_done(t_thread_data *thread)
+{
+	t_bool	has_work;
+
+	if (pthread_mutex_lock(&thread->lock))
+		exit_error(MSG_ERROR_THREADS_MUTEX);
+	has_work = thread->has_work;
+	if (pthread_mutex_unlock(&thread->lock))
+		exit_error(MSG_ERROR_THREADS_MUTEX);
+	return (has_work);
+}
+
+/**
  * @brief Signals threads to awake them and wait until their work is complete.
  * If there is still some thread working, waits 1ms before checking it again.
  * 
@@ -73,21 +105,14 @@ void	threads_work(t_thread_data *threads_data)
 		if (pthread_mutex_lock(&threads_data[i].lock))
 			exit_error(MSG_ERROR_THREADS_SIGNAL);
 		threads_data[i].has_work = TRUE;
-		if (pthread_cond_signal(&threads_data[i].cond)
-			|| pthread_mutex_unlock(&threads_data[i].lock))
+		if (pthread_mutex_unlock(&threads_data[i].lock)
+			|| pthread_cond_signal(&threads_data[i].cond))
 			exit_error(MSG_ERROR_THREADS_SIGNAL);
 	}
 	i = -1;
 	while (++i < THREAD_COUNT)
 	{
-		if (pthread_mutex_lock(&threads_data[i].lock)
-			|| pthread_mutex_unlock(&threads_data[i].lock))
-			exit_error(MSG_ERROR_THREADS_SIGNAL);
-		if (threads_data[i].has_work)
-		{
-			if (!USING_LINUX)
-				SDL_Delay(1);
+		if (thread_check_done(&threads_data[i]))
 			i = -1;
-		}
 	}
 }

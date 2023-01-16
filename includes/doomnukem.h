@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 22:03:09 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 22:36:02 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -235,22 +235,20 @@ void			load_assets(t_app *app);
  */
 void			expand_data(unsigned char **data, int *length, int *allocated);
 unsigned char	*read_source(const char *source, int *source_length);
-void			rle_uncompress_data(const char *source, unsigned char **data,
-					int *length);
+void			rle_uncompress_data(t_import_info *info, const char *source,
+					unsigned char **data, int *length);
 void			*async_load(void *data);
 void			import_level(t_app *app, t_thread_data *thread, char *path);
-void			import_update_progress(t_app *app, t_thread_data *thread,
-					t_import_info *info);
-void			import_sectors(t_app *app, t_thread_data *thread,
-					t_import_info *info);
-void			import_assets(t_app *app, t_thread_data *thread,
-					t_import_info *info);
-void			import_surfaces(t_app *app, t_thread_data *thread,
-					t_import_info *info);
-void			import_wavs(t_app *app, t_thread_data *thread,
-					t_import_info *info);
-void			import_texts(t_app *app, t_thread_data *thread,
-					t_import_info *info);
+void			import_update_progress(t_import_info *info);
+void			uncompression_update_progress(t_import_info *info);
+void			import_sectors(t_app *app, t_import_info *info);
+void			import_player(t_app *app, t_import_info *info);
+void			import_objects(t_app *app, t_import_info *info);
+void			import_interactions(t_app *app, t_import_info *info);
+void			import_assets(t_app *app, t_import_info *info);
+void			import_surfaces(t_app *app, t_import_info *info);
+void			import_wavs(t_app *app, t_import_info *info);
+void			import_texts(t_app *app, t_import_info *info);
 
 /**
  * Data validation
@@ -299,6 +297,8 @@ void			handle_movement(t_app *app);
 void			threads_init(t_app *app, t_thread_data *threads_data);
 void			threads_create(t_thread_data *threads_data,
 					void *(*renderer)(void *));
+void			thread_set_done(t_thread_data *thread);
+t_bool			thread_check_done(t_thread_data *thread);
 void			threads_work(t_thread_data *threads_data);
 
 /**
@@ -489,7 +489,6 @@ void			color_surface(SDL_Surface *surface, int color);
 int				blend_pixel(t_color base, t_color top);
 t_color			int_to_argb(int color);
 int				argb_to_int(t_color color);
-SDL_Surface		*bmp_to_surface(const char *path);
 int				shade_depth(int color, float shade);
 
 /**

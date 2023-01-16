@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:06:54 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 16:49:51 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/13 18:55:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,6 @@ static void	import_ceil_slope(t_export_sector *export, t_sector *sector)
  */
 static void	read_sector(t_app *app, t_export_sector *export, int sectorid)
 {
-	app->sectors[sectorid].corner_count = export->corner_count;
 	ft_memcpy(app->sectors[sectorid].corners, export->corners,
 		export->corner_count * sizeof(t_vector2));
 	ft_memcpy(app->sectors[sectorid].wall_textures, export->wall_textures,
@@ -140,13 +139,13 @@ static void	read_sector(t_app *app, t_export_sector *export, int sectorid)
  * @param available 
  * @return int 
  */
-void	import_sectors(t_app *app, t_thread_data *thread, t_import_info *info)
+void	import_sectors(t_app *app, t_import_info *info)
 {
 	t_export_sector	export;
-	int				counter;
+	int				i;
 
 	if (info->header.sector_count > MAX_SECTOR_COUNT
-		|| sizeof(t_sector) * (size_t)info->header.sector_count
+		|| sizeof(t_export_sector) * (size_t)info->header.sector_count
 		>= (size_t)(info->length - info->imported))
 		exit_error(MSG_ERROR_IMPORT_SECTOR);
 	app->sectors = (t_sector *)ft_memalloc(sizeof(t_sector)
@@ -154,14 +153,17 @@ void	import_sectors(t_app *app, t_thread_data *thread, t_import_info *info)
 	if (!app->sectors)
 		exit_error(MSG_ERROR_ALLOC);
 	app->sector_count = info->header.sector_count;
-	counter = 0;
-	while (counter < info->header.sector_count)
+	i = -1;
+	while (++i < info->header.sector_count)
 	{
 		ft_memcpy(&export, info->data + info->imported,
 			sizeof(t_export_sector));
 		info->imported += (int) sizeof(t_export_sector);
-		read_sector(app, &export, counter);
-		counter++;
+		app->sectors[i].corner_count = export.corner_count;
+		if (export.corner_count < MIN_SECTOR_CORNERS
+			|| export.corner_count > MAX_SECTOR_CORNERS)
+			exit_error(MSG_ERROR_IMPORT_SECTOR);
+		read_sector(app, &export, i);
 	}
-	import_update_progress(app, thread, info);
+	import_update_progress(info);
 }

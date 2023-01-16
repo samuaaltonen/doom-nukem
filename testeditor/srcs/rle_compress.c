@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 14:03:01 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/06 16:11:24 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 20:27:04 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
  * @param sequence_length 
  * @param byte 
  */
-void	set_sequence(unsigned char *compressed, int *compressed_bytes,
-	t_uint8 *sequence_length, unsigned char byte)
+void	set_sequence(t_uint8 *compressed, int *compressed_bytes,
+	t_uint8 *sequence_length, t_uint8 byte)
 {
 	compressed[*compressed_bytes - *sequence_length] = byte;
 	compressed[*compressed_bytes - *sequence_length + 1] = byte;
@@ -40,12 +40,12 @@ void	set_sequence(unsigned char *compressed, int *compressed_bytes,
  * @param source_data 
  * @param length 
  */
-void	compress_batch(int target_fd, unsigned char *source_data, int len)
+void	compress_batch(int target_fd, t_uint8 *source_data, int len)
 {
-	unsigned char	compressed[MAX_COMPRESS_BATCH];
-	int				i;
-	int				size;
-	t_uint8			sequence;
+	t_uint8	compressed[MAX_COMPRESS_BATCH];
+	int		i;
+	int		size;
+	t_uint8	sequence;
 
 	sequence = 0;
 	size = 0;
@@ -55,7 +55,7 @@ void	compress_batch(int target_fd, unsigned char *source_data, int len)
 		if (i == 0 || (source_data[i] == source_data[i - 1] && sequence < 255))
 			sequence++;
 		else if (sequence >= 2)
-			set_sequence((unsigned char *)&compressed, &size, &sequence,
+			set_sequence((t_uint8 *)&compressed, &size, &sequence,
 				source_data[i - 1]);
 		else
 			sequence = 1;
@@ -63,7 +63,7 @@ void	compress_batch(int target_fd, unsigned char *source_data, int len)
 		size++;
 	}
 	if (sequence >= 2)
-		set_sequence((unsigned char *)&compressed, &size, &sequence,
+		set_sequence((t_uint8 *)&compressed, &size, &sequence,
 			source_data[i - 1]);
 	if (write(target_fd, &compressed, size) == -1)
 		exit_error(MSG_ERROR_FILE_WRITE);
@@ -75,27 +75,28 @@ void	compress_batch(int target_fd, unsigned char *source_data, int len)
  * 
  * @param source 
  */
-void	rle_compress(const char *source)
+void	rle_compress(t_import_info *info, const char *source)
 {
-	unsigned char	*source_data;
-	int				source_length;
-	int				read_bytes;
-	int				target_fd;
-	int				i;
+	t_uint8	*source_data;
+	int		read_bytes;
+	int		target_fd;
+	int		i;
 
-	source_data = read_source(source, &source_length);
+	source_data = read_source(source, &info->compressed_length);
 	if (!source_data)
 		return ;
 	target_fd = open(source, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (target_fd < 0)
 		exit_error(MSG_ERROR_FILE_OPEN);
 	i = 0;
-	while (i < source_length)
+	while (i < info->compressed_length)
 	{
-		if (i + MAX_UNCOMPRESS_BATCH < source_length)
+		info->uncompressed = i;
+		compression_update_progress(info);
+		if (i + MAX_UNCOMPRESS_BATCH < info->compressed_length)
 			read_bytes = MAX_UNCOMPRESS_BATCH;
 		else
-			read_bytes = source_length - i;
+			read_bytes = info->compressed_length - i;
 		compress_batch(target_fd, source_data + i, read_bytes);
 		i += MAX_UNCOMPRESS_BATCH;
 	}

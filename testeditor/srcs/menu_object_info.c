@@ -6,15 +6,18 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:04:04 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/12 16:02:32 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:52:09 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Based on the object type, highlights the correct movement type (moves,
+ * @brief Based on the object type, highlights the correct movement type (moves,
  * follows, in place) on the help menu sidebar.
+ * 
+ * @param app
+ * @param movement
 */
 static void	render_object_movement_type(t_app *app, int movement)
 {
@@ -43,8 +46,10 @@ static void	render_object_movement_type(t_app *app, int movement)
 }
 
 /**
- * Based on the object type, displays the correct statics on the help menu
- * sidebar.
+ * @brief Based on the object type, displays the correct statics on the help
+ * menu sidebar.
+ * 
+ * @param app
 */
 static void	render_object_type_statics(t_app *app)
 {
@@ -76,7 +81,9 @@ static void	render_object_type_statics(t_app *app)
 }
 
 /**
- * Renders object related texts on the help menu sidebar.
+ * @brief Renders object related texts on the help menu sidebar.
+ * 
+ * @param app
 */
 static void	render_object_texts(t_app *app)
 {
@@ -108,7 +115,9 @@ static void	render_object_texts(t_app *app)
 }
 
 /**
-* Renders object staticbars on the help menu sidebar.
+ * @brief Renders object staticbars on the help menu sidebar.
+ * 
+ * @param app
 */
 void	render_object_statics(t_app *app)
 {
@@ -133,14 +142,16 @@ void	render_object_statics(t_app *app)
 }
 
 /**
- * Renders object specific information on the help menu sidebar.
+ * @brief Renders object specific information on the help menu sidebar.
+ * 
+ * @param app
 */
 void	object_edit_menu(t_app *app)
 {
 	int			id;
-	t_point		screen_pos;
+	t_point		mouse;
 
-	SDL_GetMouseState(&screen_pos.x, &screen_pos.y);
+	SDL_GetMouseState(&mouse.x, &mouse.y);
 	change_font(app, 15, TEXT);
 	render_text(app, (t_rect){10, 40, 50, 20}, "OBJECTS");
 	change_font(app, 11, TEXT);
@@ -153,6 +164,6 @@ void	object_edit_menu(t_app *app)
 		id = find_object_interaction(app, 0, 1);
 	else
 		id = find_object_interaction(app, find_interaction(app), 1);
-	render_current_interaction_status(app, screen_pos, 210, id);
+	render_current_interaction_status(app, mouse, 210, id);
 	render_text(app, (t_rect){70, 260, 260, 15}, "DELETE OBJECT ( DEL )");
 }

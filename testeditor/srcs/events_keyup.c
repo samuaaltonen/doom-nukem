@@ -1,21 +1,24 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   events_key.c                                       :+:      :+:    :+:   */
+/*   events_keyup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/03 16:49:13 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:52:02 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Events for WASD keys.
+ * @brief Events for WASD keys.
+ * 
+ * @param app
+ * @param keycode
 */
-static void	handle_wasd_keys(int keycode, t_app *app)
+static void	handle_wasd_keys(t_app *app, int keycode)
 {
 	if (keycode == SDLK_w)
 		app->keystates ^= FORWARD_W_DOWN;
@@ -28,9 +31,12 @@ static void	handle_wasd_keys(int keycode, t_app *app)
 }
 
 /**
- * Keyup events for different edit modes.
+ * @brief Keyup events for different edit modes.
+ * 
+ * @param app
+ * @param keycode
 */
-static void	edit_mode_keys(int keycode, t_app *app)
+static void	edit_mode_keys(t_app *app, int keycode)
 {
 	if (keycode == SDLK_p)
 		app->player_edit = ft_toggle(app->player_edit);
@@ -59,22 +65,26 @@ static void	edit_mode_keys(int keycode, t_app *app)
 }
 
 /**
- * Handles events for key presses (keyup).
+ * @brief Handles events for key presses (keyup).
+ * 
+ * @param app
+ * @param keycode
+ * @return int
  */
-int	events_keyup(int keycode, t_app *app)
+int	events_keyup(t_app *app, int keycode)
 {
-	handle_wasd_keys(keycode, app);
-	edit_mode_keys(keycode, app);
+	handle_wasd_keys(app, keycode);
+	edit_mode_keys(app, keycode);
 	if (keycode == SDLK_m)
-		export_file(app, FILE_PATH);
+		export_file(app);
 	if (keycode == SDLK_o && !app->imported && !app->sectors)
-		import_file(app, FILE_PATH);
+		import_file(app);
 	if (keycode == SDLK_i)
 		link_interaction(app);
 	if (keycode == SDLK_l)
 		link_wall_to_sector(app);
 	if (keycode == SDLK_DELETE && !app->current_object)
-		sector_pop(app, &(app->active_sector), NULL);
+		sector_pop(app, &(app->active_sector));
 	if (keycode == SDLK_DELETE && app->current_object)
 		del_object(app, get_object_id(app, app->current_object));
 	if (keycode == SDLK_y || keycode == SDLK_h)
@@ -89,7 +99,7 @@ int	events_keyup(int keycode, t_app *app)
 }
 
 /**
- * @brief handle map navigation
+ * @brief Handles map navigation.
  * 
  * @param app 
  */

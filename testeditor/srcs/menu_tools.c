@@ -1,19 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   help_menu_tools.c                                  :+:      :+:    :+:   */
+/*   menu_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 16:41:10 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/08 16:58:38 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/13 16:06:33 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Renders upward pointing arrow in the size given to it.
+ * @brief Renders upward pointing arrow in the size given to it.
+ * 
+ * @param app
+ * @param up
+ * @param size
 */
 static void	up_arrow(t_app *app, t_point up, int size)
 {
@@ -36,7 +40,11 @@ static void	up_arrow(t_app *app, t_point up, int size)
 }
 
 /**
- * Renders downward pointing arrow in the size given to it.
+ * @brief Renders downward pointing arrow in the size given to it.
+ * 
+ * @param app
+ * @param down
+ * @param size
 */
 static void	down_arrow(t_app *app, t_point down, int size)
 {
@@ -59,7 +67,12 @@ static void	down_arrow(t_app *app, t_point down, int size)
 }
 
 /**
- * Renders up and down arrows to the points given and in the size given.
+ * @brief Renders up and down arrows to the points given and in the size given.
+ * 
+ * @param app
+ * @param up
+ * @param down
+ * @param size
 */
 void	render_up_and_down_arrows(t_app *app, t_point up,
 									t_point down, int size)
@@ -69,28 +82,36 @@ void	render_up_and_down_arrows(t_app *app, t_point up,
 }
 
 /**
- * Renders arrows to the side of the icons on the help menu sidebar.
+ * @brief Renders arrows to the side of the icons on the help menu sidebar.
+ * 
+ * @param app
+ * @param left
+ * @param right
 */
 void	render_arrows(t_app *app, t_point left, t_point right)
 {
-	t_point	screen_pos;
+	t_point	mouse;
 
-	SDL_GetMouseState(&screen_pos.x, &screen_pos.y);
-	if ((left.x - 5) < screen_pos.x && (left.x + 10) > screen_pos.x
-		&& left.y < screen_pos.y && (left.y + 10) > screen_pos.y)
-		toggle_active_color(app, 1, "<", (t_rect){left.x, left.y, 15, 15});
+	SDL_GetMouseState(&mouse.x, &mouse.y);
+	if (check_mouse(mouse, (t_rect){left.x, left.y, 15, 15}))
+		toggle_active_color(app, TRUE, "<", (t_rect){left.x, left.y, 15, 15});
 	else
-		toggle_active_color(app, 0, "<", (t_rect){left.x, left.y, 15, 15});
-	if ((right.x - 5) < screen_pos.x && (right.x + 10) > screen_pos.x
-		&& right.y < screen_pos.y && (right.y + 10) > screen_pos.y)
-		toggle_active_color(app, 1, ">", (t_rect){right.x, right.y, 15, 15});
+		toggle_active_color(app, FALSE, "<", (t_rect){left.x, left.y, 15, 15});
+	if (check_mouse(mouse, (t_rect){right.x, right.y, 15, 15}))
+		toggle_active_color(app, TRUE, ">", (t_rect){right.x, right.y, 15, 15});
 	else
-		toggle_active_color(app, 0, ">", (t_rect){right.x, right.y, 15, 15});
+		toggle_active_color(app, FALSE, ">",
+			(t_rect){right.x, right.y, 15, 15});
 }
 
 /**
- * Toggles the color of the text between TEXT and ACTIVE_TEXT wether the
+ * @brief Toggles the color of the text between TEXT and ACTIVE_TEXT wether the
  * edit mode is active or not.
+ * 
+ * @param app
+ * @param active
+ * @param text
+ * @param point
 */
 void	toggle_active_color(t_app *app, int active, char *text, t_rect point)
 {

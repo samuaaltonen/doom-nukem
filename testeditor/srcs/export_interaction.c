@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:30:42 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 18:03:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:01:51 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	write_interactions(t_app *app, t_export_interaction *interactions)
  * @param app 
  * @param fd 
  */
-void	export_interactions(t_app *app, int fd)
+void	export_interactions(t_app *app, int fd, t_import_info *info)
 {
 	t_export_interaction	interactions[MAX_INTERACTIONS];
 
@@ -62,4 +62,6 @@ void	export_interactions(t_app *app, int fd)
 	if (write(fd, interactions,
 			sizeof(t_export_interaction) * MAX_INTERACTIONS) == -1)
 		exit_error(MSG_ERROR_FILE_WRITE);
+	info->imported = 4;
+	export_update_progress(info);
 }

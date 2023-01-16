@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 21:01:53 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 21:06:12 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 22:35:40 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,16 @@ void	*object_render_thread(void *data)
 	while (TRUE)
 	{
 		if (pthread_mutex_lock(&thread->lock))
-			exit_error(NULL);
+			exit_error(MSG_ERROR_THREADS_MUTEX);
 		while (!thread->has_work)
+		{
 			if (pthread_cond_wait(&thread->cond, &thread->lock))
-				exit_error(NULL);
-		objects_render(app, thread);
-		thread->has_work = FALSE;
+				exit_error(MSG_ERROR_THREADS_SIGNAL);
+		}
 		if (pthread_mutex_unlock(&thread->lock))
-			exit_error(NULL);
+			exit_error(MSG_ERROR_THREADS_MUTEX);
+		objects_render(app, thread);
+		thread_set_done(thread);
 	}
 	pthread_exit(NULL);
 }

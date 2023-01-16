@@ -3,21 +3,28 @@
 /*                                                        :::      ::::::::   */
 /*   objects.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:53:42 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 14:55:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 13:08:44 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
+/**
+ * @brief Toggles the object_new state between true and false, updating the
+ * current object along it.
+ * 
+ * @param app
+ * @param state
+*/
 void	toggle_new_object(t_app *app, t_bool state)
 {
 	if (state)
 	{
 		app->object_new = FALSE;
-		if (app->object_new && app->current_object)
+		if (app->current_object)
 			app->current_object->type = 0;
 		app->current_object = NULL;
 	}
@@ -31,6 +38,13 @@ void	toggle_new_object(t_app *app, t_bool state)
 	app->current_interaction = NULL;
 }
 
+/**
+ * @brief Checks if mouse position matches to any of the object positions and
+ * sets the selected object to current object.
+ * 
+ * @param app
+ * @return t_bool
+*/
 t_bool	select_object(t_app *app)
 {
 	int	id;
@@ -50,7 +64,11 @@ t_bool	select_object(t_app *app)
 }
 
 /**
- * Draws the object to the correct position.
+ * @brief Draws the object to the correct position.
+ * 
+ * @param app
+ * @param world_pos
+ * @param id
 */
 void	draw_object_icon(t_app *app, t_vector2 world_pos, int id)
 {
@@ -63,6 +81,12 @@ void	draw_object_icon(t_app *app, t_vector2 world_pos, int id)
 		OBJECT_SCREEN_SIZE, OBJECT_SCREEN_SIZE});
 }
 
+/**
+ * @brief Renders the objects and if the object has an interaction, the 
+ * colored square behind it.
+ * 
+ * @param app
+*/
 void	render_objects(t_app *app)
 {
 	int	i;
@@ -79,6 +103,13 @@ void	render_objects(t_app *app)
 	}
 }
 
+/**
+ * @brief Creates a new object, sets its variables accordingly and saves
+ * it to the object array.
+ * 
+ * @param app
+ * @return int
+*/
 int	new_object(t_app *app)
 {
 	if (app->object_count == MAX_OBJECTS)
@@ -87,5 +118,5 @@ int	new_object(t_app *app)
 	app->objects[app->object_count].position = app->mouse_track;
 	app->objects[app->object_count].sector = app->active_sector;
 	app->object_count++;
-	return (1);
+	return (TRUE);
 }
