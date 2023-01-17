@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/13 13:40:38 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/17 15:42:55 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ static void	app_render_helper(t_app *app)
 	render_sector_points(app);
 	if (app->list_ongoing)
 	{
-		if (valid_point(app))
+		if (check_last_point(app) || valid_point(app))
 			draw_line(app, &app->active_last->point, &app->mouse_track, LINE_A);
 		else
 			draw_line(app, &app->active_last->point, &app->mouse_track, LINE_B);

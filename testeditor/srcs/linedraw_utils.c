@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:08:45 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/13 15:09:33 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/17 16:01:27 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,4 +116,39 @@ void	linedraw_high(t_app *app, t_point *a, t_point *b, int color)
 		}
 	}
 	put_pixel_to_surface(app->surface, line.pos.x, line.pos.y, color);
+}
+
+/**
+ * @brief Checks if sector line connects to the first point of the list.
+ * 
+ * @param app
+ * @return t_bool
+*/
+t_bool	check_last_point(t_app *app)
+{
+	t_vec2_lst	*tmp;
+	t_vec2_lst	*prev;
+	int			points;
+
+	tmp = app->active;
+	points = 0;
+	while (tmp)
+	{
+		if (tmp->next)
+		{
+			points++;
+			prev = tmp;
+		}
+		tmp = tmp->next;
+		if (tmp == app->active)
+			break ;
+	}
+	if (points < 2 || points >= MAX_SECTOR_CORNERS)
+		return (FALSE);
+	if (app->mouse_track.x == app->active->point.x
+		&& app->mouse_track.y == app->active->point.y
+		&& !ft_line_side((t_line){prev->point, app->active_last->point},
+		app->mouse_track))
+		return (TRUE);
+	return (FALSE);
 }
