@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/17 13:41:56 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/17 13:57:53 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	render_game(t_app *app)
 	bullet_enemy_collisions(app);
 	bullet_player_collision(app);
 	render_sectors(app);
-	render_hand(app, WIN_W / 2 - 128, 500);
+	render_hand(app, WIN_W / 2 - 256, 320);
 	render_objects(app);
 	render_textmodals(app);
 	render_ui(app);
