@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/17 11:52:53 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/17 12:05:36 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,21 +88,7 @@ void	player_move(t_app *app, t_movement movement, double speed)
 					perpendicular.y * speed});
 		if (movement == RIGHTWARD)
 			app->player.move_vector = ft_vector2_add(app->player.move_vector,
-					(t_vector2){perpendicular.x * app->conf->delta_time,
-					perpendicular.y * app->conf->delta_time});
-	}
-	if (movement == UPWARD && !app->player.flying)
-	{
-		app->player.flying = TRUE;
-		app->player.jump_timer = 0.0;
-	}
-	if (movement == UPWARD && app->player.flying && app->player.jump_timer == JUMP_TIME)
-	{
-		//----DEBUG FEATURE
-		if (app->player.jetpack == TRUE && app->player.inventory.special_ammo > 0)
-			app->player.jetpack_boost = TRUE;
-		
-		//----
-	//	app->player.jetpack = TRUE;
+					(t_vector2){perpendicular.x * speed,
+					perpendicular.y * speed});
 	}
 }

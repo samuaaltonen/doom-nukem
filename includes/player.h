@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/16 22:30:46 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/17 12:07:19 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define FALL_DAMAGE_MULTIPLIER 3.0
 # define JUMP_FORCE 5.0
 # define JETPACK 1.0
-# define JETPACK_FALL 0.01
+# define JETPACK_FALL 0.04
 # define JETPACK_ASCENT 4.0
 # define JETPACK_DESCENT -4.0
 # define ELEVATION_EPSILON 0.01
