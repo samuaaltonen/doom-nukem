@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/17 12:07:19 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/17 12:39:54 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ typedef struct s_weapon
 }	t_weapon;
 
 /**
- * Struct for player. Contains players position, direction and camera plane.
+ * Struct for player. Contains player's position, direction and camera plane.
  */
 typedef struct s_player
 {

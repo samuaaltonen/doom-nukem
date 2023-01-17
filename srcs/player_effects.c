@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:57:21 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/16 14:30:06 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/17 12:39:11 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,8 @@ void	energy(t_app *app, int mod)
 			app->player.inventory.special_ammo = 0;
 			jetpack(app);
 		}
-			
-		ft_printf("%d\n", app->player.inventory.special_ammo);
+	//----DEBUG FEATURE
+		ft_printf("Energy: %d\n", app->player.inventory.special_ammo);
+	//----
 	}
 }

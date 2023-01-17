@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/17 11:45:16 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/17 12:40:45 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	jetpack(t_app *app)
 	{
 		app->player.jetpack = FALSE;
 		app->player.elevation_velocity = JETPACK_FALL;
-		start_timer(&app->item_timer, 4);
+		start_timer(&app->item_timer, 5);
 	}
 	else if (check_timer(&app->item_timer) && !app->player.jetpack)
 	{
