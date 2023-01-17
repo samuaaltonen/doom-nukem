@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_hand.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 18:47:59 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/05 18:59:32 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/17 13:50:42 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,13 @@
 
 void	render_hand(t_app *app, int x, int y)
 {
-	int nux;
-	int texx;
-	int texy;
+	t_rect	dst;
+	t_rect	src;
 
-	texx = 0;
-	texy = 0;
-	nux = x;
-	while (++y < app->surface->h && texy < app->assets.weapon->h)
-	{
-		nux = x;
-		texx = 0;
-		while(++nux < app->surface->w && texx < app->assets.weapon->w)
-		{
-			int color = get_pixel_color(app->assets.weapon,texx,texy);
-			if (color & 0xFF000000)
-				put_pixel_to_surface(app->surface,nux,y,color);
-			texx++;
-		}
-		texy++;
-	}
+	rect_from_surface(app->assets.weapon, &src);
+	dst.x = x;
+	dst.y = y;
+	dst.w = src.w;
+	dst.h = src.h;
+	blit_surface(app->assets.weapon, &src, app->surface, &dst);
 }

@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:38:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/09 11:49:41 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/17 13:49:50 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,9 +98,6 @@ int	check_blit(SDL_Surface *src, t_rect *src_rect,
 	if (src == NULL || dst == NULL)
 		return (0);
 	if (src_rect == NULL || dst_rect == NULL)
-		return (0);
-	if (dst_rect->x + dst_rect->w > dst->w
-		|| dst_rect->y + dst_rect->h > dst->h)
 		return (0);
 	return (1);
 }
