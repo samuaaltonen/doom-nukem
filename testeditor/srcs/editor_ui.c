@@ -6,14 +6,16 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:09:02 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/01 17:24:42 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:14:04 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Draws the zoom slider to the right side of the screen.
+ * @brief Draws the zoom slider to the right side of the screen.
+ * 
+ * @param app
 */
 void	zoom_slider(t_app *app)
 {
@@ -43,7 +45,23 @@ void	zoom_slider(t_app *app)
 }
 
 /**
- * Changes divider count for the background grid.
+ * @brief Changes mouse_down state to true when mouse button left is
+ * pressed down.
+ * 
+ * @param app
+ * @return int
+*/
+int	events_mouse_drag(t_app *app)
+{
+	app->mouse_down = TRUE;
+	return (0);
+}
+
+/**
+ * @brief Changes divider count for the background grid.
+ * 
+ * @param app
+ * @param keycode
 */
 void	move_divider(t_app *app, SDL_Keycode keycode)
 {
@@ -53,6 +71,13 @@ void	move_divider(t_app *app, SDL_Keycode keycode)
 		app->divider *= 2;
 }
 
+/**
+ * @brief Creates a floor/ceiling slope from the active point to the furthest 
+ * point in sector upon keypress.
+ * 
+ * @param app
+ * @param keycode
+*/
 void	activate_slope(t_app *app, SDL_Keycode keycode)
 {
 	if (keycode == SDLK_y && app->active_sector && app->active)

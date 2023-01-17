@@ -13,11 +13,16 @@
 #include "liblinearalgebra.h"
 
 /**
- * Returns 1 only when there is intersection that splits the other line in 2
- * parts. Therefore intersection with only a corner of other line returns 0.
+ * @brief Returns 1 only when there is intersection that splits the other line
+ * in 2 parts. Therefore intersection with only a corner of other line returns
+ * 0.
  * 
  * See also: ft_line_intersection
-*/
+ * 
+ * @param line_a 
+ * @param line_b 
+ * @return int 
+ */
 int	ft_line_intersection_through(t_line line_a, t_line line_b)
 {
 	if (ft_line_side(line_a, line_b.a) != ft_line_side(line_a, line_b.b)

@@ -6,14 +6,17 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 11:47:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/24 14:14:09 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/16 13:32:05 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Adds a member sector the an existing parent sector.
+ * @brief Adds a member sector the an existing parent sector.
+ * 
+ * @param parent
+ * @param child
 */
 void	add_member_sector(t_sector_lst *parent, t_sector_lst *child)
 {
@@ -31,7 +34,7 @@ void	add_member_sector(t_sector_lst *parent, t_sector_lst *child)
 }
 
 /**
- * @brief Finds which member sector in active sector was clicked
+ * @brief Finds which member sector in active sector was clicked.
  * 
  * @param app 
  * @return t_sector_lst* 
@@ -61,4 +64,26 @@ t_sector_lst	*find_child_sector(t_app *app)
 		i++;
 	}
 	return (NULL);
+}
+
+/**
+ * @brief Counts how many member sectors does the given sector have.
+ * 
+ * @param parent
+ * @return int
+*/
+int	get_member_sector_count(t_sector_lst *parent)
+{
+	int		index;
+
+	if (!parent)
+		return (-1);
+	index = 0;
+	while (index < MAX_MEMBER_SECTORS)
+	{
+		if (!parent->member_sectors[index])
+			break ;
+		index++;
+	}
+	return (index);
 }

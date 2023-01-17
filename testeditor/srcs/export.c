@@ -3,228 +3,89 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/12 14:58:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:43:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
-static void	list_to_export(t_exportsector *export, t_vec2_lst *list, int count)
-{
-	int			i;
-	t_vec2_lst	*tmp;
-
-	i = 0;
-	tmp = list;
-	while (i < count)
-	{
-		export->corners[i].x = tmp->point.x;
-		export->corners[i].y = tmp->point.y;
-		export->wall_textures[i] = tmp->tex;
-		export->wall_types[i] = tmp->type;
-		export->wall_decor[i] = tmp->decor;
-		export->decor_offset[i] = tmp->decor_offset;
-		tmp = tmp->next;
-		i++;
-	}
-}
-
-static void	member_export(t_app *app, t_exportsector *export,
-											t_sector_lst *sector)
-{
-	int		i;
-
-	i = 0;
-	while (sector->member_sectors[i])
-	{
-		export->member_sectors[i] = get_sector_id(app,
-				sector->member_sectors[i]);
-		ft_printf("%i\n", export->member_sectors[i]);
-		i++;
-	}
-	while (i < MAX_MEMBER_SECTORS)
-	{
-		export->member_sectors[i] = -1;
-		i++;
-	}
-}
-
-int	get_line_id(t_vec2_lst *list, t_vec2_lst *wall)
+/**
+ * @brief Returns line id that matches the wall pointer.
+ * 
+ * @param list 
+ * @param wall 
+ * @return int 
+ */
+int	get_wall_id(t_vec2_lst *list, t_vec2_lst *wall)
 {
 	int		i;
 
 	if (!wall)
 		return (-1);
 	i = 0;
-	while (wall != list)
+	while (wall != list && i < MAX_SEARCH_COUNT)
 	{
 		i++;
 		list = list->next;
 	}
+	if (i == MAX_SEARCH_COUNT)
+		exit_error(MSG_ERROR_LEVEL_DATA);
 	return (i);
 }
 
 /**
- * @brief Writes sector data to an exportable format
+ * @brief Updates header info to file.
  * 
- * @param app 
- * @param sector 
- * @param export 
+ * @param header 
+ * @param path 
  */
-void	write_sector(t_app *app, t_sector_lst *sector, t_exportsector *export)
+void	update_header(t_level_header *header, char *path)
 {
-	export->corner_count = sector->corner_count;
-	list_to_export(export, sector->wall_list, export->corner_count);
-	member_export(app, export, sector);
-	export->parent_sector = get_sector_id(app, sector->parent_sector);
-	export->light = sector->light;
-	export->floor_height = sector->floor_height;
-	export->ceil_height = sector->ceil_height;
-	export->floor_tex = sector->floor_tex;
-	export->floor_tex_offset = -1;
-	export->ceil_tex = sector->ceil_tex;
-	export->ceil_tex_offset = -1;
-	export->floor_slope_height = sector->floor_slope_height;
-	export->floor_slope_opposite = get_line_id(sector->wall_list, sector->floor_slope_opposite);
-	export->floor_slope_position = get_line_id(sector->wall_list, sector->floor_slope_wall);
-	export->ceil_slope_height = sector->ceil_slope_height;
-	export->ceil_slope_opposite = get_line_id(sector->wall_list, sector->ceil_slope_opposite);
-	export->ceil_slope_position = get_line_id(sector->wall_list, sector->ceil_slope_wall);
-}
-static int as_bits(t_app *app, t_weapon weapons[MAX_WEAPONS])
-{
-	int	inventory;
-	int	i;
+	int	fd;
 
-	inventory = 0;
-	i = 0;
-	while (i < MAX_WEAPONS)
-	{
-		(void)weapons;
-		//if(weapons[i].enabled)
-		if(i == app->player.selected_weapon)
-			inventory |= 1 << i;
-		i++;
-	}
-	return (inventory);
-}
-
-static void write_player(t_app *app, t_export_player *export)
-{
-	export->position = app->player.position;
-	export->direction = app->player.direction;
-	export->sector = get_sector_id(app,app->player.sector);
-	export->health = app->player.health;
-	export->weapons = as_bits(app, app->player.weapons);
-	export->armor = app->player.armor;
-	export->inventory = app->player.inventory;
-}
-
-static void write_objects(t_app *app, t_export_object *objects)
-{
-	t_export_object temp;
-	int	i;
-
-	i = 0;
-	while (i < MAX_OBJECTS)
-	{
-		temp.pos = app->objects[i].position;
-		if (app->objects[i].sector)
-			temp.elevation = app->objects[i].sector->floor_height;
-		else
-			temp.elevation = 0.f;
-		temp.sector = get_sector_id(app, app->objects[i].sector);
-		temp.type = app->objects[i].type;
-		if (temp.type != 0)
-				ft_printf("object exported %i\n", i);
-		temp.var = app->objects[i].var;
-		(objects[i]) = temp;
-		i++;
-	}
-}
-
-static void write_interactions(t_app *app, t_export_interaction *interactions)
-{
-	t_export_interaction temp;
-	int	i;
-
-	i = 0;
-	while (i < MAX_INTERACTIONS)
-	{
-		temp.activation_object = get_object_id(app,app->interactions[i].activation_object);
-		temp.activation_sector = get_sector_id(app,app->interactions[i].activation_sector);
-		if(temp.activation_sector != -1 && app->interactions[i].activation_wall)
-			temp.activation_wall = get_line_id(app->interactions[i].activation_sector->wall_list, app->interactions[i].activation_wall);
-		else
-			temp.activation_wall = -1;
-		temp.event_id = app->interactions[i].event_id;
-		temp.target_sector = get_sector_id(app, app->interactions[i].target_sector);
-		temp.variable = app->interactions[i].variable;
-		temp.editable = app->interactions[i].editable;
-		interactions[i] = temp;
-		i++;
-	}
+	fd = open(path, O_WRONLY, 0644);
+	if (fd < 0)
+		exit_error(MSG_ERROR_FILE_OPEN);
+	if (write(fd, header, sizeof(t_level_header)) == -1)
+		exit_error(MSG_ERROR_FILE_WRITE);
+	close(fd);
 }
 
 /**
- * @brief Opens or creates a file at path, writes map data to it
+ * @brief Exports all data to level file.
  * 
  * @param app 
+ * @param thread 
  * @param path 
- * @return int 
  */
-int	export_file(t_app *app, char *path)
+void	export_level(t_app *app, t_thread_data *thread, char *path)
 {
-	int						fd;
-	t_sector_lst			*tmp;
-	t_exportsector			*export;
-	int						counter;
-	t_export_player			player;
-	t_export_object			objects[MAX_OBJECTS];
-	t_export_interaction	interactions[MAX_INTERACTIONS];
-	t_level_header			header;
+	t_import_info	info;
+	int				fd;
 
-	//app->interaction_count = 2;
-	/* for (int i = 0; i < 2; i++)
-		delete_interaction(app, 0); */
-	counter = 0;
-	export = (t_exportsector *)ft_memalloc(sizeof(t_exportsector));
-	if (!export)
-		exit_error(MSG_ERROR_ALLOC);
-	fd = open(path, O_WRONLY | O_CREAT, 0755);
+	ft_bzero(&info, sizeof(t_import_info));
+	info.thread = thread;
+	fd = open(path, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (fd < 0)
-		exit_error("FILE OPEN ERROR TEMP!");
-	header.sector_count = ft_lstlen(app->sectors);
-	header.interaction_count = app->interaction_count;
-	header.object_count = app->object_count;
-	header.version = FILE_VERSION;
-	if (write(fd, &header, sizeof(t_level_header)) == -1)
+		exit_error(MSG_ERROR_FILE_OPEN);
+	info.header.sector_count = ft_lstlen(app->sectors);
+	info.header.interaction_count = app->interaction_count;
+	info.header.object_count = app->object_count;
+	info.header.version = FILE_VERSION;
+	if (write(fd, &info.header, sizeof(t_level_header)) == -1)
 		exit_error(MSG_ERROR_FILE_WRITE);
-	write_player(app, &player);
- 	if (write(fd, &player, sizeof(t_export_player)) == -1)
-		exit_error("Player Write Error\n");
-	tmp = app->sectors;
-	while (counter++ < header.sector_count)
-	{
-		write_sector(app, tmp, export);
-		ft_printf("exported sector corners %i\n", export->corner_count);
-		if (write(fd, export, sizeof(t_exportsector)) == -1)
-			exit_error(MSG_ERROR_FILE_WRITE);
-		tmp = tmp->next;
-	}
-	write_objects(app, (t_export_object *)&objects);
- 	if (write(fd, objects, sizeof(t_export_object) * MAX_OBJECTS) == -1)
-		exit_error("object write error\n");
-	write_interactions(app, (t_export_interaction *)&interactions);
-	ft_printf("Total interactions: %d\n", app->interaction_count);
-	for(int i = 0; i < MAX_INTERACTIONS; i++)
-		ft_printf("read interactions id %i, activation sector%i, wall%i, object%i\n",interactions[i].event_id, interactions[i].activation_sector, interactions[i].activation_wall, interactions[i].activation_object);
-	if (write(fd, interactions, sizeof(t_export_interaction) * MAX_INTERACTIONS) == -1)
-		exit_error("interaction write error\n");
-	free(export);
+	export_sectors(app, info.header, fd, &info);
+	export_player(app, fd, &info);
+	export_objects(app, fd, &info);
+	export_interactions(app, fd, &info);
+	export_surfaces(&info, fd);
+	export_wavs(&info, fd);
+	export_texts(&info, fd);
 	close(fd);
-	return (0);
+	update_header(&info.header, path);
+	rle_compress(&info, path);
+	export_set_complete(&info);
 }

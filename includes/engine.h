@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/13 15:31:41 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 14:42:22 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,42 @@ enum e_occlusion {
 };
 
 enum e_objects {
+	EMPTY,
+	ARMOR_PICKUP,
+	COIN_PICKUP,
+	HP_PICKUP,
+	JETPACK_PICKUP,
+	ANTIDOTE_PICKUP,
 	MONSTER1 = 9,
 	MONSTER2 = 10
 };
+
+typedef struct s_export_asset
+{
+	int				size;
+	int				width;
+	int				height;
+}	t_export_asset;
+
+typedef struct s_level_header
+{
+	int				version;
+	int				sector_count;
+	int				object_count;
+	int				interaction_count;
+	t_export_asset	asset_info[MAX_ASSET_COUNT];
+}	t_level_header;
+
+typedef struct s_import_info
+{
+	t_thread_data	*thread;
+	t_level_header	header;
+	unsigned char	*data;
+	int				length;
+	int				imported;
+	int				compressed_length;
+	int				uncompressed;
+}	t_import_info;
 
 /**
  * Sectors
@@ -59,7 +92,7 @@ typedef struct s_sector
 	int				stack_index;
 }	t_sector;
 
-typedef struct s_exportsector
+typedef struct s_export_sector
 {
 	int				corner_count;
 	t_vector2		corners[MAX_SECTOR_CORNERS];
@@ -82,7 +115,7 @@ typedef struct s_exportsector
 	double			ceil_slope_height;
 	int				ceil_slope_position;
 	int				ceil_slope_opposite;
-}	t_exportsector;
+}	t_export_sector;
 
 /**
  * Wall struct. Contains information of what sector it belongs to and which wall
@@ -108,45 +141,46 @@ typedef struct s_wall
 */
 typedef struct s_rayhit
 {
-	t_sector	*sector;
-	int			wall_id;
-	t_vector2	ray;
-	int			texture;
-	t_vector2	position;
-	double		distance;
-	double		distortion;
-	double		texture_offset;
-	double		texture_step;
-	int			height;
-	int			light;
+	t_sector		*sector;
+	t_wall			*wall;
+	int				wall_id;
+	t_vector2		ray;
+	int				texture;
+	t_vector2		position;
+	double			distance;
+	double			distortion;
+	double			texture_offset;
+	double			texture_step;
+	int				height;
+	int				light;
 
-	double		wall_start_actual;
-	int			wall_start;
-	int			wall_end;
-	int			wall_type;
+	double			wall_start_actual;
+	int				wall_start;
+	int				wall_end;
+	int				wall_type;
 
-	double		parent_wall_start_actual;
-	int			parent_wall_start;
-	int			parent_wall_end;
-	int			parent_height;
+	double			parent_wall_start_actual;
+	int				parent_wall_start;
+	int				parent_wall_end;
+	int				parent_height;
 
-	double		floor_horizon;
-	double		floor_horizon_angle;
-	double		floor_slope_height;
+	double			floor_horizon;
+	double			floor_horizon_angle;
+	double			floor_slope_height;
 
-	double		ceil_horizon;
-	double		ceil_horizon_angle;
-	double		ceil_slope_height;
+	double			ceil_horizon;
+	double			ceil_horizon_angle;
+	double			ceil_slope_height;
 
-	int			*occlusion_top;
-	int			*occlusion_bottom;
+	int				*occlusion_top;
+	int				*occlusion_bottom;
 
-	t_bool		has_decor;
-	int			decor_texture;
-	int			decor_start;
-	double		decor_start_actual;
-	int			decor_end;
-	double		decor_texture_offset;
+	t_bool			has_decor;
+	int				decor_texture;
+	int				decor_start;
+	double			decor_start_actual;
+	int				decor_end;
+	double			decor_texture_offset;
 }	t_rayhit;
 
 /**
@@ -155,10 +189,10 @@ typedef struct s_rayhit
  */
 typedef struct s_raycast_info
 {
-	t_wall	*wall;
-	t_limit	limit;
-	int		*occlusion_top;
-	int		*occlusion_bottom;
+	t_wall			*wall;
+	t_limit			limit;
+	int				*occlusion_top;
+	int				*occlusion_bottom;
 }	t_raycast_info;
 
 /**
@@ -167,13 +201,13 @@ typedef struct s_raycast_info
  */
 typedef struct s_wallstack
 {
-	t_wall	walls[MAX_VISIBLE_SECTORS] \
-			[(MAX_MEMBER_SECTORS + 1) * MAX_SECTOR_CORNERS + 1];
-	int		wall_count[MAX_VISIBLE_SECTORS + 1];
-	int		visited[MAX_VISIBLE_SECTORS];
-	int		visited_count;
-	int		interesting[MAX_VISIBLE_SECTORS];
-	int		interesting_count;
+	t_wall			walls[MAX_VISIBLE_SECTORS] \
+						[(MAX_MEMBER_SECTORS + 1) * MAX_SECTOR_CORNERS + 1];
+	int				wall_count[MAX_VISIBLE_SECTORS + 1];
+	int				visited[MAX_VISIBLE_SECTORS];
+	int				visited_count;
+	int				interesting[MAX_VISIBLE_SECTORS];
+	int				interesting_count;
 }	t_wallstack;
 
 typedef struct s_object
@@ -185,15 +219,25 @@ typedef struct s_object
 	int				sector;
 }	t_object;
 
+typedef struct s_gameobject
+{
+	int				type;
+	double			var;
+	t_vector2		position;
+	double			rot;
+	double			elevation;
+	int				sector;
+}	t_gameobject;
+
 /**
  * Struct that contains skybox drawing information. These values are updated
  * based on player movement.
  */
 typedef struct s_sky
 {
-	t_point		start;
-	t_point		size;
-	t_vector2	pixel_step;
+	t_point			start;
+	t_point			size;
+	t_vector2		pixel_step;
 }	t_sky;
 
 #endif

@@ -6,28 +6,19 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:37:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/15 13:25:39 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/13 14:44:18 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Initializes image.
- */
-SDL_Surface	*init_image(int width, int height)
-{
-	SDL_Surface	*surface;
-
-	surface = SDL_CreateRGBSurfaceWithFormat(0, width, height,
-			IMAGE_PIXEL_BITS, SDL_PIXELFORMAT_ARGB8888);
-	if (!surface)
-		exit_error(MSG_ERROR_IMAGE_INIT);
-	return (surface);
-}
-
-/**
- * Changes color of a specific pixel in image.
+ * @brief Changes color of a specific pixel in image.
+ * 
+ * @param surface
+ * @param x
+ * @param y
+ * @param color
  */
 void	put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color)
 {
@@ -43,7 +34,9 @@ void	put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color)
 }
 
 /**
- * Flushes image (sets all pixels to black)
+ * @brief Flushes image (sets all pixels to black).
+ * 
+ * @param surface
  */
 void	flush_surface(SDL_Surface *surface)
 {

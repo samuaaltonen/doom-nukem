@@ -6,33 +6,36 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/15 14:47:14 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/13 13:40:38 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Initializes application struct.
+ * @brief Initializes application struct.
+ * 
+ * @param app
+ * @return int
  */
 int	app_init(t_app **app)
 {
 	*app = (t_app *)malloc(sizeof(t_app));
-	ft_bzero(*app, sizeof(t_app));
 	if (!(*app))
-		return (0);
-	return (1);
+		return (FALSE);
+	ft_bzero(*app, sizeof(t_app));
+	return (TRUE);
 }
 
 /**
- * Prepares the application to be rendered:
+ * @brief Prepares the application to be rendered:
  * Creates window, loads assets, adds event hooks and sets
  * initial player position / direction.
+ * 
+ * @param app
  */
 void	app_prepare(t_app *app)
 {
-	double		aspect_ratio;
-
 	if (SDL_Init(SDL_INIT_VIDEO | SDL_INIT_EVENTS) < 0)
 		exit_error(MSG_ERROR_SDL_INIT);
 	app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, SDL_WINDOW_SHOWN);
@@ -41,17 +44,15 @@ void	app_prepare(t_app *app)
 	app->surface = SDL_GetWindowSurface(app->win);
 	if (!app->surface)
 		exit_error(MSG_ERROR_WINDOW_SURFACE);
-	aspect_ratio = ((double)app->surface->h / (double)app->surface->w) * -100;
+	app->aspect_ratio = ((double)app->surface->h / (double)app->surface->w)
+		* -100;
 	app->view_pos = (t_vector2){-50.0, 50.0};
-	app->zoom_area = (t_vector2){100.0, aspect_ratio};
+	app->zoom_area = (t_vector2){100.0, app->aspect_ratio};
 	app->view_size = (t_vector2){app->view_pos.x + app->zoom_area.x,
 		app->view_pos.y + app->zoom_area.y};
 	app->divider = 1.0f;
 	app->zoom_range = 5;
-	app->sectorcount = 0;
-	app->sectors = NULL;
-	app->player_edit = 1;
-	app->player.sector = NULL;
+	app->player_edit = TRUE;
 	app->player.health = 200;
 	app->player.armor = 100;
 	app->movement_speed = 4;
@@ -62,8 +63,38 @@ void	app_prepare(t_app *app)
 }
 
 /**
- * Rendering function to be called in loop hook. Calls individual renderers and
- * draws resulting image(s) to the window.
+ * @brief Renders the optional lines and points based on if something has been
+ * clicked active, or a certain menu is turned on.
+ * 
+ * @param app
+*/
+static void	app_render_helper(t_app *app)
+{
+	if (app->active)
+	{
+		render_sector(app, app->active);
+		render_point(app, app->active->point, 3, POINT);
+	}
+	if (app->interaction_menu && app->current_interaction)
+		render_target_sector_lines(app);
+	if (app->interaction_menu && app->current_interaction
+		&& app->current_interaction->interaction_link > -1)
+		render_interaction_link_lines(app);
+	render_sector_points(app);
+	if (app->list_ongoing)
+	{
+		if (valid_point(app))
+			draw_line(app, &app->active_last->point, &app->mouse_track, LINE_A);
+		else
+			draw_line(app, &app->active_last->point, &app->mouse_track, LINE_B);
+	}
+}
+
+/**
+ * @brief Rendering function to be called in loop hook. Calls individual
+ * renderers and draws resulting image(s) to the window.
+ * 
+ * @param app
  */
 void	app_render(t_app *app)
 {
@@ -74,31 +105,21 @@ void	app_render(t_app *app)
 	render_fill_active_sector(app);
 	render_divider(app);
 	render_sectors(app);
-	if (app->active)
-	{
-		render_sector(app, app->active);
-		render_point(app, app->active->point, 3, POINT);
-	}
-	render_sector_points(app);
-	if (app->list_ongoing)
-	{
-		if (valid_point(app))
-			draw_line(app, &app->active_last->point, &app->mouse_track, LINE_A);
-		else
-			draw_line(app, &app->active_last->point, &app->mouse_track, LINE_B);
-	}
+	app_render_helper(app);
 	render_objects(app);
 	render_player(app);
 	zoom_slider(app);
 	render_help_menu(app);
-	if(app->object_new)
-		draw_object_icon(app,app->mouse_track, app->current_object->type);
+	if (app->object_new)
+		draw_object_icon(app, app->mouse_track, app->current_object->type);
 	SDL_UpdateWindowSurface(app->win);
 }
 
 /**
- * Main game loop. Polls SDL event queue until it is empty and then 
+ * @brief Main game loop. Polls SDL event queue until it is empty and then 
  * proceeds to next frame.
+ * 
+ * @param app
  */
 void	app_loop(t_app *app)
 {
@@ -108,38 +129,6 @@ void	app_loop(t_app *app)
 	{
 		while (SDL_PollEvent(&event))
 			dispatch_event(app, &event);
-		ft_printf("x=%f, y=%f modes:c%i,o%i,p%i,r%i,f%i,s%i,n%i,i%p,object_menu%i,player%i\n", app->mouse_track.x, app->mouse_track.y, app->list_creation, app->list_ongoing, app->portal_selection, app->ceiling_edit, app->floor_edit, app->slope_edit, app->object_new, app->current_interaction, app->object_menu, app->player_edit);
-		if (app->active_sector)
-		{
-			if (app->object_menu)
-				ft_printf("selected object id:%i, type:%i, var:%f ",get_object_id(app, app->current_object), app->current_object->type, app->current_object->var);
-			if (app->current_interaction)
-				ft_printf("current interaction event_id:%i, variable: %f, targer: %i ", app->current_interaction->event_id, app->current_interaction->variable, app->current_interaction->target_sector);
-			ft_printf("inside = %i, floor: h:%f,tex:%i,o:%i, ceil: h:%f,tex:%i,o:%i, light:%i\n has members: ", app->active_sector, app->active_sector->floor_height, app->active_sector->floor_tex, app->active_sector->floor_tex_offset, app->active_sector->ceil_height, app->active_sector->ceil_tex, app->active_sector->ceil_tex_offset, app->active_sector->light);
-			for (int i = 0; i < 4 && app->active_sector->member_sectors[i]; ++i)
-				ft_printf("%i ", get_sector_id(app, app->active_sector->member_sectors[i]));
-			ft_printf("\n");
-			if (app->active_sector->parent_sector)
-				ft_printf("parent id %i, ", app->active_sector->parent_sector);
-			if (app->active_sector->ceil_slope_wall)
-				ft_printf("ceiling slopes from %i to %i, height %f, ", app->active_sector->ceil_slope_wall, app->active_sector->ceil_slope_opposite, app->active_sector->ceil_slope_height);
-			if (app->active_sector->floor_slope_wall)
-				ft_printf("floor slopes from %i to %i, height %f", app->active_sector->floor_slope_wall, app->active_sector->floor_slope_opposite, app->active_sector->floor_slope_height);
-			ft_printf("\n");
-		}
-		if (app->active)
-			ft_printf("selected point x:%f, y:%f, tex:%i, type:%i, decor:%i, decor offset: %f,%f\n", app->active->point.x, app->active->point.y, app->active->tex, app->active->type, app->active->decor, app->active->decor_offset.x, app->active->decor_offset.y);
-		// for (int index = 0; index < 10; index++)
-		// {
-		// 	ft_printf("INDEX %i\n", index);
-		// 	ft_printf("ID %i VARIABLE %f TARGET %i SECTOR %i WALL %i OBJECT %i\n\n", app->interactions[index].event_id, app->interactions[index].variable, app->interactions[index].target_sector, app->interactions[index].activation_sector, app->interactions[index].activation_wall, app->interactions[index].activation_object);
-		// }
-		// for (int index = 0; index < 10; index++)
-		// {
-		// 	ft_printf("COUNT %i\n", app->object_count);
-		// 	ft_printf("INDEX %i\n", index);
-		// 	ft_printf("TYPE %i SECTOR %i\n\n", app->objects[index].type, app->objects[index].sector);
-		// }
 		app_render(app);
 	}
 }

@@ -6,7 +6,7 @@
 #    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/12/15 17:34:30 by htahvana         ###   ########.fr        #
+#    Updated: 2023/01/16 22:35:57 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,55 +15,90 @@ NAME = doom-nukem
 CC = gcc
 PWD= $(shell pwd)
 
-FILES = main.c \
-		init.c \
-		render_status.c \
-		render_ui.c \
-		render_text.c \
+FILES = animation_create.c \
+		animation_progress.c \
+		app.c \
+		audio.c \
 		button_function.c \
-		error.c app.c \
+		enemy_move.c \
+		enemy_states.c \
+		error.c \
+		events.c \
 		events_key.c \
 		events_mouse.c \
 		events_window.c \
-		threads.c \
 		image.c \
+		import.c \
+		init.c \
+		interaction_check.c \
+		interaction_trigger.c \
+		main.c \
+		object_collision.c \
 		player_collision.c \
+		player_collision_portal.c \
+		player_collision_sector.c \
+		player_collision_slope.c \
+		player_collision_wall.c \
 		player_control.c \
 		player_effects.c \
+		player_elevate.c \
 		player_init.c \
 		player_move.c \
 		player_view.c \
-		events.c \
-		audio.c \
-		time.c \
+		bullets.c \
+		render_object.c \
+		render_status.c \
+		render_text.c \
+		render_ui.c \
 		sector_draw_ceiling.c \
 		sector_draw_floor.c \
-		sector_draw_wall.c \
-		sector_draw_wall_decor.c \
 		sector_draw_partial.c \
 		sector_draw_sky.c \
+		sector_draw_wall.c \
+		sector_draw_wall_decor.c \
+		sector_elevation.c \
 		sector_render.c \
+		sector_wall_line.c \
+		sector_wall_prepare.c \
+		sector_wall_raycast.c \
+		sector_wall_raycast_decor.c \
+		sector_wall_raycast_hit.c \
 		sector_wallstack.c \
 		sector_wallstack_order.c \
 		sector_wallstack_visible.c \
-		sector_wall_raycast.c \
-		sector_wall_raycast_hit.c \
-		sector_wall_raycast_decor.c \
-		sector_wall_prepare.c \
-		sector_wall_line.c \
-		sector_elevation.c \
-		import.c \
+		textmodal.c \
+		threads.c \
+		time.c \
 		utils.c \
 		utils_color.c \
 		utils_sdl.c \
-		interaction_check.c \
-		interaction_trigger.c \
-		animation_create.c \
-		animation_progress.c \
-		init_texts.c \
-		textmodal.c \
-		render_object.c \
-		enemy_states.c
+		import_async.c \
+		rle_utils.c \
+		rle_uncompress.c \
+		render_hand.c \
+		import_sector.c \
+		import_player.c \
+		import_object.c \
+		import_interaction.c \
+		import_assets.c \
+		import_assets_surface.c \
+		import_assets_wav.c \
+		import_assets_text.c \
+		level_validation.c \
+		level_validation_sector.c \
+		level_validation_assets.c \
+		level_validation_interaction.c \
+		level_validation_player.c \
+		level_validation_object.c \
+		bullet_collisions.c \
+		bullet_wall_collisions.c \
+		object_render_init.c \
+		object_render_utils.c \
+		object_render_work.c \
+		object_multithreading.c \
+		bullet_object_collisions.c \
+		enemy_utils.c \
+		enemy_avoidance.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a
@@ -117,7 +152,6 @@ $(SDL2):
 all_2.24.2: $(LIBFT) $(LIBLINEARALGEBRA) 2.24.2 $(OBJS) $(DEPS)
 	$(CC) $(OBJS) -o $(NAME) $(SDL_CONF) $(FLAGS) $(HEADERS) $(LIBLINKS)
 
-
 2.24.2:
 	cd sdl/$(SDL_VNEW)/build && ../configure --prefix=$(PWD)/sdl/SDL2_build/ && make install
 
@@ -135,7 +169,7 @@ clean:
 	make clean -C ./liblinearalgebra
 	/bin/rm -rf $(BUILD_DIR)
 
-fclean: clean
+fclean: clean clean-sdl
 	make fclean -C ./libft
 	make fclean -C ./liblinearalgebra
 	/bin/rm -f $(NAME)

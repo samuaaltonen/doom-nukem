@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/15 14:38:54 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 22:26:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,24 +20,10 @@
 # define SMALL_ICON 32
 # define ICON_SIZE 64
 # define OBJECT_SCREEN_SIZE 16
-# define MSG_ERROR "Error occured"
-# define MSG_ERROR_WINDOW "Could not open a window."
-# define MSG_ERROR_WINDOW_SURFACE "Could not get window surface."
-# define MSG_ERROR_SDL_INIT "Could not initialize SDL."
-# define MSG_ERROR_ALLOC "Could not allocate memory."
-# define MSG_ERROR_IMAGE_INIT "Image initialization failed."
-# define MSG_ERROR_THREADS "Could not create a thread."
-# define MSG_ERROR_THREADS_JOIN "Could not join threads."
-# define MSG_ERROR_TEXTURE_FILE_ACCESS "Could not open/close a texture file."
-# define MSG_ERROR_TEXTURE_LOAD_FAILED "Texture files are invalid."
-# define MSG_ERROR_FONT "Could not open font file."
-# define MSG_ERROR_MOUSE "Could not set mouse cursor relative to the window."
-# define MSG_ERROR_FILE_READ "Could not read from a file."
-# define MSG_ERROR_FILE_WRITE "Could not write to a file."
 # define THREAD_COUNT 2
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
-# define MAX_TEX_COUNT 73
+# define MAX_TEX_COUNT 75
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 16
 # define MAX_WEAPONS 5
@@ -45,22 +31,18 @@
 # define MAX_UNIQUE_OBJECTS 64
 # define MAX_INTERACTIONS 64
 # define MAX_UNIQUE_INTERACTIONS 7
-# define MAX_DECOR 10
+# define MAX_DECOR_COUNT 10
 # define MAX_AMMO 999
 # define MAX_ITEM_CAPACITY 99
 # define MAX_OBJECTS 128
-# define INVENTORY_SIZE 10
+# define INVENTORY_SIZE 6
 # define DEG_IN_RADIAN 0.01745f
 # define PI_HALF 1.57079632679
 # define RADIAN_IN_DEG 57.29578f
 # define MAP_SPEED 0.85f
 # define HEIGHT_INC 0.125f
-# define FILE_VERSION 2;
-# define PANELS_PATH "../assets/textures/spritesheet_full.bmp"
-# define OBJECTS_PATH "../assets/images/Objects_icons.bmp"
-# define UI_FRAME_PATH "../assets/ui/ui_frame.bmp"
-# define FONT_FILE "../assets/legacy/SpaceMono-Regular.ttf"
-# define FONT_TX "../assets/fonts/sci-fi_font.bmp"
+# define FILE_VERSION 3
+# define MAX_SEARCH_COUNT 100000
 # define FILE_PATH "./test.test"
 # include <fcntl.h>
 # include <stdio.h>
@@ -70,11 +52,17 @@
 # include <SDL.h>
 # include "libft.h"
 # include "liblinearalgebra.h"
+# include "error.h"
+# include "sectors.h"
+# include "player.h"
+# include "export.h"
 
 /**
  * Integer type definitions
  */
 typedef unsigned char	t_uint8;
+typedef unsigned short	t_uint16;
+typedef unsigned int	t_uint32;
 
 /**
  * Keystate enumeration.
@@ -109,96 +97,17 @@ enum e_colors {
 	LINE_B = 0xFF4444,
 	UI_FRAME = 0xFF00FFFF,
 	POINT = 0xFF00FF,
-	INTERACTION = 0x5050FF
+	INTERACTION = 0x5050FF,
+	LINK = 0xF987C5
 };
-
-typedef struct s_vec2_lst
-{
-	t_vector2			point;
-	int					type;
-	int					tex;
-	int					decor;
-	t_vector2			decor_offset;
-	struct s_vec2_lst	*next;
-}	t_vec2_lst;
 
 typedef struct s_draw_line
 {
-	t_point	dif;
-	t_point	pos;
-	int		d;
-	int		err;
+	t_point			dif;
+	t_point			pos;
+	int				d;
+	int				err;
 }	t_draw_line;
-
-typedef struct s_weapon
-{
-	t_bool	enabled;
-	int		damage;
-	int		range;
-	int		fire_rate;
-	int		magazine;
-}	t_weapon;
-
-typedef struct s_inventory
-{
-	int			ammo;
-	int			special_ammo;
-	int			potion;
-	int			antidote;
-	int			key;
-	t_bool		jetpack;
-	// int			item1;
-	// int			item2;
-	// int			item3;
-	// int			item4;
-}	t_inventory;
-
-typedef struct s_sectorlist
-{
-	int					corner_count;
-	t_vec2_lst			*wall_list;
-	struct s_sectorlist	*member_sectors[MAX_MEMBER_SECTORS];
-	int					member_links[MAX_MEMBER_SECTORS];
-	struct s_sectorlist	*parent_sector;
-	int					light;
-	double				floor_height;
-	double				ceil_height;
-	int					floor_tex;
-	int					floor_tex_offset;
-	int					ceil_tex;
-	int					ceil_tex_offset;
-	t_vec2_lst			*floor_slope_wall;
-	t_vec2_lst			*floor_slope_opposite;
-	double				floor_slope_height;
-	t_vec2_lst			*ceil_slope_wall;
-	t_vec2_lst			*ceil_slope_opposite;
-	double				ceil_slope_height;
-	struct s_sectorlist	*next;
-}	t_sector_lst;
-
-typedef struct s_player
-{
-	t_vector2		position;
-	t_vector2		direction;
-	t_sector_lst	*sector;
-	int				health;
-	int				selected_weapon;
-	int				selected_armor;
-	t_weapon		weapons[MAX_WEAPONS];
-	int				armor;
-	t_inventory		inventory;
-}	t_player;
-
-typedef struct s_export_player
-{
-	t_vector2		position;
-	t_vector2		direction;
-	int				sector;
-	int				health;
-	int				weapons;
-	int				armor;
-	t_inventory		inventory;
-}	t_export_player;
 
 /**
  * @brief array of objects per entire level
@@ -211,15 +120,6 @@ typedef struct s_object
 	t_vector2		position;
 	t_sector_lst	*sector;
 }	t_object;
-
-typedef struct s_export_object
-{
-	int			type;
-	double		var;
-	t_vector2	pos;
-	double		elevation;
-	int			sector;
-}	t_export_object;
 
 /**
  * @brief Array of interactions for entire level
@@ -235,49 +135,35 @@ typedef struct s_export_object
  * 7 activate end level
  * 0 no events, array delimited by 0
  * 
- * if activation_sector is NULL/-1, activator will be the activator_id in the object array
- * if activation_sector is set & activation_object is -1, the sector itself is the activator
- * if active_sector is set & activation_object is set, the activator is the decor on the wall_id declared by activation_object in active sector
- * if the activator is in the object array & the type of the object is an enemy, it only triggers when the enemy dies
+ * If activation_sector is NULL/-1, activator will be the activator_id in the
+ * object array.
+ * If activation_sector is set & activation_object is -1, the sector itself
+ * is the activator.
+ * If active_sector is set & activation_object is set, the activator is the
+ * decor on the wall_id declared by activation_object in active sector.
+ * If the activator is in the object array & the type of the object is an enemy,
+ * it only triggers when the enemy dies.
  * target_sector & target_id will be the same in saves
  */
 typedef struct s_interaction
 {
 	int				event_id;
-	double 			variable;
-	double			editable;
+	double			variable;
+	int				interaction_link;
 	t_sector_lst	*activation_sector;
 	t_vec2_lst		*activation_wall;
 	t_object		*activation_object;
 	t_sector_lst	*target_sector;
+	t_bool			requires_key;
 }	t_interaction;
-
-typedef struct	s_export_interaction
-{
-	int				event_id;
-	double 			variable;
-	double			editable;
-	int				activation_sector;
-	int				activation_wall;
-	int				activation_object;
-	int				target_sector;
-}	t_export_interaction;
-
-typedef struct	s_level_header
-{
-	int	version;
-	int	sector_count;
-	int	object_count;
-	int	interaction_count;
-}	t_level_header;
 
 /**
  * Struct for font.
  */
 typedef struct s_font
 {
-	SDL_Surface	*font;
-	int			size;
+	SDL_Surface		*font;
+	int				size;
 }	t_font;
 
 /**
@@ -299,77 +185,53 @@ typedef struct s_assets
  */
 typedef struct s_app
 {
-	int					keystates;
-	int					toggle_help;
-	int					zoom_range;
-	SDL_Window			*win;
-	SDL_Surface			*surface;
-	double				divider;
-	t_vector2			view_pos;
-	t_vector2			view_size;
-	t_vector2			zoom_area;
-	t_vector2			mouse_click;
-	t_vector2			mouse_track;
-	t_sector_lst		*sectors;
-	t_sector_lst		*active_sector;
-	t_vec2_lst			*active;
-	t_vec2_lst			*active_last;
-	t_bool				list_creation;
-	t_bool				list_ongoing;
-	t_bool				portal_selection;
-	t_bool				var_edit;
-	t_bool				wall_edit;
-	t_bool				ceiling_edit;
-	t_bool				floor_edit;
-	t_bool				light_edit;
-	t_bool				slope_edit;
-	t_bool				player_edit;
-	t_bool				player_menu;
-	t_bool				object_new;
-	t_bool				object_menu;
-	t_bool				interaction_menu;
-	t_bool				decor_edit;
-	t_interaction		*current_interaction;
-	t_object			*current_object;
-	t_bool				imported;
-	t_bool				mouse_down;
-	int					sectorcount;
-	int					movement_speed;
-	int					event_id;
-	t_assets			assets;
-	t_player			player;
-	t_object			objects[MAX_OBJECTS];
-	int					object_count;
-	t_interaction		interactions[MAX_INTERACTIONS];
-	int					interaction_count;
-	int					selected[INVENTORY_SIZE];
-
+	int				keystates;
+	int				toggle_help;
+	int				zoom_range;
+	SDL_Window		*win;
+	SDL_Surface		*surface;
+	double			divider;
+	double			aspect_ratio;
+	t_vector2		view_pos;
+	t_vector2		view_size;
+	t_vector2		zoom_area;
+	t_vector2		mouse_click;
+	t_vector2		mouse_track;
+	t_sector_lst	*sectors;
+	t_sector_lst	*active_sector;
+	t_vec2_lst		*active;
+	t_vec2_lst		*active_last;
+	t_bool			list_creation;
+	t_bool			list_ongoing;
+	t_bool			portal_selection;
+	t_bool			var_edit;
+	t_bool			wall_edit;
+	t_bool			ceiling_edit;
+	t_bool			floor_edit;
+	t_bool			light_edit;
+	t_bool			slope_edit;
+	t_bool			player_edit;
+	t_bool			player_menu;
+	t_bool			object_new;
+	t_bool			object_menu;
+	t_bool			interaction_menu;
+	t_bool			decor_edit;
+	t_interaction	*current_interaction;
+	t_object		*current_object;
+	t_bool			imported;
+	t_bool			mouse_down;
+	int				sector_count;
+	int				movement_speed;
+	int				event_id;
+	t_assets		assets;
+	t_player		player;
+	t_object		objects[MAX_OBJECTS];
+	int				object_count;
+	t_interaction	interactions[MAX_INTERACTIONS];
+	int				interaction_count;
+	int				selected[INVENTORY_SIZE];
+	double			import_progress;
 }	t_app;
-
-typedef struct s_exportsector
-{
-	int				corner_count;
-	t_vector2		corners[MAX_SECTOR_CORNERS];
-	int				wall_types[MAX_SECTOR_CORNERS];
-	int				wall_textures[MAX_SECTOR_CORNERS];
-	int				member_sectors[MAX_MEMBER_SECTORS];
-	int				wall_decor[MAX_SECTOR_CORNERS];
-	t_vector2		decor_offset[MAX_SECTOR_CORNERS];
-	int				parent_sector;
-	int				light;
-	double			floor_height;
-	double			ceil_height;
-	int				floor_tex;
-	int				floor_tex_offset;
-	int				ceil_tex;
-	int				ceil_tex_offset;
-	double			floor_slope_height;
-	int				floor_slope_position;
-	int				floor_slope_opposite;
-	double			ceil_slope_height;
-	int				ceil_slope_position;
-	int				ceil_slope_opposite;
-}	t_exportsector;
 
 /**
  * Struct for integer coordinate rectangule.
@@ -402,26 +264,31 @@ void			app_loop(t_app *app);
 /**
  * Images
  */
-SDL_Surface		*init_image(int x, int y);
 void			put_pixel_to_surface(SDL_Surface *surface, int x,
 					int y, int color);
 void			flush_surface(SDL_Surface *surface);
 int				get_pixel_color(SDL_Surface *surface, int x, int y);
+SDL_Surface		*bmp_to_surface(const char *path);
 
 /**
  * Events
  */
-int				events_keyup(int keycode, t_app *app);
-int				events_keydown(int keycode, t_app *app);
+int				dispatch_event_minimal(SDL_Event *event);
+int				events_keyup(t_app *app, int keycode);
+int				events_keydown(t_app *app, int keycode);
+int				events_mouse_wheel(t_app *app, SDL_Event *event);
 int				events_mouse_track(t_app *app);
 int				events_mouse_click(t_app *app, SDL_Event *event);
 int				events_window_destroy(void);
 int				events_window_other(int windowevent, t_app *app);
 int				dispatch_event(t_app *app, SDL_Event *event);
 int				events_mouse_drag(t_app *app);
-void			player_menu_events(t_app *app, t_point	screen_pos);
-void			interaction_menu_events(t_app *app, int start_y, t_point screen_pos);
-void			activate_interaction_menu(t_app *app, t_point screen_pos);
+void			player_menu_events(t_app *app, t_point	mouse);
+void			interaction_menu_events(t_app *app, int start_y,
+					t_point mouse);
+void			activate_interaction_menu(t_app *app, t_point mouse);
+void			edit_left_key_changes(t_app *app, SDL_Keycode keycode);
+void			edit_right_key_changes(t_app *app, SDL_Keycode keycode);
 
 /**
  * Map Editor functions
@@ -455,22 +322,21 @@ void			draw_circle(t_app *app, t_point pos, int rad, int color);
 t_sector_lst	*new_sector_list(t_vec2_lst *wall_list);
 t_sector_lst	*put_sector_lst(t_app *app, t_sector_lst *new);
 t_bool			complete_sector(t_app *app);
-t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop,
-					void (*del)(void *, size_t));
-void			sector_delone(t_sector_lst **sector,
-					void (*del)(void*, size_t));
+t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop);
+void			sector_delone(t_sector_lst **sector);
 size_t			ft_lstlen(t_sector_lst *lst);
 t_sector_lst	*sector_by_index(t_app *app, int index);
 int				inside_sector_check(t_sector_lst *sector, t_vector2 *mouse);
 t_sector_lst	*click_sector(t_app *app);
-void			sector_edit(t_app *app, SDL_Keycode key);
-t_sector_lst	*find_parent_sector(t_app *app, t_sector_lst *sector);
+void			sector_edit(t_app *app, SDL_Keycode keycode);
 t_sector_lst	*find_child_sector(t_app *app);
 int				get_sector_id(t_app *app, t_sector_lst *sector);
 void			cancel_list_creation(t_app *app);
 void			add_member_sector(t_sector_lst *parent, t_sector_lst *child);
 void			del_sector_portals(t_app *app, int deleted);
 t_bool			valid_sector(t_app *app);
+int				get_member_sector_count(t_sector_lst *parent);
+int				del_all_sector_interactions(t_app *app, t_sector_lst **sector);
 
 /**
  * Point/Wall/Wall_list Functions
@@ -481,7 +347,6 @@ int				del_vector_list(t_vec2_lst **list);
 t_bool			valid_point(t_app *app);
 t_vec2_lst		*ft_lstindex(t_vec2_lst *lst, size_t index);
 t_vec2_lst		*find_clicked_vector(t_app *app);
-void			reverse_vector_list(t_vec2_lst **head);
 
 /**
  * UI functions
@@ -497,8 +362,6 @@ void			activate_slope(t_app *app, SDL_Keycode keycode);
  * Edit Functions
  */
 void			change_walls_tex(t_vec2_lst *walls, int wall_tex);
-void			change_selected_wall_tex(t_app *app, t_vec2_lst *wall,
-					int wall_id);
 void			link_wall_to_sector(t_app *app);
 void			change_walls_type(t_app *app, t_sector_lst *sector);
 t_vec2_lst		*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point);
@@ -506,14 +369,50 @@ t_vec2_lst		*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point);
 /**
  * Import
  */
-int				import_file(t_app *app, char *path);
-void			relink_member_sectors(t_app *app);
+void			render_loading(t_app *app, t_bool dispatch_events);
+void			uncompression_update_progress(t_import_info *info);
+void			import_set_complete(t_import_info *info);
+void			import_file(t_app *app);
+void			import_level(t_app *app, t_thread_data *thread, char *path);
+void			import_sectors(t_app *app, t_import_info *info);
+void			import_player(t_app *app, t_import_info *info);
+void			import_objects(t_app *app, t_import_info *info);
+void			import_interactions(t_app *app, t_import_info *info);
+void			relink_sectors(t_app *app);
+
+/**
+ * Data validation
+ */
+void			level_validation_sector(t_app *app, t_export_sector *sector);
 
 /**
  * Export
  */
-int				export_file(t_app *app, char *path);
-int				get_line_id(t_vec2_lst *list, t_vec2_lst *wall);
+void			compression_update_progress(t_import_info *info);
+void			export_update_progress(t_import_info *info);
+void			export_set_complete(t_import_info *info);
+int				get_wall_id(t_vec2_lst *list, t_vec2_lst *wall);
+void			calculate_progress_assets(t_import_info *info, int index,
+					int current_batch);
+void			export_file(t_app *app);
+void			export_level(t_app *app, t_thread_data *thread, char *path);
+void			export_sectors(t_app *app, t_level_header header, int fd,
+					t_import_info *info);
+void			export_player(t_app *app, int fd, t_import_info *info);
+void			export_objects(t_app *app, int fd, t_import_info *info);
+void			export_interactions(t_app *app, int fd, t_import_info *info);
+void			export_surfaces(t_import_info *info, int fd);
+void			export_wavs(t_import_info *info, int fd);
+void			export_texts(t_import_info *info, int fd);
+
+/**
+ * RLE compression
+ */
+void			expand_data(t_uint8 **data, int *length, int *allocated);
+t_uint8			*read_source(const char *source, int *source_length);
+void			rle_uncompress_data(t_import_info *info, const char *source,
+					t_uint8 **data, int *length);
+void			rle_compress(t_import_info *info, const char *source);
 
 /**
  * Font
@@ -535,37 +434,45 @@ void			blit_surface(SDL_Surface *src, t_rect *src_rect,
 void			render_help_menu(t_app *app);
 void			set_icon_rect(t_rect *rect, t_point point, t_point size);
 void			load_assets(t_app *app);
-void			render_texture_icons(t_app *app);
-void			render_player_icons(t_app *app, SDL_Surface *asset, t_point point, int max);
-void			render_statusbar(t_app *app, t_point point, int statusbar, int color);
+void			render_player_icons(t_app *app, SDL_Surface *asset,
+					t_point point, int max);
+void			render_statusbar(t_app *app, t_point point, int statusbar,
+					int color);
 void			render_arrows(t_app *app, t_point left, t_point right);
-void			render_up_and_down_arrows(t_app *app, t_point up, t_point down, int size);
-void			render_ui_frame(t_app *app,t_rect area, int size, int background);
+void			render_up_and_down_arrows(t_app *app, t_point up, t_point down,
+					int size);
+void			render_ui_frame(t_app *app, t_rect area, int size,
+					int background);
 void			color_surface(SDL_Surface *surface, int color);
 void			change_item_amount(t_app *app, SDL_Keycode key);
 void			render_weapons(t_app *app);
 void			render_object_statics(t_app *app);
-void			render_icons(t_app *app, t_point point, int id, SDL_Surface *asset);
-void			interaction_edit_menu(t_app *app, int start_y, t_point screen_pos);
-void			render_interaction_button(t_app *app, t_rect button, t_point mouse, char *text);
-void			render_current_interaction_status(t_app *app, t_point screen_pos, int y, int id);
+void			render_icons(t_app *app, t_point point, int id,
+					SDL_Surface *asset);
+void			interaction_edit_menu(t_app *app, int start_y,
+					t_point mouse);
+void			render_interaction_button(t_app *app, t_rect button,
+					t_point mouse, char *text);
+void			render_current_interaction_status(t_app *app,
+					t_point mouse, int y, int id);
 void			render_inventory(t_app *app);
-void			select_inventory(t_app *app, t_point screen_pos);
-void			select_weapons(t_app *app, t_point screen_pos);
+void			select_inventory(t_app *app, t_point mouse);
+void			select_weapons(t_app *app, t_point mouse);
 void			object_edit_menu(t_app *app);
 void			player_edit_menu(t_app *app);
-void			wall_edit_menu(t_app *app, t_point screen_pos);
-void			sector_edit_menu(t_app *app, t_point screen_pos, int y);
+void			wall_edit_menu(t_app *app, t_point mouse);
+void			sector_edit_menu(t_app *app, t_point mouse, int y);
 void			render_interaction_explanations(t_app *app, int start_y);
+void			text_popup_explanation(t_app *app, int start_y, char *statics);
+void			sound_explanation(t_app *app, int start_y, char *statics);
+void			end_level_explanation(t_app *app, int start_y, char *statics);
 int				check_mouse(t_point screen_pos, t_rect rect);
-int				check_selected_inventory(t_app *app);
 
 /**
  * Player
 */
 void			render_player(t_app *app);
 void			weapons_init(t_app *app);
-void			inventory_init(t_app *app);
 void			check_player_position(t_app *app);
 
 /**
@@ -574,7 +481,7 @@ void			check_player_position(t_app *app);
  */
 int				new_object(t_app *app);
 void			change_object_id(t_app *app, int keycode);
-void			del_object(t_app *app, int object_id);
+void			del_object(t_app *app, int id);
 void			del_all_objects_in_sector(t_app *app);
 void			link_interaction(t_app *app);
 void			draw_object_icon(t_app *app, t_vector2 world_pos, int id);
@@ -587,15 +494,21 @@ void			interaction_edit(t_app *app, SDL_Keycode keycode);
 int				interaction_sector_check(t_app *app, t_sector_lst *sector);
 int				interaction_wall_check(t_app *app, t_vec2_lst *wall);
 int				interaction_object_check(t_app *app, int id);
-int				find_decor_interaction(t_app *app);
-int				find_object_interaction(t_app *app);
-int				find_sector_interaction(t_app *app);
+int				find_decor_interaction(t_app *app, int start_id,
+					t_bool direction);
+int				find_object_interaction(t_app *app, int start_id,
+					t_bool direction);
+int				find_sector_interaction(t_app *app, int start_id,
+					t_bool direction);
 int				find_interaction(t_app *app);
 void			delete_interaction(t_app *app, int id);
+void			del_all_decor_interactions(t_app *app);
+void			render_target_sector_lines(t_app *app);
+void			render_link_interaction_info(t_app *app, int start_y,
+					t_point mouse);
+void			render_interaction_link_lines(t_app *app);
+int				get_current_interaction_count(t_app *app, int interaction);
 
-
-void	fill_triangle(t_app *app, t_point a, t_point b, t_point c, int color);
-void	draw_point_line(t_app *app, t_point a, t_point b, int color);
-
+void			fill_triangle(t_app *app, t_triangle triangle, int color);
 
 #endif

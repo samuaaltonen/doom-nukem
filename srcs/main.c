@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:21:47 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/15 17:14:40 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:46:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ int	main(void)
 	sdl_init(app);
 	if (!config_init(app))
 		exit_error(NULL);
-	load_assets(app);
+	load_data(app);
+	level_validation(app);
 	define_enemies(app);
 	app_loop(app);
 	return (0);

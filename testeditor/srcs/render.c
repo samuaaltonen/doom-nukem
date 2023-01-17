@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/06 15:04:45 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 13:29:20 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * @brief renders all the lines for the given sector
+ * @brief Renders all the lines for the given sector.
  * 
  * @param app 
  * @param sector_start 
@@ -27,7 +27,7 @@ void	render_sector(t_app *app, t_vec2_lst *sector_start)
 	{
 		if (tmp->type > -1)
 			draw_list_lines(app, tmp, tmp->next, PORTAL);
-		else if(interaction_wall_check(app, tmp))
+		else if (interaction_wall_check(app, tmp))
 			draw_list_lines(app, tmp, tmp->next, INTERACTION);
 		else
 			draw_list_lines(app, tmp, tmp->next, 0xEEEEEE);
@@ -38,9 +38,9 @@ void	render_sector(t_app *app, t_vec2_lst *sector_start)
 }
 
 /**
- * @brief runs render sector on all the sectors in app
+ * @brief Runs render sector on all the sectors in app.
  * 
- * @param app 
+ * @param app
  */
 void	render_sectors(t_app *app)
 {
@@ -55,7 +55,7 @@ void	render_sectors(t_app *app)
 }
 
 /**
- * @brief renders points on each point of the active sector
+ * @brief Renders points on each corner of the active sector.
  * 
  * @param app 
  */
@@ -80,21 +80,19 @@ void	render_sector_points(t_app *app)
 }
 
 /**
- * @brief Renders a square with given size on the given point
+ * @brief Renders a square with given size on the given point.
  * 
  * @param app 
  * @param point 
  * @param size 
+ * @param color
  */
 void	render_point(t_app *app, t_vector2 point, int size, int color)
 {
-t_point		min;
-t_point		max;
+	t_point		min;
+	t_point		max;
 
-	min.x = (point.x - app->view_pos.x)
-		* (app->surface->w) / (app->view_size.x - app->view_pos.x);
-	min.y = (point.y - app->view_pos.y)
-		* (app->surface->h) / (app->view_size.y - app->view_pos.y);
+	min = world_to_screen(app, point);
 	max.x = min.x + size;
 	max.y = min.y + size;
 	min.x = min.x - size;
@@ -115,11 +113,16 @@ t_point		max;
  * @brief Midpoint Circle Algorithm, calculates only one octant
  * 3 - 2 * rad avoids overdraw -rad works as well
  * 4 / 6 and 4 / 10 make the circle more circular
+ * 
+ * @param app
+ * @param pos
+ * @param rad
+ * @param color
  */
-void draw_circle(t_app *app, t_point pos, int rad, int color)
+void	draw_circle(t_app *app, t_point pos, int rad, int color)
 {
 	t_point	tmp;
-	int	err;
+	int		err;
 
 	tmp.x = 0;
 	tmp.y = rad;

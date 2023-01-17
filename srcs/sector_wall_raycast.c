@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/05 14:14:27 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 04:19:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,19 @@
  */
 static void	raycast_portal(t_app *app, t_wall *wall, t_rayhit *hit, int x)
 {
-	if (wall->is_inside && !wall->is_member)
-		draw_portal_partial(app, x, hit);
-	if (!wall->is_inside)
-		draw_portal_partial_parent(app, x, hit);
-	if (wall->is_inside && wall->is_member)
+	if (!wall->is_member)
 	{
-		draw_ceiling(app, x, hit);
-		draw_floor(app, x, hit);
-		draw_portal_partial_hole(app, x, hit);
+		draw_portal_partial(app, x, hit);
+		return ;
 	}
+	if (!wall->is_inside)
+	{
+		draw_portal_partial_parent(app, x, hit);
+		return ;
+	}
+	draw_ceiling(app, x, hit);
+	draw_floor(app, x, hit);
+	draw_portal_partial_hole(app, x, hit);
 }
 
 /**
@@ -70,6 +73,7 @@ static void	raycast_default(t_app *app, t_rayhit *hit, int x)
  */
 static void	raycast_init(t_app *app, t_raycast_info info, t_rayhit *hit)
 {
+	hit->wall = info.wall;
 	hit->wall_id = info.wall->wall_id;
 	hit->occlusion_top = info.occlusion_top;
 	hit->occlusion_bottom = info.occlusion_bottom;

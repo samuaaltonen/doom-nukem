@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   interactions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/12 14:56:42 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:01:14 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
+/**
+ * @brief Creates a new interaction on either the sector, wall decor or object.
+ * 
+ * @param app
+ * @return t_bool
+*/
 static t_bool	new_interaction(t_app *app)
 {
 	if (app->object_menu)
@@ -32,71 +38,123 @@ static t_bool	new_interaction(t_app *app)
 		return (FALSE);
 	app->current_interaction->target_sector = app->active_sector;
 	if (app->active_sector->parent_sector)
-		app->current_interaction->target_sector = app->active_sector->parent_sector;
-	return(TRUE);
+		app->current_interaction->target_sector
+			= app->active_sector->parent_sector;
+	app->current_interaction->interaction_link = -1;
+	return (TRUE);
 }
 
+/**
+ * @brief Key events to change the interaction variable and interaction link.
+ * 
+ * @param app
+ * @param keycode
+*/
 void	interaction_edit(t_app *app, SDL_Keycode keycode)
 {
-	if(app->current_interaction)
+	int	id;
+
+	if (!app->current_interaction)
+		return ;
+	id = app->current_interaction->interaction_link;
+	if (keycode == SDLK_UP)
+		app->current_interaction->variable += app->divider;
+	else if (keycode == SDLK_DOWN)
+		app->current_interaction->variable -= app->divider;
+	else if (keycode == SDLK_LEFT
+		&& app->current_interaction->interaction_link > 0)
 	{
-			if (keycode == SDLK_UP)
-				app->current_interaction->variable += app->divider;
-			else if (keycode == SDLK_DOWN)
-				app->current_interaction->variable -= app->divider;
-			else if (keycode == SDLK_LEFT && app->current_interaction->event_id > 0)
-				app->current_interaction->event_id--;
-			else if (keycode == SDLK_RIGHT && app->current_interaction->event_id < 7)
-				app->current_interaction->event_id++;
-			if(app->var_edit)
-			{
-				if (keycode == SDLK_UP)
-					app->current_interaction->editable += app->divider;
-				else if (keycode == SDLK_DOWN)
-					app->current_interaction->editable -= app->divider;
-			}
+		app->current_interaction->interaction_link -= 1;
+		while (app->interactions[id].event_id == 0
+			&& app->current_interaction->interaction_link > -1)
+			app->current_interaction->interaction_link -= 1;
+	}
+	else if (keycode == SDLK_RIGHT
+		&& get_current_interaction_count(app, id) < app->interaction_count)
+	{
+		id++;
+		while (app->interactions[id].event_id == 0 && id < MAX_INTERACTIONS)
+			id++;
+		app->current_interaction->interaction_link = id;
 	}
 }
 
+/**
+ * @brief Finds the next free spot in the interaction array and creates a new
+ * interaction to that index.
+ * 
+ * @param app
+*/
+static void	no_current_interaction(t_app *app)
+{
+	int		i;
+
+	i = 0;
+	while (i < MAX_INTERACTIONS)
+	{
+		if (!app->interactions[i].event_id)
+		{
+			app->current_interaction = &app->interactions[i];
+			break ;
+		}
+		i++;
+	}
+	if (!app->current_interaction)
+	{
+		app->interaction_menu = FALSE;
+		return ;
+	}
+	if (!new_interaction(app))
+		app->current_interaction = NULL;
+}
+
+/**
+ * @brief If there's no current interaction, creates a new one. If there is a
+ * current interaction, saves it to the next free spot in the interaction array.
+ * 
+ * @param app
+*/
 void	link_interaction(t_app *app)
 {
-	if(app->current_interaction == NULL && app->interaction_count < MAX_INTERACTIONS)
-	{
-		app->current_interaction = &app->interactions[app->interaction_count];
-		if(!new_interaction(app))
-		{
-			app->current_interaction = NULL;
-		}
-	}
-	else if(app->current_interaction)
+	if (app->current_interaction == NULL
+		&& app->interaction_count < MAX_INTERACTIONS)
+		no_current_interaction(app);
+	else if (app->current_interaction)
 	{
 		app->current_interaction = NULL;
 		app->interaction_menu = FALSE;
 		if (app->interactions[app->interaction_count].event_id != 0)
-		{
-			ft_printf("{cyan}Linking interaction.{reset}\n");
 			app->interaction_count++;
-		}
-		else
-			ft_printf("{red}Interaction event is 0.{reset}\n");
 	}
 }
 
+/**
+ * @brief Deletes the interaction on the index you give it and removes the links
+ * to that interaction as well.
+ * 
+ * @param app
+ * @param id
+*/
 void	delete_interaction(t_app *app, int id)
 {
-	if (app->interaction_count > 0 && id > -1)
+	int		i;
+
+	if (id < 0 || id >= MAX_INTERACTIONS)
+		return ;
+	app->interaction_count--;
+	app->interactions[id].event_id = 0;
+	app->interactions[id].variable = 0;
+	app->interactions[id].interaction_link = -1;
+	app->interactions[id].target_sector = NULL;
+	app->interactions[id].activation_sector = NULL;
+	app->interactions[id].activation_wall = NULL;
+	app->interactions[id].activation_object = NULL;
+	app->interactions[id].requires_key = FALSE;
+	i = 0;
+	while (i < MAX_INTERACTIONS)
 	{
-		while (id < app->interaction_count)
-		{
-			app->interactions[id] = app->interactions[id + 1];
-			id++;
-		}
-		app->interactions[id].event_id = 0;
-		app->interactions[id].variable = 0;
-		app->interactions[id].target_sector = NULL;
-		app->interactions[id].activation_sector = NULL;
-		app->interactions[id].activation_wall = NULL;
-		app->interactions[id].activation_object = NULL;
-		app->interaction_count--;
+		if (app->interactions[i].interaction_link == id)
+			app->interactions[i].interaction_link = -1;
+		i++;
 	}
 }

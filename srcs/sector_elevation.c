@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/12 14:29:29 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/12 15:42:28 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 12:48:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * @param pos 
  * @return double 
  */
-double	get_sector_floor_height(t_app *app, int sector_id, t_vector2 pos)
+double	sector_floor_height(t_app *app, int sector_id, t_vector2 pos)
 {
 	double		perpendicular_distance;
 	double		pos_angle;
@@ -46,7 +46,7 @@ double	get_sector_floor_height(t_app *app, int sector_id, t_vector2 pos)
  * @param pos 
  * @return double 
  */
-double	get_sector_ceil_height(t_app *app, int sector_id, t_vector2 pos)
+double	sector_ceil_height(t_app *app, int sector_id, t_vector2 pos)
 {
 	double		perpendicular_distance;
 	double		pos_angle;
@@ -62,4 +62,18 @@ double	get_sector_ceil_height(t_app *app, int sector_id, t_vector2 pos)
 				pos, app->sectors[sector_id].ceil_slope_start));
 	return (app->sectors[sector_id].ceil_height + perpendicular_distance
 		* app->sectors[sector_id].ceil_slope_magnitude);
+}
+
+/**
+ * @brief Returns vertical space at given coordinate in a sector.
+ * 
+ * @param app 
+ * @param sector_id 
+ * @param pos 
+ * @return double 
+ */
+double	sector_vertical_space(t_app *app, int sector_id, t_vector2 pos)
+{
+	return (sector_ceil_height(app, sector_id, pos)
+		- sector_floor_height(app, sector_id, pos));
 }

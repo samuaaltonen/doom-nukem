@@ -3,15 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   interactions.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 16:47:58 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/12 14:49:07 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/12 19:42:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef INTERACTIONS_H
 # define INTERACTIONS_H
+
+# define DECOR_SIZE 1.0
+# define INTERACTION_ACTION_DISTANCE 1.5
+# define MAX_CONCURRENT_ANIMATIONS 16
+# define ANIMATION_DURATION_LIGHT 0.5 // seconds per light level
+# define ANIMATION_DURATION_HEIGHT 0.25 // seconds per meter
+# define ANIMATION_DURATION_TEXT 0.015625 // seconds per char
+# define ANIMATION_DURATION_TEXT_END 3.5 // seconds after full text displayed
+# define MAX_TEXT_LINES 16
+# define MAX_TEXT_LINE_LENGTH 512
 
 /**
  * Event type enumeration.
@@ -35,11 +45,12 @@ typedef struct s_interaction
 {
 	int				event_id;
 	double			variable;
-	double			editable;
+	int				interaction_link;
 	int				activation_sector;
 	int				activation_wall;
 	int				activation_object;
 	int				target_sector;
+	t_bool			requires_key;
 }	t_interaction;
 
 /**
@@ -49,11 +60,12 @@ typedef struct s_interaction
  */
 typedef struct s_animation
 {
-	double	progress;
-	double	duration;
-	double	increment;
-	double	*target;
-	double	final_value;
+	double			progress;
+	double			duration;
+	double			increment;
+	double			*target;
+	double			final_value;
+	int				trigger_after;
 }	t_animation;
 
 /**
@@ -61,9 +73,10 @@ typedef struct s_animation
  */
 typedef struct s_textmodal
 {
-	double	progress;
-	double	duration;
-	int		text;
+	double			progress;
+	double			duration;
+	int				text;
+	int				trigger_after;
 }	t_textmodal;
 
 #endif

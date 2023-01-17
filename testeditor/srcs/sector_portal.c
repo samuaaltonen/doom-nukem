@@ -3,18 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   sector_portal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 10:58:22 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/11/22 15:24:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 13:38:59 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Checks that the wall you're trying to make a portal from, isn't
+ * @brief Checks that the wall you're trying to make a portal from, isn't
  * linking to the same sector the wall is in.
+ * 
+ * @param app
+ * @return t_bool
 */
 static t_bool	check_if_valid_link(t_app *app)
 {
@@ -35,8 +38,10 @@ static t_bool	check_if_valid_link(t_app *app)
 }
 
 /**
- * Handles the manual linking event using active wall and active sector
- * activate on a selected wall, navigate to link target sector, activate again
+ * @brief Handles the manual linking event to create a portal. Activate on the
+ * currently selected wall, navigate to link target sector, activate again.
+ * 
+ * @param app
  */
 void	link_wall_to_sector(t_app *app)
 {
@@ -45,7 +50,8 @@ void	link_wall_to_sector(t_app *app)
 		app->portal_selection = FALSE;
 		app->active_last = NULL;
 	}
-	if (app->portal_selection && app->active_last && app->active && app->active->type != -1)
+	if (app->portal_selection && app->active_last && app->active
+		&& app->active->type != -1)
 	{
 		app->active_last->type = -1;
 		app->portal_selection = FALSE;
@@ -67,7 +73,10 @@ void	link_wall_to_sector(t_app *app)
 }
 
 /**
- * Removes all portals to the sector that was deleted.
+ * @brief Removes all portals to the sector that was deleted.
+ * 
+ * @param app
+ * @param deleted
 */
 void	del_sector_portals(t_app *app, int deleted)
 {

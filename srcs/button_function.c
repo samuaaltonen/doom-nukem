@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/16 16:27:18 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:42:25 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ void	button_function(t_app *app, t_rect button, void (*f)(t_app *app))
 void	start_game(t_app *app)
 {
 	player_init(app);
-	import_file(app, MAP_PATH);
+	init_enemies(app);
+	init_bullets(app);
 	//----DEBUG FEATURE
 	app->player.inventory.ammo = 20;
 	app->player.inventory.special_ammo = 200;
@@ -45,7 +46,6 @@ void	start_game(t_app *app)
 		app->player.equiped_weapon.ammo = app->player.inventory.ammo;
 	app->player.equiped_weapon.fire_rate = 0.2;
 	//----
-	init_enemies(app);
 	app->status = STATUS_GAME;
 }
 

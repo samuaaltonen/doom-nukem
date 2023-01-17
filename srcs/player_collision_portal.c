@@ -1,0 +1,92 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   player_collision_portal.c                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/12/21 19:55:30 by saaltone          #+#    #+#             */
+/*   Updated: 2023/01/16 17:55:09 by htahvana         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "doomnukem.h"
+
+/**
+ * @brief Returns TRUE if it is possible to enter portal based on height
+ * differences.
+ * 
+ * @param app 
+ * @param wall 
+ * @param source_sector 
+ * @param target_sector 
+ * @return t_bool 
+ */
+t_bool	portal_can_enter(t_app *app, t_vector3 pos, double height, t_line wall,
+	int source_sector, int target_sector)
+{
+	t_vector2	check_pos;
+	double		source_floor;
+	double		source_ceil;
+	double		target_floor;
+	double		target_ceil;
+
+	check_pos = ft_closest_point((t_vector2){pos.x, pos.y}, wall);
+	source_floor = sector_floor_height(app, source_sector, check_pos);
+	source_ceil = sector_ceil_height(app, source_sector, check_pos);
+	target_floor = sector_floor_height(app, target_sector, check_pos);
+	target_ceil = sector_ceil_height(app, target_sector, check_pos);
+	if (pos.z + MAX_STEP < target_floor
+		&& source_floor + MAX_STEP < target_floor)
+		return (FALSE);
+	if (target_ceil < pos.z + height
+		+ COLLISION_CEIL && source_ceil - MAX_STEP > target_ceil)
+		return (FALSE);
+	return (TRUE);
+}
+
+t_bool	portal_can_enter_(t_app *app, t_vector3 pos, double height, t_line wall,
+	int source_sector, int target_sector)
+{
+	t_vector2	check_pos;
+	double		source_floor;
+	double		source_ceil;
+	double		target_floor;
+	double		target_ceil;
+	(void)height;
+
+	if (target_sector == -1)
+		return (FALSE);
+	check_pos = ft_closest_point((t_vector2){pos.x, pos.y}, wall);
+	source_floor = sector_floor_height(app, source_sector, check_pos);
+	source_ceil = sector_ceil_height(app, source_sector, check_pos);
+	target_floor = sector_floor_height(app, target_sector, check_pos);
+	target_ceil = sector_ceil_height(app, target_sector, check_pos);
+	if (pos.z < target_floor)
+		return (FALSE);
+	if (target_ceil < pos.z)
+		return (FALSE);
+	if (pos.z < source_floor)
+		return (FALSE);
+	if (source_ceil < pos.z)
+		return (FALSE);
+	return (TRUE);
+}
+
+/**
+ * @brief Changes players sector.
+ * 
+ * @param app 
+ * @param sector_id 
+ */
+void	portal_enter(t_app *app, int sector_id)
+{
+	double	target_floor;
+
+	target_floor = sector_floor_height(app, sector_id,
+			app->player.move_pos);
+	app->player.sector = sector_id;
+	interaction_check_portal(app, sector_id);
+	if (app->player.elevation != target_floor)
+		app->player.flying = TRUE;
+}

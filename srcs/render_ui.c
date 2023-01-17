@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/16 14:37:31 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:53:10 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	hud_weapon(t_app *app, t_rect rect)
 		i++;
 	}
 	ammo = ft_itoa(app->player.inventory.ammo);
+	if (!ammo)
+		return ;
 	change_font(app, 16, CYAN);
 	render_text(app, (t_rect){1136, 626, 64, 64}, ammo);
 	free(ammo);
@@ -71,6 +73,8 @@ void	hud_quickslot(t_app *app, t_rect rect, char *slot)
 	SDL_Surface	*sprite;
 	char		*amount;
 
+	sprite = NULL;
+	amount = NULL;
 	if (slot[0] == 'Q')
 	{
 		sprite = app->assets.hp;
@@ -81,6 +85,8 @@ void	hud_quickslot(t_app *app, t_rect rect, char *slot)
 		sprite = app->assets.shield;
 		amount = ft_itoa(app->player.inventory.antidote);
 	}
+	if (!amount || !sprite)
+		return ;
 	render_text_prompt(app, rect, 1, slot);
 	rect.x += 8;
 	rect.y += 32;
@@ -234,7 +240,6 @@ t_rect	render_button(t_app *app, t_rect area, int size, char *text)
 	}
 	render_ui_frame(app, area, size, 0);
 	render_text(app, text_pos, text);
-	load_font(app);
 	color_surface(app->assets.ui_frame, CYAN);
 	return (area);
 }

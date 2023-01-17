@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:46:18 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/09 15:43:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:38:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ t_line		ft_line_resize(t_line line, double length, int side);
 double		ft_vector_dotproduct(t_vector2 a, t_vector2 b);
 double		ft_vector_crossproduct(t_vector2 a, t_vector2 b);
 double		ft_vector_angle(t_vector2 a, t_vector2 b);
-double		ft_vector_angle_right(t_vector2 a, t_vector2 b);
+double		ft_vector_angle_left(t_vector2 a, t_vector2 b);
 int			ft_line_point(t_line line, t_vector2 coord);
 int			ft_line_side(t_line line, t_vector2 coord);
 t_vector2	ft_vector2_sub(t_vector2 a, t_vector2 b);
@@ -93,5 +93,8 @@ int			ft_point_on_segment(t_line line, t_vector2 point);
 int			ft_cmp_vec2(t_vector2 a, t_vector2 b);
 void		ft_point_swap(t_point *a, t_point *b);
 void		ft_swap(int *a, int *b);
+t_vector3	ft_vec2_to_vec3(t_vector2 vector, double z);
+void		ft_double_swap(double *a, double *b);
+void		ft_vec2_swap(t_vector2 *a, t_vector2 *b);
 
 #endif

@@ -3,18 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   menu_weapon_info.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:32:37 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/12 16:18:49 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/16 10:52:27 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Sets weapon values. [0] lasergun, [1] bow, [2] shotgun, [3] machinegun,
- * [4] grenade.
+ * @brief Sets weapon values. [0] lasergun, [1] bow, [2] shotgun,
+ * [3] machinegun, [4] grenade.
+ * 
+ * @param app
 */
 void	weapons_init(t_app *app)
 {
@@ -41,34 +43,53 @@ void	weapons_init(t_app *app)
 }
 
 /**
- * Renders weapon related texts on the help menu sidebar when player edit
+ * @brief Renders weapon related texts on the help menu sidebar when player edit
  * mode is turned on.
+ * 
+ * @param app
+ * @param stats
 */
-static void	render_weapon_texts(t_app *app)
+static void	render_weapon_texts(t_app *app, char *stats)
 {
 	render_text(app, (t_rect){40, 102, 100, 15}, "DAMAGE");
-	render_text(app, (t_rect){220, 102, 100, 15},
-		ft_itoa(app->player.weapons[app->player.selected_weapon].damage));
+	stats = ft_itoa(app->player.weapons[app->player.selected_weapon].damage);
+	if (!stats)
+		return ;
+	render_text(app, (t_rect){220, 102, 100, 15}, stats);
+	free(stats);
 	render_text(app, (t_rect){40, 115, 100, 15}, "RANGE");
-	render_text(app, (t_rect){220, 115, 100, 15},
-		ft_itoa(app->player.weapons[app->player.selected_weapon].range));
+	stats = ft_itoa(app->player.weapons[app->player.selected_weapon].range);
+	if (!stats)
+		return ;
+	render_text(app, (t_rect){220, 115, 100, 15}, stats);
+	free(stats);
 	render_text(app, (t_rect){40, 128, 100, 15}, "RPS");
-	render_text(app, (t_rect){220, 128, 100, 15},
-		ft_itoa(app->player.weapons[app->player.selected_weapon].fire_rate));
+	stats = ft_itoa(app->player.weapons[app->player.selected_weapon].fire_rate);
+	if (!stats)
+		return ;
+	render_text(app, (t_rect){220, 128, 100, 15}, stats);
+	free(stats);
 	render_text(app, (t_rect){40, 141, 100, 15}, "MAGAZINE");
-	render_text(app, (t_rect){120, 141, 100, 15},
-		ft_itoa(app->player.weapons[app->player.selected_weapon].magazine));
+	stats = ft_itoa(app->player.weapons[app->player.selected_weapon].magazine);
+	if (!stats)
+		return ;
+	render_text(app, (t_rect){120, 141, 100, 15}, stats);
+	free(stats);
 }
 
 /**
-* Renders weapon staticbars on the help menu sidebar when player edit mode
- * is turned on.
+ * @brief Renders weapon staticbars on the help menu sidebar when player
+ * edit mode is turned on.
+ * 
+ * @param app
 */
 static void	render_weapon_statics(t_app *app)
 {
 	int		x;
 	int		y;
+	char	*stats;
 
+	stats = NULL;
 	y = 100;
 	while (y < 150)
 	{
@@ -88,19 +109,21 @@ static void	render_weapon_statics(t_app *app)
 		}
 		y++;
 	}
-	render_weapon_texts(app);
+	render_weapon_texts(app, stats);
 }
 
 /**
- * Renders the weapon icons and selection frame around the icon if the weapon
- * is enabled.
+ * @brief Renders the weapon icons and selection frame around the icon if
+ * the weapon is enabled.
+ * 
+ * @param app
 */
 void	render_weapons(t_app *app)
 {
 	int		index;
 
 	render_player_icons(app, app->assets.sprite,
-		(t_point){40, 60}, MAX_WEAPONS + 1);
+		(t_point){40, 60}, MAX_WEAPONS);
 	index = 0;
 	while (index < MAX_WEAPONS)
 	{
@@ -115,17 +138,20 @@ void	render_weapons(t_app *app)
 }
 
 /**
- * If left mouse click is within the icon rectangles, toggles the weapon's
- * selection on/off.
+ * @brief If left mouse click is within the icon rectangles, toggles the
+ * weapon's selection on/off.
+ * 
+ * @param app
+ * @param mouse
 */
-void	select_weapons(t_app *app, t_point screen_pos)
+void	select_weapons(t_app *app, t_point mouse)
 {
 	int	index;
 
 	index = 0;
 	while (index < MAX_WEAPONS)
 	{
-		if (check_mouse(screen_pos, (t_rect){(SMALL_ICON) * (index + 1)
+		if (check_mouse(mouse, (t_rect){(SMALL_ICON) * (index + 1)
 				+ (10 * (index + 1)) - 3, 60, 35, 35}))
 			app->player.weapons[index].enabled
 				= ft_toggle(app->player.weapons[index].enabled);

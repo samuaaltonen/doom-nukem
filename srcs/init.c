@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/16 13:26:25 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/16 19:06:04 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,6 @@ int	config_init(t_app *app)
 	ft_bzero(app->conf, sizeof(t_conf));
 	clock_gettime(CLOCK_REALTIME, &app->conf->fps_clock);
 	app->conf->fov = FOV;
-	app->conf->skybox_offset = 360.f;
-	app->conf->movement_speed = MOVEMENT_SPEED;
-	app->conf->rotation_speed = ROTATION_SPEED;
 	app->conf->mouse_active = 1;
 	app->status = STATUS_TITLESCREEN;
 	app->conf->fps_avg = 0;
@@ -63,6 +60,10 @@ void	sdl_init(t_app *app)
 	app->surface = SDL_GetWindowSurface(app->win);
 	if (!app->surface)
 		exit_error(MSG_ERROR_WINDOW_SURFACE);
+	app->audio.wav_spec.channels = DEFAULT_AUDIO_CHANNELS;
+	app->audio.wav_spec.format = DEFAULT_AUDIO_FORMAT;
+	app->audio.wav_spec.freq = DEFAULT_AUDIO_FREQUENCEY;
+	app->audio.wav_spec.samples = DEFAULT_AUDIO_SAMPLES;
 	app->audio.device_id = SDL_OpenAudioDevice(NULL, 0, &app->audio.wav_spec,
 		NULL, SDL_AUDIO_ALLOW_FORMAT_CHANGE);
 	if (!app->audio.device_id)
@@ -70,38 +71,79 @@ void	sdl_init(t_app *app)
 	SDL_ShowCursor(SDL_DISABLE);
 }
 
-void	define_enemies(t_app *app)
+void	define_bullets(t_app *app)
+{
+	app->bullet_def[0].speed = 5.f;
+	app->bullet_def[0].damage = 25.f;
+	app->bullet_def[0].size = (t_vector2){0.5f,0.5f};
+	app->bullet_def[1].speed = 5.f;
+	app->bullet_def[1].damage = 25.f;
+	app->bullet_def[1].size = (t_vector2){0.5f,0.5f};
+	app->bullet_def[2].speed = 8.f;
+	app->bullet_def[2].damage = 25.f;
+	app->bullet_def[2].size = (t_vector2){0.5f,0.5f};
+	app->bullet_def[3].speed = 8.f;
+	app->bullet_def[3].damage = 25.f;
+	app->bullet_def[3].size = (t_vector2){0.5f,0.5f};
+	app->bullet_def[4].speed = 8.f;
+	app->bullet_def[4].damage = 25.f;
+	app->bullet_def[4].size = (t_vector2){0.5f,0.5f};
+	app->bullet_def[5].speed = 8.f;
+	app->bullet_def[5].damage = 25.f;
+	app->bullet_def[5].size = (t_vector2){0.5f,0.5f};
+	app->bullet_def[6].speed = 10.f;
+	app->bullet_def[6].damage = 25.f;
+	app->bullet_def[6].size = (t_vector2){0.5f,0.5f};
+	app->bullet_def[7].speed = 10.f;
+	app->bullet_def[7].damage = 25.f;
+	app->bullet_def[7].size = (t_vector2){0.5f,0.5f};
+}
+
+void	define_enemy_0(t_app *app)
 {
 	app->enemy_def[0].state_count = 4;
 	app->enemy_def[0].range = 3.f;
+	app->enemy_def[0].speed = 2.f;
+	app->enemy_def[0].attack_speed = 2.f;
 	app->enemy_def[0].states[0][0] = 0.f;
 	app->enemy_def[0].states[0][1] = 1.f;
 	app->enemy_def[0].states[0][2] = 1.f;
 	app->enemy_def[0].states[1][0] = 1.f;
-	app->enemy_def[0].states[1][1] = 2.f;
-	app->enemy_def[0].states[1][2] = 5.f;
+	app->enemy_def[0].states[1][1] = 3.f;
+	app->enemy_def[0].states[1][2] = 2.5f;
 	app->enemy_def[0].states[2][0] = 3.f;
-	app->enemy_def[0].states[2][1] = 2.f;
-	app->enemy_def[0].states[2][2] = 1.f;
+	app->enemy_def[0].states[2][1] = 5.f;
+	app->enemy_def[0].states[2][2] = 2.f;
 	app->enemy_def[0].states[3][0] = 5.f;
-	app->enemy_def[0].states[3][1] = 3.f;
-	app->enemy_def[0].states[3][2] = 1.f;
+	app->enemy_def[0].states[3][1] = 8.f;
+	app->enemy_def[0].states[3][2] = 5.f;
+}
 
+void	define_enemy_1(t_app *app)
+{
 	app->enemy_def[1].state_count = 4;
 	app->enemy_def[1].range = 1.f;
+	app->enemy_def[1].speed = 5.f;
+	app->enemy_def[1].attack_speed = 4.f;
 	app->enemy_def[1].states[0][0] = 0.f;
 	app->enemy_def[1].states[0][1] = 1.f;
 	app->enemy_def[1].states[0][2] = 1.f;
 	app->enemy_def[1].states[1][0] = 1.f;
-	app->enemy_def[1].states[1][1] = 5.f;
+	app->enemy_def[1].states[1][1] = 6.f;
 	app->enemy_def[1].states[1][2] = 5.f;
 	app->enemy_def[1].states[2][0] = 6.f;
-	app->enemy_def[1].states[2][1] = 2.f;
-	app->enemy_def[1].states[2][2] = 1.f;
-	app->enemy_def[1].states[3][0] = 8.f;
-	app->enemy_def[1].states[3][1] = 4.f;
-	app->enemy_def[1].states[3][2] = 1.f;
-
+	app->enemy_def[1].states[2][1] = 8.f;
+	app->enemy_def[1].states[2][2] = 2.f;
+	app->enemy_def[1].states[3][0] = 9.f;
+	app->enemy_def[1].states[3][1] = 12.f;
+	app->enemy_def[1].states[3][2] = 5.f;
+}
+void	define_enemies(t_app *app)
+{
+	define_bullets(app);
+	define_enemy_0(app);
+	define_enemy_1(app);
+}
 /* 	app->enemy_def[2].state_count = 3;
 	app->enemy_def[2].states[0][0] = 0;
 	app->enemy_def[2].states[0][1] = 1;
@@ -111,66 +153,41 @@ void	define_enemies(t_app *app)
 	app->enemy_def[2].states[2][1] = 2;
 	app->enemy_def[2].states[3][0] = 0;
 	app->enemy_def[2].states[3][1] = 0; */
-}
 
 void	init_enemies(t_app *app)
 {
-	int	i;
-	int	enemy_count;
+	int				i;
+	t_enemy_state	*enemy;
+	int				enemy_count;
 
-	enemy_count = 0;
+	enemy = &(app->enemies[0]);
 	i = -1;
-	while(++i < app->conf->header.object_count)
+	enemy_count = 0;
+	while (++i < MAX_OBJECTS)
 	{
-		if(app->objects[i].type >= MONSTER1 && app->objects[i].type < MONSTER1 + MAX_ENEMY_TYPES)
+		if (app->objects[i].type >= MONSTER1
+			&& app->objects[i].type < MONSTER1 + MAX_ENEMY_TYPES)
 		{
-			app->enemies[enemy_count].id = i;
-			app->enemies[enemy_count].pos = app->objects[i].position;
-			app->enemies[enemy_count].dead = FALSE;
-			app->enemies[enemy_count].agressive = FALSE;
-			app->enemies[enemy_count].dir = (t_vector2){0.f,0.f};
+			enemy->id = i;
+			enemy->hp = 50.f;
+			enemy->pos = app->objects[i].position;
+			enemy->dead = FALSE;
+			enemy->agressive = FALSE;
+			enemy++;
 			enemy_count++;
 		}
+		else
+			enemy->id = -1;
 	}
-	ft_printf("%i enemy count \n", enemy_count);
 }
 
-/**
- * Loads all game assets
- */
-void	load_assets(t_app *app)
+void	init_bullets(t_app *app)
 {
-	app->assets.ui_frame = SDL_LoadBMP(UI_FRAME_PATH);
-	app->assets.title_screen_image = SDL_LoadBMP(TITLESCREEN_PATH);
-	app->assets.crosshair = SDL_LoadBMP(CROSSHAIR_PATH);
-	app->assets.pointer = SDL_LoadBMP(POINTER_PATH);
-	app->assets.shield = SDL_LoadBMP(SHIELD_PATH);
-	app->assets.hp = SDL_LoadBMP(HP_PATH);
-	app->assets.pistol = SDL_LoadBMP(PISTOL_PATH);
-	app->assets.bullet = SDL_LoadBMP(BULLET_PATH);
-	app->assets.meter = SDL_LoadBMP(METER_PATH);
-	app->assets.sprite = SDL_LoadBMP(PANELS_PATH);
-	app->assets.bg = SDL_LoadBMP(SKYBOX_PATH);
+	int	i;
 
-	//temp 2d object array in 0, 2d object array in 1, 2d per enemy arrays from then on
-	app->assets.sprites[0] = SDL_LoadBMP(PICKUP_PATH);
-	app->assets.sprites[1] = SDL_LoadBMP(OBJECT_PATH);
-	app->assets.sprites[2] = SDL_LoadBMP(SPRITE_PATH);
-	app->assets.sprites[3] = SDL_LoadBMP(MONSTER_1_PATH);
-	app->assets.sprites[4] = SDL_LoadBMP(MONSTER_2_PATH);
-	load_font(app);
-	load_texts(app);
-	load_music(app, MUSIC_PATH);
-}
+	i = -1;
 
-/**
- * Loads the font or resets it
- */
-void	load_font(t_app *app)
-{
-	if (!app->assets.font.font)
-		app->assets.font.font = SDL_LoadBMP(FONT_PATH);
-	if (!app->assets.font.font)
-		exit_error("Could not load font");
-	change_font(app, 16, 0xFF000000);
+	ft_bzero(app->bullets, sizeof(t_bullet) * MAX_TEMP_OBJECTS);
+	while (++i < MAX_TEMP_OBJECTS)
+		app->bullets[i].type = -1;
 }

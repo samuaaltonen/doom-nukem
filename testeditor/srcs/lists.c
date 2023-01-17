@@ -3,17 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   lists.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:42:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/01 15:22:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:32:22 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Creates a new linked list to save lines (x, y points) of a sector.
+ * @brief Creates a new linked list to save sector information.
+ * 
+ * @param point
+ * @return t_vec2_lst
  */
 t_vec2_lst	*new_vector_list(t_vector2 *point)
 {
@@ -34,7 +37,12 @@ t_vec2_lst	*new_vector_list(t_vector2 *point)
 }
 
 /**
- * Adds a new node to the end of vector2d linked list.
+ * @brief Adds a new node to the end of vector2d linked list. Returns -1 upon
+ * error.
+ * 
+ * @param list
+ * @param new
+ * @return int
  */
 int	put_to_vector_list(t_vec2_lst **list, t_vec2_lst *new)
 {
@@ -56,7 +64,10 @@ int	put_to_vector_list(t_vec2_lst **list, t_vec2_lst *new)
 }
 
 /**
- * Deletes the whole vector2d linked list.
+ * @brief Deletes the whole vector2d linked list. Returns -1 upon error.
+ * 
+ * @param list
+ * @return int
  */
 int	del_vector_list(t_vec2_lst **list)
 {
@@ -71,31 +82,9 @@ int	del_vector_list(t_vec2_lst **list)
 		next = current->next;
 		free(current);
 		current = next;
+		if (current == *list)
+			break ;
 	}
 	*list = NULL;
 	return (0);
-}
-
-/**
- * Reverses the vector2d linked list.
-*/
-void	reverse_vector_list(t_vec2_lst **head)
-{
-	t_vec2_lst	*prev;
-	t_vec2_lst	*next;
-	t_vec2_lst	*current;
-
-	if (!(*head))
-		return ;
-	prev = NULL;
-	next = NULL;
-	current = *head;
-	while (current)
-	{
-		next = current->next;
-		current->next = prev;
-		prev = current;
-		current = next;
-	}
-	*head = prev;
 }

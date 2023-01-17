@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/15 14:56:39 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/16 22:30:46 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,33 @@
 # define DIRECTION_START_Y 1.0
 # define POSITION_START_X 0.5
 # define POSITION_START_Y 0.5
-# define ROTATION_SPEED 1.5f
-# define MOVEMENT_SPEED 0.02f
-# define RUN_SPEED 0.1f
-# define MOVE_RANGE 0.05f
-# define MOVE_ACCEL 100.f
-# define MOVE_DECEL 10.f
-# define GRAVITY 10.f
-# define JUMP_SIZE 2.f
-# define JUMP_TIME 0.1f
-# define JETPACK_START 0.3
-# define JETPACK 1.f
-# define JETPACK_FALL 0.125f
-# define MAX_STEP 0.2f
-# define MAX_ANGLE 45.f
+# define ROTATION_SPEED 1.8
+# define MOVEMENT_SPEED 6.0
+# define RUNNING_SPEED 10.0
+# define MOVE_RANGE 0.05
+# define MOVE_ACCEL 90.0
+# define MOVE_DECEL 5.0
+# define MOVE_MIN 0.001
+# define GRAVITY -20.0
+# define FALL_DAMAGE_FORCE_THRESHOLD -20.0
+# define FALL_DAMAGE_MULTIPLIER 3.0
+# define JUMP_FORCE 5.0
+# define JETPACK 1.0
+# define JETPACK_FALL 0.01
+# define JETPACK_ASCENT 4.0
+# define JETPACK_DESCENT -4.0
+# define ELEVATION_EPSILON 0.01
+# define MAX_STEP 0.3
+# define MAX_ANGLE 45.0
 # define HORIZON_UPPER_LIMIT 1.25
 # define HORIZON_LOWER_LIMIT -0.25
-# define PLAYER_HEIGHT 0.5
-# define COLLISION_OFFSET 0.5
+# define PLAYER_HEIGHT_STANDING 0.58
+# define PLAYER_HEIGHT_CROUCHING 0.28
+# define PLAYER_HEIGHT_CHANGE_RATE 16.0
+# define COLLISION_OFFSET 0.25
+# define COLLISION_CEIL 0.125
+# define MAX_CONCURRENT_COLLISIONS 16
+# define MAX_COLLISION_POSITION_TRIES 320
 # define MAX_HP 200
 # define REGEN_TIME 5
 
@@ -51,24 +60,31 @@ typedef enum e_movement
 	DOWNWARD = 5
 }	t_movement;
 
+typedef enum e_collision
+{
+	COLLISION_WALL,
+	COLLISION_PORTAL,
+	COLLISION_NONE
+}	t_collision;
+
 typedef struct s_inventory
 {
-	int			ammo;
-	int			special_ammo;
-	int			potion;
-	int			antidote;
-	int			key;
-	t_bool		jetpack;
+	int				ammo;
+	int				special_ammo;
+	int				potion;
+	int				antidote;
+	int				key;
+	t_bool			jetpack;
 }	t_inventory;
 
 typedef struct s_weapon
 {
-	t_bool	enabled;
-	int		damage;
-	int		range;
-	double	fire_rate;
-	int		magazine;
-	int		ammo;
+	t_bool			enabled;
+	int				damage;
+	int				range;
+	double			fire_rate;
+	int				magazine;
+	int				ammo;
 }	t_weapon;
 
 /**
@@ -80,12 +96,16 @@ typedef struct s_player
 	t_vector2		dir;
 	t_vector2		move_vector;
 	t_vector2		move_pos;
-	double			velocity;
+	double			move_speed;
+	t_bool			is_decelerating;
 	t_vector2		cam;
 	double			camera_length;
+	double			target_height;
+	double			height;
 	double			elevation;
+	double			elevation_velocity;
 	double			horizon;
-	int				current_sector;
+	int				sector;
 	t_bool			flying;
 	t_bool			jetpack;
 	t_bool			jetpack_boost;
@@ -95,6 +115,8 @@ typedef struct s_player
 	t_weapon		equiped_weapon;
 	int				shield;
 	t_inventory		inventory;
+	t_line			collisions[MAX_CONCURRENT_COLLISIONS];
+	int				total_collisions;
 }	t_player;
 
 typedef struct s_export_player
@@ -110,8 +132,8 @@ typedef struct s_export_player
 
 typedef struct s_move
 {
-	t_vector2	pos;
-	double		elevation;
+	t_vector2		pos;
+	double			elevation;
 }	t_move;
 
 #endif

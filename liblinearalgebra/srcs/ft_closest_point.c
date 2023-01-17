@@ -6,14 +6,14 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/09 16:01:06 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/09 15:32:59 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/20 14:25:16 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "liblinearalgebra.h"
 
 /**
- * @brief find the closest point to the @point on the @line
+ * @brief Find the closest point to the point on the line.
  * 
  * @param point 
  * @param line 

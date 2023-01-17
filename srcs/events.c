@@ -3,18 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:41:22 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/13 12:54:48 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/10 13:26:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * Dispatches SDL2 event to event handler functions.
-*/
+ * @brief Dispatches SDL2 event to event handler functions.
+ * 
+ * @param app 
+ * @param event 
+ * @return int 
+ */
 int	dispatch_event(t_app *app, SDL_Event *event)
 {
 	if (event->type == SDL_QUIT)
@@ -33,5 +37,22 @@ int	dispatch_event(t_app *app, SDL_Event *event)
 		return (events_mouse_wheel(event->wheel.y, app));
 	if (event->type == SDL_WINDOWEVENT)
 		return (events_window_other(event->window.event, app));
+	return (0);
+}
+
+/**
+ * @brief Dispatches only window and process related events (used in
+ * initialization phase).
+ * 
+ * @return int 
+ */
+int dispatch_event_minimal(t_app *app, SDL_Event *event)
+{
+	if (event->type == SDL_QUIT)
+		return (events_window_destroy());
+	if (event->type == SDL_WINDOWEVENT)
+		return (events_window_other(event->window.event, app));
+	if (event->type == SDL_KEYUP && event->key.keysym.sym == SDLK_ESCAPE)
+		exit(EXIT_SUCCESS);
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2022/12/15 16:38:49 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/16 21:56:34 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,15 +14,82 @@ NAME = doom-nukem-editor
 
 CC = gcc
 
-FILES = app.c help_menu.c editor.c editor_ui.c editor_menu.c \
-events_key.c events_mouse.c events.c export.c import.c player.c \
-image.c main.c render.c render_extra.c render_text.c render_grid.c \
-linedraw.c linedraw_utils.c lists.c menu_sector_info.c sector.c sector_tools.c \
-sector_members.c sector_portal.c tex_icons.c tools.c utils_sdl.c utils.c \
-menu_player_info.c menu_weapon_info.c  menu_inventory_info.c \
-menu_object_info.c menu_interaction_info.c render_ui.c interactions.c \
-objects.c events_menu.c help_menu_tools.c interaction_tools.c \
-menu_interaction_tools.c menu_wall_info.c triangle.c
+FILES = app.c \
+		editor.c \
+		editor_menu.c \
+		editor_ui.c \
+		events.c \
+		events_dispatch.c \
+		events_activate_interaction.c \
+		events_inventory.c \
+		events_keydown.c \
+		events_keyup.c \
+		events_menu.c \
+		events_mouse.c \
+		events_mouse_track.c \
+		events_mouse_wheel.c \
+		events_sector.c \
+		export.c \
+		image.c \
+		import.c \
+		interaction_checks.c \
+		interaction_tools.c \
+		interactions.c \
+		linedraw.c \
+		linedraw_utils.c \
+		list_tools.c \
+		lists.c \
+		main.c \
+		menu.c \
+		menu_interaction_explanations.c \
+		menu_interaction_explanations_extra.c \
+		menu_interaction_info.c \
+		menu_interaction_link_info.c \
+		menu_interaction_tools.c \
+		menu_inventory_info.c \
+		menu_object_info.c \
+		menu_player_info.c \
+		menu_sector_info.c \
+		menu_tools.c \
+		menu_wall_info.c \
+		menu_weapon_info.c \
+		object_tools.c \
+		objects.c \
+		player.c \
+		render.c \
+		render_extra.c \
+		render_grid.c \
+		render_text.c \
+		render_ui.c \
+		rle_compress.c \
+		rle_uncompress.c \
+		rle_utils.c \
+		sector.c \
+		sector_interactions.c \
+		sector_members.c \
+		sector_portal.c \
+		sector_tools.c \
+		tex_icons.c \
+		tools.c \
+		triangle.c \
+		utils.c \
+		utils_bmp.c \
+		utils_sdl.c \
+		import_interaction.c \
+		import_sector.c \
+		import_async.c \
+		import_player.c \
+		import_object.c \
+		export_assets_surface.c \
+		export_assets_wav.c \
+		export_assets_text.c \
+		export_player.c \
+		export_sector.c \
+		export_object.c \
+		export_interaction.c \
+		export_async.c \
+		level_validation_sector.c \
+		loading_screen.c
 
 LIBFT = ../libft/libft.a
 LIBLINEARALGEBRA = ../liblinearalgebra/liblinearalgebra.a
@@ -45,7 +112,7 @@ HEADERS = \
 	-I ../liblinearalgebra/includes \
 	-I ../sdl/SDL2-2.0.8/include
 	
-FLAGS = -MMD -Wall -Wextra -Werror -O3 -g -fsanitize=address
+FLAGS = -MMD -Wall -Wextra -Werror -O3 -g 
 
 LIBLINKS = -L ../libft -L ../liblinearalgebra -L/usr/local/lib \
 		-llinearalgebra -lft -lm

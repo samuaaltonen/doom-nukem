@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/16 13:25:54 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/04 15:40:55 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,10 +70,24 @@ int	events_keyup(int keycode, t_app *app)
 		//----
 		app->conf->keystates ^= SPACE;
 	}
-	if (keycode == SDLK_b)
+	if (keycode == SDLK_7)
 	{
+		app->enemies[1].next = ATTACK;
 		app->enemies[0].next = ATTACK;
 		ft_printf("Set to ATTACK\n");
+	}
+		if (keycode == SDLK_8)
+	{
+		app->enemies[1].next = DEATH;
+		app->enemies[0].next = DEATH;
+		ft_printf("Set to DEATH\n");
+	}
+		if (keycode == SDLK_9)
+	{
+		app->enemies[1].next = WALK;
+		app->enemies[0].next = WALK;
+		ft_printf("Set to WALK\n");
+		app->player.inventory.ammo += 50;
 	}
 	return (0);
 }

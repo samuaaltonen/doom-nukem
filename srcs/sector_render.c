@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/13 15:13:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/16 19:06:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ void	render_sectors(t_app *app)
 	ft_bzero(app->occlusion_bottom, WIN_W * sizeof(int));
 	sector_wallstack_build(app);
 	threads_work((t_thread_data *)&threads_data);
-	app->depthmap_fill_switch = !app->depthmap_fill_switch;
 }
 
 /**
@@ -55,16 +54,18 @@ void	*sector_render_thread(void *data)
 	while (TRUE)
 	{
 		if (pthread_mutex_lock(&thread->lock))
-			exit_error(NULL);
+			exit_error(MSG_ERROR_THREADS_MUTEX);
 		while (!thread->has_work)
+		{
 			if (pthread_cond_wait(&thread->cond, &thread->lock))
-				exit_error(NULL);
-		sector_stack_render(app, thread,
-			app->sectors[app->player.current_sector].stack_index, (t_limit){
-			0, WIN_W - 1});
-		thread->has_work = FALSE;
+				exit_error(MSG_ERROR_THREADS_SIGNAL);
+		}
 		if (pthread_mutex_unlock(&thread->lock))
-			exit_error(NULL);
+			exit_error(MSG_ERROR_THREADS_MUTEX);
+		sector_stack_render(app, thread,
+			app->sectors[app->player.sector].stack_index, (t_limit){
+			0, WIN_W - 1});
+		thread_set_done(thread);
 	}
 	pthread_exit(NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:18:47 by saaltone          #+#    #+#             */
-/*   Updated: 2022/08/08 17:21:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:26:22 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 void	exit_error(char *message)
 {
 	if (message)
-		ft_putendl_fd(message, STDERR_FILENO);
+		ft_dprintf(STDERR_FILENO, "{red}%s{reset}\n", message);
 	else
 		perror(MSG_ERROR);
 	exit(EXIT_FAILURE);

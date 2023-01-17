@@ -6,15 +6,18 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:04:04 by ssulkuma          #+#    #+#             */
-/*   Updated: 2022/12/13 14:00:16 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/13 15:52:09 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Based on the object type, highlights the correct movement type (moves,
+ * @brief Based on the object type, highlights the correct movement type (moves,
  * follows, in place) on the help menu sidebar.
+ * 
+ * @param app
+ * @param movement
 */
 static void	render_object_movement_type(t_app *app, int movement)
 {
@@ -43,29 +46,59 @@ static void	render_object_movement_type(t_app *app, int movement)
 }
 
 /**
- * Renders object related texts on the help menu sidebar.
+ * @brief Based on the object type, displays the correct statics on the help
+ * menu sidebar.
+ * 
+ * @param app
+*/
+static void	render_object_type_statics(t_app *app)
+{
+	change_font(app, 11, TEXT);
+	if (app->current_object->type < 6)
+	{
+		render_text(app, (t_rect){102, 120, 120, 15}, "CONSUMABLE");
+		render_text(app, (t_rect){40, 140, 120, 15}, "HEALTH");
+		render_text(app, (t_rect){210, 140, 120, 15}, "0");
+		render_text(app, (t_rect){40, 155, 120, 15}, "DAMAGE");
+		render_text(app, (t_rect){210, 155, 120, 15}, "0");
+	}
+	if (app->current_object->type > 5 && app->current_object->type < 9)
+	{
+		render_text(app, (t_rect){120, 120, 120, 15}, "OBJECT");
+		render_text(app, (t_rect){40, 140, 120, 15}, "HEALTH");
+		render_text(app, (t_rect){210, 140, 120, 15}, "50");
+		render_text(app, (t_rect){40, 155, 120, 15}, "DAMAGE");
+		render_text(app, (t_rect){210, 155, 120, 15}, "0");
+	}
+	if (app->current_object->type == 9 || app->current_object->type == 10)
+	{
+		render_text(app, (t_rect){113, 120, 120, 15}, "MONSTER");
+		render_text(app, (t_rect){40, 140, 120, 15}, "HEALTH");
+		render_text(app, (t_rect){210, 140, 120, 15}, "100");
+		render_text(app, (t_rect){40, 155, 120, 15}, "DAMAGE");
+		render_text(app, (t_rect){210, 155, 120, 15}, "10");
+	}
+}
+
+/**
+ * @brief Renders object related texts on the help menu sidebar.
+ * 
+ * @param app
 */
 static void	render_object_texts(t_app *app)
 {
 	int	pickable;
 	int	movement;
-	int	type;
 
-	type = 1;
 	pickable = 0;
 	movement = 0;
-	if (type < 5 || type == 10 || type > 15)
+	if (app->current_object->type < 6)
 		pickable = 1;
-	if (type < 9 || type == 14 || type == 16)
+	if (app->current_object->type < 9)
 		movement = 1;
-	if (type == 12 || type < 16)
-		movement = 1;
-	change_font(app, 11, TEXT);
-	render_text(app, (t_rect){113, 120, 120, 15}, "MONSTER");
-	render_text(app, (t_rect){40, 140, 120, 15}, "HEALTH");
-	render_text(app, (t_rect){210, 140, 120, 15}, "100");
-	render_text(app, (t_rect){40, 155, 120, 15}, "DAMAGE");
-	render_text(app, (t_rect){210, 155, 120, 15}, "10");
+	if (app->current_object->type == 9)
+		movement = 2;
+	render_object_type_statics(app);
 	if (pickable)
 	{
 		render_text(app, (t_rect){50, 170, 120, 15}, "UNPICKABLE");
@@ -76,13 +109,15 @@ static void	render_object_texts(t_app *app)
 	{
 		render_text(app, (t_rect){165, 170, 120, 15}, "PICKABLE");
 		change_font(app, 11, ACTIVE_TEXT);
-		render_text(app, (t_rect){40, 170, 120, 15}, "- UNPICKABLE -");
+		render_text(app, (t_rect){40, 170, 130, 15}, "- UNPICKABLE -");
 	}
 	render_object_movement_type(app, movement);
 }
 
 /**
-* Renders object staticbars on the help menu sidebar.
+ * @brief Renders object staticbars on the help menu sidebar.
+ * 
+ * @param app
 */
 void	render_object_statics(t_app *app)
 {
@@ -107,14 +142,16 @@ void	render_object_statics(t_app *app)
 }
 
 /**
- * Renders object specific information on the help menu sidebar.
+ * @brief Renders object specific information on the help menu sidebar.
+ * 
+ * @param app
 */
 void	object_edit_menu(t_app *app)
 {
 	int			id;
-	t_point		screen_pos;
+	t_point		mouse;
 
-	SDL_GetMouseState(&screen_pos.x, &screen_pos.y);
+	SDL_GetMouseState(&mouse.x, &mouse.y);
 	change_font(app, 15, TEXT);
 	render_text(app, (t_rect){10, 40, 50, 20}, "OBJECTS");
 	change_font(app, 11, TEXT);
@@ -123,6 +160,10 @@ void	object_edit_menu(t_app *app)
 		app->assets.objects);
 	render_object_statics(app);
 	change_font(app, 11, TEXT);
-	id = find_object_interaction(app);
-	render_current_interaction_status(app, screen_pos, 210, id);
+	if (!app->current_interaction)
+		id = find_object_interaction(app, 0, 1);
+	else
+		id = find_object_interaction(app, find_interaction(app), 1);
+	render_current_interaction_status(app, mouse, 210, id);
+	render_text(app, (t_rect){70, 260, 260, 15}, "DELETE OBJECT ( DEL )");
 }

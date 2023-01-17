@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:49:04 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/08 15:49:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/11 19:00:08 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,40 @@ int	shade_color(int color, int shade)
 	r += (r * shade) >> 3;
 	g += (g * shade) >> 3;
 	b += (b * shade) >> 3;
+	if (r > 0xFF0000)
+		r = 0xFF0000;
+	if (g > 0x00FF00)
+		g = 0x00FF00;
+	if (b > 0x0000FF)
+		b = 0x0000FF;
+	return ((r & 0xFF0000) | (g & 0x00FF00) | (b & 0x0000FF));
+}
+
+/**
+ * @brief Shades color based on distance.
+ * 
+ * @param color 
+ * @param shade 
+ * @return int 
+ */
+int	shade_depth(int color, float shade)
+{
+	int	r;
+	int	g;
+	int	b;
+
+	if (!shade)
+		return (color);
+	if (shade >= MAX_FOG_DISTANCE)
+		return (0x000000);
+	if (shade <= 0.f)
+		return (0xFFFFFF);
+	r = color & 0xFF0000;
+	g = color & 0x00FF00;
+	b = color & 0x0000FF;
+	r -= (int)((r * shade) / MAX_FOG_DISTANCE);
+	g -= (int)((g * shade) / MAX_FOG_DISTANCE);
+	b -= (int)((b * shade) / MAX_FOG_DISTANCE);
 	if (r > 0xFF0000)
 		r = 0xFF0000;
 	if (g > 0x00FF00)

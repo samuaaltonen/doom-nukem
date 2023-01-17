@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_init.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:06 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/16 14:03:45 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/12 15:38:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,11 @@ void	init_skybox_plane(t_app *app)
 	app->sky.size.y = (int)(WIN_H
 			+ WIN_H * (HORIZON_UPPER_LIMIT - 0.5)
 			+ WIN_H * (0.5 - HORIZON_LOWER_LIMIT));
-	app->sky.size.x = WIN_W * 4;
+	app->sky.size.x = WIN_W * 2;
 	app->sky.pixel_step.x = SKYBOX_W / (double)app->sky.size.x;
 	app->sky.pixel_step.y = SKYBOX_H / (double)app->sky.size.y;
-	app->sky.start.x = app->sky.size.x * ft_vector_angle_right(app->player.dir,
-			(t_vector2){1.0, 0.0}) / (M_PI * 2);
+	app->sky.start.x = app->sky.size.x * ft_vector_angle_left(app->player.dir,
+			(t_vector2){1.0, 0.0}) / M_PI;
 	app->sky.start.y = WIN_H * app->player.horizon - app->sky.size.y / 2;
 }
 
@@ -60,11 +60,10 @@ void	init_skybox_plane(t_app *app)
  */
 void	player_init(t_app *app)
 {
-	app->player.pos = (t_vector2){POSITION_START_X, POSITION_START_Y};
 	app->player.dir = (t_vector2){DIRECTION_START_X, DIRECTION_START_Y};
-	app->player.elevation = 0.0;
 	app->player.horizon = 0.5;
-	app->player.current_sector = 0;
+	app->player.elevation_velocity = 0.0;
+	app->player.height = PLAYER_HEIGHT_STANDING;
 	init_camera_plane(app);
 	init_skybox_plane(app);
 }

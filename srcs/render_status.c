@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/25 11:57:31 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/16 16:19:59 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:48:04 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,6 @@ void	render_titlescreen(t_app *app)
 	render_text(app, (t_rect){490, 210, 320, 800}, "AWAKE");
 	change_font(app, 32, WHITE);
 	render_text(app, (t_rect){504, WIN_H - 170, 800, 800}, "PRESS SPACE");
-	load_font(app);
 }
 
 void	render_mainmenu(t_app *app)
@@ -61,9 +60,14 @@ void	render_game(t_app *app)
 {
 	SDL_SetRelativeMouseMode(SDL_TRUE);
 	update_enemy_states(app);
+	update_bullets(app);
 	progress_animations(app);
 	player_control(app);
+	object_collision(app);
+	bullet_enemy_collisions(app);
+	bullet_player_collision(app);
 	render_sectors(app);
+	render_hand(app, WIN_W / 2 - 128, 500);
 	render_objects(app);
 	render_textmodals(app);
 	render_ui(app);
@@ -168,6 +172,5 @@ void	render_gameover(t_app *app)
 	render_text(app, (t_rect){WIN_W / 2 - 116, 210, 320, 800}, "GAME OVER");
 	change_font(app, 32, WHITE);
 	render_text(app, (t_rect){504, WIN_H - 170, 800, 800}, "You suck at this!");
-	load_font(app);
 	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
 }

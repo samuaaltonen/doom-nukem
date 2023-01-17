@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:06:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/12 14:59:40 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/05 12:14:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ static void	set_parent_vertical_positions(t_app *app, t_rayhit *hit,
 	hit->parent_height = (int)(relative * (parent->ceil_height + ceil_slope
 				- parent->floor_height - floor_slope));
 	wall_start = WIN_H * app->player.horizon
-		+ relative * (PLAYER_HEIGHT + app->player.elevation
+		+ relative * (app->player.height + app->player.elevation
 			- parent->ceil_height - ceil_slope);
 	hit->parent_wall_start = (int)wall_start;
 	hit->parent_wall_end = hit->parent_wall_start + hit->parent_height;
@@ -132,10 +132,10 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 	hit->height = (int)(relative * (hit->sector->ceil_height + ceil_slope
 				- hit->sector->floor_height - floor_slope));
 	wall_start = WIN_H * app->player.horizon
-		+ relative * (PLAYER_HEIGHT + app->player.elevation
+		+ relative * (app->player.height + app->player.elevation
 			- hit->sector->ceil_height - ceil_slope);
 	hit->wall_start = (int)wall_start;
-	hit->wall_end = wall_start + hit->height;
+	hit->wall_end = (int)wall_start + hit->height;
 	hit->texture_step = TEX_SIZE / relative;
 	hit->wall_start_actual = wall_start;
 	if (ceil_slope)
@@ -170,7 +170,8 @@ t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 		app->player.dir.y + app->player.cam.y * camera_x};
 	ray_line.b.x = hit->ray.x + app->player.pos.x;
 	ray_line.b.y = hit->ray.y + app->player.pos.y;
-	if (!ft_line_intersection(wall, ray_line, &hit->position))
+	if (!ft_line_intersection(wall, ray_line, &hit->position)
+		|| (hit->wall->is_member && !ft_point_on_segment(wall, hit->position)))
 		return (FALSE);
 	hit->distance = ft_vector_length((t_vector2){
 			hit->position.x - app->player.pos.x,

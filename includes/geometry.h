@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   geometry.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:48:59 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/12 16:31:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2022/12/28 15:54:16 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define RADIAN_IN_DEG 57.29578
 # define PI_HALF 1.57079632679
 # define PI_3_QUARTERS 2.35619449019
+# define PI_PI 6.28318530718
 
 /**
  * Sturct for limits.

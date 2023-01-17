@@ -3,19 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   events_mouse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2022/12/07 13:54:42 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/16 21:51:57 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * Left mouse click events when list creation is toggled on. Creates a
+ * @brief Left mouse click events when list creation is toggled on. Creates a
  * linked list from the clicked points, checking that their position is valid
  * and completes the drawn sector.
+ * 
+ * @param app
+ * @return int
 */
 static int	list_creation_events(t_app *app)
 {
@@ -43,17 +46,19 @@ static int	list_creation_events(t_app *app)
 }
 
 /**
- * Left mouse click events when there's an active sector. If player edit mode
- * is toggled on, places player on map. If object is clicked, selcts object
+ * @brief Left mouse click events when there's an active sector. If player edit
+ * mode is toggled on, places player on map. If object is clicked, selcts object
  * and changes menu to object menu. Clicking member sectors selects them as
  * active sector.
+ * 
+ * @param app
 */
 static void	active_sector_events(t_app *app)
 {
 	if (app->player_edit)
 	{
 		app->player.position = app->mouse_track;
-		app->player.direction = (t_vector2){0.f,1.f};
+		app->player.direction = (t_vector2){0.f, 1.f};
 		app->player.sector = app->active_sector;
 		app->player_edit = FALSE;
 		check_player_position(app);
@@ -67,11 +72,51 @@ static void	active_sector_events(t_app *app)
 }
 
 /**
- * All the events happening from left mouse click.
+ * @brief Left mouse click events for the small menu on the upper right corner.
+ * 
+ * @param app
+ * @param mouse
 */
-static int	left_click_events(t_app *app, t_point screen_pos)
+static void	rightside_menu_events(t_app *app, t_point mouse)
 {
-	if (app->list_creation)
+	if (check_mouse(mouse, (t_rect){WIN_W - 155, 10, 150, 20}))
+	{
+		if ((app->active_sector && get_member_sector_count(app->active_sector)
+				< MAX_MEMBER_SECTORS) || (!app->active_sector)
+			|| (app->active_sector && app->active_sector->parent_sector))
+			app->list_creation = ft_toggle(app->list_creation);
+		if (app->list_ongoing)
+			cancel_list_creation(app);
+	}
+	if (check_mouse(mouse, (t_rect){WIN_W - 155, 40, 150, 20})
+		&& app->active_sector && app->object_count < MAX_OBJECTS)
+		toggle_new_object(app, app->object_new);
+	if (check_mouse(mouse, (t_rect){WIN_W - 155, 70, 150, 20})
+		&& app->sectors)
+	{
+		export_file(app);
+		app->imported = TRUE;
+	}
+	if (check_mouse(mouse, (t_rect){WIN_W - 155, 108, 150, 20})
+		&& !app->imported && !app->sectors)
+	{
+		import_file(app);
+		app->imported = TRUE;
+	}
+}
+
+/**
+ * @brief All the events happening from left mouse click.
+ * 
+ * @param app
+ * @param mouse
+ * @return int
+*/
+static int	left_click_events(t_app *app, t_point mouse)
+{
+	if (check_mouse(mouse, (t_rect){WIN_W - 160, 10, 150, 140}))
+		rightside_menu_events(app, mouse);
+	else if (app->list_creation)
 		return (list_creation_events(app));
 	else if (app->object_new)
 	{
@@ -80,15 +125,15 @@ static int	left_click_events(t_app *app, t_point screen_pos)
 		app->object_new = FALSE;
 	}
 	else if (app->player_menu)
-		player_menu_events(app, screen_pos);
+		player_menu_events(app, mouse);
 	else if (app->interaction_menu && app->current_interaction)
-		interaction_menu_events(app, 40, screen_pos);
+		interaction_menu_events(app, 40, mouse);
 	else if (!app->active_sector && app->mouse_track.x == app->player.position.x
 		&& app->mouse_track.y == app->player.position.y)
 		app->player_menu = TRUE;
-	else if (check_mouse(screen_pos, (t_rect){0, 0, HELP_MENU_W, WIN_H})
+	else if (check_mouse(mouse, (t_rect){0, 0, HELP_MENU_W, WIN_H})
 		&& !app->interaction_menu)
-		activate_interaction_menu(app, screen_pos);
+		activate_interaction_menu(app, mouse);
 	else if (app->active_sector)
 		active_sector_events(app);
 	else
@@ -97,16 +142,20 @@ static int	left_click_events(t_app *app, t_point screen_pos)
 }
 
 /**
- * All events happening from mouse button up.
+ * @brief All events happening from mouse button up.
+ * 
+ * @param app
+ * @param event
+ * @return int
  */
 int	events_mouse_click(t_app *app, SDL_Event *event)
 {
-	t_point		screen_pos;
+	t_point		mouse;
 
 	app->mouse_down = FALSE;
-	SDL_GetMouseState(&screen_pos.x, &screen_pos.y);
+	SDL_GetMouseState(&mouse.x, &mouse.y);
 	if (event->button.button == SDL_BUTTON_LEFT)
-		return (left_click_events(app, screen_pos));
+		return (left_click_events(app, mouse));
 	else
 	{
 		if (app->list_ongoing)
@@ -123,70 +172,4 @@ int	events_mouse_click(t_app *app, SDL_Event *event)
 			app->active_sector = NULL;
 	}
 	return (0);
-}
-
-/**
- * Changes mouse_down state to true when mouse button left is pressed down.
-*/
-int	events_mouse_drag(t_app *app)
-{
-	app->mouse_down = TRUE;
-	return (0);
-}
-
-/**
- * Cancels the ungoing list creation and deletes the incomplete sector list.
-*/
-void	cancel_list_creation(t_app *app)
-{
-	del_vector_list(&(app->active));
-	app->active = NULL;
-	app->active_last = NULL;
-	app->active_sector = NULL;
-	app->list_ongoing = FALSE;
-	app->list_creation = FALSE;
-}
-
-/**
- * converts mouse_pos to world space and snaps to grid
- */
-void	snap_to_nearest(t_app *app, t_point *mouse_pos, t_vector2 *snap_pos, double divider)
-{
-	t_vector2	world_pos;
-	double		tmp;
-
-	world_pos.x = app->view_pos.x + (mouse_pos->x / (double)app->surface->w) * app->zoom_area.x;
-	world_pos.y = app->view_pos.y + (mouse_pos->y / (double)app->surface->h) * app->zoom_area.y;
-	snap_pos->x = world_pos.x;
-	snap_pos->y = world_pos.y;
-	tmp = fabs(fmod(world_pos.x, divider));
-	if (tmp < (divider / 2))
-	{
-		if (world_pos.x < 0)
-			snap_pos->x = world_pos.x + tmp;
-		else
-			snap_pos->x = world_pos.x - tmp;
-	}
-	else
-	{
-		if (world_pos.x < 0)
-			snap_pos->x = world_pos.x - (divider - tmp);
-		else
-			snap_pos->x = world_pos.x + (divider - tmp);
-	}
-	tmp = fabs(fmod(world_pos.y, divider));
-	if (tmp < (divider / 2))
-	{
-		if (world_pos.y < 0)
-			snap_pos->y = world_pos.y + tmp;
-		else
-			snap_pos->y = world_pos.y - tmp;
-	}
-	else
-	{
-		if (world_pos.y < 0)
-			snap_pos->y = world_pos.y - (divider - tmp);
-		else
-			snap_pos->y = world_pos.y + (divider - tmp);
-	}
 }
