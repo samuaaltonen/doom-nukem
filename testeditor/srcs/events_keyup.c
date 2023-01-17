@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_keyup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 21:52:02 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:58:16 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,9 +83,9 @@ int	events_keyup(t_app *app, int keycode)
 		link_interaction(app);
 	if (keycode == SDLK_l)
 		link_wall_to_sector(app);
-	if (keycode == SDLK_DELETE && !app->current_object)
+	if (keycode == SDLK_BACKSPACE && !app->current_object)
 		sector_pop(app, &(app->active_sector));
-	if (keycode == SDLK_DELETE && app->current_object)
+	if (keycode == SDLK_BACKSPACE && app->current_object)
 		del_object(app, get_object_id(app, app->current_object));
 	if (keycode == SDLK_y || keycode == SDLK_h)
 		activate_slope(app, keycode);
