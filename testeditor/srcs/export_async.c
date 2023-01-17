@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:44:12 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 22:26:54 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/17 16:06:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	compression_update_progress(t_import_info *info)
 {
 	static int	last_update;
 
+	if (((t_app *)info->thread->app)->import_progress == 0.5)
+		last_update = 0;
 	if (info->uncompressed - last_update > MIN_UNCOMPRESS_UPDATE
 		|| info->uncompressed == info->compressed_length)
 	{
