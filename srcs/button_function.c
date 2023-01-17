@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   button_function.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/16 22:34:25 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:42:25 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,15 @@ void	button_function(t_app *app, t_rect button, void (*f)(t_app *app))
 {
 	if (check_mouse(app, button))
 	{
-		if (app->event.button.clicks == 1)
-		{
-			if (app->event.button.state == SDL_RELEASED)
+		if (app->conf->buttonstates & LEFT_MOUSE)
+			start_timer(&app->button_timer, 0.5);
+		else if (!(app->conf->buttonstates & LEFT_MOUSE)
+			&& !check_timer(&app->button_timer))
+			{
 				f(app);
-		}
+				start_timer(&app->button_timer, 0.0);
+			}
+			
 	}
 }
 
@@ -31,6 +35,7 @@ void	start_game(t_app *app)
 	init_bullets(app);
 	//----DEBUG FEATURE
 	app->player.inventory.ammo = 20;
+	app->player.inventory.special_ammo = 200;
 	app->player.inventory.potion = 5;
 	app->player.inventory.antidote = 5;
 	app->player.weapons = 0;
@@ -87,6 +92,11 @@ void	fullscreen(t_app *app)
 		app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, 0);
 	}	
 	app->surface = SDL_GetWindowSurface(app->win);
+}
+
+void	controls(t_app *app)
+{
+	app->status = STATUS_CONTROLS;
 }
 
 void	do_nothing(t_app *app)

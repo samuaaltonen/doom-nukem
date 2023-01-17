@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/15 14:42:52 by dpalacio         ###   ########.fr       */
+/*   Updated: 2022/12/16 15:19:21 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,24 @@ void	put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color)
 	pixel = surface->pixels + pixel_pos;
 //	if ((color & 0xFF000000) == 0xFF000000)
 		*(int *)pixel = color;
-	// else
-	// 	*(int *)pixel = blend_pixel(int_to_argb(*(int *)pixel), int_to_argb(color));
+	/* else
+	 	*(int *)pixel = blend_pixel(int_to_argb(*(int *)pixel), int_to_argb(color));
+	*/
 }
 
 int	blend_pixel(t_color base, t_color top)
 {
 	t_color	color;
 
-	
 	if ((top.a & 0xFF000000) > 0)
 	{
 		color.a = base.a + (top.a * ((255 - base.a) / 255));
-		color.r = (base.r * base.a + top.r * top.a * ((255 - base.a) / 255))/color.a;
-		color.g = (base.g * base.a + top.g * top.a * ((255 - base.a) / 255))/color.a;
-		color.b = (base.b * base.a + top.b * top.a * ((255 - base.a) / 255))/color.a;
+		color.r = (base.r * base.a + top.r * top.a * ((255 - base.a) / 255))
+			/ color.a;
+		color.g = (base.g * base.a + top.g * top.a * ((255 - base.a) / 255))
+			/ color.a;
+		color.b = (base.b * base.a + top.b * top.a * ((255 - base.a) / 255))
+			/ color.a;
 	}
 	else
 	{
@@ -55,8 +58,6 @@ int	blend_pixel(t_color base, t_color top)
 	}
 	color.a = 0xFF;
 	return (argb_to_int(color));
-	
-
 }
 
 t_color	int_to_argb(int color)
@@ -83,18 +84,20 @@ int	argb_to_int(t_color color)
  * @param y 
  * @param color 
  */
-void	put_pixel_to_surface_check(t_app *app, t_point point, int color, float distance)
+void	put_pixel_to_surface_check(t_app *app, t_point point,
+	int color, float distance)
 {
 	int		pixel_pos;
 	char	*pixel;
 
 	pixel_pos = (point.y * app->surface->pitch) + (point.x * IMAGE_PIXEL_BYTES);
-	if (pixel_pos < 0 || point.x >= app->surface->w || point.y >= app->surface->h)
+	if (pixel_pos < 0 || point.x >= app->surface->w
+		|| point.y >= app->surface->h)
 		return ;
-	if(app->depthmap[point.y / 2][point.x] >= distance)
+	if (app->depthmap[point.y / 2][point.x] >= distance)
 	{
 		pixel = app->surface->pixels + pixel_pos;
-		if(point.y % 2)
+		if (point.y % 2)
 			app->depthmap[point.y / 2][point.x] = distance;
 		*(int *)pixel = color;
 	}

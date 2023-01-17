@@ -2,6 +2,8 @@ compiled
 objs
 sdl/SDL2-2.0.8/build/*
 !sdl/SDL2-2.0.8/build/DontRemoveMe
+sdl/SDL2-2.24.2/build/*
+!sdl/SDL2-2.24.2/build/DontRemoveMe
 SDL2_build
 doom-nukem
 sdl/SDL2_build

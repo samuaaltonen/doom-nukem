@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 22:36:02 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:47:03 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@
 # define STATUS_MAINOPTIONS 4
 # define STATUS_GAMEOPTIONS 5
 # define STATUS_GAMEOVER 6
+# define STATUS_CONTROLS 7
 
 //BUTTON MACROS
 # define BUTTON_IDLE 0
@@ -217,9 +218,11 @@ typedef struct s_app
 	char				**texts;
 	int					text_lengths[MAX_TEXT_LINES];
 	t_textmodal			textmodal;
+	t_timer			button_timer;
 	t_timer				regen_timer;
 	t_timer				shoot_timer;
 	t_timer				item_timer;
+	t_timer			energy_timer;
 }	t_app;
 
 /**
@@ -321,6 +324,7 @@ void			heal(t_app *app);
 void			shield(t_app *app);
 void			regen(t_app *app, int *value);
 void			damage(t_app *app, int dmg);
+void		energy(t_app *app, int mod);
 
 /**
  * Collisions
@@ -450,6 +454,7 @@ void			do_nothing(t_app *app);
 void			main_options(t_app *app);
 void			game_options(t_app *app);
 void			fullscreen(t_app *app);
+void		controls(t_app *app);
 
 /**
  * Render Game Status
@@ -461,6 +466,7 @@ void			render_pausemenu(t_app *app);
 void			render_options(t_app *app);
 void			render_gameover(t_app *app);
 void			render_hand(t_app *app, int x, int y);
+void		render_controls(t_app *app);
 
 /*
 * AUDIO.C

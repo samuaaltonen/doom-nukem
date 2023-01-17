@@ -3,19 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   render_ui.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/11 18:57:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:53:10 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
-static void	ui_background(t_app *app,t_rect area, int size, int background);
-static void ui_topframe(t_app *app,t_rect area, int size);
-static void ui_midframe(t_app *app,t_rect area, int size);
-static void ui_bottomframe(t_app *app,t_rect area, int size);
+static void	ui_background(t_app *app, t_rect area, int size, int background);
+static void	ui_topframe(t_app *app, t_rect area, int size);
+static void	ui_midframe(t_app *app, t_rect area, int size);
+static void	ui_bottomframe(t_app *app, t_rect area, int size);
 static void	fill_meter(t_app *app, t_rect area, int type, int id);
 static void	player_status_meter(t_app *app, t_rect area, int value, int color);
 
@@ -70,8 +70,8 @@ void	hud_weapon(t_app *app, t_rect rect)
 
 void	hud_quickslot(t_app *app, t_rect rect, char *slot)
 {
-	SDL_Surface *sprite;
-	char			*amount;
+	SDL_Surface	*sprite;
+	char		*amount;
 
 	sprite = NULL;
 	amount = NULL;
@@ -104,7 +104,7 @@ void	hud_quickslot(t_app *app, t_rect rect, char *slot)
 /**
  * Renders a ui frame with the background color given as parameter
 */	
-void	render_ui_frame(t_app *app,t_rect area, int size, int background)
+void	render_ui_frame(t_app *app, t_rect area, int size, int background)
 {
 	if (background)
 		ui_background(app, area, size, background);
@@ -114,12 +114,12 @@ void	render_ui_frame(t_app *app,t_rect area, int size, int background)
 	ui_bottomframe(app, area, size);
 }
 
-static void	ui_background(t_app *app,t_rect area, int size, int background)
+static void	ui_background(t_app *app, t_rect area, int size, int background)
 {
 	int	x;
 	int	y;
-	int top;
-	int bottom;
+	int	top;
+	int	bottom;
 
 	x = area.x;
 	y = area.y;
@@ -145,7 +145,7 @@ static void	ui_background(t_app *app,t_rect area, int size, int background)
 	}
 }
 
-static void ui_topframe(t_app *app,t_rect area, int size)
+static void	ui_topframe(t_app *app, t_rect area, int size)
 {
 	t_rect	dst;
 	t_rect	src;
@@ -169,7 +169,7 @@ static void ui_topframe(t_app *app,t_rect area, int size)
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
 }
 
-static void ui_midframe(t_app *app, t_rect area, int size)
+static void	ui_midframe(t_app *app, t_rect area, int size)
 {
 	t_rect	dst;
 	t_rect	src;
@@ -188,7 +188,7 @@ static void ui_midframe(t_app *app, t_rect area, int size)
 	blit_surface(app->assets.ui_frame, &src, app->surface, &dst);
 }
 
-static void ui_bottomframe(t_app *app,t_rect area, int size)
+static void	ui_bottomframe(t_app *app, t_rect area, int size)
 {
 	t_rect	dst;
 	t_rect	src;
@@ -259,7 +259,7 @@ void	render_pointer(t_app *app, int x, int y)
 {
 	t_rect		dst;
 	t_rect		src;
-	
+
 	rect_from_surface(app->assets.pointer, &src);
 	dst.x = x;
 	dst.y = y;
@@ -267,6 +267,7 @@ void	render_pointer(t_app *app, int x, int y)
 	dst.h = app->assets.pointer->h;
 	blit_surface(app->assets.pointer, &src, app->surface, &dst);
 }
+
 void	render_crosshair(t_app *app)
 {
 	t_rect	dst;
@@ -283,14 +284,16 @@ void	render_crosshair(t_app *app)
 void	render_player_status(t_app *app)
 {
 	render_ui_element(app, app->assets.shield, (t_rect){32, 600, 32, 32});
-	player_status_meter(app,(t_rect){80, 600, 16, 32}, app->player.shield, CYAN);
+	player_status_meter(app, (t_rect){80, 600, 16, 32},
+		app->player.shield, CYAN);
 	render_ui_element(app, app->assets.hp, (t_rect){32, 640, 32, 32});
-	player_status_meter(app,(t_rect){80, 640, 16, 32}, app->player.hp, DARK_RED);
+	player_status_meter(app, (t_rect){80, 640, 16, 32},
+		app->player.hp, DARK_RED);
 }
 
 static void	player_status_meter(t_app *app, t_rect area, int value, int color)
 {
-	int meter_value;
+	int	meter_value;
 	int	i;
 
 	meter_value = value;
@@ -308,7 +311,7 @@ static void	fill_meter(t_app *app, t_rect area, int value, int color)
 {
 	int	x;
 	int	y;
-	int limit;
+	int	limit;
 
 	x = area.x + area.w - 3;
 	y = area.y + area.h - 3;

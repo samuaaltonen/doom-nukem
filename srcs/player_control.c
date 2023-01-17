@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_control.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/11 18:42:26 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/17 13:09:18 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,12 +31,20 @@ void	player_control(t_app *app)
 		heal(app);
 	if (app->conf->keystates & E)
 		shield(app);
-	if (app->conf->keystates & SHIFT)
+	if (!app->player.jetpack && app->conf->keystates & SHIFT)
 		app->player.move_speed = RUNNING_SPEED;
+	else if (app->player.jetpack)
+		app->player.move_speed = FLYING_SPEED;
 	else
 		app->player.move_speed = MOVEMENT_SPEED;
 	if (app->conf->keystates & C)
 		jetpack(app);
+	if ((app->conf->keystates & SPACE || app->conf->keystates & CTRL) && app->player.jetpack)
+		energy(app, -4);
+	else if (app->player.jetpack)
+		energy(app, -2);
+	else
+		energy(app, 1);
 	if (app->conf->keystates & CTRL && !app->player.jetpack)
 		app->player.target_height = PLAYER_HEIGHT_CROUCHING;
 	else if (sector_vertical_space(app, app->player.sector, app->player.pos)
@@ -108,7 +116,7 @@ void	jetpack(t_app *app)
 	{
 		app->player.jetpack = FALSE;
 		app->player.elevation_velocity = JETPACK_FALL;
-		start_timer(&app->item_timer, 1);
+		start_timer(&app->item_timer, 5);
 	}
 	else if (check_timer(&app->item_timer) && !app->player.jetpack)
 	{

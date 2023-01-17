@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_mouse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:40:40 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/10 19:15:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/17 11:48:32 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,6 @@ int	events_mouse_down(int mouse_button, t_app *app)
 		damage(app, 20);
 		//----
 	}
-		
 	return (0);
 }
 
@@ -65,21 +64,21 @@ int	events_mouse_up(int mouse_button, t_app *app)
 int	events_mouse_wheel(int wheel_dir, t_app *app)
 {
 	//----DEBUG FEATURE
-		app->player.hp += wheel_dir;
-		if (app->player.hp <= 0)
-		{
-			app->player.hp = 0;
-			app->player.shield += wheel_dir;
-		}
-		else if (app->player.hp >= MAX_HP)
-		{
-			app->player.hp = MAX_HP;
-			app->player.shield += wheel_dir;
-		}
-		if (app->player.shield <= 0)
-			app->player.shield = 0;
-		else if (app->player.shield >= MAX_HP)
-			app->player.shield = MAX_HP;
+	app->player.hp += wheel_dir;
+	if (app->player.hp <= 0)
+	{
+		app->player.hp = 0;
+		app->player.shield += wheel_dir;
+	}
+	else if (app->player.hp >= MAX_HP)
+	{
+		app->player.hp = MAX_HP;
+		app->player.shield += wheel_dir;
+	}
+	if (app->player.shield <= 0)
+		app->player.shield = 0;
+	else if (app->player.shield >= MAX_HP)
+		app->player.shield = MAX_HP;
 	//----
-		return (0);
+	return (0);
 }

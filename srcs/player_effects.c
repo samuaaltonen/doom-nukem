@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:57:21 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/15 13:12:10 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/17 13:07:08 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,10 @@ void	shield(t_app *app)
 void	regen(t_app *app, int *value)
 {
 	if (check_timer(&app->regen_timer) && *value % 40 != 0)
-			(*value)++;
-
+	{
+		(*value)++;
+		start_timer(&app->regen_timer, 0.05);
+	}
 }
 
 void	damage(t_app *app, int dmg)
@@ -57,4 +59,23 @@ void	damage(t_app *app, int dmg)
 	if (app->player.hp < 0)
 		app->player.hp = 0;
 	start_timer(&app->regen_timer, REGEN_TIME);
+}
+
+void	energy(t_app *app, int mod)
+{
+	if (check_timer(&app->energy_timer))
+	{
+		app->player.inventory.special_ammo += mod;
+		start_timer(&app->energy_timer, 0.1);
+		if (app->player.inventory.special_ammo >= 200)
+			app->player.inventory.special_ammo = 200;
+		else if (app->player.inventory.special_ammo <= 0)
+		{
+			app->player.inventory.special_ammo = 0;
+			jetpack(app);
+		}
+	//----DEBUG FEATURE
+		ft_printf("Energy: %d\n", app->player.inventory.special_ammo);
+	//----
+	}
 }
