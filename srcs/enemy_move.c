@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 13:21:17 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 22:30:20 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/17 16:03:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static int	enemy_check_main(t_app *app, t_enemy_state *enemy, t_point info,
 		return (info.y);
 	portal_id = app->sectors[info.y].wall_types[info.x];
 	if (portal_id < 0 || app->sectors[info.y].wall_textures[info.x]
-		== PARTIALLY_TRANSPARENT_TEXTURE_ID)
+		<= PARTIALLY_TRANSPARENT_TEXTURE_ID)
 		return (-1);
 	if (!portal_can_enter(app, ft_vec2_to_vec3(new.pos, new.elevation), 0.5f,
 			wall_line, app->objects[enemy->id].sector,

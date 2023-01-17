@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/16 22:33:26 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/17 16:02:16 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,8 @@
 # define MAX_TEMP_OBJECTS 64
 # define MAX_INTERACTIONS 64
 # define MAX_UNIQUE_INTERACTIONS 7
-# define PARTIALLY_TRANSPARENT_TEXTURE_ID 0
-# define FULLY_TRANSPARENT_TEXTURE_ID 1
+# define PARTIALLY_TRANSPARENT_TEXTURE_ID 3
+# define FULLY_TRANSPARENT_TEXTURE_ID 4
 
 /**
  * Struct for threads about their specific identifiers and locks for signaling.

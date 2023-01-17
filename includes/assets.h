@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assets.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/16 21:18:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/17 16:00:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@
 # define ENEMY_1_H					1024
 # define ENEMY_2_W					11520
 # define ENEMY_2_H					1536
-# define MAX_TEX_COUNT				75
+# define MAX_TEX_COUNT				79
 # define MAX_DECOR_COUNT			10
 # define MAX_BMP_OFFSET				32768
 # define MAX_BMP_WIDTH				32768
