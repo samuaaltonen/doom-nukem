@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:53:18 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 13:59:32 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/18 11:10:05 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,10 @@ int	inside_sector_check(t_sector_lst *sector, t_vector2 *mouse)
 t_bool	valid_sector(t_app *app)
 {
 	t_vec2_lst	*tmp;
+	int			corners;
 
 	tmp = app->active;
+	corners = 0;
 	while (tmp)
 	{
 		if (tmp->next && ft_line_side((t_line){tmp->point, tmp->next->point},
@@ -109,6 +111,12 @@ t_bool	valid_sector(t_app *app)
 			return (FALSE);
 		}
 		tmp = tmp->next;
+		corners++;
+	}
+	if (corners > MAX_SECTOR_CORNERS)
+	{
+		cancel_list_creation(app);
+		return (FALSE);
 	}
 	return (TRUE);
 }
