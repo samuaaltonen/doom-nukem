@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:51:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 20:36:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 00:11:45 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ static void	render_loading(t_app *app)
 {
 	while (SDL_PollEvent(&app->event))
 		dispatch_event_minimal(app, &app->event);
-	ft_bzero(app->surface->pixels, app->surface->h * app->surface->pitch);
 	draw_progress_bar_frame(app);
 	draw_progress_bar(app);
 	SDL_UpdateWindowSurface(app->win);
