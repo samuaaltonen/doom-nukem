@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:53:42 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 13:08:44 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:02:32 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,6 @@ void	toggle_new_object(t_app *app, t_bool state)
 	if (state)
 	{
 		app->object_new = FALSE;
-		if (app->current_object)
-			app->current_object->type = 0;
 		app->current_object = NULL;
 	}
 	else
