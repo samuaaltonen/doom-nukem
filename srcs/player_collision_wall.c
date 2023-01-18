@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:42:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/17 16:33:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/18 23:18:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ t_vector2	get_possible_movement_point(t_line wall, t_vector2 coord, int side)
 	t_vector2	on_wall;
 
 	on_wall = ft_closest_point(coord, wall);
-	cancel = ft_vector_resize(ft_vector2_sub(coord, on_wall),
-			COLLISION_OFFSET + MOVE_MIN);
+	cancel = ft_vector_resize(ft_vector_perpendicular(
+				ft_vector2_sub(wall.b, wall.a)), COLLISION_OFFSET + MOVE_MIN);
 	if (ft_line_side(wall, ft_vector2_add(on_wall, cancel)) == side)
 		return (ft_vector2_add(on_wall, cancel));
 	return (ft_vector2_sub(on_wall, cancel));
