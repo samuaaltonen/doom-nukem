@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/13 13:54:30 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/18 12:02:10 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	edit_up_key_changes(t_app *app, double increment)
 		&& !app->ceiling_edit)
 	{
 		app->active->decor++;
-		if (app->active->decor > MAX_DECOR_COUNT)
+		if (app->active->decor > MAX_DECOR_COUNT - 1)
 		{
 			app->active->decor = -1;
 			del_all_decor_interactions(app);
@@ -66,7 +66,7 @@ static void	edit_down_key_changes(t_app *app, double increment)
 		if (app->active->decor == -1)
 			del_all_decor_interactions(app);
 		if (app->active->decor < -1)
-			app->active->decor = MAX_DECOR_COUNT;
+			app->active->decor = MAX_DECOR_COUNT - 1;
 	}
 	if (app->decor_edit && app->active && !app->floor_edit
 		&& !app->ceiling_edit && app->active->decor != -1)
