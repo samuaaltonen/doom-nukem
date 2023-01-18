@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 17:04:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/18 23:59:44 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static void	update_elevation_velocity(t_app *app, double floor)
 	if (app->player.jetpack)
 		app->player.elevation_velocity = GRAVITY * JETPACK_FALL;
 	else if (app->player.flying
-		&& app->player.elevation > floor + ELEVATION_EPSILON)
+		|| app->player.elevation > floor + ELEVATION_EPSILON)
 		app->player.elevation_velocity += GRAVITY * app->conf->delta_time;
 	if (app->player.elevation < floor && app->player.elevation_velocity
 		< (floor - app->player.elevation) * -GRAVITY)
@@ -39,8 +39,7 @@ static void	update_elevation_velocity(t_app *app, double floor)
 			* -GRAVITY;
 	}
 	if (!app->player.flying
-		&& floor - app->player.elevation > -ELEVATION_EPSILON
-		&& floor - app->player.elevation < ELEVATION_EPSILON
+		&& fabs(floor - app->player.elevation) < ELEVATION_EPSILON
 		&& !app->player.jetpack)
 	{
 		app->player.flying = FALSE;
@@ -57,19 +56,28 @@ static void	update_elevation_velocity(t_app *app, double floor)
  */
 void	update_elevation(t_app *app)
 {
+	double	old_elevation;
 	double	floor;
 	double	ceil;
 
+	old_elevation = app->player.elevation;
 	floor = sector_floor_height(app, app->player.sector, app->player.pos);
 	ceil = sector_ceil_height(app, app->player.sector, app->player.pos);
-	if (!app->player.flying && app->player.elevation > floor)
-		app->player.elevation = floor;
 	update_elevation_velocity(app, floor);
-	if (ceil < app->player.elevation + app->player.height + COLLISION_CEIL)
-		app->player.elevation = ceil - app->player.height - COLLISION_CEIL;
-	else if (fabs(app->player.elevation_velocity) > MOVE_MIN)
+	if (fabs(app->player.elevation_velocity) > MOVE_MIN)
 		app->player.elevation += app->player.elevation_velocity
 			* app->conf->delta_time;
+	if (ceil < app->player.elevation + app->player.height + COLLISION_CEIL)
+		app->player.elevation = ceil - app->player.height - COLLISION_CEIL;
+	if (!app->player.flying && app->player.elevation > floor)
+		app->player.elevation = floor;
+	if (old_elevation >= floor && app->player.elevation < floor
+		&& app->player.elevation_velocity < 0)
+	{
+		app->player.flying = FALSE;
+		app->player.elevation = floor;
+		app->player.elevation_velocity = 0.0;
+	}
 }
 
 /**
