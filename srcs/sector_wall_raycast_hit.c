@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:06:55 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/05 12:14:14 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/18 22:46:20 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -165,8 +165,7 @@ t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 
 	ray_line.a = app->player.pos;
 	camera_x = 2 * x / (double) WIN_W - 1.0;
-	hit->ray = (t_vector2){
-		app->player.dir.x + app->player.cam.x * camera_x,
+	hit->ray = (t_vector2){app->player.dir.x + app->player.cam.x * camera_x,
 		app->player.dir.y + app->player.cam.y * camera_x};
 	ray_line.b.x = hit->ray.x + app->player.pos.x;
 	ray_line.b.y = hit->ray.y + app->player.pos.y;
@@ -176,9 +175,10 @@ t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 	hit->distance = ft_vector_length((t_vector2){
 			hit->position.x - app->player.pos.x,
 			hit->position.y - app->player.pos.y});
+	if (hit->distance < SMALL_DISTANCE_EPSILON)
+		hit->distance = SMALL_DISTANCE_EPSILON;
 	hit->texture_offset = ft_vector_length((t_vector2){
-			wall.a.x - hit->position.x,
-			wall.a.y - hit->position.y});
+			wall.a.x - hit->position.x, wall.a.y - hit->position.y});
 	hit->texture_offset -= floor(hit->texture_offset);
 	hit->distortion = cos(ft_vector_angle(hit->ray, app->player.dir));
 	hit->distance = hit->distortion * hit->distance;
