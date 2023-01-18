@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linedraw_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:08:45 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/17 16:01:27 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/18 19:46:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ t_bool	check_last_point(t_app *app)
 	t_vec2_lst	*prev;
 	int			points;
 
+	prev = NULL;
 	tmp = app->active;
 	points = 0;
 	while (tmp)
@@ -145,10 +146,9 @@ t_bool	check_last_point(t_app *app)
 	}
 	if (points < 2 || points >= MAX_SECTOR_CORNERS)
 		return (FALSE);
-	if (app->mouse_track.x == app->active->point.x
-		&& app->mouse_track.y == app->active->point.y
-		&& !ft_line_side((t_line){prev->point, app->active_last->point},
-		app->mouse_track))
+	if (prev && app->mouse_track.x == app->active->point.x && app->mouse_track.y
+		== app->active->point.y && !ft_line_side((t_line){prev->point,
+			app->active_last->point}, app->mouse_track))
 		return (TRUE);
 	return (FALSE);
 }
