@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:09:50 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/13 15:49:45 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:56:56 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	select_inventory(t_app *app, t_point mouse)
  * @param position
  * @param item
 */
-static void	render_inventory_capacity(t_app *app, t_rect position, int item)
+void	render_amount_info(t_app *app, t_rect position, int item)
 {
 	char	*amount;
 
@@ -74,17 +74,17 @@ static void	render_inventory_texts(t_app *app, int x, int y)
 	change_font(app, 15, TEXT);
 	render_text(app, (t_rect){10, 288, 150, 20}, "INVENTORY");
 	change_font(app, 11, TEXT);
-	render_inventory_capacity(app, (t_rect){x, y, 30, 20},
+	render_amount_info(app, (t_rect){x, y, 30, 20},
 		app->player.inventory.ammo);
-	render_inventory_capacity(app, (t_rect){x + 42, y, 30, 20},
+	render_amount_info(app, (t_rect){x + 42, y, 30, 20},
 		app->player.inventory.special_ammo);
-	render_inventory_capacity(app, (t_rect){x + 84, y, 30, 20},
+	render_amount_info(app, (t_rect){x + 84, y, 30, 20},
 		app->player.inventory.potion);
-	render_inventory_capacity(app, (t_rect){x + 128, y, 30, 20},
+	render_amount_info(app, (t_rect){x + 128, y, 30, 20},
 		app->player.inventory.antidote);
-	render_inventory_capacity(app, (t_rect){x + 170, y, 30, 20},
+	render_amount_info(app, (t_rect){x + 170, y, 30, 20},
 		app->player.inventory.key);
-	render_inventory_capacity(app, (t_rect){x, y + 43, 30, 20},
+	render_amount_info(app, (t_rect){x, y + 43, 30, 20},
 		app->player.inventory.jetpack);
 	render_text(app, (t_rect){30, y + 90, 255, 50}, "LEFT CLICK ITEMS AND USE \
 ARROW KEYS TO CHANGE THE AMOUNT.");

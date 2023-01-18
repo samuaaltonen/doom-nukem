@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/17 16:27:06 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/18 15:57:27 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -468,6 +468,7 @@ void			text_popup_explanation(t_app *app, int start_y, char *statics);
 void			sound_explanation(t_app *app, int start_y, char *statics);
 void			end_level_explanation(t_app *app, int start_y, char *statics);
 int				check_mouse(t_point screen_pos, t_rect rect);
+void			render_amount_info(t_app *app, t_rect position, int item);
 
 /**
  * Player

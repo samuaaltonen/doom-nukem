@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/16 13:10:24 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/18 16:06:43 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,31 @@
 */
 static void	main_menu(t_app *app, int start_y)
 {
-	if (!app->imported && !app->sectors)
-		render_text(app, (t_rect){20, start_y, 260, 15}, "OPEN FILE ( O )");
-	render_text(app, (t_rect){20, start_y + 15, 260, 15}, "SAVE FILE ( M )");
-	toggle_active_color(app, app->list_creation, "CREATE SECTOR ( C )",
-		(t_rect){20, start_y + 35, 260, 15});
-	render_text(app, (t_rect){20, start_y + 55, 260, 100}, "LEFT CLICK MOUSE TO\
- SELECT SECTOR. RIGHT CLICK TO UNSELECT. LEFT CLICK CORNER TO SELECT WALL ON\
- RIGHT. TO CREATE A MEMBER SECTOR, PRESS 'C' WHEN SECTOR IS SELECTED.");
-	render_text(app, (t_rect){20, start_y + 150, 260, 15}, "DIVIDE GRID\
- ( Z / X )");
-	render_text(app, (t_rect){20, start_y + 165, 260, 15}, "MOVE ( WASD )");
-	render_text(app, (t_rect){20, start_y + 180, 250, 15}, "ZOOM ( SCROLL )");
+	render_text(app, (t_rect){20, start_y , 260, 15}, "DIVIDE GRID ( Z / X )");
+	render_text(app, (t_rect){20, start_y + 15, 260, 15}, "MOVE ( WASD )");
+	render_text(app, (t_rect){20, start_y + 30, 260, 15}, "ZOOM ( SCROLL )");
+	render_text(app, (t_rect){20, start_y + 50, 270, 100}, "LEFT CLICK MOUSE TO\
+ SELECT SECTOR / POINT / OBJECT / PLAYER. POINT / OBJECT / MEMBER SECTOR\
+ REQUIRE AN ACTIVE SECTOR SELECTION FIRST.");
+	render_text(app, (t_rect){20, start_y + 120, 270, 15}, "RIGHT CLICK MOUSE\
+ TO UNSELECT.");
+	render_point(app, screen_to_world(app, (t_point){25, start_y + 145}),
+		3, PLAYER);
+	render_text(app, (t_rect){35, start_y + 140, 270, 15}, "PLAYER");
+	render_text(app, (t_rect){20, start_y + 155, 270, 30}, "PLAYER MUST BE\
+ PLACED INSIDE AN ACTIVE SECTOR.");
+	render_text(app, (t_rect){20, start_y + 200, 270, 15}, "SECTORS");
+	render_text(app, (t_rect){205, start_y + 200, 270, 15}, "/");
+	render_amount_info(app, (t_rect){180, 240, 90, 15}, app->sector_count);
+	render_amount_info(app, (t_rect){220, 240, 90, 15}, MAX_SECTOR_COUNT);
+	render_text(app, (t_rect){20, start_y + 215, 270, 15}, "OBJECTS");
+	render_text(app, (t_rect){205, start_y + 215, 270, 15}, "/");
+	render_amount_info(app, (t_rect){180, 255, 90, 15}, app->object_count);
+	render_amount_info(app, (t_rect){220, 255, 90, 15}, MAX_OBJECTS);
+	render_text(app, (t_rect){18, start_y + 230, 270, 15}, "INTERACTIONS");
+	render_text(app, (t_rect){205, start_y + 230, 270, 15}, "/");
+	render_amount_info(app, (t_rect){180, 270, 90, 15}, app->interaction_count);
+	render_amount_info(app, (t_rect){220, 270, 90, 15}, MAX_INTERACTIONS);
 }
 
 /**
