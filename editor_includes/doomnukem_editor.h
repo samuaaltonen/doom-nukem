@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/19 14:31:26 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 16:36:05 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +28,10 @@
 # define MAX_MEMBER_SECTORS 16
 # define MAX_WEAPONS 5
 # define MAX_ARMOR 5
-# define MAX_UNIQUE_OBJECTS 64
+# define MAX_UNIQUE_OBJECTS 17
 # define MAX_INTERACTIONS 64
 # define MAX_UNIQUE_INTERACTIONS 7
-# define MAX_DECOR_COUNT 10
+# define MAX_DECOR_COUNT 21
 # define MAX_AMMO 999
 # define MAX_ITEM_CAPACITY 99
 # define MAX_OBJECTS 128
@@ -195,7 +195,7 @@ typedef struct s_app
 	t_vector2		view_pos;
 	t_vector2		view_size;
 	t_vector2		zoom_area;
-	t_vector2		mouse_click;
+	t_point			mouse_pos;
 	t_vector2		mouse_track;
 	t_sector_lst	*sectors;
 	t_sector_lst	*active_sector;

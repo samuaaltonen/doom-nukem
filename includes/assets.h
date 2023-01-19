@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assets.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/19 15:32:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 15:42:16 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@
 # define METER_W					16
 # define METER_H					32
 # define OBJECT_ICON_W				128
-# define OBJECT_ICON_H				1792
+# define OBJECT_ICON_H				2688
 # define WEAPON_W					256
 # define WEAPON_H					256
 # define OBJECT_SMALL_W				3960

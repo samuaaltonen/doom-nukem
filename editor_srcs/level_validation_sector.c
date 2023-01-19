@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   level_validation_sector.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 14:45:06 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/13 15:48:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 16:06:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,5 +122,5 @@ void	level_validation_sector(t_app *app, t_export_sector *sector)
 		|| sector->parent_sector >= app->sector_count
 		|| sector->parent_sector < -1
 		|| !valid_linked_sectors(app, sector))
-		exit_error(MSG_ERROR_IMPORT_OBJECT);
+		exit_error(MSG_ERROR_IMPORT_SECTOR);
 }

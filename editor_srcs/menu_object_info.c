@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_object_info.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:04:04 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/13 15:52:09 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/19 16:51:09 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,29 +19,20 @@
  * @param app
  * @param movement
 */
-static void	render_object_movement_type(t_app *app, int movement)
+static void	render_object_movement_type(t_app *app, t_bool movement)
 {
 	change_font(app, 11, TEXT);
-	if (movement == 1)
+	if (movement == TRUE)
 	{
-		render_text(app, (t_rect){121, 185, 120, 15}, "MOVES");
-		render_text(app, (t_rect){175, 185, 120, 15}, "FOLLOWS");
+		render_text(app, (t_rect){121, 185, 120, 15}, "IN PLACE");
 		change_font(app, 11, ACTIVE_TEXT);
-		render_text(app, (t_rect){35, 185, 120, 15}, "- IN PLACE -");
-	}
-	else if (movement == 2)
-	{
-		render_text(app, (t_rect){45, 185, 120, 15}, "IN PLACE");
-		render_text(app, (t_rect){175, 185, 120, 15}, "FOLLOWS");
-		change_font(app, 11, ACTIVE_TEXT);
-		render_text(app, (t_rect){111, 185, 120, 15}, "- MOVES -");
+		render_text(app, (t_rect){35, 185, 120, 15}, "- FOLLOWS -");
 	}
 	else
 	{
-		render_text(app, (t_rect){45, 185, 120, 15}, "IN PLACE");
-		render_text(app, (t_rect){121, 185, 120, 15}, "MOVES");
+		render_text(app, (t_rect){45, 185, 120, 15}, "FOLLOWS");
 		change_font(app, 11, ACTIVE_TEXT);
-		render_text(app, (t_rect){165, 185, 120, 15}, "- FOLLOWS -");
+		render_text(app, (t_rect){165, 185, 120, 15}, "- IN PLACE -");
 	}
 }
 
@@ -54,7 +45,7 @@ static void	render_object_movement_type(t_app *app, int movement)
 static void	render_object_type_statics(t_app *app)
 {
 	change_font(app, 11, TEXT);
-	if (app->current_object->type < 6)
+	if (app->current_object->type <= MAX_SMALL_OBJECTS)
 	{
 		render_text(app, (t_rect){102, 120, 120, 15}, "CONSUMABLE");
 		render_text(app, (t_rect){40, 140, 120, 15}, "HEALTH");
@@ -62,7 +53,7 @@ static void	render_object_type_statics(t_app *app)
 		render_text(app, (t_rect){40, 155, 120, 15}, "DAMAGE");
 		render_text(app, (t_rect){210, 155, 120, 15}, "0");
 	}
-	if (app->current_object->type > 5 && app->current_object->type < 9)
+	else if (app->current_object->type <= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS)
 	{
 		render_text(app, (t_rect){120, 120, 120, 15}, "OBJECT");
 		render_text(app, (t_rect){40, 140, 120, 15}, "HEALTH");
@@ -70,7 +61,7 @@ static void	render_object_type_statics(t_app *app)
 		render_text(app, (t_rect){40, 155, 120, 15}, "DAMAGE");
 		render_text(app, (t_rect){210, 155, 120, 15}, "0");
 	}
-	if (app->current_object->type == 9 || app->current_object->type == 10)
+	else if (app->current_object->type <= MAX_UNIQUE_OBJECTS)
 	{
 		render_text(app, (t_rect){113, 120, 120, 15}, "MONSTER");
 		render_text(app, (t_rect){40, 140, 120, 15}, "HEALTH");
@@ -87,17 +78,17 @@ static void	render_object_type_statics(t_app *app)
 */
 static void	render_object_texts(t_app *app)
 {
-	int	pickable;
-	int	movement;
+	t_bool	pickable;
+	t_bool	movement;
 
-	pickable = 0;
-	movement = 0;
-	if (app->current_object->type < 6)
-		pickable = 1;
-	if (app->current_object->type < 9)
-		movement = 1;
-	if (app->current_object->type == 9)
-		movement = 2;
+	pickable = FALSE;
+	movement = FALSE;
+	if (app->current_object->type <= MAX_SMALL_OBJECTS)
+		pickable = TRUE;
+	else if (app->current_object->type <= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS)
+		movement = FALSE;
+	else if (app->current_object->type <= MAX_UNIQUE_OBJECTS)
+		movement = TRUE;
 	render_object_type_statics(app);
 	if (pickable)
 	{

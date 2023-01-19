@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/19 15:33:10 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 15:43:28 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define UI_FRAME_W					30
 # define UI_FRAME_H					30
 # define OBJECT_ICON_W				128
-# define OBJECT_ICON_H				1792
+# define OBJECT_ICON_H				2688
 # define MAX_BMP_OFFSET				32768
 # define MAX_BMP_WIDTH				32768
 # define MAX_BMP_HEIGHT				32768
@@ -55,9 +55,10 @@
 # define TEXTS_PATH			"assets/texts/texts.txt"
 # define MAX_TEXT_LINES 16
 # define MAX_TEXT_LINE_LENGTH 512
-# define MAX_SMALL_OBJECTS 5
-# define MAX_BIG_OBJECTS 3
+# define MAX_SMALL_OBJECTS 7
+# define MAX_BIG_OBJECTS 7
 # define MAX_ENEMY_TYPES 3
+# define MAX_DECOR_TYPES 4
 # define MSG_ERROR_IMPORT "Level file is invalid."
 # define MSG_ERROR_THREADS_MUTEX "Error with locking/unlocking a mutex."
 # define MSG_ERROR_IMPORT_SECTOR "Level file is invalid. Could not import \

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 22:35:19 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:13:49 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ static t_vector2	render_bullet(t_app *app, t_render_object *object,
 {
 	*sprite_id = PROJECTILE_SPRITE;
 	tex.x += 0.f;
-	tex.y += (app->bullets[object->id - MAX_OBJECTS].type - MAX_UNIQUE_OBJECTS
-			- 1) * TEX_PICKUP;
+	tex.y += (app->bullets[object->id - MAX_OBJECTS].type - 1) * TEX_PICKUP;
 	return (tex);
 }
 
@@ -62,17 +61,17 @@ void	objects_render(t_app *app, t_thread_data *thread)
 		object_type = app->objects[app->objectstack.objects[i].id].type;
 		if (app->objectstack.objects[i].id >= MAX_OBJECTS)
 			object_type = app->bullets[app->objectstack.objects[i].id
-				- MAX_OBJECTS].type;
+				- MAX_OBJECTS].type + MAX_OBJECT_TYPES;
 		if (object_type <= MAX_SMALL_OBJECTS)
 			object_render(app, &(app->objectstack.objects[i]), thread,
 				render_small);
 		else if (object_type <= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS)
 			object_render(app, &(app->objectstack.objects[i]), thread,
 				render_big);
-		else if (object_type <= MAX_UNIQUE_OBJECTS)
+		else if (object_type <= MAX_OBJECT_TYPES)
 			object_render(app, &(app->objectstack.objects[i]), thread,
 				render_enemy);
-		else if (object_type > MAX_UNIQUE_OBJECTS)
+		else if (object_type > MAX_OBJECT_TYPES)
 			object_render(app, &(app->objectstack.objects[i]), thread,
 				render_bullet);
 		i++;
