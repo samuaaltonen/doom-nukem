@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_move.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 13:21:17 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/17 16:03:22 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/19 16:38:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,18 +58,16 @@ static int	enemy_check_main(t_app *app, t_enemy_state *enemy, t_point info,
 	if (portal_id < 0 || app->sectors[info.y].wall_textures[info.x]
 		<= PARTIALLY_TRANSPARENT_TEXTURE_ID)
 		return (-1);
-	if (!portal_can_enter(app, ft_vec2_to_vec3(new.pos, new.elevation), 0.5f,
-			wall_line, app->objects[enemy->id].sector,
-			app->sectors[app->objects[enemy->id].sector].wall_types[info.x]))
+	if (!portal_can_enter(app, ft_vec2_to_vec3(new.pos, new.elevation),
+			wall_line, (t_vector3){app->objects[enemy->id].sector,
+			app->sectors[app->objects[enemy->id].sector].wall_types[info.x],
+				0.5}))
 		return (-1);
 	portal_id = enemy_move_check(app, new, portal_id, enemy);
 	if (portal_id < 0)
 		return (-1);
-	else
-	{
-		app->objects[enemy->id].sector = portal_id;
-		return (portal_id);
-	}
+	app->objects[enemy->id].sector = portal_id;
+	return (portal_id);
 }
 
 /**

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/19 16:36:05 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:21:40 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,10 @@
 # define RADIAN_IN_DEG 57.29578f
 # define MAP_SPEED 0.85f
 # define HEIGHT_INC 0.125f
-# define FILE_VERSION 3
 # define MAX_SEARCH_COUNT 100000
+# define MAX_GRAVITY -1
+# define MIN_GRAVITY -200
+# define DEFAULT_GRAVITY -20
 # define FILE_PATH "./test.test"
 # include <fcntl.h>
 # include <stdio.h>
@@ -231,6 +233,7 @@ typedef struct s_app
 	int				interaction_count;
 	int				selected[INVENTORY_SIZE];
 	double			import_progress;
+	int				gravity;
 }	t_app;
 
 /**

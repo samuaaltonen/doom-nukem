@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/19 18:12:50 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:21:55 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,13 +26,11 @@ void	app_init(t_app **app)
 /**
  * Initializes configuration struct.
  */
-int	config_init(t_app *app)
+void	config_init(t_app *app)
 {
-	if (!app)
-		return (0);
 	app->conf = (t_conf *)malloc(sizeof(t_conf));
 	if (!(app->conf))
-		return (0);
+		exit_error(MSG_ERROR_ALLOC);
 	ft_bzero(app->conf, sizeof(t_conf));
 	clock_gettime(CLOCK_REALTIME, &app->conf->fps_clock);
 	app->conf->fov = FOV;
@@ -42,7 +40,6 @@ int	config_init(t_app *app)
 	app->conf->fps_total = 0;
 	app->conf->frames_total = 0;
 	ft_strcpy(app->conf->fps_info, "FPS                 ");
-	return (1);
 }
 
 /**

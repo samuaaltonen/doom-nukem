@@ -3,62 +3,62 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/17 13:05:25 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/19 16:42:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PLAYER_H
 # define PLAYER_H
 
-# define DIRECTION_START_X 0.0
-# define DIRECTION_START_Y 1.0
-# define POSITION_START_X 0.5
-# define POSITION_START_Y 0.5
-# define ROTATION_SPEED 1.8
-# define MOVEMENT_SPEED 4.0
-# define RUNNING_SPEED 8.0
-# define FLYING_SPEED 2.0
-# define MOVE_RANGE 0.05
-# define MOVE_ACCEL 90.0
-# define MOVE_DECEL 5.0
-# define MOVE_MIN 0.001
-# define GRAVITY -20.0
-# define FALL_DAMAGE_FORCE_THRESHOLD -20.0
-# define FALL_DAMAGE_MULTIPLIER 3.0
-# define JUMP_FORCE 5.0
-# define JETPACK 1.0
-# define JETPACK_FALL 0.04
-# define JETPACK_ASCENT 4.0
-# define JETPACK_DESCENT -4.0
-# define ELEVATION_EPSILON 0.01
-# define MAX_STEP 0.3
-# define MAX_ANGLE 45.0
-# define HORIZON_UPPER_LIMIT 1.25
-# define HORIZON_LOWER_LIMIT -0.25
-# define PLAYER_HEIGHT_STANDING 0.58
-# define PLAYER_HEIGHT_CROUCHING 0.28
-# define PLAYER_HEIGHT_CHANGE_RATE 16.0
-# define COLLISION_OFFSET 0.25
-# define COLLISION_CEIL 0.125
-# define MAX_CONCURRENT_COLLISIONS 16
-# define MAX_COLLISION_POSITION_TRIES 320
-# define MAX_HP 200
-# define REGEN_TIME 5
+# define DIRECTION_START_X				0.0
+# define DIRECTION_START_Y				1.0
+# define POSITION_START_X				0.5
+# define POSITION_START_Y				0.5
+# define ROTATION_SPEED					1.8
+# define MOVEMENT_SPEED					4.0
+# define RUNNING_SPEED					8.0
+# define FLYING_SPEED					2.0
+# define MOVE_RANGE						0.05
+# define MOVE_ACCEL						90.0
+# define MOVE_DECEL						5.0
+# define MOVE_MIN						0.001
+# define GRAVITY						-20.0
+# define FALL_DAMAGE_FORCE_THRESHOLD	-20.0
+# define FALL_DAMAGE_MULTIPLIER			3.0
+# define JUMP_FORCE						5.0
+# define JETPACK						1.0
+# define JETPACK_FALL					0.04
+# define JETPACK_ASCENT					4.0
+# define JETPACK_DESCENT				-4.0
+# define ELEVATION_EPSILON				0.01
+# define MAX_STEP						0.3
+# define MAX_ANGLE						45.0
+# define HORIZON_UPPER_LIMIT			1.25
+# define HORIZON_LOWER_LIMIT			-0.25
+# define PLAYER_HEIGHT_STANDING			0.58
+# define PLAYER_HEIGHT_CROUCHING		0.28
+# define PLAYER_HEIGHT_CHANGE_RATE		16.0
+# define COLLISION_OFFSET				0.25
+# define COLLISION_CEIL					0.125
+# define MAX_CONCURRENT_COLLISIONS		16
+# define MAX_COLLISION_POSITION_TRIES	320
+# define MAX_HP							200
+# define REGEN_TIME						5
 
 /**
  * Movement direction enumeration.
  */
 typedef enum e_movement
 {
-	FORWARD = 0,
-	BACKWARD = 1,
-	LEFTWARD = 2,
-	RIGHTWARD = 3,
-	UPWARD = 4,
-	DOWNWARD = 5
+	FORWARD		= 0,
+	BACKWARD	= 1,
+	LEFTWARD	= 2,
+	RIGHTWARD	= 3,
+	UPWARD		= 4,
+	DOWNWARD	= 5
 }	t_movement;
 
 typedef enum e_collision
