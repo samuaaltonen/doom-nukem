@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assets.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/17 16:00:29 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/19 15:28:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@
 # define DEFAULT_AUDIO_SAMPLES		4096
 # define PROGRESS_BAR_FRAME_COLOR	0xff0099f2
 # define PROGRESS_BAR_COLOR			0xff00def2
-# define MAP_PATH			"./testeditor/test.test"
+# define MAP_PATH			"./test.test"
 # define MAX_SPRITES 5
 
 enum e_export_assets

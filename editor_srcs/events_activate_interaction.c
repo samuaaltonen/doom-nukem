@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_activate_interaction.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:18:12 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/13 14:01:58 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/19 15:24:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

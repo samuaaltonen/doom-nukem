@@ -3,14 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
+#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/16 22:35:57 by htahvana         ###   ########.fr        #
+#    Updated: 2023/01/19 15:26:56 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = doom-nukem
+EDITOR_NAME = level-editor
 
 CC = gcc
 PWD= $(shell pwd)
@@ -100,16 +101,100 @@ FILES = animation_create.c \
 		enemy_utils.c \
 		enemy_avoidance.c
 
+EDITOR_FILES = app.c \
+		editor.c \
+		editor_menu.c \
+		editor_ui.c \
+		events.c \
+		events_dispatch.c \
+		events_activate_interaction.c \
+		events_inventory.c \
+		events_keydown.c \
+		events_keyup.c \
+		events_menu.c \
+		events_mouse.c \
+		events_mouse_track.c \
+		events_mouse_wheel.c \
+		events_sector.c \
+		export.c \
+		image.c \
+		import.c \
+		interaction_checks.c \
+		interaction_tools.c \
+		interactions.c \
+		linedraw.c \
+		linedraw_utils.c \
+		list_tools.c \
+		lists.c \
+		main.c \
+		menu.c \
+		menu_interaction_explanations.c \
+		menu_interaction_explanations_extra.c \
+		menu_interaction_info.c \
+		menu_interaction_link_info.c \
+		menu_interaction_tools.c \
+		menu_inventory_info.c \
+		menu_object_info.c \
+		menu_player_info.c \
+		menu_sector_info.c \
+		menu_tools.c \
+		menu_wall_info.c \
+		menu_weapon_info.c \
+		object_tools.c \
+		objects.c \
+		player.c \
+		render.c \
+		render_extra.c \
+		render_grid.c \
+		render_text.c \
+		render_ui.c \
+		rle_compress.c \
+		rle_uncompress.c \
+		rle_utils.c \
+		sector.c \
+		sector_interactions.c \
+		sector_members.c \
+		sector_portal.c \
+		sector_tools.c \
+		tex_icons.c \
+		tools.c \
+		triangle.c \
+		utils.c \
+		utils_bmp.c \
+		utils_sdl.c \
+		import_interaction.c \
+		import_sector.c \
+		import_async.c \
+		import_player.c \
+		import_object.c \
+		export_assets_surface.c \
+		export_assets_wav.c \
+		export_assets_text.c \
+		export_player.c \
+		export_sector.c \
+		export_object.c \
+		export_interaction.c \
+		export_async.c \
+		level_validation_sector.c \
+		loading_screen.c
+
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a
 SDL2 = ./sdl/SDL2_build/lib/libSDL2.a
 
-SRC_DIR = ./srcs
-SRCS := $(patsubst %, $(SRC_DIR)/%, $(FILES))
+SRCS_DIR = ./srcs
+SRCS := $(patsubst %, $(SRCS_DIR)/%, $(FILES))
+
+EDITOR_SRCS_DIR = ./editor_srcs
+EDITOR_SRCS := $(patsubst %, $(EDITOR_SRCS_DIR)/%, $(EDITOR_FILES))
 
 BUILD_DIR = ./compiled
 OBJS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.o))
 DEPS = $(patsubst %, $(BUILD_DIR)/%, $(FILES:.c=.d))
+
+EDITOR_BUILD_DIR = ./editor_compiled
+EDITOR_OBJS = $(patsubst %, $(EDITOR_BUILD_DIR)/%, $(EDITOR_FILES:.c=.o))
+EDITOR_DEPS = $(patsubst %, $(EDITOR_BUILD_DIR)/%, $(EDITOR_FILES:.c=.d))
 
 SDL_DIR = ./sdl
 SDL_CONF = `sdl/SDL2_build/bin/sdl2-config --cflags --libs`
@@ -122,23 +207,40 @@ HEADERS = \
 	-I ./liblinearalgebra/includes \
 	-I ./sdl/SDL2-2.0.8/include
 
+EDITOR_HEADERS = \
+	-I ./editor_includes \
+	-I ./libft/includes \
+	-I ./liblinearalgebra/includes \
+	-I ./sdl/SDL2-2.0.8/include
+
 FLAGS = -MMD -Wall -Wextra -Werror -flto -Ofast -g
 
 LIBLINKS = -L ./libft -L ./liblinearalgebra -L/usr/local/lib \
 		-llinearalgebra -lft -lm
 
-all: $(NAME)
+all: $(NAME) $(EDITOR_NAME)
 
 $(NAME): $(LIBFT) $(LIBLINEARALGEBRA) $(SDL2) $(OBJS)
 	$(CC) $(OBJS) -o $(NAME) $(SDL_CONF) $(FLAGS) $(HEADERS) $(LIBLINKS)
 
-$(BUILD_DIR)/%.o: $(SRC_DIR)/%.c | $(BUILD_DIR)
+$(EDITOR_NAME): $(LIBFT) $(LIBLINEARALGEBRA) $(SDL2) $(EDITOR_OBJS)
+	$(CC) $(EDITOR_OBJS) -o $(EDITOR_NAME) $(SDL_CONF) $(FLAGS) $(EDITOR_HEADERS) $(LIBLINKS)
+
+$(BUILD_DIR)/%.o: $(SRCS_DIR)/%.c | $(BUILD_DIR)
 	$(CC) $(HEADERS) $(FLAGS) -c $< -o $@
 
 -include $(DEPS)
 
+$(EDITOR_BUILD_DIR)/%.o: $(EDITOR_SRCS_DIR)/%.c | $(EDITOR_BUILD_DIR)
+	$(CC) $(EDITOR_HEADERS) $(FLAGS) -c $< -o $@
+
+-include $(EDITOR_DEPS)
+
 $(BUILD_DIR):
 	mkdir -p $(BUILD_DIR)
+
+$(EDITOR_BUILD_DIR):
+	mkdir -p $(EDITOR_BUILD_DIR)
 
 $(LIBFT):
 	make -C ./libft
@@ -168,11 +270,13 @@ clean:
 	make clean -C ./libft
 	make clean -C ./liblinearalgebra
 	/bin/rm -rf $(BUILD_DIR)
+	/bin/rm -rf $(EDITOR_BUILD_DIR)
 
 fclean: clean clean-sdl
 	make fclean -C ./libft
 	make fclean -C ./liblinearalgebra
 	/bin/rm -f $(NAME)
+	/bin/rm -f $(EDITOR_NAME)
 
 re: fclean all
 
