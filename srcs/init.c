@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/19 17:23:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:54:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,15 +140,15 @@ void	define_enemy_1(t_app *app)
 void	define_enemy_2(t_app *app)
 {
 	app->enemy_def[2].state_count = 4;
-	app->enemy_def[2].range = 10.f;
-	app->enemy_def[2].speed = 3.5f;
-	app->enemy_def[2].attack_speed = 4.f;
+	app->enemy_def[2].range = 5.f;
+	app->enemy_def[2].speed = 1.5f;
+	app->enemy_def[2].attack_speed = 1.5f;
 	app->enemy_def[2].states[0][0] = 0.f;
 	app->enemy_def[2].states[0][1] = 1.f;
 	app->enemy_def[2].states[0][2] = 1.f;
 	app->enemy_def[2].states[1][0] = 1.f;
 	app->enemy_def[2].states[1][1] = 2.f;
-	app->enemy_def[2].states[1][2] = 2.5f;
+	app->enemy_def[2].states[1][2] = 1.5f;
 	app->enemy_def[2].states[2][0] = 2.f;
 	app->enemy_def[2].states[2][1] = 4.f;
 	app->enemy_def[2].states[2][2] = 2.f;

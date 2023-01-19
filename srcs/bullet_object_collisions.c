@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 21:15:09 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 21:19:26 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:45:23 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,17 +49,17 @@ static void	damage_enemy(t_app *app, int damage, t_enemy_state *enemy)
 static int	bullet_enemy_collision(t_app *app, t_bullet *bullet,
 		t_enemy_state *enemy)
 {
-	if (bullet->type > 12)
+	if (bullet->type > 2)
 	{
-		if (!enemy->dead && (in_range(bullet->start,
+		if (enemy->state != DEATH && (in_range(bullet->start,
 					app->objects[enemy->id].position,
-					app->bullet_def[bullet->type - 11].size.x)
+					app->bullet_def[bullet->type].size.x)
 				|| line_collision(app, bullet, enemy))
 			&& in_range_height(bullet->start_z,
 				app->objects[enemy->id].elevation + 0.5f,
-				app->bullet_def[bullet->type - 11].size.y))
+				app->bullet_def[bullet->type].size.y))
 		{
-			damage_enemy(app, app->bullet_def[bullet->type - 11].damage, enemy);
+			damage_enemy(app, app->bullet_def[bullet->type].damage, enemy);
 			kill_bullet(app, bullet);
 		}
 	}
@@ -104,15 +104,15 @@ void	bullet_player_collision(t_app *app)
 	{
 		if (bullet->type != -1)
 		{
-			if (bullet->type < 15)
+			if (bullet->type < 2)
 			{
 				if (in_range(app->player.pos, bullet->start,
-						app->bullet_def[bullet->type - 11].size.x)
+						app->bullet_def[bullet->type].size.x)
 					&& in_range_height(app->player.elevation
 						+ app->player.height, bullet->start_z,
-						app->bullet_def[bullet->type - 11].size.y))
+						app->bullet_def[bullet->type].size.y))
 				{
-					damage(app, app->bullet_def[bullet->type - 11].damage);
+					damage(app, app->bullet_def[bullet->type].damage);
 					kill_bullet(app, bullet);
 				}
 			}

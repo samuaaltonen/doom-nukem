@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 14:12:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/16 11:15:12 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/19 16:14:43 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ int	get_object_id(t_app *app, t_object *object)
 */
 void	change_object_id(t_app *app, int keycode)
 {
-	if (keycode == SDLK_LEFT && app->current_object->type > 1)
+	if (keycode == SDLK_LEFT && app->current_object->type > 2)
 		app->current_object->type--;
 	if (keycode == SDLK_RIGHT && app->current_object->type < MAX_UNIQUE_OBJECTS)
 		app->current_object->type++;

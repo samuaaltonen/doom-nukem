@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   engine.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/19 17:09:25 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:21:48 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,20 @@ enum e_objects {
 	ARMOR_PICKUP,
 	COIN_PICKUP,
 	HP_PICKUP,
-	JETPACK_PICKUP,
 	ANTIDOTE_PICKUP,
-	MONSTER1 = 9,
-	MONSTER2 = 10
+	JETPACK_PICKUP,
+	WEAPON1,
+	WEAPON2,
+	BIG1,
+	BIG2,
+	BIG3,
+	BIG4,
+	BIG5,
+	BIG6,
+	BIG7,
+	MONSTER1,
+	MONSTER2,
+	MONSTER3,
 };
 
 typedef struct s_export_asset

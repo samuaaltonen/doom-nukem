@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_sector.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 15:49:10 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/13 14:29:39 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/19 16:17:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,8 +62,8 @@ void	edit_left_key_changes(t_app *app, SDL_Keycode keycode)
 	if (app->object_menu || app->object_new)
 	{
 		app->current_object->type--;
-		if (app->current_object->type < 0)
-			app->current_object->type = MAX_UNIQUE_OBJECTS - 1;
+		if (app->current_object->type <= 0)
+			app->current_object->type = MAX_UNIQUE_OBJECTS;
 	}
 }
 
@@ -117,7 +117,7 @@ void	edit_right_key_changes(t_app *app, SDL_Keycode keycode)
 	if (app->object_menu || app->object_new)
 	{
 		app->current_object->type++;
-		if (app->current_object->type >= MAX_UNIQUE_OBJECTS)
-			app->current_object->type = 0;
+		if (app->current_object->type > MAX_UNIQUE_OBJECTS)
+			app->current_object->type = 1;
 	}
 }

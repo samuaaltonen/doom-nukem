@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_collision.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:17:11 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 22:49:53 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:19:50 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	object_hit(t_app *app, t_gameobject *obj)
 		app->player.inventory.potion++;
 	else if (obj->type == COIN_PICKUP)
 		app->player.inventory.key++;
-	if (obj->type < MONSTER1)
+	if (obj->type <= MAX_SMALL_OBJECTS)
 		obj->type = -1;
 }
 

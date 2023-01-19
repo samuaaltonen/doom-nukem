@@ -34,10 +34,10 @@ void	fire(t_app *app, t_vector3 target_dir, t_vector3 start, t_point info)
 	calc_end(app, &(app->bullets[i]), target_dir);
 	app->bullets[i].timer = ft_vector_length(
 			ft_vector2_sub(app->bullets[i].end, app->bullets[i].start))
-		/ app->bullet_def[app->bullets[i].type - 11].speed;
+		/ app->bullet_def[app->bullets[i].type].speed;
 	app->bullets[i].end = ft_vector2_normalize(
 			ft_vector2_sub(app->bullets[i].end, app->bullets[i].start));
-	if (app->bullets[i].type == 15)
+	if (app->bullets[i].type == 4)
 	{
 		app->bullets[i].timer = 0.25f;
 		app->bullets[i].end = (t_vector2){0.f, 0.f};
@@ -55,11 +55,11 @@ void	fire(t_app *app, t_vector3 target_dir, t_vector3 start, t_point info)
  */
 void	kill_bullet(t_app *app, t_bullet *bullet)
 {
-	if (bullet->type == 18)
+	if (bullet->type == 7)
 		melee(app, (t_vector3){0.f, 0.f, 0.f}, ft_vec2_to_vec3(
 				ft_vector2_sub(bullet->start, ft_vec2_mult(bullet->end, 0.15f)),
 				bullet->start_z - bullet->end_z * 0.15f),
-			(t_point){12, bullet->sector});
+			(t_point){1, bullet->sector});
 	bullet->type = -1;
 	app->bullets_active--;
 }
@@ -111,10 +111,10 @@ void	update_bullets(t_app *app)
 			continue ;
 		app->bullets[i].start = ft_vector2_add(app->bullets[i].start,
 				ft_vec2_mult(app->bullets[i].end, app->conf->delta_time
-					* app->bullet_def[app->bullets[i].type - 11].speed));
+					* app->bullet_def[app->bullets[i].type].speed));
 		app->bullets[i].start_z += app->bullets[i].end_z
 			* app->conf->delta_time
-			* app->bullet_def[app->bullets[i].type - 11].speed;
+			* app->bullet_def[app->bullets[i].type].speed;
 		if (app->bullets[i].timer > 0)
 			app->bullets[i].timer -= app->conf->delta_time;
 		else
