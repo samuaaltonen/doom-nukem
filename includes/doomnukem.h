@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/17 11:47:03 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/19 16:36:56 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,29 +35,41 @@
 # include "player.h"
 # include "interactions.h"
 
-//STATUS MACROS
-# define STATUS_TITLESCREEN 0
-# define STATUS_MAINMENU 1
-# define STATUS_GAME 2
-# define STATUS_PAUSEMENU 3
-# define STATUS_MAINOPTIONS 4
-# define STATUS_GAMEOPTIONS 5
-# define STATUS_GAMEOVER 6
-# define STATUS_CONTROLS 7
+/**
+ * Status enumeration
+ */
+enum e_status {
+	STATUS_TITLESCREEN,
+	STATUS_MAINMENU,
+	STATUS_GAME,
+	STATUS_PAUSEMENU,
+	STATUS_MAINOPTIONS,
+	STATUS_GAMEOPTIONS,
+	STATUS_GAMEOVER,
+	STATUS_CONTROLS
+};
 
-//BUTTON MACROS
-# define BUTTON_IDLE 0
-# define BUTTON_SELECT 1
-# define BUTTON_PRESS 2
+/**
+ * Button enumeration
+ */
+enum e_button {
+	BUTTON_IDLE,
+	BUTTON_SELECT,
+	BUTTON_PRESS
+};
 
-//COLORS
-# define WHITE 0xFFFFFFFF
-# define BLACK 0xFF000000
-# define DARK_RED 0xFFD50000
-# define DARK_GREY 0xFF242424
-# define GREY 0xFF9A9A9A
-# define CYAN 0xFF00FFFF
-# define GREEN 0xFF8CFF00
+/**
+ * Color enumeration
+ */
+enum e_color {
+	WHITE		= 0xFFFFFFFF,
+	BLACK		= 0xFF000000,
+	DARK_RED	= 0xFFD50000,
+	DARK_GREY	= 0xFF242424,
+	GREY		= 0xFF9A9A9A,
+	CYAN		= 0xFF00FFFF,
+	GREEN		= 0xFF8CFF00
+};
 
 /**
  * Integer type definitions
@@ -118,11 +130,11 @@ typedef struct s_enemy_def
 	float				states[4][3];
 }	t_enemy_def;
 
-typedef struct	s_bullet_def
+typedef struct s_bullet_def
 {
-	double	speed;
-	double	damage;
-	t_vector2	size;
+	double				speed;
+	double				damage;
+	t_vector2			size;
 }	t_bullet_def;
 
 typedef struct s_enemy_state
@@ -207,22 +219,22 @@ typedef struct s_app
 	int					sector_count;
 	t_gameobject		objects[MAX_OBJECTS];
 	float				object_states[MAX_OBJECTS];
-	t_bullet		bullets[MAX_TEMP_OBJECTS];
+	t_bullet			bullets[MAX_TEMP_OBJECTS];
 	int					bullets_active;
 	t_enemy_state		enemies[MAX_OBJECTS];
 	t_enemy_def			enemy_def[MAX_ENEMY_TYPES];
-	t_bullet_def	bullet_def[MAX_PROJECTILES];
+	t_bullet_def		bullet_def[MAX_PROJECTILES];
 	t_interaction		interactions[MAX_INTERACTIONS];
 	t_animation			animations[MAX_CONCURRENT_ANIMATIONS];
 	int					animation_count;
 	char				**texts;
 	int					text_lengths[MAX_TEXT_LINES];
 	t_textmodal			textmodal;
-	t_timer			button_timer;
+	t_timer				button_timer;
 	t_timer				regen_timer;
 	t_timer				shoot_timer;
 	t_timer				item_timer;
-	t_timer			energy_timer;
+	t_timer				energy_timer;
 }	t_app;
 
 /**
@@ -230,7 +242,7 @@ typedef struct s_app
  */
 void			sdl_init(t_app *app);
 void			app_init(t_app **app);
-int				config_init(t_app *app);
+void			config_init(t_app *app);
 void			load_assets(t_app *app);
 
 /**
@@ -264,7 +276,7 @@ void			level_validation_player(t_app *app);
 void			level_validation_objects(t_app *app);
 
 /**
- * error.c
+ * Errors
  */
 void			exit_error(char *message);
 
@@ -324,7 +336,7 @@ void			heal(t_app *app);
 void			shield(t_app *app);
 void			regen(t_app *app, int *value);
 void			damage(t_app *app, int dmg);
-void		energy(t_app *app, int mod);
+void			energy(t_app *app, int mod);
 
 /**
  * Collisions
@@ -339,10 +351,10 @@ t_bool			collision_possible(t_vector2 start_pos, t_vector2 end_pos,
 					t_line wall, t_bool is_member);
 t_vector2		get_possible_movement_point(t_line wall, t_vector2 coord,
 					int side);
-t_bool			portal_can_enter(t_app *app, t_vector3 pos, double height,
-					t_line wall, int source_sector, int target_sector);
-t_bool			portal_can_enter_(t_app *app, t_vector3 pos, double height,
-					t_line wall, int source_sector, int target_sector);
+t_bool			portal_can_enter(t_app *app, t_vector3 pos, t_line wall,
+					t_vector3 sectors);
+t_bool			projectile_can_enter(t_app *app, t_vector3 pos, t_line wall,
+					t_point sectors);
 void			portal_enter(t_app *app, int sector_id);
 t_bool			inside_sector(t_app *app, int sector_id, t_vector2 coord);
 void			check_player_sector(t_app *app, int old_sector,
@@ -454,7 +466,7 @@ void			do_nothing(t_app *app);
 void			main_options(t_app *app);
 void			game_options(t_app *app);
 void			fullscreen(t_app *app);
-void		controls(t_app *app);
+void			controls(t_app *app);
 
 /**
  * Render Game Status
@@ -466,10 +478,10 @@ void			render_pausemenu(t_app *app);
 void			render_options(t_app *app);
 void			render_gameover(t_app *app);
 void			render_hand(t_app *app, int x, int y);
-void		render_controls(t_app *app);
+void			render_controls(t_app *app);
 
 /*
-* AUDIO.C
+* Audio
 */
 void			play_music(t_app *app);
 void			play_sound(t_app *app, int audio_type);
@@ -478,7 +490,7 @@ void			unpause_audio(t_app *app);
 void			stop_audio(t_app *app);
 
 /**
- * utils_sdl
+ * Graphic utils
  */
 int				get_pixel_color(SDL_Surface *surface, int x, int y);
 int				shade_color(int color, int shade);
@@ -498,18 +510,18 @@ int				argb_to_int(t_color color);
 int				shade_depth(int color, float shade);
 
 /**
- * utils
+ * Other utils
  */
 void			map_coordinates(t_rect *src, t_rect *dst, t_point *point);
 void			clamp_int(int *number, int min, int max);
 
 /**
- * objects
+ * Objects
  */
 void			render_objects(t_app *app);
 void			object_render(t_app *app, t_render_object *object,
-	t_thread_data *thread, t_vector2 (*f)(
-		t_app *, t_render_object *, t_vector2, int *));
+					t_thread_data *thread, t_vector2 (*f)(
+						t_app *, t_render_object *, t_vector2, int *));
 void			objects_render(t_app *app, t_thread_data *thread);
 void			init_enemies(t_app *app);
 void			update_enemy_states(t_app *app);
@@ -526,11 +538,12 @@ void			bullet_enemy_collisions(t_app *app);
 void			calc_end(t_app *app, t_bullet *bullet, t_vector3 target_dir);
 void			bullet_test(t_app *app, t_bullet *bullet, t_bool init);
 void			objects_visible(t_app *app);
-void			object_frame(t_app *app, t_vector2 dir, t_render_object *object);
+void			object_frame(t_app *app, t_vector2 dir,
+					t_render_object *object);
 void			init_draw_area(t_render_object *object);
 int				object_tex_size(t_app *app, int id);
-void			draw_object_pixel(t_app *app, t_render_object *object, 
-		t_point window, int color);
+void			draw_object_pixel(t_app *app, t_render_object *object,
+					t_point window, int color);
 void			avoid_walls(t_app *app, t_enemy_state *enemy);
 void			turn_enemy(t_app *app, t_enemy_state *state);
 void			enemy_attack(t_app *app, t_enemy_state *state, int define);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_collision_wall.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:42:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/19 14:17:53 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/19 16:40:16 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,11 +81,12 @@ t_collision	collision_wall(t_app *app, int sector_id, int wall_id,
 	if (!collision_possible(app->player.pos, app->player.move_pos,
 			wall, sector_id == portal_id))
 		return (COLLISION_NONE);
-	if (portal_id != -1 &&  (app->sectors[sector_id].parent_sector > -1 || app->sectors[sector_id].wall_textures[wall_id]
-		> PARTIALLY_TRANSPARENT_TEXTURE_ID)
-		&& portal_can_enter(app,
-			ft_vec2_to_vec3(app->player.move_pos, app->player.elevation),
-			app->player.height, wall, app->player.sector, portal_id))
+	if (portal_id != -1 && (app->sectors[sector_id].parent_sector > -1
+			|| app->sectors[sector_id].wall_textures[wall_id]
+			> PARTIALLY_TRANSPARENT_TEXTURE_ID)
+		&& portal_can_enter(app, ft_vec2_to_vec3(app->player.move_pos,
+				app->player.elevation), wall, (t_vector3){app->player.sector,
+			portal_id, app->player.height}))
 		return (COLLISION_PORTAL);
 	if (app->player.total_collisions >= MAX_CONCURRENT_COLLISIONS - 1)
 	{

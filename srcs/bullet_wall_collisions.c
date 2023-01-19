@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bullet_wall_collisions.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 20:15:53 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 20:30:14 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/19 16:21:46 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ static t_bool	bullet_member_check(t_app *app, t_bullet *bullet)
 		if (!ft_line_intersection_segment((t_line){bullet->start, bullet->end},
 			wall_line, &(collision)))
 			continue ;
-		if (portal_can_enter_(app, ft_vec2_to_vec3(collision, bullet->start_z
+		if (projectile_can_enter(app, ft_vec2_to_vec3(collision, bullet->start_z
 					+ ft_vector_length(ft_vector2_sub(collision, bullet->start))
-					* bullet->end_z), 0.0f, wall_line, bullet->sector,
-				app->sectors[bullet->sector].parent_sector))
+					* bullet->end_z), wall_line, (t_point){bullet->sector,
+				app->sectors[bullet->sector].parent_sector}))
 		{
 			bullet->sector = app->sectors[bullet->sector].parent_sector;
 			return (TRUE);
@@ -56,9 +56,9 @@ static void	check_member_walls(t_app *app, t_bullet *bullet, int id)
 		if (!ft_line_intersection_segment((t_line){bullet->start, bullet->end},
 			wall_line, &(collision)))
 			continue ;
-		if (!portal_can_enter_(app, ft_vec2_to_vec3(collision, bullet->start_z
+		if (!projectile_can_enter(app, ft_vec2_to_vec3(collision, bullet->start_z
 					+ ft_vector_length(ft_vector2_sub(collision, bullet->start))
-					* bullet->end_z), 0.0f, wall_line, bullet->sector, id))
+					* bullet->end_z), wall_line, (t_point){bullet->sector, id}))
 			bullet->end = collision;
 		else
 		{
@@ -84,9 +84,9 @@ static t_bool	check_main_walls(t_app *app, t_bullet *bullet, int id)
 		return (TRUE);
 	dist = ft_vector_length(ft_vector2_sub(collision, bullet->start));
 	dist = bullet->start_z + dist * bullet->end_z;
-	if (!portal_can_enter_(app, ft_vec2_to_vec3(collision, dist), 0.0f,
-			wall_line, bullet->sector,
-			app->sectors[bullet->sector].wall_types[id]))
+	if (!projectile_can_enter(app, ft_vec2_to_vec3(collision, dist), wall_line,
+			(t_point){bullet->sector,
+				app->sectors[bullet->sector].wall_types[id]}))
 	{
 		bullet->end = collision;
 		sector_height_collision(app, bullet);

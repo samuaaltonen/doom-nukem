@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/19 15:33:10 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:11:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ typedef struct s_export_asset
 
 typedef struct s_level_header
 {
-	int				version;
+	int				gravity;
 	int				sector_count;
 	int				object_count;
 	int				interaction_count;

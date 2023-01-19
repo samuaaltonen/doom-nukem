@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/19 15:26:56 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/19 16:57:44 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,9 +20,15 @@ FILES = animation_create.c \
 		animation_progress.c \
 		app.c \
 		audio.c \
+		bullet_collisions.c \
+		bullet_object_collisions.c \
+		bullet_wall_collisions.c \
+		bullets.c \
 		button_function.c \
+		enemy_avoidance.c \
 		enemy_move.c \
 		enemy_states.c \
+		enemy_utils.c \
 		error.c \
 		events.c \
 		events_key.c \
@@ -30,11 +36,30 @@ FILES = animation_create.c \
 		events_window.c \
 		image.c \
 		import.c \
+		import_assets.c \
+		import_assets_surface.c \
+		import_assets_text.c \
+		import_assets_wav.c \
+		import_async.c \
+		import_interaction.c \
+		import_object.c \
+		import_player.c \
+		import_sector.c \
 		init.c \
 		interaction_check.c \
 		interaction_trigger.c \
+		level_validation.c \
+		level_validation_assets.c \
+		level_validation_interaction.c \
+		level_validation_object.c \
+		level_validation_player.c \
+		level_validation_sector.c \
 		main.c \
 		object_collision.c \
+		object_multithreading.c \
+		object_render_init.c \
+		object_render_utils.c \
+		object_render_work.c \
 		player_collision.c \
 		player_collision_portal.c \
 		player_collision_sector.c \
@@ -46,11 +71,18 @@ FILES = animation_create.c \
 		player_init.c \
 		player_move.c \
 		player_view.c \
-		bullets.c \
+		render_hand.c \
 		render_object.c \
-		render_status.c \
+		render_status_game.c \
+		render_status_gameover.c \
+		render_status_mainmenu.c \
+		render_status_options.c \
+		render_status_pausemenu.c \
+		render_status_titlescreen.c \
 		render_text.c \
 		render_ui.c \
+		rle_uncompress.c \
+		rle_utils.c \
 		sector_draw_ceiling.c \
 		sector_draw_floor.c \
 		sector_draw_partial.c \
@@ -72,42 +104,15 @@ FILES = animation_create.c \
 		time.c \
 		utils.c \
 		utils_color.c \
-		utils_sdl.c \
-		import_async.c \
-		rle_utils.c \
-		rle_uncompress.c \
-		render_hand.c \
-		import_sector.c \
-		import_player.c \
-		import_object.c \
-		import_interaction.c \
-		import_assets.c \
-		import_assets_surface.c \
-		import_assets_wav.c \
-		import_assets_text.c \
-		level_validation.c \
-		level_validation_sector.c \
-		level_validation_assets.c \
-		level_validation_interaction.c \
-		level_validation_player.c \
-		level_validation_object.c \
-		bullet_collisions.c \
-		bullet_wall_collisions.c \
-		object_render_init.c \
-		object_render_utils.c \
-		object_render_work.c \
-		object_multithreading.c \
-		bullet_object_collisions.c \
-		enemy_utils.c \
-		enemy_avoidance.c
+		utils_sdl.c
 
 EDITOR_FILES = app.c \
 		editor.c \
 		editor_menu.c \
 		editor_ui.c \
 		events.c \
-		events_dispatch.c \
 		events_activate_interaction.c \
+		events_dispatch.c \
 		events_inventory.c \
 		events_keydown.c \
 		events_keyup.c \
@@ -117,15 +122,30 @@ EDITOR_FILES = app.c \
 		events_mouse_wheel.c \
 		events_sector.c \
 		export.c \
+		export_assets_surface.c \
+		export_assets_text.c \
+		export_assets_wav.c \
+		export_async.c \
+		export_interaction.c \
+		export_object.c \
+		export_player.c \
+		export_sector.c \
 		image.c \
 		import.c \
+		import_async.c \
+		import_interaction.c \
+		import_object.c \
+		import_player.c \
+		import_sector.c \
 		interaction_checks.c \
 		interaction_tools.c \
 		interactions.c \
+		level_validation_sector.c \
 		linedraw.c \
 		linedraw_utils.c \
 		list_tools.c \
 		lists.c \
+		loading_screen.c \
 		main.c \
 		menu.c \
 		menu_interaction_explanations.c \
@@ -161,22 +181,7 @@ EDITOR_FILES = app.c \
 		triangle.c \
 		utils.c \
 		utils_bmp.c \
-		utils_sdl.c \
-		import_interaction.c \
-		import_sector.c \
-		import_async.c \
-		import_player.c \
-		import_object.c \
-		export_assets_surface.c \
-		export_assets_wav.c \
-		export_assets_text.c \
-		export_player.c \
-		export_sector.c \
-		export_object.c \
-		export_interaction.c \
-		export_async.c \
-		level_validation_sector.c \
-		loading_screen.c
+		utils_sdl.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a
