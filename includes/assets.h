@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/19 15:28:35 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 15:32:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,19 +40,21 @@
 # define METER_W					16
 # define METER_H					32
 # define OBJECT_ICON_W				128
-# define OBJECT_ICON_H				1408
+# define OBJECT_ICON_H				1792
 # define WEAPON_W					256
 # define WEAPON_H					256
 # define OBJECT_SMALL_W				3960
-# define OBJECT_SMALL_H				264
+# define OBJECT_SMALL_H				308
 # define OBJECT_BIG_W				11520
-# define OBJECT_BIG_H				384
+# define OBJECT_BIG_H				896
 # define PROJECTILE_W				44
 # define PROJECTILE_H				352
 # define ENEMY_1_W					11520
 # define ENEMY_1_H					1024
 # define ENEMY_2_W					11520
 # define ENEMY_2_H					1536
+# define ENEMY_3_W					11520
+# define ENEMY_3_H					640
 # define MAX_TEX_COUNT				79
 # define MAX_DECOR_COUNT			10
 # define MAX_BMP_OFFSET				32768
@@ -70,7 +72,7 @@
 # define PROGRESS_BAR_FRAME_COLOR	0xff0099f2
 # define PROGRESS_BAR_COLOR			0xff00def2
 # define MAP_PATH			"./test.test"
-# define MAX_SPRITES 5
+# define MAX_SPRITES 6
 
 enum e_export_assets
 {
@@ -93,6 +95,7 @@ enum e_export_assets
 	EXPORT_SPRITE,
 	EXPORT_MONSTER_1,
 	EXPORT_MONSTER_2,
+	EXPORT_MONSTER_3,
 	EXPORT_MUSIC,
 	EXPORT_SOUND_LASER,
 	EXPORT_SOUND_SHOT,
@@ -107,6 +110,7 @@ enum e_spritesheet {
 	PROJECTILE_SPRITE,
 	ENEMY_SPRITE_1,
 	ENEMY_SPRITE_2,
+	ENEMY_SPRITE_3
 };
 /**
  * Struct for font. 

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/16 19:06:04 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/19 15:29:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,21 +138,34 @@ void	define_enemy_1(t_app *app)
 	app->enemy_def[1].states[3][1] = 12.f;
 	app->enemy_def[1].states[3][2] = 5.f;
 }
+
+void	define_enemy_2(t_app *app)
+{
+	app->enemy_def[2].state_count = 4;
+	app->enemy_def[2].range = 10.f;
+	app->enemy_def[2].speed = 3.5f;
+	app->enemy_def[2].attack_speed = 4.f;
+	app->enemy_def[2].states[0][0] = 0.f;
+	app->enemy_def[2].states[0][1] = 1.f;
+	app->enemy_def[2].states[0][2] = 1.f;
+	app->enemy_def[2].states[1][0] = 1.f;
+	app->enemy_def[2].states[1][1] = 2.f;
+	app->enemy_def[2].states[1][2] = 2.5f;
+	app->enemy_def[2].states[2][0] = 2.f;
+	app->enemy_def[2].states[2][1] = 4.f;
+	app->enemy_def[2].states[2][2] = 2.f;
+	app->enemy_def[2].states[3][0] = 4.f;
+	app->enemy_def[2].states[3][1] = 5.f;
+	app->enemy_def[2].states[3][2] = 5.f;
+}
+
 void	define_enemies(t_app *app)
 {
 	define_bullets(app);
 	define_enemy_0(app);
 	define_enemy_1(app);
+	define_enemy_2(app);
 }
-/* 	app->enemy_def[2].state_count = 3;
-	app->enemy_def[2].states[0][0] = 0;
-	app->enemy_def[2].states[0][1] = 1;
-	app->enemy_def[2].states[1][0] = 1;
-	app->enemy_def[2].states[1][1] = 2;
-	app->enemy_def[2].states[2][0] = 3;
-	app->enemy_def[2].states[2][1] = 2;
-	app->enemy_def[2].states[3][0] = 0;
-	app->enemy_def[2].states[3][1] = 0; */
 
 void	init_enemies(t_app *app)
 {
