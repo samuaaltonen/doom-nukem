@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 12:22:28 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/06 16:16:04 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 14:31:02 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
  * @param header 
  * @return t_bool 
  */
-static t_bool	check_header(t_point *size, unsigned char *header)
+static t_bool	check_header(t_point *size, t_uint8 *header)
 {
 	size->x = *(t_uint32 *)&header[18];
 	size->y = *(t_uint32 *)&header[22];
@@ -67,13 +67,13 @@ static t_bool	read_pixels(SDL_Surface *surface, int fd)
  */
 static t_bool	skip_offset(int fd, int offset_length)
 {
-	unsigned char	*offset_data;
+	t_uint8	*offset_data;
 
 	if (!offset_length)
 		return (TRUE);
 	if (offset_length < 0 || offset_length > MAX_BMP_OFFSET)
 		return (FALSE);
-	offset_data = (unsigned char *)malloc(offset_length);
+	offset_data = (t_uint8 *)malloc(offset_length);
 	if (!offset_data)
 		return (FALSE);
 	if (read(fd, offset_data, offset_length) < 0)
@@ -103,7 +103,7 @@ SDL_Surface	*bmp_to_surface(const char *path)
 	if (fd < 0
 		|| read(fd, &header, 54) != 54
 		|| header[0] != 'B' || header[1] != 'M'
-		|| !check_header(&size, (unsigned char *)&header))
+		|| !check_header(&size, (t_uint8 *)&header))
 		return (NULL);
 	if (!skip_offset(fd, *(t_uint32 *)&header[10] - 54))
 		return (NULL);

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:48:10 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/05 13:04:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 14:29:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,8 +18,20 @@
 void	load_assets(t_app *app)
 {
 	app->assets.sprite = bmp_to_surface(PANELS_PATH);
+	if (!app->assets.sprite
+		|| app->assets.sprite->w != TEX_SIZE * MAX_TEX_COUNT
+		|| app->assets.sprite->h != TEX_SIZE)
+		exit_error(MSG_ERROR_LOAD_IMAGE);
 	app->assets.objects = bmp_to_surface(OBJECT_ICON_PATH);
+	if (!app->assets.objects
+		|| app->assets.objects->w != OBJECT_ICON_W
+		|| app->assets.objects->h != OBJECT_ICON_H)
+		exit_error(MSG_ERROR_LOAD_IMAGE);
 	app->assets.ui_frame = bmp_to_surface(UI_FRAME_PATH);
+	if (!app->assets.ui_frame
+		|| app->assets.ui_frame->w != UI_FRAME_W
+		|| app->assets.ui_frame->h != UI_FRAME_H)
+		exit_error(MSG_ERROR_LOAD_IMAGE);
 }
 
 /**
@@ -29,8 +41,10 @@ void	load_font(t_app *app)
 {
 	if (!app->assets.font.font)
 		app->assets.font.font = bmp_to_surface(FONT_PATH);
-	if (!app->assets.font.font)
-		exit_error(MSG_ERROR_FONT);
+	if (!app->assets.font.font
+		|| app->assets.font.font->w != FONT_W
+		|| app->assets.font.font->h != FONT_H)
+		exit_error(MSG_ERROR_LOAD_FONT);
 	change_font(app, 16, 0xFF000000);
 }
 

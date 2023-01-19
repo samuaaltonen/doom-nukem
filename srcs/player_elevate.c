@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/18 23:59:44 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 14:37:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ void	update_elevation(t_app *app)
 		app->player.elevation = ceil - app->player.height - COLLISION_CEIL;
 	if (!app->player.flying && app->player.elevation > floor)
 		app->player.elevation = floor;
-	if (old_elevation >= floor && app->player.elevation < floor
+	if (!app->player.jetpack && old_elevation >= floor
+		&& app->player.elevation < floor
 		&& app->player.elevation_velocity < 0)
 	{
 		app->player.flying = FALSE;
