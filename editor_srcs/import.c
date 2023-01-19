@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/19 17:16:59 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:26:59 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	import_level(t_app *app, t_thread_data *thread, char *path)
 		exit_error(MSG_ERROR_IMPORT);
 	ft_memcpy(&info.header, info.data, sizeof(t_level_header));
 	info.imported = sizeof(t_level_header);
-	app->gravity = info.header.gravity;
+	app->gravity = (double)info.header.gravity;
 	if (app->gravity < MIN_GRAVITY || app->gravity > MAX_GRAVITY)
 		app->gravity = DEFAULT_GRAVITY;
 	app->interaction_count = 0;

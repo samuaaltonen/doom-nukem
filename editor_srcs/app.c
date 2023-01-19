@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/17 15:42:55 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:31:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ int	app_init(t_app **app)
 	if (!(*app))
 		return (FALSE);
 	ft_bzero(*app, sizeof(t_app));
+	(*app)->gravity = DEFAULT_GRAVITY;
 	return (TRUE);
 }
 

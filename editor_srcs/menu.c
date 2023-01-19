@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/19 14:31:55 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:51:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,10 @@ static void	help_menu_texts(t_app *app)
 	else if (app->object_menu)
 		object_edit_menu(app);
 	else
+	{
 		main_menu(app, 40);
+		gravity_menu(app);
+	}
 	color_surface(app->assets.ui_frame, TEXT);
 	render_button_menu(app, mouse);
 }

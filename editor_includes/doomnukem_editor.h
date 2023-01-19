@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/19 17:16:54 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:52:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,9 @@
 # define MAP_SPEED 0.85f
 # define HEIGHT_INC 0.125f
 # define MAX_SEARCH_COUNT 100000
-# define MAX_GRAVITY -1
-# define MIN_GRAVITY -200
-# define DEFAULT_GRAVITY -20
+# define MAX_GRAVITY -1.0
+# define MIN_GRAVITY -50.0
+# define DEFAULT_GRAVITY -20.0
 # define FILE_PATH "./test.test"
 # include <fcntl.h>
 # include <stdio.h>
@@ -197,7 +197,6 @@ typedef struct s_app
 	t_vector2		view_pos;
 	t_vector2		view_size;
 	t_vector2		zoom_area;
-	t_vector2		mouse_click;
 	t_vector2		mouse_track;
 	t_sector_lst	*sectors;
 	t_sector_lst	*active_sector;
@@ -233,7 +232,7 @@ typedef struct s_app
 	int				interaction_count;
 	int				selected[INVENTORY_SIZE];
 	double			import_progress;
-	int				gravity;
+	double			gravity;
 }	t_app;
 
 /**
@@ -471,6 +470,7 @@ void			sound_explanation(t_app *app, int start_y, char *statics);
 void			end_level_explanation(t_app *app, int start_y, char *statics);
 int				check_mouse(t_point screen_pos, t_rect rect);
 void			render_amount_info(t_app *app, t_rect position, int item);
+void			gravity_menu(t_app *app);
 
 /**
  * Player
@@ -481,7 +481,6 @@ void			check_player_position(t_app *app);
 
 /**
  * Objects & Interactions
- * 
  */
 int				new_object(t_app *app);
 void			change_object_id(t_app *app, int keycode);

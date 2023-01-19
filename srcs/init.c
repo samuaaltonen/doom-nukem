@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/19 15:57:47 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:23:11 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	app_init(t_app **app)
 	if (!(*app))
 		exit_error(NULL);
 	ft_bzero(*app, sizeof(t_app));
+	(*app)->gravity = DEFAULT_GRAVITY;
 }
 
 /**

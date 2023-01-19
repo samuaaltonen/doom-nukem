@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/19 16:57:44 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/19 18:52:50 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -148,6 +148,7 @@ EDITOR_FILES = app.c \
 		loading_screen.c \
 		main.c \
 		menu.c \
+		menu_gravity.c \
 		menu_interaction_explanations.c \
 		menu_interaction_explanations_extra.c \
 		menu_interaction_info.c \

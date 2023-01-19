@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 21:47:27 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:24:51 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,9 @@ void	import_level(t_app *app, t_thread_data *thread, char *path)
 		|| sizeof(t_level_header) >= (size_t)(info.length))
 		exit_error(MSG_ERROR_IMPORT);
 	ft_memcpy(&info.header, info.data, sizeof(t_level_header));
+	app->gravity = (double)info.header.gravity;
+	if (app->gravity < MIN_GRAVITY || app->gravity > MAX_GRAVITY)
+		app->gravity = DEFAULT_GRAVITY;
 	info.imported = sizeof(t_level_header);
 	import_update_progress(&info);
 	import_sectors(app, &info);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/19 15:14:56 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:38:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,9 @@
 # define MAX_UNIQUE_INTERACTIONS 7
 # define PARTIALLY_TRANSPARENT_TEXTURE_ID 3
 # define FULLY_TRANSPARENT_TEXTURE_ID 4
+# define MAX_GRAVITY -1.0
+# define MIN_GRAVITY -50.0
+# define DEFAULT_GRAVITY -20.0
 
 /**
  * Struct for threads about their specific identifiers and locks for signaling.

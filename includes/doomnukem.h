@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/19 16:36:56 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 17:24:16 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -208,6 +208,7 @@ typedef struct s_app
 	t_assets			assets;
 	t_audio				audio;
 	t_point				mouse_pos;
+	double				gravity;
 	int					occlusion_top[WIN_W];
 	int					occlusion_bottom[WIN_W];
 	float				depthmap[WIN_H / 2][WIN_W];
