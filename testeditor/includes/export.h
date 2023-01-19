@@ -6,12 +6,18 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 21:55:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 14:12:56 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef EXPORT_H
 # define EXPORT_H
+# define FONT_W						416
+# define FONT_H						64
+# define UI_FRAME_W					30
+# define UI_FRAME_H					30
+# define OBJECT_ICON_W				128
+# define OBJECT_ICON_H				1408
 # define MAX_BMP_OFFSET				32768
 # define MAX_BMP_WIDTH				32768
 # define MAX_BMP_HEIGHT				32768

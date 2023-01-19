@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/18 16:06:43 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/19 14:31:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 */
 static void	main_menu(t_app *app, int start_y)
 {
-	render_text(app, (t_rect){20, start_y , 260, 15}, "DIVIDE GRID ( Z / X )");
+	render_text(app, (t_rect){20, start_y, 260, 15}, "DIVIDE GRID ( Z / X )");
 	render_text(app, (t_rect){20, start_y + 15, 260, 15}, "MOVE ( WASD )");
 	render_text(app, (t_rect){20, start_y + 30, 260, 15}, "ZOOM ( SCROLL )");
 	render_text(app, (t_rect){20, start_y + 50, 270, 100}, "LEFT CLICK MOUSE TO\
