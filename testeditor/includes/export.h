@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 21:55:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 15:11:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@
 # define OBJECT_ICON_PATH	"../assets/images/Objects_icons.bmp"
 # define MONSTER_1_PATH		"../assets/images/Monster1_full_sheet.bmp"
 # define MONSTER_2_PATH		"../assets/images/Monster2_full_sheet.bmp"
+# define MONSTER_3_PATH		"../assets/images/Monster3_full_sheet.bmp"
 # define SPRITE_PATH		"../assets/images/Projectiles.bmp"
 # define WEAPON_HD_PATH		"../assets/images/weapon_cannon4.bmp"
 # define MUSIC_PATH			"../assets/sounds/title_music.wav"
@@ -50,7 +51,7 @@
 # define MAX_TEXT_LINE_LENGTH 512
 # define MAX_SMALL_OBJECTS 5
 # define MAX_BIG_OBJECTS 3
-# define MAX_ENEMY_TYPES 2
+# define MAX_ENEMY_TYPES 3
 # define MSG_ERROR_IMPORT "Level file is invalid."
 # define MSG_ERROR_THREADS_MUTEX "Error with locking/unlocking a mutex."
 # define MSG_ERROR_IMPORT_SECTOR "Level file is invalid. Could not import \
@@ -83,6 +84,7 @@ enum e_export_assets
 	EXPORT_SPRITE,
 	EXPORT_MONSTER_1,
 	EXPORT_MONSTER_2,
+	EXPORT_MONSTER_3,
 	EXPORT_MUSIC,
 	EXPORT_SOUND_LASER,
 	EXPORT_SOUND_SHOT,

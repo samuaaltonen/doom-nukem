@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_assets_surface.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:57:52 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 21:46:41 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 15:12:32 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,4 +113,5 @@ void	export_surfaces(t_import_info *info, int fd)
 	export_surface(info, EXPORT_SPRITE, fd, SPRITE_PATH);
 	export_surface(info, EXPORT_MONSTER_1, fd, MONSTER_1_PATH);
 	export_surface(info, EXPORT_MONSTER_2, fd, MONSTER_2_PATH);
+	export_surface(info, EXPORT_MONSTER_3, fd, MONSTER_3_PATH);
 }
