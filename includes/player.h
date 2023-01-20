@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/17 13:05:25 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/20 14:09:06 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # define MOVEMENT_SPEED 4.0
 # define RUNNING_SPEED 8.0
 # define FLYING_SPEED 2.0
+# define FLYING_IDLE 1.0
 # define MOVE_RANGE 0.05
 # define MOVE_ACCEL 90.0
 # define MOVE_DECEL 5.0

@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/17 13:09:18 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/20 14:09:58 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,19 @@ void	player_control(t_app *app)
 	if (!app->player.jetpack && app->conf->keystates & SHIFT)
 		app->player.move_speed = RUNNING_SPEED;
 	else if (app->player.jetpack)
-		app->player.move_speed = FLYING_SPEED;
+		app->player.move_speed = FLYING_IDLE;
 	else
 		app->player.move_speed = MOVEMENT_SPEED;
 	if (app->conf->keystates & C)
 		jetpack(app);
 	if ((app->conf->keystates & SPACE || app->conf->keystates & CTRL) && app->player.jetpack)
+	{
 		energy(app, -4);
+		app->player.move_speed = FLYING_SPEED;
+	}
+		
 	else if (app->player.jetpack)
-		energy(app, -2);
+		energy(app, -1);
 	else
 		energy(app, 1);
 	if (app->conf->keystates & CTRL && !app->player.jetpack)
