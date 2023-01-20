@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/17 11:53:10 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:13:16 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,17 +87,23 @@ void	hud_quickslot(t_app *app, t_rect rect, char *slot)
 	}
 	if (!amount || !sprite)
 		return ;
-	render_text_prompt(app, rect, 1, slot);
-	rect.x += 8;
-	rect.y += 32;
-	rect.w /= 3;
-	rect.h /= 3;
-	render_ui_element(app, sprite, rect);
-	rect.x += 32;
-	rect.y += 6;
-	rect.w *= 3;
-	rect.h *= 3;
-	render_text(app, rect, amount);
+	if (check_timer(&app->item_timer))
+	{
+		render_text_prompt(app, rect, 1, slot);
+		rect.x += 8;
+		rect.y += 32;
+		rect.w /= 3;
+		rect.h /= 3;
+		render_ui_element(app, sprite, rect);
+		rect.x += 32;
+		rect.y += 6;
+		rect.w *= 3;
+		rect.h *= 3;
+		render_text(app, rect, amount);
+	}
+	else
+		render_text_prompt(app, rect, 1, ft_itoa((int)(app->item_timer.seconds - app->item_timer.delta_seconds)));
+
 	free(amount);
 }
 
@@ -341,6 +347,14 @@ void	render_ui_element(t_app *app, SDL_Surface *elem, t_rect area)
 	blit_surface(elem, &src, app->surface, &area);
 }
 
+/**
+ * @brief Checks if the mouse is within the given rectangle.
+ * Returns 1 if true or 0 if false.
+ * 
+ * @param app
+ * @param rect
+ * @return int
+ */
 int	check_mouse(t_app *app, t_rect rect)
 {
 	if (app->mouse_pos.x >= rect.x

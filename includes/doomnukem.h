@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/17 11:47:03 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:09:30 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -180,6 +180,7 @@ typedef struct s_timer
 {
 	struct timespec		start;
 	double				seconds;
+	double				delta_seconds;
 }	t_timer;
 
 /**
@@ -207,22 +208,22 @@ typedef struct s_app
 	int					sector_count;
 	t_gameobject		objects[MAX_OBJECTS];
 	float				object_states[MAX_OBJECTS];
-	t_bullet		bullets[MAX_TEMP_OBJECTS];
+	t_bullet			bullets[MAX_TEMP_OBJECTS];
 	int					bullets_active;
 	t_enemy_state		enemies[MAX_OBJECTS];
 	t_enemy_def			enemy_def[MAX_ENEMY_TYPES];
-	t_bullet_def	bullet_def[MAX_PROJECTILES];
+	t_bullet_def		bullet_def[MAX_PROJECTILES];
 	t_interaction		interactions[MAX_INTERACTIONS];
 	t_animation			animations[MAX_CONCURRENT_ANIMATIONS];
 	int					animation_count;
 	char				**texts;
 	int					text_lengths[MAX_TEXT_LINES];
 	t_textmodal			textmodal;
-	t_timer			button_timer;
+	t_timer				button_timer;
 	t_timer				regen_timer;
 	t_timer				shoot_timer;
 	t_timer				item_timer;
-	t_timer			energy_timer;
+	t_timer				energy_timer;
 }	t_app;
 
 /**
@@ -324,7 +325,7 @@ void			heal(t_app *app);
 void			shield(t_app *app);
 void			regen(t_app *app, int *value);
 void			damage(t_app *app, int dmg);
-void		energy(t_app *app, int mod);
+void			energy(t_app *app, int mod);
 
 /**
  * Collisions
@@ -454,7 +455,7 @@ void			do_nothing(t_app *app);
 void			main_options(t_app *app);
 void			game_options(t_app *app);
 void			fullscreen(t_app *app);
-void		controls(t_app *app);
+void			controls(t_app *app);
 
 /**
  * Render Game Status
@@ -466,7 +467,7 @@ void			render_pausemenu(t_app *app);
 void			render_options(t_app *app);
 void			render_gameover(t_app *app);
 void			render_hand(t_app *app, int x, int y);
-void		render_controls(t_app *app);
+void			render_controls(t_app *app);
 
 /*
 * AUDIO.C
