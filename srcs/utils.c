@@ -3,15 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:48:10 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/09 12:58:59 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/20 11:28:33 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
+/**
+ * @brief Maps the point given from the source rectangle to the appropiate 
+ * coordinates on the destination rectangle.
+ * 
+ * @param src 
+ * @param dst 
+ * @param point 
+ */
 void	map_coordinates(t_rect *src, t_rect *dst, t_point *point)
 {
 	point->x = point->x * ((float)dst->w / (float)src->w) + dst->x;

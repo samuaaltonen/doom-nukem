@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/20 11:13:16 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/20 13:00:15 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ static void	ui_midframe(t_app *app, t_rect area, int size);
 static void	ui_bottomframe(t_app *app, t_rect area, int size);
 static void	fill_meter(t_app *app, t_rect area, int type, int id);
 static void	player_status_meter(t_app *app, t_rect area, int value, int color);
+static void energy_meter(t_app *app, t_rect area);
 
 /**
  * Renders all elements of the HUD
@@ -27,6 +28,7 @@ void	render_ui(t_app *app)
 	render_crosshair(app);
 	render_text_prompt(app, (t_rect){10, 10, 112, 32}, 1, app->conf->fps_info);
 	render_player_status(app);
+	energy_meter(app, (t_rect){960, 608, 100, 8});
 	render_equipment(app);
 }
 
@@ -310,6 +312,26 @@ static void	player_status_meter(t_app *app, t_rect area, int value, int color)
 		area.x += 20;
 		meter_value -= 40;
 		i--;
+	}
+}
+
+static void energy_meter(t_app *app, t_rect area)
+{
+	int	x;
+	int	y;
+
+	x = area.x;
+	y = area.y;
+	while (y < area.y + area.h)
+	{
+		while (x < area.x + area.w)
+		{
+			if (x <= area.x + app->player.inventory.special_ammo / 2)
+				put_pixel_to_surface(app->surface, x, y, GREEN);
+			x++;
+		}
+		x = area.x;
+		y++;
 	}
 }
 
