@@ -6,12 +6,12 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/19 18:52:50 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/23 15:31:06 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = doom-nukem
-EDITOR_NAME = level-editor
+EDITOR_NAME = editor
 
 CC = gcc
 PWD= $(shell pwd)
@@ -182,7 +182,8 @@ EDITOR_FILES = app.c \
 		triangle.c \
 		utils.c \
 		utils_bmp.c \
-		utils_sdl.c
+		utils_sdl.c \
+		exit.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/23 14:33:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:35:21 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,9 @@
 # define MAX_GRAVITY -1.0
 # define MIN_GRAVITY -50.0
 # define DEFAULT_GRAVITY -20.0
-# define FILE_PATH "./test.test"
+# define MAX_LEVEL 999
+# define LEVEL_IDENTIFIER "level-"
+# define FILE_NAME_LENGTH 9
 # include <fcntl.h>
 # include <stdio.h>
 # include <math.h>
@@ -232,6 +234,7 @@ typedef struct s_app
 	t_interaction	interactions[MAX_INTERACTIONS];
 	int				interaction_count;
 	int				selected[INVENTORY_SIZE];
+	char			filename[FILE_NAME_LENGTH];
 	double			import_progress;
 	double			gravity;
 }	t_app;
@@ -251,6 +254,7 @@ typedef struct s_rect
  * Messages
  */
 void			exit_error(char *message);
+void			exit_success(char *message);
 
 /**
  * Configuration
@@ -372,11 +376,12 @@ t_vec2_lst		*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point);
 /**
  * Import
  */
+void			import_init(t_app *app, const char *level);
 void			render_loading(t_app *app, t_bool dispatch_events);
 void			uncompression_update_progress(t_import_info *info);
 void			import_set_complete(t_import_info *info);
 void			import_file(t_app *app);
-void			import_level(t_app *app, t_thread_data *thread, char *path);
+void			import_level(t_app *app, t_thread_data *thread);
 void			import_sectors(t_app *app, t_import_info *info);
 void			import_player(t_app *app, t_import_info *info);
 void			import_objects(t_app *app, t_import_info *info);

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/23 14:38:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:04:37 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,6 @@ void	export_level(t_app *app, t_thread_data *thread, char *path)
 	export_player(app, fd, &info);
 	export_objects(app, fd, &info);
 	export_interactions(app, fd, &info);
-	ft_printf("%d\n", app->export_assets);
 	if (app->export_assets)
 	{
 		export_surfaces(&info, fd);

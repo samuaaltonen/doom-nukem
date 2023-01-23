@@ -6,11 +6,31 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/19 18:26:59 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:36:21 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
+
+/**
+ * @brief Initializes import level file name.
+ * 
+ * @param app 
+ * @param level 
+ */
+void	import_init(t_app *app, const char *level)
+{
+	int	level_number;
+
+	level_number = ft_atoi(level);
+	if (level_number < 0 || level_number > MAX_LEVEL)
+		exit_error(MSG_ERROR_LEVEL_NUMBER);
+	ft_bzero((t_uint8 *)&app->filename, FILE_NAME_LENGTH);
+	ft_memcpy((t_uint8 *)&app->filename, LEVEL_IDENTIFIER,
+		ft_strlen(LEVEL_IDENTIFIER));
+	ft_memcpy((t_uint8 *)&app->filename + ft_strlen(LEVEL_IDENTIFIER), level,
+		ft_strlen(level));
+}
 
 /**
  * @brief Imports all data from level file.
@@ -19,13 +39,13 @@
  * @param thread 
  * @param path 
  */
-void	import_level(t_app *app, t_thread_data *thread, char *path)
+void	import_level(t_app *app, t_thread_data *thread)
 {
 	t_import_info	info;
 
 	info.data = NULL;
 	info.thread = thread;
-	rle_uncompress_data(&info, path, &info.data, &info.length);
+	rle_uncompress_data(&info, app->filename, &info.data, &info.length);
 	if (!info.data
 		|| sizeof(t_level_header) > (size_t)(info.length))
 		exit_error(MSG_ERROR_IMPORT);

@@ -6,11 +6,34 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:51:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 22:26:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:38:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
+
+/**
+ * @brief Checks if a file exists with data. If not, tries to create it.
+ * 
+ * @param path 
+ * @return t_bool 
+ */
+static t_bool	level_file_exists(char *path)
+{
+	t_bool	exists;
+	t_uint8	buffer[1];
+	int		fd;
+
+	fd = open(path, O_RDWR | O_CREAT, 0644);
+	if (fd < 0)
+		exit_error(MSG_ERROR_FILE_OPEN);
+	if (read(fd, &buffer, 1) == 1)
+		exists = TRUE;
+	else
+		exists = FALSE;
+	close(fd);
+	return (exists);
+}
 
 /**
  * @brief Updates progress for the main thread.
@@ -68,7 +91,7 @@ void	*async_load(void *data)
 
 	thread = (t_thread_data *)data;
 	app = (t_app *)thread->app;
-	import_level(app, thread, FILE_PATH);
+	import_level(app, thread);
 	pthread_exit(NULL);
 }
 
@@ -82,6 +105,8 @@ void	import_file(t_app *app)
 {
 	t_thread_data	thread;
 
+	if (!level_file_exists(app->filename))
+		return ;
 	thread.app = app;
 	app->import_progress = 0.0;
 	if (pthread_mutex_init(&thread.lock, NULL)
@@ -100,7 +125,6 @@ void	import_file(t_app *app)
 		render_loading(app, TRUE);
 		if (pthread_mutex_unlock(&thread.lock))
 			exit_error(MSG_ERROR_THREADS_MUTEX);
-		SDL_Delay(1);
 	}
 	render_loading(app, TRUE);
 }

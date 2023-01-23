@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:44:12 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/23 14:32:27 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:34:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	*async_save(void *data)
 
 	thread = (t_thread_data *)data;
 	app = (t_app *)thread->app;
-	export_level(app, thread, FILE_PATH);
+	export_level(app, thread, app->filename);
 	pthread_exit(NULL);
 }
 
