@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/19 17:24:16 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:04:09 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -352,7 +352,7 @@ t_bool			collision_possible(t_vector2 start_pos, t_vector2 end_pos,
 					t_line wall, t_bool is_member);
 t_vector2		get_possible_movement_point(t_line wall, t_vector2 coord,
 					int side);
-t_bool			portal_can_enter(t_app *app, t_vector3 pos, t_line wall,
+t_bool			portal_can_enter(t_app *app, t_vector3 pos,
 					t_vector3 sectors);
 t_bool			projectile_can_enter(t_app *app, t_vector3 pos, t_line wall,
 					t_point sectors);
