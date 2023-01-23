@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:36:43 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/23 14:49:05 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:36:03 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static int	find_max(t_app *app, SDL_Surface *asset)
 {
 	if (asset == app->assets.sprite)
 		return (MAX_TEX_COUNT);
+	if (asset == app->assets.objects && app->active)
+		return (MAX_DECOR_COUNT);
 	if (asset == app->assets.objects)
 		return (MAX_UNIQUE_OBJECTS);
 	exit_error("Error: Could not display menu icons.");
@@ -83,8 +85,10 @@ void	render_icons(t_app *app, t_point point, int id, SDL_Surface *asset)
 	while (++index < 5)
 	{
 		tex = TEX_SIZE * ((index + id - 2) % (find_max(app, asset)));
-		if (tex < 0 && asset == app->assets.objects)
+		if (tex < 0 && asset == app->assets.objects && !app->active)
 			tex += TEX_SIZE * MAX_UNIQUE_OBJECTS;
+		if (tex < 0 && asset == app->assets.objects && app->active)
+			tex += TEX_SIZE * MAX_DECOR_COUNT;
 		if (asset == app->assets.objects)
 			set_icon_rect(&src, (t_point){0, tex},
 				(t_point){TEX_SIZE, TEX_SIZE});
