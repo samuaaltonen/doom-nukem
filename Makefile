@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/19 18:52:50 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/23 18:13:48 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,7 +104,8 @@ FILES = animation_create.c \
 		time.c \
 		utils.c \
 		utils_color.c \
-		utils_sdl.c
+		utils_sdl.c \
+		random.c
 
 EDITOR_FILES = app.c \
 		editor.c \

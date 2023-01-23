@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/23 16:04:09 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/23 18:12:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -515,6 +515,7 @@ int				shade_depth(int color, float shade);
  */
 void			map_coordinates(t_rect *src, t_rect *dst, t_point *point);
 void			clamp_int(int *number, int min, int max);
+double			ft_random_double(t_app *app, double max);
 
 /**
  * Objects
