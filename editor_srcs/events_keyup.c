@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_keyup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/17 11:58:16 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:32:37 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

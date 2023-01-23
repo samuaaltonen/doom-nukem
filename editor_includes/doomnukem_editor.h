@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/19 18:55:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:33:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -220,6 +220,7 @@ typedef struct s_app
 	t_interaction	*current_interaction;
 	t_object		*current_object;
 	t_bool			imported;
+	t_bool			export_assets;
 	t_bool			mouse_down;
 	int				sector_count;
 	int				movement_speed;
