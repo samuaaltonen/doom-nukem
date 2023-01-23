@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:33:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 22:26:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/23 17:09:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
  * @param app 
  * @param progress 
  */
-static void	draw_progress_bar(t_app *app)
+static void	draw_progress_bar(t_app *app, double progress)
 {
 	int	progress_x;
 	int	x;
 	int	y;
 
 	x = WIN_W / 10 + 5;
-	progress_x = (int)(app->import_progress * (WIN_W - WIN_W / 5)) + x - 10;
+	progress_x = (int)(progress * (WIN_W - WIN_W / 5)) + x - 10;
 	while (x < progress_x && x < WIN_W - WIN_W / 10)
 	{
 		y = WIN_H / 10 * 8 + 5;
@@ -73,7 +73,7 @@ static void	draw_progress_bar_frame(t_app *app)
  * 
  * @param app 
  */
-void	render_loading(t_app *app, t_bool dispatch_events)
+void	render_loading(t_app *app, double progress, t_bool dispatch_events)
 {
 	SDL_Event	event;
 
@@ -83,6 +83,6 @@ void	render_loading(t_app *app, t_bool dispatch_events)
 			dispatch_event_minimal(&event);
 	}
 	draw_progress_bar_frame(app);
-	draw_progress_bar(app);
+	draw_progress_bar(app, progress);
 	SDL_UpdateWindowSurface(app->win);
 }

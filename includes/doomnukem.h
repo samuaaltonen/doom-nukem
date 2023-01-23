@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/19 17:24:16 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:59:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -206,6 +206,7 @@ typedef struct s_app
 	double				import_progress;
 	t_uint8				status;
 	t_assets			assets;
+	t_bool				assets_imported;
 	t_audio				audio;
 	t_point				mouse_pos;
 	double				gravity;
@@ -236,6 +237,7 @@ typedef struct s_app
 	t_timer				shoot_timer;
 	t_timer				item_timer;
 	t_timer				energy_timer;
+	char				filename[FILE_NAME_LENGTH];
 }	t_app;
 
 /**
@@ -254,7 +256,8 @@ unsigned char	*read_source(const char *source, int *source_length);
 void			rle_uncompress_data(t_import_info *info, const char *source,
 					unsigned char **data, int *length);
 void			*async_load(void *data);
-void			import_level(t_app *app, t_thread_data *thread, char *path);
+void			import_init(t_app *app, const char *level);
+void			import_level(t_app *app, t_thread_data *thread);
 void			import_update_progress(t_import_info *info);
 void			uncompression_update_progress(t_import_info *info);
 void			import_sectors(t_app *app, t_import_info *info);

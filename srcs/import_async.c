@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:51:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/19 00:11:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:55:04 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,7 +96,7 @@ void	*async_load(void *data)
 
 	thread = (t_thread_data *)data;
 	app = (t_app *)thread->app;
-	import_level(app, thread, MAP_PATH);
+	import_level(app, thread);
 	pthread_exit(NULL);
 }
 

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/23 15:37:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:47:00 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@
 # define DEFAULT_AUDIO_SAMPLES		4096
 # define PROGRESS_BAR_FRAME_COLOR	0xff0099f2
 # define PROGRESS_BAR_COLOR			0xff00def2
-# define MAP_PATH			"./test.test"
 # define MAX_SPRITES 6
 
 enum e_export_assets
