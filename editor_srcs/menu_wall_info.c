@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:32:25 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/16 10:44:08 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:26:18 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,34 @@ static void	render_portal_status(t_app *app)
 }
 
 /**
+ * @brief If wall doesn't have a decor (-1), renders add button, else 
+ * showcases the decor icons.
+ * 
+ * @param app
+ * @param mouse
+*/
+static void	handle_wall_decor(t_app *app, t_point mouse)
+{
+	if (app->active->decor == -1)
+	{
+		render_ui_frame(app, (t_rect){90, 160, 100, 21}, 1, 0);
+		render_interaction_button(app, (t_rect){108, 166, 100, 20}, mouse,
+			"ADD DECOR");
+	}
+	else
+	{
+		render_up_and_down_arrows(app, (t_point){263, 160},
+			(t_point){10, 165}, 8);
+		render_icons(app, (t_point){25, 150}, app->active->decor,
+			app->assets.objects);
+		render_ui_frame(app, (t_rect){185, 120, 80, 21}, 1, 0);
+		render_interaction_button(app, (t_rect){200, 125, 120, 20}, mouse,
+			"REMOVE");
+		render_wall_decor_options(app, mouse);
+	}
+}
+
+/**
  * @brief Renders wall specific information on the help menu sidebar when active
  * wall is selected.
  * 
@@ -83,11 +111,7 @@ void	wall_edit_menu(t_app *app, t_point mouse)
 	render_arrows(app, (t_point){12, 70}, (t_point){265, 70});
 	render_icons(app, (t_point){25, 60}, app->active->tex, app->assets.sprite);
 	toggle_active_color(app, 1, "DECOR", (t_rect){122, 122, 200, 15});
-	render_up_and_down_arrows(app, (t_point){263, 160}, (t_point){10, 165}, 8);
-	render_icons(app, (t_point){25, 150}, app->active->decor,
-		app->assets.sprite);
-	if (app->active->decor != -1)
-		render_wall_decor_options(app, mouse);
+	handle_wall_decor(app, mouse);
 	render_portal_status(app);
 	render_text(app, (t_rect){25, 505, 260, 15}, "CREATE / CHANGE FLOOR SLOPE\
  ( H )");

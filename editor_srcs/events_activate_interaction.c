@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_activate_interaction.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:18:12 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/19 15:24:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:28:25 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,6 +164,15 @@ void	activate_interaction_menu(t_app *app, t_point mouse)
 {
 	int		id;
 
+	if (app->active && check_mouse(mouse, (t_rect){90, 160, 100, 21})
+		&& app->active->decor == -1)
+		app->active->decor = 0;
+	else if (app->active && check_mouse(mouse, (t_rect){185, 120, 80, 21})
+		&& app->active->decor > -1)
+	{
+		app->active->decor = -1;
+		del_all_decor_interactions(app);
+	}
 	if (app->object_menu && !current_object_interaction(app, mouse, 0))
 		return ;
 	if (app->active && !app->object_menu

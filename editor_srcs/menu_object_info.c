@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_object_info.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:04:04 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/19 16:51:09 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:33:09 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,7 +147,7 @@ void	object_edit_menu(t_app *app)
 	render_text(app, (t_rect){10, 40, 50, 20}, "OBJECTS");
 	change_font(app, 11, TEXT);
 	render_arrows(app, (t_point){10, 67}, (t_point){265, 67});
-	render_icons(app, (t_point){25, 60}, app->current_object->type,
+	render_icons(app, (t_point){25, 60}, app->current_object->type - 1,
 		app->assets.objects);
 	render_object_statics(app);
 	change_font(app, 11, TEXT);
