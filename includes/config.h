@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/16 22:33:26 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:54:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@
 # define WIN_W 1280
 # define WIN_H 720
 # define THREAD_COUNT 5
+# define THREAD_DEADLOCK_CHECK 10000000
 # define FOV 83
 # define MOUSE_SENSITIVITY_HORIZONTAL 0.2
 # define MOUSE_SENSITIVITY_VERTICAL 0.2
@@ -30,13 +31,14 @@
 # define MAX_LINE_LENGTH 1048576.0
 # define SMALL_SCALE 0.34375
 # define SPRITE_ANGLES 90
-# define MAX_SMALL_OBJECTS 5
-# define MAX_BIG_OBJECTS 3
-# define MAX_ENEMY_TYPES 2
+# define MAX_SMALL_OBJECTS 7
+# define MAX_BIG_OBJECTS 7
+# define MAX_ENEMY_TYPES 3
+# define MAX_DECOR_TYPES 4
 # define MAX_PROJECTILES 8
+# define MAX_OBJECT_TYPES 17
 # define MAX_OBJECT_DISTANCE 128.0
 # define MAX_FOG_DISTANCE 40.0
-# define MAX_UNIQUE_OBJECTS 10
 /* object type defines for now
 	< MAX_SMALL_OBJECTS = small objects
 	< MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS = big objects
@@ -47,13 +49,15 @@
 # define PROJECTILE_COLLISION_X 0.25f
 # define PROJECTILE_COLLISION_Y 0.5f
 # define PICKUP_RANGE 0.5f
-# define MAX_ENEMY_STATES 2
 # define MAX_OBJECTS 128
 # define MAX_TEMP_OBJECTS 64
 # define MAX_INTERACTIONS 64
 # define MAX_UNIQUE_INTERACTIONS 7
-# define PARTIALLY_TRANSPARENT_TEXTURE_ID 0
-# define FULLY_TRANSPARENT_TEXTURE_ID 1
+# define PARTIALLY_TRANSPARENT_TEXTURE_ID 3
+# define FULLY_TRANSPARENT_TEXTURE_ID 4
+# define MAX_GRAVITY -1.0
+# define MIN_GRAVITY -50.0
+# define DEFAULT_GRAVITY -20.0
 
 /**
  * Struct for threads about their specific identifiers and locks for signaling.

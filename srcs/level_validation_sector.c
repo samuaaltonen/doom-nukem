@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 14:45:06 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 16:45:16 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/18 22:07:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,7 +109,9 @@ void	level_validation_sectors(t_app *app)
 			|| !valid_textures(app, i)
 			|| app->sectors[i].parent_sector >= app->sector_count
 			|| app->sectors[i].parent_sector < -1
-			|| !valid_linked_sectors(app, i))
+			|| !valid_linked_sectors(app, i)
+			|| (app->sectors[i].parent_sector != -1
+				&& app->sectors[i].member_sectors[0] != -1))
 			exit_error(MSG_ERROR_VALIDATION_SECTOR);
 		i++;
 	}

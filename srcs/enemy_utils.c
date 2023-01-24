@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 22:00:01 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 22:02:24 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/19 18:11:42 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	turn_enemy(t_app *app, t_enemy_state *state)
 
 void	enemy_attack(t_app *app, t_enemy_state *state, int define)
 {
-	if (define == 0)
+	if (define == 0 || define == 2)
 		fire(app, (t_vector3){state->dir.x, state->dir.y,
 			(app->player.elevation - app->objects[state->id].elevation)
 			/ ft_vector_length(ft_vector2_sub(app->player.pos,
@@ -31,7 +31,7 @@ void	enemy_attack(t_app *app, t_enemy_state *state, int define)
 			(t_vector3){app->objects[state->id].position.x,
 			app->objects[state->id].position.y,
 			app->objects[state->id].elevation + 0.5f},
-			(t_point){11, app->objects[state->id].sector});
+			(t_point){1, app->objects[state->id].sector});
 	if (define == 1)
 		melee(app, (t_vector3){state->dir.x, state->dir.y,
 			(app->player.elevation - app->objects[state->id].elevation)
@@ -40,7 +40,7 @@ void	enemy_attack(t_app *app, t_enemy_state *state, int define)
 			(t_vector3){app->objects[state->id].position.x,
 			app->objects[state->id].position.y,
 			app->objects[state->id].elevation + 0.5f},
-			(t_point){11, app->objects[state->id].sector});
+			(t_point){2, app->objects[state->id].sector});
 	state->next = IDLE;
 }
 
@@ -58,7 +58,7 @@ void	update_enemy_states(t_app *app)
 			enemy_states(app, state, 0);
 		else if (app->objects[state->id].type == MONSTER2)
 			enemy_states(app, state, 1);
-	/* 	if (app->objects[state->id] == MONSTER3)
-			enemy_3_states(app, state); */
+		else if (app->objects[state->id].type == MONSTER3)
+			enemy_states(app, state, 2);
 	}
 }

@@ -6,70 +6,40 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 13:21:17 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 22:30:20 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/23 17:45:49 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
-static int	enemy_check_members(t_app *app, t_enemy_state *enemy, t_point info,
-		t_move new)
+static int	enemy_move_main(t_app *app, t_move new, int sector_id,
+	t_enemy_state *enemy)
 {
-	int	i;
-	int	member_id;
-	int	portal_id;
+	int				i;
+	t_vector2		hit;
+	t_line			wall_line;
+	int				portal_id;
+	t_gameobject	*status;
 
 	i = -1;
-	member_id = app->sectors[info.y].member_sectors[info.x];
-	while (++i < app->sectors[member_id].corner_count)
+	while (++i < app->sectors[sector_id].corner_count)
 	{
-		if (ft_line_side(get_wall_line(app, member_id, i), new.pos) != 0)
-			break ;
+		wall_line = get_wall_line(app, sector_id, i);
+		status = &(app->objects[enemy->id]);
+		if (!ft_line_side(wall_line, new.pos) || !ft_line_intersection_segment(
+				(t_line){status->position, new.pos}, wall_line, &hit))
+			continue ;
+		portal_id = app->sectors[sector_id].wall_types[i];
+		if (portal_id < 0 || app->sectors[sector_id].wall_textures[i]
+			<= PARTIALLY_TRANSPARENT_TEXTURE_ID || !portal_can_enter(app,
+				ft_vec2_to_vec3(status->position, status->elevation),
+				(t_vector3){status->sector, portal_id, 0.5f}))
+			return (-1);
+		status->elevation = sector_floor_height(app, portal_id, hit);
+		status->position = hit;
+		enemy_move_check(app, new, portal_id, enemy);
 	}
-	if (i != app->sectors[member_id].corner_count)
-		return (-1);
-	portal_id = enemy_move_check(app, new, member_id, enemy);
-	if (portal_id < 0 || (new.elevation + MAX_STEP
-			< app->sectors[portal_id].floor_height
-			|| app->sectors[portal_id].ceil_height < new.elevation
-			+ app->player.height))
-		return (-1);
-	else
-	{
-		app->objects[enemy->id].sector = portal_id;
-		return (portal_id);
-	}
-	return (-1);
-}
-
-static int	enemy_check_main(t_app *app, t_enemy_state *enemy, t_point info,
-		t_move new)
-{
-	t_line	wall_line;
-	int		portal_id;
-
-	wall_line = get_wall_line(app, info.y, info.x);
-	if (!ft_line_side(wall_line, new.pos))
-		return (info.y);
-	if (!ft_line_intersection_segment((t_line){app->objects[enemy->id].position,
-			new.pos}, wall_line, NULL))
-		return (info.y);
-	portal_id = app->sectors[info.y].wall_types[info.x];
-	if (portal_id < 0 || app->sectors[info.y].wall_textures[info.x]
-		== PARTIALLY_TRANSPARENT_TEXTURE_ID)
-		return (-1);
-	if (!portal_can_enter(app, ft_vec2_to_vec3(new.pos, new.elevation), 0.5f,
-			wall_line, app->objects[enemy->id].sector,
-			app->sectors[app->objects[enemy->id].sector].wall_types[info.x]))
-		return (-1);
-	portal_id = enemy_move_check(app, new, portal_id, enemy);
-	if (portal_id < 0)
-		return (-1);
-	else
-	{
-		app->objects[enemy->id].sector = portal_id;
-		return (portal_id);
-	}
+	return (sector_id);
 }
 
 /**
@@ -83,19 +53,28 @@ static int	enemy_check_main(t_app *app, t_enemy_state *enemy, t_point info,
  * @return int 
  */
 int	enemy_move_check(t_app *app, t_move new, int sector_id,
-		t_enemy_state *enemy)
+	t_enemy_state *enemy)
 {
-	int		i;
+	int		member_id;
 	int		counter;
 
-	counter = 0;
-	while (app->sectors[sector_id].member_sectors[counter] >= 0)
+	app->objects[enemy->id].sector = sector_id;
+	counter = -1;
+	while (app->sectors[sector_id].member_sectors[++counter] >= 0)
 	{
-		enemy_check_members(app, enemy, (t_point){counter, sector_id}, new);
-		counter++;
+		member_id = app->sectors[sector_id].member_sectors[counter];
+		if (member_id != -1 && inside_sector(app, member_id, new.pos))
+		{
+			if (portal_can_enter(app, ft_vec2_to_vec3(new.pos,
+						app->objects[enemy->id].elevation),
+					(t_vector3){app->objects[enemy->id].sector,
+					member_id, 0.5f}))
+			{
+				app->objects[enemy->id].sector = member_id;
+				return (member_id);
+			}
+			return (-1);
+		}
 	}
-	i = -1;
-	while (++i < app->sectors[sector_id].corner_count)
-		enemy_check_main(app, enemy, (t_point){i, sector_id}, new);
-	return (sector_id);
+	return (enemy_move_main(app, new, sector_id, enemy));
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_collision_wall.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:42:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 18:20:17 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:09:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ t_vector2	get_possible_movement_point(t_line wall, t_vector2 coord, int side)
 	t_vector2	on_wall;
 
 	on_wall = ft_closest_point(coord, wall);
-	cancel = ft_vector_resize(ft_vector2_sub(coord, on_wall),
-			COLLISION_OFFSET + MOVE_MIN);
+	cancel = ft_vector_resize(ft_vector_perpendicular(
+				ft_vector2_sub(wall.b, wall.a)), COLLISION_OFFSET + MOVE_MIN);
 	if (ft_line_side(wall, ft_vector2_add(on_wall, cancel)) == side)
 		return (ft_vector2_add(on_wall, cancel));
 	return (ft_vector2_sub(on_wall, cancel));
@@ -81,11 +81,13 @@ t_collision	collision_wall(t_app *app, int sector_id, int wall_id,
 	if (!collision_possible(app->player.pos, app->player.move_pos,
 			wall, sector_id == portal_id))
 		return (COLLISION_NONE);
-	if (portal_id != -1 && app->sectors[sector_id].wall_textures[wall_id]
-		!= PARTIALLY_TRANSPARENT_TEXTURE_ID
-		&& portal_can_enter(app,
-			ft_vec2_to_vec3(app->player.move_pos, app->player.elevation),
-			app->player.height, wall, app->player.sector, portal_id))
+	if (portal_id != -1 && (app->sectors[sector_id].parent_sector > -1
+			|| app->sectors[sector_id].wall_textures[wall_id]
+			> PARTIALLY_TRANSPARENT_TEXTURE_ID)
+		&& portal_can_enter(app, ft_vec2_to_vec3(ft_closest_point(
+				app->player.move_pos, wall), app->player.elevation),
+				(t_vector3){app->player.sector,
+			portal_id, app->player.height}))
 		return (COLLISION_PORTAL);
 	if (app->player.total_collisions >= MAX_CONCURRENT_COLLISIONS - 1)
 	{

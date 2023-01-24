@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   geometry.h                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:48:59 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/12/28 15:54:16 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/18 22:45:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # define PI_HALF 1.57079632679
 # define PI_3_QUARTERS 2.35619449019
 # define PI_PI 6.28318530718
+# define SMALL_DISTANCE_EPSILON 0.0001
 
 /**
  * Sturct for limits.

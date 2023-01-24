@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:32:45 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 18:29:26 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/18 22:32:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,7 @@ t_bool	thread_check_done(t_thread_data *thread)
  */
 void	threads_work(t_thread_data *threads_data)
 {
+	int	check_count;
 	int	i;
 
 	i = -1;
@@ -110,7 +111,8 @@ void	threads_work(t_thread_data *threads_data)
 			exit_error(MSG_ERROR_THREADS_SIGNAL);
 	}
 	i = -1;
-	while (++i < THREAD_COUNT)
+	check_count = -1;
+	while (++i < THREAD_COUNT && ++check_count < THREAD_DEADLOCK_CHECK)
 	{
 		if (thread_check_done(&threads_data[i]))
 			i = -1;

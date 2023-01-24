@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import_assets_surface.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:45:28 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 21:09:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 15:15:35 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,5 +73,7 @@ void	import_surfaces(t_app *app, t_import_info *info)
 	app->assets.sprites[ENEMY_SPRITE_1] = import_surface(EXPORT_MONSTER_1,
 			info);
 	app->assets.sprites[ENEMY_SPRITE_2] = import_surface(EXPORT_MONSTER_2,
+			info);
+	app->assets.sprites[ENEMY_SPRITE_3] = import_surface(EXPORT_MONSTER_3,
 			info);
 }

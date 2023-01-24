@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:49:36 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/03 15:07:42 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/18 22:11:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,9 +94,10 @@ static void	initialize_wall_data(t_wall *wall, t_sector *sector, int sector_id,
 	wall->sector_id = sector_id;
 	wall->wall_id = wall_index;
 	wall->wall_type = sector->wall_types[wall_index];
-	wall->is_member = FALSE;
 	if (sector->parent_sector != -1)
 		wall->is_member = TRUE;
+	else
+		wall->is_member = FALSE;
 }
 
 /**

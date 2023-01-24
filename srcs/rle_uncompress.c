@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 22:11:34 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 15:02:04 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/19 00:10:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static t_uint8	*init_uncompression(const char *source, int *source_length,
 }
 
 /**
- * @brief Uncompressed RLE compressed file into data pointer and writes
+ * @brief Uncompresses RLE compressed file into data pointer and writes
  * uncompressed data length to length int pointer.
  * 
  * @param source 

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 20:54:45 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 21:05:58 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/19 15:57:31 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ void	object_frame(t_app *app, t_vector2 dir, t_render_object *object)
 	double	rad;
 
 	object->frame = 0;
-	if (app->objects[object->id].type <= MAX_UNIQUE_OBJECTS)
+	if (app->objects[object->id].type <= MAX_OBJECT_TYPES)
 	{
 		rad = get_radial_direction(&dir);
 			object->frame = ((int)((rad + app->objects[object->id].rot)

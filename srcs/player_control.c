@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/20 14:09:58 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/24 11:43:13 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,7 +90,7 @@ void	player_shoot(t_app *app)
 {
 	if (check_timer(&app->shoot_timer) && app->player.equiped_weapon.ammo > 0)
 	{
-		fire(app,(t_vector3){app->player.dir.x, app->player.dir.y,(app->player.horizon - 0.5f)},(t_vector3){app->player.pos.x, app->player.pos.y,app->player.elevation + app->player.height / 2},(t_point){18,app->player.sector});
+		fire(app,(t_vector3){app->player.dir.x, app->player.dir.y,(app->player.horizon - 0.5f)},(t_vector3){app->player.pos.x, app->player.pos.y,app->player.elevation + app->player.height / 2},(t_point){7,app->player.sector});
 		play_sound(app, AUDIO_SHOT);
 		app->player.equiped_weapon.ammo--;
 		app->player.inventory.ammo--;
