@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:51:22 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 13:40:17 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:46:54 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void	render_titlescreen(t_app *app)
 	change_font(app, 80, BLACK);
 	render_text(app, (t_rect){484, 214, 400, 800}, "AWAKE");
 	change_font(app, 80, DARK_RED);
-	render_text(app, (t_rect){490, 210, 320, 800}, "AWAKE<+>");
+	render_text(app, (t_rect){490, 210, 320, 800}, "AWAKE");
 	change_font(app, 32, WHITE);
 	render_text(app, (t_rect){504, WIN_H - 170, 800, 800}, "PRESS SPACE");
 }
