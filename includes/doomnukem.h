@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 16:15:17 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/24 17:49:49 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ typedef struct s_enemy_state
 {
 	int					id;
 	double				hp;
+	double				target_elevation;
 	t_vector2			pos;
 	t_vector2			dir;
 	t_bool				dead;

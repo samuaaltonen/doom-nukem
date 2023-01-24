@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:30:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/24 17:47:09 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/24 17:58:04 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ static void	enemy_walk_update(t_app *app, t_enemy_state *state, int define)
 			app->objects[state->id].sector, state) != -1)
 	{
 		app->objects[state->id].position = new.pos;
-		app->objects[state->id].elevation = sector_floor_height(app,
+		state->target_elevation = sector_floor_height(app,
 				app->objects[state->id].sector, new.pos);
 	}
 }

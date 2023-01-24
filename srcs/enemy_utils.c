@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 22:00:01 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/19 18:11:42 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/24 18:00:27 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,12 @@ void	update_enemy_states(t_app *app)
 	state--;
 	while (++state != NULL && state->id != -1)
 	{
+		if(state->target_elevation != app->objects[state->id].elevation)
+		{
+			app->objects[state->id].elevation += app->conf->delta_time * app->gravity;
+			if(app->objects[state->id].elevation < state->target_elevation)
+				app->objects[state->id].elevation = state->target_elevation;
+		}
 		if (state->dead)
 			continue ;
 		else if (app->objects[state->id].type == MONSTER1)
