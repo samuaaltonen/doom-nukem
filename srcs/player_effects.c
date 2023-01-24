@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_effects.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:57:21 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/17 13:07:08 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:47:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,5 @@ void	energy(t_app *app, int mod)
 			app->player.inventory.special_ammo = 0;
 			jetpack(app);
 		}
-	//----DEBUG FEATURE
-		ft_printf("Energy: %d\n", app->player.inventory.special_ammo);
-	//----
 	}
 }
