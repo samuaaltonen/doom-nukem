@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:30:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 22:04:49 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/24 17:47:09 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ static void	check_enemy(t_app *app, t_enemy_state *state, int define)
 static void	enemy_state_update(t_app *app, t_enemy_state *state, int define)
 {
 	check_enemy(app, state, define);
-	if (state->state == WALK && state->next == WALK)
+	if (state->state == WALK && state->next == WALK && define != 2)
 		app->object_states[state->id]
 			= (app->object_states[state->id] - 1) * -1;
 	else
