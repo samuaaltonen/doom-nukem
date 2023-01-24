@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/24 15:53:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 17:08:05 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,7 @@ void	define_enemy_2(t_app *app)
 {
 	app->enemy_def[2].state_count = 4;
 	app->enemy_def[2].range = 5.f;
-	app->enemy_def[2].speed = 1.5f;
+	app->enemy_def[2].speed = 3.f;
 	app->enemy_def[2].attack_speed = 1.5f;
 	app->enemy_def[2].states[0][0] = 0.f;
 	app->enemy_def[2].states[0][1] = 1.f;
@@ -154,7 +154,7 @@ void	define_enemy_2(t_app *app)
 	app->enemy_def[2].states[2][2] = 2.f;
 	app->enemy_def[2].states[3][0] = 4.f;
 	app->enemy_def[2].states[3][1] = 5.f;
-	app->enemy_def[2].states[3][2] = 5.f;
+	app->enemy_def[2].states[3][2] = 1.f;
 }
 
 void	define_enemies(t_app *app)
