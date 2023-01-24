@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 15:51:10 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/24 16:15:17 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,8 @@ enum e_status {
 	STATUS_MAINOPTIONS,
 	STATUS_GAMEOPTIONS,
 	STATUS_GAMEOVER,
-	STATUS_CONTROLS
+	STATUS_CONTROLS,
+	STATUS_SELECTLEVEL
 };
 
 /**
@@ -468,7 +469,7 @@ void			start_game(t_app *app);
 void			pause_game(t_app *app);
 void			exit_game(t_app *app);
 void			main_menu(t_app *app);
-void			open_editor(t_app *app);
+void			select_level(t_app *app);
 void			main_options(t_app *app);
 void			game_options(t_app *app);
 void			fullscreen(t_app *app);
@@ -485,6 +486,7 @@ void			render_options(t_app *app);
 void			render_gameover(t_app *app);
 void			render_hand(t_app *app, int x, int y);
 void			render_controls(t_app *app);
+void			render_select_level(t_app *app);
 
 /*
 * Audio

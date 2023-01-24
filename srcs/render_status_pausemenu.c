@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:51:22 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 14:59:57 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/24 16:15:39 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	render_pausemenu(t_app *app)
 		pause_game);
 	button_function(app,
 		render_button(app, (t_rect){50, 260, 256, 64}, 1, "LEVEL EDITOR"),
-		open_editor);
+		select_level);
 	button_function(app,
 		render_button(app, (t_rect){50, 340, 256, 64}, 1, "OPTIONS"),
 		game_options);

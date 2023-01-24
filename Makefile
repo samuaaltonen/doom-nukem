@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/24 14:54:14 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/24 16:11:40 by dpalacio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -78,6 +78,7 @@ FILES = animation_create.c \
 		render_status_mainmenu.c \
 		render_status_options.c \
 		render_status_pausemenu.c \
+		render_status_select_level.c \
 		render_status_titlescreen.c \
 		render_text.c \
 		render_ui.c \

@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/24 15:51:24 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/24 16:08:42 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,14 @@ void	controls(t_app *app)
 	app->status = STATUS_CONTROLS;
 }
 
+void	select_level(t_app *app)
+{
+	app->status = STATUS_SELECTLEVEL;
+}
+
 void	open_editor(t_app *app)
 {	
-	system("./level-editor &");
+	system("./editor &");
+	if (app)
+		return ;
 }

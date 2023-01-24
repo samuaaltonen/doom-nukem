@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 14:51:24 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 16:07:11 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ void	render_frame(t_app *app)
 		render_gameover(app);
 	else if (app->status == STATUS_CONTROLS)
 		render_controls(app);
+	else if (app->status == STATUS_SELECTLEVEL)
+		render_select_level(app);
 	SDL_UpdateWindowSurface(app->win);
 	play_music(app);
 }
