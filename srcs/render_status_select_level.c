@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:59:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/24 16:45:08 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/24 16:57:17 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	render_select_level(t_app *app)
 	rect_from_surface(app->assets.title_screen_image, &src);
 	rect_from_surface(app->surface, &dst);
 	blit_surface(app->assets.title_screen_image, &src, app->surface, &dst);
-	render_ui_frame(app, (t_rect){320, 132, 224, 64}, 1, DARK_GREY);
+	render_ui_frame(app, (t_rect){320, 132, 324, 64}, 1, DARK_GREY);
 	change_font(app, 32, DARK_RED);
 	render_text(app, (t_rect){336, 146, 800, 800}, "SELECT LEVEL");
 	render_ui_frame(app, (t_rect){320, 180, 640, 360}, 1, DARK_GREY);
@@ -52,7 +52,6 @@ static void	select_level_button(t_app *app, t_rect button,
 		{
 			f(app, level);
 			start_timer(&app->button_timer, 0.0);
-			app->status = STATUS_GAME;
 		}	
 	}
 }
