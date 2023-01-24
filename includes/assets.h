@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assets.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/24 12:52:21 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:54:00 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@
 # define ENEMY_3_W					11520
 # define ENEMY_3_H					640
 # define MAX_TEX_COUNT				79
-# define MAX_DECOR_COUNT			10
+# define MAX_DECOR_COUNT			21
 # define MAX_BMP_OFFSET				32768
 # define MAX_BMP_WIDTH				32768
 # define MAX_BMP_HEIGHT				32768
@@ -73,7 +73,6 @@
 # define DEFAULT_AUDIO_SAMPLES		4096
 # define PROGRESS_BAR_FRAME_COLOR	0xff0099f2
 # define PROGRESS_BAR_COLOR			0xff00def2
-# define MAP_PATH			"./test.test"
 # define MAX_SPRITES 6
 
 enum e_export_assets

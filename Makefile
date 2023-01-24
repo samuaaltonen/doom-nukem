@@ -3,15 +3,15 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
+#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/23 18:13:48 by htahvana         ###   ########.fr        #
+#    Updated: 2023/01/24 14:54:14 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = doom-nukem
-EDITOR_NAME = level-editor
+EDITOR_NAME = editor
 
 CC = gcc
 PWD= $(shell pwd)
@@ -105,7 +105,8 @@ FILES = animation_create.c \
 		utils.c \
 		utils_color.c \
 		utils_sdl.c \
-		random.c
+		random.c \
+		import_change_level.c
 
 EDITOR_FILES = app.c \
 		editor.c \
@@ -183,7 +184,8 @@ EDITOR_FILES = app.c \
 		triangle.c \
 		utils.c \
 		utils_bmp.c \
-		utils_sdl.c
+		utils_sdl.c \
+		exit.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a
@@ -222,7 +224,7 @@ EDITOR_HEADERS = \
 
 FLAGS = -MMD -Wall -Wextra -Werror -flto -Ofast -g
 
-LIBLINKS = -L ./libft -L ./liblinearalgebra -L/usr/local/lib \
+LIBLINKS = -L ./libft -L ./liblinearalgebra \
 		-llinearalgebra -lft -lm
 
 all: $(NAME) $(EDITOR_NAME)

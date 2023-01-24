@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/24 11:46:13 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:54:25 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 # define MAX_COLLISION_POSITION_TRIES	320
 # define MAX_HP							200
 # define REGEN_TIME						5
+# define AMMO_PICKUP_AMOUNT				20
 
 /**
  * Movement direction enumeration.
@@ -111,10 +112,9 @@ typedef struct s_player
 	t_bool			flying;
 	t_bool			jetpack;
 	t_bool			jetpack_boost;
-	double			jump_timer;
 	int				hp;
 	int				weapons;
-	t_weapon		equiped_weapon;
+	t_weapon		equipped_weapon;
 	int				shield;
 	t_inventory		inventory;
 	t_line			collisions[MAX_CONCURRENT_COLLISIONS];

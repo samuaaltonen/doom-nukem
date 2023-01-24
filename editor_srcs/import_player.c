@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import_player.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:31:04 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 19:31:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:57:16 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @param export 
  * @param weapons 
  */
-static void	from_bits(t_app *app, int export, t_weapon *weapons)
+static void	from_bits(int export, t_weapon *weapons)
 {
 	int	i;
 
@@ -29,7 +29,6 @@ static void	from_bits(t_app *app, int export, t_weapon *weapons)
 		if (export & 1)
 		{	
 			weapons[i].enabled = TRUE;
-			app->player.selected_weapon = i;
 		}
 		export >>= 1;
 		i++;
@@ -60,6 +59,6 @@ void	import_player(t_app *app, t_import_info *info)
 	if (!app->player.sector)
 		exit_error(MSG_ERROR_IMPORT_PLAYER);
 	app->player.health = player.health;
-	from_bits(app, player.weapons, app->player.weapons);
+	from_bits(player.weapons, (t_weapon *)&(app->player.weapons));
 	app->player.inventory = player.inventory;
 }

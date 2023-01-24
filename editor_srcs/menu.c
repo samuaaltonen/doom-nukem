@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/19 18:51:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/23 14:22:53 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,8 +77,8 @@ SECTORS", (t_rect){WIN_W - 155, 10, 180, 40});
 		toggle_active_color(app, app->list_creation, "CREATE SECTOR",
 			(t_rect){WIN_W - 135, 17, 150, 15});
 	toggle_active_color(app, FALSE, "SAVE", (t_rect){WIN_W - 100, 77, 150, 15});
-	toggle_active_color(app, app->imported, "OPEN",
-		(t_rect){WIN_W - 100, 108, 150, 15});
+	toggle_active_color(app, FALSE, "SAVE WITH ASSETS",
+		(t_rect){WIN_W - 144, 108, 150, 15});
 }
 
 /**

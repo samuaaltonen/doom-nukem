@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:51:24 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/16 18:27:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/23 17:02:04 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ locking/unlocking a mutex."
 # define MSG_ERROR_MOUSE "Could not set mouse cursor relative to the window."
 # define MSG_ERROR_FILE_OPEN "Could not open a file."
 # define MSG_ERROR_FILE_READ "Could not read from a file."
-
+# define MSG_ERROR_LEVEL_NUMBER "Level number is invalid (allowed numbers are \
+0-999)."
 # define MSG_ERROR_IMPORT "Level file is invalid."
 # define MSG_ERROR_IMPORT_SECTOR "Level file is invalid. Could not import \
 sectors."
@@ -45,6 +46,8 @@ player."
 objects."
 # define MSG_ERROR_IMPORT_INTERACTION "Level file is invalid. Could not import \
 interactions."
+# define MSG_ERROR_LOAD_ASSETS "Could not load asset data from the level file. \
+Please save the level file with assets using level editor."
 # define MSG_ERROR_IMPORT_SURFACE "Level file is invalid. Could not import \
 image assets."
 # define MSG_ERROR_IMPORT_AUDIO "Level file is invalid. Could not import \

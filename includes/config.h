@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/19 18:54:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:53:19 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,10 @@
 # define MAX_GRAVITY -1.0
 # define MIN_GRAVITY -50.0
 # define DEFAULT_GRAVITY -20.0
+# define MAX_LEVEL 999
+# define LEVEL_IDENTIFIER "level-"
+# define FILE_NAME_LENGTH 9
+# define DEFAULT_LEVEL "level-0"
 
 /**
  * Struct for threads about their specific identifiers and locks for signaling.

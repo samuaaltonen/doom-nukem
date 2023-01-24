@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_ui.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/24 13:15:46 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:53:02 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@ void	hud_weapon(t_app *app, t_rect rect)
 	rect.y += 16;
 	rect.w = 4;
 	rect.h = 8;
-	while (i < app->player.equiped_weapon.magazine)
+	while (i < app->player.equipped_weapon.magazine)
 	{
-		if (i >= app->player.equiped_weapon.ammo)
+		if (i >= app->player.equipped_weapon.ammo)
 			color_surface(app->assets.bullet, GREY);
 		render_ui_element(app, app->assets.bullet, rect);
 		rect.x += 6;
-		if (i >= app->player.equiped_weapon.ammo)
+		if (i >= app->player.equipped_weapon.ammo)
 			color_surface(app->assets.bullet, GREY);
 		i++;
 	}

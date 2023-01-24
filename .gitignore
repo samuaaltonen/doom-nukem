@@ -16,5 +16,5 @@ sdl/SDL2_build
 .DS_Store
 perf.data*
 doom-nukem-editor
-level-editor
+editor
 *.test

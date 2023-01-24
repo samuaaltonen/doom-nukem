@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:51:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/19 00:11:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:48:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,14 @@
  * @param app 
  * @param progress 
  */
-static void	draw_progress_bar(t_app *app)
+static void	draw_progress_bar(t_app *app, double progress)
 {
 	int	progress_x;
 	int	x;
 	int	y;
 
 	x = WIN_W / 10 + 5;
-	progress_x = (int)(app->import_progress * (WIN_W - WIN_W / 5)) + x - 10;
+	progress_x = (int)(progress * (WIN_W - WIN_W / 5)) + x - 10;
 	while (x < progress_x && x < WIN_W - WIN_W / 10)
 	{
 		y = WIN_H / 10 * 8 + 5;
@@ -73,12 +73,12 @@ static void	draw_progress_bar_frame(t_app *app)
  * 
  * @param app 
  */
-static void	render_loading(t_app *app)
+static void	render_loading(t_app *app, double progress)
 {
 	while (SDL_PollEvent(&app->event))
 		dispatch_event_minimal(app, &app->event);
 	draw_progress_bar_frame(app);
-	draw_progress_bar(app);
+	draw_progress_bar(app, progress);
 	SDL_UpdateWindowSurface(app->win);
 }
 
@@ -96,7 +96,7 @@ void	*async_load(void *data)
 
 	thread = (t_thread_data *)data;
 	app = (t_app *)thread->app;
-	import_level(app, thread, MAP_PATH);
+	import_level(app, thread);
 	pthread_exit(NULL);
 }
 
@@ -108,28 +108,25 @@ void	*async_load(void *data)
  */
 void	load_data(t_app *app)
 {
+	double			progress;
 	t_thread_data	thread;
 
 	ft_bzero(app->surface->pixels, app->surface->h * app->surface->pitch);
+	app->import_progress = 0.0;
+	progress = 0.0;
 	thread.app = app;
 	thread.id = 0;
 	if (pthread_mutex_init(&thread.lock, NULL)
 		|| pthread_create(&thread.thread, NULL, async_load, (void *)(&thread)))
 		exit_error(MSG_ERROR_THREADS);
-	while (TRUE)
+	while (progress != -1.0)
 	{
 		if (pthread_mutex_lock(&thread.lock))
 			exit_error(MSG_ERROR_THREADS_MUTEX);
-		if (app->import_progress == -1.0)
-		{
-			if (pthread_mutex_unlock(&thread.lock))
-				exit_error(MSG_ERROR_THREADS_MUTEX);
-			break ;
-		}
-		render_loading(app);
+		progress = app->import_progress;
 		if (pthread_mutex_unlock(&thread.lock))
 			exit_error(MSG_ERROR_THREADS_MUTEX);
-		SDL_Delay(1);
+		render_loading(app, progress);
 	}
-	render_loading(app);
+	render_loading(app, progress);
 }

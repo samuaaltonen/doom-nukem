@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 13:29:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/19 17:24:51 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:54:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,13 +80,13 @@ void	uncompression_update_progress(t_import_info *info)
  * @param thread 
  * @param path 
  */
-void	import_level(t_app *app, t_thread_data *thread, char *path)
+void	import_level(t_app *app, t_thread_data *thread)
 {
-	t_import_info		info;
+	t_import_info	info;
 
 	info.data = NULL;
 	info.thread = thread;
-	rle_uncompress_data(&info, path, &info.data, &info.length);
+	rle_uncompress_data(&info, app->filename, &info.data, &info.length);
 	if (!info.data
 		|| sizeof(t_level_header) >= (size_t)(info.length))
 		exit_error(MSG_ERROR_IMPORT);
