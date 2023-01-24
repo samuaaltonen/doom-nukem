@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:23:24 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 14:51:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 15:28:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,16 @@
  */
 void	import_init_level(t_app *app, const char *level)
 {
+	int	i;
 	int	level_number;
 
+	i = 0;
+	while (level[i])
+	{
+		if (level[i] < '0' || level[i] > '9')
+			exit_error(MSG_ERROR_LEVEL_NUMBER);
+		i++;
+	}
 	ft_bzero((t_uint8 *)&app->filename, FILE_NAME_LENGTH);
 	if (!level)
 	{

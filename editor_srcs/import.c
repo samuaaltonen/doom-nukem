@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/23 16:36:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 15:27:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,16 @@
  */
 void	import_init(t_app *app, const char *level)
 {
+	int	i;
 	int	level_number;
 
+	i = 0;
+	while (level[i])
+	{
+		if (level[i] < '0' || level[i] > '9')
+			exit_error(MSG_ERROR_LEVEL_NUMBER);
+		i++;
+	}
 	level_number = ft_atoi(level);
 	if (level_number < 0 || level_number > MAX_LEVEL)
 		exit_error(MSG_ERROR_LEVEL_NUMBER);
