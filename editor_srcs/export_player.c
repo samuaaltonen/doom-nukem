@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_player.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:07:56 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 21:09:06 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:52:37 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static int	as_bits(t_app *app)
 	i = 0;
 	while (i < MAX_WEAPONS)
 	{
-		if (i == app->player.selected_weapon)
+		if (app->player.weapons[i].enabled)
 			inventory |= 1 << i;
 		i++;
 	}
