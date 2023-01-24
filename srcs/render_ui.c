@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/20 14:03:48 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/24 12:35:52 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	render_ui(t_app *app)
 	render_crosshair(app);
 	render_text_prompt(app, (t_rect){10, 10, 112, 32}, 1, app->conf->fps_info);
 	render_player_status(app);
-	energy_meter(app, (t_rect){960, 600, 144, 16});
+	energy_meter(app, (t_rect){988, 592, 116, 24});
 	render_equipment(app);
 }
 
@@ -320,19 +320,25 @@ static void energy_meter(t_app *app, t_rect area)
 	int	x;
 	int	y;
 
+	render_ui_frame(app, area, 1, DARK_GREY);
+	area.x += 8;
+	area.y += 8;
+	area.w -= 16;
+	area.h -= 16;
 	x = area.x;
 	y = area.y;
 	while (y < area.y + area.h)
 	{
 		while (x < area.x + area.w)
 		{
-			if (x <= area.x + app->player.inventory.special_ammo * area.w / 200)
+			if (x <= (area.x) + app->player.inventory.special_ammo / 2)
 				put_pixel_to_surface(app->surface, x, y, GREEN);
 			x++;
 		}
 		x = area.x;
 		y++;
 	}
+	
 }
 
 static void	fill_meter(t_app *app, t_rect area, int value, int color)
