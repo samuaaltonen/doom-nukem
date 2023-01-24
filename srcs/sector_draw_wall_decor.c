@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/11 17:44:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 17:25:51 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ static t_bool	apply_occlusion(t_rayhit *hit, int x, t_limit *y)
  */
 static void	apply_offsets(t_rayhit *hit, t_limit y, int *tex_x, double *tex_y)
 {
-	*tex_x = (int)(((double)hit->decor_texture + hit->decor_texture_offset)
-			* TEX_SIZE);
-	*tex_y = hit->texture_step
+	*tex_x = (int)(hit->decor_texture_offset * TEX_SIZE);
+	*tex_y = (double)hit->decor_texture * TEX_SIZE + hit->texture_step
 		* ((double)(y.start + 1) - hit->decor_start_actual);
 	if (*tex_y < 0.0)
 		*tex_y += TEX_SIZE * (-*tex_y / TEX_SIZE + 1);
@@ -75,9 +74,9 @@ void	draw_wall_decor(t_app *app, int x, t_rayhit *hit)
 	while (y.start < y.end)
 	{
 		tex_y += hit->texture_step;
-		if (tex_y >= (double) TEX_SIZE)
-			tex_y = fmod(tex_y, (double) TEX_SIZE);
-		color = get_pixel_color(app->assets.panels, tex_x, (int) tex_y);
+		if ((int)tex_y < OBJECT_ICON_H)
+			color = get_pixel_color(app->assets.object_icon, tex_x,
+					(int) tex_y);
 		if ((color & 0xFF000000) > 0)
 			put_pixel_to_surface(app->surface, x, y.start,
 				shade_color(color, hit->light));
