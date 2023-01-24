@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/04 15:40:55 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:05:56 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,33 @@
  */
 int	events_keyup(int keycode, t_app *app)
 {
-	if (keycode == SDLK_RIGHT)
+	if (keycode == SDLK_RIGHT && app->conf->keystates & RIGHT)
 		app->conf->keystates ^= RIGHT;
-	if (keycode == SDLK_LEFT)
+	if (keycode == SDLK_LEFT && app->conf->keystates & LEFT)
 		app->conf->keystates ^= LEFT;
-	if (keycode == SDLK_UP)
+	if (keycode == SDLK_UP && app->conf->keystates & UP)
 		app->conf->keystates ^= UP;
-	if (keycode == SDLK_DOWN)
+	if (keycode == SDLK_DOWN && app->conf->keystates & DOWN)
 		app->conf->keystates ^= DOWN;
-	if (keycode == SDLK_w)
+	if (keycode == SDLK_w && app->conf->keystates & A)
 		app->conf->keystates ^= W;
-	if (keycode == SDLK_s)
+	if (keycode == SDLK_s && app->conf->keystates & S)
 		app->conf->keystates ^= S;
-	if (keycode == SDLK_a)
+	if (keycode == SDLK_a && app->conf->keystates & A)
 		app->conf->keystates ^= A;
-	if (keycode == SDLK_d)
+	if (keycode == SDLK_d && app->conf->keystates & D)
 		app->conf->keystates ^= D;
-	if (keycode == SDLK_q)
+	if (keycode == SDLK_q && app->conf->keystates & Q)
 		app->conf->keystates ^= Q;
-	if (keycode == SDLK_e)
+	if (keycode == SDLK_e && app->conf->keystates & E)
 		app->conf->keystates ^= E;
-	if (keycode == SDLK_r)
+	if (keycode == SDLK_r && app->conf->keystates & R)
 		app->conf->keystates ^= R;
-	if (keycode == SDLK_c)
+	if (keycode == SDLK_c && app->conf->keystates & C)
 		app->conf->keystates ^= C;
-	if (keycode == SDLK_LSHIFT)
+	if (keycode == SDLK_LSHIFT && app->conf->keystates & SHIFT)
 		app->conf->keystates ^= SHIFT;
-	if (keycode == SDLK_LCTRL)
+	if (keycode == SDLK_LCTRL && app->conf->keystates & CTRL)
 		app->conf->keystates ^= CTRL;
 	if (keycode == SDLK_ESCAPE)
 		exit(EXIT_SUCCESS);
