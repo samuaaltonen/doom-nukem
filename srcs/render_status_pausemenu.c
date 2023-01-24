@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_status_pausemenu.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:51:22 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/19 16:55:41 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:59:57 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@ void	render_pausemenu(t_app *app)
 {	
 	SDL_SetRelativeMouseMode(SDL_FALSE);
 	render_sectors(app);
+	render_objects(app);
+	render_textmodals(app);
+	render_hand(app, WIN_W / 2 - 256, 320);
 	render_ui_frame(app, (t_rect){28, 78, 300, 428}, 1, DARK_GREY);
 	button_function(app,
 		render_button(app, (t_rect){50, 100, 256, 64}, 1, "MAIN MENU"),
@@ -30,7 +33,7 @@ void	render_pausemenu(t_app *app)
 		pause_game);
 	button_function(app,
 		render_button(app, (t_rect){50, 260, 256, 64}, 1, "LEVEL EDITOR"),
-		do_nothing);
+		open_editor);
 	button_function(app,
 		render_button(app, (t_rect){50, 340, 256, 64}, 1, "OPTIONS"),
 		game_options);

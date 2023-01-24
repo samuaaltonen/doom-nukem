@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_status_game.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:51:22 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/19 16:58:41 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:40:04 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@ void	render_game(t_app *app)
 	bullet_enemy_collisions(app);
 	bullet_player_collision(app);
 	render_sectors(app);
-	render_hand(app, WIN_W / 2 - 256, 320);
 	render_objects(app);
 	render_textmodals(app);
+	render_hand(app, WIN_W / 2 - 256, 320);
 	render_ui(app);
 	if (app->player.hp == 0)
 		app->status = STATUS_GAMEOVER;

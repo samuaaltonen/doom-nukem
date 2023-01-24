@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_status_mainmenu.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:51:22 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/19 16:52:13 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:59:42 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	render_mainmenu(t_app *app)
 			"START GAME"), start_game);
 	button_function(app,
 		render_button(app, (t_rect){50, 260, 256, 64}, 1,
-			"LEVEL EDITOR"), do_nothing);
+			"LEVEL EDITOR"), open_editor);
 	button_function(app,
 		render_button(app, (t_rect){50, 340, 256, 64}, 1,
 			"OPTIONS"), main_options);

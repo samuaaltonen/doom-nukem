@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 12:52:49 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:59:21 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -464,7 +464,7 @@ void			start_game(t_app *app);
 void			pause_game(t_app *app);
 void			exit_game(t_app *app);
 void			main_menu(t_app *app);
-void			do_nothing(t_app *app);
+void			open_editor(t_app *app);
 void			main_options(t_app *app);
 void			game_options(t_app *app);
 void			fullscreen(t_app *app);

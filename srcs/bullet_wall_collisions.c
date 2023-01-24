@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bullet_wall_collisions.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 20:15:53 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/19 16:21:46 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:29:55 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ static void	check_member_walls(t_app *app, t_bullet *bullet, int id)
 		if (!ft_line_intersection_segment((t_line){bullet->start, bullet->end},
 			wall_line, &(collision)))
 			continue ;
-		if (!projectile_can_enter(app, ft_vec2_to_vec3(collision, bullet->start_z
+		if (!projectile_can_enter(app,
+				ft_vec2_to_vec3(collision, bullet->start_z
 					+ ft_vector_length(ft_vector2_sub(collision, bullet->start))
 					* bullet->end_z), wall_line, (t_point){bullet->sector, id}))
 			bullet->end = collision;
@@ -86,7 +87,7 @@ static t_bool	check_main_walls(t_app *app, t_bullet *bullet, int id)
 	dist = bullet->start_z + dist * bullet->end_z;
 	if (!projectile_can_enter(app, ft_vec2_to_vec3(collision, dist), wall_line,
 			(t_point){bullet->sector,
-				app->sectors[bullet->sector].wall_types[id]}))
+			app->sectors[bullet->sector].wall_types[id]}))
 	{
 		bullet->end = collision;
 		sector_height_collision(app, bullet);
