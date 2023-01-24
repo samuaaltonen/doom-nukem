@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:36:43 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/16 15:29:18 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:36:03 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,8 @@ static int	find_max(t_app *app, SDL_Surface *asset)
 {
 	if (asset == app->assets.sprite)
 		return (MAX_TEX_COUNT);
+	if (asset == app->assets.objects && app->active)
+		return (MAX_DECOR_COUNT);
 	if (asset == app->assets.objects)
 		return (MAX_UNIQUE_OBJECTS);
 	exit_error("Error: Could not display menu icons.");
@@ -76,22 +78,24 @@ void	render_icons(t_app *app, t_point point, int id, SDL_Surface *asset)
 {
 	t_rect		src;
 	t_rect		icon;
-	t_point		size;
 	int			index;
 	int			tex;
 
 	index = -1;
 	while (++index < 5)
 	{
-		size = get_icon_size(index, &point);
 		tex = TEX_SIZE * ((index + id - 2) % (find_max(app, asset)));
+		if (tex < 0 && asset == app->assets.objects && !app->active)
+			tex += TEX_SIZE * MAX_UNIQUE_OBJECTS;
+		if (tex < 0 && asset == app->assets.objects && app->active)
+			tex += TEX_SIZE * MAX_DECOR_COUNT;
 		if (asset == app->assets.objects)
-			set_icon_rect(&src, (t_point){0, tex - TEX_SIZE},
+			set_icon_rect(&src, (t_point){0, tex},
 				(t_point){TEX_SIZE, TEX_SIZE});
 		else
 			set_icon_rect(&src, (t_point){tex, 0},
 				(t_point){TEX_SIZE, TEX_SIZE});
-		set_icon_rect(&icon, point, size);
+		set_icon_rect(&icon, point, get_icon_size(index, &point));
 		blit_surface(asset, &src, app->surface, &icon);
 		point.x += (SMALL_ICON) + 10;
 		if (index == 2)

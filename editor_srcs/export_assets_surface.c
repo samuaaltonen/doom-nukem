@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_assets_surface.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:57:52 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/19 15:12:32 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:13:21 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void	export_surfaces(t_import_info *info, int fd)
 	export_surface(info, EXPORT_POINTER, fd, POINTER_PATH);
 	export_surface(info, EXPORT_SHIELD, fd, SHIELD_PATH);
 	export_surface(info, EXPORT_HP, fd, HP_PATH);
+	export_surface(info, EXPORT_ENERGY, fd, ENERGY_PATH);
 	export_surface(info, EXPORT_PISTOL, fd, PISTOL_PATH);
 	export_surface(info, EXPORT_BULLET, fd, BULLET_PATH);
 	export_surface(info, EXPORT_METER, fd, METER_PATH);

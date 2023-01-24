@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   level_validation_assets.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:46:11 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 17:52:16 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 12:57:45 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,8 @@ static t_bool	validate_ui_elements(t_app *app)
 		|| app->assets.shield->h != SHIELD_H
 		|| app->assets.hp->w != HEALTH_W
 		|| app->assets.hp->h != HEALTH_H
+		|| app->assets.energy->w != ENERGY_W
+		|| app->assets.energy->h != ENERGY_H
 		|| app->assets.pistol->w != PISTOL_W
 		|| app->assets.pistol->h != PISTOL_H
 		|| app->assets.bullet->w != BULLET_W

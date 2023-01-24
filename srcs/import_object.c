@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import_object.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:17:07 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 14:18:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/23 18:13:16 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,12 +33,12 @@ void	import_objects(t_app *app, t_import_info *info)
 	{
 		ft_memcpy(&import, info->data + info->imported, sizeof(t_object));
 		info->imported += sizeof(t_object);
-		app->objects[i].elevation = import.elevation;
 		app->objects[i].position = import.position;
 		app->objects[i].sector = import.sector;
+		app->objects[i].elevation = sector_floor_height(app, import.sector, import.position);
 		app->objects[i].type = import.type;
 		app->objects[i].var = import.var;
-		app->objects[i].rot = 0.f;
+		app->objects[i].rot = ft_random_double(app, PI_PI);
 	}
 	import_update_progress(info);
 }

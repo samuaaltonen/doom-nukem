@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import_assets_surface.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:45:28 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/19 15:15:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:00:47 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,7 @@ void	import_surfaces(t_app *app, t_import_info *info)
 	app->assets.pointer = import_surface(EXPORT_POINTER, info);
 	app->assets.shield = import_surface(EXPORT_SHIELD, info);
 	app->assets.hp = import_surface(EXPORT_HP, info);
+	app->assets.energy = import_surface(EXPORT_ENERGY, info);
 	app->assets.pistol = import_surface(EXPORT_PISTOL, info);
 	app->assets.bullet = import_surface(EXPORT_BULLET, info);
 	app->assets.meter = import_surface(EXPORT_METER, info);

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/24 13:29:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:53:11 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,15 +34,18 @@ void	player_control(t_app *app)
 	if (!app->player.jetpack && app->conf->keystates & SHIFT)
 		app->player.move_speed = RUNNING_SPEED;
 	else if (app->player.jetpack)
-		app->player.move_speed = FLYING_SPEED;
+		app->player.move_speed = FLYING_IDLE;
 	else
 		app->player.move_speed = MOVEMENT_SPEED;
 	if (app->conf->keystates & C)
 		jetpack(app);
 	if ((app->conf->keystates & SPACE || app->conf->keystates & CTRL) && app->player.jetpack)
+	{
 		energy(app, -4);
+		app->player.move_speed = FLYING_SPEED;
+	}
 	else if (app->player.jetpack)
-		energy(app, -2);
+		energy(app, -1);
 	else
 		energy(app, 1);
 	if (app->conf->keystates & CTRL && !app->player.jetpack)
@@ -116,13 +119,13 @@ void	jetpack(t_app *app)
 	{
 		app->player.jetpack = FALSE;
 		app->player.elevation_velocity = JETPACK_FALL;
-		start_timer(&app->item_timer, 5);
+		start_timer(&app->item_timer, 4);
 	}
 	else if (check_timer(&app->item_timer) && !app->player.jetpack)
 	{
 		app->player.jetpack = TRUE;
 		app->player.flying = TRUE;
 		app->player.elevation_velocity = 0.0;
-		start_timer(&app->item_timer, 1);
+		start_timer(&app->item_timer, 2);
 	}
 }

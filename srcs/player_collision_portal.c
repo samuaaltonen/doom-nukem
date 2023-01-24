@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_collision_portal.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 19:55:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/19 16:33:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/23 16:04:10 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@
  * @param sectors (x for source sector, y for target sector, z for height)
  * @return t_bool 
  */
-t_bool	portal_can_enter(t_app *app, t_vector3 pos, t_line wall,
+t_bool	portal_can_enter(t_app *app, t_vector3 pos,
 	t_vector3 sectors)
 {
 	t_vector2	check_pos;
@@ -31,7 +31,7 @@ t_bool	portal_can_enter(t_app *app, t_vector3 pos, t_line wall,
 	double		target_floor;
 	double		target_ceil;
 
-	check_pos = ft_closest_point((t_vector2){pos.x, pos.y}, wall);
+	check_pos = (t_vector2){pos.x, pos.y};
 	source_floor = sector_floor_height(app, sectors.x, check_pos);
 	source_ceil = sector_ceil_height(app, sectors.x, check_pos);
 	target_floor = sector_floor_height(app, sectors.y, check_pos);

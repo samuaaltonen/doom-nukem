@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/24 13:18:59 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/24 14:54:14 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -105,6 +105,7 @@ FILES = animation_create.c \
 		utils.c \
 		utils_color.c \
 		utils_sdl.c \
+		random.c \
 		import_change_level.c
 
 EDITOR_FILES = app.c \
