@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:54:40 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/13 15:58:08 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:53:44 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,6 +109,34 @@ static void	render_walls_info(t_app *app, t_point mouse)
 }
 
 /**
+ * @brief Renders the info texts when sector menu is turned on.
+ * 
+ * @param app
+ * @param y
+*/
+static void	render_sector_help_texts(t_app *app, int y)
+{
+	render_text(app, (t_rect){20, y, 260, 100}, "TURN ON / OFF WALL CHANGE \
+( V ) TURN ON / OFF FLOOR CHANGE ( F ) TURN ON / OFF CEILING CHANGE ( R )");
+	render_text(app, (t_rect){20, y + 50, 260, 100}, "TEXTURE ( LEFT / RIGHT ) \
+\n HEIGHT ( UP / DOWN (+ SHIFT) )");
+	render_text(app, (t_rect){20, y + 85, 260, 50}, "CHANGE LIGHT ( + / - )");
+	if (app->portal_selection)
+		toggle_active_color(app, TRUE, "LINK PORTAL TO THIS SECTOR ( L )",
+			(t_rect){20, y + 100, 260, 15});
+	render_text(app, (t_rect){20, y + 120, 260, 100}, "TO CREATE A SLOPE, \
+SELECT A CORNER AND PRESS 'Y' AND / OR 'H'.");
+	if (app->active_sector->ceil_slope_wall
+		|| app->active_sector->floor_slope_wall)
+		render_text(app, (t_rect){20, y + 150, 260, 100}, "TOGGLE BETWEEN \
+HEIGHT AND SLOPE HEIGHT CHANGE ( U )");
+	render_text(app, (t_rect){20, y + 190, 260, 15}, "CHANGE PLAYER POSITION\
+ ( P )");
+	render_text(app, (t_rect){40, y + 650, 260, 15}, "DELETE SECTOR \
+( BACKSPACE )");
+}
+
+/**
  * @brief Renders the sector specific information on the help menu sidebar when
  * there's an active sector, but no other edit mode is on.
  * 
@@ -118,17 +146,7 @@ static void	render_walls_info(t_app *app, t_point mouse)
 */
 void	sector_edit_menu(t_app *app, t_point mouse, int y)
 {
-	render_text(app, (t_rect){20, y, 260, 100}, "TOGGLE ALL WALLS ( V )\nTOG\
-GLE FLOOR ( F )\nTOGGLE CEILING ( R )\nTOGGLE LIGHT ( T )\nTOGGLE SLOPE ( U )");
-	render_text(app, (t_rect){20, y + 70, 260, 50}, "TEX ( LEFT / RIGHT )\n \
-HEIGHT ( UP / DOWN )");
-	toggle_active_color(app, app->portal_selection, "CREATE PORTAL ( L )",
-		(t_rect){20, y + 105, 260, 15});
-	render_text(app, (t_rect){20, y + 120, 260, 150}, "SELECT WALL TO CREATE \
-PORTAL, PRESS 'L', SELECT SECTOR TO LINK PORTAL TO, PRESS 'L' AGAIN. DOUBLE \
-PRESS 'L' TO REMOVE PORTAL.");
-	render_text(app, (t_rect){20, y + 195, 260, 15}, "CREATE OBJECT ( N )");
-	render_text(app, (t_rect){20, y + 215, 260, 15}, "DELETE SECTOR ( DEL )");
+	render_sector_help_texts(app, y);
 	render_arrows(app, (t_point){12, y + 290}, (t_point){265, y + 290});
 	render_icons(app, (t_point){25, y + 280},
 		app->active_sector->wall_list->tex, app->assets.sprite);

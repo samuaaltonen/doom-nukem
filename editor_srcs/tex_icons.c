@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:36:43 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/23 16:36:03 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/24 11:09:54 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,9 +97,8 @@ void	render_icons(t_app *app, t_point point, int id, SDL_Surface *asset)
 				(t_point){TEX_SIZE, TEX_SIZE});
 		set_icon_rect(&icon, point, get_icon_size(index, &point));
 		blit_surface(asset, &src, app->surface, &icon);
-		point.x += (SMALL_ICON) + 10;
-		if (index == 2)
-			point = (t_point){point.x + SMALL_ICON, point.y + 14};
+		point.x += (SMALL_ICON) + 10 + (SMALL_ICON * (index == 2));
+		point.y += 14 * (index == 2);
 	}
 	render_ui_frame(app, (t_rect){108, point.y - 14, 66, 66}, 1, 0);
 }

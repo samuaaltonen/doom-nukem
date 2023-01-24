@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_keyup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/23 15:17:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 15:09:44 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,12 @@ static void	edit_mode_keys(t_app *app, int keycode)
 		if (app->list_ongoing)
 			cancel_list_creation(app);
 	}
+	if (keycode == SDLK_EQUALS && app->active_sector
+		&& app->active_sector->light < 8)
+		app->active_sector->light++;
+	if (keycode == SDLK_MINUS && app->active_sector
+		&& app->active_sector->light > -8)
+		app->active_sector->light--;
 }
 
 /**
