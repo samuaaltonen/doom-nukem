@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/24 14:58:57 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/24 15:02:33 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,6 +97,4 @@ void	controls(t_app *app)
 void	open_editor(t_app *app)
 {	
 	system("./level-editor &");
-	if (app)
-		return ;
 }
