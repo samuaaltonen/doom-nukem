@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   level_validation_assets.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:46:11 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 12:57:45 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/24 15:42:20 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,7 @@ static t_bool	validate_ui_elements(t_app *app)
 		|| app->assets.meter->w != METER_W
 		|| app->assets.meter->h != METER_H
 		|| app->assets.object_icon->w != OBJECT_ICON_W
-		|| app->assets.object_icon->h != OBJECT_ICON_H
-		|| app->assets.weapon->w != WEAPON_W
-		|| app->assets.weapon->h != WEAPON_H);
+		|| app->assets.object_icon->h != OBJECT_ICON_H);
 }
 
 /**
@@ -80,6 +78,8 @@ void	level_validation_assets(t_app *app)
 		|| app->assets.skybox->w != SKYBOX_W
 		|| app->assets.skybox->h != SKYBOX_H
 		|| validate_ui_elements(app)
-		|| validate_sprites(app))
+		|| validate_sprites(app)
+		|| app->assets.weapon->w != WEAPON_W
+		|| app->assets.weapon->h != WEAPON_H)
 		exit_error(MSG_ERROR_VALIDATION_ASSETS);
 }

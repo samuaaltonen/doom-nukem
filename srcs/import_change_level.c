@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:23:24 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 15:28:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 15:56:56 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	import_init_level(t_app *app, const char *level)
 	int	level_number;
 
 	i = 0;
-	while (level[i])
+	while (level && level[i])
 	{
 		if (level[i] < '0' || level[i] > '9')
 			exit_error(MSG_ERROR_LEVEL_NUMBER);
@@ -68,4 +68,6 @@ void	import_change_level(t_app *app, int level_number)
 	load_data(app);
 	level_validation(app);
 	app->conf->keystates = 0;
+	init_enemies(app);
+	init_bullets(app);
 }

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:52:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/24 15:27:50 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 15:57:15 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	import_init(t_app *app, const char *level)
 	int	level_number;
 
 	i = 0;
-	while (level[i])
+	while (level && level[i])
 	{
 		if (level[i] < '0' || level[i] > '9')
 			exit_error(MSG_ERROR_LEVEL_NUMBER);

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/19 18:54:42 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 15:53:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,6 +171,7 @@ void	init_enemies(t_app *app)
 	t_enemy_state	*enemy;
 	int				enemy_count;
 
+	ft_bzero(&app->enemies, sizeof(app->enemies));
 	enemy = &(app->enemies[0]);
 	i = -1;
 	enemy_count = 0;
