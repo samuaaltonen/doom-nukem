@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_control.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/19 17:43:27 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:29:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,28 +84,28 @@ void	handle_movement(t_app *app)
 
 void	player_shoot(t_app *app)
 {
-	if (check_timer(&app->shoot_timer) && app->player.equiped_weapon.ammo > 0)
+	if (check_timer(&app->shoot_timer) && app->player.equipped_weapon.ammo > 0)
 	{
 		fire(app,(t_vector3){app->player.dir.x, app->player.dir.y,(app->player.horizon - 0.5f)},(t_vector3){app->player.pos.x, app->player.pos.y,app->player.elevation + app->player.height / 2},(t_point){7,app->player.sector});
 		play_sound(app, AUDIO_SHOT);
-		app->player.equiped_weapon.ammo--;
+		app->player.equipped_weapon.ammo--;
 		app->player.inventory.ammo--;
-		start_timer(&app->shoot_timer, app->player.equiped_weapon.fire_rate);
+		start_timer(&app->shoot_timer, app->player.equipped_weapon.fire_rate);
 	}
-	else if (app->player.equiped_weapon.ammo <= 0 && app->player.inventory.ammo > 0)
+	else if (app->player.equipped_weapon.ammo <= 0 && app->player.inventory.ammo > 0)
 		player_reload(app);
 }
 
 void	player_reload(t_app *app)
 {
 	if (check_timer(&app->shoot_timer) && app->player.inventory.ammo
-		&& app->player.equiped_weapon.ammo < app->player.equiped_weapon.magazine)
+		&& app->player.equipped_weapon.ammo < app->player.equipped_weapon.magazine)
 	{
 		play_sound(app, AUDIO_RELOAD);
-		if (app->player.equiped_weapon.magazine <= app->player.inventory.ammo)
-			app->player.equiped_weapon.ammo = app->player.equiped_weapon.magazine;
+		if (app->player.equipped_weapon.magazine <= app->player.inventory.ammo)
+			app->player.equipped_weapon.ammo = app->player.equipped_weapon.magazine;
 		else
-			app->player.equiped_weapon.ammo = app->player.inventory.ammo;
+			app->player.equipped_weapon.ammo = app->player.inventory.ammo;
 		start_timer(&app->shoot_timer, 0.8);
 	}
 }

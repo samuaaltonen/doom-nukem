@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/19 18:44:14 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:45:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,10 +110,9 @@ typedef struct s_player
 	t_bool			flying;
 	t_bool			jetpack;
 	t_bool			jetpack_boost;
-	double			jump_timer;
 	int				hp;
 	int				weapons;
-	t_weapon		equiped_weapon;
+	t_weapon		equipped_weapon;
 	int				shield;
 	t_inventory		inventory;
 	t_line			collisions[MAX_CONCURRENT_COLLISIONS];

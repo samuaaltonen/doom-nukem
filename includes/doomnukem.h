@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/23 16:59:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/23 17:26:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -256,7 +256,8 @@ unsigned char	*read_source(const char *source, int *source_length);
 void			rle_uncompress_data(t_import_info *info, const char *source,
 					unsigned char **data, int *length);
 void			*async_load(void *data);
-void			import_init(t_app *app, const char *level);
+void			import_init_level(t_app *app, const char *level);
+void			import_change_level(t_app *app, int level_number);
 void			import_level(t_app *app, t_thread_data *thread);
 void			import_update_progress(t_import_info *info);
 void			uncompression_update_progress(t_import_info *info);

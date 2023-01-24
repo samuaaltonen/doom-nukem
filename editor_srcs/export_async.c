@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:44:12 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/23 17:09:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/23 17:47:16 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,26 +101,23 @@ void	*async_save(void *data)
  */
 void	export_file(t_app *app)
 {
+	double			progress;
 	t_thread_data	thread;
 
 	thread.app = app;
+	progress = 0.0;
 	app->import_progress = 0.0;
 	if (pthread_mutex_init(&thread.lock, NULL)
 		|| pthread_create(&thread.thread, NULL, async_save, (void *)(&thread)))
 		exit_error(MSG_ERROR_THREADS);
-	while (TRUE)
+	while (progress != -1.0)
 	{
 		if (pthread_mutex_lock(&thread.lock))
 			exit_error(MSG_ERROR_THREADS_MUTEX);
-		if (app->import_progress == -1.0)
-		{
-			if (pthread_mutex_unlock(&thread.lock))
-				exit_error(MSG_ERROR_THREADS_MUTEX);
-			break ;
-		}
+		progress = app->import_progress;
 		if (pthread_mutex_unlock(&thread.lock))
 			exit_error(MSG_ERROR_THREADS_MUTEX);
-		render_loading(app, app->import_progress, FALSE);
+		render_loading(app, progress, FALSE);
 	}
-	render_loading(app, app->import_progress, FALSE);
+	render_loading(app, progress, FALSE);
 }

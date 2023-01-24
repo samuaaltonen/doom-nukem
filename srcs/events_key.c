@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 14:05:56 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:30:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,33 +17,33 @@
  */
 int	events_keyup(int keycode, t_app *app)
 {
-	if (keycode == SDLK_RIGHT && app->conf->keystates & RIGHT)
+	if (keycode == SDLK_RIGHT)
 		app->conf->keystates ^= RIGHT;
-	if (keycode == SDLK_LEFT && app->conf->keystates & LEFT)
+	if (keycode == SDLK_LEFT)
 		app->conf->keystates ^= LEFT;
-	if (keycode == SDLK_UP && app->conf->keystates & UP)
+	if (keycode == SDLK_UP)
 		app->conf->keystates ^= UP;
-	if (keycode == SDLK_DOWN && app->conf->keystates & DOWN)
+	if (keycode == SDLK_DOWN)
 		app->conf->keystates ^= DOWN;
-	if (keycode == SDLK_w && app->conf->keystates & A)
+	if (keycode == SDLK_w)
 		app->conf->keystates ^= W;
-	if (keycode == SDLK_s && app->conf->keystates & S)
+	if (keycode == SDLK_s)
 		app->conf->keystates ^= S;
-	if (keycode == SDLK_a && app->conf->keystates & A)
+	if (keycode == SDLK_a)
 		app->conf->keystates ^= A;
-	if (keycode == SDLK_d && app->conf->keystates & D)
+	if (keycode == SDLK_d)
 		app->conf->keystates ^= D;
-	if (keycode == SDLK_q && app->conf->keystates & Q)
+	if (keycode == SDLK_q)
 		app->conf->keystates ^= Q;
-	if (keycode == SDLK_e && app->conf->keystates & E)
+	if (keycode == SDLK_e)
 		app->conf->keystates ^= E;
-	if (keycode == SDLK_r && app->conf->keystates & R)
+	if (keycode == SDLK_r)
 		app->conf->keystates ^= R;
-	if (keycode == SDLK_c && app->conf->keystates & C)
+	if (keycode == SDLK_c)
 		app->conf->keystates ^= C;
-	if (keycode == SDLK_LSHIFT && app->conf->keystates & SHIFT)
+	if (keycode == SDLK_LSHIFT)
 		app->conf->keystates ^= SHIFT;
-	if (keycode == SDLK_LCTRL && app->conf->keystates & CTRL)
+	if (keycode == SDLK_LCTRL)
 		app->conf->keystates ^= CTRL;
 	if (keycode == SDLK_ESCAPE)
 		exit(EXIT_SUCCESS);
@@ -133,5 +133,6 @@ int	events_keydown(int keycode, t_app *app)
 		app->conf->keystates |= SPACE;
 	if (keycode == SDLK_f)
 		interaction_check(app);
+	ft_printf("%d\n", app->conf->keystates);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   button_function.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/17 11:42:25 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:29:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,12 +39,12 @@ void	start_game(t_app *app)
 	app->player.inventory.potion = 5;
 	app->player.inventory.antidote = 5;
 	app->player.weapons = 0;
-	app->player.equiped_weapon.magazine = 9;
-	if (app->player.equiped_weapon.magazine <= app->player.inventory.ammo)
-		app->player.equiped_weapon.ammo = app->player.equiped_weapon.magazine;
+	app->player.equipped_weapon.magazine = 9;
+	if (app->player.equipped_weapon.magazine <= app->player.inventory.ammo)
+		app->player.equipped_weapon.ammo = app->player.equipped_weapon.magazine;
 	else
-		app->player.equiped_weapon.ammo = app->player.inventory.ammo;
-	app->player.equiped_weapon.fire_rate = 0.2;
+		app->player.equipped_weapon.ammo = app->player.inventory.ammo;
+	app->player.equipped_weapon.fire_rate = 0.2;
 	//----
 	app->status = STATUS_GAME;
 }

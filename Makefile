@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/23 15:31:06 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/24 13:18:59 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -104,7 +104,8 @@ FILES = animation_create.c \
 		time.c \
 		utils.c \
 		utils_color.c \
-		utils_sdl.c
+		utils_sdl.c \
+		import_change_level.c
 
 EDITOR_FILES = app.c \
 		editor.c \
@@ -222,7 +223,7 @@ EDITOR_HEADERS = \
 
 FLAGS = -MMD -Wall -Wextra -Werror -flto -Ofast -g
 
-LIBLINKS = -L ./libft -L ./liblinearalgebra -L/usr/local/lib \
+LIBLINKS = -L ./libft -L ./liblinearalgebra \
 		-llinearalgebra -lft -lm
 
 all: $(NAME) $(EDITOR_NAME)
