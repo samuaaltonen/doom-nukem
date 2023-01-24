@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_inventory.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 15:59:10 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/13 14:04:23 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:30:01 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ static void	decrease_item_amount(t_app *app)
 		app->player.inventory.antidote--;
 	if (app->selected[4] && app->player.inventory.key > 0)
 		app->player.inventory.key--;
-	if (app->selected[5] && app->player.inventory.jetpack > 0)
-		app->player.inventory.jetpack--;
+	if (app->selected[5] && app->player.inventory.jetpack  == TRUE)
+		app->player.inventory.jetpack = FALSE;
 }
 
 /**
@@ -50,8 +50,8 @@ static void	increase_item_amount(t_app *app)
 		app->player.inventory.antidote++;
 	if (app->selected[4] && app->player.inventory.key < MAX_ITEM_CAPACITY)
 		app->player.inventory.key++;
-	if (app->selected[5] && app->player.inventory.jetpack < 1)
-		app->player.inventory.jetpack++;
+	if (app->selected[5] && app->player.inventory.jetpack == FALSE)
+		app->player.inventory.jetpack = TRUE;
 }
 
 /**

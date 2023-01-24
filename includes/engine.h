@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/19 18:21:48 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:59:28 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ enum e_objects {
 	EMPTY,
 	ARMOR_PICKUP,
 	COIN_PICKUP,
+	AMMO_PICKUP,
 	HP_PICKUP,
-	ANTIDOTE_PICKUP,
 	JETPACK_PICKUP,
 	WEAPON1,
 	WEAPON2,

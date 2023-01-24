@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/24 11:46:13 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:04:37 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 # define MAX_COLLISION_POSITION_TRIES	320
 # define MAX_HP							200
 # define REGEN_TIME						5
+# define AMMO_PICKUP_AMOUNT				20
 
 /**
  * Movement direction enumeration.

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:17:11 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/19 17:19:50 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:09:04 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,18 @@ static void	object_hit(t_app *app, t_gameobject *obj)
 {
 	if (obj->type == ARMOR_PICKUP)
 		app->player.inventory.antidote++;
-	else if (obj->type == HP_PICKUP)
-		app->player.inventory.potion++;
 	else if (obj->type == COIN_PICKUP)
 		app->player.inventory.key++;
+	else if (obj->type == AMMO_PICKUP)
+		app->player.inventory.ammo += AMMO_PICKUP_AMOUNT;
+	else if (obj->type == HP_PICKUP)
+		app->player.inventory.potion++;
+	else if (obj->type == JETPACK_PICKUP)
+		app->player.inventory.jetpack = TRUE;
+	else if (obj->type == WEAPON1)
+		app->player.weapons |= 0b00000001;
+	else if (obj->type == WEAPON2)
+		app->player.weapons |= 0b00000010;
 	if (obj->type <= MAX_SMALL_OBJECTS)
 		obj->type = -1;
 }
@@ -60,7 +68,7 @@ void	object_collision(t_app *app)
 	obj = &(app->objects[0]);
 	while (obj->type != 0)
 	{
-		if (obj->type != -1)
+		if (obj->type != -1 && obj->type <= MAX_SMALL_OBJECTS)
 			per_object_collision(app, app->player.pos,
 				app->player.elevation, obj);
 		obj++;

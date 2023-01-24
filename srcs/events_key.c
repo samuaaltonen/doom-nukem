@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/04 15:40:55 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/24 14:33:00 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	events_keyup(int keycode, t_app *app)
 		app->conf->keystates ^= E;
 	if (keycode == SDLK_r)
 		app->conf->keystates ^= R;
-	if (keycode == SDLK_c)
+	if (app->player.inventory.jetpack && keycode == SDLK_c)
 		app->conf->keystates ^= C;
 	if (keycode == SDLK_LSHIFT)
 		app->conf->keystates ^= SHIFT;
@@ -123,7 +123,7 @@ int	events_keydown(int keycode, t_app *app)
 		app->conf->keystates |= E;
 	if (keycode == SDLK_r)
 		app->conf->keystates |= R;
-	if (keycode == SDLK_c)
+	if (app->player.inventory.jetpack && keycode == SDLK_c)
 		app->conf->keystates |= C;
 	if (keycode == SDLK_LSHIFT)
 		app->conf->keystates |= SHIFT;
