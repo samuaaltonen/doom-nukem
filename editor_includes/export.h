@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/19 18:21:44 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:13:19 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@
 # define POINTER_PATH		"assets/ui/mouse_pointer.bmp"
 # define SHIELD_PATH		"assets/ui/shield.bmp"
 # define HP_PATH			"assets/ui/hp.bmp"
+# define ENERGY_PATH		"assets/ui/energy.bmp"
 # define PISTOL_PATH		"assets/textures/pistol.bmp"
 # define BULLET_PATH		"assets/textures/bullet.bmp"
 # define METER_PATH			"assets/ui/meter.bmp"
@@ -81,6 +82,7 @@ enum e_export_assets
 	EXPORT_POINTER,
 	EXPORT_SHIELD,
 	EXPORT_HP,
+	EXPORT_ENERGY,
 	EXPORT_PISTOL,
 	EXPORT_BULLET,
 	EXPORT_METER,

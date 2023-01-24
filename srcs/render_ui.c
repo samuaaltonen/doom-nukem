@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/24 12:35:52 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/24 13:15:46 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -320,6 +320,7 @@ static void energy_meter(t_app *app, t_rect area)
 	int	x;
 	int	y;
 
+	render_ui_element(app, app->assets.energy, (t_rect){960, area.y, 24, 24});
 	render_ui_frame(app, area, 1, DARK_GREY);
 	area.x += 8;
 	area.y += 8;
@@ -338,7 +339,6 @@ static void energy_meter(t_app *app, t_rect area)
 		x = area.x;
 		y++;
 	}
-	
 }
 
 static void	fill_meter(t_app *app, t_rect area, int value, int color)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assets.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/19 15:42:16 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/24 12:52:21 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,8 @@
 # define SHIELD_H					32
 # define HEALTH_W					32
 # define HEALTH_H					32
+# define ENERGY_W					32
+# define ENERGY_H					32
 # define PISTOL_W					64
 # define PISTOL_H					64
 # define BULLET_W					4
@@ -85,6 +87,7 @@ enum e_export_assets
 	EXPORT_POINTER,
 	EXPORT_SHIELD,
 	EXPORT_HP,
+	EXPORT_ENERGY,
 	EXPORT_PISTOL,
 	EXPORT_BULLET,
 	EXPORT_METER,
@@ -138,6 +141,7 @@ typedef struct s_assets
 	SDL_Surface		*pointer;
 	SDL_Surface		*shield;
 	SDL_Surface		*hp;
+	SDL_Surface		*energy;
 	SDL_Surface		*pistol;
 	SDL_Surface		*bullet;
 	SDL_Surface		*meter;
