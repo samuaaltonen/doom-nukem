@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:32:37 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/16 10:52:27 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/25 11:42:01 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ void	render_weapons(t_app *app)
 {
 	int		index;
 
-	render_player_icons(app, app->assets.sprite,
+	render_player_icons(app, app->assets.objects,
 		(t_point){40, 60}, MAX_WEAPONS);
 	index = 0;
 	while (index < MAX_WEAPONS)

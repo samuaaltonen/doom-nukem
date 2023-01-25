@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:36:45 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/17 16:53:17 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/25 13:24:49 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,8 @@ t_sector_lst	*put_sector_lst(t_app *app, t_sector_lst *new)
 	}
 	else
 		app->sectors = new;
-	app->sector_count++;
+	if (app->sector_count < ((int)ft_lstlen(app->sectors)))
+		app->sector_count++;
 	return (new);
 }
 

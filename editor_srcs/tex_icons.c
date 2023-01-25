@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:36:43 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/24 11:09:54 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/25 11:36:55 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,8 +123,8 @@ void	render_player_icons(t_app *app, SDL_Surface *asset,
 	start_x = point.x;
 	while (index <= max)
 	{
-		set_icon_rect(&src, (t_point){TEX_SIZE * index, 0},
-			(t_point){SMALL_ICON, SMALL_ICON});
+		set_icon_rect(&src, (t_point){0, TEX_SIZE * index},
+			(t_point){TEX_SIZE, TEX_SIZE});
 		set_icon_rect(&icon, point, (t_point){SMALL_ICON, SMALL_ICON});
 		blit_surface(asset, &src, app->surface, &icon);
 		point.x += (SMALL_ICON) + 10;
