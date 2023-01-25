@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:04:04 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/23 14:33:09 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/25 15:31:49 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,15 @@ static void	render_object_movement_type(t_app *app, t_bool movement)
 	change_font(app, 11, TEXT);
 	if (movement == TRUE)
 	{
-		render_text(app, (t_rect){121, 185, 120, 15}, "IN PLACE");
+		render_text(app, (t_rect){168, 185, 120, 15}, "IN PLACE");
 		change_font(app, 11, ACTIVE_TEXT);
-		render_text(app, (t_rect){35, 185, 120, 15}, "- FOLLOWS -");
+		render_text(app, (t_rect){30, 185, 120, 15}, "- FOLLOWS -");
 	}
 	else
 	{
-		render_text(app, (t_rect){45, 185, 120, 15}, "FOLLOWS");
+		render_text(app, (t_rect){40, 185, 120, 15}, "FOLLOWS");
 		change_font(app, 11, ACTIVE_TEXT);
-		render_text(app, (t_rect){165, 185, 120, 15}, "- IN PLACE -");
+		render_text(app, (t_rect){158, 185, 120, 15}, "- IN PLACE -");
 	}
 }
 
@@ -45,19 +45,11 @@ static void	render_object_movement_type(t_app *app, t_bool movement)
 static void	render_object_type_statics(t_app *app)
 {
 	change_font(app, 11, TEXT);
-	if (app->current_object->type <= MAX_SMALL_OBJECTS)
-	{
-		render_text(app, (t_rect){102, 120, 120, 15}, "CONSUMABLE");
-		render_text(app, (t_rect){40, 140, 120, 15}, "HEALTH");
-		render_text(app, (t_rect){210, 140, 120, 15}, "0");
-		render_text(app, (t_rect){40, 155, 120, 15}, "DAMAGE");
-		render_text(app, (t_rect){210, 155, 120, 15}, "0");
-	}
-	else if (app->current_object->type <= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS)
+	if (app->current_object->type <= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS)
 	{
 		render_text(app, (t_rect){120, 120, 120, 15}, "OBJECT");
 		render_text(app, (t_rect){40, 140, 120, 15}, "HEALTH");
-		render_text(app, (t_rect){210, 140, 120, 15}, "50");
+		render_text(app, (t_rect){210, 140, 120, 15}, "0");
 		render_text(app, (t_rect){40, 155, 120, 15}, "DAMAGE");
 		render_text(app, (t_rect){210, 155, 120, 15}, "0");
 	}
@@ -67,7 +59,7 @@ static void	render_object_type_statics(t_app *app)
 		render_text(app, (t_rect){40, 140, 120, 15}, "HEALTH");
 		render_text(app, (t_rect){210, 140, 120, 15}, "100");
 		render_text(app, (t_rect){40, 155, 120, 15}, "DAMAGE");
-		render_text(app, (t_rect){210, 155, 120, 15}, "10");
+		render_text(app, (t_rect){210, 155, 120, 15}, "20");
 	}
 }
 
@@ -92,7 +84,7 @@ static void	render_object_texts(t_app *app)
 	render_object_type_statics(app);
 	if (pickable)
 	{
-		render_text(app, (t_rect){50, 170, 120, 15}, "UNPICKABLE");
+		render_text(app, (t_rect){40, 170, 120, 15}, "UNPICKABLE");
 		change_font(app, 11, ACTIVE_TEXT);
 		render_text(app, (t_rect){155, 170, 120, 15}, "- PICKABLE -");
 	}
@@ -100,7 +92,7 @@ static void	render_object_texts(t_app *app)
 	{
 		render_text(app, (t_rect){165, 170, 120, 15}, "PICKABLE");
 		change_font(app, 11, ACTIVE_TEXT);
-		render_text(app, (t_rect){40, 170, 130, 15}, "- UNPICKABLE -");
+		render_text(app, (t_rect){30, 170, 130, 15}, "- UNPICKABLE -");
 	}
 	render_object_movement_type(app, movement);
 }
@@ -114,20 +106,26 @@ void	render_object_statics(t_app *app)
 {
 	int		x;
 	int		y;
+	int		health;
+	int		damage;
 
-	y = 140;
-	while (y < 250)
+	health = 1;
+	damage = 1;
+	y = 139;
+	while (++y < 250)
 	{
-		x = 100;
-		while (x < 220)
+		x = 99;
+		while (++x < 220)
 		{
-			if (x < 100 + 100 && y < 150)
+			if (app->current_object->type > MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS)
+				health = 100;
+			if (app->current_object->type > MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS)
+				damage = 20;
+			if (x < (health + 100) && y < 150)
 				put_pixel_to_surface(app->surface, x, y, TEXT);
-			if (x < 10 + 100 && y > 153 && y < 163)
+			if (x < (damage + 100) && y > 153 && y < 163)
 				put_pixel_to_surface(app->surface, x, y, TEXT);
-			x++;
 		}
-		y++;
 	}
 	render_object_texts(app);
 }
@@ -156,5 +154,5 @@ void	object_edit_menu(t_app *app)
 	else
 		id = find_object_interaction(app, find_interaction(app), 1);
 	render_current_interaction_status(app, mouse, 210, id);
-	render_text(app, (t_rect){70, 260, 260, 15}, "DELETE OBJECT ( DEL )");
+	render_text(app, (t_rect){42, 260, 260, 15}, "DELETE OBJECT ( BACKSPACE )");
 }
