@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/25 14:49:18 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:48:25 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,21 @@ t_sector_lst	*sector_by_index(t_app *app, int index)
 t_vec2_lst	*find_clicked_vector(t_app *app)
 {
 	t_vec2_lst		*found;
+	t_point			mouse;
+	t_vector2		mouse_pos;
+	t_line			wall_line;
 
+	SDL_GetMouseState(&mouse.x, &mouse.y);
+	mouse_pos = screen_to_world(app, mouse);
 	if (app->active_sector)
 	{
 		found = app->active_sector->wall_list;
 		while (found)
 		{
-			if (app->mouse_track.x == found->point.x
+			wall_line = (t_line){found->point, found->next->point};
+			if ((app->mouse_track.x == found->point.x
 				&& app->mouse_track.y == found->point.y)
+					|| ft_point_on_segment_epsilon(wall_line, mouse_pos, 0.01))
 				return (found);
 			if (found->next == app->active_sector->wall_list)
 				break ;

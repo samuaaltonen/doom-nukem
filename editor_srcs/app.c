@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/25 16:32:05 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:49:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,6 +75,7 @@ static void	app_render_helper(t_app *app)
 	{
 		render_sector(app, app->active);
 		render_point(app, app->active->point, 3, POINT);
+		draw_circle(app, world_to_screen(app, app->active->point), 4, POINT);
 	}
 	if (app->interaction_menu && app->current_interaction)
 		render_target_sector_lines(app);
