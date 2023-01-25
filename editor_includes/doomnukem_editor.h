@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/23 17:07:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/25 15:56:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -196,9 +196,9 @@ typedef struct s_app
 	SDL_Surface		*surface;
 	double			divider;
 	double			aspect_ratio;
-	t_vector2		view_pos;
+	t_vector2		view_start;
+	t_vector2		view_end;
 	t_vector2		view_size;
-	t_vector2		zoom_area;
 	t_vector2		mouse_track;
 	t_sector_lst	*sectors;
 	t_sector_lst	*active_sector;

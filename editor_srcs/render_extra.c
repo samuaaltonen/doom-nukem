@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_extra.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:55:36 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/12 13:54:12 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/25 15:41:40 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,18 +51,19 @@ static void	sector_bounds(t_app *app, t_sector_lst *sector,
 static t_line	get_window_line(t_app *app, int side_id)
 {
 	if (side_id == 0)
-		return ((t_line){app->view_pos,
-			ft_vector2_add(app->view_pos, (t_vector2){app->zoom_area.x, 0})});
+		return ((t_line){app->view_start,
+			ft_vector2_add(app->view_start, (t_vector2){app->view_size.x, 0})});
 	if (side_id == 1)
-		return ((t_line){ft_vector2_add(app->view_pos,
-				(t_vector2){app->zoom_area.x, 0}), ft_vector2_add(app->view_pos,
-				(t_vector2){app->zoom_area.x, app->zoom_area.y})});
+		return ((t_line){ft_vector2_add(app->view_start,
+				(t_vector2){app->view_size.x, 0}),
+					ft_vector2_add(app->view_start,
+				(t_vector2){app->view_size.x, app->view_size.y})});
 	if (side_id == 2)
-		return ((t_line){ft_vector2_add(app->view_pos, (t_vector2){
-				app->zoom_area.x, app->zoom_area.y}), ft_vector2_add(
-				app->view_pos, (t_vector2){0, app->zoom_area.y})});
-	return ((t_line){ft_vector2_add(app->view_pos,
-			(t_vector2){0, app->zoom_area.y}), app->view_pos,});
+		return ((t_line){ft_vector2_add(app->view_start, (t_vector2){
+				app->view_size.x, app->view_size.y}), ft_vector2_add(
+				app->view_start, (t_vector2){0, app->view_size.y})});
+	return ((t_line){ft_vector2_add(app->view_start,
+			(t_vector2){0, app->view_size.y}), app->view_start,});
 }
 
 static void	sort_point_array(t_vector2 *array, int *count)

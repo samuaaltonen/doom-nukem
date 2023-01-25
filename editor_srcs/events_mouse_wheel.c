@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_mouse_wheel.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:07:58 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 21:53:22 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/25 15:56:38 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,23 +21,29 @@
  */
 int	events_mouse_wheel(t_app *app, SDL_Event *event)
 {
-	if (event->wheel.y > 0 && app->zoom_area.x < 200)
+	double	zoom;
+
+	zoom = 1.f;
+	if (event->wheel.y > 0 && app->zoom_range < 6)
 	{
-		app->zoom_area.x *= 2;
-		app->zoom_area.y *= 2;
-		app->view_pos.x *= 2;
-		app->view_pos.y *= 2;
+		zoom = 0.5f;
+		app->view_size = ft_vec2_mult(app->view_size, 2.f);
 		app->zoom_range += 1;
-		app->movement_speed /= 2;
+		app->movement_speed *= 0.5f;
 	}	
-	else if (event->wheel.y < 0 && app->zoom_area.x > 6)
+	else if (event->wheel.y < 0 && app->zoom_range > 1)
 	{
-		app->zoom_area.x /= 2;
-		app->zoom_area.y /= 2;
-		app->view_pos.x /= 2;
-		app->view_pos.y /= 2;
+		zoom = 2.f;
+		app->view_size = ft_vec2_mult(app->view_size, 0.5f);
 		app->zoom_range -= 1;
 		app->movement_speed *= 2;
+	}
+	if (event->wheel.y != 0)
+	{
+		app->view_start.x = (app->view_start.x - app->mouse_track.x)
+			/ zoom + app->mouse_track.x;
+		app->view_start.y = (app->view_start.y - app->mouse_track.y)
+			/ zoom + app->mouse_track.y;
 	}
 	return (0);
 }
