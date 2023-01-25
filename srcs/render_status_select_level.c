@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:59:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/25 13:53:49 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/25 14:10:31 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,25 +93,22 @@ static void	make_button(t_app *app, int n)
 	t_rect	rect;
 	char	*name;
 	char	*level;
+	int		temp;
 
-	if (n < 5)
-	{	
-		rect.x = 340;
-		rect.y = 200 + 64 * n;
-	}
-	else if (n >= 5 && n < 10)
-	{	
-		rect.x = 534;
-		rect.y = 200 + 64 * (n - 5);
-	}
+	temp = n;
+	if (n >= 5 && n < 10)
+		temp -= 5;
+	else if (n >= 10)
+		return ;
+	rect.x = 340 + (n / 5) * 194;
+	rect.y = 200 + 64 * temp;
 	rect.w = 160;
 	rect.h = 32;
 	level = ft_itoa(n);
 	name = ft_strnew(FILE_NAME_LENGTH);
 	name = ft_strcpy(name, "LEVEL ");
 	name = ft_strcat(name, level);
-	select_level_button(app,
-		render_button(app, rect, 1, name),
+	select_level_button(app, render_button(app, rect, 1, name),
 		import_change_level, n);
 	free(level);
 	free(name);
