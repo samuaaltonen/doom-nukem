@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/25 15:35:45 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:32:05 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,8 @@ static void	app_render_helper(t_app *app)
 		&& app->current_interaction->interaction_link > -1)
 		render_interaction_link_lines(app);
 	render_sector_points(app);
+	if (app->list_creation && !app->list_ongoing)
+		render_point(app, app->mouse_track, 3, POINT);
 	if (app->list_ongoing)
 	{
 		if (check_last_point(app) || valid_point(app))
