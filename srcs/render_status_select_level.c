@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:59:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/25 14:10:31 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/25 14:17:42 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,11 +31,11 @@ void	render_select_level(t_app *app)
 	change_font(app, 32, DARK_RED);
 	render_text(app, (t_rect){336, 146, 800, 800}, "SELECT LEVEL");
 	render_ui_frame(app, (t_rect){320, 180, 640, 360}, 1, DARK_GREY);
-	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
 	valid_levels(app);
 	button_function(app,
 		render_button(app, (t_rect){880, 488, 60, 32}, 1, "Back"),
 		main_menu);
+	render_pointer(app, app->mouse_pos.x, app->mouse_pos.y);
 }
 
 static void	select_level_button(t_app *app, t_rect button,
@@ -59,7 +59,7 @@ static void	valid_levels(t_app *app)
 	int	i;
 
 	i = 0;
-	while (i < 9)
+	while (i < 10)
 	{
 		if (check_level(i))
 			make_button(app, i);
