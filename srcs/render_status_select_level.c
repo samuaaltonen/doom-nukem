@@ -6,22 +6,22 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:59:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/25 13:40:45 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/25 13:53:49 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
-static void select_level_button(t_app *app, t_rect button,
-								void (*f)(t_app *app, int level), int level);
-static int check_level(int n);
-static void valid_levels(t_app *app);
-static void make_button(t_app *app, int level);
+static void	select_level_button(t_app *app, t_rect button,
+				void (*f)(t_app *app, int level), int level);
+static int	check_level(int n);
+static void	valid_levels(t_app *app);
+static void	make_button(t_app *app, int level);
 
-void render_select_level(t_app *app)
+void	render_select_level(t_app *app)
 {
-	t_rect dst;
-	t_rect src;
+	t_rect	dst;
+	t_rect	src;
 
 	SDL_SetRelativeMouseMode(SDL_FALSE);
 	rect_from_surface(app->assets.title_screen_image, &src);
@@ -38,7 +38,7 @@ void render_select_level(t_app *app)
 		main_menu);
 }
 
-static void select_level_button(t_app *app, t_rect button,
+static void	select_level_button(t_app *app, t_rect button,
 								void (*f)(t_app *app, int level), int level)
 {
 	if (check_mouse(app, button))
@@ -54,7 +54,7 @@ static void select_level_button(t_app *app, t_rect button,
 	}
 }
 
-static void valid_levels(t_app *app)
+static void	valid_levels(t_app *app)
 {
 	int	i;
 
@@ -67,13 +67,13 @@ static void valid_levels(t_app *app)
 	}
 }
 
-static int check_level(int n)
+static int	check_level(int n)
 {
-	char *str;
-	char *level;
-	char *file;
+	char	*str;
+	char	*level;
+	char	*file;
 
-	str = ft_strnew(sizeof(char) * 9);
+	str = ft_strnew(FILE_NAME_LENGTH);
 	str = ft_strcpy(str, "level-");
 	level = ft_itoa(n);
 	file = ft_strcat(str, level);
@@ -88,24 +88,31 @@ static int check_level(int n)
 	return (0);
 }
 
-static void make_button(t_app *app, int level)
+static void	make_button(t_app *app, int n)
 {
 	t_rect	rect;
+	char	*name;
+	char	*level;
 
-	if (level < 5)
+	if (n < 5)
 	{	
 		rect.x = 340;
-		rect.y = 200 + 64 * level;
+		rect.y = 200 + 64 * n;
 	}
-	else if (level >= 5 && level < 10)
+	else if (n >= 5 && n < 10)
 	{	
 		rect.x = 534;
-		rect.y = 200 + 64 * (level - 5);
+		rect.y = 200 + 64 * (n - 5);
 	}
-	
 	rect.w = 160;
 	rect.h = 32;
+	level = ft_itoa(n);
+	name = ft_strnew(FILE_NAME_LENGTH);
+	name = ft_strcpy(name, "LEVEL ");
+	name = ft_strcat(name, level);
 	select_level_button(app,
-		render_button(app, rect, 1, "LEVEL 0"),
-		import_change_level, level);
+		render_button(app, rect, 1, name),
+		import_change_level, n);
+	free(level);
+	free(name);
 }
