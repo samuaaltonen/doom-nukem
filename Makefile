@@ -6,7 +6,7 @@
 #    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/24 16:11:40 by dpalacio         ###   ########.fr        #
+#    Updated: 2023/01/25 16:24:47 by dpalacio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,8 @@ FILES = animation_create.c \
 		bullet_wall_collisions.c \
 		bullets.c \
 		button_function.c \
+		button_game_status.c \
+		button_options_menu.c \
 		enemy_avoidance.c \
 		enemy_move.c \
 		enemy_states.c \

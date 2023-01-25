@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_control.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/24 14:53:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:12:37 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,7 +89,7 @@ void	player_shoot(t_app *app)
 {
 	if (check_timer(&app->shoot_timer) && app->player.equipped_weapon.ammo > 0)
 	{
-		fire(app,(t_vector3){app->player.dir.x, app->player.dir.y,(app->player.horizon - 0.5f)},(t_vector3){app->player.pos.x, app->player.pos.y,app->player.elevation + app->player.height / 2},(t_point){7,app->player.sector});
+		fire(app,(t_vector3){app->player.dir.x, app->player.dir.y,(app->player.horizon - 0.5f)},(t_vector3){app->player.pos.x, app->player.pos.y,app->player.elevation + app->player.height / 2},(t_point){7,app->player.sector});  //This 7 is the proyectile sprite
 		play_sound(app, AUDIO_SHOT);
 		app->player.equipped_weapon.ammo--;
 		app->player.inventory.ammo--;
