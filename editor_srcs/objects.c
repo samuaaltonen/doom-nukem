@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:53:42 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/18 15:02:32 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/26 11:48:46 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,12 +71,14 @@ t_bool	select_object(t_app *app)
 void	draw_object_icon(t_app *app, t_vector2 world_pos, int id)
 {
 	t_point	screen_pos;
+	int		size;
 
+	size = 6 / app->zoom_range;
 	screen_pos = world_to_screen(app, world_pos);
 	blit_surface(app->assets.objects, &(t_rect){0, TEX_SIZE * (id - 1),
 		TEX_SIZE, TEX_SIZE}, app->surface, &(t_rect){screen_pos.x
-		- OBJECT_SCREEN_SIZE / 2, screen_pos.y - OBJECT_SCREEN_SIZE / 2,
-		OBJECT_SCREEN_SIZE, OBJECT_SCREEN_SIZE});
+		- (OBJECT_SCREEN_SIZE * size) / 2, screen_pos.y - (OBJECT_SCREEN_SIZE
+			* size) / 2, OBJECT_SCREEN_SIZE * size, OBJECT_SCREEN_SIZE * size});
 }
 
 /**
