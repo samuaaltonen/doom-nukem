@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_status_select_level.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:59:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/25 14:17:42 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/26 13:52:45 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,10 @@ static int	check_level(int n)
 	char	*file;
 
 	str = ft_strnew(FILE_NAME_LENGTH);
-	str = ft_strcpy(str, "level-");
+	str = ft_strcpy(str, LEVEL_IDENTIFIER);
 	level = ft_itoa(n);
+	if (!level)
+		exit_error(MSG_ERROR_ALLOC);
 	file = ft_strcat(str, level);
 	if (access(file, F_OK) == 0)
 	{
@@ -105,6 +107,8 @@ static void	make_button(t_app *app, int n)
 	rect.w = 160;
 	rect.h = 32;
 	level = ft_itoa(n);
+	if (!level)
+		exit_error(MSG_ERROR_ALLOC);
 	name = ft_strnew(FILE_NAME_LENGTH);
 	name = ft_strcpy(name, "LEVEL ");
 	name = ft_strcat(name, level);
