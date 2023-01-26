@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/25 16:49:41 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/26 19:06:17 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,12 @@ void	app_prepare(t_app *app)
 }
 
 /**
- * @brief Renders the optional lines and points based on if something has been
+ * @brief Renders the selected lines and points based on if something has been
  * clicked active, or a certain menu is turned on.
  * 
  * @param app
 */
-static void	app_render_helper(t_app *app)
+static void	render_selected(t_app *app)
 {
 	if (app->active)
 	{
@@ -109,7 +109,7 @@ void	app_render(t_app *app)
 	render_fill_active_sector(app);
 	render_divider(app);
 	render_sectors(app);
-	app_render_helper(app);
+	render_selected(app);
 	render_objects(app);
 	render_player(app);
 	zoom_slider(app);
