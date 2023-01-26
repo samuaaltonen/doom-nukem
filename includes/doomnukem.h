@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 17:49:49 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:41:49 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ typedef struct s_bullet
 	double				timer;
 	int					type;
 	int					sector;
+	int					wall_id;
 }	t_bullet;
 
 typedef struct s_render_object
@@ -361,8 +362,8 @@ t_vector2		get_possible_movement_point(t_line wall, t_vector2 coord,
 					int side);
 t_bool			portal_can_enter(t_app *app, t_vector3 pos,
 					t_vector3 sectors);
-t_bool			projectile_can_enter(t_app *app, t_vector3 pos, t_line wall,
-					t_point sectors);
+t_bool	projectile_can_enter(t_app *app, t_vector3 pos, t_bullet *bullet,
+	int	target);
 void			portal_enter(t_app *app, int sector_id);
 t_bool			inside_sector(t_app *app, int sector_id, t_vector2 coord);
 void			check_player_sector(t_app *app, int old_sector,
@@ -372,7 +373,7 @@ int				enemy_move_check(t_app *app, t_move new, int sector_id,
 void			object_collision(t_app *app);
 t_bool			in_range(t_vector2 pos, t_vector2 obj, double epsilon);
 t_bool			in_range_height(double pos, double obj, double epsilon);
-void			sector_height_collision(t_app *app, t_bullet *bullet);
+t_bool			sector_height_collision(t_app *app, t_bullet *bullet);
 
 /**
  * Sectors

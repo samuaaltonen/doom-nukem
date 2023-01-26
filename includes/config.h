@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/24 15:57:27 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/26 13:58:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define MAX_SMALL_OBJECTS 7
 # define MAX_BIG_OBJECTS 7
 # define MAX_ENEMY_TYPES 3
-# define MAX_DECOR_TYPES 4
+# define MAX_DECOR_TYPES 9
 # define MAX_PROJECTILES 8
 # define MAX_OBJECT_TYPES 17
 # define MAX_OBJECT_DISTANCE 128.0
@@ -53,8 +53,8 @@
 # define MAX_TEMP_OBJECTS 64
 # define MAX_INTERACTIONS 64
 # define MAX_UNIQUE_INTERACTIONS 7
-# define PARTIALLY_TRANSPARENT_TEXTURE_ID 3
-# define FULLY_TRANSPARENT_TEXTURE_ID 4
+# define PARTIALLY_TRANSPARENT_TEXTURE_ID 8
+# define FULLY_TRANSPARENT_TEXTURE_ID 9
 # define MAX_GRAVITY -1.0
 # define MIN_GRAVITY -50.0
 # define DEFAULT_GRAVITY -20.0

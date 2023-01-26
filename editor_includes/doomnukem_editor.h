@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/25 15:56:22 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/26 13:53:44 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # define THREAD_COUNT 2
 # define IMAGE_PIXEL_BYTES 4
 # define IMAGE_PIXEL_BITS 32
-# define MAX_TEX_COUNT 79
+# define MAX_TEX_COUNT 98
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 16
 # define MAX_WEAPONS 5
@@ -31,13 +31,14 @@
 # define MAX_UNIQUE_OBJECTS 17
 # define MAX_INTERACTIONS 64
 # define MAX_UNIQUE_INTERACTIONS 7
-# define MAX_DECOR_COUNT 21
+# define MAX_DECOR_COUNT 26
 # define MAX_AMMO 999
 # define MAX_ITEM_CAPACITY 99
 # define MAX_OBJECTS 128
 # define INVENTORY_SIZE 6
 # define DEG_IN_RADIAN 0.01745f
 # define PI_HALF 1.57079632679
+# define PI_PI 6.28318530718
 # define RADIAN_IN_DEG 57.29578f
 # define MAP_SPEED 0.85f
 # define HEIGHT_INC 0.125f

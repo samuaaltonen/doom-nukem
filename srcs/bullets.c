@@ -95,6 +95,16 @@ void	melee(t_app *app, t_vector3 target_dir, t_vector3 start, t_point info)
 	app->bullets_active++;
 }
 
+static void	start_bullet(t_app *app, t_bullet *bullet)
+{
+	bullet->start = ft_vector2_add(bullet->start,
+			ft_vec2_mult(bullet->end, app->conf->delta_time
+				* app->bullet_def[bullet->type].speed));
+	bullet->start_z += bullet->end_z
+		* app->conf->delta_time
+		* app->bullet_def[bullet->type].speed;
+}
+
 /**
  * @brief loops through the bullet array adds time to timers and updats positions
  * 
@@ -102,22 +112,25 @@ void	melee(t_app *app, t_vector3 target_dir, t_vector3 start, t_point info)
  */
 void	update_bullets(t_app *app)
 {
-	int	i;
+	int			i;
+	t_bullet	*bullet;
 
 	i = -1;
 	while (++i < MAX_TEMP_OBJECTS)
 	{
-		if (app->bullets[i].type == -1)
+		bullet = &(app->bullets[i]);
+		if (bullet->type == -1)
 			continue ;
-		app->bullets[i].start = ft_vector2_add(app->bullets[i].start,
-				ft_vec2_mult(app->bullets[i].end, app->conf->delta_time
-					* app->bullet_def[app->bullets[i].type].speed));
-		app->bullets[i].start_z += app->bullets[i].end_z
-			* app->conf->delta_time
-			* app->bullet_def[app->bullets[i].type].speed;
-		if (app->bullets[i].timer > 0)
-			app->bullets[i].timer -= app->conf->delta_time;
+		start_bullet(app, bullet);
+		if (bullet->timer > 0)
+			bullet->timer -= app->conf->delta_time;
 		else
-			kill_bullet(app, &(app->bullets[i]));
+		{
+			kill_bullet(app, bullet);
+			if (app->sectors[bullet->sector].wall_types[bullet->wall_id] > -1
+				&& app->sectors[bullet->sector].wall_textures[bullet->wall_id]
+				== PARTIALLY_TRANSPARENT_TEXTURE_ID)
+				app->sectors[bullet->sector].wall_textures[bullet->wall_id]++;
+		}
 	}
 }
