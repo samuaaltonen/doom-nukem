@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/19 18:50:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:25:19 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,9 +44,6 @@ static void	update_elevation_velocity(t_app *app, double floor)
 	if (app->player.elevation < floor && app->player.elevation_velocity
 		< (floor - app->player.elevation) * FLOOR_NORMAL_FORCE)
 	{
-		if (app->player.elevation_velocity < FALL_DAMAGE_FORCE_THRESHOLD)
-			damage(app, -(int)app->player.elevation_velocity
-				* FALL_DAMAGE_MULTIPLIER);
 		if (!app->player.jetpack)
 			app->player.flying = FALSE;
 		app->player.elevation_velocity = (floor - app->player.elevation)
@@ -87,7 +84,12 @@ void	update_elevation(t_app *app)
 		app->player.elevation = floor;
 	if (!app->player.jetpack && old_elevation >= floor
 		&& app->player.elevation < floor && app->player.elevation_velocity < 0)
+	{
+		if (app->player.elevation_velocity < FALL_DAMAGE_FORCE_THRESHOLD)
+			damage(app, -(int)app->player.elevation_velocity
+				* FALL_DAMAGE_MULTIPLIER);
 		reset_elevation(app, floor);
+	}
 }
 
 /**
