@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:17:22 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 18:28:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:15:33 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,7 +134,7 @@ void	draw_ceiling(t_app *app, int x, t_rayhit *hit)
 			ft_vector2_sub(hit->position,
 				ft_vec2_mult(hit->ray, hit->distance - distance))))
 		return ;
-	while (y.start < y.end)
+	while (y.start <= y.end)
 	{
 		distance = elevation * WIN_H / ((double)y.start - horizon_effect);
 		draw_ceiling_pixel(app, hit, (t_point){x, y.start}, distance);
