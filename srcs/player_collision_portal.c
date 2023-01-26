@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 19:55:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/23 16:04:10 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:42:31 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ t_bool	portal_can_enter(t_app *app, t_vector3 pos,
  * @param sectors (x for source sector and y for target sector)
  * @return t_bool 
  */
-t_bool	projectile_can_enter(t_app *app, t_vector3 pos, t_line wall,
-	t_point sectors)
+t_bool	projectile_can_enter(t_app *app, t_vector3 pos, t_bullet *bullet,
+	int target)
 {
 	t_vector2	check_pos;
 	double		source_floor;
@@ -63,13 +63,15 @@ t_bool	projectile_can_enter(t_app *app, t_vector3 pos, t_line wall,
 	double		target_floor;
 	double		target_ceil;
 
-	if (sectors.y == -1)
+	if (target == -1 || app->sectors[bullet->sector].\
+			wall_textures[bullet->wall_id] <= PARTIALLY_TRANSPARENT_TEXTURE_ID)
 		return (FALSE);
-	check_pos = ft_closest_point((t_vector2){pos.x, pos.y}, wall);
-	source_floor = sector_floor_height(app, sectors.x, check_pos);
-	source_ceil = sector_ceil_height(app, sectors.x, check_pos);
-	target_floor = sector_floor_height(app, sectors.y, check_pos);
-	target_ceil = sector_ceil_height(app, sectors.y, check_pos);
+	check_pos = ft_closest_point((t_vector2){pos.x, pos.y},
+		get_wall_line(app, bullet->sector, bullet->wall_id));
+	source_floor = sector_floor_height(app, bullet->sector, check_pos);
+	source_ceil = sector_ceil_height(app, bullet->sector, check_pos);
+	target_floor = sector_floor_height(app, target, check_pos);
+	target_ceil = sector_ceil_height(app, target, check_pos);
 	if (pos.z < target_floor)
 		return (FALSE);
 	if (target_ceil < pos.z)

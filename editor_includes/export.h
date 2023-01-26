@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 13:13:19 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/26 13:50:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define UI_FRAME_W					30
 # define UI_FRAME_H					30
 # define OBJECT_ICON_W				128
-# define OBJECT_ICON_H				2688
+# define OBJECT_ICON_H				3328
 # define MAX_BMP_OFFSET				32768
 # define MAX_BMP_WIDTH				32768
 # define MAX_BMP_HEIGHT				32768
