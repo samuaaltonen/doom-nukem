@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:53:42 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/26 11:48:46 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/26 13:35:41 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,15 +89,17 @@ void	draw_object_icon(t_app *app, t_vector2 world_pos, int id)
 */
 void	render_objects(t_app *app)
 {
-	int	i;
+	int		i;
+	int		size;
 
+	size = 6 / app->zoom_range;
 	i = 0;
 	while (i < app->object_count)
 	{
 		if (app->objects[i].type == 0)
 			return ;
 		if (interaction_object_check(app, i))
-			render_point(app, app->objects[i].position, 9, INTERACTION);
+			render_point(app, app->objects[i].position, 9 * size, INTERACTION);
 		draw_object_icon(app, app->objects[i].position, app->objects[i].type);
 		i++;
 	}
