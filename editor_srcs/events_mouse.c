@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/23 16:32:28 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/26 13:17:11 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static int	list_creation_events(t_app *app)
 	}
 	else
 	{
-		if (app->mouse_track.x == app->active->point.x
+		if (app->active && app->mouse_track.x == app->active->point.x
 			&& app->mouse_track.y == app->active->point.y && valid_sector(app))
 			return (complete_sector(app));
 		else if (valid_point(app) && app->active)
@@ -65,7 +65,7 @@ static void	active_sector_events(t_app *app)
 	}
 	else if (select_object(app))
 		app->object_menu = TRUE;
-	else if (app->active_sector->member_sectors[0]
+	else if (app->active_sector && app->active_sector->member_sectors[0]
 		&& find_child_sector(app))
 		app->active_sector = find_child_sector(app);
 	app->active = find_clicked_vector(app);
