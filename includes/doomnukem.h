@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/26 16:41:49 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/26 18:07:17 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -421,6 +421,8 @@ void			draw_portal_partial_hole(t_app *app, int x, t_rayhit *hit);
 void			interaction_check(t_app *app);
 void			interaction_check_portal(t_app *app, int sector_id);
 void			interaction_trigger(t_app *app, int interaction_index);
+void			enemy_interaction_check(t_app *app, t_enemy_state *enemy);
+void			interaction_by_pickup(t_app *app, t_gameobject *obj);
 
 /**
  * Animations

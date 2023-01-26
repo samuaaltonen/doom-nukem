@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:30:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/24 17:58:04 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/26 17:05:30 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,10 @@ void	enemy_states(t_app *app, t_enemy_state *state, int define)
 		enemy_attack_check(app, state, define);
 	if (state->state == DEATH && app->object_states[state->id]
 		> app->enemy_def[define].states[state->state][1] - 1)
-		state->dead = TRUE;
+		{
+			state->dead = TRUE;
+			enemy_interaction_check(app, state);
+		}
 	else if (state->state == ATTACK && state->next == ATTACK
 		&& app->enemy_def[define].attack_speed < app->object_states[state->id])
 		enemy_attack(app, state, define);
