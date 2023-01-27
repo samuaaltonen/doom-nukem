@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:34:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/19 16:41:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/27 11:13:19 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ enum e_keystate {
 enum e_buttonstate {
 	LEFT_MOUSE		= 1 << 0,
 	RIGHT_MOUSE		= 1 << 1,
-	MIDDLE_MOUSE	= 1 << 2
+	MIDDLE_MOUSE	= 1 << 2,
+	WHEEL_UP		= 1 << 3,
+	WHEEL_DOWN		= 1 << 4,
 };
 
 #endif

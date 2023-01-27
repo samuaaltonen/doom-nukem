@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:46:07 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 17:14:25 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/27 21:35:37 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,28 +68,6 @@ static double	get_wall_dotproduct(t_app *app, t_wall wall)
 	return (dotproduct);
 }
 
-/* static void	sector_walls_epsilon_accuracy(t_wall *walls, int wall_count)
-{
-	int	i;
-	int	next_i;
-
-	ft_printf("---\n");
-	i = 0;
-	while (i < wall_count)
-	{
-		next_i = i + 1;
-		if (next_i == wall_count)
-			next_i = 0;
-		if (walls[i].is_member && walls[next_i].is_member)
-			ft_printf("(%d:%d) x start: %d, x end: %d. (%d:%d) x start %d, x end: %d\n",
-				walls[i].sector_id, walls[i].wall_id,
-				walls[i].start_x, walls[i].end_x,
-				walls[next_i].sector_id, walls[next_i].wall_id,
-				walls[next_i].start_x, walls[next_i].end_x);
-		i++;
-	}
-} */
-
 /**
  * @brief Prepares selected walls to be rendered. Calculates their translated x
  * positions in screen.
@@ -113,6 +91,7 @@ void	sector_walls_prepare(t_app *app, t_wall *walls, int wall_count)
 		dotproduct = get_wall_dotproduct(app, walls[i]);
 		walls[i].start_x = translate_window_x(app, walls[i].line.a, dotproduct);
 		walls[i].end_x = translate_window_x(app, walls[i].line.b, dotproduct);
+		walls[i].x_flipped = FALSE;
 		if (walls[i].end_x < walls[i].start_x)
 		{
 			temp_x = walls[i].end_x;
@@ -126,5 +105,4 @@ void	sector_walls_prepare(t_app *app, t_wall *walls, int wall_count)
 			walls[i].end_x = WIN_W - 1;
 		walls[i].already_selected = 0;
 	}
-	/* sector_walls_epsilon_accuracy(walls, wall_count); */
 }

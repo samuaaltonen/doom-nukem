@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:36:45 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/25 13:24:49 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/27 18:30:20 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,18 +145,17 @@ t_bool	complete_sector(t_app *app)
 	new->parent_sector = app->active_sector;
 	add_member_sector(new->parent_sector, new);
 	change_walls_type(app, new);
-	if (new->parent_sector)
-	{
-		change_walls_tex(new->wall_list, 11);
-		new->ceil_tex = 10;
-		new->floor_tex = 10;
-	}
-	else
+	change_walls_tex(new->wall_list, 11);
+	new->ceil_tex = 10;
+	new->floor_tex = 10;
+	if (!new->parent_sector)
 	{
 		change_walls_tex(new->wall_list, 35);
 		new->ceil_height = 3.0;
 		new->ceil_tex = 19;
 		new->floor_tex = 19;
 	}
+	if (app->linking_mode)
+		find_links(app, new);
 	return (0);
 }

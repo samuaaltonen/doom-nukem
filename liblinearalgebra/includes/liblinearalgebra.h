@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:46:18 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 17:19:55 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/27 21:42:21 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,24 @@
 # define LINE_POINT_EPSILON 0.0009765625
 # include "math.h"
 
+# ifndef LIBFT_H
+typedef enum e_bool {
+	FALSE = 0,
+	TRUE = 1
+}	t_bool;
+# endif
 enum e_line_resize_side {
 	EXTEND_CORNER_A,
 	EXTEND_CORNER_B,
 	EXTEND_BOTH
 };
+
+/**
+ * Integer type definitions
+ */
+typedef unsigned char	t_uint8;
+typedef unsigned short	t_uint16;
+typedef unsigned int	t_uint32;
 
 typedef struct s_vector2 {
 	double	x;
@@ -57,6 +70,18 @@ typedef struct s_triangle
 	t_point	b;
 	t_point	c;
 }	t_triangle;
+
+typedef union u_colors
+{
+	int	color;
+	struct
+	{
+		t_uint8	b;
+		t_uint8	g;
+		t_uint8	r;
+		t_uint8	a;
+	}	s_bgra;
+}	t_colors;
 
 double		ft_vector_length(t_vector2 a);
 t_vector2	ft_vector_multiply_matrix(t_vector2 vector, t_matrix2 matrix);
@@ -98,5 +123,7 @@ void		ft_swap(int *a, int *b);
 t_vector3	ft_vec2_to_vec3(t_vector2 vector, double z);
 void		ft_double_swap(double *a, double *b);
 void		ft_vec2_swap(t_vector2 *a, t_vector2 *b);
+int			blend_pixel_half(t_colors base, t_colors top);
+t_bool		ft_cmp_line_points(t_line a, t_line b);
 
 #endif

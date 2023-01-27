@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/26 13:53:44 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/27 17:39:33 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,6 @@
 # include "export.h"
 
 /**
- * Integer type definitions
- */
-typedef unsigned char	t_uint8;
-typedef unsigned short	t_uint16;
-typedef unsigned int	t_uint32;
-
-/**
  * Keystate enumeration.
  * Keystate enumerations use powers of 2 for bit stacking operations.
  */
@@ -89,6 +82,7 @@ enum e_keystate {
 
 enum e_colors {
 	PORTAL = 0xFF0000,
+	PORTAL_LINK = 0x008C00,
 	WALL = 0x999999,
 	CEILING_ROTATE = 0x888888,
 	FLOOR_ROTATE = 0x777777,
@@ -220,6 +214,7 @@ typedef struct s_app
 	t_bool			object_menu;
 	t_bool			interaction_menu;
 	t_bool			decor_edit;
+	t_bool			linking_mode;
 	t_interaction	*current_interaction;
 	t_object		*current_object;
 	t_bool			imported;
@@ -310,9 +305,10 @@ t_vector2		screen_to_world(t_app *app, t_point pos);
  */
 void			render_divider(t_app *app);
 void			render_grid(t_app *app, double divider, int color);
-void			render_sector(t_app *app, t_vec2_lst *sector_start);
+void			render_sector(t_app *app, t_vec2_lst *wall_start, t_sector_lst *sector);
 void			render_sectors(t_app *app);
 void			render_point(t_app *app, t_vector2 point, int size, int color);
+void			render_decor(t_app *app,t_vec2_lst *wall, int color);
 void			render_sector_points(t_app *app);
 void			render_fill_active_sector(t_app *app);
 void			draw_list_lines(t_app *app, t_vec2_lst *a,
@@ -344,6 +340,7 @@ void			del_sector_portals(t_app *app, int deleted);
 t_bool			valid_sector(t_app *app);
 int				get_member_sector_count(t_sector_lst *parent);
 int				del_all_sector_interactions(t_app *app, t_sector_lst **sector);
+int				find_links(t_app *app, t_sector_lst *new);
 
 /**
  * Point/Wall/Wall_list Functions

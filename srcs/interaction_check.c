@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interaction_check.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:06:37 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 22:50:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/26 18:09:30 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,53 @@ static t_bool	check_key_requirement(t_app *app, t_interaction *interaction)
 	return (TRUE);
 }
 
+static t_bool	check_object_interaction(t_app *app, t_interaction *interaction)
+{
+	int				i;
+	t_gameobject	*object;
+	t_vector2		vector;
+	double			dist;
+
+	i = -1;
+	while (app->objects[++i].type != 0)
+	{
+		object = &(app->objects[i]);
+		if (app->objects[i].type > MAX_SMALL_OBJECTS
+			&& interaction->activation_object == i && in_range(app->player.pos,
+				object->position, INTERACTION_ACTION_DISTANCE)
+			&& in_range_height(app->player.elevation, object->elevation,
+				INTERACTION_ACTION_DISTANCE))
+		{
+			vector = ft_vector2_sub(object->position, app->player.pos);
+			dist = ft_vector_length(vector);
+			vector = ft_vector_multiply_matrix(vector,
+					ft_matrix_inverse((t_matrix2){app->player.cam,
+						app->player.dir}));
+			if (vector.y / dist > 0.90f)
+				return (TRUE);
+		}
+	}
+	return (FALSE);
+}
+
+void	interaction_by_pickup(t_app *app, t_gameobject *obj)
+{
+	int				i;
+	t_gameobject	*tmp;
+
+	i = -1;
+	while (++i < MAX_INTERACTIONS)
+	{
+		if (app->interactions[i].activation_object != 1)
+		{
+			tmp = &(app->objects[app->interactions[i].activation_object]);
+			if (tmp != obj)
+				continue ;
+			interaction_trigger(app, i);
+		}
+	}
+}
+
 /**
  * @brief Loops through interaction array and checks if any interactivable
  * events could be triggered.
@@ -82,10 +129,29 @@ void	interaction_check(t_app *app)
 	{
 		if (app->interactions[i].event_id == EVENT_NONE)
 			continue ;
+		if (app->interactions[i].activation_object != -1
+			&& check_object_interaction(app, &(app->interactions[i]))
+			&& check_key_requirement(app, &app->interactions[i]))
+			interaction_trigger(app, i);
 		if (app->interactions[i].activation_wall != -1
 			&& is_near_activation_decor(app,
 				app->interactions[i].activation_sector,
 				app->interactions[i].activation_wall)
+			&& check_key_requirement(app, &app->interactions[i]))
+			interaction_trigger(app, i);
+	}
+}
+
+void	enemy_interaction_check(t_app *app, t_enemy_state *enemy)
+{
+	int	i;
+
+	i = -1;
+	while (++i < MAX_INTERACTIONS)
+	{
+		if (app->interactions[i].event_id == EVENT_NONE)
+			continue ;
+		if (app->interactions[i].activation_object == enemy->id
 			&& check_key_requirement(app, &app->interactions[i]))
 			interaction_trigger(app, i);
 	}

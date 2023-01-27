@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/26 16:04:48 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/27 21:42:49 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,8 @@ FILES = animation_create.c \
 		bullet_wall_collisions.c \
 		bullets.c \
 		button_function.c \
+		button_game_status.c \
+		button_options_menu.c \
 		enemy_avoidance.c \
 		enemy_move.c \
 		enemy_states.c \
@@ -224,7 +226,7 @@ EDITOR_HEADERS = \
 	-I ./sdl/SDL2-2.0.8/include
 
 FLAGS = -MMD -Wall -Wextra -Werror -flto -Ofast -g
-EDITOR_FLAGS = -MMD -Wall -Wextra -Werror -g -fsanitize=address
+EDITOR_FLAGS = -MMD -Wall -Wextra -Werror -flto -Ofast -g
 
 LIBLINKS = -L ./libft -L ./liblinearalgebra \
 		-llinearalgebra -lft -lm

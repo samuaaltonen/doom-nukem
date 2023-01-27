@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/24 16:08:42 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/27 10:59:49 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,75 +33,13 @@ void	start_game(t_app *app)
 	init_enemies(app);
 	init_bullets(app);
 	//----DEBUG FEATURE
-	app->player.weapons = 0;
-	app->player.equipped_weapon.magazine = 9;
-	if (app->player.equipped_weapon.magazine <= app->player.inventory.ammo)
-		app->player.equipped_weapon.ammo = app->player.equipped_weapon.magazine;
-	else
-		app->player.equipped_weapon.ammo = app->player.inventory.ammo;
-	app->player.equipped_weapon.fire_rate = 0.2;
+	weapon(app, 1);
 	//----
 	app->status = STATUS_GAME;
-}
-
-void	pause_game(t_app *app)
-{
-	if (app->status == STATUS_GAME || app->status == STATUS_GAMEOPTIONS)
-		app->status = STATUS_PAUSEMENU;
-	else if (app->status == STATUS_PAUSEMENU)
-		app->status = STATUS_GAME;
 }
 
 void	exit_game(t_app *app)
 {
 	if (app)
 		exit(EXIT_SUCCESS);
-}
-
-void	main_menu(t_app *app)
-{
-	app->status = STATUS_MAINMENU;
-}
-
-void	main_options(t_app *app)
-{
-	app->status = STATUS_MAINOPTIONS;
-}
-
-void	game_options(t_app *app)
-{
-	app->status = STATUS_GAMEOPTIONS;
-}
-
-void	fullscreen(t_app *app)
-{
-	if (!(SDL_GetWindowFlags(app->win) & SDL_WINDOW_FULLSCREEN))
-	{
-		SDL_DestroyWindow(app->win);
-		app->win = SDL_CreateWindow(WIN_NAME, 0, 0,
-				WIN_W, WIN_H, SDL_WINDOW_FULLSCREEN);
-	}
-	else if (SDL_GetWindowFlags(app->win) & SDL_WINDOW_FULLSCREEN)
-	{
-		SDL_DestroyWindow(app->win);
-		app->win = SDL_CreateWindow(WIN_NAME, 0, 0, WIN_W, WIN_H, 0);
-	}	
-	app->surface = SDL_GetWindowSurface(app->win);
-}
-
-void	controls(t_app *app)
-{
-	app->status = STATUS_CONTROLS;
-}
-
-void	select_level(t_app *app)
-{
-	app->status = STATUS_SELECTLEVEL;
-}
-
-void	open_editor(t_app *app)
-{	
-	system("./editor &");
-	if (app)
-		return ;
 }

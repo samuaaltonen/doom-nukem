@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:06:55 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 18:42:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/27 21:41:01 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,29 +161,27 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 {
 	t_line	ray_line;
-	double	camera_x;
+	float	camera_x;
 
 	ray_line.a = app->player.pos;
-	camera_x = 2 * x / (double) WIN_W - 1.0;
+	camera_x = 2 * x / (float) WIN_W - 1.0;
 	hit->ray = (t_vector2){app->player.dir.x + app->player.cam.x * camera_x,
 		app->player.dir.y + app->player.cam.y * camera_x};
 	ray_line.b.x = hit->ray.x + app->player.pos.x;
 	ray_line.b.y = hit->ray.y + app->player.pos.y;
-	if ((x > 0 && x < WIN_W - 1) && hit->wall->is_member
+	if ((x > 0 && x < WIN_W - 1) && !hit->wall->is_inside
 		&& (hit->wall->start_x == x || hit->wall->end_x == x))
 	{
-		ft_printf("%d\n", x);
 		if (hit->wall->start_x == x && hit->wall->x_flipped)
-			hit->position = wall.a;
-		else if (hit->wall->start_x == x)
 			hit->position = wall.b;
+		else if (hit->wall->start_x == x)
+			hit->position = wall.a;
 		if (hit->wall->end_x == x && hit->wall->x_flipped)
 			hit->position = wall.a;
 		else if (hit->wall->end_x == x)
 			hit->position = wall.b;
 	}
-	else if (!ft_line_intersection(wall, ray_line, &hit->position)
-		|| (hit->wall->is_member && !ft_point_on_segment(wall, hit->position)))
+	else if (!ft_line_intersection(wall, ray_line, &hit->position))
 		return (FALSE);
 	hit->distance = ft_vector_length((t_vector2){
 			hit->position.x - app->player.pos.x,
