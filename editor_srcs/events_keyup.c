@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/25 15:09:18 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/27 18:33:44 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ static void	edit_mode_keys(t_app *app, int keycode)
 		app->decor_edit = ft_toggle(app->decor_edit);
 	if (keycode == SDLK_e)
 		app->var_edit = ft_toggle(app->var_edit);
+	if (keycode == SDLK_k)
+		app->linking_mode = ft_toggle(app->linking_mode);
 	if (keycode == SDLK_n)
 		toggle_new_object(app, app->object_new);
 	if (keycode == SDLK_c)

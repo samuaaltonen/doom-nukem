@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_colors.c                                        :+:      :+:    :+:   */
+/*   ft_line_comparison.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/27 15:39:35 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/27 18:26:17 by htahvana         ###   ########.fr       */
+/*   Created: 2023/01/27 18:43:25 by htahvana          #+#    #+#             */
+/*   Updated: 2023/01/27 18:53:28 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "liblinearalgebra.h"
 
-int	blend_pixel_half(t_colors base, t_colors top)
+static void	sort_line_points(t_line *line)
 {
-	t_colors	color;
+	if (line->a.y < line->b.y)
+		ft_vec2_swap(&line->a, &line->b);
+	else if (line->a.y == line->b.y && line->a.x > line->b.x)
+		ft_vec2_swap(&line->a, &line->b);
+	return ;
+}
 
-	color.s_bgra.b = base.s_bgra.b / 2 + top.s_bgra.b / 2;
-	color.s_bgra.g = base.s_bgra.g / 2 + top.s_bgra.g / 2;
-	color.s_bgra.r = base.s_bgra.r / 2 + top.s_bgra.r / 2;
-	color.s_bgra.a = 255;
-	return (color.color);
+t_bool	ft_cmp_line_points(t_line a, t_line b)
+{
+	sort_line_points(&a);
+	sort_line_points(&b);
+	if (a.a.x == b.a.x
+		&& a.a.y == b.a.y
+		&& a.b.x == b.b.x
+		&& a.b.y == b.b.y)
+		return (TRUE);
+	return (FALSE);
 }

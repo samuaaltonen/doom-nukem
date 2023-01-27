@@ -6,7 +6,7 @@
 #    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 10:36:08 by saaltone          #+#    #+#              #
-#    Updated: 2023/01/27 15:47:25 by htahvana         ###   ########.fr        #
+#    Updated: 2023/01/27 18:49:38 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,8 @@ FILES=ft_vector_length.c \
 	ft_compare_vectors.c \
 	ft_swap.c \
 	ft_conversions.c \
-	ft_colors.c
+	ft_colors.c \
+	ft_line_comparison.c
 
 SRC_DIR = ./srcs
 SRCS := $(patsubst %, $(SRC_DIR)/%, $(FILES))

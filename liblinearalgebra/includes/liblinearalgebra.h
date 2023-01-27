@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:46:18 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 15:56:59 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/27 18:48:11 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,12 @@
 # define LINE_POINT_EPSILON 0.0009765625
 # include "math.h"
 
+# ifndef LIBFT_H
+typedef enum e_bool {
+	FALSE = 0,
+	TRUE = 1
+}	t_bool;
+# endif
 enum e_line_resize_side {
 	EXTEND_CORNER_A,
 	EXTEND_CORNER_B,
@@ -67,14 +73,14 @@ typedef struct s_triangle
 
 typedef union u_colors
 {
-		int	color;
+	int	color;
 	struct
 	{
 		t_uint8	b;
 		t_uint8	g;
 		t_uint8	r;
 		t_uint8	a;
-	};
+	}	s_bgra;
 }	t_colors;
 
 double		ft_vector_length(t_vector2 a);
@@ -117,5 +123,6 @@ t_vector3	ft_vec2_to_vec3(t_vector2 vector, double z);
 void		ft_double_swap(double *a, double *b);
 void		ft_vec2_swap(t_vector2 *a, t_vector2 *b);
 int			blend_pixel_half(t_colors base, t_colors top);
+t_bool		ft_cmp_line_points(t_line a, t_line b);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 17:08:19 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/27 17:39:33 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -214,6 +214,7 @@ typedef struct s_app
 	t_bool			object_menu;
 	t_bool			interaction_menu;
 	t_bool			decor_edit;
+	t_bool			linking_mode;
 	t_interaction	*current_interaction;
 	t_object		*current_object;
 	t_bool			imported;
@@ -339,6 +340,7 @@ void			del_sector_portals(t_app *app, int deleted);
 t_bool			valid_sector(t_app *app);
 int				get_member_sector_count(t_sector_lst *parent);
 int				del_all_sector_interactions(t_app *app, t_sector_lst **sector);
+int				find_links(t_app *app, t_sector_lst *new);
 
 /**
  * Point/Wall/Wall_list Functions
