@@ -6,7 +6,7 @@
 #    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/25 16:24:47 by dpalacio         ###   ########.fr        #
+#    Updated: 2023/01/27 11:10:07 by dpalacio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -226,6 +226,7 @@ EDITOR_HEADERS = \
 	-I ./sdl/SDL2-2.0.8/include
 
 FLAGS = -MMD -Wall -Wextra -Werror -flto -Ofast -g
+EDITOR_FLAGS = -MMD -Wall -Wextra -Werror -g -fsanitize=address
 
 LIBLINKS = -L ./libft -L ./liblinearalgebra \
 		-llinearalgebra -lft -lm
@@ -236,7 +237,7 @@ $(NAME): $(LIBFT) $(LIBLINEARALGEBRA) $(SDL2) $(OBJS)
 	$(CC) $(OBJS) -o $(NAME) $(SDL_CONF) $(FLAGS) $(HEADERS) $(LIBLINKS)
 
 $(EDITOR_NAME): $(LIBFT) $(LIBLINEARALGEBRA) $(SDL2) $(EDITOR_OBJS)
-	$(CC) $(EDITOR_OBJS) -o $(EDITOR_NAME) $(SDL_CONF) $(FLAGS) $(EDITOR_HEADERS) $(LIBLINKS)
+	$(CC) $(EDITOR_OBJS) -o $(EDITOR_NAME) $(SDL_CONF) $(EDITOR_FLAGS) $(EDITOR_HEADERS) $(LIBLINKS)
 
 $(BUILD_DIR)/%.o: $(SRCS_DIR)/%.c | $(BUILD_DIR)
 	$(CC) $(HEADERS) $(FLAGS) -c $< -o $@
@@ -244,7 +245,7 @@ $(BUILD_DIR)/%.o: $(SRCS_DIR)/%.c | $(BUILD_DIR)
 -include $(DEPS)
 
 $(EDITOR_BUILD_DIR)/%.o: $(EDITOR_SRCS_DIR)/%.c | $(EDITOR_BUILD_DIR)
-	$(CC) $(EDITOR_HEADERS) $(FLAGS) -c $< -o $@
+	$(CC) $(EDITOR_HEADERS) $(EDITOR_FLAGS) -c $< -o $@
 
 -include $(EDITOR_DEPS)
 

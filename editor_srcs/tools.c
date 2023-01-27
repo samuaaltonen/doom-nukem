@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 21:51:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/25 17:07:31 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,14 +86,22 @@ t_sector_lst	*sector_by_index(t_app *app, int index)
 t_vec2_lst	*find_clicked_vector(t_app *app)
 {
 	t_vec2_lst		*found;
+	t_point			mouse;
+	t_vector2		mouse_pos;
+	t_line			wall_line;
 
+	SDL_GetMouseState(&mouse.x, &mouse.y);
+	mouse_pos = screen_to_world(app, mouse);
 	if (app->active_sector)
 	{
 		found = app->active_sector->wall_list;
 		while (found)
 		{
-			if (app->mouse_track.x == found->point.x
-				&& app->mouse_track.y == found->point.y)
+			wall_line = (t_line){found->point, found->next->point};
+			if ((app->mouse_track.x == found->point.x
+					&& app->mouse_track.y == found->point.y)
+				|| ft_point_on_segment_epsilon(wall_line, mouse_pos,
+					0.025 * (app->view_size.x / 200)))
 				return (found);
 			if (found->next == app->active_sector->wall_list)
 				break ;
@@ -112,9 +120,9 @@ t_vec2_lst	*find_clicked_vector(t_app *app)
 */
 t_point	world_to_screen(t_app *app, t_vector2 pos)
 {
-	return ((t_point){(pos.x - app->view_pos.x) * (app->surface->w)
-		/ (app->view_size.x - app->view_pos.x), (pos.y - app->view_pos.y)
-		* (app->surface->h) / (app->view_size.y - app->view_pos.y)});
+	return ((t_point){(pos.x - app->view_start.x) * (app->surface->w)
+		/ (app->view_end.x - app->view_start.x), (pos.y - app->view_start.y)
+		* (app->surface->h) / (app->view_end.y - app->view_start.y)});
 }
 
 /**
@@ -126,7 +134,8 @@ t_point	world_to_screen(t_app *app, t_vector2 pos)
 */
 t_vector2	screen_to_world(t_app *app, t_point pos)
 {
-	return ((t_vector2){app->view_pos.x + (pos.x / (double)app->surface->w)
-		* app->zoom_area.x, app->view_pos.y + (pos.y / (double)app->surface->h)
-		* app->zoom_area.y});
+	return ((t_vector2){app->view_start.x + (pos.x / (double)app->surface->w)
+		* app->view_size.x, app->view_start.y
+		+ (pos.y / (double)app->surface->h)
+		* app->view_size.y});
 }

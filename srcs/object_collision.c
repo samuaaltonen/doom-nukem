@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:17:11 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/24 14:09:04 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/26 18:06:36 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ static void	object_hit(t_app *app, t_gameobject *obj)
 	else if (obj->type == WEAPON2)
 		app->player.weapons |= 0b00000010;
 	if (obj->type <= MAX_SMALL_OBJECTS)
+	{
 		obj->type = -1;
+		interaction_by_pickup(app, obj);
+	}
 }
 
 static int	per_object_collision(t_app *app, t_vector2 pos, double elev,

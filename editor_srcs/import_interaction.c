@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import_interaction.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:30:17 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 22:47:44 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/26 17:46:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,13 @@ static void	level_validation_interactions(t_app *app,
 			|| interactions[i].activation_wall < -1
 			|| interactions[i].activation_object < -1)
 			exit_error(MSG_ERROR_IMPORT_INTERACTION);
+		if (interactions[i].activation_object != -1
+			|| interactions[i].activation_object < 0
+			|| interactions[i].activation_object > MAX_OBJECTS)
+			continue ;
 		sector = sector_by_index(app, interactions[i].activation_sector);
-		if (!sector || (interactions[i].target_sector >= 0
-				&& sector->corner_count <= interactions[i].activation_wall - 1)
-			|| (interactions[i].activation_object >= 0
-				&& interactions[i].activation_object >= MAX_OBJECTS))
+		if (!sector || (sector->corner_count
+				<= interactions[i].activation_wall - 1))
 			exit_error(MSG_ERROR_IMPORT_INTERACTION);
 	}
 }

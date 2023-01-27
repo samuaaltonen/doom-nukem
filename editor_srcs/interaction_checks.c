@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:39:08 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/13 14:56:14 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/26 13:48:55 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,8 @@ int	interaction_sector_check(t_app *app, t_sector_lst *sector)
 	while (i < MAX_INTERACTIONS)
 	{	
 		if (!app->interactions[i].activation_wall
-			&& app->interactions[i].activation_sector == sector)
+			&& app->interactions[i].activation_sector == sector
+			&& !app->interactions[i].activation_object)
 			return (app->interactions[i].event_id);
 		i++;
 	}

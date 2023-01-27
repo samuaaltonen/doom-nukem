@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/23 17:23:24 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 15:56:56 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/26 14:33:37 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ void	import_change_level(t_app *app, int level_number)
 	level = ft_itoa(level_number);
 	if (!level)
 		exit_error(MSG_ERROR_ALLOC);
+	ft_bzero((t_uint8 *)&app->filename + ft_strlen(LEVEL_IDENTIFIER),
+		FILE_NAME_LENGTH - ft_strlen(LEVEL_IDENTIFIER));
 	ft_memcpy((t_uint8 *)&app->filename + ft_strlen(LEVEL_IDENTIFIER), level,
 		ft_strlen(level));
 	free(level);

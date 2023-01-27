@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 13:29:20 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/26 19:07:26 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,12 @@ void	render_sector(t_app *app, t_vec2_lst *sector_start)
 	{
 		if (tmp->type > -1)
 			draw_list_lines(app, tmp, tmp->next, PORTAL);
-		else if (interaction_wall_check(app, tmp))
-			draw_list_lines(app, tmp, tmp->next, INTERACTION);
 		else
 			draw_list_lines(app, tmp, tmp->next, 0xEEEEEE);
+		if (interaction_wall_check(app, tmp))
+			render_decor(app, tmp, INTERACTION);
+		else
+			render_decor(app, tmp, 0xEEEEEE);
 		if (tmp->next == sector_start)
 			break ;
 		tmp = tmp->next;

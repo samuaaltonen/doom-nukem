@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_grid.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 15:28:54 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/16 13:17:55 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/25 14:49:18 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,10 @@ void	render_center(t_app *app, int color)
 {
 	t_point		point;
 
-	point.x = (0 - app->view_pos.x) * (app->surface->w)
-		/ (app->view_size.x - app->view_pos.x);
-	point.y = (0 - app->view_pos.y) * (app->surface->h)
-		/ (app->view_size.y - app->view_pos.y);
+	point.x = (0 - app->view_start.x) * (app->surface->w)
+		/ (app->view_end.x - app->view_start.x);
+	point.y = (0 - app->view_start.y) * (app->surface->h)
+		/ (app->view_end.y - app->view_start.y);
 	render_row(app, point.y, color);
 	render_col(app, point.x, color);
 	render_row(app, point.y + 1, color);
@@ -94,16 +94,16 @@ void	render_grid(t_app *app, double divider, int color)
 	prev = (t_vector2){0.0f, 0.0f};
 	while (++y < app->surface->h)
 	{
-		screen.y = app->view_pos.y + (y / (double)app->surface->h)
-			* app->zoom_area.y;
+		screen.y = app->view_start.y + (y / (double)app->surface->h)
+			* app->view_size.y;
 		if (fmod(screen.y, divider) > prev.y || screen.y == 0.0f)
 			render_row(app, y, color);
 		prev.y = fmod(screen.y, divider);
 	}
 	while (++x < app->surface->w)
 	{
-		screen.x = app->view_pos.x + (x / (double)app->surface->w)
-			* app->zoom_area.x;
+		screen.x = app->view_start.x + (x / (double)app->surface->w)
+			* app->view_size.x;
 		if (fmod(screen.x, divider) < prev.x || screen.x == 0.0f)
 			render_col(app, x, color);
 		prev.x = fmod(screen.x, divider);

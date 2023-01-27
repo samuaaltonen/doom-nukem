@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/24 14:53:02 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/26 13:46:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@ void	hud_quickslot(t_app *app, t_rect rect, char *slot)
 {
 	SDL_Surface	*sprite;
 	char		*amount;
+	char		*text;
 
 	sprite = NULL;
 	amount = NULL;
@@ -104,8 +105,13 @@ void	hud_quickslot(t_app *app, t_rect rect, char *slot)
 		render_text(app, rect, amount);
 	}
 	else
-		render_text_prompt(app, rect, 1, ft_itoa((int)(app->item_timer.seconds - app->item_timer.delta_seconds)));
-
+	{
+		text = ft_itoa((int)(app->item_timer.seconds - app->item_timer.delta_seconds));
+		if (!text)
+			exit_error(MSG_ERROR_ALLOC);
+		render_text_prompt(app, rect, 1, text);
+		free(text);
+	}
 	free(amount);
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_menu.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:38:26 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/13 14:20:07 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/26 13:18:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ static void	no_interaction_check(t_app *app)
 	int		id;
 	int		interaction;
 
+	if (!app->current_interaction)
+		return ;
 	if (app->current_interaction->event_id)
 	{
 		interaction = find_interaction(app);
@@ -62,7 +64,7 @@ static void	no_interaction_check(t_app *app)
 */
 static void	update_target_sector(t_app *app, t_point mouse)
 {
-	if (mouse.x > HELP_MENU_W)
+	if (app->current_interaction && mouse.x > HELP_MENU_W)
 	{
 		app->current_interaction->target_sector = find_child_sector(app);
 		if (!app->current_interaction->target_sector)
@@ -81,6 +83,8 @@ static void	update_target_sector(t_app *app, t_point mouse)
 */
 static void	update_event_id(t_app *app, int start_y, t_point mouse)
 {
+	if (!app->current_interaction)
+		return ;
 	if (check_mouse(mouse, (t_rect){90, start_y + 25, 113, 15}))
 		no_interaction_check(app);
 	if (check_mouse(mouse, (t_rect){100, start_y + 40, 93, 15}))
@@ -111,6 +115,8 @@ static void	update_event_id(t_app *app, int start_y, t_point mouse)
 */
 void	interaction_menu_events(t_app *app, int start_y, t_point mouse)
 {
+	if (!app->current_interaction)
+		return ;
 	update_target_sector(app, mouse);
 	update_event_id(app, start_y, mouse);
 	if (check_mouse(mouse, (t_rect){158, start_y + 300, 40, 20}))

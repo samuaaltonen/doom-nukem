@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/24 14:54:25 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:26:04 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,8 @@
 # define MOVE_ACCEL						90.0
 # define MOVE_DECEL						5.0
 # define MOVE_MIN						0.001
-# define FALL_DAMAGE_FORCE_THRESHOLD	-20.0
-# define FALL_DAMAGE_MULTIPLIER			3.0
+# define FALL_DAMAGE_FORCE_THRESHOLD	-12.0
+# define FALL_DAMAGE_MULTIPLIER			8.0
 # define JUMP_FORCE						5.0
 # define FLOOR_NORMAL_FORCE				20.0
 # define JETPACK						1.0

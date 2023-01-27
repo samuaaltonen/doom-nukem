@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:47:01 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 20:29:25 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/26 16:40:55 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,10 @@ static t_bool	sector_height(t_app *app, t_bullet *bullet,
 	return (FALSE);
 }
 
-void	sector_height_collision(t_app *app, t_bullet *bullet)
+t_bool	sector_height_collision(t_app *app, t_bullet *bullet)
 {
-	sector_height(app, bullet, TRUE, sector_ceil_height);
-	sector_height(app, bullet, FALSE, sector_floor_height);
+	if (sector_height(app, bullet, TRUE, sector_ceil_height)
+		+ sector_height(app, bullet, FALSE, sector_floor_height))
+		return (FALSE);
+	return (TRUE);
 }

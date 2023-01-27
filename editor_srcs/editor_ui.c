@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editor_ui.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:09:02 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/19 18:24:37 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/26 11:58:13 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	zoom_slider(t_app *app)
 	int		zoom_point;
 
 	y = app->surface->h / 4;
-	zoom_point = y + (app->surface->h / 2) / 6 * app->zoom_range;
+	zoom_point = y + (app->surface->h / 2) / 5 * (app->zoom_range - 1);
 	render_up_and_down_arrows(app, (t_point){app->surface->w - 33, y - 13},
 		(t_point){app->surface->w - 33, app->surface->h - (app->surface->h / 4)
 		+ 10}, 16);

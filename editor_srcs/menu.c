@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/23 14:22:53 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:19:50 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,17 @@
 */
 static void	main_menu(t_app *app, int start_y)
 {
-	render_text(app, (t_rect){20, start_y, 260, 15}, "DIVIDE GRID ( Z / X )");
-	render_text(app, (t_rect){20, start_y + 15, 260, 15}, "MOVE ( WASD )");
-	render_text(app, (t_rect){20, start_y + 30, 260, 15}, "ZOOM ( SCROLL )");
-	render_text(app, (t_rect){20, start_y + 50, 270, 100}, "LEFT CLICK MOUSE TO\
+	render_text(app, (t_rect){20, start_y, 260, 100}, "DIVIDE GRID ( Z / X ) \n\
+MOVE ( WASD ) \nZOOM ( SCROLL ) \nRETURN TO ORIGIN ( 1 )");
+	render_text(app, (t_rect){20, start_y + 55, 270, 100}, "LEFT CLICK MOUSE TO\
  SELECT SECTOR / POINT / OBJECT / PLAYER. POINT / OBJECT / MEMBER SECTOR\
  REQUIRE AN ACTIVE SECTOR SELECTION FIRST.");
-	render_text(app, (t_rect){20, start_y + 120, 270, 15}, "RIGHT CLICK MOUSE\
+	render_text(app, (t_rect){20, start_y + 125, 270, 15}, "RIGHT CLICK MOUSE\
  TO UNSELECT.");
-	render_point(app, screen_to_world(app, (t_point){25, start_y + 145}),
+	render_point(app, screen_to_world(app, (t_point){25, start_y + 149}),
 		3, PLAYER);
-	render_text(app, (t_rect){35, start_y + 140, 270, 15}, "PLAYER");
-	render_text(app, (t_rect){20, start_y + 155, 270, 30}, "PLAYER MUST BE\
+	render_text(app, (t_rect){35, start_y + 144, 270, 15}, "PLAYER");
+	render_text(app, (t_rect){20, start_y + 160, 270, 30}, "PLAYER MUST BE\
  PLACED INSIDE AN ACTIVE SECTOR.");
 	render_text(app, (t_rect){20, start_y + 200, 270, 15}, "SECTORS");
 	render_text(app, (t_rect){205, start_y + 200, 270, 15}, "/");

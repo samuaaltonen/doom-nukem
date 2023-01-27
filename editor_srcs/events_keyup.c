@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_keyup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 15:09:44 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/25 15:09:18 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,11 @@ static void	handle_wasd_keys(t_app *app, int keycode)
 		app->keystates ^= LEFT_DOWN;
 	if (keycode == SDLK_d)
 		app->keystates ^= RIGHT_DOWN;
+	if (keycode == SDLK_1)
+	{
+		app->view_start.x = -app->view_size.x / 2;
+		app->view_start.y = -app->view_size.y / 2;
+	}
 }
 
 /**
@@ -111,12 +116,12 @@ void	handle_movement(t_app *app)
 {
 	if (app->keystates & FORWARD_DOWN
 		|| app->keystates & FORWARD_W_DOWN)
-		app->view_pos.y += MAP_SPEED / app->movement_speed;
+		app->view_start.y += MAP_SPEED / app->movement_speed;
 	if (app->keystates & BACKWARD_DOWN
 		|| app->keystates & BACKWARD_S_DOWN)
-		app->view_pos.y -= MAP_SPEED / app->movement_speed;
+		app->view_start.y -= MAP_SPEED / app->movement_speed;
 	if (app->keystates & LEFT_DOWN)
-		app->view_pos.x -= MAP_SPEED / app->movement_speed;
+		app->view_start.x -= MAP_SPEED / app->movement_speed;
 	if (app->keystates & RIGHT_DOWN)
-		app->view_pos.x += MAP_SPEED / app->movement_speed;
+		app->view_start.x += MAP_SPEED / app->movement_speed;
 }

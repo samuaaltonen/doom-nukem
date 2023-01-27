@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/19 17:31:17 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/26 19:06:17 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ void	app_prepare(t_app *app)
 		exit_error(MSG_ERROR_WINDOW_SURFACE);
 	app->aspect_ratio = ((double)app->surface->h / (double)app->surface->w)
 		* -100;
-	app->view_pos = (t_vector2){-50.0, 50.0};
-	app->zoom_area = (t_vector2){100.0, app->aspect_ratio};
-	app->view_size = (t_vector2){app->view_pos.x + app->zoom_area.x,
-		app->view_pos.y + app->zoom_area.y};
+	app->view_size = (t_vector2){100.0, app->aspect_ratio};
+	app->view_start = (t_vector2){-app->view_size.x / 2, -app->view_size.y / 2};
+	app->view_end = (t_vector2){app->view_start.x + app->view_size.x,
+		app->view_start.y + app->view_size.y};
 	app->divider = 1.0f;
 	app->zoom_range = 5;
 	app->player_edit = TRUE;
@@ -64,17 +64,18 @@ void	app_prepare(t_app *app)
 }
 
 /**
- * @brief Renders the optional lines and points based on if something has been
+ * @brief Renders the selected lines and points based on if something has been
  * clicked active, or a certain menu is turned on.
  * 
  * @param app
 */
-static void	app_render_helper(t_app *app)
+static void	render_selected(t_app *app)
 {
 	if (app->active)
 	{
 		render_sector(app, app->active);
 		render_point(app, app->active->point, 3, POINT);
+		draw_circle(app, world_to_screen(app, app->active->point), 4, POINT);
 	}
 	if (app->interaction_menu && app->current_interaction)
 		render_target_sector_lines(app);
@@ -82,6 +83,8 @@ static void	app_render_helper(t_app *app)
 		&& app->current_interaction->interaction_link > -1)
 		render_interaction_link_lines(app);
 	render_sector_points(app);
+	if (app->list_creation && !app->list_ongoing)
+		render_point(app, app->mouse_track, 3, POINT);
 	if (app->list_ongoing)
 	{
 		if (check_last_point(app) || valid_point(app))
@@ -101,12 +104,12 @@ void	app_render(t_app *app)
 {
 	flush_surface(app->surface);
 	handle_movement(app);
-	app->view_size.x = app->view_pos.x + app->zoom_area.x;
-	app->view_size.y = app->view_pos.y + app->zoom_area.y;
+	app->view_end.x = app->view_start.x + app->view_size.x;
+	app->view_end.y = app->view_start.y + app->view_size.y;
 	render_fill_active_sector(app);
 	render_divider(app);
 	render_sectors(app);
-	app_render_helper(app);
+	render_selected(app);
 	render_objects(app);
 	render_player(app);
 	zoom_slider(app);

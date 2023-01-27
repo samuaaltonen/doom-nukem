@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   liblinearalgebra.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:46:18 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 15:38:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/25 16:46:02 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,6 +90,7 @@ t_vector2	ft_vec2_mult(t_vector2 a, double f);
 t_vector2	ft_closest_point(t_vector2 point, t_line line);
 double		ft_point_distance(t_vector2 a, t_vector2 b);
 int			ft_point_on_segment(t_line line, t_vector2 point);
+int			ft_point_on_segment_epsilon(t_line line, t_vector2 point, double epsilon);
 int			ft_cmp_vec2(t_vector2 a, t_vector2 b);
 void		ft_point_swap(t_point *a, t_point *b);
 void		ft_swap(int *a, int *b);

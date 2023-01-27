@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 13:22:32 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/13 15:27:46 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/01/25 18:57:04 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,19 @@ void	cancel_list_creation(t_app *app)
 	app->list_creation = FALSE;
 }
 
+static void	check_angles(t_app *app, t_vec2_lst *tmp, double *angle,
+	t_vector2 *last)
+{
+	if (tmp != app->active && tmp->next)
+			*angle += ft_vector_angle(ft_vector2_sub(tmp->next->point,
+					tmp->point), *last);
+	else if (tmp != app->active)
+		*angle += ft_vector_angle(ft_vector2_sub(app->mouse_track,
+					app->active_last->point), *last);
+	if (tmp->next)
+		*last = ft_vector2_sub(tmp->next->point, tmp->point);
+}
+
 /**
  * @brief Check if clicked point is already part of the same list.
  * 
@@ -85,17 +98,26 @@ void	cancel_list_creation(t_app *app)
 t_bool	valid_point(t_app *app)
 {
 	t_vec2_lst	*tmp;
+	t_vector2	last;
+	double		angle;
 
 	tmp = app->active;
+	angle = 0.f;
 	while (tmp)
 	{
-		if (tmp->point.x == app->mouse_track.x
-			&& tmp->point.y == app->mouse_track.y)
-			return (FALSE);
-		if (tmp->next && ft_line_side((t_line)
-				{tmp->point, tmp->next->point}, app->mouse_track))
+		check_angles(app, tmp, &angle, &last);
+		if ((tmp->point.x == app->mouse_track.x
+				&& tmp->point.y == app->mouse_track.y) || (tmp->next
+				&& ft_line_side((t_line){tmp->point, tmp->next->point},
+				app->mouse_track)))
 			return (FALSE);
 		tmp = tmp->next;
 	}
+	if (app->active->next)
+		angle += ft_vector_angle(ft_vector2_sub(app->active->next->point,
+					app->active->point), ft_vector2_sub(app->active->point,
+					app->active_last->point));
+	if (angle > M_PI * 2)
+		return (FALSE);
 	return (TRUE);
 }
