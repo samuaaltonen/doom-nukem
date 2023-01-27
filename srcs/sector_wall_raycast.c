@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 04:19:55 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/27 17:16:41 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,12 +101,15 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread,
 	t_rayhit	hit;
 	int			x;
 
+	if (info.limit.start < info.wall->start_x)
+		info.limit.start = info.wall->start_x;
+	if (info.limit.end > info.wall->end_x)
+		info.limit.end = info.wall->end_x;
 	raycast_init(app, info, &hit);
 	x = info.limit.start - 1;
 	while (++x < info.limit.end)
 	{
 		if (x % THREAD_COUNT != thread->id
-			|| info.wall->start_x > x || info.wall->end_x < x
 			|| info.occlusion_top[x] + info.occlusion_bottom[x] >= WIN_H
 			|| !raycast_hit(app, info.wall->line, &hit, x)
 			|| hit.distance > (double)MAX_VIEW_DISTANCE)
@@ -131,12 +134,15 @@ void	sector_walls_raycast_transparent(t_app *app, t_thread_data *thread,
 	t_rayhit	hit;
 	int			x;
 
+	if (info.limit.start < info.wall->start_x)
+		info.limit.start = info.wall->start_x;
+	if (info.limit.end > info.wall->end_x)
+		info.limit.end = info.wall->end_x;
 	raycast_init(app, info, &hit);
 	x = info.limit.start - 1;
 	while (++x < info.limit.end)
 	{
 		if (x % THREAD_COUNT != thread->id
-			|| info.wall->start_x > x || info.wall->end_x < x
 			|| info.occlusion_top[x] + info.occlusion_bottom[x] >= WIN_H
 			|| !raycast_hit(app, info.wall->line, &hit, x)
 			|| hit.distance > (double)MAX_VIEW_DISTANCE)

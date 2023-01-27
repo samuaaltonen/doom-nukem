@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/26 16:41:49 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/27 16:46:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,6 +331,7 @@ void			threads_work(t_thread_data *threads_data);
 void			player_init(t_app *app);
 void			player_control(t_app *app);
 void			player_rotate(t_app *app, double angle);
+int				get_player_side(t_app *app, t_line line);
 void			player_horizon(t_app *app, double change);
 void			player_move(t_app *app, t_movement movement, double speed);
 void			player_elevate(t_app *app, t_movement movement, double speed);
