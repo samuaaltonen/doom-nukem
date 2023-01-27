@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_collision_portal.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 19:55:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/26 16:42:31 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/27 22:35:13 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_bool	projectile_can_enter(t_app *app, t_vector3 pos, t_bullet *bullet,
 	double		target_ceil;
 
 	if (target == -1 || app->sectors[bullet->sector].\
-			wall_textures[bullet->wall_id] <= PARTIALLY_TRANSPARENT_TEXTURE_ID)
+			wall_textures[bullet->wall_id] >= PARTIALLY_TRANSPARENT_TEXTURE_ID)
 		return (FALSE);
 	check_pos = ft_closest_point((t_vector2){pos.x, pos.y},
 		get_wall_line(app, bullet->sector, bullet->wall_id));

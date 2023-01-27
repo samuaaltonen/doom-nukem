@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:06:55 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 21:41:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/27 22:37:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,6 +148,35 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 }
 
 /**
+ * @brief Checks hit for wall endpoints when wall and ray angle is extremely
+ * small to avoid inaccuracy from normal interaction calculation.
+ * 
+ * @param app 
+ * @param wall 
+ * @param hit 
+ * @param x 
+ * @return t_bool 
+ */
+t_bool	endpoint_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
+{
+	(void)app;
+	if (x <= 0 || x >= WIN_W - 1)
+		return (FALSE);
+	if (hit->wall->is_inside
+		|| (hit->wall->start_x != x && hit->wall->end_x != x))
+		return (FALSE);
+	if (hit->wall->start_x == x && hit->wall->x_flipped)
+		hit->position = wall.b;
+	else if (hit->wall->start_x == x)
+		hit->position = wall.a;
+	if (hit->wall->end_x == x && hit->wall->x_flipped)
+		hit->position = wall.a;
+	else if (hit->wall->end_x == x)
+		hit->position = wall.b;
+	return (TRUE);
+}
+
+/**
  * @brief Performs raycast from player to wall. Updates values into rayhit
  * struct to be used later in rendering. Returns TRUE if there was a hit and
  * FALSE otherwise.
@@ -169,19 +198,8 @@ t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 		app->player.dir.y + app->player.cam.y * camera_x};
 	ray_line.b.x = hit->ray.x + app->player.pos.x;
 	ray_line.b.y = hit->ray.y + app->player.pos.y;
-	if ((x > 0 && x < WIN_W - 1) && !hit->wall->is_inside
-		&& (hit->wall->start_x == x || hit->wall->end_x == x))
-	{
-		if (hit->wall->start_x == x && hit->wall->x_flipped)
-			hit->position = wall.b;
-		else if (hit->wall->start_x == x)
-			hit->position = wall.a;
-		if (hit->wall->end_x == x && hit->wall->x_flipped)
-			hit->position = wall.a;
-		else if (hit->wall->end_x == x)
-			hit->position = wall.b;
-	}
-	else if (!ft_line_intersection(wall, ray_line, &hit->position))
+	if (!endpoint_hit(app, wall, hit, x)
+		&& !ft_line_intersection(wall, ray_line, &hit->position))
 		return (FALSE);
 	hit->distance = ft_vector_length((t_vector2){
 			hit->position.x - app->player.pos.x,
