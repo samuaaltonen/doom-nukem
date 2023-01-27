@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/25 16:12:37 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/27 11:05:30 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ void	player_shoot(t_app *app)
 		fire(app,(t_vector3){app->player.dir.x, app->player.dir.y,(app->player.horizon - 0.5f)},(t_vector3){app->player.pos.x, app->player.pos.y,app->player.elevation + app->player.height / 2},(t_point){7,app->player.sector});  //This 7 is the proyectile sprite
 		play_sound(app, AUDIO_SHOT);
 		app->player.equipped_weapon.ammo--;
-		app->player.inventory.ammo--;
+		app->player.inventory.special_ammo--;
 		start_timer(&app->shoot_timer, app->player.equipped_weapon.fire_rate);
 	}
 	else if (app->player.equipped_weapon.ammo <= 0 && app->player.inventory.ammo > 0)
@@ -128,4 +128,22 @@ void	jetpack(t_app *app)
 		app->player.elevation_velocity = 0.0;
 		start_timer(&app->item_timer, 2);
 	}
+}
+
+void	weapon(t_app *app, int weapon)
+{
+	if (app->player.weapons & 0b00000001 && weapon == 1)
+	{
+		app->player.equipped_weapon.magazine = 7;
+		app->player.equipped_weapon.fire_rate = 0.3;
+	}
+	else if (app->player.weapons & 0b00000001 && weapon == 2)
+	{
+		app->player.equipped_weapon.magazine = 16;
+		app->player.equipped_weapon.fire_rate = 0.1;
+	}
+	if (app->player.equipped_weapon.magazine <= app->player.inventory.ammo)
+		app->player.equipped_weapon.ammo = app->player.equipped_weapon.magazine;
+	else
+		app->player.equipped_weapon.ammo = app->player.inventory.ammo;
 }

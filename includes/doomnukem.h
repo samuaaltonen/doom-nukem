@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 17:49:49 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/27 10:54:51 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -338,6 +338,7 @@ void			update_elevation(t_app *app);
 void			player_shoot(t_app *app);
 void			player_reload(t_app *app);
 void			jetpack(t_app *app);
+void			weapon(t_app *app, int weapon);
 void			init_camera_plane(t_app *app);
 void			init_skybox_plane(t_app *app);
 void			heal(t_app *app);

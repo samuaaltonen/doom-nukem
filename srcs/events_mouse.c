@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:40:40 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/17 11:48:32 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/27 11:04:51 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,12 +41,7 @@ int	events_mouse_down(int mouse_button, t_app *app)
 	if (mouse_button == SDL_BUTTON_RIGHT)
 		app->conf->buttonstates |= RIGHT_MOUSE;
 	if (mouse_button == SDL_BUTTON_MIDDLE)
-	{
 		app->conf->buttonstates |= MIDDLE_MOUSE;
-		//----DEBUG FEATURE
-		damage(app, 20);
-		//----
-	}
 	return (0);
 }
 
@@ -63,22 +58,26 @@ int	events_mouse_up(int mouse_button, t_app *app)
 
 int	events_mouse_wheel(int wheel_dir, t_app *app)
 {
+	if (wheel_dir > 0)
+		weapon(app, 2);
+	else if (wheel_dir < 0)
+		weapon(app, 1);
 	//----DEBUG FEATURE
-	app->player.hp += wheel_dir;
-	if (app->player.hp <= 0)
-	{
-		app->player.hp = 0;
-		app->player.shield += wheel_dir;
-	}
-	else if (app->player.hp >= MAX_HP)
-	{
-		app->player.hp = MAX_HP;
-		app->player.shield += wheel_dir;
-	}
-	if (app->player.shield <= 0)
-		app->player.shield = 0;
-	else if (app->player.shield >= MAX_HP)
-		app->player.shield = MAX_HP;
+	// app->player.hp += wheel_dir;
+	// if (app->player.hp <= 0)
+	// {
+	// 	app->player.hp = 0;
+	// 	app->player.shield += wheel_dir;
+	// }
+	// else if (app->player.hp >= MAX_HP)
+	// {
+	// 	app->player.hp = MAX_HP;
+	// 	app->player.shield += wheel_dir;
+	// }
+	// if (app->player.shield <= 0)
+	// 	app->player.shield = 0;
+	// else if (app->player.shield >= MAX_HP)
+	// 	app->player.shield = MAX_HP;
 	//----
 	return (0);
 }
