@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/26 19:00:08 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/27 17:08:19 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,6 @@
 # include "export.h"
 
 /**
- * Integer type definitions
- */
-typedef unsigned char	t_uint8;
-typedef unsigned short	t_uint16;
-typedef unsigned int	t_uint32;
-
-/**
  * Keystate enumeration.
  * Keystate enumerations use powers of 2 for bit stacking operations.
  */
@@ -89,6 +82,7 @@ enum e_keystate {
 
 enum e_colors {
 	PORTAL = 0xFF0000,
+	PORTAL_LINK = 0x008C00,
 	WALL = 0x999999,
 	CEILING_ROTATE = 0x888888,
 	FLOOR_ROTATE = 0x777777,
@@ -310,7 +304,7 @@ t_vector2		screen_to_world(t_app *app, t_point pos);
  */
 void			render_divider(t_app *app);
 void			render_grid(t_app *app, double divider, int color);
-void			render_sector(t_app *app, t_vec2_lst *sector_start);
+void			render_sector(t_app *app, t_vec2_lst *wall_start, t_sector_lst *sector);
 void			render_sectors(t_app *app);
 void			render_point(t_app *app, t_vector2 point, int size, int color);
 void			render_decor(t_app *app,t_vec2_lst *wall, int color);

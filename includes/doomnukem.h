@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 11:10:26 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/27 17:09:33 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,14 +183,6 @@ typedef struct s_objectstack
 	t_render_object		objects[MAX_VISIBLE_WALLS];
 }	t_objectstack;
 
-typedef struct s_color
-{
-	int					a;
-	int					r;
-	int					g;
-	int					b;
-}	t_color;
-
 typedef struct s_timer
 {
 	struct timespec		start;
@@ -363,8 +355,8 @@ t_vector2		get_possible_movement_point(t_line wall, t_vector2 coord,
 					int side);
 t_bool			portal_can_enter(t_app *app, t_vector3 pos,
 					t_vector3 sectors);
-t_bool	projectile_can_enter(t_app *app, t_vector3 pos, t_bullet *bullet,
-	int	target);
+t_bool			projectile_can_enter(t_app *app, t_vector3 pos,
+					t_bullet *bullet, int target);
 void			portal_enter(t_app *app, int sector_id);
 t_bool			inside_sector(t_app *app, int sector_id, t_vector2 coord);
 void			check_player_sector(t_app *app, int old_sector,
@@ -517,9 +509,6 @@ int				check_blit(SDL_Surface *src, t_rect *src_rect,
 					SDL_Surface *dst, t_rect *dst_rect);
 void			rect_from_surface(SDL_Surface *surface, t_rect *rect);
 void			color_surface(SDL_Surface *surface, int color);
-int				blend_pixel(t_color base, t_color top);
-t_color			int_to_argb(int color);
-int				argb_to_int(t_color color);
 int				shade_depth(int color, float shade);
 
 /**

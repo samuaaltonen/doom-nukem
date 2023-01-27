@@ -6,11 +6,51 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/26 19:07:26 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/27 17:07:54 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
+
+static void	sort_line_points(t_line *line)
+{
+	if (line->a.y < line->b.y)
+		ft_vec2_swap(&line->a, &line->b);
+	else if (line->a.y == line->b.y && line->a.x > line->b.x)
+		ft_vec2_swap(&line->a, &line->b);
+	return ;
+}
+
+static t_bool	same_line_points(t_line a, t_line b)
+{
+	sort_line_points(&a);
+	sort_line_points(&b);
+	if(a.a.x == b.a.x
+		&& a.a.y == b.a.y
+		&& a.b.x == b.b.x
+		&& a.b.y == b.b.y)
+		return (TRUE);
+	return (FALSE);
+}
+
+int	find_wall_match(t_app *app, t_vec2_lst *wall, t_sector_lst *start)
+{
+	int	i;
+	t_sector_lst	*target_sector;
+	t_vec2_lst		*target_wall;
+
+	target_sector = sector_by_index(app, wall->type);
+	i = -1;
+	target_wall = target_sector->wall_list;
+	while (++i < target_sector->corner_count + 1)
+	{
+		if(same_line_points((t_line){wall->point, wall->next->point},
+				(t_line){target_wall->point, target_wall->next->point}) && target_wall->type == get_sector_id(app, start))
+			return (TRUE);
+		target_wall = target_wall->next;
+	}
+	return (FALSE);
+}
 
 /**
  * @brief Renders all the lines for the given sector.
@@ -18,22 +58,27 @@
  * @param app 
  * @param sector_start 
  */
-void	render_sector(t_app *app, t_vec2_lst *sector_start)
+void	render_sector(t_app *app, t_vec2_lst *wall_start, t_sector_lst *sector)
 {
 	t_vec2_lst	*tmp;
 
-	tmp = sector_start;
+	tmp = wall_start;
 	while (tmp->next != NULL)
 	{
 		if (tmp->type > -1)
-			draw_list_lines(app, tmp, tmp->next, PORTAL);
+		{
+			if(find_wall_match(app, tmp, sector))
+				draw_list_lines(app, tmp, tmp->next, PORTAL_LINK);
+			else
+				draw_list_lines(app, tmp, tmp->next, PORTAL);
+		}
 		else
 			draw_list_lines(app, tmp, tmp->next, 0xEEEEEE);
 		if (interaction_wall_check(app, tmp))
 			render_decor(app, tmp, INTERACTION);
 		else
 			render_decor(app, tmp, 0xEEEEEE);
-		if (tmp->next == sector_start)
+		if (tmp->next == wall_start)
 			break ;
 		tmp = tmp->next;
 	}
@@ -51,7 +96,7 @@ void	render_sectors(t_app *app)
 	tmp = app->sectors;
 	while (tmp)
 	{
-		render_sector(app, tmp->wall_list);
+		render_sector(app, tmp->wall_list, tmp);
 		tmp = tmp->next;
 	}
 }
