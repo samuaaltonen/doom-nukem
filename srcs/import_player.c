@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:17:25 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 14:36:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/27 22:04:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	import_player(t_app *app, t_import_info *info)
 	ft_memcpy(&player, info->data + info->imported, sizeof(t_export_player));
 	app->player.sector = player.sector;
 	app->player.pos = player.position;
-	if (!app->assets_imported)
+	if (!app->assets_imported || app->player.hp <= 0)
 	{
 		app->player.hp = player.health;
 		app->player.weapons = player.weapons;
