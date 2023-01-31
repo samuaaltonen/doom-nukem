@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/27 21:42:49 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/31 15:11:39 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,6 +99,7 @@ FILES = animation_create.c \
 		sector_wall_raycast.c \
 		sector_wall_raycast_decor.c \
 		sector_wall_raycast_hit.c \
+		sector_wall_raycast_slopes.c \
 		sector_wallstack.c \
 		sector_wallstack_order.c \
 		sector_wallstack_visible.c \

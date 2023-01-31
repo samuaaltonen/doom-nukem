@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:46:07 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 21:35:37 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/31 15:15:00 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,9 +85,6 @@ void	sector_walls_prepare(t_app *app, t_wall *walls, int wall_count)
 	i = -1;
 	while (++i < wall_count)
 	{
-		walls[i].line = get_wall_line(app,
-				walls[i].sector_id,
-				walls[i].wall_id);
 		dotproduct = get_wall_dotproduct(app, walls[i]);
 		walls[i].start_x = translate_window_x(app, walls[i].line.a, dotproduct);
 		walls[i].end_x = translate_window_x(app, walls[i].line.b, dotproduct);

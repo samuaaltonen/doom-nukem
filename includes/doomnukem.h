@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/31 15:03:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/31 15:11:06 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -372,6 +372,8 @@ t_bool			sector_height_collision(t_app *app, t_bullet *bullet);
 /**
  * Sectors
  */
+double			apply_floor_slope(t_rayhit *hit);
+double			apply_ceiling_slope(t_rayhit *hit);
 double			sector_floor_height(t_app *app, int sector_id, t_vector2 pos);
 double			sector_ceil_height(t_app *app, int sector_id, t_vector2 pos);
 double			sector_vertical_space(t_app *app, int sector_id, t_vector2 pos);
