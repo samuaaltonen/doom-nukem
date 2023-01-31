@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/31 15:11:06 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/31 18:50:29 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -385,6 +385,8 @@ void			sector_visible_walls(t_app *app, t_wallstack *wallstack,
 					int index, int sector_id);
 void			sector_walls_prepare(t_app *app, t_wall *walls, int wall_count);
 void			sector_walls_order(t_app *app, t_wall *walls, int wall_count);
+t_bool			compare_same_endpoint(t_app *app, t_line a, t_line b,
+					t_bool *compare);
 void			sector_stack_render(t_app *app, t_thread_data *thread,
 					int stack_id, t_limit limit);
 void			*sector_render_thread(void *data);

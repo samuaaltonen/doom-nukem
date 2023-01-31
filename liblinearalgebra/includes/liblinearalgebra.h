@@ -6,21 +6,24 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:46:18 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 21:42:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/31 19:30:15 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBLINEARALGEBRA_H
 # define LIBLINEARALGEBRA_H
-# define LINE_POINT_EPSILON 0.0009765625
+# define LINE_POINT_EPSILON 0.0001
 # include "math.h"
 
 # ifndef LIBFT_H
+
 typedef enum e_bool {
 	FALSE = 0,
 	TRUE = 1
 }	t_bool;
+
 # endif
+
 enum e_line_resize_side {
 	EXTEND_CORNER_A,
 	EXTEND_CORNER_B,
@@ -117,7 +120,7 @@ double		ft_point_distance(t_vector2 a, t_vector2 b);
 int			ft_point_on_segment(t_line line, t_vector2 point);
 int			ft_point_on_segment_epsilon(t_line line, t_vector2 point,
 				double epsilon);
-int			ft_cmp_vec2(t_vector2 a, t_vector2 b);
+int			ft_vector_compare(t_vector2 a, t_vector2 b);
 void		ft_point_swap(t_point *a, t_point *b);
 void		ft_swap(int *a, int *b);
 t_vector3	ft_vec2_to_vec3(t_vector2 vector, double z);

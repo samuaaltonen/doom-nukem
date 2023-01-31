@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:46:07 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/31 15:15:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/31 18:48:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,14 @@ static int	translate_window_x(t_app *app, t_vector2 coord, double dotproduct)
 			(t_vector2){app->player.pos.x + app->player.dir.x,
 			app->player.pos.y + app->player.dir.y}}, coord))
 		angle *= -1.0;
-	if (angle < -PI_3_QUARTERS || angle > PI_3_QUARTERS)
+	if (angle < -PI_HALF || angle > PI_HALF)
 	{
 		if (dotproduct > 0.0)
 			return (0);
 		return (WIN_W - 1);
 	}
-	if (angle < -PI_HALF)
-		return (0);
-	else if (angle > PI_HALF)
-		return (WIN_W - 1);
-	else
-		return ((int)(WIN_W / 2.0
-			+ WIN_W * tan(angle) / app->player.camera_length / 2.0));
+	return ((int)(WIN_W / 2.0
+		+ WIN_W * tan(angle) / app->player.camera_length / 2.0));
 }
 
 /**
