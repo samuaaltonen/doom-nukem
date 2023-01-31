@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 21:42:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/31 15:03:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -375,6 +375,7 @@ t_bool			sector_height_collision(t_app *app, t_bullet *bullet);
 double			sector_floor_height(t_app *app, int sector_id, t_vector2 pos);
 double			sector_ceil_height(t_app *app, int sector_id, t_vector2 pos);
 double			sector_vertical_space(t_app *app, int sector_id, t_vector2 pos);
+double			get_relative_wall_distance(t_vector2 coord, t_line wall_line);
 t_vector2		get_wall_vector(t_app *app, int sector_id, int wall_id);
 t_line			get_wall_line(t_app *app, int sector_id, int wall_id);
 void			sector_wallstack_build(t_app *app);

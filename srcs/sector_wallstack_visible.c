@@ -6,21 +6,25 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:49:36 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 17:09:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/31 15:06:00 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * Returns TRUE if given line has either corners visible to player.
+ * @brief Returns TRUE if given line has any part visible to player.
  * 
  * - If both corners of the wall are in view cone returns TRUE
  * - If not, then check intersection points with view lines: Extend view
  *   lines and check intersection with the wall and return TRUE if either of
  *   the intersection coordinates are left of camera plane (in front of player).
-*/
-static t_bool	has_visible_corner(t_app *app, t_line wall)
+ * 
+ * @param app 
+ * @param wall 
+ * @return t_bool 
+ */
+static t_bool	has_visible_part(t_app *app, t_line wall)
 {
 	t_line		left;
 	t_line		right;
@@ -42,6 +46,42 @@ static t_bool	has_visible_corner(t_app *app, t_line wall)
 }
 
 /**
+ * @brief Checks for duplicate walls in the wallstack. Duplicate is defined as
+ * having identical endpoints. If duplicate is found, only keep the wall that
+ * is closer to the player.
+ * 
+ * @param app 
+ * @param walls 
+ * @param walls_count 
+ * @param wall 
+ * @return int 
+ */
+static int	check_duplicate(t_app *app, t_wall *walls, int *walls_count,
+	t_wall wall)
+{
+	int	i;
+
+	i = -1;
+	while (++i < *walls_count)
+	{
+		if (!(walls[i].line.a.x == wall.line.a.x
+				&& walls[i].line.a.y == wall.line.a.y
+				&& walls[i].line.b.x == wall.line.b.x
+				&& walls[i].line.b.y == wall.line.b.y)
+			&& !(walls[i].line.a.x == wall.line.b.x
+				&& walls[i].line.a.y == wall.line.b.y
+				&& walls[i].line.b.x == wall.line.a.x
+				&& walls[i].line.b.y == wall.line.a.y))
+			continue ;
+		if (get_relative_wall_distance(app->player.pos, walls[i].line)
+			< get_relative_wall_distance(app->player.pos, wall.line))
+			return (*walls_count);
+		return (i);
+	}
+	return (*walls_count);
+}
+
+/**
  * @brief Determines if wall is possibly visible from player view.
  * Checks side first. If player position is at left side of a wall, player is
  * outside of that wall (unless member sectors wall).
@@ -56,30 +96,28 @@ static t_bool	has_visible_corner(t_app *app, t_line wall)
 static void	check_possible_visible(t_app *app, t_wall *walls, int *walls_count,
 	t_wall wall)
 {
-	t_bool		is_inside;
-	t_bool		is_portal;
-	t_line		wall_line;
-	int			player_side;
+	int	add_index;
+	int	player_side;
 
-	is_inside = !wall.is_member;
-	wall_line = get_wall_line(app, wall.sector_id, wall.wall_id);
-	player_side = ft_line_side(wall_line, app->player.pos);
-	if (ft_line_point(wall_line, app->player.pos))
+	wall.is_inside = !wall.is_member;
+	wall.line = get_wall_line(app, wall.sector_id, wall.wall_id);
+	player_side = ft_line_side(wall.line, app->player.pos);
+	if (ft_line_point(wall.line, app->player.pos))
 		player_side = 1;
 	if (!wall.is_member && player_side)
 		return ;
-	is_portal = FALSE;
+	wall.is_portal = FALSE;
 	if (app->sectors[wall.sector_id].wall_types[wall.wall_id] != -1
 		|| wall.is_member)
-		is_portal = TRUE;
+		wall.is_portal = TRUE;
 	if (wall.is_member && !player_side)
-		is_inside = TRUE;
-	if (!has_visible_corner(app, wall_line))
+		wall.is_inside = TRUE;
+	if (!has_visible_part(app, wall.line))
 		return ;
-	walls[*walls_count] = wall;
-	walls[*walls_count].is_portal = is_portal;
-	walls[*walls_count].is_inside = is_inside;
-	*walls_count = *walls_count + 1;
+	add_index = check_duplicate(app, walls, walls_count, wall);
+	walls[add_index] = wall;
+	if (add_index == *walls_count)
+		*walls_count = *walls_count + 1;
 }
 
 /**
