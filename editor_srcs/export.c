@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/23 16:04:37 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:46:21 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,8 @@ void	update_header(t_level_header *header, char *path)
 		exit_error(MSG_ERROR_FILE_OPEN);
 	if (write(fd, header, sizeof(t_level_header)) == -1)
 		exit_error(MSG_ERROR_FILE_WRITE);
-	close(fd);
+	if (close(fd) < 0)
+		exit_error(MSG_ERROR_FILE_CLOSE);
 }
 
 /**
@@ -98,7 +99,8 @@ void	export_level(t_app *app, t_thread_data *thread, char *path)
 		export_wavs(&info, fd);
 		export_texts(&info, fd);
 	}
-	close(fd);
+	if (close(fd) < 0)
+		exit_error(MSG_ERROR_FILE_CLOSE);
 	update_header(&info.header, path);
 	rle_compress(&info, path);
 	export_set_complete(&info);

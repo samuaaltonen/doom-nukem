@@ -1,34 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render_extra.c                                     :+:      :+:    :+:   */
+/*   font.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/21 13:55:36 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/01 17:13:46 by saaltone         ###   ########.fr       */
+/*   Created: 2023/02/01 16:45:59 by saaltone          #+#    #+#             */
+/*   Updated: 2023/02/01 16:46:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * @brief Renders decor circle on a wall line.
+ * @brief Changes font color and size.
  * 
  * @param app 
- * @param wall 
+ * @param size 
  * @param color 
  */
-void	render_decor(t_app *app, t_vec2_lst *wall, int color)
+void	change_font(t_app *app, int size, int color)
 {
-	t_vector2	wall_vector;
-
-	if (wall && wall->decor >= 0)
-	{
-		wall_vector = ft_vector2_sub(wall->next->point, wall->point);
-		wall_vector = ft_vector2_add(wall->point, ft_vector_resize(wall_vector,
-					(ft_vector_length(wall_vector) / 2)
-					+ wall->decor_offset.x));
-		draw_circle(app, world_to_screen(app, wall_vector), 5, color);
-	}
+	app->assets.font.size = size;
+	color_surface(app->assets.font.font, color);
 }

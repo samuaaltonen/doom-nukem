@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_text.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:48:08 by dpalacio          #+#    #+#             */
-/*   Updated: 2022/11/22 16:04:19 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/01 16:48:16 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,36 +15,27 @@
 static t_rect	get_rect(int c);
 static void		render_char(t_app *app, t_point *position, t_rect src);
 static t_rect	get_char(char *str, int c, int line);
+static int		get_word_index(char *text, int index);
 
 void	render_text(t_app *app, t_rect frame, char *text)
 {
 	int		i;
-	int		word;
 	t_point	pos;
 
-	pos.x = frame.x;
-	pos.y = frame.y;
+	pos = (t_point){frame.x, frame.y};
 	i = 0;
-	word = 1;
 	while (text[i] != '\0')
 	{
-		if (i > 0 && text[i - 1] == ' ')
+		if (i > 0 && text[i - 1] == ' '
+			&& pos.x + 12 * (get_word_index(text, i) - i) > frame.x + frame.w)
 		{
-			word = i;
-			while (text[word] != ' ' && text[word] != '\0')
-				word++;
-			if (pos.x + 12 * (word - i) > frame.x + frame.w)
-			{
-				pos.x = frame.x;
-				pos.y += app->assets.font.size * 1.25;
-				if (text[i] == ' ')
-					i++;
-			}
+			pos = (t_point){frame.x, pos.y + app->assets.font.size * 1.25};
+			if (text[i] == ' ')
+				i++;
 		}
 		if (text[i] == '\n')
 		{
-			pos.x = frame.x;
-			pos.y += app->assets.font.size * 1.25;
+			pos = (t_point){frame.x, pos.y + app->assets.font.size * 1.25};
 			i++;
 		}
 		if (pos.y + app->assets.font.size > frame.y + frame.h)
@@ -116,8 +107,9 @@ static t_rect	get_char(char *str, int c, int line)
 	return (src);
 }
 
-void	change_font(t_app *app, int size, int color)
+static int	get_word_index(char *text, int index)
 {
-	app->assets.font.size = size;
-	color_surface(app->assets.font.font, color);
+	while (text[index] != ' ' && text[index] != '\0')
+		index++;
+	return (index);
 }

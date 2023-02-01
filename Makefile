@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/31 18:53:36 by saaltone         ###   ########.fr        #
+#    Updated: 2023/02/01 17:11:01 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -190,7 +190,12 @@ EDITOR_FILES = app.c \
 		utils.c \
 		utils_bmp.c \
 		utils_sdl.c \
-		exit.c
+		exit.c \
+		sector_tools_links.c \
+		font.c \
+		render_fill_sector.c \
+		render_fill_sector_points.c \
+		render_fill_sector_points_sort.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a

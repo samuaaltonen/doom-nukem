@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 17:39:33 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/01 17:04:16 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -341,6 +341,9 @@ t_bool			valid_sector(t_app *app);
 int				get_member_sector_count(t_sector_lst *parent);
 int				del_all_sector_interactions(t_app *app, t_sector_lst **sector);
 int				find_links(t_app *app, t_sector_lst *new);
+void			make_point_array(t_app *app, t_vector2 *array,
+					t_sector_lst *sector, int *count);
+void			sort_point_array(t_vector2 *array, int *count);
 
 /**
  * Point/Wall/Wall_list Functions
