@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:59:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/01 14:42:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:45:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,8 @@ static int	check_level(int n)
 	fd = open(file, O_RDONLY);
 	if (fd >= 0)
 	{
-		close(fd);
+		if (close(fd) < 0)
+			exit_error(MSG_ERROR_FILE_CLOSE);
 		free(level);
 		free(file);
 		return (1);

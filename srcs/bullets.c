@@ -24,6 +24,8 @@ void	fire(t_app *app, t_vector3 target_dir, t_vector3 start, t_point info)
 {
 	int	i;
 
+	if (app->bullets_active >= MAX_TEMP_OBJECTS - 1)
+		return ;
 	i = 0;
 	while (i < MAX_TEMP_OBJECTS && app->bullets[i].type != -1)
 		i++;
@@ -44,7 +46,6 @@ void	fire(t_app *app, t_vector3 target_dir, t_vector3 start, t_point info)
 		app->bullets[i].end_z = 0.f;
 	}
 	app->bullets_active++;
-	return ;
 }
 
 /**
@@ -76,6 +77,8 @@ void	melee(t_app *app, t_vector3 target_dir, t_vector3 start, t_point info)
 {
 	int	i;
 
+	if (app->bullets_active >= MAX_TEMP_OBJECTS - 1)
+		return ;
 	i = 0;
 	while (i < MAX_TEMP_OBJECTS && app->bullets[i].type != -1)
 		i++;
