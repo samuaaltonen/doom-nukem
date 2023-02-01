@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/02/01 17:50:14 by saaltone         ###   ########.fr        #
+#    Updated: 2023/02/01 19:51:52 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -111,7 +111,8 @@ FILES = animation_create.c \
 		utils_sdl.c \
 		random.c \
 		import_change_level.c \
-		sector_wallstack_order_endpoint.c
+		sector_wallstack_order_endpoint.c \
+		font.c
 
 EDITOR_FILES = app.c \
 		editor.c \

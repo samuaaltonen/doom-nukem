@@ -3,19 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   events_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 18:32:27 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/01 19:48:06 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * Handles events for key presses (keyup).
+ * @brief Handles events for movement key presses.
+ * 
+ * @param keycode 
+ * @param app 
+ * @return int 
  */
-int	events_keyup(int keycode, t_app *app)
+static void	event_keyup_movement(int keycode, t_app *app)
 {
 	if (keycode == SDLK_RIGHT && app->conf->keystates & RIGHT)
 		app->conf->keystates ^= RIGHT;
@@ -27,36 +31,45 @@ int	events_keyup(int keycode, t_app *app)
 		app->conf->keystates ^= DOWN;
 	if (keycode == SDLK_w && app->conf->keystates & W)
 		app->conf->keystates ^= W;
-	if (keycode == SDLK_s && app->conf->keystates & S)
-		app->conf->keystates ^= S;
 	if (keycode == SDLK_a && app->conf->keystates & A)
 		app->conf->keystates ^= A;
+	if (keycode == SDLK_s && app->conf->keystates & S)
+		app->conf->keystates ^= S;
 	if (keycode == SDLK_d && app->conf->keystates & D)
 		app->conf->keystates ^= D;
+	if (keycode == SDLK_LSHIFT && app->conf->keystates & SHIFT)
+		app->conf->keystates ^= SHIFT;
+	if (keycode == SDLK_LCTRL && app->conf->keystates & CTRL)
+		app->conf->keystates ^= CTRL;
+}
+
+/**
+ * @brief Handles events for key presses (keyup).
+ * 
+ * @param keycode 
+ * @param app 
+ * @return int 
+ */
+int	events_keyup(int keycode, t_app *app)
+{
+	event_keyup_movement(keycode, app);
 	if (keycode == SDLK_q && app->conf->keystates & Q)
 		app->conf->keystates ^= Q;
 	if (keycode == SDLK_e && app->conf->keystates & E)
 		app->conf->keystates ^= E;
 	if (keycode == SDLK_r && app->conf->keystates & R)
 		app->conf->keystates ^= R;
-	if (app->player.inventory.jetpack && app->conf->keystates & C && keycode == SDLK_c)
+	if (app->player.inventory.jetpack && app->conf->keystates & C
+		&& keycode == SDLK_c)
 		app->conf->keystates ^= C;
-	if (keycode == SDLK_LSHIFT && app->conf->keystates & SHIFT)
-		app->conf->keystates ^= SHIFT;
-	if (keycode == SDLK_LCTRL && app->conf->keystates & CTRL)
-		app->conf->keystates ^= CTRL;
 	if (keycode == SDLK_ESCAPE)
 		exit(EXIT_SUCCESS);
-	if (keycode == SDLK_p)
-		app->conf->toggle_loop = ft_toggle(app->conf->toggle_loop);
 	if (keycode == SDLK_TAB)
 	{
-		//----DEBUG FEATURE
 		if (app->status == STATUS_GAME || app->status == STATUS_PAUSEMENU)
 			pause_game(app);
 		if (app->status == STATUS_MAINMENU)
 			app->status = STATUS_TITLESCREEN;
-		//----
 	}
 	if (keycode == SDLK_SPACE && app->conf->keystates & SPACE)
 	{
@@ -79,7 +92,11 @@ int	events_keyup(int keycode, t_app *app)
 }
 
 /**
- * Handles events for key presses (keydown).
+ * @brief Handles events for key presses (keydown).
+ * 
+ * @param keycode 
+ * @param app 
+ * @return int 
  */
 int	events_keydown(int keycode, t_app *app)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_control.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/01 18:35:48 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/01 19:57:15 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,28 +132,24 @@ void	jetpack(t_app *app)
 
 void	weapon(t_app *app, int weapon)
 {
-	if (check_timer(&app->shoot_timer))
+	if (app->player.weapons & 0b00000001 && weapon == 1)
 	{
-		if (app->player.weapons & 0b00000001 && weapon == 1)
-		{
-			app->hand.equipped = 0;
-			app->player.equipped_weapon.type = 7;
-			app->player.equipped_weapon.magazine = 7;
-			app->player.equipped_weapon.fire_rate = 0.3;
-			start_timer(&app->shoot_timer, 2.0f);
-		}
-		else if (app->player.weapons & 0b00000001 && weapon == 2)
-		{
-			app->hand.equipped = 1;
-			app->player.equipped_weapon.type = 4;
-			app->player.equipped_weapon.magazine = 16;
-			app->player.equipped_weapon.fire_rate = 0.1;
-			start_timer(&app->shoot_timer, 2.0f);			
-		}
-		if (app->player.equipped_weapon.magazine <= app->player.inventory.ammo)
-			app->player.equipped_weapon.ammo = app->player.equipped_weapon.magazine;
-		else
-			app->player.equipped_weapon.ammo = app->player.inventory.ammo;
+		app->hand.equipped = 0;
+		app->player.equipped_weapon.type = 7;
+		app->player.equipped_weapon.magazine = 7;
+		app->player.equipped_weapon.fire_rate = 0.3;
+		start_timer(&app->shoot_timer, 2.0f);
 	}
-
+	else if (app->player.weapons & 0b00000001 && weapon == 2)
+	{
+		app->hand.equipped = 1;
+		app->player.equipped_weapon.type = 4;
+		app->player.equipped_weapon.magazine = 16;
+		app->player.equipped_weapon.fire_rate = 0.1;
+		start_timer(&app->shoot_timer, 2.0f);			
+	}
+	if (app->player.equipped_weapon.magazine <= app->player.inventory.ammo)
+		app->player.equipped_weapon.ammo = app->player.equipped_weapon.magazine;
+	else
+		app->player.equipped_weapon.ammo = app->player.inventory.ammo;
 }
