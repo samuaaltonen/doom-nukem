@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/26 13:48:25 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:00:48 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,7 @@
 # define PROGRESS_BAR_FRAME_COLOR	0xff0099f2
 # define PROGRESS_BAR_COLOR			0xff00def2
 # define MAX_SPRITES 6
+# define WEAPON_COUNT 2
 
 enum e_export_assets
 {
@@ -92,6 +93,7 @@ enum e_export_assets
 	EXPORT_METER,
 	EXPORT_ICON,
 	EXPORT_WEAPON_HD,
+	EXPORT_WEAPON_ENERGY,
 	EXPORT_PICKUP,
 	EXPORT_OBJECT,
 	EXPORT_SPRITE,
@@ -146,7 +148,7 @@ typedef struct s_assets
 	SDL_Surface		*meter;
 	SDL_Surface		*object_icon;
 	SDL_Surface		*panels;
-	SDL_Surface		*weapon;
+	SDL_Surface		*weapon[WEAPON_COUNT];
 	SDL_Surface		*skybox;
 	SDL_Surface		*sprites[MAX_SPRITES];
 }	t_assets;

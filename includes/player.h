@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/01 14:01:49 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:14:54 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,6 +83,7 @@ typedef struct s_inventory
 typedef struct s_weapon
 {
 	t_bool			enabled;
+	int				type;
 	int				damage;
 	int				range;
 	double			fire_rate;

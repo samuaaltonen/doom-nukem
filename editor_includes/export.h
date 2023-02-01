@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/26 13:50:22 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:03:39 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@
 # define MONSTER_3_PATH		"assets/images/Monster3_full_sheet.bmp"
 # define SPRITE_PATH		"assets/images/Projectiles.bmp"
 # define WEAPON_HD_PATH		"assets/images/weapon_cannon4.bmp"
+# define WEAPON_ENERGY_PATH	"assets/images/weapon_energy.bmp"
 # define MUSIC_PATH			"assets/sounds/title_music.wav"
 # define SOUND_LASER_PATH	"assets/sounds/laser.wav"
 # define SOUND_SHOT_PATH	"assets/sounds/pistol_shot.wav"
@@ -88,6 +89,7 @@ enum e_export_assets
 	EXPORT_METER,
 	EXPORT_ICON,
 	EXPORT_WEAPON_HD,
+	EXPORT_WEAPON_ENERGY,
 	EXPORT_PICKUP,
 	EXPORT_OBJECT,
 	EXPORT_SPRITE,

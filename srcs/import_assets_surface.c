@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import_assets_surface.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:45:28 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 13:00:47 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:03:48 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,8 @@ void	import_surfaces(t_app *app, t_import_info *info)
 	app->assets.bullet = import_surface(EXPORT_BULLET, info);
 	app->assets.meter = import_surface(EXPORT_METER, info);
 	app->assets.object_icon = import_surface(EXPORT_ICON, info);
-	app->assets.weapon = import_surface(EXPORT_WEAPON_HD, info);
+	app->assets.weapon[0] = import_surface(EXPORT_WEAPON_HD, info);
+	app->assets.weapon[1] = import_surface(EXPORT_WEAPON_ENERGY, info);
 	app->assets.sprites[SMALL_SPRITE] = import_surface(EXPORT_PICKUP, info);
 	app->assets.sprites[BIG_SPRITE] = import_surface(EXPORT_OBJECT, info);
 	app->assets.sprites[PROJECTILE_SPRITE] = import_surface(EXPORT_SPRITE,

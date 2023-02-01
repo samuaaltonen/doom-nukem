@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   level_validation_assets.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:46:11 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 15:42:20 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/01 17:58:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,14 @@ static t_bool	validate_sprites(t_app *app)
 		|| app->assets.sprites[ENEMY_SPRITE_2]->h != ENEMY_2_H);
 }
 
+static t_bool	validate_weapons(t_app *app)
+{
+	return (app->assets.weapon[0]->w != WEAPON_W
+			|| app->assets.weapon[0]->h != WEAPON_H
+			|| app->assets.weapon[1]->w != WEAPON_W
+			|| app->assets.weapon[1]->h != WEAPON_H);
+}
+
 /**
  * @brief Checks if game assets are valid.
  * 
@@ -79,7 +87,6 @@ void	level_validation_assets(t_app *app)
 		|| app->assets.skybox->h != SKYBOX_H
 		|| validate_ui_elements(app)
 		|| validate_sprites(app)
-		|| app->assets.weapon->w != WEAPON_W
-		|| app->assets.weapon->h != WEAPON_H)
+		|| validate_weapons(app))
 		exit_error(MSG_ERROR_VALIDATION_ASSETS);
 }

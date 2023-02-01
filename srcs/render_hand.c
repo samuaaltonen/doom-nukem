@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 18:47:59 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/01 17:39:52 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/01 18:05:15 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,11 +78,12 @@ void	render_hand(t_app *app)
 
 	app->hand.current = ft_vector2_add(app->hand.current,
 			ft_vec2_mult(app->hand.velocity, app->conf->delta_time));
-	rect_from_surface(app->assets.weapon, &src);
+	rect_from_surface(app->assets.weapon[app->hand.equipped], &src);
 	dst.x = app->hand.current.x;
 	dst.y = app->hand.current.y;
 	dst.w = WEAPON_SIZE;
 	dst.h = WEAPON_SIZE;
-	blit_surface(app->assets.weapon, &src, app->surface, &dst);
+	blit_surface(app->assets.weapon[app->hand.equipped],
+			&src, app->surface, &dst);
 	app->mouse_delta = (t_point){0, 0};
 }
