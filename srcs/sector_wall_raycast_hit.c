@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:06:55 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/31 15:10:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:32:37 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,8 +88,9 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 }
 
 /**
- * @brief Checks hit for wall endpoints when wall and ray angle is extremely
- * small to avoid inaccuracy from normal interaction calculation.
+ * @brief Checks hit for wall endpoints to avoid inaccuracy from normal
+ * interaction calculation (usually with extreme angles, only endpoint is
+ * visible anyways).
  * 
  * @param app 
  * @param wall 
@@ -99,11 +100,9 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
  */
 static t_bool	endpoint_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 {
-	(void)app;
 	if (x <= 0 || x >= WIN_W - 1)
 		return (FALSE);
-	if (hit->wall->is_inside
-		|| (hit->wall->start_x != x && hit->wall->end_x != x))
+	if (hit->wall->start_x != x && hit->wall->end_x != x)
 		return (FALSE);
 	if (hit->wall->start_x == x && hit->wall->x_flipped)
 		hit->position = wall.b;
@@ -113,6 +112,8 @@ static t_bool	endpoint_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 		hit->position = wall.a;
 	else if (hit->wall->end_x == x)
 		hit->position = wall.b;
+	hit->ray = ft_vector_resize(ft_vector2_sub(hit->position, app->player.pos),
+			1.0 / cos(ft_vector_angle(hit->ray, app->player.dir)));
 	return (TRUE);
 }
 
