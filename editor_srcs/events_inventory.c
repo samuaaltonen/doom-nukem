@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_inventory.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 15:59:10 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/24 14:30:01 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/01 17:26:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static void	decrease_item_amount(t_app *app)
 		app->player.inventory.antidote--;
 	if (app->selected[4] && app->player.inventory.key > 0)
 		app->player.inventory.key--;
-	if (app->selected[5] && app->player.inventory.jetpack  == TRUE)
+	if (app->selected[5] && app->player.inventory.jetpack == TRUE)
 		app->player.inventory.jetpack = FALSE;
 }
 

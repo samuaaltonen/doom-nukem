@@ -3,18 +3,26 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/27 18:48:58 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/01 17:50:08 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
+/**
+ * @brief Finds matching wall.
+ * 
+ * @param app 
+ * @param wall 
+ * @param origin 
+ * @return int 
+ */
 int	find_wall_match(t_app *app, t_vec2_lst *wall, t_sector_lst *origin)
 {
-	int	i;
+	int				i;
 	t_sector_lst	*target_sector;
 	t_vec2_lst		*target_wall;
 
@@ -23,9 +31,10 @@ int	find_wall_match(t_app *app, t_vec2_lst *wall, t_sector_lst *origin)
 	target_wall = target_sector->wall_list;
 	while (++i < target_sector->corner_count + 1)
 	{
-		if(ft_cmp_line_points((t_line){wall->point, wall->next->point},
-				(t_line){target_wall->point, target_wall->next->point}) && target_wall->type == get_sector_id(app, origin))
-				return (TRUE);
+		if (ft_cmp_line_points((t_line){wall->point, wall->next->point},
+			(t_line){target_wall->point, target_wall->next->point})
+				&& target_wall->type == get_sector_id(app, origin))
+			return (TRUE);
 		target_wall = target_wall->next;
 	}
 	return (FALSE);
@@ -46,7 +55,7 @@ void	render_sector(t_app *app, t_vec2_lst *wall_start, t_sector_lst *sector)
 	{
 		if (tmp->type > -1)
 		{
-			if(find_wall_match(app, tmp, sector))
+			if (find_wall_match(app, tmp, sector))
 				draw_list_lines(app, tmp, tmp->next, PORTAL_LINK);
 			else
 				draw_list_lines(app, tmp, tmp->next, PORTAL);
@@ -132,44 +141,5 @@ void	render_point(t_app *app, t_vector2 point, int size, int color)
 			min.x++;
 		}
 		min.y++;
-	}
-}
-
-/**
- * @brief Midpoint Circle Algorithm, calculates only one octant
- * 3 - 2 * rad avoids overdraw -rad works as well
- * 4 / 6 and 4 / 10 make the circle more circular
- * 
- * @param app
- * @param pos
- * @param rad
- * @param color
- */
-void	draw_circle(t_app *app, t_point pos, int rad, int color)
-{
-	t_point	tmp;
-	int		err;
-
-	tmp.x = 0;
-	tmp.y = rad;
-	err = 3 - 2 * rad;
-	while (tmp.x <= tmp.y)
-	{
-		put_pixel_to_surface(app->surface, pos.x + tmp.x, pos.y + tmp.y, color);
-		put_pixel_to_surface(app->surface, pos.x + tmp.y, pos.y + tmp.x, color);
-		put_pixel_to_surface(app->surface, pos.x - tmp.x, pos.y + tmp.y, color);
-		put_pixel_to_surface(app->surface, pos.x - tmp.y, pos.y + tmp.x, color);
-		put_pixel_to_surface(app->surface, pos.x + tmp.x, pos.y - tmp.y, color);
-		put_pixel_to_surface(app->surface, pos.x + tmp.y, pos.y - tmp.x, color);
-		put_pixel_to_surface(app->surface, pos.x - tmp.x, pos.y - tmp.y, color);
-		put_pixel_to_surface(app->surface, pos.x - tmp.y, pos.y - tmp.x, color);
-		if (err < 0)
-			err += 4 * tmp.x + 6;
-		else
-		{
-			err += 4 * (tmp.x - tmp.y) + 10;
-			tmp.y--;
-		}
-		tmp.x++;
 	}
 }

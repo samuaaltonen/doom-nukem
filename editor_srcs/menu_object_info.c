@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_object_info.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:04:04 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/25 15:31:49 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/01 17:38:30 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -154,5 +154,5 @@ void	object_edit_menu(t_app *app)
 	else
 		id = find_object_interaction(app, find_interaction(app), 1);
 	render_current_interaction_status(app, mouse, 210, id);
-	render_text(app, (t_rect){42, 260, 260, 15}, "DELETE OBJECT ( BACKSPACE )");
+	render_text(app, (t_rect){42, 290, 260, 15}, "DELETE OBJECT ( BACKSPACE )");
 }

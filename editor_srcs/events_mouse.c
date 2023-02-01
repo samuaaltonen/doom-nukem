@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/26 13:17:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/01 17:47:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,14 +96,12 @@ static void	rightside_menu_events(t_app *app, t_point mouse)
 	{
 		app->export_assets = FALSE;
 		export_file(app);
-		app->imported = TRUE;
 	}
 	if (check_mouse(mouse, (t_rect){WIN_W - 155, 107, 150, 21})
 		&& app->sectors)
 	{
 		app->export_assets = TRUE;
 		export_file(app);
-		app->imported = TRUE;
 	}
 }
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_keyup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 18:33:44 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/01 17:46:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,15 +36,13 @@ static void	handle_wasd_keys(t_app *app, int keycode)
 }
 
 /**
- * @brief Keyup events for different edit modes.
+ * @brief Keyup events for sector related edit modes.
  * 
- * @param app
- * @param keycode
-*/
-static void	edit_mode_keys(t_app *app, int keycode)
+ * @param app 
+ * @param keycode 
+ */
+static void	edit_sector_mode_keys(t_app *app, int keycode)
 {
-	if (keycode == SDLK_p)
-		app->player_edit = ft_toggle(app->player_edit);
 	if (keycode == SDLK_r)
 		app->ceiling_edit = ft_toggle(app->ceiling_edit);
 	if (keycode == SDLK_f)
@@ -57,6 +55,24 @@ static void	edit_mode_keys(t_app *app, int keycode)
 		app->wall_edit = ft_toggle(app->wall_edit);
 	if (keycode == SDLK_g)
 		app->decor_edit = ft_toggle(app->decor_edit);
+	if (keycode == SDLK_EQUALS && app->active_sector
+		&& app->active_sector->light < 8)
+		app->active_sector->light++;
+	if (keycode == SDLK_MINUS && app->active_sector
+		&& app->active_sector->light > -8)
+		app->active_sector->light--;
+}
+
+/**
+ * @brief Keyup events for different edit modes.
+ * 
+ * @param app
+ * @param keycode
+*/
+static void	edit_mode_keys(t_app *app, int keycode)
+{
+	if (keycode == SDLK_p)
+		app->player_edit = ft_toggle(app->player_edit);
 	if (keycode == SDLK_e)
 		app->var_edit = ft_toggle(app->var_edit);
 	if (keycode == SDLK_k)
@@ -69,12 +85,6 @@ static void	edit_mode_keys(t_app *app, int keycode)
 		if (app->list_ongoing)
 			cancel_list_creation(app);
 	}
-	if (keycode == SDLK_EQUALS && app->active_sector
-		&& app->active_sector->light < 8)
-		app->active_sector->light++;
-	if (keycode == SDLK_MINUS && app->active_sector
-		&& app->active_sector->light > -8)
-		app->active_sector->light--;
 }
 
 /**
@@ -87,6 +97,7 @@ static void	edit_mode_keys(t_app *app, int keycode)
 int	events_keyup(t_app *app, int keycode)
 {
 	handle_wasd_keys(app, keycode);
+	edit_sector_mode_keys(app, keycode);
 	edit_mode_keys(app, keycode);
 	if (keycode == SDLK_m)
 		export_file(app);

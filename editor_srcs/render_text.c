@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:48:08 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/01 16:48:16 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/01 17:39:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ static t_rect	get_rect(int c)
 	upcase = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
 	lowcase = "abcdefghijklmnopqrstuvwxyz";
 	digits = "0123456789";
-	symbols = ".,:;'\"!?-_()/|\\<>\%";
+	symbols = ".,:;'\"!?-_()/|\\<>\%+";
 	if (ft_isupper(c))
 		rect = get_char(upcase, c, 0);
 	else if (ft_islower(c))

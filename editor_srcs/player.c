@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:00:45 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/26 11:52:19 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/01 17:23:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,14 +75,14 @@ void	check_player_position(t_app *app)
 void	render_player(t_app *app)
 {
 	t_vector2	point;
-	int		size;
+	int			size;
 
 	size = 6 / app->zoom_range;
 	if (!app->player_edit && app->player.sector)
 		point = app->player.position;
 	else
 		point = app->mouse_track;
-	if (!app->list_creation || (app->list_creation && app->player.sector
-		&& !app->player_edit))
+	if (!app->list_creation
+		|| (app->list_creation && app->player.sector && !app->player_edit))
 		render_point(app, point, 4 * size, PLAYER);
 }

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/01 14:46:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/01 17:41:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,11 +94,7 @@ void	export_level(t_app *app, t_thread_data *thread, char *path)
 	export_objects(app, fd, &info);
 	export_interactions(app, fd, &info);
 	if (app->export_assets)
-	{
-		export_surfaces(&info, fd);
-		export_wavs(&info, fd);
-		export_texts(&info, fd);
-	}
+		export_assets(&info, fd);
 	if (close(fd) < 0)
 		exit_error(MSG_ERROR_FILE_CLOSE);
 	update_header(&info.header, path);

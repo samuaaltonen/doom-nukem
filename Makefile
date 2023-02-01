@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/02/01 17:11:01 by saaltone         ###   ########.fr        #
+#    Updated: 2023/02/01 17:50:14 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -195,7 +195,12 @@ EDITOR_FILES = app.c \
 		font.c \
 		render_fill_sector.c \
 		render_fill_sector_points.c \
-		render_fill_sector_points_sort.c
+		render_fill_sector_points_sort.c \
+		events_activate_interaction_decor.c \
+		events_activate_interaction_object.c \
+		events_activate_interaction_sector.c \
+		export_assets.c \
+		render_circle.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a
