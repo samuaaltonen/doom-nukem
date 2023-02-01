@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/24 15:59:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/26 13:52:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:42:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,7 @@ static int	check_level(int n)
 	char	*str;
 	char	*level;
 	char	*file;
+	int		fd;
 
 	str = ft_strnew(FILE_NAME_LENGTH);
 	str = ft_strcpy(str, LEVEL_IDENTIFIER);
@@ -79,8 +80,10 @@ static int	check_level(int n)
 	if (!level)
 		exit_error(MSG_ERROR_ALLOC);
 	file = ft_strcat(str, level);
-	if (access(file, F_OK) == 0)
+	fd = open(file, O_RDONLY);
+	if (fd >= 0)
 	{
+		close(fd);
 		free(level);
 		free(file);
 		return (1);
