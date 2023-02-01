@@ -46,6 +46,8 @@ void	fire(t_app *app, t_vector3 target_dir, t_vector3 start, t_point info)
 		app->bullets[i].end_z = 0.f;
 	}
 	app->bullets_active++;
+	add_fire_movement(app);
+	return ;
 }
 
 /**

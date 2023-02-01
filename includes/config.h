@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/26 13:58:41 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/01 17:22:51 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,12 @@
 # define THREAD_COUNT 5
 # define THREAD_DEADLOCK_CHECK 10000000
 # define FOV 83
-# define MOUSE_SENSITIVITY_HORIZONTAL 0.2
-# define MOUSE_SENSITIVITY_VERTICAL 0.2
+# define MOUSE_SENSITIVITY_HORIZONTAL 0.001
+# define MOUSE_SENSITIVITY_VERTICAL 0.001
+# define HAND_TURN_SPEED 3
+# define HAND_MOVE_SPEED 100
+# define HAND_FIRE_SPEED 5000.f
+# define HAND_SPEED 10
 # define MAX_SECTOR_COUNT 4096
 # define MIN_SECTOR_CORNERS 3
 # define MAX_SECTOR_CORNERS 16
@@ -49,6 +53,7 @@
 # define PROJECTILE_COLLISION_X 0.25f
 # define PROJECTILE_COLLISION_Y 0.5f
 # define PICKUP_RANGE 0.5f
+# define WEAPON_SIZE 864.f
 # define MAX_OBJECTS 128
 # define MAX_TEMP_OBJECTS 64
 # define MAX_INTERACTIONS 64

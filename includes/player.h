@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/26 16:26:04 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:01:49 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,14 @@ typedef struct s_weapon
 	int				magazine;
 	int				ammo;
 }	t_weapon;
+
+typedef struct s_hand
+{
+	int			equipped;
+	t_vector2	target;
+	t_vector2	current;
+	t_vector2	velocity;
+}	t_hand;
 
 /**
  * Struct for player. Contains player's position, direction and camera plane.

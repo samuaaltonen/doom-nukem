@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_status_pausemenu.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/19 16:51:22 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/25 15:53:22 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:05:24 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	render_pausemenu(t_app *app)
 	render_sectors(app);
 	render_objects(app);
 	render_textmodals(app);
-	render_hand(app, WIN_W / 2 - 256, 320);
+	render_hand(app);
 	render_ui_frame(app, (t_rect){28, 78, 300, 428}, 1, DARK_GREY);
 	button_function(app,
 		render_button(app, (t_rect){50, 100, 256, 64}, 1, "MAIN MENU"),

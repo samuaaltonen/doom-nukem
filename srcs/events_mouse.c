@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_mouse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:40:40 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 11:36:34 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:09:56 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,11 @@ int	events_mouse_motion(t_app *app)
 	{
 		delta.x = app->event.motion.xrel;
 		delta.y = app->event.motion.yrel;
+		app->mouse_delta = delta;
 		if (delta.x != 0)
-			player_rotate(app, (double)delta.x * MOUSE_SENSITIVITY_HORIZONTAL
-				* app->conf->delta_time);
+			player_rotate(app, (double)delta.x * MOUSE_SENSITIVITY_HORIZONTAL);
 		if (delta.y != 0)
-			player_horizon(app, (double)delta.y * MOUSE_SENSITIVITY_VERTICAL
-				* app->conf->delta_time);
+			player_horizon(app, (double)delta.y * MOUSE_SENSITIVITY_VERTICAL);
 	}
 	return (0);
 }

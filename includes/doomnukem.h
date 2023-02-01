@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/31 18:50:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/01 17:10:55 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,6 +200,9 @@ typedef struct s_app
 	SDL_Surface			*surface;
 	SDL_Event			event;
 	double				import_progress;
+	t_hand				hand;
+	t_point				mouse_delta;
+	double				wave;
 	t_uint8				status;
 	t_assets			assets;
 	t_bool				assets_imported;
@@ -487,7 +490,7 @@ void			render_game(t_app *app);
 void			render_pausemenu(t_app *app);
 void			render_options(t_app *app);
 void			render_gameover(t_app *app);
-void			render_hand(t_app *app, int x, int y);
+void			render_hand(t_app *app);
 void			render_controls(t_app *app);
 void			render_select_level(t_app *app);
 
@@ -523,6 +526,14 @@ int				shade_depth(int color, float shade);
 void			map_coordinates(t_rect *src, t_rect *dst, t_point *point);
 void			clamp_int(int *number, int min, int max);
 double			ft_random_double(t_app *app, double max);
+
+/**
+ * @brief hand handling
+ * 
+ */
+void			hand_init(t_app *app);
+void			add_fire_movement(t_app *app);
+void			update_hand(t_app *app);
 
 /**
  * Objects
