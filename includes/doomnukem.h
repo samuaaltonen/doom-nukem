@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 13:29:52 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:01:39 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -456,9 +456,6 @@ void			render_ui_frame(t_app *app, t_rect area, int size,
 void			render_ui(t_app *app);
 void			render_player_status(t_app *app);
 void			render_equipment(t_app *app);
-void			hud_keys(t_app *app, t_rect area);
-void			hud_jetpack(t_app *app, t_rect area);
-void			hud_weapon(t_app *app, t_rect rect);
 void			hud_quickslot(t_app *app, t_rect rect, char *slot);
 void			render_pointer(t_app *app, int x, int y);
 void			render_crosshair(t_app *app);
