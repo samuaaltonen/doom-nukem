@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_collision_portal.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 19:55:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 21:04:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/06 21:36:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,7 +114,7 @@ void	portal_enter(t_app *app, int sector_id)
 	target_floor = sector_floor_height(app, sector_id,
 			app->player.move_pos);
 	app->player.sector = sector_id;
-	interaction_check_portal(app, sector_id);
 	if (app->player.elevation != target_floor)
 		app->player.flying = TRUE;
+	interaction_check_portal(app, sector_id);
 }
