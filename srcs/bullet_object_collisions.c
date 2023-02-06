@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 21:15:09 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/01 18:23:21 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:05:47 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,8 @@ static t_bool	line_collision(t_app *app, t_bullet *bullet,
 	point = ft_closest_point(app->objects[enemy->id].position, collision_line);
 	if (ft_point_on_segment(collision_line, point)
 		&& in_range(point, app->objects[enemy->id].position,
-			app->bullet_def[bullet->type - 11].size.x))
-	{
+			app->bullet_def[bullet->type].size.x))
 		return (TRUE);
-	}
 	return (FALSE);
 }
 

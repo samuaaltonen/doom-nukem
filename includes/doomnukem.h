@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 19:01:39 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:27:20 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -567,5 +567,6 @@ void			avoid_walls(t_app *app, t_enemy_state *enemy);
 void			turn_enemy(t_app *app, t_enemy_state *state);
 void			enemy_attack(t_app *app, t_enemy_state *state, int define);
 void			enemy_states(t_app *app, t_enemy_state *state, int define);
+t_bool			obj_seen(t_app *app, int id);
 
 #endif
