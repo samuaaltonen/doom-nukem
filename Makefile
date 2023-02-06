@@ -6,7 +6,7 @@
 #    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/02/06 16:44:13 by dpalacio         ###   ########.fr        #
+#    Updated: 2023/02/06 19:02:31 by dpalacio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,6 +73,7 @@ FILES = animation_create.c \
 		player_init.c \
 		player_move.c \
 		player_view.c \
+		quickslots.c \
 		render_equipment.c \
 		render_hand.c \
 		render_object.c \

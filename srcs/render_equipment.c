@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:40:28 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/06 17:14:04 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:01:51 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static void	hud_keys(t_app *app, t_rect area);
 static void	hud_jetpack(t_app *app, t_rect area);
 static void	hud_weapon(t_app *app, t_rect rect);
-static void	hud_quickslot(t_app *app, t_rect rect, char *slot);
 
 void	render_equipment(t_app *app)
 {
@@ -90,50 +89,4 @@ static void	hud_weapon(t_app *app, t_rect rect)
 		return ;
 	render_text(app, (t_rect){1136, 626, 64, 64}, ammo);
 	free(ammo);
-}
-
-static void	hud_quickslot(t_app *app, t_rect rect, char *slot)
-{
-	SDL_Surface	*sprite;
-	char		*amount;
-	char		*text;
-
-	sprite = NULL;
-	amount = NULL;
-	if (slot[0] == 'Q')
-	{
-		sprite = app->assets.hp;
-		amount = ft_itoa(app->player.inventory.potion);
-	}
-	if (slot[0] == 'E')
-	{
-		sprite = app->assets.shield;
-		amount = ft_itoa(app->player.inventory.antidote);
-	}
-	if (!amount || !sprite)
-		return ;
-	if (check_timer(&app->item_timer))
-	{
-		render_text_prompt(app, rect, 1, slot);
-		rect.x += 8;
-		rect.y += 32;
-		rect.w /= 3;
-		rect.h /= 3;
-		render_ui_element(app, sprite, rect);
-		rect.x += 32;
-		rect.y += 6;
-		rect.w *= 3;
-		rect.h *= 3;
-		render_text(app, rect, amount);
-	}
-	else
-	{
-		text = ft_itoa((int)(app->item_timer.seconds
-					- app->item_timer.delta_seconds));
-		if (!text)
-			exit_error(MSG_ERROR_ALLOC);
-		render_text_prompt(app, rect, 1, text);
-		free(text);
-	}
-	free(amount);
 }
