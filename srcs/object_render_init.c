@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 20:51:27 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 21:06:03 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:32:43 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static t_bool	init_object(t_app *app, int i, t_render_object *object,
 		return (FALSE);
 	transform = ft_vector_multiply_matrix(vector,
 			ft_matrix_inverse((t_matrix2){app->player.cam, app->player.dir}));
-	if (transform.y / dist < 0.75f)
+	if (transform.y / dist < 0.7f)
 		return (FALSE);
 	object->id = i;
 	object->tex_size = object_tex_size(app, object->id);
@@ -141,7 +141,7 @@ void	objects_visible(t_app *app)
 	app->objectstack.visible_count = 0;
 	while (++i < MAX_OBJECTS && app->objects[i].type != 0)
 	{
-		if (app->objects[i].type == -1)
+		if (app->objects[i].type == -1 || !obj_seen(app, i))
 			continue ;
 		object = &(app->objectstack.objects[app->objectstack.visible_count]);
 		if (!init_object(app, i, object, &angle))

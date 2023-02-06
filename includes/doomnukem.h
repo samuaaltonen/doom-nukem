@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 19:37:27 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:47:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -568,5 +568,6 @@ void			avoid_walls(t_app *app, t_enemy_state *enemy);
 void			turn_enemy(t_app *app, t_enemy_state *state);
 void			enemy_attack(t_app *app, t_enemy_state *state, int define);
 void			enemy_states(t_app *app, t_enemy_state *state, int define);
+t_bool			obj_seen(t_app *app, int id);
 
 #endif

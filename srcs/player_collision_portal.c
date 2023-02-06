@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 19:55:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 17:09:13 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:03:14 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_bool	projectile_can_enter(t_app *app, t_vector3 pos, t_bullet *bullet,
 	double		target_floor;
 	double		target_ceil;
 
-	if (app->sectors[target].parent_sector == -1)
+	if (target == -1 || app->sectors[target].parent_sector == -1)
 	{
 		if (target == -1 || (app->sectors[bullet->sector].parent_sector == -1
 				&& app->sectors[bullet->sector].wall_textures[bullet->wall_id]

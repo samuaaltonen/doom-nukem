@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:48:10 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/20 11:28:33 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:30:32 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,24 @@ void	clamp_int(int *number, int min, int max)
 		*number = min;
 	if (*number > max)
 		*number = max;
+}
+
+t_bool obj_seen(t_app *app, int id)
+{
+	int i;
+	i = -1;
+
+	while (++i < app->sector_count)
+	{
+		if (i != app->objects[id].sector)
+			continue;
+		int j = 0;
+		while(j < THREAD_COUNT)
+		{
+			if (app->sectors[i].is_visible[j])
+				return (TRUE);
+			j++;
+		}
+	}
+	return (FALSE);
 }
