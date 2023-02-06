@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/06 14:19:40 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:36:47 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,23 +47,22 @@ void	hud_keys(t_app *app, t_rect area)
 	char	*key_str;
 	int		i;
 
-	key_str = ft_itoa(app->player.inventory.key);
-	
 	src.x = 0;
 	src.y = 128;
 	src.w = 128;
 	src.h = 128;
+	key_str = ft_itoa(app->player.inventory.key);
 	i = app->player.inventory.key;
-	if (i > 15)
+	if (i > 7)
 	{
-		i = 15;
-		render_text_prompt(app, (t_rect){area.x - 4, area.y + 8, 32, 32}, 1, app->conf->fps_info);
+		i = 7;
+		render_text_prompt(app, (t_rect){1208, area.y, 40, 32}, 1, key_str);
 	}
 		
 	while (i > 0)
 	{
 		blit_surface(app->assets.object_icon, &src, app->surface, &area);
-		area.x += 16;
+		area.x += 34;
 		i--;
 	}
 //	if (app->player.inventory.key)
