@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   image.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 19:08:00 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:27:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color)
 	char	*pixel;
 
 	pixel_pos = (y * surface->pitch) + (x * IMAGE_PIXEL_BYTES);
-	if (pixel_pos <  0 || x < 0 || y < 0 || x >= surface->w || y >= surface->h)
+	if (x < 0 || y < 0 || pixel_pos < 0 || x >= surface->w || y >= surface->h)
 		return ;
 	pixel = surface->pixels + pixel_pos;
 	*(int *)pixel = color;

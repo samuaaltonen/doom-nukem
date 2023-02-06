@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 19:24:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:34:08 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,22 @@ static void	raycast_default(t_app *app, t_rayhit *hit, int x)
  * @param info 
  * @param hit 
  */
-static void	raycast_init(t_app *app, t_raycast_info info, t_rayhit *hit)
+static void	raycast_init(t_app *app, t_raycast_info *info, t_rayhit *hit)
 {
-	hit->wall = info.wall;
-	hit->wall_id = info.wall->wall_id;
-	hit->occlusion_top = info.occlusion_top;
-	hit->occlusion_bottom = info.occlusion_bottom;
+	if (info->limit.start < info->wall->start_x)
+		info->limit.start = info->wall->start_x;
+	if (info->limit.end > info->wall->end_x)
+		info->limit.end = info->wall->end_x;
+	hit->wall = info->wall;
+	hit->wall_id = info->wall->wall_id;
+	hit->occlusion_top = info->occlusion_top;
+	hit->occlusion_bottom = info->occlusion_bottom;
 	hit->floor_slope_height = 0.0;
 	hit->ceil_slope_height = 0.0;
-	hit->sector = &app->sectors[info.wall->sector_id];
-	hit->wall_type = info.wall->wall_type;
-	hit->texture = app->sectors[info.wall->sector_id] \
-		.wall_textures[info.wall->wall_id];
+	hit->sector = &app->sectors[info->wall->sector_id];
+	hit->wall_type = info->wall->wall_type;
+	hit->texture = app->sectors[info->wall->sector_id] \
+		.wall_textures[info->wall->wall_id];
 	hit->light = (int)hit->sector->light;
 	hit->drawn = FALSE;
 }
@@ -102,11 +106,7 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread,
 	t_rayhit	hit;
 	int			x;
 
-	if (info.limit.start < info.wall->start_x)
-		info.limit.start = info.wall->start_x;
-	if (info.limit.end > info.wall->end_x)
-		info.limit.end = info.wall->end_x;
-	raycast_init(app, info, &hit);
+	raycast_init(app, &info, &hit);
 	x = info.limit.start - 1;
 	while (++x < info.limit.end)
 	{
@@ -123,7 +123,8 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread,
 			continue ;
 		hit.sector->is_visible[thread->id] = TRUE;
 		if (hit.sector->parent_sector != -1)
-			app->sectors[hit.sector->parent_sector].is_visible[thread->id] = TRUE;
+			app->sectors[hit.sector->parent_sector].is_visible[thread->id]
+				= TRUE;
 	}
 }
 
@@ -140,11 +141,7 @@ void	sector_walls_raycast_transparent(t_app *app, t_thread_data *thread,
 	t_rayhit	hit;
 	int			x;
 
-	if (info.limit.start < info.wall->start_x)
-		info.limit.start = info.wall->start_x;
-	if (info.limit.end > info.wall->end_x)
-		info.limit.end = info.wall->end_x;
-	raycast_init(app, info, &hit);
+	raycast_init(app, &info, &hit);
 	x = info.limit.start - 1;
 	while (++x < info.limit.end)
 	{

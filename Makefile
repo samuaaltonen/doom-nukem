@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
+#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/02/06 19:02:31 by dpalacio         ###   ########.fr        #
+#    Updated: 2023/02/06 19:39:53 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -116,7 +116,10 @@ FILES = animation_create.c \
 		random.c \
 		import_change_level.c \
 		sector_wallstack_order_endpoint.c \
-		font.c
+		font.c \
+		interaction_pickup.c \
+		interaction_enemy.c \
+		init_enemies.c
 
 EDITOR_FILES = app.c \
 		editor.c \

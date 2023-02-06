@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 16:07:35 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:44:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,26 +44,13 @@ static void	event_keyup_movement(int keycode, t_app *app)
 }
 
 /**
- * @brief Handles events for key presses (keyup).
+ * @brief Handles keyup events related to game states.
  * 
  * @param keycode 
  * @param app 
- * @return int 
  */
-int	events_keyup(int keycode, t_app *app)
+static void	events_keyup_status(int keycode, t_app *app)
 {
-	event_keyup_movement(keycode, app);
-	if (keycode == SDLK_q && app->conf->keystates & Q)
-		app->conf->keystates ^= Q;
-	if (keycode == SDLK_e && app->conf->keystates & E)
-		app->conf->keystates ^= E;
-	if (keycode == SDLK_r && app->conf->keystates & R)
-		app->conf->keystates ^= R;
-	if (app->player.inventory.jetpack && app->conf->keystates & C
-		&& keycode == SDLK_c)
-		app->conf->keystates ^= C;
-	if (keycode == SDLK_ESCAPE)
-		exit(EXIT_SUCCESS);
 	if (keycode == SDLK_TAB)
 	{
 		if (app->status == STATUS_GAME || app->status == STATUS_PAUSEMENU)
@@ -75,32 +62,46 @@ int	events_keyup(int keycode, t_app *app)
 	{
 		if (app->status == STATUS_TITLESCREEN)
 			app->status = STATUS_MAINMENU;
-		//----DEBUG FEATURE
 		else if (app->status == STATUS_MAINMENU)
 			start_game(app);
 		if (app->status == STATUS_GAMEOVER)
 			app->status = STATUS_MAINMENU;
-		//----
 		app->conf->keystates ^= SPACE;
 	}
-	//----DEBUG FEATURE
-	if (keycode == SDLK_9)
-	{
-		ft_printf("add ammo\n");
-		app->player.inventory.ammo += 50;
-	}
-	//----
-	return (0);
 }
 
 /**
- * @brief Handles events for key presses (keydown).
+ * @brief Handles events for key presses (keyup).
  * 
  * @param keycode 
  * @param app 
  * @return int 
  */
-int	events_keydown(int keycode, t_app *app)
+int	events_keyup(int keycode, t_app *app)
+{
+	if (keycode == SDLK_ESCAPE)
+		exit(EXIT_SUCCESS);
+	event_keyup_movement(keycode, app);
+	if (keycode == SDLK_q && app->conf->keystates & Q)
+		app->conf->keystates ^= Q;
+	if (keycode == SDLK_e && app->conf->keystates & E)
+		app->conf->keystates ^= E;
+	if (keycode == SDLK_r && app->conf->keystates & R)
+		app->conf->keystates ^= R;
+	if (app->player.inventory.jetpack && app->conf->keystates & C
+		&& keycode == SDLK_c)
+		app->conf->keystates ^= C;
+	events_keyup_status(keycode, app);
+	if (keycode == SDLK_9)
+		app->player.inventory.ammo += 50;
+	return (0);
+}
+
+/**
+ * @brief Handles keydown events for movement.
+ * 
+ */
+static void	events_keydown_movement(int keycode, t_app *app)
 {
 	if (keycode == SDLK_RIGHT)
 		app->conf->keystates |= RIGHT;
@@ -118,6 +119,17 @@ int	events_keydown(int keycode, t_app *app)
 		app->conf->keystates |= A;
 	if (keycode == SDLK_d)
 		app->conf->keystates |= D;
+}
+
+/**
+ * @brief Handles events for key presses (keydown).
+ * 
+ * @param keycode 
+ * @param app 
+ * @return int 
+ */
+int	events_keydown(int keycode, t_app *app)
+{
 	if (keycode == SDLK_u)
 		app->conf->fov--;
 	if (keycode == SDLK_u || keycode == SDLK_i)

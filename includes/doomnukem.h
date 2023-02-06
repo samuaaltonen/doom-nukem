@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 19:01:39 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:37:27 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -420,6 +420,7 @@ void			draw_portal_partial_hole(t_app *app, int x, t_rayhit *hit);
 /**
  * Interactions
  */
+t_bool			check_key_requirement(t_app *app, t_interaction *interaction);
 void			interaction_check(t_app *app);
 void			interaction_check_portal(t_app *app, int sector_id);
 void			interaction_trigger(t_app *app, int interaction_index);

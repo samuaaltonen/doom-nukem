@@ -6,11 +6,27 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/26 16:25:19 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:27:20 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
+
+/**
+ * @brief Clamps player elevation to ceiling when it would be higher than
+ * ceiling height.
+ * 
+ * @param app 
+ * @param ceil 
+ */
+static void	clamp_ceiling_elevation(t_app *app, double ceil)
+{
+	if (ceil >= app->player.elevation + app->player.height + COLLISION_CEIL)
+		return ;
+	app->player.elevation = ceil - app->player.height - COLLISION_CEIL;
+	if (app->player.elevation_velocity > 0)
+		app->player.elevation_velocity = 0.0;
+}
 
 /**
  * @brief Disables flying, sets player elevation to current floor height and
@@ -74,12 +90,7 @@ void	update_elevation(t_app *app)
 	if (fabs(app->player.elevation_velocity) > MOVE_MIN)
 		app->player.elevation += app->player.elevation_velocity
 			* app->conf->delta_time;
-	if (ceil < app->player.elevation + app->player.height + COLLISION_CEIL)
-	{
-		app->player.elevation = ceil - app->player.height - COLLISION_CEIL;
-		if (app->player.elevation_velocity > 0)
-			app->player.elevation_velocity = 0.0;
-	}
+	clamp_ceiling_elevation(app, ceil);
 	if (!app->player.flying && app->player.elevation > floor)
 		app->player.elevation = floor;
 	if (!app->player.jetpack && old_elevation >= floor

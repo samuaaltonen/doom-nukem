@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interaction_check.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:06:37 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/26 18:09:30 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:37:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,23 +50,12 @@ static t_bool	is_near_activation_decor(t_app *app, int sector_id, int wall_id)
 }
 
 /**
- * @brief Checks if interaction requires key and if so, uses one from player
- * inventory.
+ * @brief Checks object interacction.
  * 
  * @param app 
  * @param interaction 
  * @return t_bool 
  */
-static t_bool	check_key_requirement(t_app *app, t_interaction *interaction)
-{
-	if (!interaction->requires_key)
-		return (TRUE);
-	if (app->player.inventory.key <= 0)
-		return (FALSE);
-	app->player.inventory.key--;
-	return (TRUE);
-}
-
 static t_bool	check_object_interaction(t_app *app, t_interaction *interaction)
 {
 	int				i;
@@ -96,22 +85,22 @@ static t_bool	check_object_interaction(t_app *app, t_interaction *interaction)
 	return (FALSE);
 }
 
-void	interaction_by_pickup(t_app *app, t_gameobject *obj)
+/**
+ * @brief Checks if interaction requires key and if so, uses one from player
+ * inventory.
+ * 
+ * @param app 
+ * @param interaction 
+ * @return t_bool 
+ */
+t_bool	check_key_requirement(t_app *app, t_interaction *interaction)
 {
-	int				i;
-	t_gameobject	*tmp;
-
-	i = -1;
-	while (++i < MAX_INTERACTIONS)
-	{
-		if (app->interactions[i].activation_object != 1)
-		{
-			tmp = &(app->objects[app->interactions[i].activation_object]);
-			if (tmp != obj)
-				continue ;
-			interaction_trigger(app, i);
-		}
-	}
+	if (!interaction->requires_key)
+		return (TRUE);
+	if (app->player.inventory.key <= 0)
+		return (FALSE);
+	app->player.inventory.key--;
+	return (TRUE);
 }
 
 /**
@@ -137,21 +126,6 @@ void	interaction_check(t_app *app)
 			&& is_near_activation_decor(app,
 				app->interactions[i].activation_sector,
 				app->interactions[i].activation_wall)
-			&& check_key_requirement(app, &app->interactions[i]))
-			interaction_trigger(app, i);
-	}
-}
-
-void	enemy_interaction_check(t_app *app, t_enemy_state *enemy)
-{
-	int	i;
-
-	i = -1;
-	while (++i < MAX_INTERACTIONS)
-	{
-		if (app->interactions[i].event_id == EVENT_NONE)
-			continue ;
-		if (app->interactions[i].activation_object == enemy->id
 			&& check_key_requirement(app, &app->interactions[i]))
 			interaction_trigger(app, i);
 	}
