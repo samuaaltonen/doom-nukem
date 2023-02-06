@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
+#    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/02/01 19:51:52 by saaltone         ###   ########.fr        #
+#    Updated: 2023/02/06 16:44:13 by dpalacio         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -73,8 +73,10 @@ FILES = animation_create.c \
 		player_init.c \
 		player_move.c \
 		player_view.c \
+		render_equipment.c \
 		render_hand.c \
 		render_object.c \
+		render_player_status.c \
 		render_status_game.c \
 		render_status_gameover.c \
 		render_status_mainmenu.c \
@@ -83,6 +85,7 @@ FILES = animation_create.c \
 		render_status_select_level.c \
 		render_status_titlescreen.c \
 		render_text.c \
+		render_ui_frame.c \
 		render_ui.c \
 		rle_uncompress.c \
 		rle_utils.c \
