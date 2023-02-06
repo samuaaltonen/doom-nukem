@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_sdl.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:38:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/17 13:52:41 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/06 14:56:30 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	blit_surface(SDL_Surface *src, t_rect *src_rect,
 	{
 		current.x = 0;
 		current.y = 0;
-		while (current.y < dst_rect->h)
+		while (current.y < dst_rect->h && current.y + dst_rect->y < dst->h)
 		{
-			while (current.x < dst_rect->w)
+			while (current.x < dst_rect->w && current.x + dst_rect->x < dst->w)
 			{
 				point.x = current.x;
 				point.y = current.y;

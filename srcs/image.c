@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 15:34:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 17:08:02 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:08:00 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	put_pixel_to_surface(SDL_Surface *surface, int x, int y, int color)
 	char	*pixel;
 
 	pixel_pos = (y * surface->pitch) + (x * IMAGE_PIXEL_BYTES);
-	if (pixel_pos < 0 || x >= surface->w || y >= surface->h)
+	if (pixel_pos <  0 || x < 0 || y < 0 || x >= surface->w || y >= surface->h)
 		return ;
 	pixel = surface->pixels + pixel_pos;
 	*(int *)pixel = color;
@@ -47,8 +47,8 @@ void	put_pixel_to_surface_check(t_app *app, t_point point,
 	char	*pixel;
 
 	pixel_pos = (point.y * app->surface->pitch) + (point.x * IMAGE_PIXEL_BYTES);
-	if (pixel_pos < 0 || point.x >= app->surface->w
-		|| point.y >= app->surface->h)
+	if (pixel_pos < 0 || point.x < 0 || point.y < 0
+		|| point.x >= app->surface->w || point.y >= app->surface->h)
 		return ;
 	if (app->depthmap[point.y / 2][point.x] >= distance)
 	{
