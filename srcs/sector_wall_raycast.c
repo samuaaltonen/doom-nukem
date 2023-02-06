@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 18:50:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:24:08 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,8 +119,11 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread,
 			raycast_portal(app, info.wall, &hit, x);
 		else
 			raycast_default(app, &hit, x);
-		if (hit.drawn)
-			info.wall->is_visible[thread->id] = TRUE;
+		if (!hit.drawn)
+			continue ;
+		hit.sector->is_visible[thread->id] = TRUE;
+		if (hit.sector->parent_sector != -1)
+			app->sectors[hit.sector->parent_sector].is_visible[thread->id] = TRUE;
 	}
 }
 
@@ -152,6 +155,6 @@ void	sector_walls_raycast_transparent(t_app *app, t_thread_data *thread,
 			continue ;
 		draw_wall(app, x, &hit, OCCLUDE_BOTH);
 		if (hit.drawn)
-			info.wall->is_visible[thread->id] = TRUE;
+			hit.sector->is_visible[thread->id] = TRUE;
 	}
 }
