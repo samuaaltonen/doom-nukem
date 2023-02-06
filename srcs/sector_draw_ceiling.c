@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:17:22 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/26 16:15:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/27 21:35:53 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -129,11 +129,6 @@ void	draw_ceiling(t_app *app, int x, t_rayhit *hit)
 	initialize_elevation(app, hit, &elevation, &horizon_effect);
 	hit->occlusion_top[x] = hit->wall_start;
 	distance = elevation * WIN_H / ((double)(y.start + 1) - horizon_effect);
-	if (hit->wall->is_member && hit->wall->is_inside
-		&& !inside_sector(app, hit->wall->sector_id,
-			ft_vector2_sub(hit->position,
-				ft_vec2_mult(hit->ray, hit->distance - distance))))
-		return ;
 	while (y.start <= y.end)
 	{
 		distance = elevation * WIN_H / ((double)y.start - horizon_effect);

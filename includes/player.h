@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/27 12:47:01 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/06 12:21:51 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,12 +85,21 @@ typedef struct s_inventory
 typedef struct s_weapon
 {
 	t_bool			enabled;
+	int				type;
 	int				damage;
 	int				range;
 	double			fire_rate;
 	int				magazine;
 	int				ammo;
 }	t_weapon;
+
+typedef struct s_hand
+{
+	int			equipped;
+	t_vector2	target;
+	t_vector2	current;
+	t_vector2	velocity;
+}	t_hand;
 
 /**
  * Struct for player. Contains player's position, direction and camera plane.

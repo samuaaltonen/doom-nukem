@@ -6,71 +6,11 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:06:55 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/18 22:46:20 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:32:37 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
-
-/**
- * @brief Calculates height offset for current rayhit based on sector ceiling
- * slope
- * 
- * @param hit 
- * @return double 
- */
-static double	apply_ceiling_slope(t_rayhit *hit)
-{
-	double		perpendicular_distance;
-	double		pos_angle;
-	t_vector2	slope_vector;
-
-	if (!hit->sector->ceil_slope_magnitude)
-		return (0.0);
-	slope_vector = ft_vector2_sub(hit->sector->ceil_slope_end,
-			hit->sector->ceil_slope_start);
-	pos_angle = ft_vector_angle(ft_vector2_sub(hit->position,
-				hit->sector->ceil_slope_start), slope_vector);
-	perpendicular_distance = cos(pos_angle) * ft_vector_length(ft_vector2_sub(
-				hit->position, hit->sector->ceil_slope_start));
-	hit->ceil_horizon_angle = cos(ft_vector_angle(hit->ray,
-				slope_vector)) / hit->distortion;
-	hit->ceil_horizon = hit->sector->ceil_slope_magnitude \
-				* hit->ceil_horizon_angle;
-	hit->ceil_slope_height = perpendicular_distance \
-				* hit->sector->ceil_slope_magnitude;
-	return (perpendicular_distance * hit->sector->ceil_slope_magnitude);
-}
-
-/**
- * @brief Calculates height offset for current rayhit based on sector floor
- * slope
- * 
- * @param hit 
- * @return double 
- */
-static double	apply_floor_slope(t_rayhit *hit)
-{
-	double		perpendicular_distance;
-	double		pos_angle;
-	t_vector2	slope_vector;
-
-	if (!hit->sector->floor_slope_magnitude)
-		return (0.0);
-	slope_vector = ft_vector2_sub(hit->sector->floor_slope_end,
-			hit->sector->floor_slope_start);
-	pos_angle = ft_vector_angle(ft_vector2_sub(hit->position,
-				hit->sector->floor_slope_start), slope_vector);
-	perpendicular_distance = cos(pos_angle) * ft_vector_length(ft_vector2_sub(
-				hit->position, hit->sector->floor_slope_start));
-	hit->floor_horizon_angle = cos(ft_vector_angle(hit->ray,
-				slope_vector)) / hit->distortion;
-	hit->floor_horizon = hit->sector->floor_slope_magnitude \
-			* hit->floor_horizon_angle;
-	hit->floor_slope_height = perpendicular_distance \
-			* hit->sector->floor_slope_magnitude;
-	return (perpendicular_distance * hit->sector->floor_slope_magnitude);
-}
 
 /**
  * @brief If wall is from member sector, calculate parent positions as well
@@ -148,6 +88,36 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 }
 
 /**
+ * @brief Checks hit for wall endpoints to avoid inaccuracy from normal
+ * interaction calculation (usually with extreme angles, only endpoint is
+ * visible anyways).
+ * 
+ * @param app 
+ * @param wall 
+ * @param hit 
+ * @param x 
+ * @return t_bool 
+ */
+static t_bool	endpoint_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
+{
+	if (x <= 0 || x >= WIN_W - 1)
+		return (FALSE);
+	if (hit->wall->start_x != x && hit->wall->end_x != x)
+		return (FALSE);
+	if (hit->wall->start_x == x && hit->wall->x_flipped)
+		hit->position = wall.b;
+	else if (hit->wall->start_x == x)
+		hit->position = wall.a;
+	if (hit->wall->end_x == x && hit->wall->x_flipped)
+		hit->position = wall.a;
+	else if (hit->wall->end_x == x)
+		hit->position = wall.b;
+	hit->ray = ft_vector_resize(ft_vector2_sub(hit->position, app->player.pos),
+			1.0 / cos(ft_vector_angle(hit->ray, app->player.dir)));
+	return (TRUE);
+}
+
+/**
  * @brief Performs raycast from player to wall. Updates values into rayhit
  * struct to be used later in rendering. Returns TRUE if there was a hit and
  * FALSE otherwise.
@@ -161,16 +131,16 @@ void	set_wall_vertical_positions(t_app *app, t_rayhit *hit)
 t_bool	raycast_hit(t_app *app, t_line wall, t_rayhit *hit, int x)
 {
 	t_line	ray_line;
-	double	camera_x;
+	float	camera_x;
 
 	ray_line.a = app->player.pos;
-	camera_x = 2 * x / (double) WIN_W - 1.0;
+	camera_x = 2 * x / (float) WIN_W - 1.0;
 	hit->ray = (t_vector2){app->player.dir.x + app->player.cam.x * camera_x,
 		app->player.dir.y + app->player.cam.y * camera_x};
 	ray_line.b.x = hit->ray.x + app->player.pos.x;
 	ray_line.b.y = hit->ray.y + app->player.pos.y;
-	if (!ft_line_intersection(wall, ray_line, &hit->position)
-		|| (hit->wall->is_member && !ft_point_on_segment(wall, hit->position)))
+	if (!endpoint_hit(app, wall, hit, x)
+		&& !ft_line_intersection(wall, ray_line, &hit->position))
 		return (FALSE);
 	hit->distance = ft_vector_length((t_vector2){
 			hit->position.x - app->player.pos.x,

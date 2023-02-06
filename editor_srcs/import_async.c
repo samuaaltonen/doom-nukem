@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 17:51:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/23 17:48:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:46:25 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static t_bool	level_file_exists(char *path)
 		exists = TRUE;
 	else
 		exists = FALSE;
-	close(fd);
+	if (close(fd) < 0)
+		exit_error(MSG_ERROR_FILE_CLOSE);
 	return (exists);
 }
 

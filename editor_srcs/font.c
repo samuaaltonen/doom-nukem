@@ -1,20 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_compare_vectors.c                               :+:      :+:    :+:   */
+/*   font.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/11/18 15:40:52 by htahvana          #+#    #+#             */
-/*   Updated: 2022/11/29 15:20:07 by saaltone         ###   ########.fr       */
+/*   Created: 2023/02/01 16:45:59 by saaltone          #+#    #+#             */
+/*   Updated: 2023/02/01 16:46:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "liblinearalgebra.h"
+#include "doomnukem_editor.h"
 
-int	ft_cmp_vec2(t_vector2 a, t_vector2 b)
+/**
+ * @brief Changes font color and size.
+ * 
+ * @param app 
+ * @param size 
+ * @param color 
+ */
+void	change_font(t_app *app, int size, int color)
 {
-	if (a.x != b.x || a.y != b.y)
-		return (0);
-	return (1);
+	app->assets.font.size = size;
+	color_surface(app->assets.font.font, color);
 }

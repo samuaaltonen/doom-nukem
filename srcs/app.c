@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 16:07:11 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/01 19:38:32 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,7 @@ void	app_loop(t_app *app)
 	{
 		while (SDL_PollEvent(&app->event))
 			dispatch_event(app, &app->event);
-		if (!app->conf->toggle_loop)
-			render_frame(app);
+		render_frame(app);
 	}
 }
 

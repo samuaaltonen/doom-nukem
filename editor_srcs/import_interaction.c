@@ -3,14 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   import_interaction.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:30:17 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/26 17:46:46 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/01 17:27:00 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
+
+/**
+ * @brief Checks for valid sector ids.
+ * 
+ * @param app 
+ * @param interaction 
+ * @return t_bool 
+ */
+static t_bool	has_invalid_sector_ids(t_app *app,
+	t_export_interaction *interaction)
+{
+	return (interaction->activation_sector < -1
+		|| interaction->activation_sector >= app->sector_count
+		|| interaction->target_sector < -1
+		|| interaction->target_sector >= app->sector_count
+		|| !sector_by_index(app, interaction->target_sector));
+}
 
 /**
  * @brief Validates interaction data.
@@ -28,11 +45,7 @@ static void	level_validation_interactions(t_app *app,
 	{
 		if (!interactions[i].event_id)
 			continue ;
-		if (interactions[i].activation_sector < -1
-			|| interactions[i].activation_sector >= app->sector_count
-			|| interactions[i].target_sector < -1
-			|| interactions[i].target_sector >= app->sector_count
-			|| !sector_by_index(app, interactions[i].target_sector)
+		if (has_invalid_sector_ids(app, &interactions[i])
 			|| interactions[i].interaction_link < -1
 			|| interactions[i].interaction_link >= MAX_INTERACTIONS
 			|| interactions[i].activation_wall < -1

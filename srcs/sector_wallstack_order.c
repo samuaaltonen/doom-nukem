@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 23:00:02 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 02:21:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/31 19:27:37 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,28 +33,28 @@
  */
 static t_bool	compare_walls(t_app *app, t_line a, t_line b)
 {
-	t_line	extend;
 	t_bool	extend_a;
 	int		side;
 
-	extend = ft_line_resize(a, MAX_LINE_LENGTH, EXTEND_BOTH);
 	extend_a = TRUE;
-	if (ft_line_intersection_through(extend, b))
+	side = ft_line_side(a, app->player.pos);
+	if (ft_line_intersection_through(a, b))
 	{
-		extend = ft_line_resize(b, MAX_LINE_LENGTH, EXTEND_BOTH);
 		extend_a = FALSE;
-		if (ft_line_intersection_through(extend, a))
+		side = ft_line_side(b, app->player.pos);
+		if (ft_line_intersection_through(b, a))
 			return (TRUE);
 	}
-	side = ft_line_side(extend, app->player.pos);
+	if (side == -1)
+		return (TRUE);
 	if (extend_a
-		&& (side == ft_line_side(extend, b.a) || ft_line_point(extend, b.a))
-		&& (side == ft_line_side(extend, b.b) || ft_line_point(extend, b.b)))
+		&& (side == ft_line_side(a, b.a) || ft_line_point(a, b.a))
+		&& (side == ft_line_side(a, b.b) || ft_line_point(a, b.b)))
 		return (FALSE);
 	if (!extend_a
-		&& ((side != ft_line_side(extend, a.a) && !ft_line_point(extend, a.a))
-			|| (side != ft_line_side(extend, a.b)
-				&& !ft_line_point(extend, a.b))))
+		&& ((side != ft_line_side(b, a.a) && !ft_line_point(b, a.a))
+			|| (side != ft_line_side(b, a.b)
+				&& !ft_line_point(b, a.b))))
 		return (FALSE);
 	return (TRUE);
 }
@@ -73,6 +73,7 @@ static t_bool	compare_walls(t_app *app, t_line a, t_line b)
  */
 static t_bool	walls_in_order(t_app *app, t_wall *wall_a, t_wall *wall_b)
 {
+	t_bool	compare;
 	t_line	a;
 	t_line	b;
 
@@ -82,14 +83,19 @@ static t_bool	walls_in_order(t_app *app, t_wall *wall_a, t_wall *wall_b)
 		return (FALSE);
 	a = get_wall_line(app, wall_a->sector_id, wall_a->wall_id);
 	b = get_wall_line(app, wall_b->sector_id, wall_b->wall_id);
-	if (ft_line_intersection_full(a, b)
-		&& wall_a->is_inside != wall_b->is_inside)
+	if (ft_line_intersection_full(a, b))
 	{
-		if (wall_a->is_inside)
+		if (wall_a->is_inside != wall_b->is_inside && wall_a->is_inside)
 			return (TRUE);
-		else
+		else if (wall_a->is_inside != wall_b->is_inside)
 			return (FALSE);
+		if (get_relative_wall_distance(app->player.pos, a)
+			<= get_relative_wall_distance(app->player.pos, b))
+			return (TRUE);
+		return (FALSE);
 	}
+	if (compare_same_endpoint(app, a, b, &compare))
+		return (compare);
 	return (compare_walls(app, a, b));
 }
 
@@ -107,7 +113,7 @@ t_bool	walls_overlap(t_wall *wall_a, t_wall *wall_b)
 
 	overlap_start = wall_a->start_x - wall_b->end_x;
 	overlap_end = wall_a->end_x - wall_b->start_x;
-	if (overlap_start < -2 && overlap_end > 2)
+	if (overlap_start < 0 && overlap_end > 0)
 		return (TRUE);
 	return (FALSE);
 }

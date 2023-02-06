@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_collision_portal.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 19:55:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/26 16:42:31 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/27 23:01:22 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,22 +63,22 @@ t_bool	projectile_can_enter(t_app *app, t_vector3 pos, t_bullet *bullet,
 	double		target_floor;
 	double		target_ceil;
 
-	if (target == -1 || app->sectors[bullet->sector].\
-			wall_textures[bullet->wall_id] <= PARTIALLY_TRANSPARENT_TEXTURE_ID)
+	if (target == -1 || (app->sectors[bullet->sector].parent_sector == -1
+			&& app->sectors[bullet->sector].wall_textures[bullet->wall_id]
+			>= PARTIALLY_TRANSPARENT_TEXTURE_ID
+			&& app->sectors[bullet->sector].wall_textures[bullet->wall_id]
+			!= FULLY_TRANSPARENT_TEXTURE_ID))
 		return (FALSE);
 	check_pos = ft_closest_point((t_vector2){pos.x, pos.y},
-		get_wall_line(app, bullet->sector, bullet->wall_id));
+			get_wall_line(app, bullet->sector, bullet->wall_id));
 	source_floor = sector_floor_height(app, bullet->sector, check_pos);
 	source_ceil = sector_ceil_height(app, bullet->sector, check_pos);
 	target_floor = sector_floor_height(app, target, check_pos);
 	target_ceil = sector_ceil_height(app, target, check_pos);
-	if (pos.z < target_floor)
-		return (FALSE);
-	if (target_ceil < pos.z)
-		return (FALSE);
-	if (pos.z < source_floor)
-		return (FALSE);
-	if (source_ceil < pos.z)
+	if (pos.z < target_floor
+		|| target_ceil < pos.z
+		|| pos.z < source_floor
+		|| source_ceil < pos.z)
 		return (FALSE);
 	return (TRUE);
 }

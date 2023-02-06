@@ -6,7 +6,7 @@
 #    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/10/29 10:36:08 by saaltone          #+#    #+#              #
-#    Updated: 2023/01/12 15:38:03 by saaltone         ###   ########.fr        #
+#    Updated: 2023/01/31 18:41:31 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,9 +39,11 @@ FILES=ft_vector_length.c \
 	ft_vector_normalize.c \
 	ft_point_distance.c \
 	ft_point_on_segment.c \
-	ft_compare_vectors.c \
 	ft_swap.c \
-	ft_conversions.c
+	ft_conversions.c \
+	ft_colors.c \
+	ft_line_comparison.c \
+	ft_vector_compare.c
 
 SRC_DIR = ./srcs
 SRCS := $(patsubst %, $(SRC_DIR)/%, $(FILES))

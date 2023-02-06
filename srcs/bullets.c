@@ -24,6 +24,8 @@ void	fire(t_app *app, t_vector3 target_dir, t_vector3 start, t_point info)
 {
 	int	i;
 
+	if (app->bullets_active >= MAX_TEMP_OBJECTS - 1)
+		return ;
 	i = 0;
 	while (i < MAX_TEMP_OBJECTS && app->bullets[i].type != -1)
 		i++;
@@ -37,13 +39,14 @@ void	fire(t_app *app, t_vector3 target_dir, t_vector3 start, t_point info)
 		/ app->bullet_def[app->bullets[i].type].speed;
 	app->bullets[i].end = ft_vector2_normalize(
 			ft_vector2_sub(app->bullets[i].end, app->bullets[i].start));
-	if (app->bullets[i].type == 4)
+	if (app->bullets[i].type == PROJECTILE_ENEMY)
 	{
 		app->bullets[i].timer = 0.25f;
 		app->bullets[i].end = (t_vector2){0.f, 0.f};
 		app->bullets[i].end_z = 0.f;
 	}
 	app->bullets_active++;
+	add_fire_movement(app);
 	return ;
 }
 
@@ -55,11 +58,11 @@ void	fire(t_app *app, t_vector3 target_dir, t_vector3 start, t_point info)
  */
 void	kill_bullet(t_app *app, t_bullet *bullet)
 {
-	if (bullet->type == 7)
+	if (bullet->type == PROJECTILE_ROCKET || bullet->type == 4)
 		melee(app, (t_vector3){0.f, 0.f, 0.f}, ft_vec2_to_vec3(
 				ft_vector2_sub(bullet->start, ft_vec2_mult(bullet->end, 0.15f)),
-				bullet->start_z - bullet->end_z * 0.15f),
-			(t_point){1, bullet->sector});
+				bullet->start_z - bullet->end_z),
+			(t_point){PROJECTILE_EXPLOSION, bullet->sector});
 	bullet->type = -1;
 	app->bullets_active--;
 }
@@ -76,6 +79,8 @@ void	melee(t_app *app, t_vector3 target_dir, t_vector3 start, t_point info)
 {
 	int	i;
 
+	if (app->bullets_active >= MAX_TEMP_OBJECTS - 1)
+		return ;
 	i = 0;
 	while (i < MAX_TEMP_OBJECTS && app->bullets[i].type != -1)
 		i++;
@@ -97,11 +102,16 @@ void	melee(t_app *app, t_vector3 target_dir, t_vector3 start, t_point info)
 
 static void	start_bullet(t_app *app, t_bullet *bullet)
 {
+	double	delta;
+
+	delta = app->conf->delta_time;
+	if (bullet->timer < 0)
+		delta += bullet->timer;
 	bullet->start = ft_vector2_add(bullet->start,
-			ft_vec2_mult(bullet->end, app->conf->delta_time
+			ft_vec2_mult(bullet->end, delta
 				* app->bullet_def[bullet->type].speed));
 	bullet->start_z += bullet->end_z
-		* app->conf->delta_time
+		* delta
 		* app->bullet_def[bullet->type].speed;
 }
 
@@ -121,7 +131,6 @@ void	update_bullets(t_app *app)
 		bullet = &(app->bullets[i]);
 		if (bullet->type == -1)
 			continue ;
-		start_bullet(app, bullet);
 		if (bullet->timer > 0)
 			bullet->timer -= app->conf->delta_time;
 		else
@@ -132,5 +141,6 @@ void	update_bullets(t_app *app)
 				== PARTIALLY_TRANSPARENT_TEXTURE_ID)
 				app->sectors[bullet->sector].wall_textures[bullet->wall_id]++;
 		}
+		start_bullet(app, bullet);
 	}
 }

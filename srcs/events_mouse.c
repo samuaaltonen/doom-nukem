@@ -3,17 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   events_mouse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:40:40 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 11:36:34 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/01 19:59:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * Tracks mouse position and changes player direction accordingly.
+ * @brief Tracks mouse position and changes player direction and horizon value
+ * accordingly.
+ * 
+ * @param app 
+ * @return int 
  */
 int	events_mouse_motion(t_app *app)
 {
@@ -24,16 +28,22 @@ int	events_mouse_motion(t_app *app)
 	{
 		delta.x = app->event.motion.xrel;
 		delta.y = app->event.motion.yrel;
+		app->mouse_delta = delta;
 		if (delta.x != 0)
-			player_rotate(app, (double)delta.x * MOUSE_SENSITIVITY_HORIZONTAL
-				* app->conf->delta_time);
+			player_rotate(app, (double)delta.x * MOUSE_SENSITIVITY_HORIZONTAL);
 		if (delta.y != 0)
-			player_horizon(app, (double)delta.y * MOUSE_SENSITIVITY_VERTICAL
-				* app->conf->delta_time);
+			player_horizon(app, (double)delta.y * MOUSE_SENSITIVITY_VERTICAL);
 	}
 	return (0);
 }
 
+/**
+ * @brief Mouse key down events.
+ * 
+ * @param mouse_button 
+ * @param app 
+ * @return int 
+ */
 int	events_mouse_down(int mouse_button, t_app *app)
 {
 	if (mouse_button == SDL_BUTTON_LEFT)
@@ -45,6 +55,13 @@ int	events_mouse_down(int mouse_button, t_app *app)
 	return (0);
 }
 
+/**
+ * @brief Mouse key up events.
+ * 
+ * @param mouse_button 
+ * @param app 
+ * @return int 
+ */
 int	events_mouse_up(int mouse_button, t_app *app)
 {
 	if (mouse_button == SDL_BUTTON_LEFT)
@@ -56,28 +73,18 @@ int	events_mouse_up(int mouse_button, t_app *app)
 	return (0);
 }
 
+/**
+ * @brief Mouse wheel events.
+ * 
+ * @param wheel_dir 
+ * @param app 
+ * @return int 
+ */
 int	events_mouse_wheel(int wheel_dir, t_app *app)
 {
 	if (wheel_dir > 0)
 		weapon(app, 2);
 	else if (wheel_dir < 0)
 		weapon(app, 1);
-	//----DEBUG FEATURE
-	// app->player.hp += wheel_dir;
-	// if (app->player.hp <= 0)
-	// {
-	// 	app->player.hp = 0;
-	// 	app->player.shield += wheel_dir;
-	// }
-	// else if (app->player.hp >= MAX_HP)
-	// {
-	// 	app->player.hp = MAX_HP;
-	// 	app->player.shield += wheel_dir;
-	// }
-	// if (app->player.shield <= 0)
-	// 	app->player.shield = 0;
-	// else if (app->player.shield >= MAX_HP)
-	// 	app->player.shield = MAX_HP;
-	//----
 	return (0);
 }

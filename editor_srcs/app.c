@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/26 19:06:17 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/27 17:05:33 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ static void	render_selected(t_app *app)
 {
 	if (app->active)
 	{
-		render_sector(app, app->active);
+		render_sector(app, app->active, NULL);
 		render_point(app, app->active->point, 3, POINT);
 		draw_circle(app, world_to_screen(app, app->active->point), 4, POINT);
 	}

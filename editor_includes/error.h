@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 13:10:34 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/23 16:50:42 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/01 14:47:01 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ Usage:\n./editor [level-number]"
 # define MSG_ERROR_TEXTURE_LOAD_FAILED "Texture files are invalid."
 # define MSG_ERROR_MOUSE "Could not set mouse cursor relative to the window."
 # define MSG_ERROR_FILE_OPEN "Could not open a file."
+# define MSG_ERROR_FILE_CLOSE "Could not close a file."
 # define MSG_ERROR_FILE_READ "Could not read from a file."
 # define MSG_ERROR_FILE_WRITE "Could not write to a file."
 # define MSG_ERROR_LEVEL_NUMBER "Level number is invalid (allowed numbers are\

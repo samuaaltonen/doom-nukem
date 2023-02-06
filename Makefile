@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+         #
+#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/01/27 11:10:07 by dpalacio         ###   ########.fr        #
+#    Updated: 2023/02/01 19:51:52 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,6 +99,7 @@ FILES = animation_create.c \
 		sector_wall_raycast.c \
 		sector_wall_raycast_decor.c \
 		sector_wall_raycast_hit.c \
+		sector_wall_raycast_slopes.c \
 		sector_wallstack.c \
 		sector_wallstack_order.c \
 		sector_wallstack_visible.c \
@@ -109,7 +110,9 @@ FILES = animation_create.c \
 		utils_color.c \
 		utils_sdl.c \
 		random.c \
-		import_change_level.c
+		import_change_level.c \
+		sector_wallstack_order_endpoint.c \
+		font.c
 
 EDITOR_FILES = app.c \
 		editor.c \
@@ -188,7 +191,17 @@ EDITOR_FILES = app.c \
 		utils.c \
 		utils_bmp.c \
 		utils_sdl.c \
-		exit.c
+		exit.c \
+		sector_tools_links.c \
+		font.c \
+		render_fill_sector.c \
+		render_fill_sector_points.c \
+		render_fill_sector_points_sort.c \
+		events_activate_interaction_decor.c \
+		events_activate_interaction_object.c \
+		events_activate_interaction_sector.c \
+		export_assets.c \
+		render_circle.c
 
 LIBFT = ./libft/libft.a
 LIBLINEARALGEBRA = ./liblinearalgebra/liblinearalgebra.a
@@ -226,7 +239,7 @@ EDITOR_HEADERS = \
 	-I ./sdl/SDL2-2.0.8/include
 
 FLAGS = -MMD -Wall -Wextra -Werror -flto -Ofast -g
-EDITOR_FLAGS = -MMD -Wall -Wextra -Werror -g -fsanitize=address
+EDITOR_FLAGS = -MMD -Wall -Wextra -Werror -flto -Ofast -g
 
 LIBLINKS = -L ./libft -L ./liblinearalgebra \
 		-llinearalgebra -lft -lm

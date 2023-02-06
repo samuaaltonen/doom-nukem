@@ -13,6 +13,24 @@
 #include "doomnukem.h"
 
 /**
+ * @brief Returns relative distance to a sector wall. Gets the closest point on
+ * the wall and then adds normalized unit vector that is perpendicular to the
+ * wall and calculated distance to that point. Used for comparing relative
+ * distances to walls from different sectors.
+ * 
+ * @param coord 
+ * @param wall_line 
+ * @return double 
+ */
+double	get_relative_wall_distance(t_vector2 coord, t_line wall_line)
+{
+	return (ft_vector_length(ft_vector2_sub(coord,
+				ft_vector2_add(ft_closest_point(coord, wall_line),
+					ft_vector2_normalize(ft_vector_perpendicular(
+							ft_vector2_sub(wall_line.b, wall_line.a)))))));
+}
+
+/**
  * @brief Returns wall vector from sector by wall id.
  * 
  * @param app 

@@ -3,23 +3,39 @@
 /*                                                        :::      ::::::::   */
 /*   liblinearalgebra.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:46:18 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/25 16:46:02 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/31 19:30:15 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBLINEARALGEBRA_H
 # define LIBLINEARALGEBRA_H
-# define LINE_POINT_EPSILON 0.0009765625
+# define LINE_POINT_EPSILON 0.0001
 # include "math.h"
+
+# ifndef LIBFT_H
+
+typedef enum e_bool {
+	FALSE = 0,
+	TRUE = 1
+}	t_bool;
+
+# endif
 
 enum e_line_resize_side {
 	EXTEND_CORNER_A,
 	EXTEND_CORNER_B,
 	EXTEND_BOTH
 };
+
+/**
+ * Integer type definitions
+ */
+typedef unsigned char	t_uint8;
+typedef unsigned short	t_uint16;
+typedef unsigned int	t_uint32;
 
 typedef struct s_vector2 {
 	double	x;
@@ -58,6 +74,18 @@ typedef struct s_triangle
 	t_point	c;
 }	t_triangle;
 
+typedef union u_colors
+{
+	int	color;
+	struct
+	{
+		t_uint8	b;
+		t_uint8	g;
+		t_uint8	r;
+		t_uint8	a;
+	}	s_bgra;
+}	t_colors;
+
 double		ft_vector_length(t_vector2 a);
 t_vector2	ft_vector_multiply_matrix(t_vector2 vector, t_matrix2 matrix);
 t_vector2	ft_vector_perpendicular(t_vector2 a);
@@ -90,12 +118,15 @@ t_vector2	ft_vec2_mult(t_vector2 a, double f);
 t_vector2	ft_closest_point(t_vector2 point, t_line line);
 double		ft_point_distance(t_vector2 a, t_vector2 b);
 int			ft_point_on_segment(t_line line, t_vector2 point);
-int			ft_point_on_segment_epsilon(t_line line, t_vector2 point, double epsilon);
-int			ft_cmp_vec2(t_vector2 a, t_vector2 b);
+int			ft_point_on_segment_epsilon(t_line line, t_vector2 point,
+				double epsilon);
+int			ft_vector_compare(t_vector2 a, t_vector2 b);
 void		ft_point_swap(t_point *a, t_point *b);
 void		ft_swap(int *a, int *b);
 t_vector3	ft_vec2_to_vec3(t_vector2 vector, double z);
 void		ft_double_swap(double *a, double *b);
 void		ft_vec2_swap(t_vector2 *a, t_vector2 *b);
+int			blend_pixel_half(t_colors base, t_colors top);
+t_bool		ft_cmp_line_points(t_line a, t_line b);
 
 #endif

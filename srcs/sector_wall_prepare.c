@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:46:07 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/05 11:38:28 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/01/31 18:48:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,19 +32,14 @@ static int	translate_window_x(t_app *app, t_vector2 coord, double dotproduct)
 			(t_vector2){app->player.pos.x + app->player.dir.x,
 			app->player.pos.y + app->player.dir.y}}, coord))
 		angle *= -1.0;
-	if (angle < -PI_3_QUARTERS || angle > PI_3_QUARTERS)
+	if (angle < -PI_HALF || angle > PI_HALF)
 	{
 		if (dotproduct > 0.0)
 			return (0);
 		return (WIN_W - 1);
 	}
-	if (angle < -PI_HALF)
-		return (0);
-	else if (angle > PI_HALF)
-		return (WIN_W - 1);
-	else
-		return ((int)(WIN_W / 2.0
-			+ WIN_W * tan(angle) / app->player.camera_length / 2.0));
+	return ((int)(WIN_W / 2.0
+		+ WIN_W * tan(angle) / app->player.camera_length / 2.0));
 }
 
 /**
@@ -85,20 +80,19 @@ void	sector_walls_prepare(t_app *app, t_wall *walls, int wall_count)
 	i = -1;
 	while (++i < wall_count)
 	{
-		walls[i].line = get_wall_line(app,
-				walls[i].sector_id,
-				walls[i].wall_id);
 		dotproduct = get_wall_dotproduct(app, walls[i]);
 		walls[i].start_x = translate_window_x(app, walls[i].line.a, dotproduct);
 		walls[i].end_x = translate_window_x(app, walls[i].line.b, dotproduct);
+		walls[i].x_flipped = FALSE;
 		if (walls[i].end_x < walls[i].start_x)
 		{
 			temp_x = walls[i].end_x;
 			walls[i].end_x = walls[i].start_x;
 			walls[i].start_x = temp_x;
+			walls[i].x_flipped = TRUE;
 		}
-		if (walls[i].start_x < -1)
-			walls[i].start_x = -1;
+		if (walls[i].start_x < 0)
+			walls[i].start_x = 0;
 		if (walls[i].end_x >= WIN_W)
 			walls[i].end_x = WIN_W - 1;
 		walls[i].already_selected = 0;

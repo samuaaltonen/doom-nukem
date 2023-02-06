@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 14:12:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/19 16:14:43 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/01/31 18:46:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ t_bool	valid_object(t_app *app)
 	{
 		if (app->active_sector == NULL)
 			return (FALSE);
-		if (ft_cmp_vec2(app->mouse_track, app->objects[i].position))
+		if (ft_vector_compare(app->mouse_track, app->objects[i].position))
 			return (FALSE);
 		if (!inside_sector_check(app->active_sector, &(app->mouse_track)))
 			return (FALSE);

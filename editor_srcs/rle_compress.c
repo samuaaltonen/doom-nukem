@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 14:03:01 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 20:27:04 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/01 15:46:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,6 @@ void	rle_compress(t_import_info *info, const char *source)
 	t_uint8	*source_data;
 	int		read_bytes;
 	int		target_fd;
-	int		i;
 
 	source_data = read_source(source, &info->compressed_length);
 	if (!source_data)
@@ -88,18 +87,18 @@ void	rle_compress(t_import_info *info, const char *source)
 	target_fd = open(source, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	if (target_fd < 0)
 		exit_error(MSG_ERROR_FILE_OPEN);
-	i = 0;
-	while (i < info->compressed_length)
+	info->uncompressed = 0;
+	while (info->uncompressed < info->compressed_length)
 	{
-		info->uncompressed = i;
 		compression_update_progress(info);
-		if (i + MAX_UNCOMPRESS_BATCH < info->compressed_length)
+		if (info->uncompressed + MAX_UNCOMPRESS_BATCH < info->compressed_length)
 			read_bytes = MAX_UNCOMPRESS_BATCH;
 		else
-			read_bytes = info->compressed_length - i;
-		compress_batch(target_fd, source_data + i, read_bytes);
-		i += MAX_UNCOMPRESS_BATCH;
+			read_bytes = info->compressed_length - info->uncompressed;
+		compress_batch(target_fd, source_data + info->uncompressed, read_bytes);
+		info->uncompressed += MAX_UNCOMPRESS_BATCH;
 	}
 	free(source_data);
-	close(target_fd);
+	if (close(target_fd) < 0)
+		exit_error(MSG_ERROR_FILE_CLOSE);
 }

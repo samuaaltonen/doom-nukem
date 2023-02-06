@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:41:22 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 14:23:22 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/01 19:32:08 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int	dispatch_event(t_app *app, SDL_Event *event)
  * 
  * @return int 
  */
-int dispatch_event_minimal(t_app *app, SDL_Event *event)
+int	dispatch_event_minimal(t_app *app, SDL_Event *event)
 {
 	if (event->type == SDL_QUIT)
 		return (events_window_destroy());

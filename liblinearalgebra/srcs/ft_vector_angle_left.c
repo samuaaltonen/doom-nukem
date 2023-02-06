@@ -27,7 +27,7 @@ double	ft_vector_angle_left(t_vector2 a, t_vector2 b)
 
 	ratio = ft_vector_dotproduct(a, b)
 		/ (ft_vector_length(a) * ft_vector_length(b));
-	if (ratio < -1.0)
+	if (ratio <= -1.0)
 		return (0.0);
 	if (ratio >= 1.0)
 		return (2 * M_PI);

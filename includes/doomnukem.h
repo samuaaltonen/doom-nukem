@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 11:10:26 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/01 17:10:55 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -183,14 +183,6 @@ typedef struct s_objectstack
 	t_render_object		objects[MAX_VISIBLE_WALLS];
 }	t_objectstack;
 
-typedef struct s_color
-{
-	int					a;
-	int					r;
-	int					g;
-	int					b;
-}	t_color;
-
 typedef struct s_timer
 {
 	struct timespec		start;
@@ -208,6 +200,9 @@ typedef struct s_app
 	SDL_Surface			*surface;
 	SDL_Event			event;
 	double				import_progress;
+	t_hand				hand;
+	t_point				mouse_delta;
+	double				wave;
 	t_uint8				status;
 	t_assets			assets;
 	t_bool				assets_imported;
@@ -331,6 +326,7 @@ void			threads_work(t_thread_data *threads_data);
 void			player_init(t_app *app);
 void			player_control(t_app *app);
 void			player_rotate(t_app *app, double angle);
+int				get_player_side(t_app *app, t_line line);
 void			player_horizon(t_app *app, double change);
 void			player_move(t_app *app, t_movement movement, double speed);
 void			player_elevate(t_app *app, t_movement movement, double speed);
@@ -363,8 +359,8 @@ t_vector2		get_possible_movement_point(t_line wall, t_vector2 coord,
 					int side);
 t_bool			portal_can_enter(t_app *app, t_vector3 pos,
 					t_vector3 sectors);
-t_bool	projectile_can_enter(t_app *app, t_vector3 pos, t_bullet *bullet,
-	int	target);
+t_bool			projectile_can_enter(t_app *app, t_vector3 pos,
+					t_bullet *bullet, int target);
 void			portal_enter(t_app *app, int sector_id);
 t_bool			inside_sector(t_app *app, int sector_id, t_vector2 coord);
 void			check_player_sector(t_app *app, int old_sector,
@@ -379,9 +375,12 @@ t_bool			sector_height_collision(t_app *app, t_bullet *bullet);
 /**
  * Sectors
  */
+double			apply_floor_slope(t_rayhit *hit);
+double			apply_ceiling_slope(t_rayhit *hit);
 double			sector_floor_height(t_app *app, int sector_id, t_vector2 pos);
 double			sector_ceil_height(t_app *app, int sector_id, t_vector2 pos);
 double			sector_vertical_space(t_app *app, int sector_id, t_vector2 pos);
+double			get_relative_wall_distance(t_vector2 coord, t_line wall_line);
 t_vector2		get_wall_vector(t_app *app, int sector_id, int wall_id);
 t_line			get_wall_line(t_app *app, int sector_id, int wall_id);
 void			sector_wallstack_build(t_app *app);
@@ -389,6 +388,8 @@ void			sector_visible_walls(t_app *app, t_wallstack *wallstack,
 					int index, int sector_id);
 void			sector_walls_prepare(t_app *app, t_wall *walls, int wall_count);
 void			sector_walls_order(t_app *app, t_wall *walls, int wall_count);
+t_bool			compare_same_endpoint(t_app *app, t_line a, t_line b,
+					t_bool *compare);
 void			sector_stack_render(t_app *app, t_thread_data *thread,
 					int stack_id, t_limit limit);
 void			*sector_render_thread(void *data);
@@ -489,7 +490,7 @@ void			render_game(t_app *app);
 void			render_pausemenu(t_app *app);
 void			render_options(t_app *app);
 void			render_gameover(t_app *app);
-void			render_hand(t_app *app, int x, int y);
+void			render_hand(t_app *app);
 void			render_controls(t_app *app);
 void			render_select_level(t_app *app);
 
@@ -517,9 +518,6 @@ int				check_blit(SDL_Surface *src, t_rect *src_rect,
 					SDL_Surface *dst, t_rect *dst_rect);
 void			rect_from_surface(SDL_Surface *surface, t_rect *rect);
 void			color_surface(SDL_Surface *surface, int color);
-int				blend_pixel(t_color base, t_color top);
-t_color			int_to_argb(int color);
-int				argb_to_int(t_color color);
 int				shade_depth(int color, float shade);
 
 /**
@@ -528,6 +526,14 @@ int				shade_depth(int color, float shade);
 void			map_coordinates(t_rect *src, t_rect *dst, t_point *point);
 void			clamp_int(int *number, int min, int max);
 double			ft_random_double(t_app *app, double max);
+
+/**
+ * @brief hand handling
+ * 
+ */
+void			hand_init(t_app *app);
+void			add_fire_movement(t_app *app);
+void			update_hand(t_app *app);
 
 /**
  * Objects
