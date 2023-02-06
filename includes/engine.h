@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/27 21:42:29 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:46:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,7 @@ typedef struct s_wall
 	int				start_x;
 	int				end_x;
 	t_bool			x_flipped;
+	t_bool			is_visible[THREAD_COUNT];
 }	t_wall;
 
 /**
@@ -192,6 +193,8 @@ typedef struct s_rayhit
 	double			decor_start_actual;
 	int				decor_end;
 	double			decor_texture_offset;
+	
+	t_bool			drawn;
 }	t_rayhit;
 
 /**

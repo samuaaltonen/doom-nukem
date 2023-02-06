@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 18:28:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:37:17 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,8 +40,10 @@ static t_bool	apply_occlusion(t_rayhit *hit, int x, t_limit *y)
  * @param occlusion 
  * @param y 
  */
-static void	update_occlusion(t_rayhit *hit, int x, int occlusion)
+static void	update_occlusion(t_rayhit *hit, int x, t_limit y, int occlusion)
 {
+	if (y.start < y.end)
+		hit->drawn = TRUE;
 	if (occlusion == OCCLUDE_NONE)
 		return ;
 	if (occlusion == OCCLUDE_BOTH || occlusion == OCCLUDE_TOP)
@@ -122,5 +124,5 @@ void	draw_wall(t_app *app, int x, t_rayhit *hit, int occlusion_type)
 	}
 	if (hit->has_decor)
 		draw_wall_decor(app, x, hit);
-	update_occlusion(hit, x, occlusion_type);
+	update_occlusion(hit, x, y, occlusion_type);
 }

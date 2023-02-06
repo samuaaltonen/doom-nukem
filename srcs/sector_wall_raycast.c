@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 21:29:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/06 18:50:00 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ static void	raycast_init(t_app *app, t_raycast_info info, t_rayhit *hit)
 	hit->texture = app->sectors[info.wall->sector_id] \
 		.wall_textures[info.wall->wall_id];
 	hit->light = (int)hit->sector->light;
+	hit->drawn = FALSE;
 }
 
 /**
@@ -118,6 +119,8 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread,
 			raycast_portal(app, info.wall, &hit, x);
 		else
 			raycast_default(app, &hit, x);
+		if (hit.drawn)
+			info.wall->is_visible[thread->id] = TRUE;
 	}
 }
 
@@ -148,5 +151,7 @@ void	sector_walls_raycast_transparent(t_app *app, t_thread_data *thread,
 			|| hit.distance > (double)MAX_VIEW_DISTANCE)
 			continue ;
 		draw_wall(app, x, &hit, OCCLUDE_BOTH);
+		if (hit.drawn)
+			info.wall->is_visible[thread->id] = TRUE;
 	}
 }
