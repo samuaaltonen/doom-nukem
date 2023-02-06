@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/27 11:39:38 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/01/27 12:45:07 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,13 +136,13 @@ void	weapon(t_app *app, int weapon)
 	{
 		if (app->player.weapons & 0b00000001 && weapon == 1)
 		{
-			app->player.equipped_weapon.magazine = 7;
+			app->player.equipped_weapon.magazine = WEAPON1_MAG;
 			app->player.equipped_weapon.fire_rate = 0.3;
 			start_timer(&app->shoot_timer, 2.0f);
 		}
 		else if (app->player.weapons & 0b00000001 && weapon == 2)
 		{
-			app->player.equipped_weapon.magazine = 16;
+			app->player.equipped_weapon.magazine = WEAPON2_MAG;
 			app->player.equipped_weapon.fire_rate = 0.1;
 			start_timer(&app->shoot_timer, 2.0f);			
 		}
@@ -151,5 +151,4 @@ void	weapon(t_app *app, int weapon)
 		else
 			app->player.equipped_weapon.ammo = app->player.inventory.ammo;
 	}
-
 }
