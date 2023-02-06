@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/20 12:05:46 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/27 10:59:49 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:58:21 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,9 +32,7 @@ void	start_game(t_app *app)
 	player_init(app);
 	init_enemies(app);
 	init_bullets(app);
-	//----DEBUG FEATURE
 	weapon(app, 1);
-	//----
 	app->status = STATUS_GAME;
 }
 

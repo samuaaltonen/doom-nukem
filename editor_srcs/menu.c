@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:50:07 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/25 16:19:50 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:35:24 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ MOVE ( WASD ) \nZOOM ( SCROLL ) \nRETURN TO ORIGIN ( 1 )");
 		3, PLAYER);
 	render_text(app, (t_rect){35, start_y + 144, 270, 15}, "PLAYER");
 	render_text(app, (t_rect){20, start_y + 160, 270, 30}, "PLAYER MUST BE\
- PLACED INSIDE AN ACTIVE SECTOR.");
+ PLACED INSIDE AN ACTIVE SECTOR (NOT IN MEMBER).");
 	render_text(app, (t_rect){20, start_y + 200, 270, 15}, "SECTORS");
 	render_text(app, (t_rect){205, start_y + 200, 270, 15}, "/");
 	render_amount_info(app, (t_rect){180, 240, 90, 15}, app->sector_count);
@@ -55,29 +55,29 @@ static void	render_button_menu_texts(t_app *app)
 {
 	if (app->active_sector)
 	{
-		if (app->active_sector->parent_sector)
-			toggle_active_color(app, TRUE, "CANNOT ADD MEMBERS\n TO MEMBER \
-SECTORS", (t_rect){WIN_W - 155, 10, 180, 40});
-		else if (get_member_sector_count(app->active_sector)
-			< MAX_MEMBER_SECTORS)
+		if (get_member_sector_count(app->active_sector) >= MAX_MEMBER_SECTORS
+			|| app->active_sector->parent_sector)
+			toggle_active_color(app, TRUE, "CANNOT ADD NEW (MEMBER) SECTOR",
+				(t_rect){WIN_W - 145, 10, 180, 40});
+		else
 			toggle_active_color(app, app->list_creation, "CREATE MEMBER",
 				(t_rect){WIN_W - 135, 17, 150, 15});
-		else
-			toggle_active_color(app, TRUE, "CANNOT ADD MORE MEMBERS TO SECTOR",
-				(t_rect){WIN_W - 150, 10, 200, 40});
 		if (app->object_count < MAX_OBJECTS)
 			toggle_active_color(app, app->object_new, "ADD OBJECT",
-				(t_rect){WIN_W - 120, 47, 150, 15});
+				(t_rect){WIN_W - 120, 77, 150, 15});
 		else
 			toggle_active_color(app, TRUE, "CANNOT ADD MORE OBJECTS",
-				(t_rect){WIN_W - 145, 40, 150, 40});
+				(t_rect){WIN_W - 145, 70, 150, 40});
 	}
 	else
 		toggle_active_color(app, app->list_creation, "CREATE SECTOR",
 			(t_rect){WIN_W - 135, 17, 150, 15});
-	toggle_active_color(app, FALSE, "SAVE", (t_rect){WIN_W - 100, 77, 150, 15});
+	toggle_active_color(app, app->linking_mode, "AUTO PORTALS",
+		(t_rect){WIN_W - 130, 47, 150, 15});
+	toggle_active_color(app, FALSE, "SAVE",
+		(t_rect){WIN_W - 100, 107, 150, 15});
 	toggle_active_color(app, FALSE, "SAVE WITH ASSETS",
-		(t_rect){WIN_W - 144, 108, 150, 15});
+		(t_rect){WIN_W - 144, 137, 150, 15});
 }
 
 /**
@@ -93,13 +93,13 @@ static void	render_button_menu(t_app *app, t_point mouse)
 
 	index = -1;
 	y = 10;
-	while (++index < 4)
+	while (++index < 5)
 	{
 		if ((get_member_sector_count(app->active_sector) >= MAX_MEMBER_SECTORS
 				&& y == 10) || (y == 10 && app->active_sector
 				&& app->active_sector->parent_sector)
-			|| (y == 40 && !app->active_sector)
-			|| (y == 40 && app->object_count >= MAX_OBJECTS))
+			|| (y == 70 && !app->active_sector)
+			|| (y == 70 && app->object_count >= MAX_OBJECTS))
 		{
 			y += 30;
 			continue ;

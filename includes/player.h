@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/01 18:14:54 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/06 12:21:51 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,8 @@
 # define MAX_HP							200
 # define REGEN_TIME						5
 # define AMMO_PICKUP_AMOUNT				20
+# define WEAPON1_MAG					7
+# define WEAPON2_MAG					16
 
 /**
  * Movement direction enumeration.

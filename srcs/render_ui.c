@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_ui.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/06 11:53:11 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:45:09 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,46 @@ void	render_equipment(t_app *app)
 	hud_quickslot(app, (t_rect){960, 624, 64, 64}, "Q");
 	hud_quickslot(app, (t_rect){1040, 624, 64, 64}, "E");
 	hud_weapon(app, (t_rect){1120, 592, 128, 96});
+	hud_jetpack(app, (t_rect){860, 592, 96, 96});
+	hud_keys(app, (t_rect){960, 544, 32, 32});
+}
+
+void	hud_keys(t_app *app, t_rect area)
+{
+	t_rect	src;
+	char	*key_str;
+	int		i;
+
+	src.x = 0;
+	src.y = 128;
+	src.w = 128;
+	src.h = 128;
+	key_str = ft_itoa(app->player.inventory.key);
+	i = app->player.inventory.key;
+	if (i > 7)
+	{
+		i = 7;
+		render_text_prompt(app, (t_rect){1208, area.y, 40, 32}, 1, key_str);
+	}
+	while (i > 0)
+	{
+		blit_surface(app->assets.object_icon, &src, app->surface, &area);
+		area.x += 34;
+		i--;
+	}
+	free(key_str);
+}
+
+void	hud_jetpack(t_app *app, t_rect area)
+{
+	t_rect	src;
+
+	src.x = 0;
+	src.y = 128 * 4;
+	src.w = 128;
+	src.h = 128;
+	if (app->player.inventory.jetpack)
+		blit_surface(app->assets.object_icon, &src, app->surface, &area);
 }
 
 void	hud_weapon(t_app *app, t_rect rect)

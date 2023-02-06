@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/01 19:48:06 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:07:35 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,11 +83,13 @@ int	events_keyup(int keycode, t_app *app)
 		//----
 		app->conf->keystates ^= SPACE;
 	}
+	//----DEBUG FEATURE
 	if (keycode == SDLK_9)
 	{
 		ft_printf("add ammo\n");
 		app->player.inventory.ammo += 50;
 	}
+	//----
 	return (0);
 }
 
