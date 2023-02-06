@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/06 15:41:20 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/06 16:00:45 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,11 @@ void	player_shoot(t_app *app)
 {
 	if (check_timer(&app->shoot_timer) && app->player.equipped_weapon.ammo > 0)
 	{
-		fire(app, (t_vector3){app->player.dir.x, app->player.dir.y, (app->player.horizon - 0.5f)}, (t_vector3){app->player.pos.x, app->player.pos.y, app->player.elevation + app->player.height / 2}, (t_point){app->player.equipped_weapon.type, app->player.sector}); //This 7 is the proyectile sprite
+		fire(app, (t_vector3){app->player.dir.x, app->player.dir.y,
+			(app->player.horizon - 0.5f)}, (t_vector3){app->player.pos.x, app->player.pos.y, app->player.elevation + app->player.height / 2}, (t_point){app->player.equipped_weapon.type, app->player.sector}); //This 7 is the proyectile sprite
 		play_sound(app, AUDIO_SHOT);
 		app->player.equipped_weapon.ammo--;
-		app->player.inventory.special_ammo--;
+		app->player.inventory.ammo--;
 		start_timer(&app->shoot_timer, app->player.equipped_weapon.fire_rate);
 	}
 	else if (app->player.equipped_weapon.ammo <= 0

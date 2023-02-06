@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/06 15:41:43 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:45:09 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,15 +58,12 @@ void	hud_keys(t_app *app, t_rect area)
 		i = 7;
 		render_text_prompt(app, (t_rect){1208, area.y, 40, 32}, 1, key_str);
 	}
-		
 	while (i > 0)
 	{
 		blit_surface(app->assets.object_icon, &src, app->surface, &area);
 		area.x += 34;
 		i--;
 	}
-//	if (app->player.inventory.key)
-//		render_text(app, (t_rect){area.x - 4, area.y + 8, 32, 32}, key_str);
 	free(key_str);
 }
 
