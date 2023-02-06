@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_menu.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 14:38:26 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/26 13:18:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/06 13:36:37 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,10 @@ static void	update_target_sector(t_app *app, t_point mouse)
 {
 	if (app->current_interaction && mouse.x > HELP_MENU_W)
 	{
-		app->current_interaction->target_sector = find_child_sector(app);
+		app->current_interaction->target_sector = find_child_target_sector(app,
+				app->current_interaction->target_sector);
+		if (!app->current_interaction->target_sector)
+			app->current_interaction->target_sector = find_child_sector(app);
 		if (!app->current_interaction->target_sector)
 			app->current_interaction->target_sector = click_sector(app);
 		if (!app->current_interaction->target_sector)

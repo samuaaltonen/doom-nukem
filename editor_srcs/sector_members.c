@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 11:47:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/16 13:32:05 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/06 13:26:25 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,42 @@ t_sector_lst	*find_child_sector(t_app *app)
 	while (i < MAX_MEMBER_SECTORS && app->active_sector->member_sectors[i])
 	{
 		tmp = app->active_sector->member_sectors[i];
+		if (inside_sector_check(tmp, &app->mouse_track))
+			return (tmp);
+		i++;
+	}
+	return (NULL);
+}
+
+/**
+ * @brief Finds child sector in parent for target sector.
+ * 
+ * @param app
+ * @param parent
+ * @return t_sector_lst*
+*/
+t_sector_lst	*find_child_target_sector(t_app *app, t_sector_lst *parent)
+{
+	int				i;
+	t_sector_lst	*tmp;
+	t_vec2_lst		*wall;
+
+	if (!parent)
+		return (NULL);
+	wall = parent->wall_list;
+	while (wall)
+	{
+		if (wall->point.x == app->mouse_track.x
+			&& wall->point.y == app->mouse_track.y)
+			return (NULL);
+		wall = wall->next;
+		if (wall == parent->wall_list)
+			break ;
+	}
+	i = 0;
+	while (i < MAX_MEMBER_SECTORS && parent->member_sectors[i])
+	{
+		tmp = parent->member_sectors[i];
 		if (inside_sector_check(tmp, &app->mouse_track))
 			return (tmp);
 		i++;

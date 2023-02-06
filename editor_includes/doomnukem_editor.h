@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/01 17:51:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/06 13:22:30 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -333,6 +333,7 @@ int				inside_sector_check(t_sector_lst *sector, t_vector2 *mouse);
 t_sector_lst	*click_sector(t_app *app);
 void			sector_edit(t_app *app, SDL_Keycode keycode);
 t_sector_lst	*find_child_sector(t_app *app);
+t_sector_lst	*find_child_target_sector(t_app *app, t_sector_lst *parent);
 int				get_sector_id(t_app *app, t_sector_lst *sector);
 void			cancel_list_creation(t_app *app);
 void			add_member_sector(t_sector_lst *parent, t_sector_lst *child);
