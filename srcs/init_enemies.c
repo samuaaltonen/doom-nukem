@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 19:38:34 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 19:39:21 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:51:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ void	define_enemy_2(t_app *app)
  */
 void	define_enemies(t_app *app)
 {
-	define_bullets(app);
 	define_enemy_0(app);
 	define_enemy_1(app);
 	define_enemy_2(app);

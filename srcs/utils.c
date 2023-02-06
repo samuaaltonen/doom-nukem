@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:48:10 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/06 19:30:32 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:55:04 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,22 +41,23 @@ void	clamp_int(int *number, int min, int max)
 		*number = max;
 }
 
-t_bool obj_seen(t_app *app, int id)
+/**
+ * @brief Checks if object is inside visible sector.
+ * 
+ * @param app 
+ * @param id 
+ * @return t_bool 
+ */
+t_bool	obj_seen(t_app *app, int id)
 {
-	int i;
-	i = -1;
+	int	i;
 
-	while (++i < app->sector_count)
+	i = 0;
+	while (i < THREAD_COUNT)
 	{
-		if (i != app->objects[id].sector)
-			continue;
-		int j = 0;
-		while(j < THREAD_COUNT)
-		{
-			if (app->sectors[i].is_visible[j])
-				return (TRUE);
-			j++;
-		}
+		if (app->sectors[app->objects[id].sector].is_visible[i])
+			return (TRUE);
+		i++;
 	}
 	return (FALSE);
 }

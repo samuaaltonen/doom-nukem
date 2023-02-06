@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 19:44:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:49:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,6 +130,7 @@ static void	events_keydown_movement(int keycode, t_app *app)
  */
 int	events_keydown(int keycode, t_app *app)
 {
+	events_keydown_movement(keycode, app);
 	if (keycode == SDLK_u)
 		app->conf->fov--;
 	if (keycode == SDLK_u || keycode == SDLK_i)
