@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   time.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/04 12:22:26 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/20 11:09:52 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/06 14:42:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,9 @@ void	update_fps_counter(t_app *app)
 	clock_gettime(CLOCK_REALTIME, &time_now);
 	time_since.tv_nsec = time_now.tv_nsec - app->conf->fps_clock.tv_nsec;
 	time_since.tv_sec = time_now.tv_sec - app->conf->fps_clock.tv_sec;
-	app->conf->delta_time = (double)time_since.tv_sec
-		+ 1.0e-9 * time_since.tv_nsec;
+	if (time_since.tv_sec)
+		time_since.tv_nsec += time_since.tv_sec * 1000000000;
+	app->conf->delta_time = 1.0e-9 * time_since.tv_nsec * 0.25;
 	app->conf->fps = (int)(1 / app->conf->delta_time);
 	app->conf->fps_clock = time_now;
 	update_avg_fps(app);

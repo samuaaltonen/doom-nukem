@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_effects.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:57:21 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/24 14:53:07 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/06 11:49:44 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,18 @@
 void	heal(t_app *app)
 {
 	if (check_timer(&app->item_timer) && app->player.inventory.potion > 0
-        && app->player.hp < MAX_HP)
+		&& app->player.hp < MAX_HP)
 	{
 		app->player.inventory.potion--;
 		app->player.hp += 40;
-        start_timer(&app->item_timer, 5);
+		start_timer(&app->item_timer, 5);
 	}
 }
 
 void	shield(t_app *app)
 {
 	if (check_timer(&app->item_timer) && app->player.inventory.antidote > 0
-        && app->player.shield < MAX_HP)
+		&& app->player.shield < MAX_HP)
 	{
 		app->player.inventory.antidote--;
 		app->player.shield = MAX_HP;

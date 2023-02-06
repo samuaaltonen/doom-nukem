@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/06 12:23:41 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:41:20 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	player_control(t_app *app)
 		app->player.move_speed = MOVEMENT_SPEED;
 	if (app->conf->keystates & C)
 		jetpack(app);
-	if ((app->conf->keystates & SPACE || app->conf->keystates & CTRL) && app->player.jetpack)
+	if ((app->conf->keystates & SPACE || app->conf->keystates & CTRL)
+		&& app->player.jetpack)
 	{
 		energy(app, -4);
 		app->player.move_speed = FLYING_SPEED;
@@ -54,7 +55,8 @@ void	player_control(t_app *app)
 		>= PLAYER_HEIGHT_STANDING + COLLISION_CEIL)
 		app->player.target_height = PLAYER_HEIGHT_STANDING;
 	if (app->player.target_height != app->player.height)
-		app->player.height += (app->player.target_height - app->player.height) * PLAYER_HEIGHT_CHANGE_RATE * app->conf->delta_time;
+		app->player.height += (app->player.target_height - app->player.height)
+			* PLAYER_HEIGHT_CHANGE_RATE * app->conf->delta_time;
 }
 
 /**
@@ -89,24 +91,27 @@ void	player_shoot(t_app *app)
 {
 	if (check_timer(&app->shoot_timer) && app->player.equipped_weapon.ammo > 0)
 	{
-		fire(app,(t_vector3){app->player.dir.x, app->player.dir.y,(app->player.horizon - 0.5f)},(t_vector3){app->player.pos.x, app->player.pos.y,app->player.elevation + app->player.height / 2},(t_point){app->player.equipped_weapon.type, app->player.sector});  //This 7 is the proyectile sprite
+		fire(app, (t_vector3){app->player.dir.x, app->player.dir.y, (app->player.horizon - 0.5f)}, (t_vector3){app->player.pos.x, app->player.pos.y, app->player.elevation + app->player.height / 2}, (t_point){app->player.equipped_weapon.type, app->player.sector}); //This 7 is the proyectile sprite
 		play_sound(app, AUDIO_SHOT);
 		app->player.equipped_weapon.ammo--;
 		app->player.inventory.special_ammo--;
 		start_timer(&app->shoot_timer, app->player.equipped_weapon.fire_rate);
 	}
-	else if (app->player.equipped_weapon.ammo <= 0 && app->player.inventory.ammo > 0)
+	else if (app->player.equipped_weapon.ammo <= 0
+		&& app->player.inventory.ammo > 0)
 		player_reload(app);
 }
 
 void	player_reload(t_app *app)
 {
 	if (check_timer(&app->shoot_timer) && app->player.inventory.ammo
-		&& app->player.equipped_weapon.ammo < app->player.equipped_weapon.magazine)
+		&& app->player.equipped_weapon.ammo
+		< app->player.equipped_weapon.magazine)
 	{
 		play_sound(app, AUDIO_RELOAD);
 		if (app->player.equipped_weapon.magazine <= app->player.inventory.ammo)
-			app->player.equipped_weapon.ammo = app->player.equipped_weapon.magazine;
+			app->player.equipped_weapon.ammo
+				= app->player.equipped_weapon.magazine;
 		else
 			app->player.equipped_weapon.ammo = app->player.inventory.ammo;
 		start_timer(&app->shoot_timer, 0.8);
@@ -146,7 +151,7 @@ void	weapon(t_app *app, int weapon)
 		app->player.equipped_weapon.type = 4;
 		app->player.equipped_weapon.magazine = WEAPON2_MAG;
 		app->player.equipped_weapon.fire_rate = 0.1;
-		start_timer(&app->shoot_timer, 2.0f);			
+		start_timer(&app->shoot_timer, 2.0f);
 	}
 	if (app->player.equipped_weapon.magazine <= app->player.inventory.ammo)
 		app->player.equipped_weapon.ammo = app->player.equipped_weapon.magazine;
