@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 20:18:00 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/06 20:52:52 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,7 +141,8 @@ int	events_keydown(int keycode, t_app *app)
 		app->conf->keystates |= E;
 	if (keycode == SDLK_r)
 		app->conf->keystates |= R;
-	if (app->player.inventory.jetpack && app->player.inventory.special_ammo && keycode == SDLK_c)
+	if (app->player.inventory.jetpack
+		&& app->player.inventory.special_ammo && keycode == SDLK_c)
 		jetpack(app);
 	if (keycode == SDLK_LSHIFT)
 		app->conf->keystates |= SHIFT;

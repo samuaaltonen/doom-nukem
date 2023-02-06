@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:57:21 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/06 20:24:30 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/06 20:53:24 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,5 +76,4 @@ void	energy(t_app *app, int mod)
 			jetpack(app);
 		}
 	}
-	
 }

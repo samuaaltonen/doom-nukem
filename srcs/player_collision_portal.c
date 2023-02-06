@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/21 19:55:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 18:03:14 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/06 21:04:46 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,24 @@ t_bool	portal_can_enter(t_app *app, t_vector3 pos,
 }
 
 /**
+ * @brief Checks if the bullet can pass a wall type texture
+ * 
+ * @param app 
+ * @param bullet 
+ * @param target 
+ * @return t_bool 
+ */
+static t_bool	passthrough_texture(t_app *app, t_bullet *bullet, int target)
+{
+	return (target == -1
+		|| (app->sectors[bullet->sector].parent_sector == -1
+			&& app->sectors[bullet->sector].wall_textures[bullet->wall_id]
+			<= PARTIALLY_TRANSPARENT_TEXTURE_ID
+			&& app->sectors[bullet->sector].wall_textures[bullet->wall_id]
+			!= FULLY_TRANSPARENT_TEXTURE_ID));
+}
+
+/**
  * @brief Checks if heightless projectile can enter the portal.
  * 
  * @param app 
@@ -65,14 +83,10 @@ t_bool	projectile_can_enter(t_app *app, t_vector3 pos, t_bullet *bullet,
 
 	if (target == -1 || app->sectors[target].parent_sector == -1)
 	{
-		if (target == -1 || (app->sectors[bullet->sector].parent_sector == -1
-				&& app->sectors[bullet->sector].wall_textures[bullet->wall_id]
-				<= PARTIALLY_TRANSPARENT_TEXTURE_ID
-				&& app->sectors[bullet->sector].wall_textures[bullet->wall_id]
-				!= FULLY_TRANSPARENT_TEXTURE_ID))
+		if (passthrough_texture(app, bullet, target))
 			return (FALSE);
 		check_pos = ft_closest_point((t_vector2){pos.x, pos.y},
-		get_wall_line(app, bullet->sector, bullet->wall_id));
+				get_wall_line(app, bullet->sector, bullet->wall_id));
 	}
 	else
 		check_pos = ft_closest_point((t_vector2){pos.x, pos.y},
@@ -81,9 +95,7 @@ t_bool	projectile_can_enter(t_app *app, t_vector3 pos, t_bullet *bullet,
 	source_ceil = sector_ceil_height(app, bullet->sector, check_pos);
 	target_floor = sector_floor_height(app, target, check_pos);
 	target_ceil = sector_ceil_height(app, target, check_pos);
-	if (pos.z < target_floor
-		|| target_ceil < pos.z
-		|| pos.z < source_floor
+	if (pos.z < target_floor || target_ceil < pos.z || pos.z < source_floor
 		|| source_ceil < pos.z)
 		return (FALSE);
 	return (TRUE);

@@ -77,6 +77,7 @@ void	kill_bullet(t_app *app, t_bullet *bullet)
 void	melee(t_app *app, t_vector3 target_dir, t_vector3 start, t_point info)
 {
 	int	i;
+
 	if (app->bullets_active >= MAX_TEMP_OBJECTS - 1)
 		return ;
 	i = 0;
