@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 20:15:53 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/06 17:08:28 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/06 19:51:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static t_bool	bullet_member_check(t_app *app, t_bullet *bullet)
 	t_line		wall_line;
 
 	i = -1;
-
 	while (++i < app->sectors[bullet->sector].corner_count)
 	{
 		wall_line = get_wall_line(app, bullet->sector, i);
@@ -49,7 +48,6 @@ static void	check_member_walls(t_app *app, t_bullet *bullet, int id)
 	t_line		wall_line;
 
 	i = -1;
-
 	while (++i < app->sectors[id].corner_count)
 	{
 		wall_line = get_wall_line(app, id, i);
@@ -143,7 +141,7 @@ void	bullet_test(t_app *app, t_bullet *bullet, t_bool init)
  * @param bullet 
  * @param target_dir 
  */
-void	calc_end(t_app *app, t_bullet *bullet, t_vector3 target_dir)
+void	calc_bullet_end(t_app *app, t_bullet *bullet, t_vector3 target_dir)
 {
 	t_vector2	start;
 	double		start_z;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 19:51:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/06 20:29:25 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -556,7 +556,8 @@ void			init_bullets(t_app *app);
 void			bullet_player_collision(t_app *app);
 void			kill_bullet(t_app *app, t_bullet *bullet);
 void			bullet_enemy_collisions(t_app *app);
-void			calc_end(t_app *app, t_bullet *bullet, t_vector3 target_dir);
+void			calc_bullet_end(t_app *app, t_bullet *bullet,
+					t_vector3 target_dir);
 void			bullet_test(t_app *app, t_bullet *bullet, t_bool init);
 void			objects_visible(t_app *app);
 void			object_frame(t_app *app, t_vector2 dir,

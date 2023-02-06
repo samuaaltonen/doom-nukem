@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_key.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 19:49:42 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/06 20:18:00 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -141,8 +141,8 @@ int	events_keydown(int keycode, t_app *app)
 		app->conf->keystates |= E;
 	if (keycode == SDLK_r)
 		app->conf->keystates |= R;
-	if (app->player.inventory.jetpack && keycode == SDLK_c)
-		app->conf->keystates |= C;
+	if (app->player.inventory.jetpack && app->player.inventory.special_ammo && keycode == SDLK_c)
+		jetpack(app);
 	if (keycode == SDLK_LSHIFT)
 		app->conf->keystates |= SHIFT;
 	if (keycode == SDLK_LCTRL)

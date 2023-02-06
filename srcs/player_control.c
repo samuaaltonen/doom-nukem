@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_control.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/06 16:00:45 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/06 20:27:59 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,17 @@ void	player_control(t_app *app)
 	if (!app->player.jetpack && app->conf->keystates & SHIFT)
 		app->player.move_speed = RUNNING_SPEED;
 	else if (app->player.jetpack)
-		app->player.move_speed = FLYING_IDLE;
+		app->player.move_speed = MOVEMENT_SPEED;
 	else
 		app->player.move_speed = MOVEMENT_SPEED;
-	if (app->conf->keystates & C)
-		jetpack(app);
-	if ((app->conf->keystates & SPACE || app->conf->keystates & CTRL)
-		&& app->player.jetpack)
+	if (app->conf->keystates & SPACE && app->player.jetpack)
 	{
 		energy(app, -4);
-		app->player.move_speed = FLYING_SPEED;
+		app->player.move_speed = RUNNING_SPEED;
 	}
 	else if (app->player.jetpack)
 		energy(app, -1);
-	else
+	else 
 		energy(app, 1);
 	if (app->conf->keystates & CTRL && !app->player.jetpack)
 		app->player.target_height = PLAYER_HEIGHT_CROUCHING;
@@ -92,7 +89,12 @@ void	player_shoot(t_app *app)
 	if (check_timer(&app->shoot_timer) && app->player.equipped_weapon.ammo > 0)
 	{
 		fire(app, (t_vector3){app->player.dir.x, app->player.dir.y,
-			(app->player.horizon - 0.5f)}, (t_vector3){app->player.pos.x, app->player.pos.y, app->player.elevation + app->player.height / 2}, (t_point){app->player.equipped_weapon.type, app->player.sector}); //This 7 is the proyectile sprite
+			(app->player.horizon - 0.5f)}, (t_vector3){app->player.pos.x,
+			app->player.pos.y, app->player.elevation
+			+ app->player.height / 2},
+			(t_point){app->player.equipped_weapon.type,
+			app->player.sector});
+		add_fire_movement(app);
 		play_sound(app, AUDIO_SHOT);
 		app->player.equipped_weapon.ammo--;
 		app->player.inventory.ammo--;
@@ -121,18 +123,16 @@ void	player_reload(t_app *app)
 
 void	jetpack(t_app *app)
 {
-	if (check_timer(&app->item_timer) && app->player.jetpack)
+	if (app->player.jetpack)
 	{
 		app->player.jetpack = FALSE;
 		app->player.elevation_velocity = JETPACK_FALL;
-		start_timer(&app->item_timer, 4);
 	}
-	else if (check_timer(&app->item_timer) && !app->player.jetpack)
+	else if (!app->player.jetpack)
 	{
 		app->player.jetpack = TRUE;
 		app->player.flying = TRUE;
 		app->player.elevation_velocity = 0.0;
-		start_timer(&app->item_timer, 2);
 	}
 }
 

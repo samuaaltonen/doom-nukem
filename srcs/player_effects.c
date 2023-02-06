@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_effects.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:57:21 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/06 11:49:44 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/06 20:24:30 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,10 +69,12 @@ void	energy(t_app *app, int mod)
 		start_timer(&app->energy_timer, 0.1);
 		if (app->player.inventory.special_ammo >= 200)
 			app->player.inventory.special_ammo = 200;
-		else if (app->player.inventory.special_ammo <= 0)
+		if (app->player.inventory.special_ammo <= 0)
 		{
 			app->player.inventory.special_ammo = 0;
+			start_timer(&app->energy_timer, 1.f);
 			jetpack(app);
 		}
 	}
+	
 }
