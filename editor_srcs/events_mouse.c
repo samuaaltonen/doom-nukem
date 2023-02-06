@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_mouse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/01 17:47:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:15:30 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,17 +88,17 @@ static void	rightside_menu_events(t_app *app, t_point mouse)
 		if (app->list_ongoing)
 			cancel_list_creation(app);
 	}
-	if (check_mouse(mouse, (t_rect){WIN_W - 155, 40, 150, 20})
+	if (check_mouse(mouse, (t_rect){WIN_W - 155, 40, 150, 20}))
+		app->linking_mode = ft_toggle(app->linking_mode);
+	if (check_mouse(mouse, (t_rect){WIN_W - 155, 70, 150, 20})
 		&& app->active_sector && app->object_count < MAX_OBJECTS)
 		toggle_new_object(app, app->object_new);
-	if (check_mouse(mouse, (t_rect){WIN_W - 155, 70, 150, 20})
-		&& app->sectors)
+	if (check_mouse(mouse, (t_rect){WIN_W - 155, 100, 150, 20}) && app->sectors)
 	{
 		app->export_assets = FALSE;
 		export_file(app);
 	}
-	if (check_mouse(mouse, (t_rect){WIN_W - 155, 107, 150, 21})
-		&& app->sectors)
+	if (check_mouse(mouse, (t_rect){WIN_W - 155, 130, 150, 21}) && app->sectors)
 	{
 		app->export_assets = TRUE;
 		export_file(app);
