@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/01 17:10:55 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/06 13:10:16 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -456,6 +456,7 @@ void			render_ui_frame(t_app *app, t_rect area, int size,
 void			render_ui(t_app *app);
 void			render_player_status(t_app *app);
 void			render_equipment(t_app *app);
+void			hud_jetpack(t_app *app, t_rect area);
 void			hud_weapon(t_app *app, t_rect rect);
 void			hud_quickslot(t_app *app, t_rect rect, char *slot);
 void			render_pointer(t_app *app, int x, int y);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_ui.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/26 13:46:35 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/06 13:15:56 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,19 @@ void	render_equipment(t_app *app)
 	hud_quickslot(app, (t_rect){960, 624, 64, 64}, "Q");
 	hud_quickslot(app, (t_rect){1040, 624, 64, 64}, "E");
 	hud_weapon(app, (t_rect){1120, 592, 128, 96});
+	hud_jetpack(app, (t_rect){860, 592, 96, 96});
+}
+
+void	hud_jetpack(t_app *app, t_rect area)
+{
+	t_rect	src;
+
+	src.x = 0;
+	src.y = 128 * 4;
+	src.w = 128;
+	src.h = 128;
+	if (app->player.inventory.jetpack)
+		blit_surface(app->assets.object_icon, &src, app->surface, &area);
 }
 
 void	hud_weapon(t_app *app, t_rect rect)
