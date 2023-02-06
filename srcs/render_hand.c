@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_hand.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 18:47:59 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/06 11:51:13 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/06 15:08:40 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,8 @@ void	render_hand(t_app *app)
 	dst.y = app->hand.current.y;
 	dst.w = WEAPON_SIZE;
 	dst.h = WEAPON_SIZE;
+	clamp_int(&dst.x, 0, WIN_W - 1);
+	clamp_int(&dst.y, 0, WIN_H - 1);
 	blit_surface(app->assets.weapon[app->hand.equipped],
 		&src, app->surface, &dst);
 	app->mouse_delta = (t_point){0, 0};
