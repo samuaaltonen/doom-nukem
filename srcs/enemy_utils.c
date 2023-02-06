@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 22:00:01 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/24 18:00:27 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/06 11:35:35 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,10 +52,11 @@ void	update_enemy_states(t_app *app)
 	state--;
 	while (++state != NULL && state->id != -1)
 	{
-		if(state->target_elevation != app->objects[state->id].elevation)
+		if (state->target_elevation != app->objects[state->id].elevation)
 		{
-			app->objects[state->id].elevation += app->conf->delta_time * app->gravity;
-			if(app->objects[state->id].elevation < state->target_elevation)
+			app->objects[state->id].elevation += app->conf->delta_time
+				* app->gravity;
+			if (app->objects[state->id].elevation < state->target_elevation)
 				app->objects[state->id].elevation = state->target_elevation;
 		}
 		if (state->dead)

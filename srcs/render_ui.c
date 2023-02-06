@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_ui.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/13 14:19:12 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/26 13:46:35 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/06 11:53:11 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	ui_midframe(t_app *app, t_rect area, int size);
 static void	ui_bottomframe(t_app *app, t_rect area, int size);
 static void	fill_meter(t_app *app, t_rect area, int type, int id);
 static void	player_status_meter(t_app *app, t_rect area, int value, int color);
-static void energy_meter(t_app *app, t_rect area);
+static void	energy_meter(t_app *app, t_rect area);
 
 /**
  * Renders all elements of the HUD
@@ -106,7 +106,8 @@ void	hud_quickslot(t_app *app, t_rect rect, char *slot)
 	}
 	else
 	{
-		text = ft_itoa((int)(app->item_timer.seconds - app->item_timer.delta_seconds));
+		text = ft_itoa((int)(app->item_timer.seconds
+					- app->item_timer.delta_seconds));
 		if (!text)
 			exit_error(MSG_ERROR_ALLOC);
 		render_text_prompt(app, rect, 1, text);
@@ -321,7 +322,7 @@ static void	player_status_meter(t_app *app, t_rect area, int value, int color)
 	}
 }
 
-static void energy_meter(t_app *app, t_rect area)
+static void	energy_meter(t_app *app, t_rect area)
 {
 	int	x;
 	int	y;
