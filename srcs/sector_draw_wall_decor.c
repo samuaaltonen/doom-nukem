@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/07 17:21:24 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 17:27:14 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,8 @@ void	draw_wall_decor(t_app *app, int x, t_rayhit *hit)
 					(int) tex_y);
 		if ((color & 0xFF000000) > 0)
 			put_pixel_to_surface(app->surface, x, y.start,
-			shade_depth(shade_color(color, hit->light), (float)hit->distance));
+				shade_depth(shade_color(color, hit->light),
+					(float)hit->distance));
 		y.start++;
 	}
 }

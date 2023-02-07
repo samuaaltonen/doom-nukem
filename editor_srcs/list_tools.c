@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 13:22:32 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/07 15:54:14 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 17:28:51 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,12 @@ size_t	ft_lstlen(t_sector_lst *lst)
  * @param lst_start 
  * @return size_t 
  */
-size_t vec2_lstlen(t_vec2_lst *lst_start)
+size_t	vec2_lstlen(t_vec2_lst *lst_start)
 {
 	size_t		count;
 	t_vec2_lst	*head;
 
-	if( !lst_start)
+	if (!lst_start)
 		return (0);
 	head = lst_start;
 	count = 1;
@@ -81,22 +81,6 @@ t_vec2_lst	*ft_lstindex(t_vec2_lst *lst, size_t index)
 		i++;
 	}
 	return (temp);
-}
-
-/**
- * @brief Cancels the ungoing list creation and deletes the incomplete
- * sectorlist.
- * 
- * @param app
-*/
-void	cancel_list_creation(t_app *app)
-{
-	del_vector_list(&(app->active));
-	app->active = NULL;
-	app->active_last = NULL;
-	app->active_sector = NULL;
-	app->list_ongoing = FALSE;
-	app->list_creation = FALSE;
 }
 
 static void	check_angles(t_app *app, t_vec2_lst *tmp, double *angle,

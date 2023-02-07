@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 16:05:08 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 17:29:02 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static int	list_creation_events(t_app *app)
 		if (app->active && ft_vector_compare(app->mouse_track,
 				app->active->point) && valid_sector(app))
 		{
-			if(vec2_lstlen(app->active) <= 2)
+			if (vec2_lstlen(app->active) <= 2)
 				cancel_list_creation(app);
 			else
 				return (complete_sector(app));

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:42:06 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 15:59:24 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 17:28:36 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,22 @@ t_vec2_lst	*put_to_vector_list(t_vec2_lst **list, t_vec2_lst *new)
 		last = last->next;
 	last->next = new;
 	return (last->next);
+}
+
+/**
+ * @brief Cancels the ungoing list creation and deletes the incomplete
+ * sectorlist.
+ * 
+ * @param app
+*/
+void	cancel_list_creation(t_app *app)
+{
+	del_vector_list(&(app->active));
+	app->active = NULL;
+	app->active_last = NULL;
+	app->active_sector = NULL;
+	app->list_ongoing = FALSE;
+	app->list_creation = FALSE;
 }
 
 /**
