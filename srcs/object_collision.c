@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_collision.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:17:11 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/26 18:06:36 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:30:48 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ t_bool	in_range(t_vector2 pos, t_vector2 obj, double epsilon)
 static void	object_hit(t_app *app, t_gameobject *obj)
 {
 	if (obj->type == ARMOR_PICKUP)
-		app->player.inventory.antidote++;
+		app->player.inventory.armor_pack++;
 	else if (obj->type == COIN_PICKUP)
 		app->player.inventory.key++;
 	else if (obj->type == AMMO_PICKUP)

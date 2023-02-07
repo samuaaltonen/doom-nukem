@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:58:29 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 12:46:31 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:28:57 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ typedef struct s_inventory
 	int				ammo;
 	int				special_ammo;
 	int				potion;
-	int				antidote;
+	int				armor_pack;
 	int				key;
 	t_bool			jetpack;
 }	t_inventory;

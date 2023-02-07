@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quickslots.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 19:00:41 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/06 19:04:30 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:31:21 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	hud_quickslot(t_app *app, t_rect rect, char *slot)
 	if (slot[0] == 'E')
 	{
 		sprite = app->assets.shield;
-		amount = ft_itoa(app->player.inventory.antidote);
+		amount = ft_itoa(app->player.inventory.armor_pack);
 	}
 	if (!check_timer(&app->item_timer))
 		slot = ft_itoa((int)(app->item_timer.seconds

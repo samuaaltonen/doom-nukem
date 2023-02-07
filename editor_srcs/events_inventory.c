@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/04 15:59:10 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/07 14:18:18 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:29:57 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,8 @@
 */
 static void	decrease_item_amount(t_app *app)
 {
-	if (app->selected[0] && app->player.inventory.antidote > 0)
-		app->player.inventory.antidote--;
+	if (app->selected[0] && app->player.inventory.armor_pack > 0)
+		app->player.inventory.armor_pack--;
 	if (app->selected[1] && app->player.inventory.key > 0)
 		app->player.inventory.key--;
 	if (app->selected[2] && app->player.inventory.ammo > 0)
@@ -38,8 +38,9 @@ static void	decrease_item_amount(t_app *app)
 */
 static void	increase_item_amount(t_app *app)
 {
-	if (app->selected[0] && app->player.inventory.antidote < MAX_ITEM_CAPACITY)
-		app->player.inventory.antidote++;
+	if (app->selected[0]
+		&& app->player.inventory.armor_pack < MAX_ITEM_CAPACITY)
+		app->player.inventory.armor_pack++;
 	if (app->selected[1] && app->player.inventory.key < MAX_ITEM_CAPACITY)
 		app->player.inventory.key++;
 	if (app->selected[2] && app->player.inventory.ammo < MAX_AMMO)

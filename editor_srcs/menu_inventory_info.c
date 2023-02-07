@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:09:50 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/07 14:06:36 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:30:11 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ static void	render_inventory_texts(t_app *app, int x, int y)
 	render_text(app, (t_rect){10, 288, 150, 20}, "INVENTORY");
 	change_font(app, 11, TEXT);
 	render_amount_info(app, (t_rect){x, y, 30, 20},
-		app->player.inventory.antidote);
+		app->player.inventory.armor_pack);
 	render_amount_info(app, (t_rect){x + 42, y, 30, 20},
 		app->player.inventory.key);
 	render_amount_info(app, (t_rect){x + 84, y, 30, 20},
