@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:32:37 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/25 11:42:01 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 11:50:29 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,26 +20,18 @@
 */
 void	weapons_init(t_app *app)
 {
-	app->player.weapons[0].damage = 5;
+	app->player.weapons[0].damage = 25;
 	app->player.weapons[0].range = 5;
-	app->player.weapons[0].fire_rate = 5;
-	app->player.weapons[0].magazine = 10;
-	app->player.weapons[1].damage = 50;
+	app->player.weapons[0].fire_rate = 3;
+	app->player.weapons[0].magazine = 7;
+	app->player.weapons[1].damage = 25;
 	app->player.weapons[1].range = 15;
 	app->player.weapons[1].fire_rate = 1;
-	app->player.weapons[1].magazine = 1;
+	app->player.weapons[1].magazine = 16;
 	app->player.weapons[2].damage = 30;
 	app->player.weapons[2].range = 2;
 	app->player.weapons[2].fire_rate = 2;
 	app->player.weapons[2].magazine = 6;
-	app->player.weapons[3].damage = 60;
-	app->player.weapons[3].range = 10;
-	app->player.weapons[3].fire_rate = 1;
-	app->player.weapons[3].magazine = 3;
-	app->player.weapons[4].damage = 8;
-	app->player.weapons[4].range = 12;
-	app->player.weapons[4].fire_rate = 25;
-	app->player.weapons[4].magazine = 20;
 }
 
 /**

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_mouse_track.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:08:29 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 21:53:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 11:33:42 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,9 +36,5 @@ int	events_mouse_track(t_app *app)
 		app->player.selected_weapon = 1;
 	if (app->player_menu && check_mouse(mouse, (t_rect){124, 60, 32, 32}))
 		app->player.selected_weapon = 2;
-	if (app->player_menu && check_mouse(mouse, (t_rect){166, 60, 32, 32}))
-		app->player.selected_weapon = 3;
-	if (app->player_menu && check_mouse(mouse, (t_rect){208, 60, 32, 32}))
-		app->player.selected_weapon = 4;
 	return (0);
 }

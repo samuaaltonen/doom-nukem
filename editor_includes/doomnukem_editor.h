@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 13:22:30 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 11:30:32 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@
 # define MAX_TEX_COUNT 98
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 16
-# define MAX_WEAPONS 5
+# define MAX_WEAPONS 3
 # define MAX_ARMOR 5
 # define MAX_UNIQUE_OBJECTS 17
 # define MAX_INTERACTIONS 64
