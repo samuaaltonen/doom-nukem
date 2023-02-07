@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/16 11:09:50 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/24 15:00:06 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:06:36 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	select_inventory(t_app *app, t_point mouse)
 	index = 0;
 	y = 309;
 	x = 0;
-	while (index < INVENTORY_SIZE)
+	while (index < INVENTORY_SIZE - 1)
 	{
 		if (index % 5 == 0 && index != 0)
 		{
@@ -75,18 +75,16 @@ static void	render_inventory_texts(t_app *app, int x, int y)
 	render_text(app, (t_rect){10, 288, 150, 20}, "INVENTORY");
 	change_font(app, 11, TEXT);
 	render_amount_info(app, (t_rect){x, y, 30, 20},
-		app->player.inventory.ammo);
-	render_amount_info(app, (t_rect){x + 42, y, 30, 20},
-		app->player.inventory.special_ammo);
-	render_amount_info(app, (t_rect){x + 84, y, 30, 20},
-		app->player.inventory.potion);
-	render_amount_info(app, (t_rect){x + 128, y, 30, 20},
 		app->player.inventory.antidote);
-	render_amount_info(app, (t_rect){x + 170, y, 30, 20},
+	render_amount_info(app, (t_rect){x + 42, y, 30, 20},
 		app->player.inventory.key);
-	render_amount_info(app, (t_rect){x, y + 43, 30, 20},
+	render_amount_info(app, (t_rect){x + 84, y, 30, 20},
+		app->player.inventory.ammo);
+	render_amount_info(app, (t_rect){x + 126, y, 30, 20},
+		app->player.inventory.potion);
+	render_amount_info(app, (t_rect){x + 168, y, 30, 20},
 		app->player.inventory.jetpack);
-	render_text(app, (t_rect){30, y + 90, 255, 50}, "LEFT CLICK ITEMS AND USE \
+	render_text(app, (t_rect){30, y + 50, 255, 50}, "LEFT CLICK ITEMS AND USE \
 ARROW KEYS TO CHANGE THE AMOUNT.");
 }
 
@@ -103,11 +101,11 @@ void	render_inventory(t_app *app)
 	int		x;
 
 	render_player_icons(app, app->assets.objects, (t_point){40, 310},
-		INVENTORY_SIZE);
+		INVENTORY_SIZE - 1);
 	index = 0;
 	y = 309;
 	x = 0;
-	while (index < INVENTORY_SIZE)
+	while (index < INVENTORY_SIZE - 1)
 	{
 		if (index % 5 == 0 && index != 0)
 		{

@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:36:43 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/25 11:36:55 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:10:47 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,16 +119,20 @@ void	render_player_icons(t_app *app, SDL_Surface *asset,
 	int			index;
 	int			start_x;
 
-	index = 1;
+	index = 0;
 	start_x = point.x;
-	while (index <= max)
+	while (index < max)
 	{
-		set_icon_rect(&src, (t_point){0, TEX_SIZE * index},
-			(t_point){TEX_SIZE, TEX_SIZE});
+		if (max == MAX_WEAPONS)
+			set_icon_rect(&src, (t_point){0, TEX_SIZE * (index + 5)},
+				(t_point){TEX_SIZE, TEX_SIZE});
+		else
+			set_icon_rect(&src, (t_point){0, TEX_SIZE * (index)},
+				(t_point){TEX_SIZE, TEX_SIZE});
 		set_icon_rect(&icon, point, (t_point){SMALL_ICON, SMALL_ICON});
 		blit_surface(asset, &src, app->surface, &icon);
 		point.x += (SMALL_ICON) + 10;
-		if (index % 5 == 0)
+		if (index % 5 == 0 && index != 0)
 		{
 			point.y += (SMALL_ICON) + 10;
 			point.x = start_x;

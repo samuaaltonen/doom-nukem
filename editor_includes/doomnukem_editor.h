@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/07 11:30:32 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:18:49 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -228,7 +228,7 @@ typedef struct s_app
 	int				object_count;
 	t_interaction	interactions[MAX_INTERACTIONS];
 	int				interaction_count;
-	int				selected[INVENTORY_SIZE];
+	int				selected[INVENTORY_SIZE - 1];
 	char			filename[FILE_NAME_LENGTH];
 	double			import_progress;
 	double			gravity;
