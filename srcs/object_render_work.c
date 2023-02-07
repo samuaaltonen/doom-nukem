@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_render_work.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 20:59:50 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/06 17:54:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:40:56 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static t_vector2	get_draw_start(t_render_object *object)
 }
 
 /**
- * @brief Draws object.
+ * @brief Each thread draws their own columns of each object
  * 
  * @param app 
  * @param object 

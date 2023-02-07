@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objects.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:53:42 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/26 13:35:41 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:13:39 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,8 +50,7 @@ t_bool	select_object(t_app *app)
 	id = 0;
 	while (id < MAX_OBJECTS && app->objects[id].type != 0)
 	{
-		if (app->mouse_track.x == app->objects[id].position.x
-			&& app->mouse_track.y == app->objects[id].position.y)
+		if (ft_vector_compare(app->mouse_track, app->objects[id].position))
 		{
 			app->current_object = &app->objects[id];
 			return (TRUE);

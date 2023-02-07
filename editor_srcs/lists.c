@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lists.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:42:06 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/13 15:32:22 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 15:59:24 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,30 +37,30 @@ t_vec2_lst	*new_vector_list(t_vector2 *point)
 }
 
 /**
- * @brief Adds a new node to the end of vector2d linked list. Returns -1 upon
- * error.
+ * @brief Adds a new node to the end of vector2d linked list. Returns NULL on
+ * error. Returns pointer to added element on success
  * 
  * @param list
  * @param new
  * @return int
  */
-int	put_to_vector_list(t_vec2_lst **list, t_vec2_lst *new)
+t_vec2_lst	*put_to_vector_list(t_vec2_lst **list, t_vec2_lst *new)
 {
 	t_vec2_lst		*last;
 
 	if (!new)
-		return (-1);
+		return (NULL);
 	new->next = NULL;
 	if (!(*list))
 	{
 		*list = new;
-		return (0);
+		return (*list);
 	}
 	last = *list;
 	while (last->next)
 		last = last->next;
 	last->next = new;
-	return (0);
+	return (last->next);
 }
 
 /**

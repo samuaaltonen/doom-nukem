@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_mouse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/06 15:15:30 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:05:08 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@
 */
 static int	list_creation_events(t_app *app)
 {
-	t_vec2_lst	*tmp;
-
 	if (!app->list_ongoing)
 	{
 		app->active = new_vector_list(&app->mouse_track);
@@ -32,15 +30,17 @@ static int	list_creation_events(t_app *app)
 	}
 	else
 	{
-		if (app->active && app->mouse_track.x == app->active->point.x
-			&& app->mouse_track.y == app->active->point.y && valid_sector(app))
-			return (complete_sector(app));
-		else if (valid_point(app) && app->active)
+		if (app->active && ft_vector_compare(app->mouse_track,
+				app->active->point) && valid_sector(app))
 		{
-			tmp = new_vector_list(&app->mouse_track);
-			put_to_vector_list(&app->active, tmp);
-			app->active_last = tmp;
+			if(vec2_lstlen(app->active) <= 2)
+				cancel_list_creation(app);
+			else
+				return (complete_sector(app));
 		}
+		else if (valid_point(app) && app->active)
+			app->active_last = put_to_vector_list(&app->active,
+					new_vector_list(&app->mouse_track));
 	}
 	return (0);
 }
@@ -128,8 +128,8 @@ static int	left_click_events(t_app *app, t_point mouse)
 		player_menu_events(app, mouse);
 	else if (app->interaction_menu && app->current_interaction)
 		interaction_menu_events(app, 40, mouse);
-	else if (!app->active_sector && app->mouse_track.x == app->player.position.x
-		&& app->mouse_track.y == app->player.position.y)
+	else if (!app->active_sector
+		&& ft_vector_compare(app->mouse_track, app->player.position))
 		app->player_menu = TRUE;
 	else if (check_mouse(mouse, (t_rect){0, 0, HELP_MENU_W, WIN_H})
 		&& !app->interaction_menu)

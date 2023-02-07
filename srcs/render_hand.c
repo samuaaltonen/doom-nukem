@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_hand.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 18:47:59 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/06 15:08:40 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:45:09 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,12 @@ static void	add_player_movement(t_app *app, double *angle_sin,
 	}
 }
 
+/**
+ * @brief Adds hand movement from velocities, jumping, firing, turning
+ * to the hand position delta
+ * 
+ * @param app 
+ */
 void	update_hand(t_app *app)
 {
 	t_hand	*hand;

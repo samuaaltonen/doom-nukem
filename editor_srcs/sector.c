@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:36:45 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 16:31:49 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 17:12:00 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,5 +153,5 @@ t_bool	complete_sector(t_app *app)
 	new->light = app->template.light;
 	if (app->linking_mode)
 		find_links(app, new);
-	return (0);
+	return (FALSE);
 }

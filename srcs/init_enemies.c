@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_enemies.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 19:38:34 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 19:51:47 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:32:30 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,11 @@
 
 /**
  * @brief Defines enemy type 0 values.
+ * state 0 Idle
+ * state 1 Attack
+ * state 2 Death
+ * state 3 Walk
+ * 0 frame start, 1 frame end, 2 frame speed
  * 
  * @param app 
  */
@@ -22,6 +27,7 @@ void	define_enemy_0(t_app *app)
 	app->enemy_def[0].state_count = 4;
 	app->enemy_def[0].range = 3.f;
 	app->enemy_def[0].speed = 2.f;
+	app->enemy_def[0].health = 50.f;
 	app->enemy_def[0].attack_speed = 2.f;
 	app->enemy_def[0].states[0][0] = 0.f;
 	app->enemy_def[0].states[0][1] = 1.f;
@@ -39,6 +45,11 @@ void	define_enemy_0(t_app *app)
 
 /**
  * @brief Defines enemy type 1 values.
+ * state 0 Idle
+ * state 1 Attack
+ * state 2 Death
+ * state 3 Walk
+ * 0 frame start, 1 frame end, 2 frame speed
  * 
  * @param app 
  */
@@ -47,6 +58,7 @@ void	define_enemy_1(t_app *app)
 	app->enemy_def[1].state_count = 4;
 	app->enemy_def[1].range = 1.f;
 	app->enemy_def[1].speed = 5.f;
+	app->enemy_def[1].health = 75.f;
 	app->enemy_def[1].attack_speed = 4.f;
 	app->enemy_def[1].states[0][0] = 0.f;
 	app->enemy_def[1].states[0][1] = 1.f;
@@ -64,6 +76,11 @@ void	define_enemy_1(t_app *app)
 
 /**
  * @brief Defines enemy type 2 values.
+ * state 0 Idle
+ * state 1 Attack
+ * state 2 Death
+ * state 3 Walk
+ * 0 frame start, 1 frame end, 2 frame speed
  * 
  * @param app 
  */
@@ -72,6 +89,7 @@ void	define_enemy_2(t_app *app)
 	app->enemy_def[2].state_count = 4;
 	app->enemy_def[2].range = 5.f;
 	app->enemy_def[2].speed = 3.f;
+	app->enemy_def[2].health = 100.f;
 	app->enemy_def[2].attack_speed = 1.5f;
 	app->enemy_def[2].states[0][0] = 0.f;
 	app->enemy_def[2].states[0][1] = 1.f;
@@ -120,7 +138,7 @@ void	init_enemies(t_app *app)
 			&& app->objects[i].type < MONSTER1 + MAX_ENEMY_TYPES)
 		{
 			enemy->id = i;
-			enemy->hp = 50.f;
+			enemy->hp = app->enemy_def[app->objects[i].type - MONSTER1].health;
 			enemy->pos = app->objects[i].position;
 			enemy->dead = FALSE;
 			enemy->agressive = FALSE;

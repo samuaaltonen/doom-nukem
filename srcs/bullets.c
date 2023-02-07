@@ -13,12 +13,12 @@
 #include "doomnukem.h"
 
 /**
- * @brief Fire calculates the entire lifetime of a bullet to later just render
- * info.x = type, info.y = sector
+ * @brief Fire calculates the entire lifetime of a bullet to just update
+ * 
  * @param app 
  * @param target_dir 
  * @param start 
- * @param info 
+ * @param info info.x = type, info.y = sector
  */
 void	fire(t_app *app, t_vector3 target_dir, t_vector3 start, t_point info)
 {
@@ -51,7 +51,7 @@ void	fire(t_app *app, t_vector3 target_dir, t_vector3 start, t_point info)
 
 /**
  * @brief Kills bullets, specific types trigger events(explosion at the end)
- * 
+ * the explosion is calculated to be slightly back out from the wall/floor
  * @param app 
  * @param bullet 
  */
@@ -70,9 +70,9 @@ void	kill_bullet(t_app *app, t_bullet *bullet)
  * @brief Melee is the same as fire except it stays still for the duration
  * 
  * @param app 
- * @param target_dir 
- * @param start 
- * @param info 
+ * @param target_dir projectile direction
+ * @param start start position 
+ * @param info x is the bullet type, y is the bullet sector
  */
 void	melee(t_app *app, t_vector3 target_dir, t_vector3 start, t_point info)
 {

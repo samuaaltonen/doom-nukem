@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_members.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 11:47:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/06 13:26:25 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:11:20 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,7 @@ t_sector_lst	*find_child_sector(t_app *app)
 	wall = app->active_sector->wall_list;
 	while (wall)
 	{
-		if (wall->point.x == app->mouse_track.x
-			&& wall->point.y == app->mouse_track.y)
+		if (ft_vector_compare(wall->point, app->mouse_track))
 			return (NULL);
 		wall = wall->next;
 		if (wall == app->active_sector->wall_list)
@@ -84,8 +83,7 @@ t_sector_lst	*find_child_target_sector(t_app *app, t_sector_lst *parent)
 	wall = parent->wall_list;
 	while (wall)
 	{
-		if (wall->point.x == app->mouse_track.x
-			&& wall->point.y == app->mouse_track.y)
+		if (ft_vector_compare(wall->point, app->mouse_track))
 			return (NULL);
 		wall = wall->next;
 		if (wall == parent->wall_list)

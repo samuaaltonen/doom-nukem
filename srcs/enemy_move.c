@@ -6,12 +6,21 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 13:21:17 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/24 17:57:20 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:11:01 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
+/**
+ * @brief Recurses to check if enemy moved into new main(parent sectors)
+ * 
+ * @param app 
+ * @param new 
+ * @param sector_id 
+ * @param enemy 
+ * @return int 
+ */
 static int	enemy_move_main(t_app *app, t_move new, int sector_id,
 	t_enemy_state *enemy)
 {
@@ -43,13 +52,13 @@ static int	enemy_move_main(t_app *app, t_move new, int sector_id,
 }
 
 /**
- * @brief Checks if enemy new position is on the otherside of any wall,
- * 	recurses into the new sector if it's a portal,
- * 	returns -1 if the enemy can't be in the new position
+ * @brief Checks if player moved into any member sectors
+ * 	otherwise continues to check main(parent sectors)
  * 
  * @param app 
  * @param new 
  * @param sector_id 
+ * @param enemy 
  * @return int 
  */
 int	enemy_move_check(t_app *app, t_move new, int sector_id,

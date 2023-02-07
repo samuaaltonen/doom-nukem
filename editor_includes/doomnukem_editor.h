@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/07 16:30:40 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 17:11:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -353,12 +353,13 @@ void			sector_template_init(t_app *app);
  * Point/Wall/Wall_list Functions
  */
 t_vec2_lst		*new_vector_list(t_vector2 *point);
-int				put_to_vector_list(t_vec2_lst **list, t_vec2_lst *new);
+t_vec2_lst		*put_to_vector_list(t_vec2_lst **list, t_vec2_lst *new);
 int				del_vector_list(t_vec2_lst **list);
 t_bool			valid_point(t_app *app);
 t_bool			check_last_point(t_app *app);
 t_vec2_lst		*ft_lstindex(t_vec2_lst *lst, size_t index);
 t_vec2_lst		*find_clicked_vector(t_app *app);
+size_t			vec2_lstlen(t_vec2_lst *lst_start);
 
 /**
  * UI functions

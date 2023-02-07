@@ -6,12 +6,20 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 20:15:53 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/06 19:51:41 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:00:20 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
+/**
+ * @brief Checks the walls of the member which face away from the bullet
+ * i.e. If bullet can get out of member
+ * 
+ * @param app 
+ * @param bullet 
+ * @return t_bool 
+ */
 static t_bool	bullet_member_check(t_app *app, t_bullet *bullet)
 {
 	int			i;
@@ -41,6 +49,14 @@ static t_bool	bullet_member_check(t_app *app, t_bullet *bullet)
 	return (FALSE);
 }
 
+/**
+ * @brief Checks the walls of the member which face toward the bullet start
+ * i.e. If bullet can enter member
+ * 
+ * @param app 
+ * @param bullet 
+ * @param id 
+ */
 static void	check_member_walls(t_app *app, t_bullet *bullet, int id)
 {
 	int			i;
@@ -70,6 +86,14 @@ static void	check_member_walls(t_app *app, t_bullet *bullet, int id)
 	}
 }
 
+/**
+ * @brief Checks the walls of the parent sectors
+ * 
+ * @param app 
+ * @param bullet 
+ * @param id 
+ * @return t_bool 
+ */
 static t_bool	check_main_walls(t_app *app, t_bullet *bullet, int id)
 {
 	t_line		wall_line;

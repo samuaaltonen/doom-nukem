@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:48:10 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/06 20:01:54 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:47:00 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ void	clamp_int(int *number, int min, int max)
 }
 
 /**
- * @brief Checks if object is inside visible sector.
+ * @brief Checks if object is inside a visible sector.
  * 
  * @param app 
  * @param id 

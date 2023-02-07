@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linedraw_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:08:45 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/18 19:46:38 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:07:45 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,8 +146,8 @@ t_bool	check_last_point(t_app *app)
 	}
 	if (points < 2 || points >= MAX_SECTOR_CORNERS)
 		return (FALSE);
-	if (prev && app->mouse_track.x == app->active->point.x && app->mouse_track.y
-		== app->active->point.y && !ft_line_side((t_line){prev->point,
+	if (prev && ft_vector_compare(app->active->point, app->mouse_track)
+		&& !ft_line_side((t_line){prev->point,
 			app->active_last->point}, app->mouse_track))
 		return (TRUE);
 	return (FALSE);

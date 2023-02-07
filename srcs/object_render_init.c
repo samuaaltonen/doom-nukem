@@ -6,12 +6,21 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 20:51:27 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/06 19:32:43 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:37:56 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
+/**
+ * @brief Initializes values needed for rendering object sprites
+ * 
+ * @param app 
+ * @param i 
+ * @param object 
+ * @param angle 
+ * @return t_bool 
+ */
 static t_bool	init_object(t_app *app, int i, t_render_object *object,
 		double *angle)
 {
@@ -71,6 +80,14 @@ static t_bool	init_temp_object(t_app *app, int i, t_render_object *object,
 	return (TRUE);
 }
 
+/**
+ * @brief Set the object values for rendering based on the initialized values
+ * 
+ * @param app 
+ * @param object 
+ * @param angle 
+ * @param original_obj 
+ */
 static void	set_object(t_app *app, t_render_object *object, double *angle,
 	t_gameobject *original_obj)
 {
@@ -130,7 +147,12 @@ static void	set_tmp_object(t_app *app, t_render_object *object, double *angle,
 	app->objectstack.visible_count++;
 }
 
-//list all visible objects
+/**
+ * @brief Adds all visible objects and bullets(temp objects)
+ * to stack for drawing
+ * 
+ * @param app 
+ */
 void	objects_visible(t_app *app)
 {
 	int				i;

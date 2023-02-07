@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_collision.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:17:11 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 14:30:48 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 17:12:17 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,14 @@ t_bool	in_range_height(double pos, double obj, double epsilon)
 	return (FALSE);
 }
 
+/**
+ * @brief Simple & fast coordinate comparison for range checks
+ * 
+ * @param pos 
+ * @param obj 
+ * @param epsilon 
+ * @return t_bool 
+ */
 t_bool	in_range(t_vector2 pos, t_vector2 obj, double epsilon)
 {
 	if (pos.x > obj.x - epsilon
@@ -30,6 +38,12 @@ t_bool	in_range(t_vector2 pos, t_vector2 obj, double epsilon)
 	return (FALSE);
 }
 
+/**
+ * @brief Depending on object collided with do different things
+ * 
+ * @param app 
+ * @param obj 
+ */
 static void	object_hit(t_app *app, t_gameobject *obj)
 {
 	if (obj->type == ARMOR_PICKUP)
@@ -64,6 +78,11 @@ static int	per_object_collision(t_app *app, t_vector2 pos, double elev,
 	return (0);
 }
 
+/**
+ * @brief Checks player to object collisions(pickup)
+ * 
+ * @param app 
+ */
 void	object_collision(t_app *app)
 {
 	t_gameobject	*obj;

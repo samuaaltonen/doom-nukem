@@ -6,12 +6,20 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 21:15:09 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/06 19:05:47 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:57:56 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
+/**
+ * @brief Creates a line for the bullet to check the enemy position against
+ * 
+ * @param app 
+ * @param bullet 
+ * @param enemy 
+ * @return t_bool 
+ */
 static t_bool	line_collision(t_app *app, t_bullet *bullet,
 	t_enemy_state *enemy)
 {
@@ -44,6 +52,14 @@ static void	damage_enemy(t_app *app, int damage, t_enemy_state *enemy)
 	}
 }
 
+/**
+ * @brief Bullet collides with enemy event
+ * 
+ * @param app 
+ * @param bullet 
+ * @param enemy 
+ * @return int 
+ */
 static int	bullet_enemy_collision(t_app *app, t_bullet *bullet,
 		t_enemy_state *enemy)
 {
@@ -64,6 +80,11 @@ static int	bullet_enemy_collision(t_app *app, t_bullet *bullet,
 	return (0);
 }
 
+/**
+ * @brief Checks if any of the enemies collide with active bullets
+ * 
+ * @param app 
+ */
 void	bullet_enemy_collisions(t_app *app)
 {
 	t_bullet		*bullet;
@@ -91,6 +112,11 @@ void	bullet_enemy_collisions(t_app *app)
 	}
 }
 
+/**
+ * @brief Checks if player collides with any of the active enemy bullets
+ * 
+ * @param app 
+ */
 void	bullet_player_collision(t_app *app)
 {
 	t_bullet		*bullet;

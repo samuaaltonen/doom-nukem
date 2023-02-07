@@ -6,12 +6,19 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 20:54:45 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/19 15:57:31 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:40:16 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
+/**
+ * @brief Returns the texture size based on object type(pickups are small)
+ * 
+ * @param app 
+ * @param id 
+ * @return int 
+ */
 int	object_tex_size(t_app *app, int id)
 {
 	if (app->objects[id].type <= MAX_SMALL_OBJECTS)
@@ -34,6 +41,13 @@ double	get_radial_direction(t_vector2 *vector)
 	return (rad);
 }
 
+/**
+ * @brief Sets the object angled frame based on relation to player
+ * 
+ * @param app 
+ * @param dir 
+ * @param object 
+ */
 void	object_frame(t_app *app, t_vector2 dir, t_render_object *object)
 {
 	double	rad;
@@ -47,6 +61,11 @@ void	object_frame(t_app *app, t_vector2 dir, t_render_object *object)
 	}
 }
 
+/**
+ * @brief Clamps object draw areas to screen
+ * 
+ * @param object 
+ */
 void	init_draw_area(t_render_object *object)
 {
 	object->draw_start = object->start;
@@ -60,6 +79,15 @@ void	init_draw_area(t_render_object *object)
 		object->end.y = WIN_H - 1;
 }
 
+/**
+ * @brief Objects check and draw the depth array
+ * to see if they're occluded by walls or by other objects
+ * 
+ * @param app 
+ * @param object 
+ * @param window 
+ * @param color 
+ */
 void	draw_object_pixel(t_app *app, t_render_object *object,
 		t_point window, int color)
 {

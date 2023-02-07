@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 20:29:25 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:30:33 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,6 +128,7 @@ typedef struct s_enemy_def
 	double				range;
 	double				speed;
 	double				attack_speed;
+	double				health;
 	float				states[4][3];
 }	t_enemy_def;
 

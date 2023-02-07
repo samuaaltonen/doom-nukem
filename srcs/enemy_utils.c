@@ -3,15 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 22:00:01 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/06 11:35:35 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:18:05 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
+/**
+ * @brief turns the enemy to face to player (when preping to attack)
+ * 
+ * @param app 
+ * @param state 
+ */
 void	turn_enemy(t_app *app, t_enemy_state *state)
 {
 	app->objects[state->id].rot = ft_vector_angle_left(
@@ -21,6 +27,13 @@ void	turn_enemy(t_app *app, t_enemy_state *state)
 			ft_vector2_sub(app->player.pos, app->objects[state->id].position));
 }
 
+/**
+ * @brief Enemy attack based on define
+ * 
+ * @param app 
+ * @param state 
+ * @param define 
+ */
 void	enemy_attack(t_app *app, t_enemy_state *state, int define)
 {
 	if (define == 0 || define == 2)
@@ -44,6 +57,11 @@ void	enemy_attack(t_app *app, t_enemy_state *state, int define)
 	state->next = IDLE;
 }
 
+/**
+ * @brief Updates enemies, updates enemies based on defines
+ * 
+ * @param app 
+ */
 void	update_enemy_states(t_app *app)
 {
 	t_enemy_state	*state;

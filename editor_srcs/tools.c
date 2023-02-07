@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/25 17:07:31 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:13:05 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,8 +98,7 @@ t_vec2_lst	*find_clicked_vector(t_app *app)
 		while (found)
 		{
 			wall_line = (t_line){found->point, found->next->point};
-			if ((app->mouse_track.x == found->point.x
-					&& app->mouse_track.y == found->point.y)
+			if (ft_vector_compare(app->mouse_track, found->point)
 				|| ft_point_on_segment_epsilon(wall_line, mouse_pos,
 					0.025 * (app->view_size.x / 200)))
 				return (found);

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 22:30:02 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/24 16:52:55 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 14:06:37 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,13 @@ static void	collect_hits(t_app *app, t_enemy_state *enemy, t_bool *hits,
 	member_wall_hits(app, enemy, hits, colliders);
 }
 
+/**
+ * @brief Makes 4 colliders around the enemy, collects which of the colliders
+ * 	hit walls, adds them and creates a direction away from the collided points
+ * 
+ * @param app 
+ * @param enemy 
+ */
 void	avoid_walls(t_app *app, t_enemy_state *enemy)
 {
 	t_vector2	colliders[4];

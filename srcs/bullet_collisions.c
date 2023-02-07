@@ -6,12 +6,22 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 19:47:01 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/26 16:40:55 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 13:54:06 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
+/**
+ * @brief Finds the collision on floor or ceiling
+ * depending on the compare boolean
+ * 
+ * @param app 
+ * @param bullet 
+ * @param compare 
+ * @param sector_function 
+ * @return t_bool 
+ */
 static t_bool	sector_height(t_app *app, t_bullet *bullet,
 		t_bool compare, double (*sector_function)(t_app *, int, t_vector2))
 {
@@ -42,6 +52,13 @@ static t_bool	sector_height(t_app *app, t_bullet *bullet,
 	return (FALSE);
 }
 
+/**
+ * @brief Checks the floor and ceiling collision for projectile
+ * 
+ * @param app 
+ * @param bullet 
+ * @return t_bool 
+ */
 t_bool	sector_height_collision(t_app *app, t_bullet *bullet)
 {
 	if (sector_height(app, bullet, TRUE, sector_ceil_height)

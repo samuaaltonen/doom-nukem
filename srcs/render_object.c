@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/19 18:13:49 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:46:20 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,13 @@ static t_vector2	render_bullet(t_app *app, t_render_object *object,
 	return (tex);
 }
 
+/**
+ * @brief Calls different renderers based on the object type
+ * which initialize the correct spritesheet offsets
+ * 
+ * @param app 
+ * @param thread 
+ */
 void	objects_render(t_app *app, t_thread_data *thread)
 {
 	int	i;

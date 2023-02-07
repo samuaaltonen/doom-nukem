@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 13:22:32 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/25 18:57:04 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 15:54:14 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,29 @@ size_t	ft_lstlen(t_sector_lst *lst)
 		lst = lst->next;
 	}
 	return (i);
+}
+
+/**
+ * @brief returns vec2_list len, protection for loops
+ * 
+ * @param lst_start 
+ * @return size_t 
+ */
+size_t vec2_lstlen(t_vec2_lst *lst_start)
+{
+	size_t		count;
+	t_vec2_lst	*head;
+
+	if( !lst_start)
+		return (0);
+	head = lst_start;
+	count = 1;
+	while (head->next && head->next != lst_start)
+	{
+		count++;
+		head = head->next;
+	}
+	return (count);
 }
 
 /**
@@ -106,13 +129,14 @@ t_bool	valid_point(t_app *app)
 	while (tmp)
 	{
 		check_angles(app, tmp, &angle, &last);
-		if ((tmp->point.x == app->mouse_track.x
-				&& tmp->point.y == app->mouse_track.y) || (tmp->next
+		if (ft_vector_compare(tmp->point, app->mouse_track) || (tmp->next
 				&& ft_line_side((t_line){tmp->point, tmp->next->point},
 				app->mouse_track)))
 			return (FALSE);
 		tmp = tmp->next;
 	}
+	if (vec2_lstlen(app->active) >= MAX_SECTOR_CORNERS)
+		return (FALSE);
 	if (app->active->next)
 		angle += ft_vector_angle(ft_vector2_sub(app->active->next->point,
 					app->active->point), ft_vector2_sub(app->active->point,

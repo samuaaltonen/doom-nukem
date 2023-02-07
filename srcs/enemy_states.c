@@ -3,15 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_states.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:30:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/06 11:34:35 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:25:53 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
+/**
+ * @brief Specific handling of instant attack,
+ * 	instead of at the end of an animation
+ * 
+ * @param app 
+ * @param state 
+ * @param define 
+ */
 static void	enemy_attack_check(t_app *app, t_enemy_state *state, int define)
 {
 	if (state->agressive && state->state == WALK
@@ -29,6 +37,13 @@ static void	enemy_attack_check(t_app *app, t_enemy_state *state, int define)
 	}
 }
 
+/**
+ * @brief Checks the attack / aggro ranges for enemies
+ * 
+ * @param app 
+ * @param state 
+ * @param define 
+ */
 static void	check_enemy(t_app *app, t_enemy_state *state, int define)
 {
 	if (!state->agressive && in_range(app->player.pos,
@@ -54,6 +69,13 @@ static void	check_enemy(t_app *app, t_enemy_state *state, int define)
 		state->agressive = FALSE;
 }
 
+/**
+ * @brief Updates the enemy states based on defines
+ * 
+ * @param app 
+ * @param state 
+ * @param define 
+ */
 static void	enemy_state_update(t_app *app, t_enemy_state *state, int define)
 {
 	check_enemy(app, state, define);
@@ -68,6 +90,13 @@ static void	enemy_state_update(t_app *app, t_enemy_state *state, int define)
 		state->next = IDLE;
 }
 
+/**
+ * @brief Moves the enemies
+ * 
+ * @param app 
+ * @param state 
+ * @param define 
+ */
 static void	enemy_walk_update(t_app *app, t_enemy_state *state, int define)
 {
 	t_move	new;
@@ -86,6 +115,18 @@ static void	enemy_walk_update(t_app *app, t_enemy_state *state, int define)
 	}
 }
 
+/**
+ * @brief Enemy state machine, current animation timers are held as floats
+ * 	in object_states[id], enemy states stores current state, and the next state.
+ * 	Defines get current animation start and end frames from enemy define arrays,
+ * 	as well as the speed of the specific animation loop
+ * 	Special handling of pingpong animation for the walk cycles.
+ * 	Special handling of instant attack when in range for 1 enemy type
+ * 
+ * @param app 
+ * @param state state holds relevant enemy data
+ * @param define is the enemy definition id
+ */
 void	enemy_states(t_app *app, t_enemy_state *state, int define)
 {
 	app->object_states[state->id] += (float)app->conf->delta_time
