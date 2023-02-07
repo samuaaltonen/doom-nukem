@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/07 18:11:47 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:34:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ typedef struct s_object
 	int				type;
 	double			var;
 	t_vector2		position;
-	t_sector_lst	*sector;
+	t_sector_list	*sector;
 }	t_object;
 
 /**
@@ -148,10 +148,10 @@ typedef struct s_interaction
 	int				event_id;
 	double			variable;
 	int				interaction_link;
-	t_sector_lst	*activation_sector;
-	t_vec2_lst		*activation_wall;
+	t_sector_list	*activation_sector;
+	t_wall_list		*activation_wall;
 	t_object		*activation_object;
-	t_sector_lst	*target_sector;
+	t_sector_list	*target_sector;
 	t_bool			requires_key;
 }	t_interaction;
 
@@ -194,10 +194,10 @@ typedef struct s_app
 	t_vector2		view_end;
 	t_vector2		view_size;
 	t_vector2		mouse_track;
-	t_sector_lst	*sectors;
-	t_sector_lst	*active_sector;
-	t_vec2_lst		*active;
-	t_vec2_lst		*active_last;
+	t_sector_list	*sectors;
+	t_sector_list	*active_sector;
+	t_wall_list		*active;
+	t_wall_list		*active_last;
 	t_bool			list_creation;
 	t_bool			list_ongoing;
 	t_bool			portal_selection;
@@ -304,15 +304,15 @@ t_vector2		screen_to_world(t_app *app, t_point pos);
  */
 void			render_divider(t_app *app);
 void			render_grid(t_app *app, double divider, int color);
-void			render_sector(t_app *app, t_vec2_lst *wall_start,
-					t_sector_lst *sector);
+void			render_sector(t_app *app, t_wall_list *wall_start,
+					t_sector_list *sector);
 void			render_sectors(t_app *app);
 void			render_point(t_app *app, t_vector2 point, int size, int color);
-void			render_decor(t_app *app, t_vec2_lst *wall, int color);
+void			render_decor(t_app *app, t_wall_list *wall, int color);
 void			render_sector_points(t_app *app);
 void			render_fill_active_sector(t_app *app);
-void			draw_list_lines(t_app *app, t_vec2_lst *a,
-					t_vec2_lst *b, int color);
+void			draw_list_lines(t_app *app, t_wall_list *a,
+					t_wall_list *b, int color);
 void			draw_line(t_app *app, t_vector2 *a, t_vector2 *b, int color);
 void			linedraw_low(t_app *app, t_point *a, t_point *b, int color);
 void			linedraw_high(t_app *app, t_point *a, t_point *b, int color);
@@ -322,28 +322,28 @@ void			draw_circle(t_app *app, t_point pos, int rad, int color);
 /**
  * Sector Functions
  */
-t_sector_lst	*new_sector_list(t_vec2_lst *wall_list);
-t_sector_lst	*put_sector_lst(t_app *app, t_sector_lst *new);
+t_sector_list	*new_sector_list(t_wall_list *wall_list);
+t_sector_list	*put_sector_list(t_app *app, t_sector_list *new);
 t_bool			complete_sector(t_app *app);
-t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop);
-void			sector_delone(t_sector_lst **sector);
-size_t			ft_lstlen(t_sector_lst *lst);
-t_sector_lst	*sector_by_index(t_app *app, int index);
-int				inside_sector_check(t_sector_lst *sector, t_vector2 *mouse);
-t_sector_lst	*click_sector(t_app *app);
+t_sector_list	*sector_pop(t_app *app, t_sector_list **pop);
+void			sector_delone(t_sector_list **sector);
+size_t			ft_lstlen(t_sector_list *lst);
+t_sector_list	*sector_by_index(t_app *app, int index);
+int				inside_sector_check(t_sector_list *sector, t_vector2 *mouse);
+t_sector_list	*click_sector(t_app *app);
 void			sector_edit(t_app *app, SDL_Keycode keycode);
-t_sector_lst	*find_child_sector(t_app *app);
-t_sector_lst	*find_child_target_sector(t_app *app, t_sector_lst *parent);
-int				get_sector_id(t_app *app, t_sector_lst *sector);
+t_sector_list	*find_child_sector(t_app *app);
+t_sector_list	*find_child_target_sector(t_app *app, t_sector_list *parent);
+int				get_sector_id(t_app *app, t_sector_list *sector);
 void			cancel_list_creation(t_app *app);
-void			add_member_sector(t_sector_lst *parent, t_sector_lst *child);
+void			add_member_sector(t_sector_list *parent, t_sector_list *child);
 void			del_sector_portals(t_app *app, int deleted);
 t_bool			valid_sector(t_app *app);
-int				get_member_sector_count(t_sector_lst *parent);
-int				del_all_sector_interactions(t_app *app, t_sector_lst **sector);
-int				find_links(t_app *app, t_sector_lst *new);
+int				get_member_sector_count(t_sector_list *parent);
+int				del_all_sector_interactions(t_app *app, t_sector_list **sector);
+int				find_links(t_app *app, t_sector_list *new);
 void			make_point_array(t_app *app, t_vector2 *array,
-					t_sector_lst *sector, int *count);
+					t_sector_list *sector, int *count);
 void			sort_point_array(t_vector2 *array, int *count);
 void			update_sector_template(t_app *app);
 void			sector_template_init(t_app *app);
@@ -351,14 +351,14 @@ void			sector_template_init(t_app *app);
 /**
  * Point/Wall/Wall_list Functions
  */
-t_vec2_lst		*new_vector_list(t_vector2 *point);
-t_vec2_lst		*put_to_vector_list(t_vec2_lst **list, t_vec2_lst *new);
-int				del_vector_list(t_vec2_lst **list);
+t_wall_list		*new_vector_list(t_vector2 *point);
+t_wall_list		*put_to_vector_list(t_wall_list **list, t_wall_list *new);
+int				del_vector_list(t_wall_list **list);
 t_bool			valid_point(t_app *app);
 t_bool			check_last_point(t_app *app);
-t_vec2_lst		*ft_lstindex(t_vec2_lst *lst, size_t index);
-t_vec2_lst		*find_clicked_vector(t_app *app);
-size_t			vec2_lstlen(t_vec2_lst *lst_start);
+t_wall_list		*ft_lstindex(t_wall_list *lst, size_t index);
+t_wall_list		*find_clicked_vector(t_app *app);
+size_t			vec2_lstlen(t_wall_list *lst_start);
 
 /**
  * UI functions
@@ -373,10 +373,10 @@ void			activate_slope(t_app *app, SDL_Keycode keycode);
 /**
  * Edit Functions
  */
-void			change_walls_tex(t_vec2_lst *walls, int wall_tex);
+void			change_walls_tex(t_wall_list *walls, int wall_tex);
 void			link_wall_to_sector(t_app *app);
-void			change_walls_type(t_app *app, t_sector_lst *sector);
-t_vec2_lst		*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point);
+void			change_walls_type(t_app *app, t_sector_list *sector);
+t_wall_list		*find_opposite_point(t_sector_list *sector, t_wall_list *point);
 
 /**
  * Import
@@ -405,7 +405,7 @@ void			level_validation_sector(t_app *app, t_export_sector *sector);
 void			compression_update_progress(t_import_info *info);
 void			export_update_progress(t_import_info *info);
 void			export_set_complete(t_import_info *info);
-int				get_wall_id(t_vec2_lst *list, t_vec2_lst *wall);
+int				get_wall_id(t_wall_list *list, t_wall_list *wall);
 void			calculate_progress_assets(t_import_info *info, int index,
 					int current_batch);
 void			export_file(t_app *app);
@@ -510,8 +510,8 @@ t_bool			select_object(t_app *app);
 int				get_object_id(t_app *app, t_object *object);
 void			toggle_new_object(t_app *app, t_bool state);
 void			interaction_edit(t_app *app, SDL_Keycode keycode);
-int				interaction_sector_check(t_app *app, t_sector_lst *sector);
-int				interaction_wall_check(t_app *app, t_vec2_lst *wall);
+int				interaction_sector_check(t_app *app, t_sector_list *sector);
+int				interaction_wall_check(t_app *app, t_wall_list *wall);
 int				interaction_object_check(t_app *app, int id);
 int				find_decor_interaction(t_app *app, int start_id,
 					t_bool direction);

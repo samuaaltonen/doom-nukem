@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:58:29 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/07 14:28:57 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:34:46 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ typedef struct s_player
 {
 	t_vector2		position;
 	t_vector2		direction;
-	t_sector_lst	*sector;
+	t_sector_list	*sector;
 	int				health;
 	int				selected_weapon;
 	int				selected_armor;
