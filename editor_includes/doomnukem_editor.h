@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/07 14:18:49 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:30:40 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -232,6 +232,7 @@ typedef struct s_app
 	char			filename[FILE_NAME_LENGTH];
 	double			import_progress;
 	double			gravity;
+	t_template		template;
 }	t_app;
 
 /**
@@ -345,6 +346,8 @@ int				find_links(t_app *app, t_sector_lst *new);
 void			make_point_array(t_app *app, t_vector2 *array,
 					t_sector_lst *sector, int *count);
 void			sort_point_array(t_vector2 *array, int *count);
+void			update_sector_template(t_app *app);
+void			sector_template_init(t_app *app);
 
 /**
  * Point/Wall/Wall_list Functions

@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/08 11:54:40 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/24 14:53:44 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:38:51 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,8 +130,10 @@ SELECT A CORNER AND PRESS 'Y' AND / OR 'H'.");
 		|| app->active_sector->floor_slope_wall)
 		render_text(app, (t_rect){20, y + 150, 260, 100}, "TOGGLE BETWEEN \
 HEIGHT AND SLOPE HEIGHT CHANGE ( U )");
-	render_text(app, (t_rect){20, y + 190, 260, 15}, "CHANGE PLAYER POSITION\
+	render_text(app, (t_rect){20, y + 180, 260, 15}, "CHANGE PLAYER POSITION\
  ( P )");
+	render_text(app, (t_rect){20, y + 200, 270, 50}, "TO DRAW NEW SECTORS WITH \
+THESE HEIGHT, TEX AND LIGHT SETTINGS.");
 	render_text(app, (t_rect){40, y + 650, 260, 15}, "DELETE SECTOR \
 ( BACKSPACE )");
 }
@@ -147,6 +149,9 @@ HEIGHT AND SLOPE HEIGHT CHANGE ( U )");
 void	sector_edit_menu(t_app *app, t_point mouse, int y)
 {
 	render_sector_help_texts(app, y);
+	render_interaction_button(app, (t_rect){84, y + 233, 120, 15}, mouse,
+		"UPDATE TEMPLATE");
+	render_ui_frame(app, (t_rect){67, y + 227, 150, 20}, 1, 0);
 	render_arrows(app, (t_point){12, y + 290}, (t_point){265, y + 290});
 	render_icons(app, (t_point){25, y + 280},
 		app->active_sector->wall_list->tex, app->assets.sprite);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sectors.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 13:00:44 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 15:28:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 15:26:57 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,5 +46,15 @@ typedef struct s_sectorlist
 	double				ceil_slope_height;
 	struct s_sectorlist	*next;
 }	t_sector_lst;
+
+typedef struct s_template
+{
+	double				ceil_height;
+	double				floor_height;
+	int					ceil_tex;
+	int					floor_tex;
+	int					wall_tex;
+	int					light;
+}	t_template;
 
 #endif

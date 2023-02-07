@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
+#    By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/02/06 21:09:20 by htahvana         ###   ########.fr        #
+#    Updated: 2023/02/07 16:27:08 by ssulkuma         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -192,6 +192,7 @@ EDITOR_FILES = app.c \
 		sector_interactions.c \
 		sector_members.c \
 		sector_portal.c \
+		sector_template.c \
 		sector_tools.c \
 		tex_icons.c \
 		tools.c \
