@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/01 17:50:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:31:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,11 @@
  * @param origin 
  * @return int 
  */
-int	find_wall_match(t_app *app, t_vec2_lst *wall, t_sector_lst *origin)
+int	find_wall_match(t_app *app, t_wall_list *wall, t_sector_list *origin)
 {
 	int				i;
-	t_sector_lst	*target_sector;
-	t_vec2_lst		*target_wall;
+	t_sector_list	*target_sector;
+	t_wall_list		*target_wall;
 
 	target_sector = sector_by_index(app, wall->type);
 	i = -1;
@@ -46,9 +46,10 @@ int	find_wall_match(t_app *app, t_vec2_lst *wall, t_sector_lst *origin)
  * @param app 
  * @param sector_start 
  */
-void	render_sector(t_app *app, t_vec2_lst *wall_start, t_sector_lst *sector)
+void	render_sector(t_app *app, t_wall_list *wall_start,
+	t_sector_list *sector)
 {
-	t_vec2_lst	*tmp;
+	t_wall_list	*tmp;
 
 	tmp = wall_start;
 	while (tmp->next != NULL)
@@ -79,7 +80,7 @@ void	render_sector(t_app *app, t_vec2_lst *wall_start, t_sector_lst *sector)
  */
 void	render_sectors(t_app *app)
 {
-	t_sector_lst	*tmp;
+	t_sector_list	*tmp;
 
 	tmp = app->sectors;
 	while (tmp)
@@ -96,7 +97,7 @@ void	render_sectors(t_app *app)
  */
 void	render_sector_points(t_app *app)
 {
-	t_vec2_lst	*head;
+	t_wall_list	*head;
 
 	if (app->active_sector)
 	{

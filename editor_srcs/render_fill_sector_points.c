@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:55:36 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/01 17:13:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,7 @@ static void	add_point(t_vector2 point, t_vector2 *array, int *count)
  * @param count 
  */
 static void	add_window_boundary_points(t_app *app, t_vector2 *array,
-	t_sector_lst *sector, int *count)
+	t_sector_list *sector, int *count)
 {
 	t_line		line;
 	int			i;
@@ -101,12 +101,12 @@ static void	add_window_boundary_points(t_app *app, t_vector2 *array,
  * @param sector 
  * @param count 
  */
-void	make_point_array(t_app *app, t_vector2 *array, t_sector_lst *sector,
+void	make_point_array(t_app *app, t_vector2 *array, t_sector_list *sector,
 																	int *count)
 {
 	int			i;
 	t_line		wall_line;
-	t_vec2_lst	*tmp;
+	t_wall_list	*tmp;
 	t_vector2	point;
 
 	tmp = sector->wall_list;

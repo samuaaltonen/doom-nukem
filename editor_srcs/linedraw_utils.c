@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linedraw_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 13:08:45 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/07 16:07:45 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:30:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,8 +126,8 @@ void	linedraw_high(t_app *app, t_point *a, t_point *b, int color)
 */
 t_bool	check_last_point(t_app *app)
 {
-	t_vec2_lst	*tmp;
-	t_vec2_lst	*prev;
+	t_wall_list	*tmp;
+	t_wall_list	*prev;
 	int			points;
 
 	prev = NULL;

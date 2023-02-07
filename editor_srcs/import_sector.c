@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:36:17 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 19:32:51 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 void	relink_sectors(t_app *app)
 {
 	int				i;
-	t_sector_lst	*head;
+	t_sector_list	*head;
 
 	head = app->sectors;
 	while (head)
@@ -52,11 +52,11 @@ void	relink_sectors(t_app *app)
  * @param list 
  * @param count 
  */
-static void	export_to_list(t_export_sector *export, t_vec2_lst **list,
+static void	export_to_list(t_export_sector *export, t_wall_list **list,
 	int count)
 {
 	int			i;
-	t_vec2_lst	*tmp;
+	t_wall_list	*tmp;
 	t_vector2	point;
 
 	point = export->corners[0];
@@ -87,7 +87,7 @@ static void	export_to_list(t_export_sector *export, t_vec2_lst **list,
  * @param sector 
  * @param export 
  */
-static void	read_sector(t_sector_lst *sector, t_export_sector *export)
+static void	read_sector(t_sector_list *sector, t_export_sector *export)
 {
 	sector->light = export->light;
 	sector->floor_height = export->floor_height;
@@ -120,13 +120,13 @@ static void	read_sector(t_sector_lst *sector, t_export_sector *export)
  * @brief Reads exported sector data, allocates and returns a new sector.
  * 
  * @param export 
- * @return t_sector_lst* 
+ * @return t_sector_list* 
  */
-static t_sector_lst	*read_sector_list(t_export_sector *export)
+static t_sector_list	*read_sector_list(t_export_sector *export)
 {
-	t_sector_lst	*new;
+	t_sector_list	*new;
 
-	new = (t_sector_lst *)malloc(sizeof(t_sector_lst));
+	new = (t_sector_list *)malloc(sizeof(t_sector_list));
 	if (!new)
 		exit_error(MSG_ERROR_ALLOC);
 	new->corner_count = export->corner_count;
@@ -163,7 +163,7 @@ void	import_sectors(t_app *app, t_import_info *info)
 			sizeof(t_export_sector));
 		level_validation_sector(app, &export);
 		info->imported += (int) sizeof(t_export_sector);
-		put_sector_lst(app, read_sector_list(&export));
+		put_sector_list(app, read_sector_list(&export));
 		i++;
 	}
 }

@@ -3,22 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/07 16:30:33 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:12:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DOOMNUKEM_H
 # define DOOMNUKEM_H
-# ifdef linux
-#  define USING_LINUX 1
-# else
-#  define USING_LINUX 0
-# endif
+
 # include <fcntl.h>
-# include <stdio.h>
 # include <math.h>
 # include <time.h>
 # include <pthread.h>

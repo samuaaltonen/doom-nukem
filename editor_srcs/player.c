@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 11:00:45 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/07 16:09:33 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:30:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
 */
 static t_bool	check_sector_corners(t_app *app, t_vector2 *mouse)
 {
-	t_vec2_lst	*tmp;
+	t_wall_list	*tmp;
 
 	tmp = app->active_sector->wall_list;
 	while (tmp)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 13:22:32 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/07 17:28:51 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param lst
  * @return size_t
 */
-size_t	ft_lstlen(t_sector_lst *lst)
+size_t	ft_lstlen(t_sector_list *lst)
 {
 	size_t	i;
 
@@ -37,10 +37,10 @@ size_t	ft_lstlen(t_sector_lst *lst)
  * @param lst_start 
  * @return size_t 
  */
-size_t	vec2_lstlen(t_vec2_lst *lst_start)
+size_t	vec2_lstlen(t_wall_list *lst_start)
 {
 	size_t		count;
-	t_vec2_lst	*head;
+	t_wall_list	*head;
 
 	if (!lst_start)
 		return (0);
@@ -59,12 +59,12 @@ size_t	vec2_lstlen(t_vec2_lst *lst_start)
  * 
  * @param lst
  * @param index
- * @return t_vec2_lst
+ * @return t_wall_list
 */
-t_vec2_lst	*ft_lstindex(t_vec2_lst *lst, size_t index)
+t_wall_list	*ft_lstindex(t_wall_list *lst, size_t index)
 {
 	size_t		i;
-	t_vec2_lst	*temp;
+	t_wall_list	*temp;
 
 	i = 0;
 	temp = lst;
@@ -83,7 +83,7 @@ t_vec2_lst	*ft_lstindex(t_vec2_lst *lst, size_t index)
 	return (temp);
 }
 
-static void	check_angles(t_app *app, t_vec2_lst *tmp, double *angle,
+static void	check_angles(t_app *app, t_wall_list *tmp, double *angle,
 	t_vector2 *last)
 {
 	if (tmp != app->active && tmp->next)
@@ -104,7 +104,7 @@ static void	check_angles(t_app *app, t_vec2_lst *tmp, double *angle,
  */
 t_bool	valid_point(t_app *app)
 {
-	t_vec2_lst	*tmp;
+	t_wall_list	*tmp;
 	t_vector2	last;
 	double		angle;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editor_menu.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/17 16:33:06 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/13 13:44:04 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
  * @param app
  * @param sector
  */
-void	change_walls_type(t_app *app, t_sector_lst *sector)
+void	change_walls_type(t_app *app, t_sector_list *sector)
 {
-	t_vec2_lst	*head;
+	t_wall_list	*head;
 
 	if (!sector)
 		return ;
@@ -41,9 +41,9 @@ void	change_walls_type(t_app *app, t_sector_lst *sector)
  * @param walls 
  * @param wall_tex 
  */
-void	change_walls_tex(t_vec2_lst *walls, int wall_tex)
+void	change_walls_tex(t_wall_list *walls, int wall_tex)
 {
-	t_vec2_lst	*tmp;
+	t_wall_list	*tmp;
 
 	tmp = walls;
 	while (tmp)

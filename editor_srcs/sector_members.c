@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_members.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 11:47:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/07 16:11:20 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
  * @param parent
  * @param child
 */
-void	add_member_sector(t_sector_lst *parent, t_sector_lst *child)
+void	add_member_sector(t_sector_list *parent, t_sector_list *child)
 {
 	int		i;
 
@@ -37,13 +37,13 @@ void	add_member_sector(t_sector_lst *parent, t_sector_lst *child)
  * @brief Finds which member sector in active sector was clicked.
  * 
  * @param app 
- * @return t_sector_lst* 
+ * @return t_sector_list* 
  */
-t_sector_lst	*find_child_sector(t_app *app)
+t_sector_list	*find_child_sector(t_app *app)
 {
 	int				i;
-	t_sector_lst	*tmp;
-	t_vec2_lst		*wall;
+	t_sector_list	*tmp;
+	t_wall_list		*wall;
 
 	wall = app->active_sector->wall_list;
 	while (wall)
@@ -70,13 +70,13 @@ t_sector_lst	*find_child_sector(t_app *app)
  * 
  * @param app
  * @param parent
- * @return t_sector_lst*
+ * @return t_sector_list*
 */
-t_sector_lst	*find_child_target_sector(t_app *app, t_sector_lst *parent)
+t_sector_list	*find_child_target_sector(t_app *app, t_sector_list *parent)
 {
 	int				i;
-	t_sector_lst	*tmp;
-	t_vec2_lst		*wall;
+	t_sector_list	*tmp;
+	t_wall_list		*wall;
 
 	if (!parent)
 		return (NULL);
@@ -106,7 +106,7 @@ t_sector_lst	*find_child_target_sector(t_app *app, t_sector_lst *parent)
  * @param parent
  * @return int
 */
-int	get_member_sector_count(t_sector_lst *parent)
+int	get_member_sector_count(t_sector_list *parent)
 {
 	int		index;
 

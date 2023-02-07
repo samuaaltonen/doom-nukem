@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_interaction_link_info.c                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 14:36:50 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/13 16:08:03 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:30:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ int	get_current_interaction_count(t_app *app, int interaction)
 */
 void	render_interaction_link_lines(t_app *app)
 {
-	t_vec2_lst	*tmp;
+	t_wall_list	*tmp;
 	int			id;
 
 	id = app->current_interaction->interaction_link;

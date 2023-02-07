@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:48:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/01 14:51:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,11 @@
  * @param sector 
  * @return int 
  */
-static int	find_linkable_walls(t_app *app, t_vec2_lst *wall,
-		t_sector_lst *origin, t_sector_lst *sector)
+static int	find_linkable_walls(t_app *app, t_wall_list *wall,
+		t_sector_list *origin, t_sector_list *sector)
 {
 	int			i;
-	t_vec2_lst	*target_wall;
+	t_wall_list	*target_wall;
 
 	i = -1;
 	target_wall = sector->wall_list;
@@ -50,11 +50,11 @@ static int	find_linkable_walls(t_app *app, t_vec2_lst *wall,
  * @param new 
  * @return int 
  */
-int	find_links(t_app *app, t_sector_lst *new)
+int	find_links(t_app *app, t_sector_list *new)
 {
 	int				i;
-	t_vec2_lst		*start_wall;
-	t_sector_lst	*sector_list;
+	t_wall_list		*start_wall;
+	t_sector_list	*sector_list;
 	int				counter;
 
 	i = -1;

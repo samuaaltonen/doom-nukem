@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:11:57 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 21:03:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:31:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,11 @@
  * @param list 
  * @param count 
  */
-static void	list_to_export(t_export_sector *export, t_vec2_lst *list, int count)
+static void	list_to_export(t_export_sector *export, t_wall_list *list,
+	int count)
 {
 	int			i;
-	t_vec2_lst	*tmp;
+	t_wall_list	*tmp;
 
 	i = 0;
 	tmp = list;
@@ -47,7 +48,7 @@ static void	list_to_export(t_export_sector *export, t_vec2_lst *list, int count)
  * @param sector 
  */
 static void	member_export(t_app *app, t_export_sector *export,
-		t_sector_lst *sector)
+		t_sector_list *sector)
 {
 	int		i;
 
@@ -72,7 +73,7 @@ static void	member_export(t_app *app, t_export_sector *export,
  * @param sector 
  * @param export 
  */
-void	write_sector(t_app *app, t_sector_lst *sector, t_export_sector *export)
+void	write_sector(t_app *app, t_sector_list *sector, t_export_sector *export)
 {
 	export->corner_count = sector->corner_count;
 	list_to_export(export, sector->wall_list, export->corner_count);
@@ -108,7 +109,7 @@ void	export_sectors(t_app *app, t_level_header header, int fd,
 	t_import_info *info)
 {
 	int				i;
-	t_sector_lst	*tmp;
+	t_sector_list	*tmp;
 	t_export_sector	export;
 
 	ft_bzero(&export, sizeof(t_export_sector));

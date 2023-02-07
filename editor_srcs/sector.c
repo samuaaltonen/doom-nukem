@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:36:45 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 17:12:00 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,14 @@
  * @brief Creates a new linked list to save sectors.
  * 
  * @param wall_list
- * @return t_sector_lst*
+ * @return t_sector_list*
  */
-t_sector_lst	*new_sector_list(t_vec2_lst *wall_list)
+t_sector_list	*new_sector_list(t_wall_list *wall_list)
 {
-	t_sector_lst	*new;
-	t_vec2_lst		*tmp;
+	t_sector_list	*new;
+	t_wall_list		*tmp;
 
-	new = (t_sector_lst *)ft_memalloc(sizeof(t_sector_lst));
+	new = (t_sector_list *)ft_memalloc(sizeof(t_sector_list));
 	if (!new)
 		return (NULL);
 	tmp = wall_list->next;
@@ -47,14 +47,14 @@ t_sector_lst	*new_sector_list(t_vec2_lst *wall_list)
  * 
  * @param app 
  * @param new 
- * @return t_sector_lst* 
+ * @return t_sector_list* 
  */
-t_sector_lst	*put_sector_lst(t_app *app, t_sector_lst *new)
+t_sector_list	*put_sector_list(t_app *app, t_sector_list *new)
 {
-	t_sector_lst	*iter;
+	t_sector_list	*iter;
 
 	if (!new)
-		exit_error("Editor: add_sector_lst failed!\n");
+		exit_error("Editor: add_sector_list failed!\n");
 	if (app->sectors)
 	{
 		iter = app->sectors;
@@ -77,7 +77,7 @@ t_sector_lst	*put_sector_lst(t_app *app, t_sector_lst *new)
  * @param app
  * @param pop
 */
-static void	prepare_del(t_app *app, t_sector_lst **pop)
+static void	prepare_del(t_app *app, t_sector_list **pop)
 {
 	if (app->active_sector == app->player.sector)
 	{
@@ -95,12 +95,12 @@ static void	prepare_del(t_app *app, t_sector_lst **pop)
  * 
  * @param app
  * @param pop
- * @return t_sector_lst*
+ * @return t_sector_list*
  */
-t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop)
+t_sector_list	*sector_pop(t_app *app, t_sector_list **pop)
 {
-	t_sector_lst	*prev;
-	t_sector_lst	*head;
+	t_sector_list	*prev;
+	t_sector_list	*head;
 
 	if (!pop || !(*pop) || (*pop)->member_sectors[0] || !(app->sectors))
 		return (NULL);
@@ -134,10 +134,10 @@ t_sector_lst	*sector_pop(t_app *app, t_sector_lst **pop)
  */
 t_bool	complete_sector(t_app *app)
 {
-	t_sector_lst	*new;
+	t_sector_list	*new;
 
 	app->active_last->next = app->active;
-	new = put_sector_lst(app, new_sector_list(app->active));
+	new = put_sector_list(app, new_sector_list(app->active));
 	app->active = NULL;
 	app->active_last = NULL;
 	app->list_ongoing = FALSE;

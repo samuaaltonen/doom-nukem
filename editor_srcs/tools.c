@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tools.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 16:13:05 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@
  * 
  * @param sector
  * @param point
- * @return t_vec2_lst*
+ * @return t_wall_list*
  */
-t_vec2_lst	*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point)
+t_wall_list	*find_opposite_point(t_sector_list *sector, t_wall_list *point)
 {
 	t_vector2	c;
-	t_vec2_lst	*head;
-	t_vec2_lst	*selection;
+	t_wall_list	*head;
+	t_wall_list	*selection;
 	double		opposite;
 	double		max;
 
@@ -56,11 +56,11 @@ t_vec2_lst	*find_opposite_point(t_sector_lst *sector, t_vec2_lst *point)
  * 
  * @param app
  * @param index
- * @return t_sector_lst*
+ * @return t_sector_list*
 */
-t_sector_lst	*sector_by_index(t_app *app, int index)
+t_sector_list	*sector_by_index(t_app *app, int index)
 {
-	t_sector_lst	*head;
+	t_sector_list	*head;
 	int				i;
 
 	i = 0;
@@ -81,11 +81,11 @@ t_sector_lst	*sector_by_index(t_app *app, int index)
  * @brief Finds which point in active sector was clicked.
  * 
  * @param app 
- * @return t_vec2_lst* 
+ * @return t_wall_list* 
  */
-t_vec2_lst	*find_clicked_vector(t_app *app)
+t_wall_list	*find_clicked_vector(t_app *app)
 {
-	t_vec2_lst		*found;
+	t_wall_list		*found;
 	t_point			mouse;
 	t_vector2		mouse_pos;
 	t_line			wall_line;

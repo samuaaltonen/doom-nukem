@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:53:18 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/01 14:49:02 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@
  * @param sector 
  * @return int 
  */
-int	get_sector_id(t_app *app, t_sector_lst *sector)
+int	get_sector_id(t_app *app, t_sector_list *sector)
 {
-	t_sector_lst	*tmp;
+	t_sector_list	*tmp;
 	int				i;
 
 	i = 0;
@@ -41,11 +41,11 @@ int	get_sector_id(t_app *app, t_sector_lst *sector)
  * clicked sector.
  * 
  * @param app
- * @return t_sector_lst*
+ * @return t_sector_list*
  */
-t_sector_lst	*click_sector(t_app *app)
+t_sector_list	*click_sector(t_app *app)
 {
-	t_sector_lst	*tmp;
+	t_sector_list	*tmp;
 
 	tmp = app->sectors;
 	while (tmp)
@@ -71,9 +71,9 @@ t_sector_lst	*click_sector(t_app *app)
  * @param mouse
  * @return int
  */
-int	inside_sector_check(t_sector_lst *sector, t_vector2 *mouse)
+int	inside_sector_check(t_sector_list *sector, t_vector2 *mouse)
 {
-	t_vec2_lst	*tmp;
+	t_wall_list	*tmp;
 
 	tmp = sector->wall_list;
 	while (tmp)
@@ -97,7 +97,7 @@ int	inside_sector_check(t_sector_lst *sector, t_vector2 *mouse)
 */
 t_bool	valid_sector(t_app *app)
 {
-	t_vec2_lst	*tmp;
+	t_wall_list	*tmp;
 	int			corners;
 
 	tmp = app->active;
@@ -127,7 +127,7 @@ t_bool	valid_sector(t_app *app)
  * 
  * @param sector
 */
-void	sector_delone(t_sector_lst **sector)
+void	sector_delone(t_sector_list **sector)
 {
 	int		i;
 

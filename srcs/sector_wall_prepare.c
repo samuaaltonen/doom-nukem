@@ -6,15 +6,15 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 16:46:07 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/31 18:48:54 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:26:18 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
 
 /**
- * @brief Translates world coordinate position to camera space and converts it to
- * window x position.
+ * @brief Translates world coordinate position to camera space and converts it
+ * to window x position.
  * 
  * @param app 
  * @param coord 

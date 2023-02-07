@@ -6,14 +6,15 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/23 21:46:18 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/31 19:30:15 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:11:04 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBLINEARALGEBRA_H
 # define LIBLINEARALGEBRA_H
-# define LINE_POINT_EPSILON 0.0001
+
 # include "math.h"
+# define LINE_POINT_EPSILON 0.0001
 
 # ifndef LIBFT_H
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lists.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 15:42:06 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 17:28:36 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:30:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,13 @@
  * @brief Creates a new linked list to save sector information.
  * 
  * @param point
- * @return t_vec2_lst
+ * @return t_wall_list
  */
-t_vec2_lst	*new_vector_list(t_vector2 *point)
+t_wall_list	*new_vector_list(t_vector2 *point)
 {
-	t_vec2_lst		*new;
+	t_wall_list		*new;
 
-	new = (t_vec2_lst *)malloc(sizeof(t_vec2_lst));
+	new = (t_wall_list *)malloc(sizeof(t_wall_list));
 	if (!new)
 		return (NULL);
 	new->point.x = point->x;
@@ -44,9 +44,9 @@ t_vec2_lst	*new_vector_list(t_vector2 *point)
  * @param new
  * @return int
  */
-t_vec2_lst	*put_to_vector_list(t_vec2_lst **list, t_vec2_lst *new)
+t_wall_list	*put_to_vector_list(t_wall_list **list, t_wall_list *new)
 {
-	t_vec2_lst		*last;
+	t_wall_list		*last;
 
 	if (!new)
 		return (NULL);
@@ -85,10 +85,10 @@ void	cancel_list_creation(t_app *app)
  * @param list
  * @return int
  */
-int	del_vector_list(t_vec2_lst **list)
+int	del_vector_list(t_wall_list **list)
 {
-	t_vec2_lst		*current;
-	t_vec2_lst		*next;
+	t_wall_list		*current;
+	t_wall_list		*next;
 
 	if (!(*list))
 		return (-1);

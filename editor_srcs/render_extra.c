@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:55:36 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/01 17:13:46 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:30:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
  * @param wall 
  * @param color 
  */
-void	render_decor(t_app *app, t_vec2_lst *wall, int color)
+void	render_decor(t_app *app, t_wall_list *wall, int color)
 {
 	t_vector2	wall_vector;
 

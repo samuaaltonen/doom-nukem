@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/07 17:11:41 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:11:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@
 # define LEVEL_IDENTIFIER "level-"
 # define FILE_NAME_LENGTH 9
 # include <fcntl.h>
-# include <stdio.h>
 # include <math.h>
 # include <pthread.h>
 # include <stdlib.h>

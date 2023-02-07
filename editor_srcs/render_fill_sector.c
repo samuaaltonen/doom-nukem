@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:55:36 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/01 17:02:16 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@
  * @param min 
  * @param max 
  */
-static void	sector_bounds(t_app *app, t_sector_lst *sector,
+static void	sector_bounds(t_app *app, t_sector_list *sector,
 									t_point *min, t_point *max)
 {
-	t_vec2_lst	*tmp;
+	t_wall_list	*tmp;
 	t_point		screen;
 
 	tmp = sector->wall_list;
@@ -55,7 +55,7 @@ static void	sector_bounds(t_app *app, t_sector_lst *sector,
  * @param sector 
  * @param color 
  */
-static void	color_sector(t_app *app, t_sector_lst *sector, int color)
+static void	color_sector(t_app *app, t_sector_list *sector, int color)
 {
 	t_vector2	render_points[MAX_SECTOR_CORNERS + 4];
 	int			point_count;

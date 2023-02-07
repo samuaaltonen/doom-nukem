@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_interactions.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 13:21:14 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/16 13:30:25 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @param sector
  * @return int
 */
-int	del_all_sector_interactions(t_app *app, t_sector_lst **sector)
+int	del_all_sector_interactions(t_app *app, t_sector_list **sector)
 {
 	int		id;
 

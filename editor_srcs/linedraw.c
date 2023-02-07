@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   linedraw.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 13:01:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/13 15:28:29 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:30:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	draw_line(t_app *app, t_vector2 *a, t_vector2 *b, int color)
  * @param b 
  * @param color 
  */
-void	draw_list_lines(t_app *app, t_vec2_lst *a, t_vec2_lst *b, int color)
+void	draw_list_lines(t_app *app, t_wall_list *a, t_wall_list *b, int color)
 {
 	t_point		pixel_a;
 	t_point		pixel_b;

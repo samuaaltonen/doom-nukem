@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:30:17 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/01 17:27:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static t_bool	has_invalid_sector_ids(t_app *app,
 static void	level_validation_interactions(t_app *app,
 	t_export_interaction *interactions)
 {
-	t_sector_lst	*sector;
+	t_sector_list	*sector;
 	int				i;
 
 	i = -1;
@@ -67,12 +67,12 @@ static void	level_validation_interactions(t_app *app,
  * 
  * @param sector 
  * @param index 
- * @return t_vec2_lst* 
+ * @return t_wall_list* 
  */
-static t_vec2_lst	*line_by_index(t_sector_lst *sector, int index)
+static t_wall_list	*line_by_index(t_sector_list *sector, int index)
 {
 	int			i;
-	t_vec2_lst	*head;
+	t_wall_list	*head;
 
 	i = 0;
 	if (!sector || index == -1)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interaction_tools.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/07 15:21:08 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/13 14:58:50 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:30:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,7 +155,7 @@ int	find_object_interaction(t_app *app, int start_id, t_bool direction)
 */
 void	render_target_sector_lines(t_app *app)
 {
-	t_vec2_lst	*tmp;
+	t_wall_list	*tmp;
 
 	tmp = app->current_interaction->target_sector->wall_list;
 	while (tmp->next)

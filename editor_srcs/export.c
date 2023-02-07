@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/12 16:51:54 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/01 17:41:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:30:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	initialize_export_header(t_app *app, t_level_header *header)
  * @param wall 
  * @return int 
  */
-int	get_wall_id(t_vec2_lst *list, t_vec2_lst *wall)
+int	get_wall_id(t_wall_list *list, t_wall_list *wall)
 {
 	int		i;
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_portal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 10:58:22 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/16 13:38:59 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@
 */
 static t_bool	check_if_valid_link(t_app *app)
 {
-	t_vec2_lst	*temp;
-	t_vec2_lst	*next;
+	t_wall_list	*temp;
+	t_wall_list	*next;
 
 	temp = app->active_sector->wall_list;
 	while (temp)
@@ -80,8 +80,8 @@ void	link_wall_to_sector(t_app *app)
 */
 void	del_sector_portals(t_app *app, int deleted)
 {
-	t_sector_lst	*sector;
-	t_vec2_lst		*wall;
+	t_sector_list	*sector;
+	t_wall_list		*wall;
 
 	sector = app->sectors;
 	while (sector)

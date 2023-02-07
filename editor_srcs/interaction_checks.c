@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interaction_checks.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:39:08 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/26 13:48:55 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@
  * @param id
  * @return int
 */
-int	interaction_sector_check(t_app *app, t_sector_lst *sector)
+int	interaction_sector_check(t_app *app, t_sector_list *sector)
 {
 	int	i;
 
@@ -46,7 +46,7 @@ int	interaction_sector_check(t_app *app, t_sector_lst *sector)
  * @param id
  * @return int
 */
-int	interaction_wall_check(t_app *app, t_vec2_lst *wall)
+int	interaction_wall_check(t_app *app, t_wall_list *wall)
 {
 	int	i;
 
