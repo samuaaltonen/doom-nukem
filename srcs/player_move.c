@@ -6,11 +6,30 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 15:05:03 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 15:54:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
+
+/**
+ * @brief Checks if player elevation is too low or high relative to current
+ * sector heights and clamps it when necessary.
+ * 
+ * @param app 
+ */
+static void	limit_elevation(t_app *app)
+{
+	double	floor;
+	double	ceil;
+
+	floor = sector_floor_height(app, app->player.sector, app->player.pos);
+	ceil = sector_ceil_height(app, app->player.sector, app->player.pos);
+	if (floor - app->player.elevation > FLOOR_MAXIMUM_EPSILON)
+		app->player.elevation = floor - FLOOR_MAXIMUM_EPSILON;
+	if (app->player.elevation - ceil > FLOOR_MAXIMUM_EPSILON)
+		app->player.elevation = ceil + FLOOR_MAXIMUM_EPSILON;
+}
 
 /**
  * @brief Limits player movement speed to maximum value. Also if movement is
@@ -57,6 +76,7 @@ void	update_position(t_app *app)
 	collisions_check(app);
 	app->player.pos = collisions_apply(app);
 	check_player_sector(app, old_sector, old_position);
+	limit_elevation(app);
 }
 
 /**

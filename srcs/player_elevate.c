@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 16:27:20 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 15:55:11 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ static void	update_elevation_velocity(t_app *app, double floor)
 	if (app->player.elevation < floor && app->player.elevation_velocity
 		< (floor - app->player.elevation) * FLOOR_NORMAL_FORCE)
 	{
+		if (floor - app->player.elevation > FLOOR_MAXIMUM_EPSILON)
+			app->player.elevation = floor - FLOOR_MAXIMUM_EPSILON;
 		if (!app->player.jetpack)
 			app->player.flying = FALSE;
 		app->player.elevation_velocity = (floor - app->player.elevation)
