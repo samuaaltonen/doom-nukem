@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/07 15:56:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/07 16:00:24 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ typedef struct s_inventory
 	int				ammo;
 	int				special_ammo;
 	int				potion;
-	int				antidote;
+	int				armor_pack;
 	int				key;
 	t_bool			jetpack;
 }	t_inventory;
