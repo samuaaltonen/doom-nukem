@@ -13,6 +13,7 @@
 #ifndef DOOMNUKEM_H
 # define DOOMNUKEM_H
 
+# include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
 # include <time.h>

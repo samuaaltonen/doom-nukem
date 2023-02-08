@@ -110,6 +110,7 @@ t_bool	valid_point(t_app *app)
 
 	tmp = app->active;
 	angle = 0.f;
+	last = (t_vector2){0.0, 0.0};
 	while (tmp)
 	{
 		check_angles(app, tmp, &angle, &last);

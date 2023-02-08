@@ -75,8 +75,8 @@ void	draw_wall_decor(t_app *app, int x, t_rayhit *hit)
 	{
 		tex_y += hit->texture_step;
 		if ((int)tex_y < OBJECT_ICON_H)
-			color = get_pixel_color(app->assets.object_icon, tex_x,
-					(int) tex_y);
+			tex_y = fmod(tex_y, (double) OBJECT_ICON_H);
+		color = get_pixel_color(app->assets.object_icon, tex_x, (int) tex_y);
 		if ((color & 0xFF000000) > 0)
 			put_pixel_to_surface(app->surface, x, y.start,
 				shade_depth(shade_color(color, hit->light),
