@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:11:01 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/06 21:10:54 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:30:20 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ enum e_objects {
 	JETPACK_PICKUP,
 	WEAPON1,
 	WEAPON2,
+	WEAPON3,
 	BIG1,
 	BIG2,
 	BIG3,

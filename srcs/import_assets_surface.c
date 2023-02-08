@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   import_assets_surface.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:45:28 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 18:16:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:05:57 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,8 +66,9 @@ void	import_surfaces(t_app *app, t_import_info *info)
 	app->assets.bullet = get_surface(EXPORT_BULLET, info);
 	app->assets.meter = get_surface(EXPORT_METER, info);
 	app->assets.object_icon = get_surface(EXPORT_ICON, info);
-	app->assets.weapon[0] = get_surface(EXPORT_WEAPON_HD, info);
-	app->assets.weapon[1] = get_surface(EXPORT_WEAPON_ENERGY, info);
+	app->assets.weapon[0] = get_surface(EXPORT_WEAPON_ENERGY, info);
+	app->assets.weapon[1] = get_surface(EXPORT_WEAPON_HD, info);
+	app->assets.weapon[2] = get_surface(EXPORT_WEAPON_BOW, info);
 	app->assets.sprites[SMALL_SPRITE] = get_surface(EXPORT_PICKUP, info);
 	app->assets.sprites[BIG_SPRITE] = get_surface(EXPORT_OBJECT, info);
 	app->assets.sprites[PROJECTILE_SPRITE] = get_surface(EXPORT_SPRITE, info);

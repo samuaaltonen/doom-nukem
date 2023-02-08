@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export_object.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:30:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 21:09:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:58:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	export_objects(t_app *app, int fd, t_import_info *info)
 
 	ft_bzero(&objects, sizeof(t_export_object) * MAX_OBJECTS);
 	i = -1;
-	while (++i < MAX_OBJECTS)
+	while (++i < MAX_OBJECTS && i < app->object_count)
 	{
 		temp.pos = app->objects[i].position;
 		if (app->objects[i].sector)

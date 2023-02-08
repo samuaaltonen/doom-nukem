@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 18:47:59 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 16:45:09 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/08 18:31:22 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,22 @@ void	render_hand(t_app *app)
 	t_rect	dst;
 	t_rect	src;
 
+	if (app->hand.equipped == 0 || (app->player.weapons & 0b00000111) == 0)
+	{
+		app->hand.equipped = 0;
+		return ;
+	}
 	if (app->status == STATUS_GAME)
 		app->hand.current = ft_vector2_add(app->hand.current,
 				ft_vec2_mult(app->hand.velocity, app->conf->delta_time));
-	rect_from_surface(app->assets.weapon[app->hand.equipped], &src);
+	rect_from_surface(app->assets.weapon[app->hand.equipped - 1], &src);
 	dst.x = app->hand.current.x;
 	dst.y = app->hand.current.y;
 	dst.w = WEAPON_SIZE;
 	dst.h = WEAPON_SIZE;
 	clamp_int(&dst.x, 0, WIN_W - 1);
 	clamp_int(&dst.y, 0, WIN_H - 1);
-	blit_surface(app->assets.weapon[app->hand.equipped],
+	blit_surface(app->assets.weapon[app->hand.equipped - 1],
 		&src, app->surface, &dst);
 	app->mouse_delta = (t_point){0, 0};
 }

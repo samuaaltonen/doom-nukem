@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:53:42 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 16:13:39 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/08 18:32:03 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ void	toggle_new_object(t_app *app, t_bool state)
 	if (state)
 	{
 		app->object_new = FALSE;
+		if (app->current_object && !app->object_menu)
+			app->current_object->type = 0;
 		app->current_object = NULL;
 	}
 	else
@@ -119,5 +121,6 @@ int	new_object(t_app *app)
 	app->objects[app->object_count].position = app->mouse_track;
 	app->objects[app->object_count].sector = app->active_sector;
 	app->object_count++;
+	app->current_object = NULL;
 	return (TRUE);
 }

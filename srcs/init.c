@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/06 19:41:04 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/08 18:28:01 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,39 +72,6 @@ void	sdl_init(t_app *app)
 	if (!app->audio.device_id)
 		exit_error(MSG_ERROR);
 	SDL_ShowCursor(SDL_DISABLE);
-}
-
-/**
- * @brief Defines bullet values.
- * 
- * @param app 
- */
-void	define_bullets(t_app *app)
-{
-	app->bullet_def[0].speed = 5.f;
-	app->bullet_def[0].damage = 25.f;
-	app->bullet_def[0].size = (t_vector2){0.5f, 0.5f};
-	app->bullet_def[1].speed = 5.f;
-	app->bullet_def[1].damage = 25.f;
-	app->bullet_def[1].size = (t_vector2){0.5f, 0.5f};
-	app->bullet_def[2].speed = 8.f;
-	app->bullet_def[2].damage = 25.f;
-	app->bullet_def[2].size = (t_vector2){0.5f, 0.5f};
-	app->bullet_def[3].speed = 8.f;
-	app->bullet_def[3].damage = 25.f;
-	app->bullet_def[3].size = (t_vector2){0.5f, 0.5f};
-	app->bullet_def[4].speed = 100.f;
-	app->bullet_def[4].damage = 1.f;
-	app->bullet_def[4].size = (t_vector2){0.5f, 0.5f};
-	app->bullet_def[5].speed = 8.f;
-	app->bullet_def[5].damage = 25.f;
-	app->bullet_def[5].size = (t_vector2){0.5f, 0.5f};
-	app->bullet_def[6].speed = 10.f;
-	app->bullet_def[6].damage = 25.f;
-	app->bullet_def[6].size = (t_vector2){0.5f, 0.5f};
-	app->bullet_def[7].speed = 50.f;
-	app->bullet_def[7].damage = 25.f;
-	app->bullet_def[7].size = (t_vector2){0.5f, 0.5f};
 }
 
 /**

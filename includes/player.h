@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/07 16:00:24 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:09:40 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@
 # define AMMO_PICKUP_AMOUNT				20
 # define WEAPON1_MAG					7
 # define WEAPON2_MAG					16
+# define WEAPON3_MAG					3
 
 /**
  * Movement direction enumeration.

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+         #
+#    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/02/07 16:27:08 by ssulkuma         ###   ########.fr        #
+#    Updated: 2023/02/08 18:30:00 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -120,7 +120,8 @@ FILES = animation_create.c \
 		interaction_pickup.c \
 		interaction_enemy.c \
 		init_enemies.c \
-		equipment_control.c
+		equipment_control.c \
+		init_weapons.c
 
 EDITOR_FILES = app.c \
 		editor.c \

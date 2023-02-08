@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/08 14:24:58 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:53:26 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -134,6 +134,13 @@ typedef struct s_bullet_def
 	t_vector2			size;
 }	t_bullet_def;
 
+typedef struct s_weapon_def
+{
+	int		type;
+	int		magazine;
+	double	fire_rate;
+}	t_weapon_def;
+
 typedef struct s_enemy_state
 {
 	int					id;
@@ -221,6 +228,7 @@ typedef struct s_app
 	t_enemy_state		enemies[MAX_OBJECTS];
 	t_enemy_def			enemy_def[MAX_ENEMY_TYPES];
 	t_bullet_def		bullet_def[MAX_PROJECTILES];
+	t_weapon_def		weapons_def[WEAPON_COUNT];
 	t_interaction		interactions[MAX_INTERACTIONS];
 	t_animation			animations[MAX_CONCURRENT_ANIMATIONS];
 	int					animation_count;
@@ -299,7 +307,6 @@ int				events_keydown(int keycode, t_app *app);
 int				events_mouse_motion(t_app *app);
 int				events_mouse_down(int mouse_button, t_app *app);
 int				events_mouse_up(int mouse_button, t_app *app);
-int				events_mouse_wheel(int wheel_dir, t_app *app);
 int				events_window_destroy(void);
 int				events_window_other(int windowevent, t_app *app);
 int				dispatch_event(t_app *app, SDL_Event *event);
@@ -542,6 +549,8 @@ void			init_enemies(t_app *app);
 void			update_enemy_states(t_app *app);
 void			define_enemies(t_app *app);
 void			define_bullets(t_app *app);
+void			define_weapons(t_app *app);
+
 void			fire(t_app *app, t_vector3 target_dir, t_vector3 start_pos,
 					t_point info);
 void			melee(t_app *app, t_vector3 target_dir, t_vector3 start_pos,

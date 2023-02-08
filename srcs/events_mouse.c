@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_mouse.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:40:40 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/01 19:59:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:52:24 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,21 +70,5 @@ int	events_mouse_up(int mouse_button, t_app *app)
 		app->conf->buttonstates ^= RIGHT_MOUSE;
 	if (mouse_button == SDL_BUTTON_MIDDLE)
 		app->conf->buttonstates ^= MIDDLE_MOUSE;
-	return (0);
-}
-
-/**
- * @brief Mouse wheel events.
- * 
- * @param wheel_dir 
- * @param app 
- * @return int 
- */
-int	events_mouse_wheel(int wheel_dir, t_app *app)
-{
-	if (wheel_dir > 0)
-		weapon(app, 2);
-	else if (wheel_dir < 0)
-		weapon(app, 1);
 	return (0);
 }

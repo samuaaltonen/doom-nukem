@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 14:12:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/31 18:46:17 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/08 18:24:15 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ t_bool	valid_object(t_app *app)
 	int	i;
 
 	i = 0;
-	while (i < MAX_OBJECTS && app->objects[i].type != 0)
+	while (i < app->object_count && app->objects[i].type != 0)
 	{
 		if (app->active_sector == NULL)
 			return (FALSE);

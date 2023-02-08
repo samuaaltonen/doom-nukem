@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 20:52:52 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:49:48 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,5 +152,7 @@ int	events_keydown(int keycode, t_app *app)
 		app->conf->keystates |= SPACE;
 	if (keycode == SDLK_f)
 		interaction_check(app);
+	if (keycode == SDLK_3 || keycode == SDLK_2 || keycode == SDLK_1)
+		weapon(app, keycode);
 	return (0);
 }

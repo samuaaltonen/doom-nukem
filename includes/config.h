@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/08 14:49:18 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:08:03 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,12 @@
 # define MAX_LINE_LENGTH 1048576.0
 # define SMALL_SCALE 0.34375
 # define SPRITE_ANGLES 90
-# define MAX_SMALL_OBJECTS 7
+# define MAX_SMALL_OBJECTS 8
 # define MAX_BIG_OBJECTS 7
 # define MAX_ENEMY_TYPES 3
 # define MAX_DECOR_TYPES 9
 # define MAX_PROJECTILES 8
-# define MAX_OBJECT_TYPES 17
+# define MAX_OBJECT_TYPES 18
 # define MAX_OBJECT_DISTANCE 128.0
 # define MIN_FOG_DISTANCE 2.0
 # define MAX_FOG_DISTANCE 40.0

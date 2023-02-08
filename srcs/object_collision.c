@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:17:11 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 17:12:17 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:29:47 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ static void	object_hit(t_app *app, t_gameobject *obj)
 		app->player.weapons |= 0b00000001;
 	else if (obj->type == WEAPON2)
 		app->player.weapons |= 0b00000010;
+	else if (obj->type == WEAPON3)
+		app->player.weapons |= 0b00000100;
 	if (obj->type <= MAX_SMALL_OBJECTS)
 	{
 		obj->type = -1;

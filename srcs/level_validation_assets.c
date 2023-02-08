@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   level_validation_assets.c                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:46:11 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 11:39:22 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:16:54 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,9 @@ static t_bool	validate_weapons(t_app *app)
 	return (app->assets.weapon[0]->w != WEAPON_W
 		|| app->assets.weapon[0]->h != WEAPON_H
 		|| app->assets.weapon[1]->w != WEAPON_W
-		|| app->assets.weapon[1]->h != WEAPON_H);
+		|| app->assets.weapon[1]->h != WEAPON_H
+		|| app->assets.weapon[2]->w != WEAPON_W
+		|| app->assets.weapon[2]->h != WEAPON_H);
 }
 
 /**

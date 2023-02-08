@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assets.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/07 18:09:13 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/08 17:20:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,11 +43,11 @@
 # define METER_W					16
 # define METER_H					32
 # define OBJECT_ICON_W				128
-# define OBJECT_ICON_H				3328
+# define OBJECT_ICON_H				3456
 # define WEAPON_W					256
 # define WEAPON_H					256
 # define OBJECT_SMALL_W				3960
-# define OBJECT_SMALL_H				308
+# define OBJECT_SMALL_H				352
 # define OBJECT_BIG_W				11520
 # define OBJECT_BIG_H				896
 # define PROJECTILE_W				44
@@ -59,7 +59,7 @@
 # define ENEMY_3_W					11520
 # define ENEMY_3_H					640
 # define MAX_TEX_COUNT				98
-# define MAX_DECOR_COUNT			26
+# define MAX_DECOR_COUNT			27
 # define MAX_BMP_OFFSET				32768
 # define MAX_BMP_WIDTH				32768
 # define MAX_BMP_HEIGHT				32768
@@ -74,8 +74,8 @@
 # define DEFAULT_AUDIO_SAMPLES		4096
 # define PROGRESS_BAR_FRAME_COLOR	0xff0099f2
 # define PROGRESS_BAR_COLOR			0xff00def2
-# define MAX_SPRITES 6
-# define WEAPON_COUNT 2
+# define MAX_SPRITES 7
+# define WEAPON_COUNT 3
 
 enum e_export_assets
 {
@@ -93,8 +93,9 @@ enum e_export_assets
 	EXPORT_BULLET,
 	EXPORT_METER,
 	EXPORT_ICON,
-	EXPORT_WEAPON_HD,
 	EXPORT_WEAPON_ENERGY,
+	EXPORT_WEAPON_HD,
+	EXPORT_WEAPON_BOW,
 	EXPORT_PICKUP,
 	EXPORT_OBJECT,
 	EXPORT_SPRITE,

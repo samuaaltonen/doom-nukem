@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/25 15:41:22 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/01 19:32:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:53:50 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,6 @@ int	dispatch_event(t_app *app, SDL_Event *event)
 		return (events_mouse_down(event->button.button, app));
 	if (event->type == SDL_MOUSEBUTTONUP)
 		return (events_mouse_up(event->button.button, app));
-	if (event->type == SDL_MOUSEWHEEL)
-		return (events_mouse_wheel(event->wheel.y, app));
 	if (event->type == SDL_WINDOWEVENT)
 		return (events_window_other(event->window.event, app));
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 14:02:41 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 17:29:02 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/08 18:25:19 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ static int	left_click_events(t_app *app, t_point mouse)
 	{
 		if (valid_object(app))
 			new_object(app);
-		app->object_new = FALSE;
+		toggle_new_object(app, app->object_new);
 	}
 	else if (app->player_menu)
 		player_menu_events(app, mouse);

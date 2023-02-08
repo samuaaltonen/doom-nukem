@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/01 18:03:39 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:55:52 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define UI_FRAME_W					30
 # define UI_FRAME_H					30
 # define OBJECT_ICON_W				128
-# define OBJECT_ICON_H				3328
+# define OBJECT_ICON_H				3456
 # define MAX_BMP_OFFSET				32768
 # define MAX_BMP_WIDTH				32768
 # define MAX_BMP_HEIGHT				32768
@@ -49,6 +49,7 @@
 # define SPRITE_PATH		"assets/images/Projectiles.bmp"
 # define WEAPON_HD_PATH		"assets/images/weapon_cannon4.bmp"
 # define WEAPON_ENERGY_PATH	"assets/images/weapon_energy.bmp"
+# define WEAPON_BOW_PATH	"assets/images/Weapon_Bolt.bmp"
 # define MUSIC_PATH			"assets/sounds/title_music.wav"
 # define SOUND_LASER_PATH	"assets/sounds/laser.wav"
 # define SOUND_SHOT_PATH	"assets/sounds/pistol_shot.wav"
@@ -57,10 +58,10 @@
 # define TEXTS_PATH			"assets/texts/texts.txt"
 # define MAX_TEXT_LINES 16
 # define MAX_TEXT_LINE_LENGTH 512
-# define MAX_SMALL_OBJECTS 7
+# define MAX_SMALL_OBJECTS 8
 # define MAX_BIG_OBJECTS 7
 # define MAX_ENEMY_TYPES 3
-# define MAX_DECOR_TYPES 4
+# define MAX_DECOR_TYPES 9
 # define MSG_ERROR_IMPORT "Level file is invalid."
 # define MSG_ERROR_THREADS_MUTEX "Error with locking/unlocking a mutex."
 # define MSG_ERROR_IMPORT_SECTOR "Level file is invalid. Could not import \
@@ -88,8 +89,9 @@ enum e_export_assets
 	EXPORT_BULLET,
 	EXPORT_METER,
 	EXPORT_ICON,
-	EXPORT_WEAPON_HD,
 	EXPORT_WEAPON_ENERGY,
+	EXPORT_WEAPON_HD,
+	EXPORT_WEAPON_BOW,
 	EXPORT_PICKUP,
 	EXPORT_OBJECT,
 	EXPORT_SPRITE,

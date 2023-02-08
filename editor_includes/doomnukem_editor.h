@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/08 14:06:24 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:00:21 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,11 +27,10 @@
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 16
 # define MAX_WEAPONS 3
-# define MAX_ARMOR 5
-# define MAX_UNIQUE_OBJECTS 17
+# define MAX_UNIQUE_OBJECTS 18
 # define MAX_INTERACTIONS 64
 # define MAX_UNIQUE_INTERACTIONS 7
-# define MAX_DECOR_COUNT 26
+# define MAX_DECOR_COUNT 27
 # define MAX_AMMO 999
 # define MAX_ITEM_CAPACITY 99
 # define MAX_OBJECTS 128

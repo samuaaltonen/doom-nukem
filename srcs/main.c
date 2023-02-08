@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 14:21:47 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 19:50:22 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:38:33 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ int	main(const int argc, const char **argv)
 	level_validation(app);
 	hand_init(app);
 	define_enemies(app);
+	define_weapons(app);
 	define_bullets(app);
 	app_loop(app);
 	return (0);

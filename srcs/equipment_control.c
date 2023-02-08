@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 21:05:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/06 21:10:28 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/08 18:30:41 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,24 +43,29 @@ void	jetpack(t_app *app)
 	}
 }
 
-void	weapon(t_app *app, int weapon)
+void	weapon(t_app *app, SDL_Keycode keycode)
 {
-	if (app->player.weapons & 0b00000001 && weapon == 1)
-	{
-		app->hand.equipped = 0;
-		app->player.equipped_weapon.type = 7;
-		app->player.equipped_weapon.magazine = WEAPON1_MAG;
-		app->player.equipped_weapon.fire_rate = 0.3;
-		start_timer(&app->shoot_timer, 2.0f);
-	}
-	else if (app->player.weapons & 0b00000001 && weapon == 2)
-	{
+	int	weapon;
+
+	weapon = 0;
+	if (keycode == SDLK_1)
+		weapon = 0;
+	if (keycode == SDLK_2)
+		weapon = 1;
+	if (keycode == SDLK_3)
+		weapon = 2;
+	if (app->player.weapons & 0b00000001 && weapon == 0)
 		app->hand.equipped = 1;
-		app->player.equipped_weapon.type = 4;
-		app->player.equipped_weapon.magazine = WEAPON2_MAG;
-		app->player.equipped_weapon.fire_rate = 0.1;
-		start_timer(&app->shoot_timer, 2.0f);
-	}
+	else if (app->player.weapons & 0b00000010 && weapon == 1)
+		app->hand.equipped = 2;
+	else if (app->player.weapons & 0b00000100 && weapon == 2)
+		app->hand.equipped = 3;
+	if (app->hand.equipped == 0)
+		return ;
+	app->player.equipped_weapon.type = app->weapons_def[weapon].type;
+	app->player.equipped_weapon.magazine = app->weapons_def[weapon].magazine;
+	app->player.equipped_weapon.fire_rate = app->weapons_def[weapon].fire_rate;
+	start_timer(&app->shoot_timer, 2.0f);
 	if (app->player.equipped_weapon.magazine <= app->player.inventory.ammo)
 		app->player.equipped_weapon.ammo = app->player.equipped_weapon.magazine;
 	else
