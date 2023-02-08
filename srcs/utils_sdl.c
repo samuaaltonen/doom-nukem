@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:38:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/06 14:56:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/08 14:25:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,30 +25,28 @@
 void	blit_surface(SDL_Surface *src, t_rect *src_rect,
 	SDL_Surface *dst, t_rect *dst_rect)
 {
-	t_point	point;
 	t_point	current;
 	int		pixel;
+	int		y;
 
-	if (check_blit(src, src_rect, dst, dst_rect))
+	if (!check_blit(src, src_rect, dst, dst_rect))
+		return ;
+	current.y = 0;
+	while (current.y < dst_rect->h && current.y + dst_rect->y < dst->h)
 	{
 		current.x = 0;
-		current.y = 0;
-		while (current.y < dst_rect->h && current.y + dst_rect->y < dst->h)
+		y = (int)(current.y * ((float)src_rect->h / (float)dst_rect->h))
+			+ src_rect->y;
+		while (current.x < dst_rect->w && current.x + dst_rect->x < dst->w)
 		{
-			while (current.x < dst_rect->w && current.x + dst_rect->x < dst->w)
-			{
-				point.x = current.x;
-				point.y = current.y;
-				map_coordinates(dst_rect, src_rect, &point);
-				pixel = get_pixel_color(src, point.x, point.y);
-				if ((pixel & 0xFF000000) > 0)
-					put_pixel_to_surface(dst, current.x + dst_rect->x,
-						current.y + dst_rect->y, pixel);
-				current.x++;
-			}
-			current.x = 0;
-			current.y++;
+			pixel = get_pixel_color(src, (int)(current.x * ((float)src_rect->w
+							/ (float)dst_rect->w)) + src_rect->x, y);
+			if ((pixel & 0xFF000000) > 0)
+				put_pixel_to_surface(dst, current.x + dst_rect->x,
+					current.y + dst_rect->y, pixel);
+			current.x++;
 		}
+		current.y++;
 	}
 }
 

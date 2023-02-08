@@ -3,28 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:48:10 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/07 16:47:00 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/08 14:24:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
-
-/**
- * @brief Maps the point given from the source rectangle to the appropiate 
- * coordinates on the destination rectangle.
- * 
- * @param src 
- * @param dst 
- * @param point 
- */
-void	map_coordinates(t_rect *src, t_rect *dst, t_point *point)
-{
-	point->x = point->x * ((float)dst->w / (float)src->w) + dst->x;
-	point->y = point->y * ((float)dst->h / (float)src->h) + dst->y;
-}
 
 /**
  * @brief Clamps given number to the range from min to max.
