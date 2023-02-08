@@ -20,11 +20,10 @@ void	hud_quickslot(t_app *app, t_rect rect, char *slot)
 	SDL_Surface	*sprite;
 	char		*amount;
 
+	amount = NULL;
+	sprite = app->assets.hp;
 	if (slot[0] == 'Q')
-	{
-		sprite = app->assets.hp;
 		amount = ft_itoa(app->player.inventory.potion);
-	}
 	if (slot[0] == 'E')
 	{
 		sprite = app->assets.shield;

@@ -48,6 +48,7 @@
 # define MAX_LEVEL 999
 # define LEVEL_IDENTIFIER "level-"
 # define FILE_NAME_LENGTH 9
+# include <stdio.h>
 # include <fcntl.h>
 # include <math.h>
 # include <pthread.h>
