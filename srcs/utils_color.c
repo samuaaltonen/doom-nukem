@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_color.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:49:04 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/07 17:23:12 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/08 14:52:26 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,11 @@ int	shade_depth(int color, float shade)
 	int	g;
 	int	b;
 
-	if (!shade)
+	if (!shade || shade < MIN_FOG_DISTANCE)
 		return (color);
 	if (shade >= MAX_FOG_DISTANCE)
 		return (0x000000);
-	if (shade <= 0.f)
+	if (shade <= 0.0)
 		return (0xFFFFFF);
 	r = color & 0xFF0000;
 	g = color & 0x00FF00;

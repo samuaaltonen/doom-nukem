@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/08 13:51:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/08 14:49:18 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@
 # define MAX_PROJECTILES 8
 # define MAX_OBJECT_TYPES 17
 # define MAX_OBJECT_DISTANCE 128.0
+# define MIN_FOG_DISTANCE 2.0
 # define MAX_FOG_DISTANCE 40.0
 # define ENEMY_COLLISION 0.25
 # define PROJECTILE_COLLISION_X 0.25
