@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/07 18:34:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/08 14:06:24 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,7 +184,6 @@ typedef struct s_assets
 typedef struct s_app
 {
 	int				keystates;
-	int				toggle_help;
 	int				zoom_range;
 	SDL_Window		*win;
 	SDL_Surface		*surface;
@@ -201,7 +200,6 @@ typedef struct s_app
 	t_bool			list_creation;
 	t_bool			list_ongoing;
 	t_bool			portal_selection;
-	t_bool			var_edit;
 	t_bool			wall_edit;
 	t_bool			ceiling_edit;
 	t_bool			floor_edit;

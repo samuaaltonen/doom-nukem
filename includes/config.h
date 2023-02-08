@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/06 19:47:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/08 13:51:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 # define FOV 83
 # define MOUSE_SENSITIVITY_HORIZONTAL 0.001
 # define MOUSE_SENSITIVITY_VERTICAL 0.001
-# define HAND_TURN_SPEED 3
-# define HAND_MOVE_SPEED 100
-# define HAND_FIRE_SPEED 5000.f
+# define HAND_TURN_SPEED 3.0
+# define HAND_MOVE_SPEED 100.0
+# define HAND_FIRE_SPEED 5000.0
 # define HAND_SPEED 10
 # define MAX_SECTOR_COUNT 4096
 # define MIN_SECTOR_CORNERS 3
@@ -43,20 +43,14 @@
 # define MAX_OBJECT_TYPES 17
 # define MAX_OBJECT_DISTANCE 128.0
 # define MAX_FOG_DISTANCE 40.0
-/* object type defines for now
-	< MAX_SMALL_OBJECTS = small objects
-	< MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS = big objects
-	< MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES = enemy
-	>= MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS + MAX_ENEMY_TYPES = bullets
-*/
-# define ENEMY_COLLISION 0.25f
-# define PROJECTILE_COLLISION_X 0.25f
-# define PROJECTILE_COLLISION_Y 0.5f
+# define ENEMY_COLLISION 0.25
+# define PROJECTILE_COLLISION_X 0.25
+# define PROJECTILE_COLLISION_Y 0.5
 # define PROJECTILE_ENEMY 3
 # define PROJECTILE_ROCKET 7
 # define PROJECTILE_EXPLOSION 1
-# define PICKUP_RANGE 0.5f
-# define WEAPON_SIZE 864.f
+# define PICKUP_RANGE 0.5
+# define WEAPON_SIZE 864.0
 # define MAX_OBJECTS 128
 # define MAX_TEMP_OBJECTS 64
 # define MAX_INTERACTIONS 64

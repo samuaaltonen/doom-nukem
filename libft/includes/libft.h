@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/29 10:42:36 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/22 22:41:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/08 13:53:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -205,7 +205,6 @@ int			ft_superint_plus_int(t_superint **addto, int plus);
 int			ft_superint_plus_ull(t_superint **addto, t_ull plus);
 int			ft_superint_minus(t_superint **from, t_superint **minus);
 int			ft_superint_minus_int(t_superint **from, int minus);
-int			ft_superint_minus_int_log10(t_superint **from, int minus, int log);
 int			ft_superint_multiply(t_superint **target, t_superint **multiplier);
 int			ft_superint_multiply_int(t_superint **target, int multiplier);
 int			ft_superint_divide_samesize(t_superint **num, t_superint **denum,

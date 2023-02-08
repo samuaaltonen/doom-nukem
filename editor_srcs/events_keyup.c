@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/01 17:46:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/08 13:40:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,6 @@ static void	edit_mode_keys(t_app *app, int keycode)
 {
 	if (keycode == SDLK_p)
 		app->player_edit = ft_toggle(app->player_edit);
-	if (keycode == SDLK_e)
-		app->var_edit = ft_toggle(app->var_edit);
 	if (keycode == SDLK_k)
 		app->linking_mode = ft_toggle(app->linking_mode);
 	if (keycode == SDLK_n)
