@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/13 15:01:14 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/08 16:31:09 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ void	link_interaction(t_app *app)
 		no_current_interaction(app);
 	else if (app->current_interaction)
 	{
+		if (!app->current_interaction->event_id)
+			delete_interaction(app, app->interaction_count);
 		app->current_interaction = NULL;
 		app->interaction_menu = FALSE;
 		if (app->interactions[app->interaction_count].event_id != 0)
