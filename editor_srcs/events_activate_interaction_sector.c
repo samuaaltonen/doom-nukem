@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_activate_interaction_sector.c               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:18:12 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/01 17:35:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/08 12:00:10 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 */
 t_bool	current_sector_interaction(t_app *app, t_point mouse, int id)
 {
-	if (check_mouse(mouse, (t_rect){25, 600, 15, 15}))
+	if (check_mouse(mouse, (t_rect){25, 620, 15, 15}))
 	{
 		if (!app->current_interaction)
 			app->current_interaction
@@ -35,7 +35,7 @@ t_bool	current_sector_interaction(t_app *app, t_point mouse, int id)
 		app->current_interaction = &app->interactions[id];
 		return (FALSE);
 	}
-	if (check_mouse(mouse, (t_rect){255, 600, 15, 15}))
+	if (check_mouse(mouse, (t_rect){255, 620, 15, 15}))
 	{
 		if (!app->current_interaction)
 			app->current_interaction

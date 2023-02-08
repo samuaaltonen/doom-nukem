@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:18:12 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/07 16:19:50 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/08 11:58:15 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static void	open_interaction_menu(t_app *app, t_point mouse)
 {
 	if ((check_mouse(mouse, (t_rect){42, 228, 190, 16})
 		&& app->object_menu) || (check_mouse(mouse, (t_rect){42, 238, 190,
-		16}) && app->active) || (check_mouse(mouse, (t_rect){42, 618, 190,
+		16}) && app->active) || (check_mouse(mouse, (t_rect){42, 638, 190,
 		16}) && app->active_sector))
 	{
 		if (!app->current_interaction)
@@ -32,7 +32,7 @@ static void	open_interaction_menu(t_app *app, t_point mouse)
 	}
 	if ((check_mouse(mouse, (t_rect){42, 248, 190, 16})
 		&& app->object_menu) || (check_mouse(mouse, (t_rect){42, 258, 200,
-		20}) && app->active) || (check_mouse(mouse, (t_rect){42, 638, 190,
+		20}) && app->active) || (check_mouse(mouse, (t_rect){42, 658, 190,
 		16}) && app->active_sector))
 	{
 		app->current_interaction = NULL;
@@ -74,7 +74,7 @@ static void	find_current_interaction(t_app *app)
 */
 void	activate_interaction_menu(t_app *app, t_point mouse)
 {
-	if (app->active_sector && check_mouse(mouse, (t_rect){67, 267, 150, 20}))
+	if (app->active_sector && check_mouse(mouse, (t_rect){67, 274, 150, 20}))
 		update_sector_template(app);
 	if (app->active && check_mouse(mouse, (t_rect){90, 160, 100, 21})
 		&& app->active->decor == -1)
