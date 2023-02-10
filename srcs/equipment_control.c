@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   equipment_control.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 21:05:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/08 18:30:41 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/10 16:37:45 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,11 +48,11 @@ void	weapon(t_app *app, SDL_Keycode keycode)
 	int	weapon;
 
 	weapon = 0;
-	if (keycode == SDLK_1)
+	if (keycode == SDLK_1 && app->player.weapons & 0b00000001)
 		weapon = 0;
-	if (keycode == SDLK_2)
+	if (keycode == SDLK_2 && app->player.weapons & 0b00000010)
 		weapon = 1;
-	if (keycode == SDLK_3)
+	if (keycode == SDLK_3 && app->player.weapons & 0b00000100)
 		weapon = 2;
 	if (app->player.weapons & 0b00000001 && weapon == 0)
 		app->hand.equipped = 1;
