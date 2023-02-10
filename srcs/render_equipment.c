@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:40:28 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/06 19:01:51 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/10 17:44:13 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 static void	hud_keys(t_app *app, t_rect area);
 static void	hud_jetpack(t_app *app, t_rect area);
 static void	hud_weapon(t_app *app, t_rect rect);
+static void	choose_weapon_sprite (t_app *app);
 
 void	render_equipment(t_app *app)
 {
@@ -70,7 +71,8 @@ static void	hud_weapon(t_app *app, t_rect rect)
 
 	i = 0;
 	render_ui_frame(app, rect, 1, DARK_GREY);
-	render_ui_element(app, app->assets.pistol, (t_rect){1152, 630, 64, 64});
+//	render_ui_element(app, app->assets.pistol, (t_rect){1152, 630, 64, 64});
+	choose_weapon_sprite(app);
 	rect.x += 16;
 	rect.y += 16;
 	rect.w = 4;
@@ -89,4 +91,22 @@ static void	hud_weapon(t_app *app, t_rect rect)
 		return ;
 	render_text(app, (t_rect){1136, 626, 64, 64}, ammo);
 	free(ammo);
+}
+
+static void choose_weapon_sprite(t_app *app)
+{
+	t_rect	src;
+	t_rect	dst;
+
+	dst = (t_rect){1152, 630, 64, 64};
+	printf("%d \n", app->hand.equipped);
+	if (app->hand.equipped == 1)
+		src = (t_rect){0, 128 * 5, 128, 128};
+	else if (app->hand.equipped == 2)
+		src = (t_rect){0, 128 * 6, 128, 128};
+	else if (app->hand.equipped == 3)
+		src = (t_rect){0, 128 * 7, 128, 128};
+	else
+ 		src = (t_rect){0, 0, 0, 0};
+	blit_surface(app->assets.object_icon, &src, app->surface, &dst);
 }
