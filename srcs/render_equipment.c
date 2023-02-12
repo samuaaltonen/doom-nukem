@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_equipment.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:40:28 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/10 17:47:03 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/12 13:38:45 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ static void	choose_weapon_sprite(t_app *app)
 	t_rect	dst;
 
 	dst = (t_rect){1152, 630, 64, 64};
-	printf("%d \n", app->hand.equipped);
 	if (app->hand.equipped == 1)
 		src = (t_rect){0, 128 * 5, 128, 128};
 	else if (app->hand.equipped == 2)

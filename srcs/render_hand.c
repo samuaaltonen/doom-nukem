@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_hand.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 18:47:59 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/08 18:31:22 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/12 13:56:56 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,13 @@ static void	add_player_movement(t_app *app, double *angle_sin,
 {
 	double	angle;
 
-		angle = ft_vector_angle_left(app->player.dir, app->player.move_vector);
+	if (app->player.move_vector.x == 0.0 && app->player.move_vector.y == 0.0)
+	{
+		*angle_cos = 0.0;
+		*angle_sin = 0.0;
+		return ;
+	}
+	angle = ft_vector_angle_left(app->player.dir, app->player.move_vector);
 	if (angle < M_PI)
 		angle = -angle;
 	else
