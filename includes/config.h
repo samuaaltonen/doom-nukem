@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/08 16:08:03 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:15:02 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@
 # define PROJECTILE_COLLISION_X 0.25
 # define PROJECTILE_COLLISION_Y 0.5
 # define PROJECTILE_ENEMY 3
-# define PROJECTILE_ROCKET 7
+# define PROJECTILE_ROCKET 5
 # define PROJECTILE_EXPLOSION 1
 # define PICKUP_RANGE 0.5
 # define WEAPON_SIZE 864.0

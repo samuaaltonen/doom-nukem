@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_player_status.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:37:25 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/06 17:08:53 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:56:20 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ static void	energy_meter(t_app *app, t_rect area)
 	int	x;
 	int	y;
 
-	render_ui_element(app, app->assets.energy, (t_rect){960, area.y, 24, 24});
+	render_ui_element(app, app->assets.energy_sprite,
+		(t_rect){960, area.y, 24, 24});
 	render_ui_frame(app, area, 1, DARK_GREY);
 	area.x += 8;
 	area.y += 8;
@@ -60,7 +61,7 @@ static void	energy_meter(t_app *app, t_rect area)
 	{
 		while (x < area.x + area.w)
 		{
-			if (x <= (area.x) + app->player.inventory.special_ammo / 2)
+			if (x <= (area.x) + app->player.inventory.energy / 2)
 				put_pixel_to_surface(app->surface, x, y, GREEN);
 			x++;
 		}

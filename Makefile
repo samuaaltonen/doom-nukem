@@ -6,7 +6,7 @@
 #    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/02/08 18:30:00 by htahvana         ###   ########.fr        #
+#    Updated: 2023/02/14 15:20:09 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ FILES = animation_create.c \
 		bullet_object_collisions.c \
 		bullet_wall_collisions.c \
 		bullets.c \
+		bullet_fire.c \
 		button_function.c \
 		button_game_status.c \
 		button_options_menu.c \

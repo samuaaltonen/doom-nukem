@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/08 16:53:26 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:30:30 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -346,7 +346,7 @@ void			heal(t_app *app);
 void			shield(t_app *app);
 void			regen(t_app *app, int *value);
 void			damage(t_app *app, int dmg);
-void			energy(t_app *app, int mod);
+void			energy_charge(t_app *app, int mod);
 
 /**
  * Collisions

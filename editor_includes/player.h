@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:58:29 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/07 18:34:46 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:56:20 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ typedef struct s_weapon
 typedef struct s_inventory
 {
 	int				ammo;
-	int				special_ammo;
+	int				energy;
 	int				potion;
 	int				armor_pack;
 	int				key;

@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 18:45:28 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/08 17:05:57 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:53:36 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,9 @@ void	import_surfaces(t_app *app, t_import_info *info)
 	app->assets.pointer = get_surface(EXPORT_POINTER, info);
 	app->assets.shield = get_surface(EXPORT_SHIELD, info);
 	app->assets.hp = get_surface(EXPORT_HP, info);
-	app->assets.energy = get_surface(EXPORT_ENERGY, info);
-	app->assets.pistol = get_surface(EXPORT_PISTOL, info);
-	app->assets.bullet = get_surface(EXPORT_BULLET, info);
+	app->assets.energy_sprite = get_surface(EXPORT_ENERGY, info);
+	app->assets.pistol_sprite = get_surface(EXPORT_PISTOL, info);
+	app->assets.bullet_sprite = get_surface(EXPORT_BULLET, info);
 	app->assets.meter = get_surface(EXPORT_METER, info);
 	app->assets.object_icon = get_surface(EXPORT_ICON, info);
 	app->assets.weapon[0] = get_surface(EXPORT_WEAPON_ENERGY, info);

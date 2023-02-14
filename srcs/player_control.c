@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/06 21:10:08 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:58:19 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,13 +22,13 @@ static void	jetpack_handle(t_app *app)
 		app->player.move_speed = MOVEMENT_SPEED;
 	if (app->conf->keystates & SPACE && app->player.jetpack)
 	{
-		energy(app, -4);
+		energy_charge(app, -4);
 		app->player.move_speed = RUNNING_SPEED;
 	}
 	else if (app->player.jetpack)
-		energy(app, -1);
+		energy_charge(app, -1);
 	else
-		energy(app, 1);
+		energy_charge(app, 1);
 	if (app->conf->keystates & CTRL && !app->player.jetpack)
 		app->player.target_height = PLAYER_HEIGHT_CROUCHING;
 	else if (sector_vertical_space(app, app->player.sector, app->player.pos)
@@ -91,18 +91,26 @@ void	handle_movement(t_app *app)
 
 void	player_shoot(t_app *app)
 {
-	if (check_timer(&app->shoot_timer) && app->player.equipped_weapon.ammo > 0)
+	if (check_timer(&app->shoot_timer) && (app->player.equipped_weapon.ammo > 0
+			|| (app->hand.equipped == 3 && app->player.inventory.energy > 50)))
 	{
 		fire(app, (t_vector3){app->player.dir.x, app->player.dir.y,
 			(app->player.horizon - 0.5f)}, (t_vector3){app->player.pos.x,
 			app->player.pos.y, app->player.elevation
 			+ app->player.height / 2},
-			(t_point){app->player.equipped_weapon.type,
-			app->player.sector});
+			(t_point){app->player.equipped_weapon.type, app->player.sector});
 		add_fire_movement(app);
-		play_sound(app, AUDIO_SHOT);
-		app->player.equipped_weapon.ammo--;
-		app->player.inventory.ammo--;
+		if (app->hand.equipped == 3)
+		{
+			app->player.inventory.energy -= 50;
+			play_sound(app, AUDIO_LASER);
+		}
+		else
+		{
+			play_sound(app, AUDIO_SHOT);
+			app->player.equipped_weapon.ammo--;
+			app->player.inventory.ammo--;
+		}
 		start_timer(&app->shoot_timer, app->player.equipped_weapon.fire_rate);
 	}
 	else if (app->player.equipped_weapon.ammo <= 0

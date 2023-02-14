@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/08 17:20:41 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:53:50 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,9 +144,9 @@ typedef struct s_assets
 	SDL_Surface		*pointer;
 	SDL_Surface		*shield;
 	SDL_Surface		*hp;
-	SDL_Surface		*energy;
-	SDL_Surface		*pistol;
-	SDL_Surface		*bullet;
+	SDL_Surface		*energy_sprite;
+	SDL_Surface		*pistol_sprite;
+	SDL_Surface		*bullet_sprite;
 	SDL_Surface		*meter;
 	SDL_Surface		*object_icon;
 	SDL_Surface		*panels;

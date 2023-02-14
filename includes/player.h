@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/08 16:09:40 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:56:20 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef enum e_collision
 typedef struct s_inventory
 {
 	int				ammo;
-	int				special_ammo;
+	int				energy;
 	int				potion;
 	int				armor_pack;
 	int				key;

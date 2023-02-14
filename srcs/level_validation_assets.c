@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/12 16:46:11 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/08 16:16:54 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:53:34 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,12 @@ static t_bool	validate_ui_elements(t_app *app)
 		|| app->assets.shield->h != SHIELD_H
 		|| app->assets.hp->w != HEALTH_W
 		|| app->assets.hp->h != HEALTH_H
-		|| app->assets.energy->w != ENERGY_W
-		|| app->assets.energy->h != ENERGY_H
-		|| app->assets.pistol->w != PISTOL_W
-		|| app->assets.pistol->h != PISTOL_H
-		|| app->assets.bullet->w != BULLET_W
-		|| app->assets.bullet->h != BULLET_H
+		|| app->assets.energy_sprite->w != ENERGY_W
+		|| app->assets.energy_sprite->h != ENERGY_H
+		|| app->assets.pistol_sprite->w != PISTOL_W
+		|| app->assets.pistol_sprite->h != PISTOL_H
+		|| app->assets.bullet_sprite->w != BULLET_W
+		|| app->assets.bullet_sprite->h != BULLET_H
 		|| app->assets.meter->w != METER_W
 		|| app->assets.meter->h != METER_H
 		|| app->assets.object_icon->w != OBJECT_ICON_W

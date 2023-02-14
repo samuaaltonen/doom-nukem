@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 18:27:42 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/08 18:29:24 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:14:02 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,13 @@ void	define_bullets(t_app *app)
 
 void	define_weapons(t_app *app)
 {
-	app->weapons_def[0].type = 7;
+	app->weapons_def[0].type = 5;
 	app->weapons_def[0].magazine = WEAPON1_MAG;
 	app->weapons_def[0].fire_rate = 0.3f;
 	app->weapons_def[1].type = 4;
 	app->weapons_def[1].magazine = WEAPON2_MAG;
 	app->weapons_def[1].fire_rate = 0.1f;
-	app->weapons_def[2].type = 6;
-	app->weapons_def[2].magazine = WEAPON3_MAG;
+	app->weapons_def[2].type = 7;
+	app->weapons_def[2].magazine = 0;
 	app->weapons_def[2].fire_rate = 0.4f;
 }

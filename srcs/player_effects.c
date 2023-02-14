@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_effects.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:57:21 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/07 14:30:59 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:56:20 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,17 +61,17 @@ void	damage(t_app *app, int dmg)
 	start_timer(&app->regen_timer, REGEN_TIME);
 }
 
-void	energy(t_app *app, int mod)
+void	energy_charge(t_app *app, int mod)
 {
 	if (check_timer(&app->energy_timer))
 	{
-		app->player.inventory.special_ammo += mod;
+		app->player.inventory.energy += mod;
 		start_timer(&app->energy_timer, 0.1);
-		if (app->player.inventory.special_ammo >= 200)
-			app->player.inventory.special_ammo = 200;
-		if (app->player.inventory.special_ammo <= 0)
+		if (app->player.inventory.energy >= 200)
+			app->player.inventory.energy = 200;
+		if (app->player.inventory.energy <= 0)
 		{
-			app->player.inventory.special_ammo = 0;
+			app->player.inventory.energy = 0;
 			start_timer(&app->energy_timer, 1.f);
 			jetpack(app);
 		}
