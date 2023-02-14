@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_equipment.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:40:28 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/12 13:38:45 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/14 12:58:22 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ static void	hud_keys(t_app *app, t_rect area)
 	src.w = 128;
 	src.h = 128;
 	key_str = ft_itoa(app->player.inventory.key);
+	if (!key_str)
+		exit_error(MSG_ERROR_ALLOC);
 	i = app->player.inventory.key;
 	if (i > 7)
 	{
