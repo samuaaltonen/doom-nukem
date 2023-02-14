@@ -6,15 +6,14 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:32:37 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/14 15:57:40 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/14 16:26:24 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * @brief Sets weapon values. [0] lasergun, [1] bow, [2] shotgun,
- * [3] machinegun, [4] grenade.
+ * @brief Sets weapon values. [0] canon, [1] heavy weapon, [2] bow.
  * 
  * @param app
 */
