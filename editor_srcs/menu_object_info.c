@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_object_info.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/18 18:04:04 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/01 17:38:30 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:32:47 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,14 @@ static void	render_object_type_statics(t_app *app)
 		render_text(app, (t_rect){210, 140, 120, 15}, "0");
 		render_text(app, (t_rect){40, 155, 120, 15}, "DAMAGE");
 		render_text(app, (t_rect){210, 155, 120, 15}, "0");
+	}
+	else if (app->current_object->type == MAX_UNIQUE_OBJECTS - 1)
+	{
+		render_text(app, (t_rect){113, 120, 120, 15}, "MONSTER");
+		render_text(app, (t_rect){40, 140, 120, 15}, "HEALTH");
+		render_text(app, (t_rect){210, 140, 120, 15}, "75");
+		render_text(app, (t_rect){40, 155, 120, 15}, "DAMAGE");
+		render_text(app, (t_rect){210, 155, 120, 15}, "25");
 	}
 	else if (app->current_object->type <= MAX_UNIQUE_OBJECTS)
 	{
@@ -102,15 +110,11 @@ static void	render_object_texts(t_app *app)
  * 
  * @param app
 */
-void	render_object_statics(t_app *app)
+void	render_object_statics(t_app *app, int health, int damage)
 {
 	int		x;
 	int		y;
-	int		health;
-	int		damage;
 
-	health = 1;
-	damage = 1;
 	y = 139;
 	while (++y < 250)
 	{
@@ -121,6 +125,10 @@ void	render_object_statics(t_app *app)
 				health = 100;
 			if (app->current_object->type > MAX_SMALL_OBJECTS + MAX_BIG_OBJECTS)
 				damage = 20;
+			if (app->current_object->type == MAX_UNIQUE_OBJECTS - 1)
+				health = 75;
+			if (app->current_object->type == MAX_UNIQUE_OBJECTS - 1)
+				damage = 25;
 			if (x < (health + 100) && y < 150)
 				put_pixel_to_surface(app->surface, x, y, TEXT);
 			if (x < (damage + 100) && y > 153 && y < 163)
@@ -147,7 +155,7 @@ void	object_edit_menu(t_app *app)
 	render_arrows(app, (t_point){10, 67}, (t_point){265, 67});
 	render_icons(app, (t_point){25, 60}, app->current_object->type - 1,
 		app->assets.objects);
-	render_object_statics(app);
+	render_object_statics(app, 1, 1);
 	change_font(app, 11, TEXT);
 	if (!app->current_interaction)
 		id = find_object_interaction(app, 0, 1);

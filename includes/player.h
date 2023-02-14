@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/14 15:56:20 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/14 16:10:26 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@
 # define AMMO_PICKUP_AMOUNT				20
 # define WEAPON1_MAG					7
 # define WEAPON2_MAG					16
-# define WEAPON3_MAG					3
+# define WEAPON3_MAG					0
 
 /**
  * Movement direction enumeration.
