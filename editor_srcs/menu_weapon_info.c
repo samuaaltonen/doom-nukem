@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:32:37 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/07 11:50:29 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:57:40 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,18 +20,18 @@
 */
 void	weapons_init(t_app *app)
 {
-	app->player.weapons[0].damage = 25;
-	app->player.weapons[0].range = 5;
+	app->player.weapons[0].damage = 30;
+	app->player.weapons[0].range = 12;
 	app->player.weapons[0].fire_rate = 3;
 	app->player.weapons[0].magazine = 7;
-	app->player.weapons[1].damage = 25;
-	app->player.weapons[1].range = 15;
+	app->player.weapons[1].damage = 40;
+	app->player.weapons[1].range = 12;
 	app->player.weapons[1].fire_rate = 1;
 	app->player.weapons[1].magazine = 16;
-	app->player.weapons[2].damage = 30;
-	app->player.weapons[2].range = 2;
-	app->player.weapons[2].fire_rate = 2;
-	app->player.weapons[2].magazine = 6;
+	app->player.weapons[2].damage = 20;
+	app->player.weapons[2].range = 12;
+	app->player.weapons[2].fire_rate = 4;
+	app->player.weapons[2].magazine = 1;
 }
 
 /**

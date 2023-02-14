@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 18:27:42 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/14 15:34:13 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:51:24 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ void	define_bullets(t_app *app)
 	app->bullet_def[3].damage = 25.f;
 	app->bullet_def[3].size = (t_vector2){0.5f, 0.5f};
 	app->bullet_def[4].speed = 100.f;
-	app->bullet_def[4].damage = 1.f;
+	app->bullet_def[4].damage = 40.f;
 	app->bullet_def[4].size = (t_vector2){0.5f, 0.5f};
 	app->bullet_def[5].speed = 8.f;
-	app->bullet_def[5].damage = 25.f;
+	app->bullet_def[5].damage = 30.f;
 	app->bullet_def[5].size = (t_vector2){0.5f, 0.5f};
 	app->bullet_def[6].speed = 10.f;
 	app->bullet_def[6].damage = 25.f;
 	app->bullet_def[6].size = (t_vector2){0.5f, 0.5f};
 	app->bullet_def[7].speed = 50.f;
-	app->bullet_def[7].damage = 25.f;
+	app->bullet_def[7].damage = 20.f;
 	app->bullet_def[7].size = (t_vector2){0.5f, 0.5f};
 }
 
