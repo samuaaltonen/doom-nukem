@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_weapons.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 18:27:42 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/08 18:29:24 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/14 15:34:13 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 void	define_bullets(t_app *app)
 {
 	app->bullet_def[0].speed = 5.f;
-	app->bullet_def[0].damage = 25.f;
+	app->bullet_def[0].damage = 20.f;
 	app->bullet_def[0].size = (t_vector2){0.5f, 0.5f};
 	app->bullet_def[1].speed = 5.f;
 	app->bullet_def[1].damage = 25.f;

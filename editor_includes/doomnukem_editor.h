@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/08 16:00:21 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/14 14:57:13 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -459,7 +459,7 @@ void			render_ui_frame(t_app *app, t_rect area, int size,
 void			color_surface(SDL_Surface *surface, int color);
 void			change_item_amount(t_app *app, SDL_Keycode key);
 void			render_weapons(t_app *app);
-void			render_object_statics(t_app *app);
+void			render_object_statics(t_app *app, int health, int damage);
 void			render_icons(t_app *app, t_point point, int id,
 					SDL_Surface *asset);
 t_bool			current_decor_interaction(t_app *app, t_point mouse, int id);
