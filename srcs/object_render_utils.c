@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_render_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 20:54:45 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 16:40:16 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/15 16:50:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,14 +69,10 @@ void	object_frame(t_app *app, t_vector2 dir, t_render_object *object)
 void	init_draw_area(t_render_object *object)
 {
 	object->draw_start = object->start;
-	if (object->draw_start.x < 0)
-		object->draw_start.x = 0;
-	if (object->draw_start.y < 0)
-		object->draw_start.y = 0;
-	if (object->end.x >= WIN_W)
-		object->end.x = WIN_W - 1;
-	if (object->end.y >= WIN_H)
-		object->end.y = WIN_H - 1;
+	clamp_int(&object->draw_start.x, 0, WIN_W - 1);
+	clamp_int(&object->draw_start.y, 0, WIN_W - 1);
+	clamp_int(&object->end.x, 0, WIN_W - 1);
+	clamp_int(&object->end.y, 0, WIN_W - 1);
 }
 
 /**
