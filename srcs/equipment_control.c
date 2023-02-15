@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 21:05:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/10 16:37:45 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:22:32 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,23 +49,25 @@ void	weapon(t_app *app, SDL_Keycode keycode)
 
 	weapon = 0;
 	if (keycode == SDLK_1 && app->player.weapons & 0b00000001)
-		weapon = 0;
-	if (keycode == SDLK_2 && app->player.weapons & 0b00000010)
 		weapon = 1;
-	if (keycode == SDLK_3 && app->player.weapons & 0b00000100)
+	else if (keycode == SDLK_2 && app->player.weapons & 0b00000010)
 		weapon = 2;
-	if (app->player.weapons & 0b00000001 && weapon == 0)
+	else if (keycode == SDLK_3 && app->player.weapons & 0b00000100)
+		weapon = 3;
+	if (app->player.weapons & 0b00000001 && weapon == 1)
 		app->hand.equipped = 1;
-	else if (app->player.weapons & 0b00000010 && weapon == 1)
+	else if (app->player.weapons & 0b00000010 && weapon == 2)
 		app->hand.equipped = 2;
-	else if (app->player.weapons & 0b00000100 && weapon == 2)
+	else if (app->player.weapons & 0b00000100 && weapon == 3)
 		app->hand.equipped = 3;
-	if (app->hand.equipped == 0)
-		return ;
+	else if (weapon == 0)
+		app->hand.equipped = 0;
 	app->player.equipped_weapon.type = app->weapons_def[weapon].type;
 	app->player.equipped_weapon.magazine = app->weapons_def[weapon].magazine;
 	app->player.equipped_weapon.fire_rate = app->weapons_def[weapon].fire_rate;
 	start_timer(&app->shoot_timer, 2.0f);
+	if (app->hand.equipped == 0)
+		return ;
 	if (app->player.equipped_weapon.magazine <= app->player.inventory.ammo)
 		app->player.equipped_weapon.ammo = app->player.equipped_weapon.magazine;
 	else

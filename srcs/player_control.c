@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   player_control.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/14 15:58:19 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:52:39 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
+
+static void	use_ammo(t_app *app);
 
 static void	jetpack_handle(t_app *app)
 {
@@ -91,8 +93,8 @@ void	handle_movement(t_app *app)
 
 void	player_shoot(t_app *app)
 {
-	if (check_timer(&app->shoot_timer) && (app->player.equipped_weapon.ammo > 0
-			|| (app->hand.equipped == 3 && app->player.inventory.energy > 50)))
+	if (check_timer(&app->shoot_timer) && ((app->hand.equipped > 0 && app->player.equipped_weapon.ammo > 0)
+			|| (app->hand.equipped == 3 && app->player.inventory.energy >= 50)))
 	{
 		fire(app, (t_vector3){app->player.dir.x, app->player.dir.y,
 			(app->player.horizon - 0.5f)}, (t_vector3){app->player.pos.x,
@@ -100,20 +102,31 @@ void	player_shoot(t_app *app)
 			+ app->player.height / 2},
 			(t_point){app->player.equipped_weapon.type, app->player.sector});
 		add_fire_movement(app);
-		if (app->hand.equipped == 3)
-		{
-			app->player.inventory.energy -= 50;
-			play_sound(app, AUDIO_LASER);
-		}
-		else
-		{
-			play_sound(app, AUDIO_SHOT);
-			app->player.equipped_weapon.ammo--;
-			app->player.inventory.ammo--;
-		}
+		use_ammo(app);
 		start_timer(&app->shoot_timer, app->player.equipped_weapon.fire_rate);
 	}
 	else if (app->player.equipped_weapon.ammo <= 0
 		&& app->player.inventory.ammo > 0)
 		player_reload(app);
+}
+
+static void	use_ammo(t_app *app)
+{
+	if (app->hand.equipped == 1)
+	{
+		play_sound(app, AUDIO_SHOT);
+		app->player.equipped_weapon.ammo--;
+		app->player.inventory.ammo--;
+	}
+	else if (app->hand.equipped == 2)
+	{
+		play_sound(app, AUDIO_BUMP);
+		app->player.equipped_weapon.ammo--;
+		app->player.inventory.ammo -=5;
+	}
+	else if (app->hand.equipped == 3)
+	{
+		play_sound(app, AUDIO_LASER);
+		app->player.inventory.energy -= 50;
+	}
 }
