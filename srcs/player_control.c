@@ -6,7 +6,7 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:41:20 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/15 17:52:39 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:36:31 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,8 @@ void	handle_movement(t_app *app)
 
 void	player_shoot(t_app *app)
 {
-	if (check_timer(&app->shoot_timer) && ((app->hand.equipped > 0 && app->player.equipped_weapon.ammo > 0)
+	if (check_timer(&app->shoot_timer) && ((app->hand.equipped > 0
+				&& app->player.equipped_weapon.ammo > 0)
 			|| (app->hand.equipped == 3 && app->player.inventory.energy >= 50)))
 	{
 		fire(app, (t_vector3){app->player.dir.x, app->player.dir.y,
@@ -122,7 +123,7 @@ static void	use_ammo(t_app *app)
 	{
 		play_sound(app, AUDIO_BUMP);
 		app->player.equipped_weapon.ammo--;
-		app->player.inventory.ammo -=5;
+		app->player.inventory.ammo -= 5;
 	}
 	else if (app->hand.equipped == 3)
 	{
