@@ -6,11 +6,13 @@
 /*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 21:05:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/15 17:22:32 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:39:18 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
+
+static void	set_ammo(t_app *app);
 
 void	player_reload(t_app *app)
 {
@@ -68,6 +70,11 @@ void	weapon(t_app *app, SDL_Keycode keycode)
 	start_timer(&app->shoot_timer, 2.0f);
 	if (app->hand.equipped == 0)
 		return ;
+	set_ammo(app);
+}
+
+static void	set_ammo(t_app *app)
+{
 	if (app->player.equipped_weapon.magazine <= app->player.inventory.ammo)
 		app->player.equipped_weapon.ammo = app->player.equipped_weapon.magazine;
 	else
