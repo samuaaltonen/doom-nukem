@@ -1,2 +1,39 @@
-Hello!
-A bitmap image file loaded into memory becomes a DIB data structure – an important component of the Windows GDI API. The in-memory DIB data structure is almost the same as the BMP file format, but it does not contain the 14-byte bitmap file header and begins with the DIB header. For DIBs loaded in memory, the color table can also consist of 16-bit entries that constitute indexes to the currently realized palette[8] (an additional level of indirection), instead of explicit RGB color definitions.
+—————— Intro
+The year is 2157. Humanity has colonized several planets in the galaxy, but the terraforming process has gone wrong on one of them. Strange creatures now roam the surface. You are the sole member of a special unit sent to investigate the source of the problem, but you soon realize that the horrors you face may be beyond what anyone could have imagined.
+——— Encounters Forest/Outside
+The twisted forests are silent, except for the whispers of an entity that haunts your every step.
+——— Encounters Research Facility
+As you explore the planet, you come across a research facility that may hold the key to understanding what went wrong.
+The facility is filled with notes and recordings left by the scientists who once worked there, but as you delve deeper, you realize that the true source of the terraforming failure is far more sinister than anything they could have imagined.
+The research facility is a maze of dark hallways and laboratories, hiding secrets that could mean the difference between life and death.
+As you make your way through the facility, you encounter the twisted creatures that once were the scientists. They attack without mercy, driven by the entity's will.
+——— Encounters Outpost
+You find a distress signal coming from a remote outpost, but as you approach, you realize that something has gone terribly wrong.
+The outpost is silent, except for the sounds of something moving in the shadows.
+——————— Encounters Generic
+Those twisted, mutated beings were once human colonists, now reduced to cannibalistic monsters that attack on sight.
+Your strength is quickly dwindling as you fight to survive and uncover the truth behind the mysterious terraforming failure.
+The most terrifying monster of all is the entity controlling the planet from the shadows. A powerful, ancient being that feeds on fear and death, it has been manipulating the terraforming process for its own twisted purposes.
+The entity sends is spawns of indescribable monsters to protect itself. Will you become one of its thralls, or will you risk everything to put an end to the terror once and for all?
+You discover that the entity was feeding on the fear and suffering of those trapped on the planet.
+The recordings reveal that the entity had been manipulating the scientists, using its powers to control their minds and force them to continue the terraforming process even as it became clear that it was causing more harm than good.
+The entity wanted to create a world where it could thrive, feeding on the fear and suffering of those trapped on the planet.
+You find a logbook left behind by a scientist, detailing their descent into madness under the entity's control.
+The mutated beings are relentless in their pursuit, driven by the entity's thirst for fear and death.
+You hear the entity's laughter echoing in your mind, a promise of the horrors to come.
+You come across a room filled with the remnants of a massacre, the walls are grotesque and the air thick with the smell of death.
+You find a cache of weapons and supplies left behind by a previous team, but you wonder what happened to them.
+The entity's influence can be felt everywhere, corrupting everything it touches.
+You catch a glimpse of a twisted creature lurking in the shadows, its glowing eyes watching your every move.
+———— Encounters Big Battle
+You are able to fight your way through and uncover the location of the entity's lair.
+The lair is a massive, dark chamber filled with a pulsing energy that makes your skin crawl.
+The entity's lair is a pulsing, dark heart at the center of the planet's corruption.
+As you approach, you can feel the entity's malevolent presence, watching you, waiting for you to make a mistake. But you have come too far to turn back now, and you steel yourself for the final showdown.
+With each blow, you can feel its power waning.
+————— Ending
+In the end, you are able to destroy the entity and bring an end to the terror that has plagued the planet.
+As you make your way back to the escape pod, you know that the memories of what you encountered will stay with you forever.
+The escape pod is a beacon of hope, but you know that the memories of what you encountered will never truly leave you.
+The planet's surface is scarred by the terraforming gone wrong, a testament to the entity's destructive power.
+The memory of what you encountered there haunts you, a warning to all those who would dare to venture into the unknown reaches of space.
