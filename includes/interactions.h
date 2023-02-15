@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interactions.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 16:47:58 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/12 19:42:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:13:52 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 # define ANIMATION_DURATION_HEIGHT 0.25 // seconds per meter
 # define ANIMATION_DURATION_TEXT 0.015625 // seconds per char
 # define ANIMATION_DURATION_TEXT_END 3.5 // seconds after full text displayed
-# define MAX_TEXT_LINES 16
+# define MAX_TEXT_LINES 40
 # define MAX_TEXT_LINE_LENGTH 512
 
 /**
