@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_enemies.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 19:38:34 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/14 15:33:32 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:28:32 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,7 @@ void	init_enemies(t_app *app)
 			enemy->pos = app->objects[i].position;
 			enemy->dead = FALSE;
 			enemy->agressive = FALSE;
+			enemy->target_elevation = app->objects[i].elevation;
 			enemy++;
 			enemy_count++;
 		}
