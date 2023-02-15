@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textmodal.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 13:26:54 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/06 15:03:43 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:59:39 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static t_rect	get_text_prompt_size(int char_count, int total)
 {
 	t_rect	area;
 
-	area.w = total * 10;
+	area.w = total * 12;
 	if (area.w > WIN_W / 2)
 		area.w = WIN_W / 2;
 	area.w += 24;
@@ -48,7 +48,7 @@ void	render_textmodals(t_app *app)
 		return ;
 	char_count = (int)(app->textmodal.progress / ANIMATION_DURATION_TEXT);
 	if (char_count >= app->text_lengths[app->textmodal.text] - 1)
-		char_count = app->text_lengths[app->textmodal.text] - 1;
+		char_count = app->text_lengths[app->textmodal.text];
 	if (char_count <= 0)
 		return ;
 	char_save = app->texts[app->textmodal.text][char_count];

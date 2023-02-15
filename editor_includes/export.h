@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/08 16:55:52 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/15 18:38:21 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@
 # define SOUND_RELOAD_PATH	"assets/sounds/pistol_reload.wav"
 # define SOUND_BUMP_PATH	"assets/sounds/bump.wav"
 # define TEXTS_PATH			"assets/texts/texts.txt"
-# define MAX_TEXT_LINES 16
+# define MAX_TEXT_LINES 42
 # define MAX_TEXT_LINE_LENGTH 512
 # define MAX_SMALL_OBJECTS 8
 # define MAX_BIG_OBJECTS 7

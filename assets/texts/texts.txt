@@ -1,6 +1,6 @@
 —————— Intro
 The year is 2157. Humanity has colonized several planets in the galaxy, but the terraforming process has gone wrong on one of them. Strange creatures now roam the surface. You are the sole member of a special unit sent to investigate the source of the problem, but you soon realize that the horrors you face may be beyond what anyone could have imagined.
-——— Encounters Forest/Outside
+——— Encounters Forest/Outside 
 The twisted forests are silent, except for the whispers of an entity that haunts your every step.
 ——— Encounters Research Facility
 As you explore the planet, you come across a research facility that may hold the key to understanding what went wrong.
