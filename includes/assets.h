@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assets.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/14 15:53:50 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:12:52 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@
 # define PROGRESS_BAR_FRAME_COLOR	0xff0099f2
 # define PROGRESS_BAR_COLOR			0xff00def2
 # define MAX_SPRITES 7
-# define WEAPON_COUNT 3
+# define WEAPON_COUNT 4
 
 enum e_export_assets
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_weapons.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/08 18:27:42 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/14 16:22:04 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/15 17:55:29 by dpalacio         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,13 +47,16 @@ void	define_bullets(t_app *app)
 
 void	define_weapons(t_app *app)
 {
-	app->weapons_def[0].type = 4;
-	app->weapons_def[0].magazine = WEAPON1_MAG;
-	app->weapons_def[0].fire_rate = 0.3f;
-	app->weapons_def[1].type = 5;
-	app->weapons_def[1].magazine = WEAPON2_MAG;
+	app->weapons_def[0].type = 0;
+	app->weapons_def[0].magazine = 0;
+	app->weapons_def[0].fire_rate = 0.f;
+	app->weapons_def[1].type = 4;
+	app->weapons_def[1].magazine = WEAPON1_MAG;
 	app->weapons_def[1].fire_rate = 0.1f;
-	app->weapons_def[2].type = 7;
-	app->weapons_def[2].magazine = WEAPON3_MAG;
-	app->weapons_def[2].fire_rate = 0.4f;
+	app->weapons_def[2].type = 5;
+	app->weapons_def[2].magazine = WEAPON2_MAG;
+	app->weapons_def[2].fire_rate = 1.5f;
+	app->weapons_def[3].type = 7;
+	app->weapons_def[3].magazine = WEAPON3_MAG;
+	app->weapons_def[3].fire_rate = 1.f;
 }
