@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 19:13:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/15 15:52:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,15 +83,21 @@ void	*sector_render_thread(void *data)
  * @param source 
  * @param target 
  */
-static void	copy_occlusion(t_app *app, int *top, int *bottom)
+static void	copy_occlusion(t_app *app, int **top, int **bottom)
 {
 	int	i;
 
 	i = 0;
+	*top = (int *)malloc(WIN_W * sizeof(int));
+	if (!*top)
+		exit_error(MSG_ERROR_ALLOC);
+	*bottom = (int *)malloc(WIN_W * sizeof(int));
+	if (!*bottom)
+		exit_error(MSG_ERROR_ALLOC);
 	while (i < WIN_W)
 	{
-		bottom[i] = app->occlusion_bottom[i];
-		top[i] = app->occlusion_top[i];
+		(*bottom)[i] = app->occlusion_bottom[i];
+		(*top)[i] = app->occlusion_top[i];
 		i++;
 	}
 }
@@ -108,14 +114,14 @@ static void	copy_occlusion(t_app *app, int *top, int *bottom)
 static void	sector_render_wall(t_app *app, t_thread_data *thread, t_limit limit,
 	t_wall *wall)
 {
-	int		top[WIN_W];
-	int		bottom[WIN_W];
+	int	*top;
+	int	*bottom;
 
 	sector_walls_raycast(app, thread, (t_raycast_info){wall, limit,
 		app->occlusion_top, app->occlusion_bottom});
 	if (app->sectors[wall->sector_id].wall_textures[wall->wall_id]
 		<= PARTIALLY_TRANSPARENT_TEXTURE_ID)
-		copy_occlusion(app, (int *)&top, (int *)&bottom);
+		copy_occlusion(app, &top, &bottom);
 	if (wall->is_portal && wall->is_inside && !wall->is_member
 		&& wall->already_passed[thread->id] < MAX_SECTOR_CORNERS)
 	{
@@ -127,8 +133,12 @@ static void	sector_render_wall(t_app *app, t_thread_data *thread, t_limit limit,
 	}
 	if (app->sectors[wall->sector_id].wall_textures[wall->wall_id]
 		<= PARTIALLY_TRANSPARENT_TEXTURE_ID)
+	{
 		sector_walls_raycast_transparent(app, thread, (t_raycast_info){
-			wall, limit, (int *)&top, (int *)&bottom});
+			wall, limit, top, bottom});
+		free(top);
+		free(bottom);
+	}
 }
 
 /**
