@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   app.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 14:36:18 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 16:22:06 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/16 15:03:35 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ static void	render_selected(t_app *app)
 		render_sector(app, app->active, NULL);
 		render_point(app, app->active->point, 3, POINT);
 		draw_circle(app, world_to_screen(app, app->active->point), 4, POINT);
+		if (app->active->type >= 0)
+			render_fill_sector(app, sector_by_index(app, app->active->type),
+				PORTAL_LINK_TARGET);
 	}
 	if (app->interaction_menu && app->current_interaction)
 		render_target_sector_lines(app);
@@ -107,7 +110,7 @@ void	app_render(t_app *app)
 	handle_movement(app);
 	app->view_end.x = app->view_start.x + app->view_size.x;
 	app->view_end.y = app->view_start.y + app->view_size.y;
-	render_fill_active_sector(app);
+	render_fill_sector(app, app->active_sector, GREY);
 	render_divider(app);
 	render_sectors(app);
 	render_selected(app);

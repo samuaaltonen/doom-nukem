@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/14 14:57:13 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/16 15:03:01 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,6 +82,7 @@ enum e_keystate {
 enum e_colors {
 	PORTAL = 0xFF0000,
 	PORTAL_LINK = 0x008C00,
+	PORTAL_LINK_TARGET = 0x001B00,
 	WALL = 0x999999,
 	CEILING_ROTATE = 0x888888,
 	FLOOR_ROTATE = 0x777777,
@@ -96,7 +97,8 @@ enum e_colors {
 	UI_FRAME = 0xFF00FFFF,
 	POINT = 0xFF00FF,
 	INTERACTION = 0x5050FF,
-	LINK = 0xF987C5
+	LINK = 0xF987C5,
+	GREY = 0x202020
 };
 
 typedef struct s_draw_line
@@ -308,7 +310,8 @@ void			render_sectors(t_app *app);
 void			render_point(t_app *app, t_vector2 point, int size, int color);
 void			render_decor(t_app *app, t_wall_list *wall, int color);
 void			render_sector_points(t_app *app);
-void			render_fill_active_sector(t_app *app);
+void			render_fill_sector(t_app *app, t_sector_list *sector,
+					int color);
 void			draw_list_lines(t_app *app, t_wall_list *a,
 					t_wall_list *b, int color);
 void			draw_line(t_app *app, t_vector2 *a, t_vector2 *b, int color);

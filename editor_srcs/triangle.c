@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   triangle.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 15:52:24 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/16 15:22:08 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/16 15:26:01 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,17 @@ static void	calculate_bot(t_triangle triangle, t_point *pos,
 	pos->x = hor->x - 1;
 }
 
+static t_bool	init_fill_triangle(t_triangle *triangle, t_point *heights,
+		t_point *pos)
+{
+	if (!sort_triangle(&triangle->a, &triangle->b, &triangle->c))
+		return (FALSE);
+	heights->x = triangle->c.y - triangle->a.y;
+	heights->y = triangle->b.y - triangle->a.y + 1;
+	pos->y = triangle->a.y - 1;
+	return (TRUE);
+}
+
 /**
  * @brief sorts the points by Y height, one side of the triangle is
  * to the full height of the triange (total_height),
@@ -105,24 +116,24 @@ void	fill_triangle(t_app *app, t_triangle triangle, int color)
 	t_point		hor;
 	t_point		heights;
 
-	if (sort_triangle(&triangle.a, &triangle.b, &triangle.c))
+	if (!init_fill_triangle(&triangle, &heights, &pos))
+		return ;
+	while (++pos.y <= triangle.b.y)
 	{
-		heights.x = triangle.c.y - triangle.a.y;
-		heights.y = triangle.b.y - triangle.a.y + 1;
-		pos.y = triangle.a.y - 1;
-		while (++pos.y <= triangle.b.y)
-		{
-			calculate_top(triangle, &pos, &heights, &hor);
-			while (++pos.x <= hor.y)
-				put_pixel_to_surface(app->surface, pos.x, pos.y, color);
-		}
-		heights.y = triangle.c.y - triangle.b.y + 1;
-		pos.y = triangle.b.y - 1;
-		while (++pos.y <= triangle.c.y)
-		{
-			calculate_bot(triangle, &pos, &heights, &hor);
-			while (++pos.x <= hor.y)
-				put_pixel_to_surface(app->surface, pos.x, pos.y, color);
-		}
+		calculate_top(triangle, &pos, &heights, &hor);
+		while (++pos.x <= hor.y)
+			put_pixel_to_surface(app->surface, pos.x, pos.y,
+				blend_pixel_half((t_colors)get_pixel_color(
+						app->surface, pos.x, pos.y), (t_colors)color));
+	}
+	heights.y = triangle.c.y - triangle.b.y + 1;
+	pos.y = triangle.b.y - 1;
+	while (++pos.y <= triangle.c.y)
+	{
+		calculate_bot(triangle, &pos, &heights, &hor);
+		while (++pos.x <= hor.y)
+			put_pixel_to_surface(app->surface, pos.x, pos.y,
+				blend_pixel_half((t_colors)get_pixel_color(
+						app->surface, pos.x, pos.y), (t_colors)color));
 	}
 }

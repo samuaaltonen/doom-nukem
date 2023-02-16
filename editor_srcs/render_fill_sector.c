@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_fill_sector.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:55:36 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/16 15:04:51 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,24 +74,20 @@ static void	color_sector(t_app *app, t_sector_list *sector, int color)
 
 /**
  * @brief Makes triangles for rendering from a sector
- * WIP atm only renders a rectangle bounding the sector
  * 
  * @param app 
  */
-void	render_fill_active_sector(t_app *app)
+void	render_fill_sector(t_app *app, t_sector_list *sector, int color)
 {
 	t_point		min;
 	t_point		max;
-	int			color;
 
-	color = 0x202020;
-	if (interaction_sector_check(app, app->active_sector))
+	if (sector == NULL)
+		return ;
+	if (interaction_sector_check(app, sector) && color == GREY)
 		color = INTERACTION;
 	min = (t_point){0, 0};
 	max = (t_point){0, 0};
-	if (app->active_sector)
-	{
-		sector_bounds(app, app->active_sector, &min, &max);
-		color_sector(app, app->active_sector, color);
-	}
+	sector_bounds(app, sector, &min, &max);
+	color_sector(app, sector, color);
 }
