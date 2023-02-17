@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 15:47:45 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/15 15:52:49 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/17 14:33:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,10 +126,10 @@ static void	sector_render_wall(t_app *app, t_thread_data *thread, t_limit limit,
 		&& wall->already_passed[thread->id] < MAX_SECTOR_CORNERS)
 	{
 		wall->already_passed[thread->id]++;
-		sector_stack_render(app, thread,
-			app->sectors[wall->wall_type].stack_index,
-			(t_limit){ft_max(wall->start_x, limit.start),
-			ft_min(wall->end_x, limit.end)});
+		if (ft_max(wall->start_x, limit.start) < ft_min(wall->end_x, limit.end))
+			sector_stack_render(app, thread, app->sectors[wall->wall_type].\
+				stack_index, (t_limit){ft_max(wall->start_x, limit.start),
+				ft_min(wall->end_x, limit.end)});
 	}
 	if (app->sectors[wall->sector_id].wall_textures[wall->wall_id]
 		<= PARTIALLY_TRANSPARENT_TEXTURE_ID)

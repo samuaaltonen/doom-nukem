@@ -6,40 +6,11 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 14:38:55 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 21:36:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/17 14:13:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
-
-/**
- * @brief Returns TRUE if a sector has already been visited. If not, sets sector
- * as visited.
- * 
- * @param visited 
- * @param sector_id 
- * @return t_bool 
- */
-static t_bool	has_been_visited(int *visited, int sector_id)
-{
-	int	i;
-
-	i = 0;
-	while (i < MAX_VISIBLE_SECTORS)
-	{
-		if (visited[i] == -1)
-			break ;
-		if (visited[i] == sector_id)
-			return (TRUE);
-		i++;
-	}
-	if (i == MAX_VISIBLE_SECTORS)
-		return (TRUE);
-	visited[i] = sector_id;
-	if (i < MAX_VISIBLE_SECTORS - 1)
-		visited[i + 1] = -1;
-	return (FALSE);
-}
 
 /**
  * @brief Orders wallstack.
@@ -79,22 +50,21 @@ void	sector_wallstack_build(t_app *app)
 {
 	int	i;
 
-	app->wallstack.visited[0] = -1;
 	if (app->sectors[app->player.sector].parent_sector == -1)
 		app->wallstack.interesting[0] = app->player.sector;
 	else
 		app->wallstack.interesting[0]
 			= app->sectors[app->player.sector].parent_sector;
+	app->wallstack.visited[0] = app->wallstack.interesting[0];
+	app->wallstack.visited[1] = -1;
 	app->wallstack.interesting_count = 1;
 	i = 0;
 	while (i < app->wallstack.interesting_count && i < MAX_VISIBLE_SECTORS - 1)
 	{
 		app->wallstack.wall_count[i] = 0;
 		app->wallstack.wall_count[i + 1] = -1;
-		if (!has_been_visited((int *)&app->wallstack.visited,
-				app->wallstack.interesting[i]))
-			sector_visible_walls(app, &app->wallstack, i,
-				app->wallstack.interesting[i]);
+		sector_visible_walls(app, &app->wallstack, i,
+			app->wallstack.interesting[i]);
 		i++;
 	}
 	sector_wallstack_order(app);

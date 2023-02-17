@@ -6,11 +6,40 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:49:36 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/31 18:54:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/17 14:13:33 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
+
+/**
+ * @brief Returns TRUE if a sector has already been visited. If not, sets sector
+ * as visited.
+ * 
+ * @param visited 
+ * @param sector_id 
+ * @return t_bool 
+ */
+static t_bool	has_been_visited(int *visited, int sector_id)
+{
+	int	i;
+
+	i = 0;
+	while (i < MAX_VISIBLE_SECTORS)
+	{
+		if (visited[i] == -1)
+			break ;
+		if (visited[i] == sector_id)
+			return (TRUE);
+		i++;
+	}
+	if (i == MAX_VISIBLE_SECTORS)
+		return (TRUE);
+	visited[i] = sector_id;
+	if (i < MAX_VISIBLE_SECTORS - 1)
+		visited[i + 1] = -1;
+	return (FALSE);
+}
 
 /**
  * @brief Returns TRUE if given line has any part visible to player.
@@ -127,7 +156,9 @@ void	sector_visible_walls(t_app *app, t_wallstack *wallstack, int index,
 	i = -1;
 	while (++i < sector->corner_count)
 	{
-		if (sector->parent_sector == -1 && sector->wall_types[i] != -1)
+		if (sector->parent_sector == -1 && sector->wall_types[i] != -1
+			&& !has_been_visited((int *)&app->wallstack.visited,
+				sector->wall_types[i]))
 		{
 			wallstack->interesting[wallstack->interesting_count]
 				= sector->wall_types[i];
