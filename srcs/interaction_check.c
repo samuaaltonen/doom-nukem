@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:06:37 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 19:37:17 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/17 17:05:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,6 +150,13 @@ void	interaction_check_portal(t_app *app, int sector_id)
 		if (app->interactions[i].activation_sector == sector_id
 			&& app->interactions[i].activation_wall == -1
 			&& check_key_requirement(app, &app->interactions[i]))
+		{
+			if (app->interactions[i].event_id == EVENT_END_LEVEL)
+			{
+				interaction_trigger(app, i);
+				break ;
+			}
 			interaction_trigger(app, i);
+		}
 	}
 }
