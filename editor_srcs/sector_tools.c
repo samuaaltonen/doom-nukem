@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:53:18 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/17 16:33:23 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,15 @@ int	get_sector_id(t_app *app, t_sector_list *sector)
 t_sector_list	*click_sector(t_app *app)
 {
 	t_sector_list	*tmp;
+	t_point			mouse_screen;
+	t_vector2		mouse_pos;
 
+	SDL_GetMouseState(&mouse_screen.x, &mouse_screen.y);
+	mouse_pos = screen_to_world(app, mouse_screen);
 	tmp = app->sectors;
 	while (tmp)
 	{
-		if (inside_sector_check(tmp, &app->mouse_track))
+		if (inside_sector_check(tmp, &mouse_pos))
 		{
 			while (tmp->parent_sector)
 			{
