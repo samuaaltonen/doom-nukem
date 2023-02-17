@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   config.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:31:03 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/14 15:15:02 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/17 15:06:56 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define MIN_SECTOR_CORNERS 3
 # define MAX_SECTOR_CORNERS 16
 # define MAX_MEMBER_SECTORS 16
-# define MAX_VISIBLE_SECTORS 64
+# define MAX_VISIBLE_SECTORS 92
 # define MAX_VISIBLE_WALLS 256
 # define MAX_VIEW_DISTANCE 1280.0
 # define MAX_LINE_LENGTH 1048576.0

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:06:52 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 16:48:41 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/17 15:38:12 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,9 @@ static void	interaction_trigger_text(t_app *app, t_interaction *interaction,
 	if (app->textmodal.text < 0 || app->textmodal.text >= MAX_TEXT_LINES
 		|| app->text_lengths[app->textmodal.text] == 0)
 		return ;
+	if (app->textmodal.trigger_after != -1)
+		interaction_trigger(app, app->textmodal.trigger_after);
+	app->textmodal.progress = 0.0;
 	app->textmodal.duration = (double)app->text_lengths[app->textmodal.text]
 		* ANIMATION_DURATION_TEXT + ANIMATION_DURATION_TEXT_END;
 	app->textmodal.trigger_after = interaction->interaction_link;
@@ -126,7 +129,7 @@ void	interaction_trigger(t_app *app, int interaction_index)
 
 	interaction = &app->interactions[interaction_index];
 	variable = interaction->variable;
-	if (interaction->event_id == EVENT_DISPLAY_TEXT && !app->textmodal.duration)
+	if (interaction->event_id == EVENT_DISPLAY_TEXT)
 		interaction_trigger_text(app, interaction, variable);
 	if (interaction->event_id == EVENT_TRIGGER_SOUND
 		&& (int)variable >= 0 && (int)variable < 3)
