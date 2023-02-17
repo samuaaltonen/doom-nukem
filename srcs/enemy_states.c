@@ -6,7 +6,7 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:30:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 16:25:53 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/17 19:34:59 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	check_enemy(t_app *app, t_enemy_state *state, int define)
 		state->agressive = TRUE;
 	else if (state->agressive && (in_range(app->player.pos,
 				app->objects[state->id].position, 10.f)
-			|| in_range_height(app->player.elevation,
+			&& in_range_height(app->player.elevation,
 				app->objects[state->id].elevation, 7.f)))
 	{
 		turn_enemy(app, state);
@@ -66,7 +66,10 @@ static void	check_enemy(t_app *app, t_enemy_state *state, int define)
 			state->next = WALK;
 	}
 	else
+	{
 		state->agressive = FALSE;
+		state->next = IDLE;
+	}
 }
 
 /**

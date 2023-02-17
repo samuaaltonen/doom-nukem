@@ -6,29 +6,11 @@
 /*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 22:30:02 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 14:06:37 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/17 19:37:16 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
-
-static void	init_colliders(t_app *app, t_enemy_state *enemy,
-		t_vector2 *colliders, int *collider)
-{
-	*collider = -1;
-	colliders[0] = (t_vector2){app->objects[enemy->id].position.x
-		- ENEMY_COLLISION + 0.01f, app->objects[enemy->id].position.y
-		- ENEMY_COLLISION};
-	colliders[1] = (t_vector2){app->objects[enemy->id].position.x
-		+ ENEMY_COLLISION, app->objects[enemy->id].position.y
-		- ENEMY_COLLISION};
-	colliders[2] = (t_vector2){app->objects[enemy->id].position.x
-		- ENEMY_COLLISION + 0.01f, app->objects[enemy->id].position.y
-		+ ENEMY_COLLISION};
-	colliders[3] = (t_vector2){app->objects[enemy->id].position.x
-		+ ENEMY_COLLISION, app->objects[enemy->id].position.y
-		+ ENEMY_COLLISION};
-}
 
 static void	member_wall_hits(t_app *app, t_enemy_state *enemy, t_bool *hits,
 		t_vector2 *colliders)
@@ -85,12 +67,36 @@ static void	parent_wall_hits(t_app *app, t_enemy_state *enemy, t_bool *hits,
 	}
 }
 
-static void	collect_hits(t_app *app, t_enemy_state *enemy, t_bool *hits,
+static t_bool	main_wall_hit(t_app *app, t_enemy_state *enemy,
+		t_vector2 *collider, int wall_id)
+{
+	t_line	wall_line;
+
+	wall_line = get_wall_line(app, app->objects[enemy->id].sector, wall_id);
+	if (!ft_line_side(wall_line, *collider))
+		return (FALSE);
+	if (ft_point_on_segment(wall_line,
+			ft_closest_point(*collider, wall_line))
+		&& ((app->sectors[app->objects[enemy->id].sector].wall_types[wall_id]
+				== -1 || app->sectors[app->objects[enemy->id].sector] \
+				.wall_textures[wall_id]
+				<= PARTIALLY_TRANSPARENT_TEXTURE_ID)
+			|| !portal_can_enter(app,
+				(t_vector3){collider->x, collider->y,
+				app->objects[enemy->id].elevation},
+			(t_vector3){app->objects[enemy->id].sector,
+			app->sectors[app->objects[enemy->id].sector] \
+			.wall_types[wall_id],
+			app->objects[enemy->id].elevation})))
+		return (TRUE);
+	return (FALSE);
+}
+
+void	collect_hits(t_app *app, t_enemy_state *enemy, t_bool *hits,
 		t_vector2 *colliders)
 {
 	int		collider;
 	int		i;
-	t_line	wall_line;
 
 	parent_wall_hits(app, enemy, hits, colliders);
 	collider = -1;
@@ -99,13 +105,7 @@ static void	collect_hits(t_app *app, t_enemy_state *enemy, t_bool *hits,
 		i = -1;
 		while (++i < app->sectors[app->objects[enemy->id].sector].corner_count)
 		{
-			wall_line = get_wall_line(app, app->objects[enemy->id].sector, i);
-			if (!ft_line_side(wall_line, colliders[collider]))
-				continue ;
-			if (ft_point_on_segment(wall_line,
-					ft_closest_point(colliders[collider], wall_line))
-				&& app->sectors[app->objects[enemy->id] \
-						.sector].wall_types[i] == -1)
+			if (main_wall_hit(app, enemy, &(colliders[collider]), i))
 			{
 				hits[collider] = TRUE;
 				hits[4] = TRUE;
@@ -113,38 +113,4 @@ static void	collect_hits(t_app *app, t_enemy_state *enemy, t_bool *hits,
 		}
 	}
 	member_wall_hits(app, enemy, hits, colliders);
-}
-
-/**
- * @brief Makes 4 colliders around the enemy, collects which of the colliders
- * 	hit walls, adds them and creates a direction away from the collided points
- * 
- * @param app 
- * @param enemy 
- */
-void	avoid_walls(t_app *app, t_enemy_state *enemy)
-{
-	t_vector2	colliders[4];
-	int			collider;
-	t_bool		hit[5];
-	t_vector2	new;
-
-	init_colliders(app, enemy, (t_vector2 *)colliders, &collider);
-	ft_bzero(&hit, sizeof(hit));
-	collect_hits(app, enemy, (t_bool *)&hit, (t_vector2 *)colliders);
-	if (hit[4])
-	{
-		new = app->objects[enemy->id].position;
-		while (++collider < 4)
-		{
-			if (!hit[collider])
-				continue ;
-			new = ft_vector2_add(new, ft_vector2_sub(colliders[collider],
-						app->objects[enemy->id].position));
-		}
-		enemy->dir = ft_vector2_normalize(ft_vector2_sub(
-					app->objects[enemy->id].position, new));
-		app->objects[enemy->id].rot = ft_vector_angle_left(
-				(t_vector2){0.f, -1.f}, enemy->dir);
-	}
 }

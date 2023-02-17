@@ -6,7 +6,7 @@
 #    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/02/14 15:20:09 by htahvana         ###   ########.fr        #
+#    Updated: 2023/02/17 19:31:37 by htahvana         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,6 +32,7 @@ FILES = animation_create.c \
 		enemy_move.c \
 		enemy_states.c \
 		enemy_utils.c \
+		enemy_collision.c \
 		error.c \
 		events.c \
 		events_key.c \
