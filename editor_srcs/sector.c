@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:36:45 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/20 12:45:20 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_sector_list	*new_sector_list(t_wall_list *wall_list)
 
 	new = (t_sector_list *)ft_memalloc(sizeof(t_sector_list));
 	if (!new)
-		return (NULL);
+		exit_error(MSG_ERROR_ALLOC);
 	tmp = wall_list->next;
 	new->corner_count++;
 	while (tmp != wall_list)
@@ -54,7 +54,7 @@ t_sector_list	*put_sector_list(t_app *app, t_sector_list *new)
 	t_sector_list	*iter;
 
 	if (!new)
-		exit_error("Editor: add_sector_list failed!\n");
+		exit_error(MSG_ERROR_ALLOC);
 	if (app->sectors)
 	{
 		iter = app->sectors;
@@ -66,6 +66,8 @@ t_sector_list	*put_sector_list(t_app *app, t_sector_list *new)
 		app->sectors = new;
 	if (app->sector_count < ((int)ft_lstlen(app->sectors)))
 		app->sector_count++;
+	if (app->sector_count >= MAX_SECTOR_COUNT)
+		exit_error(MSG_ERROR_SECTOR_LIMIT);
 	return (new);
 }
 

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/17 15:37:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/20 12:43:38 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	app_init(t_app **app)
 {
 	*app = (t_app *)malloc(sizeof(t_app));
 	if (!(*app))
-		exit_error(NULL);
+		exit_error(MSG_ERROR_ALLOC);
 	ft_bzero(*app, sizeof(t_app));
 	(*app)->gravity = DEFAULT_GRAVITY;
 	(*app)->textmodal.trigger_after = -1;

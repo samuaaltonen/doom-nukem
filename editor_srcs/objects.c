@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   objects.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 15:53:42 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/08 18:32:03 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/20 12:42:10 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,7 +116,7 @@ void	render_objects(t_app *app)
 int	new_object(t_app *app)
 {
 	if (app->object_count == MAX_OBJECTS)
-		exit_error("MAX OBJECTS reached\n");
+		exit_error(MSG_ERROR_OBJECT_LIMIT);
 	app->objects[app->object_count].var = 0.f;
 	app->objects[app->object_count].position = app->mouse_track;
 	app->objects[app->object_count].sector = app->active_sector;
