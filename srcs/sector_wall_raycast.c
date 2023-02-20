@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:12:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/06 19:34:08 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/20 20:21:31 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,8 @@ void	sector_walls_raycast(t_app *app, t_thread_data *thread,
 
 	raycast_init(app, &info, &hit);
 	x = info.limit.start - 1;
-	while (++x < info.limit.end)
+	while (++x < info.limit.end
+		|| (x <= info.limit.end && info.limit.end == WIN_W - 1))
 	{
 		if (x % THREAD_COUNT != thread->id
 			|| info.occlusion_top[x] + info.occlusion_bottom[x] >= WIN_H
@@ -143,7 +144,8 @@ void	sector_walls_raycast_transparent(t_app *app, t_thread_data *thread,
 
 	raycast_init(app, &info, &hit);
 	x = info.limit.start - 1;
-	while (++x < info.limit.end)
+	while (++x < info.limit.end
+		|| (x <= info.limit.end && info.limit.end == WIN_W - 1))
 	{
 		if (x % THREAD_COUNT != thread->id
 			|| info.occlusion_top[x] + info.occlusion_bottom[x] >= WIN_H
