@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 20:11:57 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/07 18:31:52 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/20 13:12:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ static void	member_export(t_app *app, t_export_sector *export,
 	int		i;
 
 	i = 0;
-	while (sector->member_sectors[i])
+	while (i < MAX_MEMBER_SECTORS && sector->member_sectors[i])
 	{
 		export->member_sectors[i] = get_sector_id(app,
 				sector->member_sectors[i]);
