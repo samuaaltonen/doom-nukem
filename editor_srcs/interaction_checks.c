@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interaction_checks.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:39:08 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/20 11:04:33 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,26 @@ int	interaction_object_check(t_app *app, int id)
 		i++;
 	}
 	return (0);
+}
+
+/**
+ * @brief Counts how many interactions there are in the interaction array.
+ * 
+ * @param app
+ * @return int
+*/
+int	get_interaction_count(t_app *app)
+{
+	int	count;
+	int	index;
+
+	count = 0;
+	index = 0;
+	while (index < MAX_INTERACTIONS)
+	{
+		if (app->interactions[index].event_id > 0)
+			count++;
+		index++;
+	}
+	return (count);
 }

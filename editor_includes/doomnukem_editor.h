@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/16 15:03:01 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/20 11:05:07 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -528,7 +528,7 @@ void			render_link_interaction_info(t_app *app, int start_y,
 					t_point mouse);
 void			render_interaction_link_lines(t_app *app);
 int				get_current_interaction_count(t_app *app, int interaction);
-
+int				get_interaction_count(t_app *app);
 void			fill_triangle(t_app *app, t_triangle triangle, int color);
 
 #endif
