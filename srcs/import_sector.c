@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 14:06:54 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/13 18:55:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/20 18:00:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ static void	import_floor_slope(t_export_sector *export, t_sector *sector)
 
 	if (export->floor_slope_position == -1)
 		return ;
+	if (export->floor_slope_opposite == -1)
+		exit_error(MSG_ERROR_IMPORT_SECTOR);
 	point = sector->corners[export->floor_slope_position];
 	sector->floor_slope_height = export->floor_slope_height
 		- export->floor_height;
@@ -81,6 +83,8 @@ static void	import_ceil_slope(t_export_sector *export, t_sector *sector)
 
 	if (export->ceil_slope_position == -1)
 		return ;
+	if (export->ceil_slope_opposite == -1)
+		exit_error(MSG_ERROR_IMPORT_SECTOR);
 	point = sector->corners[export->ceil_slope_position];
 	sector->ceil_slope_height = export->ceil_slope_height
 		- export->ceil_height;
