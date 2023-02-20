@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:36:17 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/20 13:16:36 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,7 @@ static t_sector_list	*read_sector_list(t_export_sector *export)
 {
 	t_sector_list	*new;
 
-	new = (t_sector_list *)malloc(sizeof(t_sector_list));
+	new = (t_sector_list *)ft_memalloc(sizeof(t_sector_list));
 	if (!new)
 		exit_error(MSG_ERROR_ALLOC);
 	new->corner_count = export->corner_count;
