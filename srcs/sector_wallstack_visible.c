@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/08 15:49:36 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/17 14:13:33 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/20 16:06:24 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,13 +95,13 @@ static void	check_possible_visible(t_app *app, t_wall *walls, int *walls_count,
 	wall.line = get_wall_line(app, wall.sector_id, wall.wall_id);
 	player_side = ft_line_side(wall.line, app->player.pos);
 	if (ft_line_point(wall.line, app->player.pos))
-		player_side = 1;
-	if (!wall.is_member && player_side)
-		return ;
+		player_side = 2;
 	wall.is_portal = FALSE;
 	if (app->sectors[wall.sector_id].wall_types[wall.wall_id] != -1
 		|| wall.is_member)
 		wall.is_portal = TRUE;
+	if ((!wall.is_member || !wall.is_portal) && player_side == 1)
+		return ;
 	if (wall.is_member && !player_side)
 		wall.is_inside = TRUE;
 	if (!has_visible_part(app, wall.line))

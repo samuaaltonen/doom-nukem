@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:06:52 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/17 15:38:12 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/20 15:21:09 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,6 +142,9 @@ void	interaction_trigger(t_app *app, int interaction_index)
 				app->animations[interaction->interaction_link].trigger_after);
 	}
 	if (interaction->event_id == EVENT_END_LEVEL)
-		return (import_change_level(app, (int)variable));
+	{
+		app->change_level = (int)variable;
+		return ;
+	}
 	interaction_trigger_sector(app, interaction, variable);
 }

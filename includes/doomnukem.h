@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/17 19:30:45 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/20 15:20:04 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -241,6 +241,7 @@ typedef struct s_app
 	t_timer				shoot_timer;
 	t_timer				item_timer;
 	t_timer				energy_timer;
+	int					change_level;
 	char				filename[FILE_NAME_LENGTH];
 }	t_app;
 

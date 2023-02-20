@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/06 14:57:35 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/16 15:02:27 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/20 12:43:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,6 @@ t_uint8	*read_source(const char *source, int *source_length)
 		*source_length += read_bytes;
 	}
 	if (close(source_fd) < 0)
-		exit_error(NULL);
+		exit_error(MSG_ERROR_FILE_CLOSE);
 	return (source_data);
 }

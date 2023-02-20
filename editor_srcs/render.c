@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 18:31:47 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/20 15:49:44 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ int	find_wall_match(t_app *app, t_wall_list *wall, t_sector_list *origin)
 	t_wall_list		*target_wall;
 
 	target_sector = sector_by_index(app, wall->type);
+	if (!target_sector)
+		return (FALSE);
 	i = -1;
 	target_wall = target_sector->wall_list;
 	while (++i < target_sector->corner_count + 1)

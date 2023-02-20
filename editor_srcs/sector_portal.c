@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_portal.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 10:58:22 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/20 15:48:29 by htahvana         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ void	del_sector_portals(t_app *app, int deleted)
 		{
 			if (wall->type == deleted && !sector->parent_sector)
 				wall->type = -1;
+			else if (wall->type == deleted && sector->parent_sector)
+				wall->type = get_sector_id(app, sector->parent_sector);
 			if (wall->type > deleted)
 				wall->type--;
 			wall = wall->next;

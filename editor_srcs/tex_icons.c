@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   tex_icons.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/27 15:36:43 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/07 14:10:47 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/20 12:43:18 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,7 @@ static int	find_max(t_app *app, SDL_Surface *asset)
 		return (MAX_DECOR_COUNT);
 	if (asset == app->assets.objects)
 		return (MAX_UNIQUE_OBJECTS);
-	exit_error("Error: Could not display menu icons.");
-	return (FALSE);
+	return (0);
 }
 
 /**

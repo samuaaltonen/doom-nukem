@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_avoidance.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 22:30:02 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/17 19:37:16 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/20 13:27:50 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	member_wall_hits(t_app *app, t_enemy_state *enemy, t_bool *hits,
 	while (++collider < 4)
 	{
 		i = -1;
-		while (current->member_sectors[++i] != -1)
+		while (++i < MAX_MEMBER_SECTORS && current->member_sectors[i] != -1)
 		{
 			if (!inside_sector(app, current->member_sectors[i],
 					colliders[collider])

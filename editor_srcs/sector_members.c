@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 11:47:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/20 13:11:11 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ void	add_member_sector(t_sector_list *parent, t_sector_list *child)
 	i = 0;
 	if (parent && child)
 	{
-		while (parent->member_sectors[i])
+		while (i <= MAX_MEMBER_SECTORS && parent->member_sectors[i])
 			i++;
 		if (i >= MAX_MEMBER_SECTORS)
-			exit_error("Trying to add too many members.\n");
+			exit_error(MSG_ERROR_MEMBER_LIMIT);
 		parent->member_sectors[i] = child;
 	}
 }

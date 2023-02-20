@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:53:18 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/17 16:33:23 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/20 13:36:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,8 +138,11 @@ void	sector_delone(t_sector_list **sector)
 	i = 0;
 	if ((*sector)->parent_sector)
 	{
-		while ((*sector)->parent_sector->member_sectors[i] != *sector)
+		while (i < MAX_MEMBER_SECTORS
+			&& (*sector)->parent_sector->member_sectors[i] != *sector)
 			i++;
+		if (i == MAX_MEMBER_SECTORS)
+			return ;
 		(*sector)->parent_sector->member_sectors[i] = NULL;
 		while (++i < MAX_MEMBER_SECTORS
 			&& (*sector)->parent_sector->member_sectors[i])

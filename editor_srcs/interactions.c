@@ -6,7 +6,7 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/20 11:18:59 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/20 14:00:27 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,12 +62,12 @@ void	interaction_edit(t_app *app, SDL_Keycode keycode)
 	else if (keycode == SDLK_DOWN)
 		app->current_interaction->variable -= app->divider;
 	else if (keycode == SDLK_LEFT
-		&& app->current_interaction->interaction_link > 0)
+		&& get_current_interaction_count(app, id) > 1)
 	{
-		app->current_interaction->interaction_link -= 1;
-		while (app->interactions[id].event_id == 0
-			&& app->current_interaction->interaction_link > -1)
-			app->current_interaction->interaction_link -= 1;
+		id--;
+		while (app->interactions[id].event_id == 0 && id > 0)
+			id--;
+		app->current_interaction->interaction_link = id;
 	}
 	else if (keycode == SDLK_RIGHT
 		&& get_current_interaction_count(app, id) < app->interaction_count)

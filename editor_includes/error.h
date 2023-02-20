@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 13:10:34 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/01 14:47:01 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/20 12:42:04 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,4 +34,7 @@ Usage:\n./editor [level-number]"
 # define MSG_ERROR_LEVEL_DATA "Level data is invalid."
 # define MSG_ERROR_LOAD_IMAGE "Could not load BMP file or the size is invalid."
 # define MSG_ERROR_LOAD_FONT "Could not open font file or the size is invalid."
+# define MSG_ERROR_SECTOR_LIMIT "Sector limit reached."
+# define MSG_ERROR_MEMBER_LIMIT "Member sector limit reached."
+# define MSG_ERROR_OBJECT_LIMIT "Object limit reached."
 #endif
