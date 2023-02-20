@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 15:14:08 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/01 19:38:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/20 15:24:24 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,9 @@ void	render_frame(t_app *app)
 		render_select_level(app);
 	SDL_UpdateWindowSurface(app->win);
 	play_music(app);
+	if (app->change_level != -1)
+	{
+		import_change_level(app, app->change_level);
+		app->change_level = -1;
+	}
 }
