@@ -1,13 +1,12 @@
 —————— Intro
 The year is 2157. Humanity has colonized several planets in the galaxy, but the terraforming process has gone wrong on one of them. Strange creatures now roam the surface. You are the sole member of a special unit sent to investigate the source of the problem, but you soon realize that the horrors you face may be beyond what anyone could have imagined.
-——— Encounters Forest/Outside 
+The Twisted Forests 
 The twisted forests are silent, except for the whispers of an entity that haunts your every step.
-——— Encounters Research Facility
-You find yourself in a research facility that may hold the key to understanding what went wrong.
-The facility is filled with notes and recordings left by the scientists who once worked there, but as you delve deeper, you realize that the true source of the terraforming failure is far more sinister than anything they could have imagined.
+The Research Facility
+You find yourself in a research facility that may hold the key to understanding what went wrong.The facility is filled with notes and recordings left by the scientists who once worked there, but as you delve deeper, you realize that the true source of the terraforming failure is far more sinister than anything they could have imagined.
 The research facility is a maze of dark hallways and laboratories, hiding secrets that could mean the difference between life and death.
 As you make your way through the facility, you encounter the twisted creatures that once were the scientists. They attack without mercy, driven by the entity's will.
-——— Encounters Outpost
+The Outpost
 You find a distress signal coming from a remote outpost, but as you approach, you realize that something has gone terribly wrong.
 The outpost is silent, except for the sounds of something moving in the shadows.
 ——————— Encounters Generic
@@ -25,13 +24,13 @@ You come across a room filled with the remnants of a massacre, the walls are gro
 You find a cache of weapons and supplies left behind by a previous team, but you wonder what happened to them.
 The entity's influence can be felt everywhere, corrupting everything it touches.
 You catch a glimpse of a twisted creature lurking in the shadows, its glowing eyes watching your every move.
-———— Encounters Big Battle
+The Boss Arena
 You are able to fight your way through and uncover the location of the entity's lair.
 The lair is a massive, dark chamber filled with a pulsing energy that makes your skin crawl.
 As you approach, you can feel the entity's malevolent presence, watching you, waiting for you to make a mistake. But you have come too far to turn back now, and you steel yourself for the final showdown.
 Something has shifted!
 With each blow, you can feel its power waning.
-————— Ending
+The Escape Ship
 In the end, you were able to destroy the entity and bring an end to the terror that has plagued the planet.
 As you make your way back to the escape pod, you know that the memories of what you encountered will stay with you forever.
 The escape pod is a beacon of hope, but you know that the memories of what you encountered will never truly leave you.
