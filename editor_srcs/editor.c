@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   editor.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 13:03:35 by htahvana          #+#    #+#             */
-/*   Updated: 2023/01/26 13:13:48 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/21 13:12:10 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,19 +20,19 @@
 */
 static void	edit_up_key_changes(t_app *app, double increment)
 {
-	if (app->active_sector && app->ceiling_edit && !app->slope_edit)
+	if (app->active_sector && !app->active && app->ceiling_edit
+		&& !app->slope_edit)
 		app->active_sector->ceil_height += increment;
-	if (app->active_sector && app->floor_edit && !app->slope_edit)
+	if (app->active_sector && !app->active && app->floor_edit
+		&& !app->slope_edit)
 		app->active_sector->floor_height += increment;
-	if (app->active && !app->decor_edit && !app->floor_edit
-		&& !app->ceiling_edit)
+	if (app->active && !app->decor_edit)
 	{
 		app->active->decor++;
 		if (app->active->decor > MAX_DECOR_COUNT - 1)
 			app->active->decor = 0;
 	}
-	if (app->active && app->decor_edit && !app->floor_edit
-		&& !app->ceiling_edit && app->active->decor != -1)
+	if (app->active && app->decor_edit && app->active->decor != -1)
 		app->active->decor_offset.y += app->divider;
 	if (app->active_sector && app->light_edit && app->active_sector->light < 8)
 		app->active_sector->light++;
@@ -52,19 +52,19 @@ static void	edit_up_key_changes(t_app *app, double increment)
 */
 static void	edit_down_key_changes(t_app *app, double increment)
 {
-	if (app->active_sector && app->ceiling_edit && !app->slope_edit)
+	if (app->active_sector && !app->active && app->ceiling_edit
+		&& !app->slope_edit)
 		app->active_sector->ceil_height -= increment;
-	if (app->active_sector && app->floor_edit && !app->slope_edit)
+	if (app->active_sector && !app->active && app->floor_edit
+		&& !app->slope_edit)
 		app->active_sector->floor_height -= increment;
-	if (app->active && !app->decor_edit && !app->floor_edit
-		&& !app->ceiling_edit)
+	if (app->active && !app->decor_edit)
 	{
 		app->active->decor--;
 		if (app->active->decor < 0)
 			app->active->decor = MAX_DECOR_COUNT - 1;
 	}
-	if (app->active && app->decor_edit && !app->floor_edit
-		&& !app->ceiling_edit && app->active->decor != -1)
+	if (app->active && app->decor_edit && app->active->decor != -1)
 		app->active->decor_offset.y -= app->divider;
 	if (app->active_sector && app->light_edit && app->active_sector->light > -8)
 		app->active_sector->light--;
