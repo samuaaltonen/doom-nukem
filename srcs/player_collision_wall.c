@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 14:42:30 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 23:01:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/20 19:29:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,15 @@
  * @param start_pos 
  * @param end_pos 
  * @param wall 
- * @param is_member 
+ * @param is_portal 
  * @return t_bool 
  */
 t_bool	collision_possible(t_vector2 start_pos, t_vector2 end_pos,
-	t_line wall, t_bool is_member)
+	t_line wall, t_bool is_portal)
 {
 	t_vector2	intersection;
 
-	if (is_member && !ft_line_side(wall, start_pos))
+	if (is_portal && !ft_line_side(wall, start_pos))
 		return (FALSE);
 	intersection = ft_closest_point(end_pos, wall);
 	if (ft_point_on_segment(wall, intersection)

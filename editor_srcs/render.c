@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/20 15:49:44 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/21 13:08:22 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,6 @@ void	render_sector_points(t_app *app)
 			if (head == app->active_sector->wall_list)
 				break ;
 		}
-		if (app->wall_edit)
-			change_walls_tex(app->active_sector->wall_list,
-				app->active_sector->wall_list->tex);
 	}
 }
 

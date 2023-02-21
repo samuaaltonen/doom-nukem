@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/20 15:26:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/20 20:30:10 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ static void	draw_wall_pixel(t_app *app, t_rayhit *hit, t_point coord, int color)
 	if ((color & 0xFF000000) > 0)
 		put_pixel_to_surface(app->surface, coord.x, coord.y,
 			shade_depth(shade_color(color, hit->light), (float)hit->distance));
-	else if (app->occlusion_top[coord.x] < coord.y
+	else if (app->occlusion_top[coord.x] <= coord.y
 		&& app->occlusion_bottom[coord.x] < WIN_H - coord.y)
 	{
 		put_pixel_to_surface(app->surface, coord.x, coord.y,

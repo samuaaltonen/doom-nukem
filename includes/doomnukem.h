@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/20 15:20:04 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/20 19:06:05 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -359,7 +359,7 @@ t_collision		collision_wall(t_app *app, int sector_id, int wall_id,
 					int portal_id);
 void			collision_slope(t_app *app, int sector_id);
 t_bool			collision_possible(t_vector2 start_pos, t_vector2 end_pos,
-					t_line wall, t_bool is_member);
+					t_line wall, t_bool is_portal);
 t_vector2		get_possible_movement_point(t_line wall, t_vector2 coord,
 					int side);
 t_bool			portal_can_enter(t_app *app, t_vector3 pos,

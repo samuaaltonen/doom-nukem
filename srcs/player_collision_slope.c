@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 16:28:47 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/07 17:58:02 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/20 20:07:41 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,9 +80,10 @@ static t_vector2	get_optimal_position(t_app *app,
 	if (space - space_away == 0.0)
 		return (collision_position);
 	space_distance = space / (space_away - space);
-	from_collision = (space - space_distance / space)
-		* (app->player.height + COLLISION_CEIL);
-	return (ft_vector2_add(collision_position, ft_vector_resize(
+	from_collision = space_distance * (app->player.height + COLLISION_CEIL)
+		/ space;
+	from_collision -= space_distance;
+	return (ft_vector2_sub(collision_position, ft_vector_resize(
 				ft_vector2_sub(collision_position, app->player.move_pos),
 				from_collision)));
 }

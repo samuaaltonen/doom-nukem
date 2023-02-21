@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 16:27:15 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/20 18:32:18 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,10 +34,9 @@ t_wall_list	*find_opposite_point(t_sector_list *sector, t_wall_list *point)
 	selection = NULL;
 	max = 0.0f;
 	head = sector->wall_list;
-	while (head->next != sector->wall_list)
+	while (TRUE)
 	{
-		c = (t_vector2){head->point.x - point->point.x,
-			head->point.y - point->point.y};
+		c = ft_vector2_sub(head->point, point->point);
 		opposite = ft_vector_length(c) * sin(ft_vector_angle((t_vector2)
 				{point->next->point.x - point->point.x, point->next->point.y
 					- point->point.y}, c));
@@ -47,6 +46,8 @@ t_wall_list	*find_opposite_point(t_sector_list *sector, t_wall_list *point)
 			selection = head;
 		}
 		head = head->next;
+		if (head == sector->wall_list)
+			break ;
 	}
 	return (selection);
 }
