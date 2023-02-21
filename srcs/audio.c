@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   audio.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/02 13:35:37 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/24 17:03:18 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/21 13:40:00 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,19 +66,4 @@ void	play_sound(t_app *app, int audio_type)
 	SDL_QueueAudio(app->audio.device_id, ptr, size);
 	SDL_PauseAudioDevice(app->audio.device_id, 0);
 	SDL_FreeWAV(app->audio.sound);
-}
-
-void	pause_audio(t_app *app)
-{
-	SDL_PauseAudioDevice(app->audio.device_id, 1);
-}
-
-void	unpause_audio(t_app *app)
-{
-	SDL_PauseAudioDevice(app->audio.device_id, 0);
-}
-
-void	stop_audio(t_app *app)
-{
-	SDL_ClearQueuedAudio(app->audio.device_id);
 }

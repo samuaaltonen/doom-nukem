@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:17:07 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/24 15:28:26 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/21 16:18:24 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,5 +41,6 @@ void	import_objects(t_app *app, t_import_info *info)
 		app->objects[i].var = import.var;
 		app->objects[i].rot = ft_random_double(app, PI_PI);
 	}
+	init_bullets(app);
 	import_update_progress(info);
 }

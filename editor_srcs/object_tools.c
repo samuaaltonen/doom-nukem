@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   object_tools.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/30 14:12:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/08 18:24:15 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/21 13:40:23 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,20 +32,6 @@ int	get_object_id(t_app *app, t_object *object)
 		i++;
 	}
 	return (-1);
-}
-
-/**
- * @brief Keydown event to change current object type.
- * 
- * @param app
- * @param keycode
-*/
-void	change_object_id(t_app *app, int keycode)
-{
-	if (keycode == SDLK_LEFT && app->current_object->type > 2)
-		app->current_object->type--;
-	if (keycode == SDLK_RIGHT && app->current_object->type < MAX_UNIQUE_OBJECTS)
-		app->current_object->type++;
 }
 
 /**

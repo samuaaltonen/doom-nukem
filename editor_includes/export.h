@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/05 12:48:41 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/15 19:03:58 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:47:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 # define UI_FRAME_H					30
 # define OBJECT_ICON_W				128
 # define OBJECT_ICON_H				3456
-# define MAX_BMP_OFFSET				32768
-# define MAX_BMP_WIDTH				32768
-# define MAX_BMP_HEIGHT				32768
+# define MAX_BMP_OFFSET				16384
+# define MAX_BMP_WIDTH				16384
+# define MAX_BMP_HEIGHT				16384
 # define MAX_ASSET_COUNT			32
 # define MIN_UNCOMPRESS_UPDATE		256
 # define MAX_UNCOMPRESS_BATCH		4096

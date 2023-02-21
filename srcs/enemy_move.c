@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_move.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 13:21:17 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 14:11:01 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/21 13:12:06 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@
  * @brief Recurses to check if enemy moved into new main(parent sectors)
  * 
  * @param app 
- * @param new 
+ * @param move 
  * @param sector_id 
  * @param enemy 
  * @return int 
  */
-static int	enemy_move_main(t_app *app, t_move new, int sector_id,
+static int	enemy_move_main(t_app *app, t_move move, int sector_id,
 	t_enemy_state *enemy)
 {
 	int				i;
@@ -35,8 +35,8 @@ static int	enemy_move_main(t_app *app, t_move new, int sector_id,
 	{
 		wall_line = get_wall_line(app, sector_id, i);
 		status = &(app->objects[enemy->id]);
-		if (!ft_line_side(wall_line, new.pos) || !ft_line_intersection_segment(
-				(t_line){status->position, new.pos}, wall_line, &hit))
+		if (!ft_line_side(wall_line, move.pos) || !ft_line_intersection_segment(
+				(t_line){status->position, move.pos}, wall_line, &hit))
 			continue ;
 		portal_id = app->sectors[sector_id].wall_types[i];
 		if (portal_id < 0 || app->sectors[sector_id].wall_textures[i]
@@ -46,7 +46,7 @@ static int	enemy_move_main(t_app *app, t_move new, int sector_id,
 			return (-1);
 		enemy->target_elevation = sector_floor_height(app, portal_id, hit);
 		status->position = hit;
-		enemy_move_check(app, new, portal_id, enemy);
+		enemy_move_check(app, move, portal_id, enemy);
 	}
 	return (sector_id);
 }

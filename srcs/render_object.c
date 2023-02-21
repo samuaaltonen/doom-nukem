@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_object.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/30 13:02:49 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 16:46:20 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:13:02 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,10 +65,11 @@ void	objects_render(t_app *app, t_thread_data *thread)
 	i = 0;
 	while (i < app->objectstack.visible_count)
 	{
-		object_type = app->objects[app->objectstack.objects[i].id].type;
 		if (app->objectstack.objects[i].id >= MAX_OBJECTS)
 			object_type = app->bullets[app->objectstack.objects[i].id
 				- MAX_OBJECTS].type + MAX_OBJECT_TYPES;
+		else
+			object_type = app->objects[app->objectstack.objects[i].id].type;
 		if (object_type <= MAX_SMALL_OBJECTS)
 			object_render(app, &(app->objectstack.objects[i]), thread,
 				render_small);

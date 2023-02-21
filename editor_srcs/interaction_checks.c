@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interaction_checks.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 14:39:08 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/20 11:04:33 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:06:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

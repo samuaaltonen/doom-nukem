@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:36:17 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/20 13:16:36 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:51:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,20 +124,20 @@ static void	read_sector(t_sector_list *sector, t_export_sector *export)
  */
 static t_sector_list	*read_sector_list(t_export_sector *export)
 {
-	t_sector_list	*new;
+	t_sector_list	*new_list;
 
-	new = (t_sector_list *)ft_memalloc(sizeof(t_sector_list));
-	if (!new)
+	new_list = (t_sector_list *)ft_memalloc(sizeof(t_sector_list));
+	if (!new_list)
 		exit_error(MSG_ERROR_ALLOC);
-	new->corner_count = export->corner_count;
-	new->wall_list = NULL;
-	export_to_list(export, &new->wall_list, export->corner_count);
-	ft_memcpy(new->member_links, export->member_sectors,
+	new_list->corner_count = export->corner_count;
+	new_list->wall_list = NULL;
+	export_to_list(export, &new_list->wall_list, export->corner_count);
+	ft_memcpy(new_list->member_links, export->member_sectors,
 		MAX_MEMBER_SECTORS * sizeof(int));
-	new->parent_sector = NULL;
-	new->next = NULL;
-	read_sector(new, export);
-	return (new);
+	new_list->parent_sector = NULL;
+	new_list->next = NULL;
+	read_sector(new_list, export);
+	return (new_list);
 }
 
 /**

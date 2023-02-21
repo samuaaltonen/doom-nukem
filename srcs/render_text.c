@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/11 11:48:08 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/01 19:53:40 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:00:20 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	render_text(t_app *app, t_rect frame, char *text)
 
 	pos = (t_point){frame.x, frame.y};
 	i = 0;
-	while (text[i] != '\0')
+	while (text && text[i] != '\0')
 	{
 		if (i > 0 && text[i - 1] == ' '
 			&& pos.x + 12 * (get_word_index(text, i) - i) > frame.x + frame.w)

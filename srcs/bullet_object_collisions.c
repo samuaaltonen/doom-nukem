@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bullet_object_collisions.c                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 21:15:09 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/07 13:57:56 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/21 16:25:46 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ static void	damage_enemy(t_app *app, int damage, t_enemy_state *enemy)
 static int	bullet_enemy_collision(t_app *app, t_bullet *bullet,
 		t_enemy_state *enemy)
 {
-	if (bullet->type > PROJECTILE_ENEMY)
+	if (bullet->type > PROJECTILE_ENEMY && bullet->type < MAX_PROJECTILES)
 	{
 		if (enemy->state != DEATH && (in_range(bullet->start,
 					app->objects[enemy->id].position,

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   bullet_fire.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/14 14:52:53 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/14 15:58:47 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:50:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	fire(t_app *app, t_vector3 target_dir, t_vector3 start, t_point info)
 	if (app->bullets_active >= MAX_TEMP_OBJECTS - 1)
 		return ;
 	i = 0;
-	while (i < MAX_TEMP_OBJECTS && app->bullets[i].type != -1)
+	while (i < MAX_TEMP_OBJECTS - 1 && app->bullets[i].type != -1)
 		i++;
 	init_bullet_info(app, i, start, info);
 	calc_bullet_end(app, &(app->bullets[i]), target_dir);
@@ -69,7 +69,7 @@ void	melee(t_app *app, t_vector3 target_dir, t_vector3 start, t_point info)
 	if (app->bullets_active >= MAX_TEMP_OBJECTS - 1)
 		return ;
 	i = 0;
-	while (i < MAX_TEMP_OBJECTS && app->bullets[i].type != -1)
+	while (i < MAX_TEMP_OBJECTS - 1 && app->bullets[i].type != -1)
 		i++;
 	app->bullets[i].start = (t_vector2){start.x, start.y};
 	app->bullets[i].start_z = start.z;

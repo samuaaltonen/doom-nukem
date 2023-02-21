@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player_effects.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:57:21 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/14 15:56:20 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:23:56 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,8 +67,8 @@ void	energy_charge(t_app *app, int mod)
 	{
 		app->player.inventory.energy += mod;
 		start_timer(&app->energy_timer, 0.1);
-		if (app->player.inventory.energy >= 200)
-			app->player.inventory.energy = 200;
+		if (app->player.inventory.energy >= PLAYER_MAX_ENERGY)
+			app->player.inventory.energy = PLAYER_MAX_ENERGY;
 		if (app->player.inventory.energy <= 0)
 		{
 			app->player.inventory.energy = 0;

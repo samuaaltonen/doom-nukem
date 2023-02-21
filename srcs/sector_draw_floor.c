@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 13:23:28 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/20 12:25:14 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/21 13:58:19 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,8 +132,6 @@ void	draw_floor(t_app *app, int x, t_rayhit *hit)
 		return ;
 	initialize_elevation(app, hit, &elevation, &horizon_effect);
 	hit->occlusion_bottom[x] = WIN_H - y.start;
-	if (y.start >= y.end)
-		return ;
 	hit->drawn = TRUE;
 	while (y.start <= y.end)
 	{

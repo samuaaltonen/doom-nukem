@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   menu_interaction_tools.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/13 11:00:43 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/01/13 15:47:40 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:54:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ HEIGHT");
 void	render_current_interaction_status(t_app *app, t_point mouse,
 													int start_y, int id)
 {
-	if (id > -1 && app->interactions[id].event_id != 0)
+	if (id > -1 && id < MAX_INTERACTIONS && app->interactions[id].event_id != 0)
 		has_interaction(app, mouse, start_y, id);
 	else
 	{

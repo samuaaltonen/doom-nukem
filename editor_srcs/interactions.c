@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interactions.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/17 17:21:39 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/20 14:00:27 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:55:46 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	interaction_edit(t_app *app, SDL_Keycode keycode)
 		&& get_current_interaction_count(app, id) > 1)
 	{
 		id--;
-		while (app->interactions[id].event_id == 0 && id > 0)
+		while (id > 0 && app->interactions[id].event_id == 0)
 			id--;
 		app->current_interaction->interaction_link = id;
 	}
@@ -73,7 +73,7 @@ void	interaction_edit(t_app *app, SDL_Keycode keycode)
 		&& get_current_interaction_count(app, id) < app->interaction_count)
 	{
 		id++;
-		while (app->interactions[id].event_id == 0 && id < MAX_INTERACTIONS)
+		while (id < MAX_INTERACTIONS && app->interactions[id].event_id == 0)
 			id++;
 		app->current_interaction->interaction_link = id;
 	}

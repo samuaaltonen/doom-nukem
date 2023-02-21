@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_equipment.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 16:40:28 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/14 16:07:31 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:34:00 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,10 +74,7 @@ static void	hud_weapon(t_app *app, t_rect rect)
 	i = 0;
 	render_ui_frame(app, rect, 1, DARK_GREY);
 	choose_weapon_sprite(app);
-	rect.x += 16;
-	rect.y += 16;
-	rect.w = 4;
-	rect.h = 8;
+	rect = (t_rect){rect.x + 16, rect.y + 16, 4, 8};
 	while (i < app->player.equipped_weapon.magazine)
 	{
 		color_surface(app->assets.bullet_sprite, CYAN);
@@ -87,9 +84,10 @@ static void	hud_weapon(t_app *app, t_rect rect)
 		rect.x += 6;
 		i++;
 	}
-	if (app->hand.equipped != 3)
+	ammo = NULL;
+	if (app->hand.equipped != 3 && app->hand.equipped != 0)
 		ammo = ft_itoa(app->player.inventory.ammo);
-	if (app->hand.equipped == 3 || !ammo)
+	if (app->hand.equipped == 3 || app->hand.equipped == 0 || !ammo)
 		return ;
 	render_text(app, (t_rect){1136, 626, 64, 64}, ammo);
 	free(ammo);

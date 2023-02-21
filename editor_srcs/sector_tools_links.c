@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/01 14:48:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:52:35 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,10 +47,10 @@ static int	find_linkable_walls(t_app *app, t_wall_list *wall,
  * @brief Finds possible links to nearby sectors.
  * 
  * @param app 
- * @param new 
+ * @param new_list 
  * @return int 
  */
-int	find_links(t_app *app, t_sector_list *new)
+int	find_links(t_app *app, t_sector_list *new_list)
 {
 	int				i;
 	t_wall_list		*start_wall;
@@ -58,15 +58,14 @@ int	find_links(t_app *app, t_sector_list *new)
 	int				counter;
 
 	i = -1;
-	start_wall = new->wall_list;
-	sector_list = app->sectors;
-	while (++i < new->corner_count)
+	start_wall = new_list->wall_list;
+	while (++i < new_list->corner_count)
 	{
 		counter = 0;
 		sector_list = app->sectors;
 		while (++counter < app->sector_count)
 		{
-			if (find_linkable_walls(app, start_wall, new, sector_list))
+			if (find_linkable_walls(app, start_wall, new_list, sector_list))
 				break ;
 			sector_list = sector_list->next;
 		}

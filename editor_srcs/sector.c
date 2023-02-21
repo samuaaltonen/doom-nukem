@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/21 13:36:45 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/20 12:45:20 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:53:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,25 @@
  */
 t_sector_list	*new_sector_list(t_wall_list *wall_list)
 {
-	t_sector_list	*new;
+	t_sector_list	*new_list;
 	t_wall_list		*tmp;
 
-	new = (t_sector_list *)ft_memalloc(sizeof(t_sector_list));
-	if (!new)
+	new_list = (t_sector_list *)ft_memalloc(sizeof(t_sector_list));
+	if (!new_list)
 		exit_error(MSG_ERROR_ALLOC);
 	tmp = wall_list->next;
-	new->corner_count++;
+	new_list->corner_count++;
 	while (tmp != wall_list)
 	{
-		new->corner_count++;
+		new_list->corner_count++;
 		tmp = tmp->next;
 	}
-	new->wall_list = wall_list;
-	new->ceil_height = 1.0f;
-	new->floor_tex_offset = -1;
-	new->ceil_tex_offset = -1;
-	new->next = NULL;
-	return (new);
+	new_list->wall_list = wall_list;
+	new_list->ceil_height = 1.0f;
+	new_list->floor_tex_offset = -1;
+	new_list->ceil_tex_offset = -1;
+	new_list->next = NULL;
+	return (new_list);
 }
 
 /**

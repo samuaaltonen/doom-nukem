@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/07 16:18:36 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/21 13:08:22 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/21 15:01:58 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ void	render_point(t_app *app, t_vector2 point, int size, int color)
 	min = world_to_screen(app, point);
 	max.x = min.x + size;
 	max.y = min.y + size;
-	min.x = min.x - size;
 	min.y = min.y - size;
 	while (min.y < max.y)
 	{

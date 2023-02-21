@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:17:22 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/20 12:24:00 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/21 13:57:55 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,6 @@ void	draw_ceiling(t_app *app, int x, t_rayhit *hit)
 		return ;
 	initialize_elevation(app, hit, &elevation, &horizon_effect);
 	hit->occlusion_top[x] = hit->wall_start;
-	if (y.start >= y.end)
-		return ;
 	hit->drawn = TRUE;
 	while (y.start <= y.end)
 	{

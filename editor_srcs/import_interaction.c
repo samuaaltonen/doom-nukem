@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/11 19:30:17 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/07 18:31:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:57:56 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,7 @@ static void	level_validation_interactions(t_app *app,
 			|| interactions[i].activation_object < -1)
 			exit_error(MSG_ERROR_IMPORT_INTERACTION);
 		if (interactions[i].activation_object != -1
-			|| interactions[i].activation_object < 0
-			|| interactions[i].activation_object > MAX_OBJECTS)
+			|| interactions[i].activation_object >= MAX_OBJECTS)
 			continue ;
 		sector = sector_by_index(app, interactions[i].activation_sector);
 		if (!sector || (sector->corner_count
