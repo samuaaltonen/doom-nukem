@@ -20,7 +20,7 @@
  */
 void	kill_bullet(t_app *app, t_bullet *bullet)
 {
-	if (bullet->type == PROJECTILE_ROCKET || bullet->type == 4)
+	if (bullet->type == PROJECTILE_ROCKET)
 		melee(app, (t_vector3){0.f, 0.f, 0.f}, ft_vec2_to_vec3(
 				ft_vector2_sub(bullet->start, ft_vec2_mult(bullet->end, 0.15f)),
 				bullet->start_z - bullet->end_z * 0.12f),
