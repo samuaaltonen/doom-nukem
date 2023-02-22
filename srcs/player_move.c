@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/15 15:21:33 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/07 15:54:23 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:11:59 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,8 @@ static void	limit_elevation(t_app *app)
 		app->player.elevation = floor - FLOOR_MAXIMUM_EPSILON;
 	if (app->player.elevation - ceil > FLOOR_MAXIMUM_EPSILON)
 		app->player.elevation = ceil + FLOOR_MAXIMUM_EPSILON;
+	if (ceil - floor < PLAYER_HEIGHT_CROUCHING)
+		damage(app, app->player.hp);
 }
 
 /**
