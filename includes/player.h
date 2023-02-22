@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/21 14:23:20 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/22 13:51:42 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@
 # define PLAYER_HEIGHT_STANDING			0.58
 # define PLAYER_HEIGHT_CROUCHING		0.28
 # define PLAYER_HEIGHT_CHANGE_RATE		16.0
-# define COLLISION_OFFSET				0.25
+# define COLLISION_OFFSET				0.24
 # define COLLISION_CEIL					0.125
 # define MAX_CONCURRENT_COLLISIONS		16
 # define MAX_COLLISION_POSITION_TRIES	320

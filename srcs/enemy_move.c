@@ -6,11 +6,44 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/02 13:21:17 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/21 13:12:06 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:07:14 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem.h"
+
+/**
+ * @brief Checks if enemy is actually inside a member sector and if so it
+ * changes its sector to member sector id and applies elevation.
+ * 
+ * @param app 
+ * @param state 
+ */
+void	check_enemy_sector(t_app *app, t_enemy_state *state)
+{
+	int	i;
+	int	sector_id;
+
+	sector_id = app->objects[state->id].sector;
+	if (app->sectors[sector_id].parent_sector != -1)
+		return ;
+	i = -1;
+	while (++i < MAX_MEMBER_SECTORS
+		&& app->sectors[sector_id].member_sectors[i] >= 0)
+	{
+		if (inside_sector(app,
+				app->sectors[sector_id].member_sectors[i],
+				app->objects[state->id].position))
+		{
+			app->objects[state->id].sector
+				= app->sectors[sector_id].member_sectors[i];
+			state->target_elevation = sector_floor_height(app,
+					app->sectors[sector_id].member_sectors[i],
+					app->objects[state->id].position);
+			return ;
+		}
+	}
+}
 
 /**
  * @brief Recurses to check if enemy moved into new main(parent sectors)

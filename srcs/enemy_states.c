@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   enemy_states.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/09 16:30:44 by htahvana          #+#    #+#             */
-/*   Updated: 2023/02/17 19:34:59 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:04:48 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -116,6 +116,7 @@ static void	enemy_walk_update(t_app *app, t_enemy_state *state, int define)
 		state->target_elevation = sector_floor_height(app,
 				app->objects[state->id].sector, new.pos);
 	}
+	check_enemy_sector(app, state);
 }
 
 /**

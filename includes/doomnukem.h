@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/22 12:54:34 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:07:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -551,7 +551,7 @@ void			update_enemy_states(t_app *app);
 void			define_enemies(t_app *app);
 void			define_bullets(t_app *app);
 void			define_weapons(t_app *app);
-
+void			check_enemy_sector(t_app *app, t_enemy_state *state);
 void			fire(t_app *app, t_vector3 target_dir, t_vector3 start_pos,
 					t_point info);
 void			melee(t_app *app, t_vector3 target_dir, t_vector3 start_pos,
