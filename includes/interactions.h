@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   interactions.h                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/06 16:47:58 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/15 19:04:35 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/22 15:42:28 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 
 # define DECOR_SIZE 1.0
 # define INTERACTION_ACTION_DISTANCE 1.5
-# define MAX_CONCURRENT_ANIMATIONS 16
+# define MAX_CONCURRENT_ANIMATIONS 64
 # define ANIMATION_DURATION_LIGHT 0.5 // seconds per light level
 # define ANIMATION_DURATION_HEIGHT 0.25 // seconds per meter
 # define ANIMATION_DURATION_TEXT 0.015625 // seconds per char
