@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_keyup.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/18 14:15:51 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/08 13:40:31 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/22 11:06:36 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ static void	edit_sector_mode_keys(t_app *app, int keycode)
 		app->floor_edit = ft_toggle(app->floor_edit);
 	if (keycode == SDLK_t)
 		app->light_edit = ft_toggle(app->light_edit);
-	if (keycode == SDLK_u)
+	if (keycode == SDLK_u && app->active_sector
+		&& (app->active_sector->ceil_slope_wall
+			|| app->active_sector->floor_slope_wall))
 		app->slope_edit = ft_toggle(app->slope_edit);
 	if (keycode == SDLK_v)
 		app->wall_edit = ft_toggle(app->wall_edit);
