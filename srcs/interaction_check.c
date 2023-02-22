@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/02 16:06:37 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/17 17:05:39 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/22 12:46:04 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ static t_bool	check_object_interaction(t_app *app, t_interaction *interaction)
 	double			dist;
 
 	i = -1;
-	while (app->objects[++i].type != 0)
+	while (++i < MAX_OBJECTS && app->objects[i].type != 0)
 	{
 		object = &(app->objects[i]);
 		if (app->objects[i].type > MAX_SMALL_OBJECTS

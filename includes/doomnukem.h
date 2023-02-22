@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/21 14:12:24 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/22 12:54:34 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,11 +222,11 @@ typedef struct s_app
 	t_sky				sky;
 	t_sector			*sectors;
 	int					sector_count;
-	t_gameobject		objects[MAX_OBJECTS];
-	float				object_states[MAX_OBJECTS];
-	t_bullet			bullets[MAX_TEMP_OBJECTS];
+	t_gameobject		objects[MAX_OBJECTS + 1];
+	float				object_states[MAX_OBJECTS + 1];
+	t_bullet			bullets[MAX_TEMP_OBJECTS + 1];
 	int					bullets_active;
-	t_enemy_state		enemies[MAX_OBJECTS];
+	t_enemy_state		enemies[MAX_OBJECTS + 1];
 	t_enemy_def			enemy_def[MAX_ENEMY_TYPES];
 	t_bullet_def		bullet_def[MAX_PROJECTILES];
 	t_weapon_def		weapons_def[WEAPON_COUNT];

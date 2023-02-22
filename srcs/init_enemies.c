@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 19:38:34 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/15 17:28:32 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/22 13:09:52 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,7 +132,7 @@ void	init_enemies(t_app *app)
 	enemy = &(app->enemies[0]);
 	i = -1;
 	enemy_count = 0;
-	while (++i < MAX_OBJECTS)
+	while (++i < MAX_OBJECTS + 1)
 	{
 		if (app->objects[i].type >= MONSTER1
 			&& app->objects[i].type < MONSTER1 + MAX_ENEMY_TYPES)

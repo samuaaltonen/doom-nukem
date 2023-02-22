@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/21 14:52:47 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/22 12:51:51 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -223,7 +223,7 @@ typedef struct s_app
 	int				event_id;
 	t_assets		assets;
 	t_player		player;
-	t_object		objects[MAX_OBJECTS];
+	t_object		objects[MAX_OBJECTS + 1];
 	int				object_count;
 	t_interaction	interactions[MAX_INTERACTIONS];
 	int				interaction_count;
