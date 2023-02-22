@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/24 14:06:55 by saaltone          #+#    #+#             */
-/*   Updated: 2022/12/28 12:41:55 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/22 13:47:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,10 +59,9 @@ t_bool	raycast_decor(t_app *app, t_line wall, t_rayhit *hit)
 				+ hit->sector->decor_offset[hit->wall_id].x));
 	decor_line.b = ft_vector2_add(decor_line.a,
 			ft_vector_resize(wall_vector, DECOR_SIZE));
-	if (!(ft_vector_length(ft_vector2_sub(hit->position, wall.a))
-			>= ft_vector_length(ft_vector2_sub(decor_line.a, wall.a))
-			&& ft_vector_length(ft_vector2_sub(hit->position, wall.a))
-			<= ft_vector_length(ft_vector2_sub(decor_line.b, wall.a))))
+	if (ft_vector_length(ft_vector2_sub(hit->position, decor_line.a))
+		+ ft_vector_length(ft_vector2_sub(hit->position, decor_line.b))
+		> DECOR_SIZE + SMALL_DISTANCE_EPSILON)
 		return (FALSE);
 	hit->decor_texture = hit->sector->wall_decor[hit->wall_id];
 	hit->decor_texture_offset = ft_vector_length(ft_vector2_sub(hit->position,

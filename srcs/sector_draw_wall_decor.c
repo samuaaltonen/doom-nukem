@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sector_draw_wall_decor.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 00:16:45 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/07 17:27:14 by htahvana         ###   ########.fr       */
+/*   Updated: 2023/02/22 13:45:54 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ static t_bool	apply_occlusion(t_rayhit *hit, int x, t_limit *y)
 static void	apply_offsets(t_rayhit *hit, t_limit y, int *tex_x, double *tex_y)
 {
 	*tex_x = (int)(hit->decor_texture_offset * TEX_SIZE);
+	clamp_int(tex_x, 0, TEX_SIZE - 1);
 	*tex_y = (double)hit->decor_texture * TEX_SIZE + hit->texture_step
 		* ((double)(y.start + 1) - hit->decor_start_actual);
 	if (*tex_y < 0.0)
@@ -74,7 +75,7 @@ void	draw_wall_decor(t_app *app, int x, t_rayhit *hit)
 	while (y.start < y.end)
 	{
 		tex_y += hit->texture_step;
-		if ((int)tex_y < OBJECT_ICON_H)
+		if ((int)tex_y >= OBJECT_ICON_H)
 			tex_y = fmod(tex_y, (double) OBJECT_ICON_H);
 		color = get_pixel_color(app->assets.object_icon, tex_x, (int) tex_y);
 		if ((color & 0xFF000000) > 0)
