@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: htahvana <htahvana@student.hive.fi>        +#+  +:+       +#+         #
+#    By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/25 12:54:14 by htahvana          #+#    #+#              #
-#    Updated: 2023/02/17 19:31:37 by htahvana         ###   ########.fr        #
+#    Updated: 2023/02/21 18:06:33 by saaltone         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -250,8 +250,8 @@ EDITOR_HEADERS = \
 	-I ./liblinearalgebra/includes \
 	-I ./sdl/SDL2-2.0.8/include
 
-FLAGS = -MMD -Wall -Wextra -Werror -flto -Ofast -g
-EDITOR_FLAGS = -MMD -Wall -Wextra -Werror -flto -Ofast -g
+FLAGS = -MMD -Wall -Wextra -Werror -flto -Ofast
+EDITOR_FLAGS = -MMD -Wall -Wextra -Werror -flto -Ofast
 
 LIBLINKS = -L ./libft -L ./liblinearalgebra \
 		-llinearalgebra -lft -lm

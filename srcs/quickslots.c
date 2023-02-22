@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quickslots.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/02/06 19:00:41 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/07 14:31:21 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:42:21 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

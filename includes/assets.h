@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   assets.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 14:38:52 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/15 17:12:52 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:47:39 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,9 +60,9 @@
 # define ENEMY_3_H					640
 # define MAX_TEX_COUNT				98
 # define MAX_DECOR_COUNT			27
-# define MAX_BMP_OFFSET				32768
-# define MAX_BMP_WIDTH				32768
-# define MAX_BMP_HEIGHT				32768
+# define MAX_BMP_OFFSET				16384
+# define MAX_BMP_WIDTH				16384
+# define MAX_BMP_HEIGHT				16384
 # define MAX_WAV_SIZE				67108864
 # define MAX_ASSET_COUNT			32
 # define MAX_UNCOMPRESS_BATCH		4096

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_sdl.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/14 15:38:18 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/01/16 15:26:14 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/21 13:41:20 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,19 +104,4 @@ int	check_blit(SDL_Surface *src, t_rect *src_rect,
 		|| dst_rect->y + dst_rect->h > dst->h)
 		return (FALSE);
 	return (TRUE);
-}
-
-/**
- * @brief Sets the given rectangle parameters to the size
- * of the given surface.
- * 
- * @param surface
- * @param rect
- */
-void	rect_from_surface(SDL_Surface *surface, t_rect *rect)
-{
-	rect->x = 0;
-	rect->y = 0;
-	rect->w = surface->w;
-	rect->h = surface->h;
 }

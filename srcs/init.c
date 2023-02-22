@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 16:04:22 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/20 15:20:25 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/21 16:23:06 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ void	init_bullets(t_app *app)
 	int	i;
 
 	i = -1;
+	app->bullets_active = 0;
 	ft_bzero(app->bullets, sizeof(t_bullet) * MAX_TEMP_OBJECTS);
 	while (++i < MAX_TEMP_OBJECTS)
 		app->bullets[i].type = -1;

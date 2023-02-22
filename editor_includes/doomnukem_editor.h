@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doomnukem_editor.h                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/20 11:05:07 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:52:47 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -342,7 +342,7 @@ void			del_sector_portals(t_app *app, int deleted);
 t_bool			valid_sector(t_app *app);
 int				get_member_sector_count(t_sector_list *parent);
 int				del_all_sector_interactions(t_app *app, t_sector_list **sector);
-int				find_links(t_app *app, t_sector_list *new);
+int				find_links(t_app *app, t_sector_list *new_list);
 void			make_point_array(t_app *app, t_vector2 *array,
 					t_sector_list *sector, int *count);
 void			sort_point_array(t_vector2 *array, int *count);

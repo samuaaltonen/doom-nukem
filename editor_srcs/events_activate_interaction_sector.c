@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   events_activate_interaction_sector.c               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/03 15:18:12 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/08 12:00:10 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:59:03 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ t_bool	current_sector_interaction(t_app *app, t_point mouse, int id)
 				= &app->interactions[find_sector_interaction(app,
 					app->interaction_count, 0)];
 		id = find_sector_interaction(app, find_interaction(app) - 1, 0);
-		if (id < 0)
+		if (id < 0 || id >= MAX_INTERACTIONS)
 			return (FALSE);
 		app->current_interaction = &app->interactions[id];
 		return (FALSE);
@@ -41,7 +41,7 @@ t_bool	current_sector_interaction(t_app *app, t_point mouse, int id)
 			app->current_interaction
 				= &app->interactions[find_sector_interaction(app, 0, 1)];
 		id = find_sector_interaction(app, find_interaction(app) + 1, 1);
-		if (id < 0)
+		if (id < 0 || id >= MAX_INTERACTIONS)
 			return (FALSE);
 		app->current_interaction = &app->interactions[id];
 		return (FALSE);

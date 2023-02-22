@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/16 14:17:25 by saaltone          #+#    #+#             */
-/*   Updated: 2023/01/27 22:04:09 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:23:49 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ static void	reset_player_data(t_app *app)
 	app->player.move_pos = app->player.pos;
 	app->player.flying = FALSE;
 	app->player.jetpack = FALSE;
+	app->player.inventory.energy = PLAYER_MAX_ENERGY;
 	app->player.is_decelerating = TRUE;
 }
 

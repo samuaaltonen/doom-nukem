@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/26 00:40:49 by saaltone          #+#    #+#             */
-/*   Updated: 2023/02/20 19:06:05 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:12:24 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -331,7 +331,6 @@ void			threads_work(t_thread_data *threads_data);
 void			player_init(t_app *app);
 void			player_control(t_app *app);
 void			player_rotate(t_app *app, double angle);
-int				get_player_side(t_app *app, t_line line);
 void			player_horizon(t_app *app, double change);
 void			player_move(t_app *app, t_movement movement, double speed);
 void			player_elevate(t_app *app, t_movement movement, double speed);
@@ -370,7 +369,7 @@ void			portal_enter(t_app *app, int sector_id);
 t_bool			inside_sector(t_app *app, int sector_id, t_vector2 coord);
 void			check_player_sector(t_app *app, int old_sector,
 					t_vector2 old_position);
-int				enemy_move_check(t_app *app, t_move new, int sector_id,
+int				enemy_move_check(t_app *app, t_move move, int sector_id,
 					t_enemy_state *enemy);
 void			object_collision(t_app *app);
 t_bool			in_range(t_vector2 pos, t_vector2 obj, double epsilon);

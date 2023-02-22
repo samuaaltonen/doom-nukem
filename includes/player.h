@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   player.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: dpalacio <danielmdc94@gmail.com>           +#+  +:+       +#+        */
+/*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/19 15:21:55 by dpalacio          #+#    #+#             */
-/*   Updated: 2023/02/15 17:27:31 by dpalacio         ###   ########.fr       */
+/*   Updated: 2023/02/21 14:23:20 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@
 # define WEAPON1_MAG					16
 # define WEAPON2_MAG					6
 # define WEAPON3_MAG					0
+# define PLAYER_MAX_HEALTH				200
+# define PLAYER_MAX_ENERGY				200
 
 /**
  * Movement direction enumeration.

@@ -6,7 +6,7 @@
 /*   By: saaltone <saaltone@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/03 11:47:05 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/20 13:11:11 by saaltone         ###   ########.fr       */
+/*   Updated: 2023/02/21 15:10:43 by saaltone         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,11 @@ t_sector_list	*find_child_sector(t_app *app)
 	int				i;
 	t_sector_list	*tmp;
 	t_wall_list		*wall;
+	t_point			mouse_screen;
+	t_vector2		mouse_pos;
 
+	SDL_GetMouseState(&mouse_screen.x, &mouse_screen.y);
+	mouse_pos = screen_to_world(app, mouse_screen);
 	wall = app->active_sector->wall_list;
 	while (wall)
 	{
@@ -54,13 +58,12 @@ t_sector_list	*find_child_sector(t_app *app)
 		if (wall == app->active_sector->wall_list)
 			break ;
 	}
-	i = 0;
-	while (i < MAX_MEMBER_SECTORS && app->active_sector->member_sectors[i])
+	i = -1;
+	while (++i < MAX_MEMBER_SECTORS && app->active_sector->member_sectors[i])
 	{
 		tmp = app->active_sector->member_sectors[i];
-		if (inside_sector_check(tmp, &app->mouse_track))
+		if (inside_sector_check(tmp, &mouse_pos))
 			return (tmp);
-		i++;
 	}
 	return (NULL);
 }
