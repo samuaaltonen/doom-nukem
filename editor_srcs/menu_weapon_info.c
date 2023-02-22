@@ -6,30 +6,30 @@
 /*   By: ssulkuma <ssulkuma@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 16:32:37 by ssulkuma          #+#    #+#             */
-/*   Updated: 2023/02/14 16:26:24 by ssulkuma         ###   ########.fr       */
+/*   Updated: 2023/02/22 10:40:54 by ssulkuma         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "doomnukem_editor.h"
 
 /**
- * @brief Sets weapon values. [0] canon, [1] heavy weapon, [2] bow.
+ * @brief Sets weapon values. [0] pistol, [1] heavy weapon, [2] bow.
  * 
  * @param app
 */
 void	weapons_init(t_app *app)
 {
-	app->player.weapons[0].damage = 30;
+	app->player.weapons[0].damage = 40;
 	app->player.weapons[0].range = 12;
-	app->player.weapons[0].fire_rate = 3;
-	app->player.weapons[0].magazine = 7;
-	app->player.weapons[1].damage = 40;
+	app->player.weapons[0].fire_rate = 2;
+	app->player.weapons[0].magazine = 16;
+	app->player.weapons[1].damage = 90;
 	app->player.weapons[1].range = 12;
-	app->player.weapons[1].fire_rate = 1;
-	app->player.weapons[1].magazine = 16;
-	app->player.weapons[2].damage = 20;
+	app->player.weapons[1].fire_rate = 10;
+	app->player.weapons[1].magazine = 6;
+	app->player.weapons[2].damage = 45;
 	app->player.weapons[2].range = 12;
-	app->player.weapons[2].fire_rate = 4;
+	app->player.weapons[2].fire_rate = 10;
 	app->player.weapons[2].magazine = 1;
 }
 
